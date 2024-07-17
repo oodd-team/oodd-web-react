@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import GlobalStyle from './styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
+import './styles/fonts/font.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ThemeProvider theme={theme}>
@@ -11,5 +12,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 		<RecoilRoot>
 			<App />
 		</RecoilRoot>
-	</ThemeProvider>
+	</ThemeProvider>,
 );

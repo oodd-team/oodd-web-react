@@ -1,0 +1,41 @@
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-weight: bold;
+	font-display: swap;
+	src: url('./GmarketSansTTFBold.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-weight: medium;
+	font-display: swap;
+	src: url('./GmarketSansTTFMedium.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Gmarket Sans';
+	font-weight: light;
+	font-display: swap;
+	src: url('./GmarketSansTTFLight.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Pretendard Variable';
+	font-weight: medium;
+	font-display: swap;
+	src: url('./Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Pretendard Variable';
+	font-weight: normal;
+	font-display: swap;
+	src: url('./Pretendard-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Pretendard Variable';
+	font-weight: light;
+	font-display: swap;
+	src: url('./Pretendard-Light.woff2') format('woff2');
+}
