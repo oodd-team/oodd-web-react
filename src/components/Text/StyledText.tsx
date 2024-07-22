@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 
 interface StyledTextProps {
-	textTheme: {
+	$textTheme: {
 		style: keyof typeof theme.fontStyles;
 		lineHeight: number;
 	};
@@ -10,7 +10,7 @@ interface StyledTextProps {
 }
 
 export const StyledText = styled.div<StyledTextProps>`
-	${(props) => props.theme.fontStyles[props.textTheme.style]};
-	line-height: ${(props) => props.textTheme.lineHeight}rem;
+	${(props) => props.theme.fontStyles[props.$textTheme.style]};
+	line-height: ${(props) => props.$textTheme.lineHeight}rem;
 	color: ${(props) => (props.color ? props.color : theme.colors.black)};
 `;
