@@ -1,18 +1,18 @@
 import React from 'react';
-import { HomeContainer, HomeLayout } from './styles';
 import HomeNavbar from './HomeNavbar';
 import HomeTabbar from './HomeTabbar';
 import Bottombar from '../../components/Bottombar';
+import { OODDContainer, OODDFrame } from '../../components/Frame/Frame';
 
 const Home: React.FC = () => {
 	return (
-		<HomeLayout>
-			<HomeContainer>
+		<OODDFrame>
+			<OODDContainer>
 				<HomeNavbar />
 				<HomeTabbar />
-			</HomeContainer>
+			</OODDContainer>
 			<Bottombar />
-		</HomeLayout>
+		</OODDFrame>
 	);
 };
 
