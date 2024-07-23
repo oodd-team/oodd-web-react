@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// 공통 레이아웃 -> 모두 적용해주세요
 export const OODDFrame = styled.div`
 	background-color: #ffffff;
 	max-width: 512px;
@@ -9,10 +10,4 @@ export const OODDFrame = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-`;
-
-export const OODDContainer = styled.div`
-	margin-top: 54px;
-	flex-grow: 1;
-	height: 400px;
 `;

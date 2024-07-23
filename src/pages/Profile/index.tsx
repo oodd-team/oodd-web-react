@@ -1,12 +1,12 @@
 import React from 'react';
-import Bottombar from '../../components/Bottombar';
-import { OODDContainer, OODDFrame } from '../../components/Frame/Frame';
+import NavBar from '../../components/NavBar';
+import { OODDFrame } from '../../components/Frame/Frame';
 
 const Profile: React.FC = () => {
 	return (
 		<OODDFrame>
-			<OODDContainer>프로필페이지입니다</OODDContainer>
-			<Bottombar />
+			프로필페이지입니다
+			<NavBar />
 		</OODDFrame>
 	);
 };

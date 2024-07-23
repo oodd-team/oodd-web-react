@@ -1,15 +1,20 @@
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, SeeMore } from './styles';
-import profileImg from '../../../assets/Home/profileImg.svg';
-import OOTDImg from '../../../assets/Home/OOTDImg.svg';
+import { CardLayoutProps } from './dto';
 
+const cardItem: CardLayoutProps = {
+	profileImgUrl: './../../../../assets/Home/profileImg.svg',
+	ootdImgUrl: './../../../../assets/Home/OOTDImg.svg',
+};
+
+// OODD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
 const Card: React.FC = () => {
 	return (
 		<CardLayout>
 			<ProfileBox>
 				<ProfileImgBox>
-					<img src={profileImg} />
+					<img src={cardItem.profileImgUrl} />
 				</ProfileImgBox>
 				<ProfileInfo>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>
@@ -27,7 +32,7 @@ const Card: React.FC = () => {
 			</ProfileBox>
 
 			<OOTDImgBox>
-				<img src={OOTDImg} />
+				<img src={cardItem.ootdImgUrl} />
 			</OOTDImgBox>
 		</CardLayout>
 	);

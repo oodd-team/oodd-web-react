@@ -4,7 +4,7 @@ export const CardLayout = styled.div`
 	margin: 10px 20px 0;
 	background-color: black;
 	border-radius: 12px;
-	height: 535px;
+	max-height: 535px;
 	position: relative;
 `;
 
@@ -38,7 +38,7 @@ export const SeeMore = styled.div`
 
 export const OOTDImgBox = styled.div`
 	width: 100%;
-	height: 464px;
+	max-height: 535px;
 	bottom: 0;
 	border-radius: 0 0 12px 12px;
 	background-color: aliceblue;

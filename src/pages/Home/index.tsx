@@ -1,17 +1,19 @@
 import React from 'react';
-import HomeNavbar from './HomeNavbar';
-import HomeTabbar from './HomeTabbar';
-import Bottombar from '../../components/Bottombar';
-import { OODDContainer, OODDFrame } from '../../components/Frame/Frame';
+import { OODDFrame } from '../../components/Frame/Frame';
+import HomeTabBar from './HomeTabBar';
+import HomeTopBar from './HomeTopBar';
+import NavBar from '../../components/NavBar';
+import { HomeContainer } from './styles';
 
+// Home 페이지입니다.
 const Home: React.FC = () => {
 	return (
 		<OODDFrame>
-			<OODDContainer>
-				<HomeNavbar />
-				<HomeTabbar />
-			</OODDContainer>
-			<Bottombar />
+			<HomeContainer>
+				<HomeTopBar />
+				<HomeTabBar />
+			</HomeContainer>
+			<NavBar />
 		</OODDFrame>
 	);
 };

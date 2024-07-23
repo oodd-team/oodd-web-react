@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BottombarLayout = styled.nav`
+export const NavBarContainer = styled.nav`
 	height: 88px;
 	justify-content: center;
 	align-items: center;
@@ -12,7 +12,7 @@ export const BottombarLayout = styled.nav`
 	filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
 `;
 
-export const BottombarContainer = styled.div`
+export const NavBarWrapper = styled.div`
 	display: flex;
 	margin: 8px 57px 0;
 	justify-content: space-between;
