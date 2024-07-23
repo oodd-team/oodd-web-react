@@ -4,6 +4,7 @@ import { StyledText } from '../../../components/Text/StyledText';
 import Matching from '../Matching';
 import OOTD from '../OOTD';
 import Favorites from '../Favorites';
+import theme from '../../../styles/theme';
 
 const tabs = ['매칭', 'OOTD', '즐겨찾기'];
 
