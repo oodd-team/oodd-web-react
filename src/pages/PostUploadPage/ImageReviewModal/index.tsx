@@ -1,17 +1,10 @@
 import React, { useRef } from 'react';
-import {
-	ModalContainer,
-	Content,
-	ImageContainer,
-	ImageWrapper,
-	RemoveButton,
-	AddButton,
-	HiddenFileInput,
-} from './styles';
+import { Content, ImageContainer, ImageWrapper, RemoveButton, AddButton, HiddenFileInput } from './styles';
 import { Header, PrevButton, Text } from '../Header';
 import { Footer, Button } from '../Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
+import back from '../assets/back.svg';
+import plus from './assets/plus.svg';
+import remove from './assets/remove.svg';
 
 interface ImageReviewModalProps {
 	onPrev: () => void;
@@ -63,10 +56,10 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	};
 
 	return (
-		<ModalContainer>
+		<>
 			<Header>
 				<PrevButton onClick={onPrev}>
-					<FontAwesomeIcon icon={faChevronLeft} />
+					<img src={back} />
 				</PrevButton>
 				<Text>OOTD 업로드</Text>
 			</Header>
@@ -75,11 +68,15 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 					{selectedImages.map((image, index) => (
 						<ImageWrapper key={index}>
 							<img src={image} alt={`Selected ${index}`} />
-							{selectedImages.length > 1 && <RemoveButton onClick={() => handleRemoveImage(image)}>×</RemoveButton>}
+							{selectedImages.length > 1 && (
+								<RemoveButton onClick={() => handleRemoveImage(image)}>
+									<img src={remove} />
+								</RemoveButton>
+							)}
 						</ImageWrapper>
 					))}
 					<AddButton onClick={handleAddImageClick}>
-						<FontAwesomeIcon icon={faPlus} />
+						<img src={plus} />
 					</AddButton>
 					<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
 				</ImageContainer>
@@ -87,7 +84,7 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 			<Footer>
 				<Button onClick={onNext}>다음</Button>
 			</Footer>
-		</ModalContainer>
+		</>
 	);
 };
 

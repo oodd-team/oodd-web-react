@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const ModalContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	max-width: 512px;
-	height: calc(100% - 40px);
-`;
-
 export const Content = styled.div`
 	display: flex;
 	flex-direction: column;

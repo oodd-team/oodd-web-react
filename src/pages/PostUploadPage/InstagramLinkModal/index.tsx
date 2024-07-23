@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ModalContainer, Content, Input } from './styles';
+import { Content, Input } from './styles';
 import { Header, PrevButton, Text } from '../Header';
 import { Footer, Button } from '../Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import close from '../assets/close.svg';
 
 interface InstagramLinkModalProps {
 	onClose: () => void;
@@ -87,10 +86,10 @@ const InstagramLinkModal: React.FC<InstagramLinkModalProps> = ({ onClose }) => {
 	};
 
 	return (
-		<ModalContainer>
+		<>
 			<Header>
 				<PrevButton onClick={onClose}>
-					<FontAwesomeIcon icon={faXmark} />
+					<img src={close} />
 				</PrevButton>
 				<Text>인스타 계정 연동</Text>
 			</Header>
@@ -107,7 +106,7 @@ const InstagramLinkModal: React.FC<InstagramLinkModalProps> = ({ onClose }) => {
 			<Footer>
 				<Button onClick={handleConnect}>연동하기</Button>
 			</Footer>
-		</ModalContainer>
+		</>
 	);
 };
 

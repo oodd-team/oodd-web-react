@@ -1,8 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { SheetContainer, SheetContent, HandleBar, OptionButton } from './styles';
+import insta from './assets/insta.svg';
+import picture from './assets/picture.svg';
 
 interface BottomSheetProps {
 	onClose: () => void;
@@ -20,11 +19,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ onClose, onInstagramSelect, o
 			<SheetContent>
 				<HandleBar />
 				<OptionButton onClick={onInstagramSelect}>
-					<FontAwesomeIcon icon={faInstagram} />
+					<img src={insta} />
 					<span>인스타 피드 가져오기</span>
 				</OptionButton>
 				<OptionButton onClick={onPhotoUploadSelect}>
-					<FontAwesomeIcon icon={faImage} className="icon-image" />
+					<img src={picture} />
 					<span>사진 올리기</span>
 				</OptionButton>
 			</SheetContent>

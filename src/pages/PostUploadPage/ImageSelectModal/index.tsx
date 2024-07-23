@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ModalContainer, ImageSelectorContainer, ImagePlaceholder, HiddenFileInput } from './styles';
+import { ImageSelectorContainer, ImagePlaceholder, HiddenFileInput } from './styles';
 import { Header, PrevButton, Text } from '../Header';
 import { Footer, Button } from '../Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
+import close from '../assets/close.svg';
+import picture from './assets/picture.svg';
 
 interface ImageSelectModalProps {
 	selectedImages: string[];
@@ -44,22 +43,22 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 	};
 
 	return (
-		<ModalContainer>
+		<>
 			<Header>
 				<PrevButton onClick={onClose}>
-					<FontAwesomeIcon icon={faXmark} />
+					<img src={close} />
 				</PrevButton>
 				<Text>OOTD 업로드</Text>
 			</Header>
 			<ImageSelectorContainer>
-				<FontAwesomeIcon icon={faImage} />
+				<img src={picture} />
 				<ImagePlaceholder>사진을 여기에 끌어다 놓으세요</ImagePlaceholder>
 				<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
 			</ImageSelectorContainer>
 			<Footer>
 				<Button onClick={handleButtonClick}>컴퓨터에서 사진 선택</Button>
 			</Footer>
-		</ModalContainer>
+		</>
 	);
 };
 

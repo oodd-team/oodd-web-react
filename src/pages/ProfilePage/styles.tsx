@@ -3,23 +3,27 @@ import styled from 'styled-components';
 
 export const Overlay = styled.div`
 	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
 	justify-content: center;
 	align-items: center;
 	background: white;
-	width: 100%;
-	height: 100%;
 `;
 
 export const PageOverlay = styled.div`
 	position: relative;
-	padding: 20px;
 	max-width: 512px;
 	width: 100%;
+	height: 100%;
 	background: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const AddButton = styled.button`
-	position: fixed;
+	position: absolute;
 	bottom: 20px;
 	right: 20px;
 	width: 50px;
@@ -34,6 +38,6 @@ export const AddButton = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: ${({ theme }) => theme.colors.gray1};
+		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 `;

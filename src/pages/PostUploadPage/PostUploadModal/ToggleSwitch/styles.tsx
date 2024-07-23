@@ -3,20 +3,21 @@ import styled from 'styled-components';
 export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 	appearance: none;
 	position: relative;
-	border: 2px solid gray;
+	border: 1.5px solid gray;
 	border-radius: 1.35em;
-	width: 2.25em;
-	height: 1.35em;
-	margin: 0;
+	width: 35px;
+	height: 22px;
+	margin: 5px;
+	cursor: pointer;
 
 	&::before {
 		content: '';
 		position: absolute;
+		top: 0;
 		left: 0;
-		width: 1.1em;
-		height: 1.1em;
+		width: 19px;
+		height: 19px;
 		border-radius: 50%;
-		transform: scale(0.8);
 		background-color: gray;
 		transition: left 250ms linear;
 	}

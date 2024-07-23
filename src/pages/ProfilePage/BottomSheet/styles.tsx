@@ -20,27 +20,27 @@ const slideDown = keyframes`
 `;
 
 export const SheetContainer = styled.div`
-	width: 100%;
-	height: 100%;
 	position: relative;
 	top: 0;
-	//bottom: 0;
+	bottom: 0;
 	left: 0;
-	//right: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const SheetContent = styled.div`
-	width: 100%;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
+	width: 100%;
 	background-color: ${({ theme }) => theme.colors.white};
 	padding: 20px;
 	padding-bottom: 30px;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-	z-index: 1000;
+	z-index: 999;
 
 	/* 애니메이션 적용 */
 	animation: ${slideUp} 0.3s ease-out;
@@ -60,22 +60,17 @@ export const HandleBar = styled.div`
 `;
 
 export const OptionButton = styled.button`
+	display: flex;
 	width: 100%;
 	padding: 15px;
 	border: none;
-	background-color: transparent;
+	//background-color: transparent;
 	text-align: left;
 	font-size: 16px;
 	cursor: pointer;
-	display: flex;
 	align-items: center;
 
-	svg {
-		font-size: 1.2rem;
+	img {
 		padding-right: 20px;
-	}
-
-	.icon-image {
-		font-size: 1.07rem;
 	}
 `;

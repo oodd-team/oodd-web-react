@@ -2,22 +2,23 @@ import styled from 'styled-components';
 
 export const Header = styled.div`
 	display: flex;
-	align-items: center;
-	width: 100%;
-	height: 60px;
-	background-color: white;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
+	width: 100%;
+	height: 60px;
+	align-items: center;
+	background-color: white;
+	z-index: 1;
 `;
 
 export const PrevButton = styled.button`
-	background: none;
-	border: none;
-	font-size: 20px;
-	cursor: pointer;
 	position: absolute;
 	left: 20px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
 `;
 
 export const Text = styled.span`

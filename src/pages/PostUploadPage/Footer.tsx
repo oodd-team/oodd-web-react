@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const Footer = styled.div`
 	display: flex;
-	justify-content: flex-end;
-	width: 100%;
-	height: 100px;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	left: 0;
+	width: 100%;
+	height: 100px;
+	background-color: ${({ theme }) => theme.colors.white};
+	justify-content: flex-end;
+	z-index: 1;
 `;
 
 export const Button = styled.button`
@@ -21,6 +23,6 @@ export const Button = styled.button`
 	margin: 20px;
 
 	&:hover {
-		background-color: #333;
+		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 `;

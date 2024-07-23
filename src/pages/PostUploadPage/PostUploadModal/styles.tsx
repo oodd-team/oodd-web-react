@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 
-export const ModalContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	max-width: 100%;
-	height: calc(100% - 40px);
-`;
-
 export const Content = styled.div`
-	width: 100%;
-	height: calc(100% - 160px);
-	position: fixed;
+	display: flex;
+	position: absolute;
 	top: 60px;
 	left: 0;
+	width: 100%;
+	height: calc(100% - 160px);
+	flex-direction: column;
+	overflow-y: auto;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
 `;
 
 export const ImageContainer = styled.div`
@@ -21,13 +22,13 @@ export const ImageContainer = styled.div`
 	align-items: center;
 	overflow-x: scroll;
 	width: 100%;
-	//height: 380px;
-	padding: 20px 0;
-	scrollbar-width: none; /* Firefox */
-	-ms-overflow-style: none; /* IE 10+ */
+	height: 380px;
 
+	/* 스크롤바 스타일 없애기 */
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
 	&::-webkit-scrollbar {
-		display: none; /* Safari and Chrome */
+		display: none; // Safari & Chrome
 	}
 
 	img {
@@ -37,20 +38,26 @@ export const ImageContainer = styled.div`
 		object-fit: cover;
 
 		&:first-child {
-			margin-left: calc((100vw - 256px) / 2);
+			margin-left: calc((100% - 256px) / 2);
 		}
 	}
 `;
 
 export const Input = styled.textarea`
-	width: 100vw;
-	height: 100px;
-	padding: 20px;
+	width: calc(100% - 40px);
+	min-height: 50px;
+	max-height: 80px;
+	margin: 20px;
 	border: none;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
 	font-size: 16px;
 	resize: none;
-	overflow-y: hidden;
+	overflow-y: scroll;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
 
 	&:focus {
 		outline: none;
@@ -60,50 +67,44 @@ export const Input = styled.textarea`
 export const TagContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
+	padding: 0 20px;
+	cursor: pointer;
 
 	label {
 		padding: 20px;
 		font-size: 16px;
 		color: ${({ theme }) => theme.colors.black};
 	}
-`;
-
-export const TagSection = styled.div`
-	display: flex;
-	flex-direction: column;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-
 	div {
 		height: 60px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 
-		:nth-child(2) {
-			margin: 20px;
+		:nth-child(3) {
 			margin-left: auto;
 		}
 	}
-	button {
-		//padding: 20px;
-		//margin-left: auto;
-		color: ${({ theme }) => theme.colors.gray3};
+
+	&.clothingTag {
+		border-top: 1px solid ${({ theme }) => theme.colors.gray2};
 	}
 `;
 
-export const OutfitTagList = styled.ul`
+export const ClothingInfoList = styled.ul`
 	padding: 10px 0;
 	display: flex;
 	flex-direction: column;
 `;
 
-export const OutfitTagItem = styled.li`
+export const ClothingInfoItem = styled.li`
 	padding: 10px 0;
 	display: flex;
 `;
 
 export const HashtagList = styled.ul`
-	padding: 0 20px 20px 20px;
+	padding-bottom: 20px;
 	display: flex;
 	flex-direction: row;
 `;
@@ -118,18 +119,19 @@ export const HashtagItem = styled.span`
 	cursor: pointer;
 `;
 
-export const ToggleLabel = styled.label`
+export const PinnedPostToggleContainer = styled.label`
 	display: flex;
 	align-items: center;
+	padding: 0 20px;
+	cursor: pointer;
+
+	div {
+		margin-left: auto;
+	}
 
 	label {
 		padding: 20px;
 		font-size: 16px;
 		color: ${({ theme }) => theme.colors.black};
 	}
-`;
-
-export const ToggleSwitchWrapper = styled.div`
-	margin: 20px;
-	margin-left: auto;
 `;
