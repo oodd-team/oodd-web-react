@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ModalContainer, Content, Input } from './styles';
-import { Header, PrevButton, Text } from '../Header/styles';
-import { Footer, Button } from '../Footer/styles';
+import { Header, PrevButton, Text } from '../Header';
+import { Footer, Button } from '../Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,7 +14,7 @@ const InstagramLinkModal: React.FC<InstagramLinkModalProps> = ({ onClose }) => {
 	const [instagramID, setInstagramID] = useState('');
 	const [selectedImages, setSelectedImages] = useState([]);
 
-	const handleSubmit = () => {
+	const handleConnect = () => {
 		/*
 		app.post('/auth/instagram', async (req, res) => {
 			const { code } = req.body;
@@ -105,7 +105,7 @@ const InstagramLinkModal: React.FC<InstagramLinkModalProps> = ({ onClose }) => {
 				/>
 			</Content>
 			<Footer>
-				<Button onClick={handleSubmit}>연동하기</Button>
+				<Button onClick={handleConnect}>연동하기</Button>
 			</Footer>
 		</ModalContainer>
 	);

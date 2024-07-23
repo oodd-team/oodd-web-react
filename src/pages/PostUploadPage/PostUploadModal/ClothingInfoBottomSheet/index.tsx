@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SheetContainer, SheetContent, Input, SearchResultContainer } from './styles';
 
@@ -6,7 +5,7 @@ interface BottomSheetProps {
 	onClose: () => void;
 }
 
-const OutfitLinkBottomSheet: React.FC<BottomSheetProps> = ({ onClose }) => {
+const ClothingInfoBottomSheet: React.FC<BottomSheetProps> = ({ onClose }) => {
 	const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		onClose();
 	};
@@ -24,4 +23,4 @@ const OutfitLinkBottomSheet: React.FC<BottomSheetProps> = ({ onClose }) => {
 	);
 };
 
-export default OutfitLinkBottomSheet;
+export default ClothingInfoBottomSheet;

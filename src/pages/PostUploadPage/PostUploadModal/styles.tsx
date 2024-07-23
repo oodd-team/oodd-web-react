@@ -102,13 +102,13 @@ export const OutfitTagItem = styled.li`
 	display: flex;
 `;
 
-export const StyleTagList = styled.ul`
+export const HashtagList = styled.ul`
 	padding: 0 20px 20px 20px;
 	display: flex;
 	flex-direction: row;
 `;
 
-export const StyleTagItem = styled.span`
+export const HashtagItem = styled.span`
 	padding: 8px 12px;
 	min-width: 50px;
 	background-color: ${({ color }) => color};

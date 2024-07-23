@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { ModalContainer, ImageSelectorContainer, ImagePlaceholder, HiddenFileInput } from './styles';
-import { Header, PrevButton, Text } from '../Header/styles';
-import { Footer, Button } from '../Footer/styles';
+import { Header, PrevButton, Text } from '../Header';
+import { Footer, Button } from '../Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 
-interface PhotoSelectModalProps {
+interface ImageSelectModalProps {
 	selectedImages: string[];
 	onClose: () => void;
 	onSelect: (images: string[]) => void;
 }
 
-const PhotoSelectModal: React.FC<PhotoSelectModalProps> = ({ selectedImages, onClose, onSelect }) => {
+const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onClose, onSelect }) => {
 	const [images, setImages] = useState<string[]>(selectedImages);
 	const fileInputRef = React.createRef<HTMLInputElement>();
 
@@ -63,4 +63,4 @@ const PhotoSelectModal: React.FC<PhotoSelectModalProps> = ({ selectedImages, onC
 	);
 };
 
-export default PhotoSelectModal;
+export default ImageSelectModal;

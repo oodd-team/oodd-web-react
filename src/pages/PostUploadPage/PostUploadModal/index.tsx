@@ -9,14 +9,14 @@ import {
 	Input,
 	OutfitTagList,
 	OutfitTagItem,
-	StyleTagList,
-	StyleTagItem,
+	HashtagList,
+	HashtagItem,
 	ToggleSwitchWrapper,
 } from './styles';
-import { Header, PrevButton, Text } from '../Header/styles';
-import { Footer, Button } from '../Footer/styles';
-import OutfitLinkBottomSheet from '../OutfitLinkBottomSheet';
-import ToggleSwitch from '../ToggleSwitch';
+import { Header, PrevButton, Text } from '../Header';
+import { Footer, Button } from '../Footer';
+import ClothingInfoBottomSheet from './ClothingInfoBottomSheet/index';
+import ToggleSwitch from './ToggleSwitch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +26,7 @@ interface PostUploadModalProps {
 	selectedImages: string[];
 }
 
-interface StyleTag {
+interface Hashtag {
 	tag: string;
 	color: string;
 }
@@ -39,12 +39,12 @@ interface ClothingInfo {
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
 	const [caption, setCaption] = useState('');
-	const [clothingInfo, setClothingInfo] = useState<ClothingInfo[]>([]);
-	const [hashtag, setHashtag] = useState<StyleTag | null>(null);
+	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
+	const [hashtag, setHashtag] = useState<Hashtag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
-	const [isStyleTagListOpen, setIsStyleTagListOpen] = useState(false);
-	const [isStyleTagSelected, setIsStyleTagSelected] = useState(false);
+	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
+	const [isHashtagSelected, setIsHashtagSelected] = useState(false);
 
 	const hashtags = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -64,30 +64,30 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const handleOpenStyleTagList = () => {
-		setIsStyleTagListOpen((prev) => !prev);
+		setIsHashtagListOpen((prev) => !prev);
 	};
 
 	const handleToggle = () => {
 		setIsOOTD(!isOOTD);
 	};
 
-	const handleTagSelect = (tag: StyleTag) => {
+	const handleTagSelect = (tag: Hashtag) => {
 		setHashtag(tag);
-		setIsStyleTagSelected(true);
-		setIsStyleTagListOpen(false);
+		setIsHashtagSelected(true);
+		setIsHashtagListOpen(false);
 	};
 
 	const handleSubmit = () => {
 		const photo_urls = selectedImages;
 		const caption_text = caption;
 		const hashtag_list = hashtag ? [hashtag.tag] : [];
-		const clothing_info_list = clothingInfo;
+		const clothing_info_list = clothingInfos;
 
 		const postData = {
 			photo_urls,
 			caption: caption_text,
-			hashtags: hashtag_list,
-			clothing_info: clothing_info_list,
+			hashtag: hashtag_list,
+			clothing_infos: clothing_info_list,
 		};
 
 		console.log(postData);
@@ -117,9 +117,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								<FontAwesomeIcon icon={faChevronRight} />
 							</button>
 						</div>
-						{clothingInfo.length > 0 && (
+						{clothingInfos.length > 0 && (
 							<OutfitTagList>
-								{clothingInfo.map((clothingObj, index) => (
+								{clothingInfos.map((clothingObj, index) => (
 									<OutfitTagItem key={index}>{clothingObj.brand}</OutfitTagItem>
 								))}
 							</OutfitTagList>
@@ -128,26 +128,26 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 					<TagSection>
 						<div onClick={handleOpenStyleTagList}>
 							<label>스타일 태그</label>
-							{isStyleTagListOpen ? (
+							{isHashtagListOpen ? (
 								<button>
 									<FontAwesomeIcon icon={faChevronUp} />
 								</button>
-							) : !isStyleTagSelected ? (
+							) : !isHashtagSelected ? (
 								<button>
 									<FontAwesomeIcon icon={faChevronRight} />
 								</button>
 							) : (
-								<StyleTagItem color={hashtag?.color}>{hashtag?.tag}</StyleTagItem>
+								<HashtagItem color={hashtag?.color}>{hashtag?.tag}</HashtagItem>
 							)}
 						</div>
-						{isStyleTagListOpen && (
-							<StyleTagList>
+						{isHashtagListOpen && (
+							<HashtagList>
 								{hashtags.map((tagObj, index) => (
-									<StyleTagItem key={index} onClick={() => handleTagSelect(tagObj)} color={tagObj.color}>
+									<HashtagItem key={index} onClick={() => handleTagSelect(tagObj)} color={tagObj.color}>
 										{tagObj.tag}
-									</StyleTagItem>
+									</HashtagItem>
 								))}
-							</StyleTagList>
+							</HashtagList>
 						)}
 					</TagSection>
 				</TagContainer>
@@ -161,7 +161,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			<Footer>
 				<Button onClick={handleSubmit}>공유</Button>
 			</Footer>
-			{isSheetOpen && <OutfitLinkBottomSheet onClose={handleCloseSheet} />}
+			{isSheetOpen && <ClothingInfoBottomSheet onClose={handleCloseSheet} />}
 		</ModalContainer>
 	);
 };

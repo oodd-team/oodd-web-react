@@ -25,7 +25,7 @@ const ProfilePage: React.FC = () => {
 
 	const handlePhotoUploadSelect = () => {
 		handleCloseSheet();
-		navigate('/upload', { state: { mode: 'photo' } });
+		navigate('/upload', { state: { mode: 'image' } });
 	};
 
 	return (

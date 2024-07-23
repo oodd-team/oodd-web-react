@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Overlay, PageOverlay } from './styles';
 import PostUploadModal from './PostUploadModal';
-import PhotoSelectModal from './PhotoSelectModal';
+import ImageSelectModal from './ImageSelectModal';
 import InstagramLinkModal from './InstagramLinkModal';
-import PhotoReviewModal from './PhotoReviewModal';
+import ImageReviewModal from './ImageReviewModal';
 
 const PostUploadPage: React.FC = () => {
 	const location = useLocation();
-	const [isPhotoSelectModalOpen, setIsPhotoSelectModalOpen] = useState(false);
+	const [isImageSelectModalOpen, setIsImageSelectModalOpen] = useState(false);
 	const [isInstagramLinkModalOpen, setIsInstagramLinkModalOpen] = useState(false);
-	const [isPhotoReviewModalOpen, setIsPhotoReviewModalOpen] = useState(false);
+	const [isImageReviewModalOpen, setIsImageReviewModalOpen] = useState(false);
 	const [isPostUploadModalOpen, setIsPostUploadModalOpen] = useState(false);
 	const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
@@ -18,27 +18,28 @@ const PostUploadPage: React.FC = () => {
 
 	useEffect(() => {
 		const state = location.state as { mode?: string };
-		if (state?.mode === 'photo') {
-			setIsPhotoSelectModalOpen(true);
+		if (state?.mode === 'image') {
+			setIsImageSelectModalOpen(true);
 		} else if (state?.mode === 'instagram') {
 			setIsInstagramLinkModalOpen(true);
 		}
 	}, [location.state]);
 
 	const handleCloseModals = () => {
-		setIsPhotoSelectModalOpen(false);
+		setIsImageSelectModalOpen(false);
 		setIsInstagramLinkModalOpen(false);
-		setIsPhotoReviewModalOpen(false);
+		setIsImageReviewModalOpen(false);
+		setSelectedImages([]);
 		navigate('/profile');
 	};
 
 	const handleImageSelect = (images: string[]) => {
 		setSelectedImages(images);
-		setIsPhotoSelectModalOpen(false);
-		setIsPhotoReviewModalOpen(true);
+		setIsImageSelectModalOpen(false);
+		setIsImageReviewModalOpen(true);
 	};
 
-	const handleAddMoreImages = (images: string[]) => {
+	const handleAddImages = (images: string[]) => {
 		setSelectedImages((prevImages) => [...prevImages, ...images]);
 	};
 
@@ -47,32 +48,33 @@ const PostUploadPage: React.FC = () => {
 	};
 
 	const handleReviewPrev = () => {
-		setIsPhotoReviewModalOpen(false);
-		setIsPhotoSelectModalOpen(true);
+		setIsImageReviewModalOpen(false);
+		setIsImageSelectModalOpen(true);
+		setSelectedImages([]);
 	};
 
 	const handleReviewNext = () => {
-		setIsPhotoReviewModalOpen(false);
+		setIsImageReviewModalOpen(false);
 		setIsPostUploadModalOpen(true);
 	};
 
 	const handlePostPrev = () => {
 		setIsPostUploadModalOpen(false);
-		setIsPhotoReviewModalOpen(true);
+		setIsImageReviewModalOpen(true);
 	};
 
 	return (
 		<Overlay>
 			<PageOverlay>
-				{isPhotoSelectModalOpen && (
-					<PhotoSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleImageSelect} />
+				{isImageSelectModalOpen && (
+					<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleImageSelect} />
 				)}
-				{isPhotoReviewModalOpen && selectedImages.length > 0 && (
-					<PhotoReviewModal
+				{isImageReviewModalOpen && selectedImages.length > 0 && (
+					<ImageReviewModal
 						onPrev={handleReviewPrev}
 						selectedImages={selectedImages}
 						onNext={handleReviewNext}
-						onAddMoreImages={handleAddMoreImages}
+						onAddImages={handleAddImages}
 						onDeleteImages={handleDeleteImages}
 					/>
 				)}

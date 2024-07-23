@@ -8,23 +8,23 @@ import {
 	AddButton,
 	HiddenFileInput,
 } from './styles';
-import { Header, PrevButton, Text } from '../Header/styles';
-import { Footer, Button } from '../Footer/styles';
+import { Header, PrevButton, Text } from '../Header';
+import { Footer, Button } from '../Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-interface PhotoReviewModalProps {
+interface ImageReviewModalProps {
 	onPrev: () => void;
 	selectedImages: string[];
-	onAddMoreImages: (images: string[]) => void;
+	onAddImages: (images: string[]) => void;
 	onDeleteImages: (images: string[]) => void;
 	onNext: () => void;
 }
 
-const PhotoReviewModal: React.FC<PhotoReviewModalProps> = ({
+const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	onPrev,
 	selectedImages,
-	onAddMoreImages,
+	onAddImages,
 	onDeleteImages,
 	onNext,
 }) => {
@@ -40,7 +40,7 @@ const PhotoReviewModal: React.FC<PhotoReviewModalProps> = ({
 					if (reader.result) {
 						newImages.push(reader.result.toString());
 						if (newImages.length === filesArray.length) {
-							onAddMoreImages(newImages);
+							onAddImages(newImages);
 						}
 					}
 				};
@@ -49,7 +49,7 @@ const PhotoReviewModal: React.FC<PhotoReviewModalProps> = ({
 		}
 	};
 
-	const handleAddMoreClick = () => {
+	const handleAddImageClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
@@ -78,7 +78,7 @@ const PhotoReviewModal: React.FC<PhotoReviewModalProps> = ({
 							{selectedImages.length > 1 && <RemoveButton onClick={() => handleRemoveImage(image)}>×</RemoveButton>}
 						</ImageWrapper>
 					))}
-					<AddButton onClick={handleAddMoreClick}>
+					<AddButton onClick={handleAddImageClick}>
 						<FontAwesomeIcon icon={faPlus} />
 					</AddButton>
 					<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
@@ -91,4 +91,4 @@ const PhotoReviewModal: React.FC<PhotoReviewModalProps> = ({
 	);
 };
 
-export default PhotoReviewModal;
+export default ImageReviewModal;
