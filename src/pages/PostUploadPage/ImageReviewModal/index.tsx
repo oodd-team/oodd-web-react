@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { Content, ImageContainer, ImageWrapper, RemoveButton, AddButton, HiddenFileInput } from './styles';
-import { Header, PrevButton, Text } from '../Header';
+import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
+import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
 import plus from './assets/plus.svg';
 import remove from './assets/remove.svg';
@@ -61,7 +62,7 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 				<PrevButton onClick={onPrev}>
 					<img src={back} />
 				</PrevButton>
-				<Text>OOTD 업로드</Text>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
 			</Header>
 			<Content>
 				<ImageContainer>
@@ -82,7 +83,9 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 				</ImageContainer>
 			</Content>
 			<Footer>
-				<Button onClick={onNext}>다음</Button>
+				<Button onClick={onNext}>
+					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>다음</StyledText>
+				</Button>
 			</Footer>
 		</>
 	);

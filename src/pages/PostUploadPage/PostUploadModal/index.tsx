@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {
 	Content,
 	ImageContainer,
-	Input,
+	StyledInput,
 	TagContainer,
 	ClothingInfoList,
 	ClothingInfoItem,
@@ -11,8 +11,9 @@ import {
 	HashtagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-import { Header, PrevButton, Text } from '../Header';
+import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
+import { StyledText } from '../../../components/Text/StyledText';
 import ClothingInfoBottomSheet from './ClothingInfoBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
 import { useNavigate } from 'react-router-dom';
@@ -73,6 +74,10 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setIsOOTD(!isOOTD);
 	};
 
+	const handleClothingInfoSelect = (clothings: ClothingInfo[]) => {
+		setClothingInfos(clothings);
+	};
+
 	const handleTagSelect = (tag: Hashtag) => {
 		setHashtag(tag);
 		setIsHashtagSelected(true);
@@ -102,7 +107,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				<PrevButton onClick={onPrev}>
 					<img src={back} />
 				</PrevButton>
-				<Text>OOTD 업로드</Text>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
 			</Header>
 			<Content>
 				<ImageContainer>
@@ -110,17 +115,34 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 						<img src={image} alt={`Selected ${index}`} key={index} />
 					))}
 				</ImageContainer>
-				<Input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
+				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
 					<div onClick={handleOpenSheet}>
 						<img src={clothingTag} />
-						<label>옷 정보 태그</label>
+						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+							옷 정보 태그
+						</StyledText>
+						{clothingInfos.length > 0 && (
+							<StyledText className="count" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+								{clothingInfos.length}
+							</StyledText>
+						)}
 						<img src={next} />
 					</div>
 					{clothingInfos.length > 0 && (
 						<ClothingInfoList>
 							{clothingInfos.map((clothingObj, index) => (
-								<ClothingInfoItem key={index}>{clothingObj.brand}</ClothingInfoItem>
+								<ClothingInfoItem key={index}>
+									<img />
+									<div className="infoContainer">
+										<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
+											{clothingObj.brand}
+										</StyledText>
+										<StyledText className="detail" $textTheme={{ style: 'body6-light', lineHeight: 1 }}>
+											{clothingObj.model}/
+										</StyledText>
+									</div>
+								</ClothingInfoItem>
 							))}
 						</ClothingInfoList>
 					)}
@@ -128,13 +150,17 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				<TagContainer>
 					<div onClick={handleOpenStyleTagList}>
 						<img src={styleTag} />
-						<label>스타일 태그</label>
+						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+							스타일 태그
+						</StyledText>
 						{isHashtagListOpen ? (
 							<img src={next_up} />
 						) : !isHashtagSelected ? (
 							<img src={next} />
 						) : (
-							<HashtagItem color={hashtag?.color}>{hashtag?.tag}</HashtagItem>
+							<HashtagItem color={hashtag?.color}>
+								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{hashtag?.tag}</StyledText>
+							</HashtagItem>
 						)}
 					</div>
 					{isHashtagListOpen && (
@@ -149,16 +175,24 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</TagContainer>
 				<PinnedPostToggleContainer>
 					<img src={pin} />
-					<label>대표 OOTD 지정</label>
+					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 					<div>
 						<ToggleSwitch checked={isOOTD} onChange={handleToggle} />
 					</div>
 				</PinnedPostToggleContainer>
 			</Content>
 			<Footer>
-				<Button onClick={handleSubmit}>공유</Button>
+				<Button onClick={handleSubmit}>
+					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>공유</StyledText>
+				</Button>
 			</Footer>
-			{isSheetOpen && <ClothingInfoBottomSheet onClose={handleCloseSheet} />}
+			{isSheetOpen && (
+				<ClothingInfoBottomSheet
+					onClose={handleCloseSheet}
+					clothingInfos={clothingInfos}
+					onSelectClothingInfos={handleClothingInfoSelect}
+				/>
+			)}
 		</>
 	);
 };

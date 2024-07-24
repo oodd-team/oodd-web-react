@@ -43,13 +43,12 @@ export const ImageContainer = styled.div`
 	}
 `;
 
-export const Input = styled.textarea`
+export const StyledInput = styled.textarea`
 	width: calc(100% - 40px);
 	min-height: 50px;
 	max-height: 80px;
 	margin: 20px;
 	border: none;
-	font-size: 16px;
 	resize: none;
 	overflow-y: scroll;
 
@@ -62,29 +61,43 @@ export const Input = styled.textarea`
 	&:focus {
 		outline: none;
 	}
+
+	::placeholder {
+		font-size: 1rem;
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: light;
+		font-size: 16px;
+	}
 `;
 
 export const TagContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-	padding: 0 20px;
+	padding: 0 15px 0 20px;
 	cursor: pointer;
 
-	label {
-		padding: 20px;
-		font-size: 16px;
+	.label {
+		padding: 0 15px;
 		color: ${({ theme }) => theme.colors.black};
 	}
+
 	div {
 		height: 60px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 
-		:nth-child(3) {
+		:last-child {
 			margin-left: auto;
 		}
+	}
+
+	.count {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-size: 16px;
 	}
 
 	&.clothingTag {
@@ -93,29 +106,69 @@ export const TagContainer = styled.div`
 `;
 
 export const ClothingInfoList = styled.ul`
-	padding: 10px 0;
+	padding-bottom: 20px;
 	display: flex;
 	flex-direction: column;
 `;
 
 export const ClothingInfoItem = styled.li`
-	padding: 10px 0;
 	display: flex;
+	flex-direction: row;
+	padding-bottom: 15px;
+	display: flex;
+
+	img {
+		width: 56px;
+		height: 56px;
+	}
+
+	.infoContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-left: 10px;
+		height: 56px;
+	}
+
+	.brand {
+		margin-right: auto;
+	}
+
+	.detail {
+		margin-right: auto;
+		color: ${({ theme }) => theme.colors.gray4};
+	}
+
+	&:last-child {
+		padding-bottom: 0;
+	}
 `;
 
 export const HashtagList = styled.ul`
 	padding-bottom: 20px;
 	display: flex;
 	flex-direction: row;
+
+	span {
+		margin-right: 7px;
+
+		&:last-child {
+			margin-right: 0px;
+		}
+	}
 `;
 
 export const HashtagItem = styled.span`
-	padding: 8px 12px;
-	min-width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 32px;
+	min-width: 70px;
+	font-size: 16px;
+	padding: 0 16px;
 	background-color: ${({ color }) => color};
 	color: black;
 	border-radius: 5px;
-	margin-right: 7px;
 	cursor: pointer;
 `;
 
@@ -125,13 +178,12 @@ export const PinnedPostToggleContainer = styled.label`
 	padding: 0 20px;
 	cursor: pointer;
 
-	div {
-		margin-left: auto;
+	:nth-child(2) {
+		padding: 20px 15px;
+		color: ${({ theme }) => theme.colors.black};
 	}
 
-	label {
-		padding: 20px;
-		font-size: 16px;
-		color: ${({ theme }) => theme.colors.black};
+	div:last-child {
+		margin-left: auto;
 	}
 `;

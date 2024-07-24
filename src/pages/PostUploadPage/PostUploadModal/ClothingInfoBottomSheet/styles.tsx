@@ -48,30 +48,33 @@ export const SheetContent = styled.div`
 	&.closing {
 		animation: ${slideDown} 0.3s ease-out;
 	}
-	:first-child {
+
+	.input_container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		span {
-			margin: 10px 15px 10px 0;
-			font-size: 16px;
-			color: ${({ theme }) => theme.colors.gray4};
+		width: 100%;
+		padding: 10px 20px;
+		height: 60px;
+
+		div {
+			margin-left: 10px;
+			color: ${({ theme }) => theme.colors.black};
 			cursor: pointer;
 		}
 	}
 `;
 
 export const Input = styled.input`
-	width: calc(100% - 85px);
-	padding: 15px;
-	margin: 10px 15px 10px 20px;
+	flex-grow: 1;
+	height: 40px;
+	padding: 0 10px;
 	text-align: left;
 	font-size: 16px;
 	background-color: ${({ theme }) => theme.colors.gray1};
 	border: solid 1px ${({ theme }) => theme.colors.gray2};
-	border-radius: 5px;
+	border-radius: 3px;
 	//cursor: pointer;
-	margin-bottom: 10px;
 
 	&:focus {
 		outline: none;

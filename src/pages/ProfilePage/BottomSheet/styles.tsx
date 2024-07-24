@@ -35,8 +35,7 @@ export const SheetContent = styled.div`
 	bottom: 0;
 	width: 100%;
 	background-color: ${({ theme }) => theme.colors.white};
-	padding: 20px;
-	padding-bottom: 30px;
+	padding: 20px 0 40px 0;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -53,7 +52,7 @@ export const SheetContent = styled.div`
 
 export const HandleBar = styled.div`
 	width: 50px;
-	height: 4px;
+	height: 3px;
 	background-color: ${({ theme }) => theme.colors.gray3};
 	border-radius: 3px;
 	margin: 0 auto 20px auto;
@@ -62,15 +61,19 @@ export const HandleBar = styled.div`
 export const OptionButton = styled.button`
 	display: flex;
 	width: 100%;
-	padding: 15px;
+	padding: 15px 20px;
 	border: none;
-	//background-color: transparent;
 	text-align: left;
 	font-size: 16px;
 	cursor: pointer;
 	align-items: center;
+	border-bottom: solid 1px ${({ theme }) => theme.colors.gray2};
 
 	img {
 		padding-right: 20px;
+	}
+
+	&:last-child {
+		border-bottom: none;
 	}
 `;

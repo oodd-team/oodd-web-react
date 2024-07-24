@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ImageSelectorContainer, ImagePlaceholder, HiddenFileInput } from './styles';
-import { Header, PrevButton, Text } from '../Header';
+import { ImageSelectorContainer } from './styles';
+import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
+import { StyledText } from '../../../components/Text/StyledText';
 import close from '../assets/close.svg';
 import picture from './assets/picture.svg';
 
@@ -48,15 +49,17 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 				<PrevButton onClick={onClose}>
 					<img src={close} />
 				</PrevButton>
-				<Text>OOTD 업로드</Text>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
 			</Header>
 			<ImageSelectorContainer>
+				<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>사진을 여기에 끌어다 놓으세요</StyledText>
 				<img src={picture} />
-				<ImagePlaceholder>사진을 여기에 끌어다 놓으세요</ImagePlaceholder>
-				<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
+				<input type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
 			</ImageSelectorContainer>
 			<Footer>
-				<Button onClick={handleButtonClick}>컴퓨터에서 사진 선택</Button>
+				<Button onClick={handleButtonClick}>
+					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>컴퓨터에서 사진 선택</StyledText>
+				</Button>
 			</Footer>
 		</>
 	);

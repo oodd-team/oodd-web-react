@@ -14,13 +14,16 @@ export const Footer = styled.div`
 
 export const Button = styled.button`
 	background-color: black;
-	color: white;
 	border-radius: 10px;
 	font-size: 16px;
 	cursor: pointer;
 	width: calc(100% - 40px);
 	height: 60px;
 	margin: 20px;
+
+	div {
+		color: white;
+	}
 
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray3};

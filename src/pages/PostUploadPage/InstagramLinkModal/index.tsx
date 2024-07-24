@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Content, Input } from './styles';
-import { Header, PrevButton, Text } from '../Header';
+import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
+import { StyledText } from '../../../components/Text/StyledText';
 import close from '../assets/close.svg';
 
 interface InstagramLinkModalProps {
@@ -91,7 +92,7 @@ const InstagramLinkModal: React.FC<InstagramLinkModalProps> = ({ onClose }) => {
 				<PrevButton onClick={onClose}>
 					<img src={close} />
 				</PrevButton>
-				<Text>인스타 계정 연동</Text>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>인스타 계정 연동</StyledText>
 			</Header>
 			<Content>
 				<p>인스타 계정 연동을 위해</p>

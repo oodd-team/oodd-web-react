@@ -10,6 +10,11 @@ export const Header = styled.div`
 	align-items: center;
 	background-color: white;
 	z-index: 1;
+
+	:nth-child(2) {
+		color: ${({ theme }) => theme.colors.black};
+		margin: 0 auto;
+	}
 `;
 
 export const PrevButton = styled.button`
@@ -19,10 +24,4 @@ export const PrevButton = styled.button`
 	border: none;
 	cursor: pointer;
 	padding: 0;
-`;
-
-export const Text = styled.span`
-	font-size: 16px;
-	color: ${({ theme }) => theme.colors.gray3};
-	margin: 0 auto;
 `;

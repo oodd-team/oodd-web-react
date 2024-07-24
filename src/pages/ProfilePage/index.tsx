@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Overlay, PageOverlay, AddButton } from './styles';
 import BottomSheet from './BottomSheet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import button_plus from './assets/button_plus.svg';
 
 const ProfilePage: React.FC = () => {
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -32,7 +31,7 @@ const ProfilePage: React.FC = () => {
 		<Overlay>
 			<PageOverlay>
 				<AddButton onClick={handleOpenSheet}>
-					<FontAwesomeIcon icon={faPlus} />
+					<img src={button_plus} />
 				</AddButton>
 				{isSheetOpen && (
 					<BottomSheet

@@ -12,20 +12,18 @@ export const ImageSelectorContainer = styled.div`
 	top: 60px;
 	left: 0;
 
+	div {
+		color: ${({ theme }) => theme.colors.gray3};
+		margin-bottom: 30px;
+	}
+
 	svg {
 		font-size: 80px;
 		color: ${({ theme }) => theme.colors.gray3};
 		margin-top: 30px;
 	}
-`;
 
-export const ImagePlaceholder = styled.div`
-	border: none;
-	margin-top: 30px;
-	font-size: 20px;
-	color: ${({ theme }) => theme.colors.gray3};
-`;
-
-export const HiddenFileInput = styled.input`
-	display: none;
+	input {
+		display: none;
+	}
 `;

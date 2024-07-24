@@ -1,5 +1,6 @@
 import React from 'react';
 import { SheetContainer, SheetContent, HandleBar, OptionButton } from './styles';
+import { StyledText } from '../../../components/Text/StyledText';
 import insta from './assets/insta.svg';
 import picture from './assets/picture.svg';
 
@@ -20,11 +21,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ onClose, onInstagramSelect, o
 				<HandleBar />
 				<OptionButton onClick={onInstagramSelect}>
 					<img src={insta} />
-					<span>인스타 피드 가져오기</span>
+					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 2 }}>인스타 피드 가져오기</StyledText>
 				</OptionButton>
 				<OptionButton onClick={onPhotoUploadSelect}>
 					<img src={picture} />
-					<span>사진 올리기</span>
+					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 2 }}>사진 올리기</StyledText>
 				</OptionButton>
 			</SheetContent>
 		</SheetContainer>
