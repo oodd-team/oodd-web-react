@@ -43,11 +43,10 @@ interface ClothingInfo {
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
 	const [caption, setCaption] = useState('');
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
-	const [hashtag, setHashtag] = useState<Hashtag | null>(null);
+	const [selectedHashtag, setSelectedHashtag] = useState<Hashtag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
-	const [isHashtagSelected, setIsHashtagSelected] = useState(false);
 
 	const hashtags = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -70,24 +69,23 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setIsHashtagListOpen((prev) => !prev);
 	};
 
-	const handleToggle = () => {
-		setIsOOTD(!isOOTD);
-	};
-
 	const handleClothingInfoSelect = (clothings: ClothingInfo[]) => {
 		setClothingInfos(clothings);
 	};
 
 	const handleTagSelect = (tag: Hashtag) => {
-		setHashtag(tag);
-		setIsHashtagSelected(true);
+		setSelectedHashtag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
 		setIsHashtagListOpen(false);
+	};
+
+	const handleToggle = () => {
+		setIsOOTD(!isOOTD);
 	};
 
 	const handleSubmit = () => {
 		const photo_url_list = selectedImages;
 		const caption_text = caption;
-		const hashtag_list = hashtag ? [hashtag.tag] : [];
+		const hashtag_list = selectedHashtag ? [selectedHashtag.tag] : [];
 		const clothing_info_list = clothingInfos;
 
 		const postData = {
@@ -127,7 +125,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								{clothingInfos.length}
 							</StyledText>
 						)}
-						<img src={next} />
+						<img className="next" src={next} />
 					</div>
 					{clothingInfos.length > 0 && (
 						<ClothingInfoList>
@@ -154,19 +152,29 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 							스타일 태그
 						</StyledText>
 						{isHashtagListOpen ? (
-							<img src={next_up} />
-						) : !isHashtagSelected ? (
-							<img src={next} />
+							<img className="next" src={next_up} />
+						) : !selectedHashtag ? (
+							<>
+								<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+									미지정
+								</StyledText>
+								<img className="next" src={next} />
+							</>
 						) : (
-							<HashtagItem color={hashtag?.color}>
-								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{hashtag?.tag}</StyledText>
+							<HashtagItem selected={false} color={selectedHashtag?.color}>
+								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{selectedHashtag?.tag}</StyledText>
 							</HashtagItem>
 						)}
 					</div>
 					{isHashtagListOpen && (
 						<HashtagList>
 							{hashtags.map((tagObj, index) => (
-								<HashtagItem key={index} onClick={() => handleTagSelect(tagObj)} color={tagObj.color}>
+								<HashtagItem
+									key={index}
+									onClick={() => handleTagSelect(tagObj)}
+									selected={selectedHashtag?.tag === tagObj.tag}
+									color={tagObj.color}
+								>
 									{tagObj.tag}
 								</HashtagItem>
 							))}

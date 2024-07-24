@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
 	display: flex;
+	flex-direction: column;
 	position: absolute;
 	top: 60px;
 	left: 0;
 	width: 100%;
 	height: calc(100% - 160px);
-	flex-direction: column;
 	overflow-y: auto;
 
 	scrollbar-width: none; // Firefox
@@ -20,11 +20,12 @@ export const Content = styled.div`
 export const ImageContainer = styled.div`
 	display: flex;
 	align-items: center;
-	overflow-x: scroll;
 	width: 100%;
-	height: 380px;
+	min-height: 380px;
+	padding: 30px 0;
+	overflow-x: scroll;
 
-	/* 스크롤바 스타일 없애기 */
+	// 스크롤바 스타일 없애기
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+
 	&::-webkit-scrollbar {
@@ -76,7 +77,7 @@ export const TagContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
-	padding: 0 15px 0 20px;
+	padding: 0 20px;
 	cursor: pointer;
 
 	.label {
@@ -95,6 +96,11 @@ export const TagContainer = styled.div`
 		}
 	}
 
+	.next {
+		position: absolute;
+		right: 15px;
+	}
+
 	.count {
 		color: ${({ theme }) => theme.colors.gray3};
 		font-size: 16px;
@@ -102,6 +108,12 @@ export const TagContainer = styled.div`
 
 	&.clothingTag {
 		border-top: 1px solid ${({ theme }) => theme.colors.gray2};
+	}
+
+	.not_selected {
+		position: absolute;
+		right: 45px;
+		color: ${({ theme }) => theme.colors.gray3};
 	}
 `;
 
@@ -158,7 +170,7 @@ export const HashtagList = styled.ul`
 	}
 `;
 
-export const HashtagItem = styled.span`
+export const HashtagItem = styled.span<{ selected: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -168,7 +180,9 @@ export const HashtagItem = styled.span`
 	padding: 0 16px;
 	background-color: ${({ color }) => color};
 	color: black;
+	border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
 	border-radius: 5px;
+	//box-shadow: ${({ selected }) => (selected ? `0 4px 8px rgba(0, 0, 0, 0.2)` : 'none')};
 	cursor: pointer;
 `;
 

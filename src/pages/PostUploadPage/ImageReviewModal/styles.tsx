@@ -16,8 +16,8 @@ export const Content = styled.div`
 export const ImageContainer = styled.div`
 	display: flex;
 	align-items: center;
-	overflow-x: scroll;
-	//width: 100%;
+	overflow-x: auto;
+	width: 100%;
 	height: 100%;
 
 	scrollbar-width: none; /* Firefox */
@@ -29,24 +29,28 @@ export const ImageContainer = styled.div`
 
 export const ImageWrapper = styled.div`
 	position: relative;
-	display: inline-block;
+	max-height: 70%;
+	max-width: calc(100% - 40px);
+	aspect-ratio: 3 / 4;
 	margin-right: 10px;
 
 	img {
+		height: 100%;
+		aspect-ratio: 3 / 4;
 		object-fit: cover;
-		width: calc(100% - 40px);
-		height: calc((100% - 40px) * 1.3);
 	}
 
 	&:first-child {
-		margin-left: 20px;
+		margin-left: max(calc((100% - ((100vh - 160px) * 0.7 * 3 / 4)) / 2), 20px);
 	}
 `;
 
 export const RemoveButton = styled.button`
 	position: absolute;
 	bottom: 5px;
-	left: 50%;
+	left: calc(50% - 30px);
+	//width: 60px;
+	//max-width: 30%;
 	cursor: pointer;
 `;
 
