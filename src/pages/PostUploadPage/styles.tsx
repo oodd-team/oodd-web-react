@@ -17,6 +17,7 @@ export const PageOverlay = styled.div`
 	position: relative;
 	width: 100%;
 	max-width: 512px;
+	//min-width: 256px;
 	height: 100%;
 	justify-content: center;
 	align-items: center;

@@ -13,7 +13,6 @@ export const ImageSelectorContainer = styled.div`
 	left: 0;
 
 	div {
-		color: ${({ theme }) => theme.colors.gray3};
 		margin-bottom: 30px;
 	}
 

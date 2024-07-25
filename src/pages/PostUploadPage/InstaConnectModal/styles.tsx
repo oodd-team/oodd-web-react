@@ -10,12 +10,6 @@ export const Content = styled.div`
 	position: fixed;
 	top: 60px;
 	left: 0;
-
-	p {
-		margin: 5px;
-		font-size: 20px;
-		color: ${({ theme }) => theme.colors.gray3};
-	}
 `;
 
 export const Input = styled.input`
@@ -25,6 +19,7 @@ export const Input = styled.input`
 	border: 1px solid ${({ theme }) => theme.colors.gray2};
 	border-radius: 5px;
 	font-size: 16px;
+	margin-top: 30px;
 
 	&:focus {
 		outline: none;

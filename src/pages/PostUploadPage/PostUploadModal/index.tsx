@@ -48,7 +48,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
 
-	const hashtags = [
+	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
 		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' },
 		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' },
@@ -107,6 +107,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</PrevButton>
 				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
 			</Header>
+
 			<Content>
 				<ImageContainer>
 					{selectedImages.map((image, index) => (
@@ -189,11 +190,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 					</div>
 				</PinnedPostToggleContainer>
 			</Content>
+
 			<Footer>
 				<Button onClick={handleSubmit}>
 					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>공유</StyledText>
 				</Button>
 			</Footer>
+
 			{isSheetOpen && (
 				<ClothingInfoBottomSheet
 					onClose={handleCloseSheet}
