@@ -24,6 +24,7 @@ import styleTag from './assets/styleTag.svg';
 import pin from './assets/pin.svg';
 import next from './assets/next.svg';
 import next_up from './assets/next_up.svg';
+import close from './assets/close.svg';
 
 interface PostUploadModalProps {
 	onPrev: () => void;
@@ -50,7 +51,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 
 	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -71,6 +71,11 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
 		setClothingInfos((clothingInfos) => [...clothingInfos, newClothingInfo]);
+	};
+
+	const handleDeleteClothingInfo = (deleteClothingInfo: ClothingInfo) => {
+		const deletedClothingInfo = clothingInfos.filter((clothing) => clothing !== deleteClothingInfo);
+		setClothingInfos(deletedClothingInfo);
 	};
 
 	const handleTagSelect = (tag: Hashtag) => {
@@ -110,7 +115,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			console.log(result);
 			navigate('/profile');
 		} catch (error) {
-			setError('Failed to upload post');
 			console.error(error);
 		} finally {
 			setIsLoading(false);
@@ -144,7 +148,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								{clothingInfos.length}
 							</StyledText>
 						)}
-						<img className="next" src={next} />
+						<img src={next} />
 					</div>
 					{clothingInfos.length > 0 && (
 						<ClothingInfoList>
@@ -159,6 +163,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 											{clothingObj.model}/
 										</StyledText>
 									</div>
+									<button onClick={() => handleDeleteClothingInfo(clothingObj)}>
+										<img src={close} />
+									</button>
 								</ClothingInfoItem>
 							))}
 						</ClothingInfoList>
@@ -171,13 +178,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 							스타일 태그
 						</StyledText>
 						{isHashtagListOpen ? (
-							<img className="next" src={next_up} />
+							<img src={next_up} />
 						) : !selectedHashtag ? (
 							<>
 								<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 									미지정
 								</StyledText>
-								<img className="next" src={next} />
+								<img src={next} />
 							</>
 						) : (
 							<HashtagItem selected={false} color={selectedHashtag?.color}>
@@ -194,7 +201,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 									selected={selectedHashtag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
-									{tagObj.tag}
+									<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{tagObj.tag}</StyledText>
 								</HashtagItem>
 							))}
 						</HashtagList>

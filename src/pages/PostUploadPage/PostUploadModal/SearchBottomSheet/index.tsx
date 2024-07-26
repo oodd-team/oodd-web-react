@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
 import Loader from '../../Loader/Loader';
+import close from '../assets/close.svg';
 
 interface ClothingInfo {
 	image: string;

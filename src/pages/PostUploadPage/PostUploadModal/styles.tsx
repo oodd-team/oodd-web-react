@@ -77,7 +77,6 @@ export const TagContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray1};
-	padding: 0 20px;
 	cursor: pointer;
 
 	.label {
@@ -85,29 +84,25 @@ export const TagContainer = styled.div`
 		color: ${({ theme }) => theme.colors.black};
 	}
 
-	div {
+	> div {
 		height: 60px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		padding: 0 20px;
 
 		:last-child {
 			margin-left: auto;
 		}
 	}
 
-	.next {
-		position: absolute;
-		right: 15px;
-	}
-
 	.count {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-size: 16px;
 	}
 
 	&.clothingTag {
 		border-top: 1px solid ${({ theme }) => theme.colors.gray1};
+		right: 15px;
 	}
 
 	.not_selected {
@@ -118,7 +113,8 @@ export const TagContainer = styled.div`
 `;
 
 export const ClothingInfoList = styled.ul`
-	padding-bottom: 20px;
+	padding: 0 20px;
+	padding-bottom: 5px;
 	display: flex;
 	flex-direction: column;
 `;
@@ -126,10 +122,10 @@ export const ClothingInfoList = styled.ul`
 export const ClothingInfoItem = styled.li`
 	display: flex;
 	flex-direction: row;
-	padding-bottom: 15px;
+	margin-bottom: 15px;
 	display: flex;
 
-	img {
+	> img {
 		width: 56px;
 		height: 56px;
 		border-radius: 10px;
@@ -153,15 +149,16 @@ export const ClothingInfoItem = styled.li`
 		color: ${({ theme }) => theme.colors.gray4};
 	}
 
-	&:last-child {
-		padding-bottom: 0;
+	button {
+		padding: 0;
+		margin-left: auto;
 	}
 `;
 
 export const HashtagList = styled.ul`
-	padding-bottom: 20px;
 	display: flex;
 	flex-direction: row;
+	padding: 0 20px 20px 20px;
 
 	span {
 		margin-right: 7px;
@@ -178,13 +175,12 @@ export const HashtagItem = styled.span<{ selected: boolean }>`
 	align-items: center;
 	height: 32px;
 	min-width: 70px;
-	font-size: 16px;
 	padding: 0 16px;
 	background-color: ${({ color }) => color};
 	color: black;
 	//border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
-	border-radius: 5px;
-	box-shadow: ${({ selected }) => (selected ? `2px 2px 8px rgba(0, 0, 0, 0.2)` : 'none')};
+	border-radius: 10px;
+	box-shadow: ${({ selected }) => (selected ? `0px 0px 8px rgba(0, 0, 0, 0.2)` : 'none')};
 	cursor: pointer;
 `;
 
