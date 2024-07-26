@@ -19,7 +19,7 @@ const slideDown = keyframes`
   }
 `;
 
-export const SheetContainer = styled.div`
+export const SheetWrapper = styled.div`
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -56,6 +56,7 @@ export const SheetContent = styled.div`
 		width: 100%;
 		padding: 10px 20px;
 		height: 60px;
+		border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
 
 		div {
 			margin-left: 10px;
@@ -68,20 +69,52 @@ export const SheetContent = styled.div`
 export const Input = styled.input`
 	flex-grow: 1;
 	height: 40px;
-	padding: 0 10px;
+	padding: 0 15px;
 	text-align: left;
 	font-size: 16px;
 	background-color: ${({ theme }) => theme.colors.gray1};
-	border: solid 1px ${({ theme }) => theme.colors.gray2};
-	border-radius: 3px;
-	//cursor: pointer;
+	border: none;
+	border-radius: 10px;
 
 	&:focus {
 		outline: none;
 	}
 `;
 
-export const SearchResultContainer = styled.div`
+export const SearchResultList = styled.div`
 	width: 100%;
-	border-top: solid 1px ${({ theme }) => theme.colors.gray2};
+	overflow-y: scroll;
+	padding: 15px;
+`;
+
+export const SearchResultItem = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100px;
+	border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
+	padding: 15px 0;
+
+	img {
+		width: 70px;
+		height: 70px;
+		border-radius: 10px;
+	}
+
+	.infoContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-left: 10px;
+		height: 56px;
+	}
+
+	.brand {
+		margin-right: auto;
+	}
+
+	.detail {
+		margin-right: auto;
+		color: ${({ theme }) => theme.colors.gray4};
+	}
 `;

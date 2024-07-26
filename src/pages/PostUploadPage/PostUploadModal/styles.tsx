@@ -76,7 +76,7 @@ export const TagContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.gray2};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.gray1};
 	padding: 0 20px;
 	cursor: pointer;
 
@@ -107,7 +107,7 @@ export const TagContainer = styled.div`
 	}
 
 	&.clothingTag {
-		border-top: 1px solid ${({ theme }) => theme.colors.gray2};
+		border-top: 1px solid ${({ theme }) => theme.colors.gray1};
 	}
 
 	.not_selected {
@@ -132,6 +132,8 @@ export const ClothingInfoItem = styled.li`
 	img {
 		width: 56px;
 		height: 56px;
+		border-radius: 10px;
+		border: none;
 	}
 
 	.infoContainer {
@@ -180,9 +182,9 @@ export const HashtagItem = styled.span<{ selected: boolean }>`
 	padding: 0 16px;
 	background-color: ${({ color }) => color};
 	color: black;
-	border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
+	//border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
 	border-radius: 5px;
-	//box-shadow: ${({ selected }) => (selected ? `0 4px 8px rgba(0, 0, 0, 0.2)` : 'none')};
+	box-shadow: ${({ selected }) => (selected ? `2px 2px 8px rgba(0, 0, 0, 0.2)` : 'none')};
 	cursor: pointer;
 `;
 

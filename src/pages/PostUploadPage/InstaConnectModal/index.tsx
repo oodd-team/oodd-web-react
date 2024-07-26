@@ -5,7 +5,7 @@ import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
-import Loader from './Loader/Loader';
+import Loader from '../Loader/Loader';
 import close from '../assets/close.svg';
 
 interface InstagramConnectModalProps {

@@ -13,7 +13,7 @@ export const ModalWrapper = styled.div`
 	z-index: 2;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContent = styled.div`
 	width: 340px;
 	max-width: calc(100% - 40px);
 	height: 230px;

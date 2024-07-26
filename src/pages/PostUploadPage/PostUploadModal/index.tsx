@@ -1,5 +1,7 @@
 //PostUploadModal/index.tsx
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
 	Content,
 	ImageContainer,
@@ -14,9 +16,8 @@ import {
 import { Header, PrevButton } from '../Header';
 import { Footer, Button } from '../Footer';
 import { StyledText } from '../../../components/Text/StyledText';
-import ClothingInfoBottomSheet from './ClothingInfoBottomSheet/index';
+import SearchBottomSheet from './SearchBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
-import { useNavigate } from 'react-router-dom';
 import back from '../assets/back.svg';
 import clothingTag from './assets/clothingTag.svg';
 import styleTag from './assets/styleTag.svg';
@@ -35,6 +36,7 @@ interface Hashtag {
 }
 
 interface ClothingInfo {
+	image: string;
 	brand: string;
 	model: string;
 	url: string;
@@ -45,8 +47,10 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
 	const [selectedHashtag, setSelectedHashtag] = useState<Hashtag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
-	const [isSheetOpen, setIsSheetOpen] = useState(false);
+	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -57,20 +61,16 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 	const navigate = useNavigate();
 
-	const handleOpenSheet = () => {
-		setIsSheetOpen(true);
-	};
-
-	const handleCloseSheet = () => {
-		setIsSheetOpen(false);
+	const handleOpenSearchSheet = () => {
+		setIsSearchSheetOpen((open) => !open);
 	};
 
 	const handleOpenStyleTagList = () => {
 		setIsHashtagListOpen((prev) => !prev);
 	};
 
-	const handleClothingInfoSelect = (clothings: ClothingInfo[]) => {
-		setClothingInfos(clothings);
+	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
+		setClothingInfos((clothingInfos) => [...clothingInfos, newClothingInfo]);
 	};
 
 	const handleTagSelect = (tag: Hashtag) => {
@@ -82,21 +82,39 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setIsOOTD(!isOOTD);
 	};
 
-	const handleSubmit = () => {
-		const photo_url_list = selectedImages;
-		const caption_text = caption;
-		const hashtag_list = selectedHashtag ? [selectedHashtag.tag] : [];
-		const clothing_info_list = clothingInfos;
-
+	const handleSubmit = async () => {
 		const postData = {
-			photo_urls: photo_url_list,
-			caption: caption_text,
-			hashtags: hashtag_list,
-			clothing_infos: clothing_info_list,
+			photo_urls: selectedImages,
+			caption,
+			hashtags: selectedHashtag ? [selectedHashtag.tag] : [],
+			clothing_infos: clothingInfos,
 		};
 
 		console.log(postData);
-		navigate('/profile');
+
+		try {
+			setIsLoading(true);
+			const response = await axios.post('http://localhost:3001/posts', postData, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (response.status !== 201) {
+				throw new Error('Failed');
+			}
+
+			const result = response.data;
+
+			console.log(postData);
+			console.log(result);
+			navigate('/profile');
+		} catch (error) {
+			setError('Failed to upload post');
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -116,7 +134,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</ImageContainer>
 				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
-					<div onClick={handleOpenSheet}>
+					<div onClick={handleOpenSearchSheet}>
 						<img src={clothingTag} />
 						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 							옷 정보 태그
@@ -132,7 +150,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 						<ClothingInfoList>
 							{clothingInfos.map((clothingObj, index) => (
 								<ClothingInfoItem key={index}>
-									<img />
+									<img src={clothingObj.image} />
 									<div className="infoContainer">
 										<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
 											{clothingObj.brand}
@@ -193,16 +211,14 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 			<Footer>
 				<Button onClick={handleSubmit}>
-					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>공유</StyledText>
+					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>
+						{isLoading ? '업로드 중...' : '공유'}
+					</StyledText>
 				</Button>
 			</Footer>
 
-			{isSheetOpen && (
-				<ClothingInfoBottomSheet
-					onClose={handleCloseSheet}
-					clothingInfos={clothingInfos}
-					onSelectClothingInfos={handleClothingInfoSelect}
-				/>
+			{isSearchSheetOpen && (
+				<SearchBottomSheet onClose={handleOpenSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
 			)}
 		</>
 	);

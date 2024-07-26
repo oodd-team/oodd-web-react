@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalWrapper, ModalContainer } from './styles';
+import { ModalWrapper, ModalContent } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
 
 interface ModalProps {
@@ -14,7 +14,7 @@ const FailedModal: React.FC<ModalProps> = ({ onNext, instagramId }) => {
 
 	return (
 		<ModalWrapper>
-			<ModalContainer>
+			<ModalContent>
 				<div>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
 						{instagramId} 계정 연동에 실패했어요
@@ -23,7 +23,7 @@ const FailedModal: React.FC<ModalProps> = ({ onNext, instagramId }) => {
 				<button onClick={handleButtonClick}>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>다시 시도하기</StyledText>
 				</button>
-			</ModalContainer>
+			</ModalContent>
 		</ModalWrapper>
 	);
 };
