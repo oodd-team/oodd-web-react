@@ -3,7 +3,7 @@ import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
-
+  
   a {
     text-decoration: none;
     color: inherit;
@@ -24,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
   
   body {
     line-height: 1;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Pretendard Variable', 'Gmarket Sans', sans-serif;
     background-color: #FFFFFF;
     margin-bottom: 100px;
   }
