@@ -136,7 +136,7 @@ export const ClothingInfoItem = styled.li`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding-left: 10px;
+		padding-left: 15px;
 		height: 56px;
 	}
 

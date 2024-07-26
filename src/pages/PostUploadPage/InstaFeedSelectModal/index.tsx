@@ -76,11 +76,9 @@ const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>
-						{post.imgs.map((image, index) => (
-							<ImageWrapper key={index}>
-								<img src={image} />
-							</ImageWrapper>
-						))}
+						<ImageWrapper>
+							<img src={post.imgs[0]} />
+						</ImageWrapper>
 					</PostContainer>
 				))}
 			</Content>

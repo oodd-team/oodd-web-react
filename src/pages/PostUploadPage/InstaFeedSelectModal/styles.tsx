@@ -29,7 +29,7 @@ export const PostContainer = styled.div`
 	min-width: 150px;
 	max-width: 300px;
 	aspect-ratio: 3 / 4;
-	border-radius: 5px;
+	border-radius: 10px;
 
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none; /* IE 10+ */

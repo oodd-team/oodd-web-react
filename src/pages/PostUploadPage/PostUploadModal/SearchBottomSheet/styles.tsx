@@ -82,31 +82,46 @@ export const Input = styled.input`
 `;
 
 export const SearchResultList = styled.div`
+	display: flex;
+	flex-direction: column;
 	width: 100%;
-	overflow-y: scroll;
+	height: calc(100% - 60px);
 	padding: 15px;
+	overflow-y: auto;
+
+	.total {
+		color: ${({ theme }) => theme.colors.gray3};
+	}
+
+	.ref {
+		min-height: 5px;
+		width: 100%;
+	}
 `;
 
 export const SearchResultItem = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: 100px;
+	height: 90px;
 	border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
 	padding: 15px 0;
 
 	img {
-		width: 70px;
-		height: 70px;
+		width: 60px;
+		height: 60px;
 		border-radius: 10px;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
 	}
 
 	.infoContainer {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding-left: 10px;
-		height: 56px;
+		padding-left: 15px;
+		height: 100%;
+		overflow-y: hidden;
 	}
 
 	.brand {
@@ -115,6 +130,10 @@ export const SearchResultItem = styled.div`
 
 	.detail {
 		margin-right: auto;
-		color: ${({ theme }) => theme.colors.gray4};
+		color: ${({ theme }) => theme.colors.black};
+	}
+
+	&:last-child {
+		border-bottom: none;
 	}
 `;
