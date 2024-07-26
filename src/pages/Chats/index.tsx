@@ -2,6 +2,31 @@ import { useState } from 'react';
 import { StyledText } from '../../components/Text/StyledText';
 import { Header, TabbarLayout, TabBox, RecentChat } from './styles';
 import theme from '../../styles/theme';
+import ChatList from './ChatList/index';
+
+interface RecentChats {
+	id: number;
+	isWaiting: boolean;
+}
+
+const mockChats: RecentChats[] = [
+	{
+		id: 0,
+		isWaiting: false,
+	},
+	{
+		id: 1,
+		isWaiting: false,
+	},
+	{
+		id: 2,
+		isWaiting: true,
+	},
+	{
+		id: 3,
+		isWaiting: false,
+	},
+];
 
 const Chats: React.FC = () => {
 	const [viewChat, setViewChat] = useState<boolean>(true);
@@ -50,6 +75,9 @@ const Chats: React.FC = () => {
 							최근 채팅방
 						</StyledText>
 					</RecentChat>
+					{mockChats.map((chat) => {
+						return <ChatList key={chat.id} isWaiting={chat.isWaiting} />;
+					})}
 				</>
 			)}
 		</div>
