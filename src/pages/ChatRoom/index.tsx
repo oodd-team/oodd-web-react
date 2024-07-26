@@ -23,7 +23,6 @@ interface Message {
 }
 
 interface ExtendedMessage extends Message {
-
 	isFirst: boolean;
 	isNewDate: boolean;
 	printTime: boolean;
@@ -50,14 +49,16 @@ const ChatRoom: React.FC = () => {
 
 	// DateBar 표시 여부를 결정하는 함수
 	const isNextDay = (curDate: Date, lastDate: Date): boolean => {
-		return curDate.getFullYear() !== lastDate.getFullYear() ||
+		return (
+			curDate.getFullYear() !== lastDate.getFullYear() ||
 			curDate.getMonth() !== lastDate.getMonth() ||
-			curDate.getDate() !== lastDate.getDate();
+			curDate.getDate() !== lastDate.getDate()
+		);
 	};
 
 	// 기존 대화 내역에 대한 정보 추가
 	useEffect(() => {
-		const temp:ExtendedMessage[] = mockMessages.map((message:Message, index:number) => {
+		const temp: ExtendedMessage[] = mockMessages.map((message: Message, index: number) => {
 			let isFirst = false;
 			let isNewDate = false;
 			let printTime = false;
@@ -107,7 +108,7 @@ const ChatRoom: React.FC = () => {
 			)}
 			<TopBar />
 			<MessagesContainer>
-				{newMockMessages.map((message:ExtendedMessage) => {
+				{newMockMessages.map((message: ExtendedMessage) => {
 					return (
 						<div key={message.id}>
 							{message.isNewDate && (
