@@ -11,7 +11,7 @@ export const TabBarLayout = styled.div`
 	border-bottom: solid 1px #0000004d;
 `;
 
-export const TabBox = styled.div`
+export const TabBox = styled.div<{ $isActive: boolean }>`
 	flex: 1;
 	text-align: center;
 	cursor: pointer;

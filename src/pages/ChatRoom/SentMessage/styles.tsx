@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MessageLayout = styled.div`
+export const MessageLayout = styled.div<{ $isFirst: boolean }>`
 	display: flex;
 	margin: ${(props) => (props.$isFirst ? '36px' : 0)} 0px 8px auto;
 	justify-content: flex-end;

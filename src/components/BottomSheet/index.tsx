@@ -6,10 +6,10 @@ interface BottomSheetProps {
 	onClickBackground: () => void; // BottomSheet을 닫는 함수
 }
 
-const BottomSheet: React.FC<BottomSheetProps> = ({ $shadow, component, onClickBackground }) => {
+const BottomSheet: React.FC<BottomSheetProps> = ({ shadow, component, onClickBackground }) => {
 	return (
 		<BottomSheetWrapper
-			$shadow={$shadow}
+			$shadow={shadow}
 			onClick={(e) => {
 				// BottomSheet 외부를 클릭했을 경우 BottomSheet 닫음
 				if (e.target === e.currentTarget) {

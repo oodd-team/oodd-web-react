@@ -101,7 +101,7 @@ const ChatRoom: React.FC = () => {
 		>
 			{isClickedMenu && (
 				<BottomSheet
-					$shadow={true}
+					shadow={true}
 					component={<SheetItemWithDivider items={['채팅방 나가기', '신고하기']} marginBottom={'60px'} />}
 					onClickBackground={closeSheet}
 				/>

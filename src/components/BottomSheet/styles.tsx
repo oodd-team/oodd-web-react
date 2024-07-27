@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BottomSheetWrapper = styled.div`
+export const BottomSheetWrapper = styled.div<{ $shadow: boolean }>`
 	position: fixed;
 	top: 0;
 	left: 0;

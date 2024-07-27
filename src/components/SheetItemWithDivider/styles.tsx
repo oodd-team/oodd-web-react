@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SheetItemWithDividerLayout = styled.div`
+export const SheetItemWithDividerLayout = styled.div<{ $marginBottom: string }>`
 	margin: 26px 0px ${(props) => (props ? props.$marginBottom : '0px')} 0px;
 	display: flex;
 	flex-direction: column;
