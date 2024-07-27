@@ -2,8 +2,13 @@ import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { SheetItemWithDividerLayout, SheetItem } from './styles';
 
+interface Item {
+	text: string;
+	action: () => any; // item 클릭 시 호출될 함수
+}
+
 interface WithDividerProps {
-	items: any[]; // text와 icon 정보가 담긴 객체의 배열로 받아야 할지. . .
+	items: Item[]; // TODO: Item에서 메뉴별 아이콘 받도록 수정해야 함
 	marginBottom: string;
 }
 
@@ -13,9 +18,9 @@ const SheetItemWithDivider: React.FC<WithDividerProps> = ({ items, marginBottom 
 		<SheetItemWithDividerLayout $marginBottom={marginBottom}>
 			{items.map((item, index) => (
 				<div key={index}>
-					<SheetItem>
+					<SheetItem onClick={item.action}>
 						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
-							{item}
+							{item.text}
 						</StyledText>
 						{/* TODO: 메뉴별 아이콘 로드 */}
 						<div></div>
