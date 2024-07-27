@@ -14,7 +14,7 @@ const SheetItemWithDivider: React.FC<WithDividerProps> = ({ items, marginBottom 
 			{items.map((item, index) => (
 				<div key={index}>
 					<SheetItem>
-						<StyledText textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
 							{item}
 						</StyledText>
 						{/* TODO: 메뉴별 아이콘 로드 */}

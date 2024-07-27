@@ -24,7 +24,7 @@ const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, defaultViewTab1 }) => {
 		<TabBarLayout>
 			<TabBox $isActive={!viewTab1} onClick={onClickTab1}>
 				<StyledText
-					textTheme={{ style: `${viewTab1 ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
+					$textTheme={{ style: `${viewTab1 ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
 					color={`${viewTab1 ? theme.colors.gray3 : theme.colors.black}`}
 				>
 					{tab1}
@@ -32,7 +32,7 @@ const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, defaultViewTab1 }) => {
 			</TabBox>
 			<TabBox $isActive={viewTab1} onClick={onClickTab2}>
 				<StyledText
-					textTheme={{ style: `${viewTab1 ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
+					$textTheme={{ style: `${viewTab1 ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
 					color={`${viewTab1 ? theme.colors.black : theme.colors.gray3}`}
 				>
 					{tab2}
