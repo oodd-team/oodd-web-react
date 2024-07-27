@@ -14,10 +14,12 @@ const TopBar: React.FC = () => {
 			<BackButton
 				src="../../../../back.png"
 				alt="back"
-				onClick={()=>{nav(-1);}}
+				onClick={() => {
+					nav(-1);
+				}}
 			/>
 			<Username>
-				<StyledText textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.black}>
 					IDID
 				</StyledText>
 			</Username>

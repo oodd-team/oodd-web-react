@@ -11,22 +11,22 @@ const ChatList: React.FC<ChatListProps> = ({ isWaiting }) => {
 		<ChatListLayout>
 			<UserImage src="../../../../0.png" alt="user" />
 			<LeftBox>
-				<StyledText textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
 					IDID
 				</StyledText>
-				<StyledText textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
+				<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
 					ㅋㅋㅋㅋ
 				</StyledText>
 			</LeftBox>
 			<RightBox>
 				<StyledText
-					textTheme={{ style: 'body6-regular', lineHeight: 1.193 }}
+					$textTheme={{ style: 'body6-regular', lineHeight: 1.193 }}
 					color={`${isWaiting ? theme.colors.black30 : theme.colors.gray3}`}
 				>
 					30분 전
 				</StyledText>
 				{isWaiting && (
-					<StyledText textTheme={{ style: 'body6-regular', lineHeight: 1.193 }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.193 }} color={theme.colors.black}>
 						응답 대기중
 					</StyledText>
 				)}

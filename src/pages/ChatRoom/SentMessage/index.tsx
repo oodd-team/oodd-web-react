@@ -14,13 +14,13 @@ const SentMessage: React.FC<SentMessageProps> = ({ text, isFirst, printTime, for
 		<MessageLayout $isFirst={isFirst}>
 			<TimeWrapper>
 				{printTime && (
-					<StyledText textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
 						{formattedTime}
 					</StyledText>
 				)}
 			</TimeWrapper>
 			<Message>
-				<StyledText textTheme={{ style: 'body6-regular', lineHeight: 0.8 }} color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0.8 }} color={theme.colors.black}>
 					{text}
 				</StyledText>
 			</Message>

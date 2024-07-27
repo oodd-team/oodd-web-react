@@ -46,14 +46,14 @@ const Chats: React.FC = () => {
 	return (
 		<OODDFrame>
 			<Header>
-				<StyledText textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.black}>
 					Chats
 				</StyledText>
 			</Header>
 			<TabbarLayout>
 				<TabBox $isActive={!viewChat} onClick={onClickRequests}>
 					<StyledText
-						textTheme={{ style: `${viewChat ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
+						$textTheme={{ style: `${viewChat ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
 						color={`${viewChat ? theme.colors.gray3 : theme.colors.black}`}
 					>
 						요청
@@ -61,7 +61,7 @@ const Chats: React.FC = () => {
 				</TabBox>
 				<TabBox $isActive={viewChat} onClick={onClickRecentChats}>
 					<StyledText
-						textTheme={{ style: `${viewChat ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
+						$textTheme={{ style: `${viewChat ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
 						color={`${viewChat ? theme.colors.black : theme.colors.gray3}`}
 					>
 						최근 채팅
@@ -71,7 +71,7 @@ const Chats: React.FC = () => {
 			{viewChat && (
 				<>
 					<RecentChat>
-						<StyledText textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+						<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
 							최근 채팅방
 						</StyledText>
 					</RecentChat>
