@@ -13,6 +13,7 @@ import BottomSheet from '../../components/BottomSheet';
 import SheetItemWithDivider from '../../components/SheetItemWithDivider';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 interface Message {
 	id: number;
@@ -29,6 +30,11 @@ interface ExtendedMessage extends Message {
 	formattedTime: string;
 }
 
+interface SheetItem {
+	text: string;
+	action: () => any;
+}
+
 // 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
 export const formatTime = (date: Date): string => {
 	const hours = String(date.getHours()).padStart(2, '0');
@@ -41,6 +47,25 @@ const ChatRoom: React.FC = () => {
 	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessage[]>([]);
 	const mockMessages = useRecoilValue(MockMessagesAtom);
 	const [isClickedMenu, setIsClickedMenu] = useRecoilState(isClickedMenuAtom);
+	const [isClickedLeave, setIsClickedLeave] = useState<boolean>(false);
+	const [isClickedBlock, setIsClickedBlock] = useState<boolean>(false);
+
+	const sheetItems: SheetItem[] = [
+		{
+			text: '채팅방 나가기',
+			action: (): void => {
+				setIsClickedMenu(false);
+				setIsClickedLeave(true);
+			},
+		},
+		{
+			text: '차단하기',
+			action: (): void => {
+				setIsClickedMenu(false);
+				setIsClickedBlock(true);
+			},
+		},
+	];
 
 	// BottomSheet 닫는 함수
 	const closeSheet = () => {
@@ -99,10 +124,54 @@ const ChatRoom: React.FC = () => {
 		<div
 			style={{ margin: 'auto', maxWidth: '32rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
 		>
+			{isClickedLeave && (
+				<ConfirmationModal
+					content="채팅방을 나가면 지난 대화 내용을 볼 수 없어요"
+					confirms={[
+						{
+							text: '취소',
+							action: () => {
+								setIsClickedLeave(false);
+							},
+						},
+						{
+							text: '채팅방 나가기',
+							action: () => {
+								setIsClickedLeave(false);
+							},
+						},
+					]}
+					onClickBackground={() => {
+						setIsClickedLeave(false);
+					}}
+				/>
+			)}
+			{isClickedBlock && (
+				<ConfirmationModal
+					content="IDID님을 정말로 차단하시겠어요?"
+					confirms={[
+						{
+							text: '취소',
+							action: () => {
+								setIsClickedBlock(false);
+							},
+						},
+						{
+							text: '차단하기',
+							action: () => {
+								setIsClickedBlock(false);
+							},
+						},
+					]}
+					onClickBackground={() => {
+						setIsClickedBlock(false);
+					}}
+				/>
+			)}
 			{isClickedMenu && (
 				<BottomSheet
 					shadow={true}
-					component={<SheetItemWithDivider items={['채팅방 나가기', '신고하기']} marginBottom={'60px'} />}
+					component={<SheetItemWithDivider items={sheetItems} marginBottom={'60px'} />}
 					onClickBackground={closeSheet}
 				/>
 			)}
