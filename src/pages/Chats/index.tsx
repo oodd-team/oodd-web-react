@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { StyledText } from '../../components/Text/StyledText';
+import { OODDFrame } from '../../components/Frame/Frame';
 import { Header, TabbarLayout, TabBox, RecentChat } from './styles';
 import theme from '../../styles/theme';
 import ChatList from './ChatList/index';
+import NavBar from '../../components/NavBar';
 
 interface RecentChats {
 	id: number;
@@ -42,9 +44,7 @@ const Chats: React.FC = () => {
 	};
 
 	return (
-		<div
-			style={{ margin: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', maxWidth: '512px' }}
-		>
+		<OODDFrame>
 			<Header>
 				<StyledText textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.black}>
 					Chats
@@ -80,7 +80,8 @@ const Chats: React.FC = () => {
 					})}
 				</>
 			)}
-		</div>
+			<NavBar />
+		</OODDFrame>
 	);
 };
 
