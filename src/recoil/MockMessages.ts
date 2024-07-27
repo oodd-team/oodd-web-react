@@ -1,6 +1,18 @@
 import { atom } from 'recoil';
 
-export const MockMessagesAtom = atom({
+interface Messages {
+	id: number;
+	text: string;
+	sender: string;
+	receiver: string;
+	timestamp: Date;
+	isFirst?: boolean;
+	isNewDate?: boolean;
+	printTime?: boolean;
+	formattedTime?: string;
+}
+
+export const MockMessagesAtom = atom<Messages[]>({
 	key: 'MockMessagesAtom',
 	default: [
 		{

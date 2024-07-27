@@ -38,8 +38,8 @@ export const formatTime = (date: Date): string => {
 
 const ChatRoom: React.FC = () => {
 	const { id } = useParams<string>();
-	const [newMockMessages, setNewMockMessages] = useState([]);
-	const mockMessages = useRecoilValue<Message[]>(MockMessagesAtom);
+	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessage[]>([]);
+	const mockMessages = useRecoilValue(MockMessagesAtom);
 	const [isClickedMenu, setIsClickedMenu] = useRecoilState(isClickedMenuAtom);
 
 	// BottomSheet 닫는 함수

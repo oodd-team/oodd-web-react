@@ -2,8 +2,8 @@ import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
 interface BottomSheetProps {
 	shadow: boolean; // 검은색 반투명 배경 설정
-	component: () => void; // BottomSheet 내부에 전달할 컴포넌트
-	onClickBackground: () => {}; // BottomSheet을 닫는 함수
+	component: React.ReactNode; // BottomSheet 내부에 전달할 컴포넌트
+	onClickBackground: () => void; // BottomSheet을 닫는 함수
 }
 
 const BottomSheet: React.FC<BottomSheetProps> = ({ $shadow, component, onClickBackground }) => {

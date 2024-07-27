@@ -8,7 +8,7 @@ const ChatBox: React.FC = () => {
 	const [newMessage, setNewMessage] = useState<string>('');
 	const [mockMessages, setMockMessages] = useRecoilState(MockMessagesAtom);
 
-	const onChangeMessage = (e): void => {
+	const onChangeMessage = (e: any): void => {
 		setNewMessage(e.target.value);
 	};
 	const sendNewMessage = (): void => {
@@ -28,7 +28,7 @@ const ChatBox: React.FC = () => {
 		setNewMessage('');
 	};
 
-	const onKeyDown = (e): void => {
+	const onKeyDown = (e: any): void => {
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
 			sendNewMessage();
