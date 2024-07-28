@@ -14,6 +14,7 @@ import SheetItemWithDivider from '../../components/SheetItemWithDivider';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import ConfirmationModal from '../../components/ConfirmationModal';
+import { OODDFrame } from '../../components/Frame/Frame';
 
 interface Message {
 	id: number;
@@ -92,7 +93,7 @@ const ChatRoom: React.FC = () => {
 			const nextMessage = index !== mockMessages.length - 1 ? mockMessages[index + 1] : null;
 
 			// 첫 메시지거나, 전송자가 바뀐 경우에
-			// 프로필 사진 출력 또는 간격 설정
+			// 프로필 사진 출력
 			if (prevMessage === null || prevMessage.sender !== message.sender) {
 				isFirst = true;
 			}
@@ -121,9 +122,7 @@ const ChatRoom: React.FC = () => {
 	}, [mockMessages]);
 
 	return (
-		<div
-			style={{ margin: 'auto', maxWidth: '32rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-		>
+		<OODDFrame>
 			{isClickedLeave && (
 				<ConfirmationModal
 					content="채팅방을 나가면 지난 대화 내용을 볼 수 없어요"
@@ -189,7 +188,7 @@ const ChatRoom: React.FC = () => {
 				})}
 			</MessagesContainer>
 			<ChatBox></ChatBox>
-		</div>
+		</OODDFrame>
 	);
 };
 
