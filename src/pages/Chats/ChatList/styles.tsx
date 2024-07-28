@@ -24,10 +24,11 @@ export const LeftBox = styled.div`
 	gap: 0.25rem;
 `;
 
-export const RightBox = styled.div`
+export const RightBox = styled.div<{ $isWaiting: boolean }>`
 	margin: 0 0 auto auto;
 	text-align: right;
 	display: flex;
 	flex-direction: column;
 	gap: 0.25rem;
+	opacity: ${(props) => (props.$isWaiting ? '0.5' : '1')};
 `;
