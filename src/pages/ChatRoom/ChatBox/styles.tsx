@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-// background-color gray0이 theme에 없음
+// background-color gray0(#f5f5f5)이 theme에 없음
 export const ChatBoxContainer = styled.div`
 	position: fixed;
 	bottom: 0;
@@ -26,6 +26,7 @@ export const Textarea = styled.textarea`
 	resize: none;
 	overflow: hidden;
 	color: ${({ theme }) => theme.colors.black};
+	background-color: transparent;
 	font-family: 'Pretendard Variable';
 	font-size: 0.75rem;
 	font-style: normal;

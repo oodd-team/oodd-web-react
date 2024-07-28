@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 
 export const TopbarLayout = styled.div`
+	position: fixed;
+	top: 0;
+	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
-	margin: 0 auto 1rem auto;
 	width: 100%;
+	max-width: 32rem;
 	height: 2.75rem;
 	justify-contents: space-evenly;
 	align-items: center;
