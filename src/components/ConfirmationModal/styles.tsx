@@ -12,11 +12,11 @@ export const ConfirmationModalWrapper = styled.div`
 
 export const ConfirmationModalLayout = styled.div`
 	position: fixed;
-	bottom: 0;
 	display: flex;
 	flex-direction: column;
-	width: 21.375rem;
-	height: 14.25rem;
+	width: 90%;
+	max-width: 21.375rem;
+	height: 14rem;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
@@ -27,20 +27,19 @@ export const ConfirmationModalLayout = styled.div`
 
 export const ContentBox = styled.div`
 	display: flex;
-	padding-top: 24px;
+	padding-top: 1.5rem;
 	flex: 1;
 	justify-content: center;
 	align-items: center;
 `;
 
 export const ButtonContainer = styled.div`
-	bottom: 0;
 	display: flex;
 	justify-content: center;
 	margin: auto;
-	border-top: 1px solid #c4c4c4;
+	border-top: 1px solid ${({ theme }) => theme.colors.gray2};
 	width: 100%;
-	height: 50px;
+	height: 3.1rem;
 `;
 
 export const Button = styled.button`

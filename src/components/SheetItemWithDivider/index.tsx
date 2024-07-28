@@ -25,7 +25,7 @@ const SheetItemWithDivider: React.FC<WithDividerProps> = ({ items, marginBottom 
 						{/* TODO: 메뉴별 아이콘 로드 */}
 						<div></div>
 					</SheetItem>
-					{index < items.length - 1 && <hr style={{ color: 'rgba(0,0,0,0.3)' }} />}
+					{index < items.length - 1 && <hr style={{ color: 'rgba(0,0,0,0.3)', margin: '0' }} />}
 				</div>
 			))}
 		</SheetItemWithDividerLayout>

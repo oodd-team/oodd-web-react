@@ -19,18 +19,18 @@ export const BottomSheetLayout = styled.div`
 	max-width: 32rem;
 	left: 50%;
 	transform: translateX(-50%);
-	border-radius: 15px 15px 0 0;
-	background-color: white;
-	padding-top: 20px;
+	border-radius: 0.938rem 0.938rem 0 0;
+	background-color: ${({ theme }) => theme.colors.white};
+	padding-top: 1.1rem;
 	z-index: 200;
 `;
 
 export const Handler = styled.hr`
-	width: 50px;
+	width: 3rem;
 	margin: 0 auto;
-	height: 3px;
-	background-color: #7b7b7b;
+	height: 0.188rem;
+	background-color: ${({ theme }) => theme.colors.gray3};
 	border: none;
-	border-radius: 2px;
+	border-radius: 0.125rem;
 	z-index: 300;
 `;
