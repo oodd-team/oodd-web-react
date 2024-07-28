@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import { TabBarLayout, TabBox } from './styles';
+import { TabBarLayout, TabBarContainer, TabBox } from './styles';
 
 interface TabBarProps {
 	tab1: string; // tab1 이름
 	tab2: string; // tab2 이름
+	element1: React.ReactNode; // tab1에 보여질 컴포넌트
+	element2: React.ReactNode; // tab2에 보여질 컴포넌트
 	defaultViewTab1: boolean; // true: 초기 탭이 좌측(tab1)으로 설정
 }
 
-const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, defaultViewTab1 }) => {
+const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, element1, element2, defaultViewTab1 }) => {
 	const [viewTab1, setViewTab1] = useState<boolean>(defaultViewTab1);
 
 	const onClickTab1 = (): void => {
@@ -22,22 +24,25 @@ const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, defaultViewTab1 }) => {
 
 	return (
 		<TabBarLayout>
+			<TabBarContainer>
 				<TabBox $isActive={viewTab1} onClick={onClickTab1}>
-				<StyledText
+					<StyledText
 						$textTheme={{ style: `${viewTab1 ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
 						color={`${viewTab1 ? theme.colors.black : theme.colors.gray3}`}
-				>
-					{tab1}
-				</StyledText>
-			</TabBox>
+					>
+						{tab1}
+					</StyledText>
+				</TabBox>
 				<TabBox $isActive={!viewTab1} onClick={onClickTab2}>
-				<StyledText
+					<StyledText
 						$textTheme={{ style: `${viewTab1 ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
 						color={`${viewTab1 ? theme.colors.gray3 : theme.colors.black}`}
-				>
-					{tab2}
-				</StyledText>
-			</TabBox>
+					>
+						{tab2}
+					</StyledText>
+				</TabBox>
+			</TabBarContainer>
+			{viewTab1 ? element1 : element2}
 		</TabBarLayout>
 	);
 };

@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
 export const TabBarLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-top: 0;
+	flex: 1;
+`;
+
+export const TabBarContainer = styled.div`
 	width: 100%;
 	height: 40px;
-	margin: auto;
+	margin: 0 auto;
 	display: flex;
 	justify-content: space-around;
 	align-items: flex-end;
