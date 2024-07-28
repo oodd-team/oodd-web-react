@@ -1,20 +1,26 @@
 import styled from 'styled-components';
 
-export const MessageLayout = styled.div<{ $isFirst: boolean }>`
+export const MessageLayout = styled.div`
 	display: flex;
-	margin: ${(props) => (props.$isFirst ? '36px' : 0)} 0px 8px auto;
+	margin: 0 0 0.5rem auto;
 	justify-content: flex-end;
 `;
 
 export const Message = styled.div`
-	padding: 11px 11px 11px 16px;
-	border-radius: 10px 0 10px 10px;
+	padding: 0.45rem 0.75rem 0.45rem 1rem;
+	border-radius: 0.625rem 0 0.625rem 0.625rem;
 	max-width: 16rem;
-	background-color: #e9e9e9;
+	background-color: ${({ theme }) => theme.colors.gray1};
 `;
 
 export const TimeWrapper = styled.div`
 	display: flex;
 	align-items: flex-end;
-	margin-right: 8px;
+	margin-right: 0.5rem;
+	color: ${({ theme }) => theme.colors.gray3};
+	font-family: 'Pretendard Variable';
+	font-size: 0.5625rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 0.675rem */
 `;

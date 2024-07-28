@@ -1,6 +1,6 @@
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { TopbarLayout, BackButton, KebabMenu, Username } from './styles';
+import { TopbarLayout, BackButton, KebabMenu } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isClickedMenuAtom } from '../../../recoil/isClickedMenu';
@@ -18,11 +18,9 @@ const TopBar: React.FC = () => {
 					nav(-1);
 				}}
 			/>
-			<Username>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.black}>
-					IDID
-				</StyledText>
-			</Username>
+			<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.black}>
+				IDID
+			</StyledText>
 			<KebabMenu
 				src="../../../../kebab-menu.png"
 				alt="menu"

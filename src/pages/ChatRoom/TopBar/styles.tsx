@@ -2,33 +2,30 @@ import styled from 'styled-components';
 
 export const TopbarLayout = styled.div`
 	display: flex;
-	margin: auto auto 16px auto;
+	margin: 0 auto 1rem auto;
 	width: 100%;
-	height: 44px;
+	height: 2.75rem;
 	justify-contents: space-evenly;
-	border-bottom: solid 1px #c4c4c4;
+	align-items: center;
+	border-bottom: solid 1px ${({ theme }) => theme.colors.gray2};
 `;
 
 export const BackButton = styled.img`
-	width: 24.09px;
-	height: 24.09px;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;
 	margin: auto;
-	margin-left: 13px;
+	margin-left: 0.813rem;
 `;
 
 export const KebabMenu = styled.img`
-	width: 24px;
-	height: 24px;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;
 	margin: auto;
-	margin-right: 18px;
-`;
-
-export const Username = styled.div`
-	margin-top: 13px;
+	margin-right: 1.125rem;
 `;

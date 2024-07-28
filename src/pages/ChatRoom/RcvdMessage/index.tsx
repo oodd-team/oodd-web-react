@@ -20,35 +20,23 @@ const RcvdMessage: React.FC<RcvdMessageProps> = ({ sender, text, isFirst, printT
 						{sender}
 					</StyledText>
 					<Message>
-						<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0.8 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
 							{text}
 						</StyledText>
 					</Message>
 				</MessageBox>
-				<TimeWrapper>
-					{printTime && (
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
-							{formattedTime}
-						</StyledText>
-					)}
-				</TimeWrapper>
+				{printTime && <TimeWrapper>{formattedTime}</TimeWrapper>}
 			</FirstMessageLayout>
 		);
 	} else {
 		return (
 			<MessageLayout>
 				<Message>
-					<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0.8 }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
 						{text}
 					</StyledText>
 				</Message>
-				<TimeWrapper>
-					{printTime && (
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
-							{formattedTime}
-						</StyledText>
-					)}
-				</TimeWrapper>
+				{printTime && <TimeWrapper>{formattedTime}</TimeWrapper>}
 			</MessageLayout>
 		);
 	}

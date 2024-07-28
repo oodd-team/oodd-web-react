@@ -9,18 +9,12 @@ interface SentMessageProps {
 	formattedTime: string; // 타임스탬프를 HH:MM 형태로 변환한 값
 }
 
-const SentMessage: React.FC<SentMessageProps> = ({ text, isFirst, printTime, formattedTime }) => {
+const SentMessage: React.FC<SentMessageProps> = ({ text, printTime, formattedTime }) => {
 	return (
-		<MessageLayout $isFirst={isFirst}>
-			<TimeWrapper>
-				{printTime && (
-					<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
-						{formattedTime}
-					</StyledText>
-				)}
-			</TimeWrapper>
+		<MessageLayout>
+			{printTime && <TimeWrapper>{formattedTime}</TimeWrapper>}
 			<Message>
-				<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0.8 }} color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
 					{text}
 				</StyledText>
 			</Message>
