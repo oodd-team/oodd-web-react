@@ -13,3 +13,8 @@ export const SheetItem = styled.div`
 	justify-content: space-between;
 	cursor: pointer;
 `;
+
+export const Icon = styled.img`
+	width: 1.4rem;
+	height: 1.4rem;
+`;

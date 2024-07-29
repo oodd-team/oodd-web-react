@@ -1,6 +1,6 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
-import { SheetItemWithDividerLayout, SheetItem } from './styles';
+import { SheetItemWithDividerLayout, SheetItem, Icon } from './styles';
 import SheetItemDto from '../../dto/SheetItemDto';
 
 interface WithDividerProps {
@@ -19,7 +19,7 @@ const SheetItemWithDivider: React.FC<WithDividerProps> = ({ items, marginBottom 
 							{item.text}
 						</StyledText>
 						{/* TODO: 메뉴별 아이콘 로드 */}
-						<div></div>
+						<Icon src={item.icon} />
 					</SheetItem>
 					{index < items.length - 1 && <hr style={{ color: 'rgba(0,0,0,0.3)', margin: '0' }} />}
 				</div>

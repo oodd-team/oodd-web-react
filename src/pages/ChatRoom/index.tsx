@@ -20,6 +20,8 @@ import ExtendedMessageDto from '../dto/ExtendedMessageDto';
 import SheetItemDto from '../../dto/SheetItemDto';
 import ConfirmationModalDto from '../dto/ConfirmationModalDto';
 import BottomSheetDto from '../dto/BottomSheetDto';
+import Leave from '../../assets/ChatRoom/Leave.svg';
+import Block from '../../assets/ChatRoom/Block.svg';
 
 // 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
 export const formatTime = (date: Date): string => {
@@ -43,6 +45,7 @@ const ChatRoom: React.FC = () => {
 				setIsClickedMenu(false);
 				setIsClickedLeave(true);
 			},
+			icon: Leave,
 		},
 		{
 			text: '차단하기',
@@ -50,6 +53,7 @@ const ChatRoom: React.FC = () => {
 				setIsClickedMenu(false);
 				setIsClickedBlock(true);
 			},
+			icon: Block,
 		},
 	];
 
