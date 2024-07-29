@@ -1,19 +1,14 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { ConfirmationModalLayout, ConfirmationModalWrapper, ContentBox, ButtonContainer, Button } from './styles';
+import ConfirmationModalDto from '../../pages/dto/ConfirmationModalDto';
 
 interface Confirm {
 	text: string; // 버튼명 ex. 취소, 차단하기, ...
 	action: () => void; // 버튼 클릭 시 실행될 함수
 }
 
-interface ConfirmationModalProps {
-	content: string; // Mocal 내용
-	confirms: Confirm[]; // 버튼을 두 개 받아야 하는 경우도 있어 일단 하나인 경우에도 배열로 전달
-	onClickBackground: () => void; // Modal을 닫는 함수
-}
-
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ content, confirms, onClickBackground }) => {
+const ConfirmationModal: React.FC<ConfirmationModalDto> = ({ content, confirms, onClickBackground }) => {
 	return (
 		<ConfirmationModalWrapper
 			onClick={(e) => {

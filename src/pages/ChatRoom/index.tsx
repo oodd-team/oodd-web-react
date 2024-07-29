@@ -16,6 +16,7 @@ import { ko } from 'date-fns/locale';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { OODDFrame } from '../../components/Frame/Frame';
 import SheetItemDto from '../../dto/SheetItemDto';
+import ConfirmationModalDto from '../dto/ConfirmationModalDto';
 import BottomSheetDto from '../dto/BottomSheetDto';
 
 // 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
@@ -49,6 +50,48 @@ const ChatRoom: React.FC = () => {
 			},
 		},
 	];
+
+	const leaveModal: ConfirmationModalDto = {
+		content: '채팅방을 나가면 지난 대화 내용을 볼 수 없어요',
+		confirms: [
+			{
+				text: '취소',
+				action: () => {
+					setIsClickedLeave(false);
+				},
+			},
+			{
+				text: '채팅방 나가기',
+				action: () => {
+					setIsClickedLeave(false);
+				},
+			},
+		],
+		onClickBackground: () => {
+			setIsClickedLeave(false);
+		},
+	};
+
+	const blockModal: ConfirmationModalDto = {
+		content: 'IDID님을 정말로 차단하시겠어요?',
+		confirms: [
+			{
+				text: '취소',
+				action: () => {
+					setIsClickedBlock(false);
+				},
+			},
+			{
+				text: '차단하기',
+				action: () => {
+					setIsClickedBlock(false);
+				},
+			},
+		],
+		onClickBackground: () => {
+			setIsClickedBlock(false);
+		},
+	};
 
 	const MenuBottomSheet: BottomSheetDto = {
 		isBackgroundDimmed: true,
@@ -108,6 +151,8 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			{isClickedLeave && <ConfirmationModal {...leaveModal} />}
+			{isClickedBlock && <ConfirmationModal {...blockModal} />}
 			{isClickedMenu && <BottomSheet {...MenuBottomSheet} />}
 			<TopBar />
 			<MessagesContainer>
