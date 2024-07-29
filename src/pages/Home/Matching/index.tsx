@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import Card from './Card';

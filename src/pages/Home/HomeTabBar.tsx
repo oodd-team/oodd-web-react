@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from 'swiper';
+import 'swiper/css';
+
 import { StyledText } from '../../components/Text/StyledText';
 import Matching from './Matching';
 import OOTD from './OOTD';
@@ -7,21 +11,30 @@ import { HomeTabBarLayout, HomeTabBarList, HomeTabBarWrapper, TabLayout, Tabs } 
 
 const tabs = ['매칭', 'OOTD', '즐겨찾기'];
 
-// Home 페이지의 탭 바입니다. 매칭, OOTD, 즐겨찾기 탭으로 이동할 수 있습니다.
 const HomeTabbar: React.FC = () => {
-	const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
+	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const swiperRef = useRef<SwiperCore | null>(null);
 
-	const handleTabClick = (tab: string) => {
-		setSelectedTab(tab);
+	const handleTabClick = (index: number) => {
+		setActiveIndex(index);
+		if (swiperRef.current) {
+			swiperRef.current.slideTo(index);
+		}
+	};
+
+	const handleSwiperChange = (swiper: SwiperCore) => {
+		setActiveIndex(swiper.activeIndex);
 	};
 
 	return (
 		<TabLayout>
 			<HomeTabBarLayout>
 				<HomeTabBarList>
-					{tabs.map((tab) => (
-						<HomeTabBarWrapper key={tab} $isSelected={selectedTab === tab} onClick={() => handleTabClick(tab)}>
-							<StyledText $textTheme={{ style: selectedTab === tab ? 'body2-medium' : 'body2-light', lineHeight: 1.5 }}>
+					{tabs.map((tab, index) => (
+						<HomeTabBarWrapper key={tab} $isSelected={activeIndex === index} onClick={() => handleTabClick(index)}>
+							<StyledText
+								$textTheme={{ style: activeIndex === index ? 'body2-medium' : 'body2-light', lineHeight: 1.5 }}
+							>
 								{tab}
 							</StyledText>
 						</HomeTabBarWrapper>
@@ -29,9 +42,25 @@ const HomeTabbar: React.FC = () => {
 				</HomeTabBarList>
 			</HomeTabBarLayout>
 			<Tabs>
-				{selectedTab === '매칭' && <Matching />}
-				{selectedTab === 'OOTD' && <OOTD />}
-				{selectedTab === '즐겨찾기' && <Favorites />}
+				<Swiper
+					onSwiper={(swiper) => {
+						swiperRef.current = swiper;
+					}}
+					onSlideChange={handleSwiperChange}
+					spaceBetween={0}
+					slidesPerView={1}
+					style={{ height: '100%' }}
+				>
+					<SwiperSlide style={{ height: '100%' }}>
+						<Matching />
+					</SwiperSlide>
+					<SwiperSlide style={{ height: '100%' }}>
+						<OOTD />
+					</SwiperSlide>
+					<SwiperSlide style={{ height: '100%' }}>
+						<Favorites />
+					</SwiperSlide>
+				</Swiper>
 			</Tabs>
 		</TabLayout>
 	);

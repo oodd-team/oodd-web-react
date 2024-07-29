@@ -42,6 +42,7 @@ export const NotiIcon = styled.img`
 export const TabLayout = styled.div`
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
 `;
 
 export const HomeTabBarLayout = styled.div`
@@ -75,4 +76,9 @@ export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean }>`
 export const Tabs = styled.div`
 	margin-top: 5.25rem;
 	z-index: 0;
+	flex-grow: 1;
+	height: 100%;
+	.swiper-container {
+		height: 100%;
+	}
 `;
