@@ -1,18 +1,7 @@
 import { atom } from 'recoil';
+import MessageDto from '../pages/dto/MessageDto';
 
-interface Messages {
-	id: number;
-	text: string;
-	sender: string;
-	receiver: string;
-	timestamp: Date;
-	isFirst?: boolean;
-	isNewDate?: boolean;
-	printTime?: boolean;
-	formattedTime?: string;
-}
-
-export const MockMessagesAtom = atom<Messages[]>({
+export const MockMessagesAtom = atom<MessageDto[]>({
 	key: 'MockMessagesAtom',
 	default: [
 		{
