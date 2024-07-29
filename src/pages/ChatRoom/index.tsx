@@ -15,6 +15,8 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { OODDFrame } from '../../components/Frame/Frame';
+import MessageDto from '../dto/MessageDto';
+import ExtendedMessageDto from '../dto/ExtendedMessageDto';
 import SheetItemDto from '../../dto/SheetItemDto';
 import ConfirmationModalDto from '../dto/ConfirmationModalDto';
 import BottomSheetDto from '../dto/BottomSheetDto';
@@ -28,7 +30,7 @@ export const formatTime = (date: Date): string => {
 
 const ChatRoom: React.FC = () => {
 	const { id } = useParams<string>();
-	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessage[]>([]);
+	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
 	const mockMessages = useRecoilValue(MockMessagesAtom);
 	const [isClickedMenu, setIsClickedMenu] = useRecoilState(isClickedMenuAtom);
 	const [isClickedLeave, setIsClickedLeave] = useState<boolean>(false);
@@ -97,7 +99,7 @@ const ChatRoom: React.FC = () => {
 		isBackgroundDimmed: true,
 		component: <SheetItemWithDivider items={sheetItems} marginBottom={'60px'} />,
 		onClickBackground: () => {
-		setIsClickedMenu(false);
+			setIsClickedMenu(false);
 		},
 	};
 
@@ -112,7 +114,7 @@ const ChatRoom: React.FC = () => {
 
 	// 기존 대화 내역에 대한 정보 추가
 	useEffect(() => {
-		const temp: ExtendedMessage[] = mockMessages.map((message: Message, index: number) => {
+		const temp: ExtendedMessageDto[] = mockMessages.map((message: MessageDto, index: number) => {
 			let isFirst = false;
 			let isNewDate = false;
 			let printTime = false;
@@ -156,7 +158,7 @@ const ChatRoom: React.FC = () => {
 			{isClickedMenu && <BottomSheet {...MenuBottomSheet} />}
 			<TopBar />
 			<MessagesContainer>
-				{newMockMessages.map((message: ExtendedMessage) => {
+				{newMockMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>
 							{message.isNewDate && (
