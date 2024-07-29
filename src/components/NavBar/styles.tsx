@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const NavBarContainer = styled.nav`
+	position: fixed;
+	width: 100%;
+	max-width: 32rem;
 	height: 5.5rem;
 	justify-content: center;
 	align-items: center;

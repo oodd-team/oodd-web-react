@@ -10,11 +10,16 @@ export const HomeContainer = styled.div`
 // HomeTopBar
 
 export const HomeTopBarContainer = styled.div`
-	width: auto;
+	width: 100%;
+	max-width: 32rem;
 	height: 2.75rem;
 	display: flex;
 	justify-content: space-between;
+	background-color: white;
+	z-index: 10;
 	align-items: center;
+	position: fixed;
+	width: 100%;
 `;
 
 export const HomeLogo = styled.img`
@@ -34,8 +39,18 @@ export const NotiIcon = styled.img`
 
 // HomeTabBar
 
+export const TabLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
 export const HomeTabBarLayout = styled.div`
-	width: auto;
+	position: fixed;
+	width: 100%;
+	background-color: white;
+	z-index: 10;
+	max-width: 32rem;
+	top: 2.75rem;
 	height: 2.5rem;
 	border-bottom: 0.063rem solid ${({ theme }) => theme.colors.gray2};
 `;
@@ -55,4 +70,9 @@ export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean }>`
 	flex-grow: 1;
 	flex-basis: 0;
 	cursor: pointer;
+`;
+
+export const Tabs = styled.div`
+	margin-top: 5.25rem;
+	z-index: 0;
 `;

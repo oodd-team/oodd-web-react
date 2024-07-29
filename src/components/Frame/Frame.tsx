@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const OODDFrame = styled.div`
 	background-color: #ffffff;
 	max-width: 32rem;
-	min-height: 52.75rem;
+	min-height: 49.375rem;
 	height: auto;
 	margin: auto;
 	display: flex;
