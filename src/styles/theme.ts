@@ -13,82 +13,82 @@ const theme: DefaultTheme = {
 		'heading1-bold': css`
 			font-family: 'Gmarket Sans';
 			font-weight: bold;
-			font-size: 32px;
+			font-size: 2rem;
 		`,
 		'heading1-medium': css`
 			font-family: 'Gmarket Sans';
 			font-weight: 500; /* medium */
-			font-size: 32px;
+			font-size: 2rem;
 		`,
 		'heading2-light': css`
 			font-family: 'Gmarket Sans';
 			font-weight: 300; /* light */
-			font-size: 21px;
+			font-size: 1.313rem;
 		`,
 		'body1-medium': css`
 			font-family: 'Gmarket Sans';
 			font-weight: 500; /* medium */
-			font-size: 16px;
+			font-size: 1rem;
 		`,
 		'body2-medium': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 500; /* medium */
-			font-size: 16px;
+			font-size: 1rem;
 		`,
 		'body2-regular': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 400; /* normal */
-			font-size: 16px;
+			font-size: 1rem;
 		`,
 		'body2-light': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
-			font-size: 16px;
+			font-size: 1rem;
 		`,
 		'body3-light': css`
 			font-family: 'Gmarket Sans';
 			font-weight: 300; /* light */
-			font-size: 14px;
+			font-size: 0.875rem;
 		`,
 		'body4-regular': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 400; /* normal */
-			font-size: 13px;
+			font-size: 0.813rem;
 		`,
 		'body4-light': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
-			font-size: 13px;
+			font-size: 0.813rem;
 		`,
 		'body5-medium': css`
 			font-family: 'Gmarket Sans';
 			font-weight: 500; /* medium */
-			font-size: 12px;
+			font-size: 0.75rem;
 		`,
 		'body6-regular': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 400; /* normal */
-			font-size: 12px;
+			font-size: 0.75rem;
 		`,
 		'body6-light': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
-			font-size: 12px;
+			font-size: 0.75rem;
 		`,
 		'button1-medium': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 500; /* medium */
-			font-size: 16px;
+			font-size: 1rem;
 		`,
 		'button2-medium': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 500; /* medium */
-			font-size: 13px;
+			font-size: 0.813rem;
 		`,
 		'button2-light': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
-			font-size: 13px;
+			font-size: 0.813rem;
 		`,
 	},
 };
