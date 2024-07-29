@@ -2,6 +2,7 @@ import { ChatBoxContainer, Textarea, SendIcon } from './styles';
 import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { MockMessagesAtom } from '../../../recoil/MockMessages';
+import Send from '../../../assets/ChatRoom/Send.svg';
 
 const ChatBox: React.FC = () => {
 	const idRef = useRef(8);
@@ -38,7 +39,7 @@ const ChatBox: React.FC = () => {
 	return (
 		<ChatBoxContainer>
 			<Textarea value={newMessage} onKeyDown={onKeyDown} onChange={onChangeMessage} onSubmit={sendNewMessage} />
-			<SendIcon onClick={sendNewMessage} />
+			<SendIcon src={Send} alt="send" onClick={sendNewMessage} />
 		</ChatBoxContainer>
 	);
 };
