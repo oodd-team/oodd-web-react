@@ -1,14 +1,10 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { SheetItemWithDividerLayout, SheetItem } from './styles';
-
-interface Item {
-	text: string;
-	action: () => any; // item 클릭 시 호출될 함수
-}
+import SheetItemDto from '../../dto/SheetItemDto';
 
 interface WithDividerProps {
-	items: Item[]; // TODO: Item에서 메뉴별 아이콘 받도록 수정해야 함
+	items: SheetItemDto[]; // TODO: Item에서 메뉴별 아이콘 받도록 수정해야 함
 	marginBottom: string;
 }
 

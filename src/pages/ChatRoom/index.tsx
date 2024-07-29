@@ -15,26 +15,8 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { OODDFrame } from '../../components/Frame/Frame';
-
-interface Message {
-	id: number;
-	text: string;
-	sender: string;
-	receiver: string;
-	timestamp: Date;
-}
-
-interface ExtendedMessage extends Message {
-	isFirst: boolean;
-	isNewDate: boolean;
-	printTime: boolean;
-	formattedTime: string;
-}
-
-interface SheetItem {
-	text: string;
-	action: () => any;
-}
+import SheetItemDto from '../../dto/SheetItemDto';
+import BottomSheetDto from '../dto/BottomSheetDto';
 
 // 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
 export const formatTime = (date: Date): string => {
@@ -51,7 +33,7 @@ const ChatRoom: React.FC = () => {
 	const [isClickedLeave, setIsClickedLeave] = useState<boolean>(false);
 	const [isClickedBlock, setIsClickedBlock] = useState<boolean>(false);
 
-	const sheetItems: SheetItem[] = [
+	const sheetItems: SheetItemDto[] = [
 		{
 			text: '채팅방 나가기',
 			action: (): void => {
@@ -68,9 +50,12 @@ const ChatRoom: React.FC = () => {
 		},
 	];
 
-	// BottomSheet 닫는 함수
-	const closeSheet = () => {
+	const MenuBottomSheet: BottomSheetDto = {
+		isBackgroundDimmed: true,
+		component: <SheetItemWithDivider items={sheetItems} marginBottom={'60px'} />,
+		onClickBackground: () => {
 		setIsClickedMenu(false);
+		},
 	};
 
 	// DateBar 표시 여부를 결정하는 함수
@@ -123,57 +108,7 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{isClickedLeave && (
-				<ConfirmationModal
-					content="채팅방을 나가면 지난 대화 내용을 볼 수 없어요"
-					confirms={[
-						{
-							text: '취소',
-							action: () => {
-								setIsClickedLeave(false);
-							},
-						},
-						{
-							text: '채팅방 나가기',
-							action: () => {
-								setIsClickedLeave(false);
-							},
-						},
-					]}
-					onClickBackground={() => {
-						setIsClickedLeave(false);
-					}}
-				/>
-			)}
-			{isClickedBlock && (
-				<ConfirmationModal
-					content="IDID님을 정말로 차단하시겠어요?"
-					confirms={[
-						{
-							text: '취소',
-							action: () => {
-								setIsClickedBlock(false);
-							},
-						},
-						{
-							text: '차단하기',
-							action: () => {
-								setIsClickedBlock(false);
-							},
-						},
-					]}
-					onClickBackground={() => {
-						setIsClickedBlock(false);
-					}}
-				/>
-			)}
-			{isClickedMenu && (
-				<BottomSheet
-					isBackgroundDimmed={true}
-					component={<SheetItemWithDivider items={sheetItems} marginBottom={'60px'} />}
-					onClickBackground={closeSheet}
-				/>
-			)}
+			{isClickedMenu && <BottomSheet {...MenuBottomSheet} />}
 			<TopBar />
 			<MessagesContainer>
 				{newMockMessages.map((message: ExtendedMessage) => {
