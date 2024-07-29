@@ -42,7 +42,7 @@ export const NotiIcon = styled.img`
 export const TabLayout = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: auto;
 `;
 
 export const HomeTabBarLayout = styled.div`

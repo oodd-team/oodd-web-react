@@ -15,6 +15,7 @@ export const TagWrapper = styled.div<{ isSelected: boolean }>`
 export const TagImgWrapper = styled.div`
 	width: 1.75rem;
 	height: 1.75rem;
+	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

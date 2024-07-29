@@ -4,7 +4,6 @@ export const CardLayout = styled.div`
 	margin: 0.625rem 1.25rem 0;
 	background-color: black;
 	border-radius: 0.75rem;
-	max-height: 33.438rem;
 	position: relative;
 `;
 
@@ -41,7 +40,7 @@ export const OOTDImgBox = styled.div`
 	max-height: 33.438rem;
 	bottom: 0;
 	border-radius: 0 0 0.75rem 0.75rem;
-	background-color: aliceblue;
+	background-color: ${({ theme }) => theme.colors.gray1};
 	overflow: hidden;
 	margin: 0 auto;
 

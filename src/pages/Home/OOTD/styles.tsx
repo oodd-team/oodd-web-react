@@ -5,8 +5,9 @@ export const OOTDContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	align-items: flex-start;
-	padding-right: 1.25rem;
 `;
+
+// Tag
 
 export const TagMent = styled.div`
 	margin-top: 1.313rem;
@@ -22,6 +23,7 @@ export const TagContainer = styled.div`
 	width: 100%;
 	gap: 0.5rem;
 	margin-left: 1.25rem;
+	padding-right: 1.25rem;
 `;
 
 export const TagRow = styled.div`
@@ -35,4 +37,14 @@ export const TagRow = styled.div`
 	&::-webkit-scrollbar {
 		display: none; /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
 	}
+`;
+
+// Feed
+
+export const FeedContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: calc(100% - 2.5rem);
+	margin: 1.625rem 1.25rem 1.625rem 1.25rem;
+	box-sizing: border-box;
 `;

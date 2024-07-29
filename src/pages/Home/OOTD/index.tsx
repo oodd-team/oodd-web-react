@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { TagMent, OOTDContainer, TagContainer, TagRow } from './styles';
+import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer } from './styles';
 import Tag from './Tag';
-import { TagProps } from './dto';
+import { FeedProps, TagProps } from './dto';
+import Feed from './Feed';
 
-// tagImgUrl과 tagName 추후 변경
+// 추후 변경
 const tagData: TagProps[] = [
 	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#hip' },
 	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#classic' },
@@ -16,6 +17,22 @@ const tagData: TagProps[] = [
 	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#sporty' },
 	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#formal' },
 	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#street' },
+];
+
+// 추후 변경
+const feedData: FeedProps[] = [
+	{
+		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		userName: 'IDID',
+		text: 'Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
+	{
+		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		userName: 'IDID2',
+		text: '굳굳',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
 ];
 
 const OOTD: React.FC = () => {
@@ -65,6 +82,11 @@ const OOTD: React.FC = () => {
 					))}
 				</TagRow>
 			</TagContainer>
+			<FeedContainer>
+				{feedData.map((feed) => (
+					<Feed feed={feed} />
+				))}
+			</FeedContainer>
 		</OOTDContainer>
 	);
 };

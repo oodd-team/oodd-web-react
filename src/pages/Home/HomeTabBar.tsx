@@ -49,15 +49,16 @@ const HomeTabbar: React.FC = () => {
 					onSlideChange={handleSwiperChange}
 					spaceBetween={0}
 					slidesPerView={1}
+					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 					style={{ height: '100%' }}
 				>
-					<SwiperSlide style={{ height: '100%' }}>
+					<SwiperSlide style={{ height: 'auto' }}>
 						<Matching />
 					</SwiperSlide>
-					<SwiperSlide style={{ height: '100%' }}>
+					<SwiperSlide style={{ height: 'auto' }}>
 						<OOTD />
 					</SwiperSlide>
-					<SwiperSlide style={{ height: '100%' }}>
+					<SwiperSlide style={{ height: 'auto' }}>
 						<Favorites />
 					</SwiperSlide>
 				</Swiper>
