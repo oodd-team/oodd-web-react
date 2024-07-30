@@ -23,8 +23,8 @@ export const FeedImgBox = styled.div`
 `;
 
 export const FeedTop = styled.div`
-	top: 12px;
-	left: 12px;
+	top: 0.75rem;
+	left: 0.75rem;
 	position: absolute;
 	display: flex;
 	align-items: center;

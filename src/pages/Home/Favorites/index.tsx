@@ -50,6 +50,7 @@ const feedData: FeedProps[] = [
 	},
 ];
 
+// 즐겨찾기 탭입니다.
 const Favorites: React.FC = () => {
 	const [selectedUsers, setSelectedUsers] = useState<number | null>(0);
 	const handleUserClick = (index: number) => {

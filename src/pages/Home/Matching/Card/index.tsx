@@ -1,8 +1,9 @@
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, SeeMore } from './styles';
+import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
 import { CardLayoutProps } from './dto';
-
+import xBtn from '../../../../assets/Home/button_reject.svg';
+import checkBtn from '../../../../assets/Home/button_check.svg';
 const cardItem: CardLayoutProps = {
 	profileImgUrl: './../../../../assets/Home/profileImg.svg',
 	ootdImgUrl: './../../../../assets/Home/OOTDImg.svg',
@@ -30,9 +31,16 @@ const Card: React.FC = () => {
 					</StyledText>
 				</SeeMore>
 			</ProfileBox>
-
 			<OOTDImgBox>
 				<img src={cardItem.ootdImgUrl} />
+				<Reaction>
+					<Btn>
+						<img src={xBtn} />
+					</Btn>
+					<Btn>
+						<img src={checkBtn} />
+					</Btn>
+				</Reaction>
 			</OOTDImgBox>
 		</CardLayout>
 	);

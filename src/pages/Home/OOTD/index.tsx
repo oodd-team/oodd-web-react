@@ -35,6 +35,7 @@ const feedData: FeedProps[] = [
 	},
 ];
 
+// OOTD 탭입니다.
 const OOTD: React.FC = () => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
 

@@ -39,6 +39,7 @@ export const SeeMore = styled.div`
 `;
 
 export const OOTDImgBox = styled.div`
+	position: relative;
 	width: 100%;
 	max-height: 33.438rem;
 	bottom: 0;
@@ -46,10 +47,39 @@ export const OOTDImgBox = styled.div`
 	background-color: ${({ theme }) => theme.colors.gray1};
 	overflow: hidden;
 	margin: 0 auto;
+	display: flex;
+	justify-content: center;
 
 	img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+`;
+
+export const Reaction = styled.div`
+	position: absolute;
+	width: 188px;
+	height: 80px;
+	bottom: 32px;
+	gap: 28px;
+	display: flex;
+`;
+
+export const Btn = styled.div`
+	cursor: pointer;
+	width: 80px;
+	height: 80px;
+	background-color: rgba(255, 255, 255, 0.3);
+	border: 1.4px solid ${({ theme }) => theme.colors.white};
+	border-radius: 50%;
+	backdrop-filter: blur(5px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	img {
+		width: 2rem;
+		height: 2rem;
 	}
 `;
