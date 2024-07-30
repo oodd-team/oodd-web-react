@@ -17,6 +17,7 @@ export const Info = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
+	cursor: pointer;
 `;
 
 export const FeedProfileImgWrapper = styled.div`
@@ -26,6 +27,10 @@ export const FeedProfileImgWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+`;
+
+export const FeedBottom = styled.div`
+	cursor: pointer;
 `;
 
 export const FeedText = styled.div`

@@ -13,18 +13,39 @@ const userData: UserProps[] = [
 	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID3' },
 	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID4' },
 	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID5' },
+	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID6' },
 ];
 
 // 추후 변경
 const feedData: FeedProps[] = [
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
 		userName: 'IDID',
 		feedImgUrl: './../../../../assets/Home/feedImg.svg',
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
 		userName: 'IDID2',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
+	{
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		userName: 'IDID3',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
+	{
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		userName: 'IDID4',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
+	{
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		userName: 'IDID5',
+		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+	},
+	{
+		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		userName: 'IDID6',
 		feedImgUrl: './../../../../assets/Home/feedImg.svg',
 	},
 ];

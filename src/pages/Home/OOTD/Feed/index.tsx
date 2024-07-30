@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { FeedImgBox, FeedProfileImgWrapper, FeedText, FeedTop, FeedWrapper, Info } from './styles';
+import { FeedBottom, FeedImgBox, FeedProfileImgWrapper, FeedText, FeedTop, FeedWrapper, Info } from './styles';
 import { FeedProps } from '../dto';
 import more from '../../../../assets/Home/grommet-icons_more.svg';
 
@@ -23,18 +23,20 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Info>
 				<img src={more} style={{ cursor: 'pointer' }} />
 			</FeedTop>
-			<FeedText>
-				<StyledText
-					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-					color={theme.colors.black}
-					style={{ opacity: '50%' }}
-				>
-					{feed.text}
-				</StyledText>
-			</FeedText>
-			<FeedImgBox>
-				<img src={feed.feedImgUrl} />
-			</FeedImgBox>
+			<FeedBottom>
+				<FeedText>
+					<StyledText
+						$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+						color={theme.colors.black}
+						style={{ opacity: '50%' }}
+					>
+						{feed.text}
+					</StyledText>
+				</FeedText>
+				<FeedImgBox>
+					<img src={feed.feedImgUrl} />
+				</FeedImgBox>
+			</FeedBottom>
 		</FeedWrapper>
 	);
 };

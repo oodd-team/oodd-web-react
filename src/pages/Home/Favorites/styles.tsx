@@ -42,9 +42,10 @@ export const UserRow = styled.div`
 // Feed
 
 export const FeedContainer = styled.div`
-	display: flex;
-	flex-direction: column;
 	width: calc(100% - 2.5rem);
-	margin: 1.625rem 1.25rem 1.625rem 1.25rem;
+	margin: 1rem 1.25rem 1.625rem 1.25rem;
 	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 0.25rem;
 `;

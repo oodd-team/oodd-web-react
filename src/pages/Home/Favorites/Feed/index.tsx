@@ -17,9 +17,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTop>
 					<Info>
 						<FeedProfileImgWrapper>
-							<img src={feed.profileUrl} alt="tag" />
+							<img src={feed.profileUrl} alt="profile" />
 						</FeedProfileImgWrapper>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>
 							{feed.userName}
 						</StyledText>
 					</Info>

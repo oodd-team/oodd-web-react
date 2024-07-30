@@ -3,20 +3,37 @@ import styled from 'styled-components';
 export const FeedWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.white};
 	width: 100%;
-	margin-bottom: 1.5rem;
 	height: auto;
+	cursor: pointer;
+`;
+
+export const FeedImgBox = styled.div`
+	position: relative;
+	width: 100%;
+	border-radius: 0.75rem;
+	background-color: ${({ theme }) => theme.colors.gray1};
+	height: auto;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
 
 export const FeedTop = styled.div`
+	top: 12px;
+	left: 12px;
+	position: absolute;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 `;
 
 export const Info = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.5rem;
 `;
 
 export const FeedProfileImgWrapper = styled.div`
@@ -35,18 +52,4 @@ export const FeedText = styled.div`
 	align-items: center;
 	word-wrap: break-word;
 	word-break: break-all;
-`;
-
-export const FeedImgBox = styled.div`
-	width: 100%;
-	border-radius: 0.75rem;
-	background-color: ${({ theme }) => theme.colors.gray1};
-	height: auto;
-	overflow: hidden;
-
-	img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
 `;

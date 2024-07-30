@@ -18,6 +18,7 @@ export const ProfileImgBox = styled.div`
 	height: 2.625rem;
 	border-radius: 50%;
 	margin-left: 1rem;
+	cursor: pointer;
 
 	img {
 		width: 100%;
@@ -29,10 +30,12 @@ export const ProfileImgBox = styled.div`
 export const ProfileInfo = styled.div`
 	gap: 0.463rem;
 	margin-left: 1rem;
+	cursor: pointer;
 `;
 
 export const SeeMore = styled.div`
 	margin: 0 1.281rem 0 auto;
+	cursor: pointer;
 `;
 
 export const OOTDImgBox = styled.div`

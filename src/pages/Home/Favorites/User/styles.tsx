@@ -23,6 +23,7 @@ export const UserImgBorder = styled.div<{ isSelected: boolean }>`
 		${({ isSelected }) =>
 			isSelected ? 'linear-gradient(200deg, black 0%, gray 50%, #eaeaea 80%, white 90%, white 100%)' : 'none'};
 `;
+
 export const UserImgWrapper = styled.div`
 	width: 4.5rem;
 	height: 4.5rem;
