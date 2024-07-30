@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { FeedImgBox, FeedProfileImgWrapper, FeedTop, FeedWrapper, Info } from './styles';
-
+import { Btn, CheckedBtn, FeedImgBox, FeedProfileImgWrapper, FeedTop, FeedWrapper, Info, Reaction } from './styles';
 import { FeedProps } from '../dto';
+import starBtn from '../../../../assets/Home/button_star.svg'
+import checkedHeart from '../../../../assets/Home/clicked_heart.svg'
+
 
 interface Props {
 	feed: FeedProps;
@@ -24,6 +26,14 @@ const Feed: React.FC<Props> = ({ feed }) => {
 						</StyledText>
 					</Info>
 				</FeedTop>
+				<Reaction>
+					<CheckedBtn>
+						<img src={checkedHeart} />
+					</CheckedBtn>
+					<Btn>
+						<img src={starBtn} />
+					</Btn>
+				</Reaction>
 			</FeedImgBox>
 		</FeedWrapper>
 	);
