@@ -59,21 +59,21 @@ export const OOTDImgBox = styled.div`
 
 export const Reaction = styled.div`
 	position: absolute;
-	width: 188px;
-	height: 80px;
-	bottom: 32px;
-	gap: 28px;
+	width: 11.75rem;
+	height: 5rem;
+	bottom: 2rem;
+	gap: 1.75rem;
 	display: flex;
 `;
 
 export const Btn = styled.div`
 	cursor: pointer;
-	width: 80px;
-	height: 80px;
+	width: 5rem;
+	height: 5rem;
 	background-color: rgba(255, 255, 255, 0.3);
-	border: 1.4px solid ${({ theme }) => theme.colors.white};
+	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
 	border-radius: 50%;
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(0.3125rem);
 	display: flex;
 	justify-content: center;
 	align-items: center;

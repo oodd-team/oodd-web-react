@@ -4,6 +4,7 @@ import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Re
 import { CardLayoutProps } from './dto';
 import xBtn from '../../../../assets/Home/button_reject.svg';
 import checkBtn from '../../../../assets/Home/button_check.svg';
+
 const cardItem: CardLayoutProps = {
 	profileImgUrl: './../../../../assets/Home/profileImg.svg',
 	ootdImgUrl: './../../../../assets/Home/OOTDImg.svg',

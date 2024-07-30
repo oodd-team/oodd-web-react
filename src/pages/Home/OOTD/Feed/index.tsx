@@ -1,9 +1,26 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { FeedBottom, FeedImgBox, FeedProfileImgWrapper, FeedText, FeedTop, FeedWrapper, Info } from './styles';
+import {
+	Btn,
+	Comment,
+	CommentBtn,
+	FeedBottom,
+	FeedImgBox,
+	FeedProfileImgWrapper,
+	FeedText,
+	FeedTop,
+	FeedWrapper,
+	Info,
+	Reaction,
+	ReactionWrapper,
+} from './styles';
 import { FeedProps } from '../dto';
 import more from '../../../../assets/Home/grommet-icons_more.svg';
+import xBtn from '../../../../assets/Home/button_reject.svg';
+import heartBtn from '../../../../assets/Home/button_heart.svg';
+import starBtn from '../../../../assets/Home/button_star.svg';
+import commentBtn from '../../../../assets/Home/comment.svg';
 
 interface Props {
 	feed: FeedProps;
@@ -35,6 +52,27 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</FeedText>
 				<FeedImgBox>
 					<img src={feed.feedImgUrl} />
+					<ReactionWrapper>
+						<Reaction>
+							<Btn>
+								<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
+							</Btn>
+							<Btn>
+								<img src={heartBtn} />
+							</Btn>
+							<Btn>
+								<img src={starBtn} />
+							</Btn>
+						</Reaction>
+						<Comment>
+							<CommentBtn>
+								<img src={commentBtn} />
+								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
+									코멘트 남기기
+								</StyledText>
+							</CommentBtn>
+						</Comment>
+					</ReactionWrapper>
 				</FeedImgBox>
 			</FeedBottom>
 		</FeedWrapper>
