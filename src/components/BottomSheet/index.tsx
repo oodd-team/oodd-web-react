@@ -9,6 +9,13 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	onCloseBottomSheet,
 }) => {
 	const [startY, setStartY] = useState<number | null>(null);
+	const [initialRender, setInitialRender] = useState(true);
+
+	useEffect(() => {
+		if (isOpenBottomSheet) {
+			setInitialRender(false);
+		}
+	}, [isOpenBottomSheet]);
 
 	// 드래그 시작 시점의 y값
 	const onPointerDown = useCallback((event: React.PointerEvent | React.TouchEvent) => {
@@ -57,6 +64,8 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			window.removeEventListener('touchend', handleTouchEnd);
 		};
 	}, [onPointerUp]);
+
+	if (initialRender && !isOpenBottomSheet) return null;
 
 	return (
 		<BottomSheetWrapper

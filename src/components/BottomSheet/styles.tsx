@@ -2,7 +2,6 @@ import styled, { keyframes, css } from 'styled-components';
 
 export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isBackgroundDimmed: boolean }>`
 	position: fixed;
-	display: ${(props) => (props.$isOpenBottomSheet ? 'flex' : 'none')};
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -22,7 +21,6 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isB
 export const BottomSheetLayout = styled.div<{ $isOpenBottomSheet: boolean }>`
 	position: fixed;
 	bottom: 0;
-	display: ${(props) => (props.$isOpenBottomSheet ? 'flex' : 'none')};
 	flex-direction: column;
 	width: 100%;
 	max-width: 32rem;
