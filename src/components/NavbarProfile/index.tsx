@@ -3,11 +3,12 @@ import { Nav, IconContainer } from './styles';
 import { Link } from 'react-router-dom';
 import settingIcon from './assets/settingIcon.svg';
 import { StyledText } from '../../components/Text/StyledText';
+import theme from '../../styles/theme';
 
 const NavbarProfile: React.FC = () => {
 	return (
 		<Nav>
-			<StyledText textTheme={{ style: 'heading1-medium', lineHeight: 1 }} color="var(--Color-black, #000)">
+			<StyledText textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.gray4}>
 				Profile
 			</StyledText>
 			<IconContainer>
