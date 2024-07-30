@@ -2,6 +2,7 @@ import styled, { keyframes, css } from 'styled-components';
 
 export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isBackgroundDimmed: boolean }>`
 	position: fixed;
+	display: ${(props) => (props.$isOpenBottomSheet ? 'flex' : 'none')};
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -21,7 +22,7 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isB
 export const BottomSheetLayout = styled.div<{ $isOpenBottomSheet: boolean }>`
 	position: fixed;
 	bottom: 0;
-	display: flex;
+	display: ${(props) => (props.$isOpenBottomSheet ? 'flex' : 'none')};
 	flex-direction: column;
 	width: 100%;
 	max-width: 32rem;
@@ -66,12 +67,10 @@ const fadeOut = keyframes`
 	from {
 		opacity: 1;
 		visibility: visible;
-		// display: block;
 	}
 	to {
 		opacity: 0;
 		visibility: hidden;
-		// display: none;
 	}
 `;
 
@@ -88,11 +87,9 @@ const slideDown = keyframes`
   from {
     transform: translate(-50%, 0);
 		visibility: visible;
-		// display: block;
   }
   to {
     transform: translate(-50%, 100%);
 		visibility: hidden;
-		// display: none;
   }
 `;
