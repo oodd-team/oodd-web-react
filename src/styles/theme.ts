@@ -65,6 +65,11 @@ const theme: DefaultTheme = {
 			font-weight: 500; /* medium */
 			font-size: 0.75rem;
 		`,
+		'body5-light': css`
+			font-family: 'Gmarket Sans';
+			font-weight: 300; /* light */
+			font-size: 0.75rem;
+		`,
 		'body6-regular': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 400; /* normal */

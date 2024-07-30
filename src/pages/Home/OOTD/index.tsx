@@ -56,7 +56,7 @@ const OOTD: React.FC = () => {
 	return (
 		<OOTDContainer>
 			<TagMent>
-				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
 					Find your style
 				</StyledText>
 			</TagMent>

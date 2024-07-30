@@ -9,7 +9,7 @@ const Matching: React.FC = () => {
 	return (
 		<MatchingContainer>
 			<Like>
-				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
 					Likes you 3
 				</StyledText>
 			</Like>
