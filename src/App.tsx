@@ -8,6 +8,9 @@ import AccountSetting from './pages/AccountSetting';
 import AccountEdit from './pages/AccountEdit';
 import AccountCancel from './pages/AccountCancel';
 import Verification from './pages/verification';
+import Login from './pages/Login';
+import Chats from './pages/Chats';
+import Profile from './pages/Profile';
 
 const App: React.FC = () => {
 	return (
@@ -17,12 +20,14 @@ const App: React.FC = () => {
 				<Route path="/Mypage" element={<Mypage />} />
 				<Route path="/post/:id" element={<PostDetail />} />
 				<Route path="/post/:id/:type" element={<PostDetail />} />
-
 				<Route path="/edit-profile" element={<ProfileEdit />} />
 				<Route path="/account-setting" element={<AccountSetting />} />
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />
 				<Route path="/Verification" element={<Verification />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/chats" element={<Chats />} />
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 		</BrowserRouter>
 	);
