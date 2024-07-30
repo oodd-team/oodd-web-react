@@ -1,4 +1,4 @@
-import BottomSheetDto from '../../pages/dto/BottomSheetDto';
+import { BottomSheetDto } from './dto';
 import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
 const BottomSheet: React.FC<BottomSheetDto> = ({ isBackgroundDimmed, component, onClickBackground }) => {

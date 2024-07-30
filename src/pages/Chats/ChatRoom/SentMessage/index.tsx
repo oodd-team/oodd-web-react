@@ -1,5 +1,5 @@
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { Message, TimeWrapper, MessageLayout } from './styles';
 
 interface SentMessageProps {

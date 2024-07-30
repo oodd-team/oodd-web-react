@@ -1,8 +1,8 @@
 import { ChatBoxContainer, Textarea, SendIcon } from './styles';
 import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { MockMessagesAtom } from '../../../recoil/MockMessages';
-import Send from '../../../assets/ChatRoom/Send.svg';
+import { MockMessagesAtom } from '../../../../recoil/MockMessages';
+import Send from '../../../../assets/Chats/Send.svg';
 
 const ChatBox: React.FC = () => {
 	const idRef = useRef(8);

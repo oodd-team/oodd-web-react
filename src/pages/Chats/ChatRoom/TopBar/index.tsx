@@ -1,11 +1,11 @@
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { TopbarLayout, BackButton, KebabMenuButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { isClickedMenuAtom } from '../../../recoil/isClickedMenu';
-import Back from '../../../assets/Chats/Back.svg';
-import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
+import { isClickedMenuAtom } from '../../../../recoil/isClickedMenu';
+import Back from '../../../../assets/Chats/Back.svg';
+import KebabMenu from '../../../../assets/Chats/KebabMenu.svg';
 
 const TopBar: React.FC = () => {
 	const setIsClickedMenu = useSetRecoilState(isClickedMenuAtom);

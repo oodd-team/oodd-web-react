@@ -1,7 +1,7 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { SheetItemWithDividerLayout, SheetItem, Icon } from './styles';
-import SheetItemDto from '../../dto/SheetItemDto';
+import { SheetItemDto } from './dto';
 
 interface WithDividerProps {
 	items: SheetItemDto[]; // TODO: Item에서 메뉴별 아이콘 받도록 수정해야 함

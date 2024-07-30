@@ -1,12 +1,7 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { ConfirmationModalLayout, ConfirmationModalWrapper, ContentBox, ButtonContainer, Button } from './styles';
-import ConfirmationModalDto from '../../pages/dto/ConfirmationModalDto';
-
-interface Confirm {
-	text: string; // 버튼명 ex. 취소, 차단하기, ...
-	action: () => void; // 버튼 클릭 시 실행될 함수
-}
+import { Confirm, ConfirmationModalDto } from './dto';
 
 const ConfirmationModal: React.FC<ConfirmationModalDto> = ({ content, confirms, onClickBackground }) => {
 	return (

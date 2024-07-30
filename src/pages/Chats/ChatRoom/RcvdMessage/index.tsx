@@ -1,5 +1,5 @@
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { FirstMessageLayout, UserImage, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
 interface RcvdMessageProps {

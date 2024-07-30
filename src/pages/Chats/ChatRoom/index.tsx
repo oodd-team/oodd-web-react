@@ -7,21 +7,20 @@ import SentMessage from './SentMessage';
 import DateBar from './DateBar';
 import ChatBox from './ChatBox';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { MockMessagesAtom } from '../../recoil/MockMessages';
-import { isClickedMenuAtom } from '../../recoil/isClickedMenu';
-import BottomSheet from '../../components/BottomSheet';
-import SheetItemWithDivider from '../../components/SheetItemWithDivider';
+import { MockMessagesAtom } from '../../../recoil/MockMessages';
+import { isClickedMenuAtom } from '../../../recoil/isClickedMenu';
+import BottomSheet from '../../../components/BottomSheet';
+import SheetItemWithDivider from '../../../components/SheetItemWithDivider';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { OODDFrame } from '../../components/Frame/Frame';
-import MessageDto from '../dto/MessageDto';
-import ExtendedMessageDto from '../dto/ExtendedMessageDto';
-import SheetItemDto from '../../dto/SheetItemDto';
-import ConfirmationModalDto from '../dto/ConfirmationModalDto';
-import BottomSheetDto from '../dto/BottomSheetDto';
-import Leave from '../../assets/ChatRoom/Leave.svg';
-import Block from '../../assets/ChatRoom/Block.svg';
+import ConfirmationModal from '../../../components/ConfirmationModal';
+import { OODDFrame } from '../../../components/Frame/Frame';
+import { MessageDto, ExtendedMessageDto } from '../dto';
+import { SheetItemDto } from '../../../components/SheetItemWithDivider/dto';
+import { ConfirmationModalDto } from '../../../components/ConfirmationModal/dto';
+import { BottomSheetDto } from '../../../components/BottomSheet/dto';
+import Leave from '../../../assets/Chats/Leave.svg';
+import Block from '../../../assets/Chats/Block.svg';
 
 // 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
 export const formatTime = (date: Date): string => {

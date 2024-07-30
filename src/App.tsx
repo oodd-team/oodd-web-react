@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Chats from './pages/Chats';
-import ChatRoom from './pages/ChatRoom';
+import ChatRoom from './pages/Chats/ChatRoom';
 import Profile from './pages/Profile';
 
 const App: React.FC = () => {
