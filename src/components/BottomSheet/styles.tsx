@@ -18,14 +18,17 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isB
 				`};
 `;
 
-export const BottomSheetLayout = styled.div<{ $isOpenBottomSheet: boolean }>`
+export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number }>(({ $currentTranslateY }) => ({
+	style: {
+		transform: `translate(-50%, ${$currentTranslateY}px)`,
+	},
+}))<{ $isOpenBottomSheet: boolean; $currentTranslateY: number }>`
 	position: fixed;
 	bottom: 0;
 	flex-direction: column;
 	width: 100%;
 	max-width: 32rem;
 	left: 50%;
-	transform: translateX(-50%);
 	border-radius: 0.938rem 0.938rem 0 0;
 	background-color: ${({ theme }) => theme.colors.white};
 	padding-top: 1.1rem;
@@ -34,7 +37,7 @@ export const BottomSheetLayout = styled.div<{ $isOpenBottomSheet: boolean }>`
 	animation: ${(props) =>
 		props.$isOpenBottomSheet
 			? css`
-					${slideUp} 0.2s ease-out forwards
+					${slideUp} 0.2s ease-out
 				`
 			: css`
 					${slideDown} 0.2s ease-out forwards
@@ -82,10 +85,6 @@ const slideUp = keyframes`
 `;
 
 const slideDown = keyframes`
-  from {
-    transform: translate(-50%, 0);
-		visibility: visible;
-  }
   to {
     transform: translate(-50%, 100%);
 		visibility: hidden;

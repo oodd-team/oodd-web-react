@@ -10,22 +10,41 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 }) => {
 	const [startY, setStartY] = useState<number | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
+	const [currentTranslateY, setCurrentTranslateY] = useState(0);
 
 	useEffect(() => {
 		if (isOpenBottomSheet) {
 			setInitialRender(false);
+			setCurrentTranslateY(0); // 초기화
 		}
 	}, [isOpenBottomSheet]);
 
 	// 드래그 시작 시점의 y값
 	const onPointerDown = useCallback((event: React.PointerEvent | React.TouchEvent) => {
-		event.stopPropagation();
 		if ('touches' in event) {
 			setStartY(event.touches[0].clientY);
 		} else {
 			setStartY(event.clientY);
 		}
 	}, []);
+
+	const onPointerMove = useCallback(
+		(event: PointerEvent | TouchEvent) => {
+			if (startY !== null) {
+				let currentY;
+				if ('touches' in event) {
+					currentY = event.touches[0].clientY;
+				} else {
+					currentY = event.clientY;
+				}
+				const deltaY = currentY - startY;
+				if (deltaY > 0) {
+					setCurrentTranslateY(deltaY);
+				}
+			}
+		},
+		[startY],
+	);
 
 	// 드래그 종료 시점의 y값
 	const onPointerUp = useCallback(
@@ -43,6 +62,8 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
 				if (deltaY > 20) {
 					onCloseBottomSheet();
+				} else {
+					setCurrentTranslateY(0);
 				}
 				setStartY(null); // 초기화
 			}
@@ -53,18 +74,25 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	useEffect(() => {
 		// pc
 		const handlePointerUp = (event: PointerEvent) => onPointerUp(event);
+		const handlePointerMove = (event: PointerEvent) => onPointerMove(event);
 		// 모바일
 		const handleTouchEnd = (event: TouchEvent) => onPointerUp(event);
+		const handleTouchMove = (event: TouchEvent) => onPointerMove(event);
 
+		window.addEventListener('pointermove', handlePointerMove);
+		window.addEventListener('touchmove', handleTouchMove);
 		window.addEventListener('pointerup', handlePointerUp);
 		window.addEventListener('touchend', handleTouchEnd);
 
 		return () => {
+			window.removeEventListener('pointermove', handlePointerMove);
+			window.removeEventListener('touchmove', handleTouchMove);
 			window.removeEventListener('pointerup', handlePointerUp);
 			window.removeEventListener('touchend', handleTouchEnd);
 		};
-	}, [onPointerUp]);
+	}, [onPointerMove, onPointerUp]);
 
+	// 초기 렌더링 시 바텀시트 안 보이게 설정
 	if (initialRender && !isOpenBottomSheet) return null;
 
 	return (
@@ -81,6 +109,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			<BottomSheetLayout
 				onPointerDown={onPointerDown}
 				onTouchStart={onPointerDown}
+				$currentTranslateY={currentTranslateY}
 				$isOpenBottomSheet={isOpenBottomSheet}
 			>
 				<Handler />
