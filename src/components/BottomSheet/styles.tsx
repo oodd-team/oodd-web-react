@@ -34,6 +34,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number }
 	padding-top: 1.1rem;
 	z-index: 200;
 	user-select: none;
+	touch-action: none;
 	animation: ${(props) =>
 		props.$isOpenBottomSheet
 			? css`
