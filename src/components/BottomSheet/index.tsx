@@ -11,6 +11,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	const [startY, setStartY] = useState<number | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
+	const [isDragging, setIsDragging] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (isOpenBottomSheet) {
@@ -26,6 +27,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 		} else {
 			setStartY(event.clientY);
 		}
+		setIsDragging(true);
 	}, []);
 
 	const onPointerMove = useCallback(
@@ -65,7 +67,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				} else {
 					setCurrentTranslateY(0);
 				}
-				setStartY(null); // 초기화
+
+				// PointerUp 직후 onClick 동작 방지
+				setTimeout(() => {
+					setIsDragging(false);
+				}, 100);
 			}
 		},
 		[startY, onCloseBottomSheet],
@@ -101,7 +107,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			$isBackgroundDimmed={isBackgroundDimmed}
 			onClick={(e: React.MouseEvent) => {
 				// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
-				if (e.target === e.currentTarget) {
+				if (!isDragging && e.target === e.currentTarget) {
 					onCloseBottomSheet();
 				}
 			}}
