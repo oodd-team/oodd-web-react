@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BottomSheetProps } from './dto';
 import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
@@ -8,7 +8,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	Component,
 	onCloseBottomSheet,
 }) => {
-	const [startY, setStartY] = useState<number | null>(null);
+	const startY = useRef<number | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -23,23 +23,23 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	// 드래그 시작 시점의 y값
 	const onPointerDown = useCallback((event: React.PointerEvent | React.TouchEvent) => {
 		if ('touches' in event) {
-			setStartY(event.touches[0].clientY);
+			startY.current = event.touches[0].clientY;
 		} else {
-			setStartY(event.clientY);
+			startY.current = event.clientY;
 		}
 		setIsDragging(true);
 	}, []);
 
 	const onPointerMove = useCallback(
 		(event: PointerEvent | TouchEvent) => {
-			if (startY !== null) {
+			if (startY.current !== null) {
 				let currentY;
 				if ('touches' in event) {
 					currentY = event.touches[0].clientY;
 				} else {
 					currentY = event.clientY;
 				}
-				const deltaY = currentY - startY;
+				const deltaY = currentY - startY.current;
 				if (deltaY > 0) {
 					setCurrentTranslateY(deltaY);
 				}
@@ -51,7 +51,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	// 드래그 종료 시점의 y값
 	const onPointerUp = useCallback(
 		(event: PointerEvent | TouchEvent) => {
-			if (startY !== null) {
+			if (startY.current !== null) {
 				let endY;
 				if ('changedTouches' in event) {
 					endY = event.changedTouches[0].clientY;
@@ -59,14 +59,15 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 					endY = event.clientY;
 				}
 
-				// 두 값의 변화량이 20px보다 크면 아래로 드래그한 것으로 간주하여 바텀시트 닫음
-				const deltaY = endY - startY;
+				// 두 값의 변화량이 50px보다 크면 아래로 드래그한 것으로 간주하여 바텀시트 닫음
+				const deltaY = endY - startY.current;
 
-				if (deltaY > 20) {
+				if (deltaY > 50) {
 					onCloseBottomSheet();
 				} else {
 					setCurrentTranslateY(0);
 				}
+				startY.current = null; // 초기화
 
 				// PointerUp 직후 onClick 동작 방지
 				setTimeout(() => {
