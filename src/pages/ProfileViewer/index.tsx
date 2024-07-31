@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import UserInfo from "./components/UserInfo";
 import PostItem from "./components/PostItem";
 import { mockUserData } from "./MocData"; // Mock 데이터 임포트
-import { ProfileViewerContainer, HeaderContainer, UserID, Vector, MoreIcon, BackButton, CounterContainer, Count, CountLabel, CountNumber, PostListContainer } from "./style";
+import { ProfileViewerContainer, HeaderContainer, UserID, Vector, MoreIcon, BackButton, CounterContainer, Count,  PostListContainer } from "./style";
 import { StyledText } from "../../components/Text/StyledText";
 import theme from '../../styles/theme';
 import { OODDFrame } from "../../components/Frame/Frame";
@@ -65,28 +65,20 @@ const ProfileViewer: React.FC = () => {
                 <Vector />
                 <CounterContainer>
                     <Count>
-                        <CountLabel>
-                            <StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
-                                OODD
-                            </StyledText>
-                        </CountLabel>
-                        <CountNumber>
-                            <StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
-                                {userDetails.postsCount || 0}
-                            </StyledText>
-                        </CountNumber>
+                        <StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+                            OODD
+                        </StyledText>
+                        <StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+                            {userDetails.postsCount || 0}
+                        </StyledText>
                     </Count>
                     <Count>
-                        <CountLabel>
-                            <StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
-                                좋아요
-                            </StyledText>
-                        </CountLabel>
-                        <CountNumber>
-                            <StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
-                                {userDetails.likesCount || 0}
-                            </StyledText>
-                        </CountNumber>
+                        <StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+                            좋아요
+                        </StyledText>
+                        <StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+                            {userDetails.likesCount || 0}
+                        </StyledText>
                     </Count>
                 </CounterContainer>
                 <PostListContainer>

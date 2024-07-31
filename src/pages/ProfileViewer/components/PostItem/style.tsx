@@ -1,32 +1,42 @@
 import styled from "styled-components";
 
 export const PostItemContainer = styled.div`
-    width: 14.2225rem; // 256px
-    height: 19.4375rem; // 311px
+    width: 100%;
+    max-width: 14.2225rem; /* 256px */
+    height: 311px; /* 높이 자동 조정 */
+    aspect-ratio: 14.2225 / 19.4375; /* 가로 세로 비율 유지 */
     display: flex;
     flex-direction: column;
+    position: relative; /* LikesOverlay 위치 조정을 위한 설정 */
+
+    @media (max-width: 530px) {
+        max-width: 100vw;
+        height: auto; /* 높이 자동 조정 */
+        aspect-ratio: auto; /* 작은 화면에서는 비율 유지 없이 자동 조정 */
+    }
 `; // 좋아요 수, Img 감싸는 큰 틀
 
 export const PostImageContainer = styled.div`
     width: 100%;
-    height: 100%; // 311px
-    border: 0.0625rem solid black; // 경계 구분용 1px
+    height: 100%;
     position: relative;
+    overflow: hidden; /* 이미지 잘리지 않도록 */
 `; // Img 감싸는 큰 틀
 
 export const PostImage = styled.img`
     width: 100%;
-    height: 100%;
+    height: auto; /* 비율을 유지하려면 height는 auto로 설정 */
+    object-fit: cover; /* 이미지가 컨테이너를 덮도록 설정, 잘릴 수 있음 */
 `;
 
 export const LikesOverlay = styled.div`
     position: absolute;
-    top: 0;
+    bottom: 0; /* 하단에 배치 */
     width: 100%;
-    height: 100%;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    box-sizing: border-box;
 `;
 
 export const HeartIcon = styled.img`

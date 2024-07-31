@@ -6,6 +6,8 @@ interface UserImgProps {
 
 export const UserInfoContainer = styled.div`
     display: flex;
+    width: 100%;
+    max-width: 32rem;
     flex-direction: column; // 전체적으로 감싸는 요소들이 세로로 정렬
     padding: 0.55rem; // 10px
 `;
@@ -13,11 +15,12 @@ export const UserInfoContainer = styled.div`
 export const UserProfile = styled.div`
     display: flex;
     flex-direction: row;
+    padding-left: 1rem;
 `;
 
 export const UserImg = styled.div<UserImgProps>`
     width: 4rem; // 72px
-    height: 4rem; // 72px
+    min-height: 4rem; // 72px
     background-color: #D9D9D9;
     background-image: url(${props => props.$imgUrl});
     background-size: cover;
@@ -39,7 +42,8 @@ export const Bio = styled.div`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    width: 19.4rem; // 350px
+    max-width: 19.4rem;
+    width: 100%;
     text-overflow: ellipsis;
 `;
 
@@ -53,27 +57,31 @@ export const ButtonContainer = styled.div`
 export const Button = styled.button<{ $color?: string, $backgroundcolor: string }>`
     display: flex;
     justify-content: center;
-    gap: 0.5rem; // 8px
+    gap: 0.5rem;
     align-items: center;
-    width: 10.25rem; // 164px
+    width: 100%;
+    max-width: 10.25rem; // 164px
     height: 2.45rem; // 44px
     color: ${({ $color }) => $color};
     background: ${({ $backgroundcolor }) => $backgroundcolor};
     border: 0.0625rem solid #000000; // 1px
     border-radius: 0.3125rem; // 5px
+    overflow: hidden; // 요소가 버튼 밖으로 나가지 않도록 함
 `;
 
 export const Icon = styled.img`
     display: display;
-    width: 1.5rem; // 24px
-    height: 1.5rem; // 24px
+    width: 100%;
+    max-width: 1.5rem; // 24px
+    height: 100%;
+    max-height: 1.5rem; // 24px
 `;
 
 export const LongButton = styled.button`
     display: flex;
     justify-content: center;
-    text-align: center;
-    width: 21rem; // 350px
+    width: 100%;
+    max-width: 21rem; // 350px
     gap: 0.5rem; // 8px
     height: 2.45rem; // 44px
     background-color: #000;
