@@ -2,8 +2,8 @@ import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { PostItemContainer, PostImageContainer, PostImage, LikesCount, HeartIcon, LikesOverlay, PinSvg} from './style';
-import HeartSvg from '../../../../assets/heart.svg';
-import PinIcon from '../../../../assets/Group 87.svg';
+import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
+import PinIcon from '../../../../assets/ProfileViewer/Group 87.svg';
 import { PostItemProps } from '../../dto';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isFixed }) => {

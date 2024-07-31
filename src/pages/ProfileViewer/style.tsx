@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import backIcon from '../../assets/backIcon.svg';
-import moreIcon from '../../assets/moreIcon.svg';
+import backIcon from '../../assets/ProfileViewer/backIcon.svg';
+import moreIcon from '../../assets/ProfileViewer/moreIcon.svg';
 
 export const ProfileViewerContainer = styled.div`
     display: flex;

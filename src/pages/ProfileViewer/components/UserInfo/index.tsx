@@ -3,9 +3,9 @@ import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContai
 import { UserInfoProps } from "../../dto";
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
-import HeartSvg from '../../../../assets/heart.svg';
-import StatSvg from '../../../../assets/star.svg';
-import MsgSvg from '../../../../assets/message_send.svg';
+import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
+import StatSvg from '../../../../assets/ProfileViewer/star.svg';
+import MsgSvg from '../../../../assets/ProfileViewer/message_send.svg';
 
 const UserInfo: React.FC<UserInfoProps> = ({userId, userBio, userImg, isFriend, isInterested}) => {
     // 최대 50자로 제한하기
