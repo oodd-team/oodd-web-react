@@ -15,7 +15,7 @@ const Login: React.FC = () => {
                     <StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 2 }}>OODD</StyledText>
                 </LogoWrapper>
                 <WelcomeWrapper>
-                    <StyledText $textTheme={{ style: 'heading2-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
+                    <StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.gray4}>
                             반가워요!
                     </StyledText>
                     <StyledText $textTheme={{ style: 'heading2-light', lineHeight: 1.5 }} color={theme.colors.gray4}>

@@ -2,11 +2,11 @@ export const mockUserData = {
     userId: "IDID",
     userBio: "Mock Data Bio입니다...",
     userImg: "https://via.placeholder.com/72",  // 임시 이미지 URL
-    isFriend: true,
-    isInterested: true,
+    isFriend: false,
+    isInterested: false,
     postsCount: 6,
     likesCount: 110,
-    fixedPostIds: [4, 5],
+    fixedPostIds: [2, 3],
     posts: [
         { id: 1, imageUrl: "https://via.placeholder.com/256x311", likes: 11 },
         { id: 2, imageUrl: "https://via.placeholder.com/256x311", likes: 20 },
