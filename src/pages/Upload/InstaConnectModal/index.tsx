@@ -5,16 +5,11 @@ import { Header, PrevButton } from '../Header';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
-import Loader from '../Loader/Loader';
+import Loader from './Loader/Loader';
 import close from '../assets/close.svg';
+import { InstaConnectModalProps } from '../dto';
 
-interface InstagramConnectModalProps {
-	onIdSelect: (id: string) => void;
-	onClose: () => void;
-	onNext: () => void;
-}
-
-const InstaConnectModal: React.FC<InstagramConnectModalProps> = ({ onIdSelect, onClose, onNext }) => {
+const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onIdSelect, onClose, onNext }) => {
 	const [instagramID, setInstagramID] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);

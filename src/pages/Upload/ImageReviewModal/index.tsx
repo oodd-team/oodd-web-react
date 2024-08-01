@@ -6,14 +6,7 @@ import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
 import plus from './assets/plus.svg';
 import remove from './assets/remove.svg';
-
-interface ImageReviewModalProps {
-	onPrev: () => void;
-	selectedImages: string[];
-	onAddImages: (images: string[]) => void;
-	onDeleteImages: (images: string[]) => void;
-	onNext: () => void;
-}
+import { ImageReviewModalProps } from '../dto';
 
 const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	onPrev,

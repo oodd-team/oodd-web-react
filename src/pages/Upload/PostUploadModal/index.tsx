@@ -14,7 +14,7 @@ import {
 	PinnedPostToggleContainer,
 } from './styles';
 import { Header, PrevButton } from '../Header';
-import { Footer, Button } from '../Footer';
+import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import SearchBottomSheet from './SearchBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
@@ -25,23 +25,7 @@ import pin from './assets/pin.svg';
 import next from './assets/next.svg';
 import next_up from './assets/next_up.svg';
 import close from './assets/close.svg';
-
-interface PostUploadModalProps {
-	onPrev: () => void;
-	selectedImages: string[];
-}
-
-interface Hashtag {
-	tag: string;
-	color: string;
-}
-
-interface ClothingInfo {
-	image: string;
-	brand: string;
-	model: string;
-	url: string;
-}
+import { PostUploadModalProps, ClothingInfo, Hashtag } from '../dto';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
 	const [caption, setCaption] = useState('');
@@ -215,13 +199,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</PinnedPostToggleContainer>
 			</Content>
 
-			<Footer>
-				<Button onClick={handleSubmit}>
-					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>
-						{isLoading ? '업로드 중...' : '공유'}
-					</StyledText>
-				</Button>
-			</Footer>
+			<BottomButton content="공유" onClick={handleSubmit} />
 
 			{isSearchSheetOpen && (
 				<SearchBottomSheet onClose={handleOpenSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />

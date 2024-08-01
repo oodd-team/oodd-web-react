@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
-import Loader from '../../Loader/Loader';
+import Loader from '../../InstaConnectModal/Loader/Loader';
 import theme from '../../../../styles/theme';
 
 interface ClothingInfo {

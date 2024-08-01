@@ -5,12 +5,7 @@ import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import close from '../assets/close.svg';
 import picture from './assets/picture.svg';
-
-interface ImageSelectModalProps {
-	selectedImages: string[];
-	onClose: () => void;
-	onSelect: (images: string[]) => void;
-}
+import { ImageSelectModalProps } from '../dto';
 
 const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onClose, onSelect }) => {
 	const [images, setImages] = useState<string[]>(selectedImages);
