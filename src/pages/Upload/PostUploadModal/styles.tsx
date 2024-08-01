@@ -35,6 +35,7 @@ export const ImageContainer = styled.div`
 	img {
 		width: 256px;
 		height: 320px;
+		aspect-ratio: 3 / 4;
 		margin-right: 10px;
 		object-fit: cover;
 
@@ -77,7 +78,6 @@ export const TagContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray1};
-	cursor: pointer;
 
 	.label {
 		padding: 0 15px;
@@ -90,6 +90,10 @@ export const TagContainer = styled.div`
 		flex-direction: row;
 		align-items: center;
 		padding: 0 20px;
+
+		&:first-child {
+			cursor: pointer;
+		}
 
 		:last-child {
 			margin-left: auto;
@@ -146,7 +150,8 @@ export const ClothingInfoItem = styled.li`
 
 	.detail {
 		margin-right: auto;
-		color: ${({ theme }) => theme.colors.gray4};
+		color: ${({ theme }) => theme.colors.gray3};
+		//overflow-x: hidden;
 	}
 
 	button {

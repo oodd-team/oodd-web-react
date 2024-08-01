@@ -111,7 +111,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 			const result = response.data;
 
-			console.log(postData);
 			console.log(result);
 			navigate('/profile');
 		} catch (error) {
@@ -156,11 +155,11 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								<ClothingInfoItem key={index}>
 									<img src={clothingObj.image} />
 									<div className="infoContainer">
-										<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
+										<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
 											{clothingObj.brand}
 										</StyledText>
-										<StyledText className="detail" $textTheme={{ style: 'body6-light', lineHeight: 1 }}>
-											{clothingObj.model}/
+										<StyledText className="detail" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+											{clothingObj.model}
 										</StyledText>
 									</div>
 									<button onClick={() => handleDeleteClothingInfo(clothingObj)}>
@@ -188,7 +187,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 							</>
 						) : (
 							<HashtagItem selected={false} color={selectedHashtag?.color}>
-								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{selectedHashtag?.tag}</StyledText>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedHashtag?.tag}</StyledText>
 							</HashtagItem>
 						)}
 					</div>
@@ -201,7 +200,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 									selected={selectedHashtag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
-									<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }}>{tagObj.tag}</StyledText>
+									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{tagObj.tag}</StyledText>
 								</HashtagItem>
 							))}
 						</HashtagList>

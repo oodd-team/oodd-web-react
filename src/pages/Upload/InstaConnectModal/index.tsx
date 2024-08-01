@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Content, Input } from './styles';
 import { Header, PrevButton } from '../Header';
-import { Footer, Button } from '../Footer';
+import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
 import Loader from '../Loader/Loader';
@@ -61,11 +61,8 @@ const InstaConnectModal: React.FC<InstagramConnectModalProps> = ({ onIdSelect, o
 				)}
 			</Content>
 
-			<Footer>
-				<Button onClick={handleConnect}>
-					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>연동하기</StyledText>
-				</Button>
-			</Footer>
+			<BottomButton content="연동하기" onClick={handleConnect} />
+
 			{isModalOpen && <FailedModal onNext={handleModalClose} instagramId={instagramID} />}
 		</>
 	);

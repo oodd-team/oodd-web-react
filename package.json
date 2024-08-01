@@ -9,7 +9,7 @@
     "build-dev": "tsc -b && vite build --outDir dist-dev",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "node": "node src/pages/PostUploadPage/server.cjs"
+    "node": "node src/pages/Upload/server.cjs"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.34",

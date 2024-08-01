@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import ProfilePage from './pages/ProfilePage';
-import PostUploadPage from './pages/PostUploadPage';
+import ProfilePage from './pages/Profile';
+import PostUploadPage from './pages/Upload';
 
 const App: React.FC = () => {
 	return (

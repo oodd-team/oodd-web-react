@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Content, PostContainer, ImageWrapper } from './styles';
 import { Header, PrevButton } from '../Header';
 import { StyledText } from '../../../components/Text/StyledText';
-import SuccessModal from './SuccessModal';
+import Modal from '../../../components/Modal';
 import close from '../assets/close.svg';
 
 interface InstaFeedSelectModalProps {
@@ -66,7 +66,13 @@ const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({
 
 	return (
 		<>
-			{isSuccessModalOpen && <SuccessModal onClose={handleSuccessModalClose} instagramId={instagramId} />}
+			{isSuccessModalOpen && (
+				<Modal
+					content={`${instagramId} 계정 연동에 성공했어요!`}
+					contentTwo="가져올 OOTD를 선택해 보세요"
+					onClose={handleSuccessModalClose}
+				/>
+			)}
 			<Header>
 				<PrevButton onClick={onClose}>
 					<img src={close} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Overlay, PageOverlay } from './styles';
+import { OODDFrame } from '../../components/Frame/Frame';
 import PostUploadModal from './PostUploadModal';
 import ImageSelectModal from './ImageSelectModal';
 import InstaConnectModal from './InstaConnectModal';
@@ -55,8 +55,14 @@ const PostUploadPage: React.FC = () => {
 	};
 
 	const handleReviewPrev = () => {
+		const state = location.state as { mode?: string };
 		setIsImageReviewModalOpen(false);
-		setIsImageSelectModalOpen(true);
+
+		if (state?.mode === 'image') {
+			setIsImageSelectModalOpen(true);
+		} else if (state?.mode === 'instagram') {
+			setIsInstaFeedSelectModalOpen(true);
+		}
 		setSelectedImages([]);
 	};
 
@@ -78,41 +84,39 @@ const PostUploadPage: React.FC = () => {
 	};
 
 	return (
-		<Overlay>
-			<PageOverlay>
-				{isImageSelectModalOpen && (
-					<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleImageSelect} />
-				)}
-				{isImageReviewModalOpen && selectedImages.length > 0 && (
-					<ImageReviewModal
-						selectedImages={selectedImages}
-						onAddImages={handleAddImages}
-						onDeleteImages={handleDeleteImages}
-						onPrev={handleReviewPrev}
-						onNext={handleOpenPostUpload}
-					/>
-				)}
-				{isInstaConnectModalOpen && (
-					<InstaConnectModal
-						onIdSelect={handleInstaIdSelect}
-						onClose={handleCloseModals}
-						onNext={handleOpenInstaFeedSelect}
-					/>
-				)}
-				{isInstaFeedSelectModalOpen && (
-					<InstaFeedSelectModal
-						instagramId={instagramId}
-						selectedImages={selectedImages}
-						onAddImages={handleAddImages}
-						onNext={handleOpenImageReview}
-						onClose={handleCloseModals}
-					/>
-				)}
-				{isPostUploadModalOpen && selectedImages.length > 0 && (
-					<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
-				)}
-			</PageOverlay>
-		</Overlay>
+		<OODDFrame>
+			{isImageSelectModalOpen && (
+				<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleImageSelect} />
+			)}
+			{isImageReviewModalOpen && selectedImages.length > 0 && (
+				<ImageReviewModal
+					selectedImages={selectedImages}
+					onAddImages={handleAddImages}
+					onDeleteImages={handleDeleteImages}
+					onPrev={handleReviewPrev}
+					onNext={handleOpenPostUpload}
+				/>
+			)}
+			{isInstaConnectModalOpen && (
+				<InstaConnectModal
+					onIdSelect={handleInstaIdSelect}
+					onClose={handleCloseModals}
+					onNext={handleOpenInstaFeedSelect}
+				/>
+			)}
+			{isInstaFeedSelectModalOpen && (
+				<InstaFeedSelectModal
+					instagramId={instagramId}
+					selectedImages={selectedImages}
+					onAddImages={handleAddImages}
+					onNext={handleOpenImageReview}
+					onClose={handleCloseModals}
+				/>
+			)}
+			{isPostUploadModalOpen && selectedImages.length > 0 && (
+				<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
+			)}
+		</OODDFrame>
 	);
 };
 

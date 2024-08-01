@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ImageSelectorContainer } from './styles';
 import { Header, PrevButton } from '../Header';
-import { Footer, Button } from '../Footer';
+import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import close from '../assets/close.svg';
 import picture from './assets/picture.svg';
@@ -56,11 +56,7 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 				<img src={picture} />
 				<input type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
 			</ImageSelectorContainer>
-			<Footer>
-				<Button onClick={handleButtonClick}>
-					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>컴퓨터에서 사진 선택</StyledText>
-				</Button>
-			</Footer>
+			<BottomButton content="컴퓨터에서 사진 선택" onClick={handleButtonClick} />
 		</>
 	);
 };

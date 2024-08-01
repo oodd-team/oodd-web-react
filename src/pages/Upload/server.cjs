@@ -19,7 +19,6 @@ app.get('/clothing', function (req, res) {
 		'&start=' +
 		req.query.start +
 		'&display=30' +
-		'&filter=category:50000002' +
 		'&exclude=used:rental';
 	const options = {
 		url: api_url,

@@ -106,6 +106,7 @@ export const SearchResultItem = styled.div`
 	height: 90px;
 	border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
 	padding: 15px 0;
+	cursor: pointer;
 
 	img {
 		width: 60px;

@@ -21,11 +21,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ onClose, onInstagramSelect, o
 				<HandleBar />
 				<OptionButton onClick={onInstagramSelect}>
 					<img src={insta} />
-					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 2 }}>인스타 피드 가져오기</StyledText>
+					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>인스타 피드 가져오기</StyledText>
 				</OptionButton>
 				<OptionButton onClick={onPhotoUploadSelect}>
 					<img src={picture} />
-					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 2 }}>사진 올리기</StyledText>
+					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>사진 올리기</StyledText>
 				</OptionButton>
 			</SheetContent>
 		</SheetContainer>

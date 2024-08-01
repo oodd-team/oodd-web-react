@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Content, ImageContainer, ImageWrapper, RemoveButton, AddButton, HiddenFileInput } from './styles';
 import { Header, PrevButton } from '../Header';
-import { Footer, Button } from '../Footer';
+import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
 import plus from './assets/plus.svg';
@@ -82,11 +82,7 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 					<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
 				</ImageContainer>
 			</Content>
-			<Footer>
-				<Button onClick={onNext}>
-					<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 2 }}>다음</StyledText>
-				</Button>
-			</Footer>
+			<BottomButton content="다음" onClick={onNext} />
 		</>
 	);
 };

@@ -29,9 +29,10 @@ export const ImageContainer = styled.div`
 
 export const ImageWrapper = styled.div`
 	position: relative;
-	max-height: 70%;
-	max-width: calc(100% - 40px);
+	height: 60%;
+	//max-height: 400px;
 	aspect-ratio: 3 / 4;
+	max-width: calc(100% - 40px);
 	margin-right: 10px;
 
 	img {
@@ -41,7 +42,7 @@ export const ImageWrapper = styled.div`
 	}
 
 	&:first-child {
-		margin-left: max(calc((100% - ((100vh - 160px) * 0.7 * 3 / 4)) / 2), 20px);
+		margin-left: max(calc((100% - ((100vh - 160px) * 0.6 * 3 / 4)) / 2), 20px);
 	}
 `;
 

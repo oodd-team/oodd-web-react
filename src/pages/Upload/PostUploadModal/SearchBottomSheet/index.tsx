@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
 import Loader from '../../Loader/Loader';
+import theme from '../../../../styles/theme';
 
 interface ClothingInfo {
 	image: string;
@@ -30,12 +31,15 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 	const fetchSearchResult = async (searchQuery: string, start: number) => {
 		try {
 			//프록시 서버 사용
-			const response = await axios.get('http://localhost:3001/clothing', {
-				params: {
-					query: searchQuery,
-					start: start,
+			const response = await axios.get(
+				'https://0dd3w25c7c.execute-api.ap-northeast-2.amazonaws.com/default/getNaverShopping',
+				{
+					params: {
+						query: searchQuery,
+						start: start,
+					},
 				},
-			});
+			);
 
 			if (response.status === 200 && response.data.items) {
 				return response.data;
@@ -134,7 +138,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 		onSelectClothingInfo({
 			image: item.image,
 			brand: item.brand,
-			model: item.title.replace(/<[^>]+>/g, ''), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
+			model: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
 			url: item.link,
 		});
 		onClose();
@@ -142,6 +146,18 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 
 	const handleCloseSheet = (e: React.MouseEvent<HTMLDivElement>) => {
 		onClose();
+	};
+
+	const removeBrandFromTitle = (title: string, brand: string) => {
+		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
+		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		// 변환된 브랜드 이름을 대소문자 구분 없이(g) 모든 위치에서(i) 찾기 위한 정규 표현식 생성
+		const regex = new RegExp(escapedBrand, 'gi');
+		// 제목에서 브랜드 이름과 HTML 태그를 제거하고 양쪽 끝의 공백을 제거하여 반환
+		return title
+			.replace(/<[^>]+>/g, '')
+			.replace(regex, '')
+			.trim();
 	};
 
 	return (
@@ -171,8 +187,15 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 							<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
 								<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
 								<div className="infoContainer">
-									<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
-										{searchResultItem.title.replace(/<[^>]+>/g, '')}
+									<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
+										{searchResultItem.brand}
+									</StyledText>
+									<StyledText
+										className="detail"
+										$textTheme={{ style: 'body2-light', lineHeight: 1 }}
+										color={theme.colors.gray3}
+									>
+										{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
 									</StyledText>
 								</div>
 							</SearchResultItem>
