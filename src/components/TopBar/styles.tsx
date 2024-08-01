@@ -1,8 +1,7 @@
 import styled from 'styled-components';
+import { TopbarLayoutProps } from './dto';
 
-export const TopbarLayout = styled.div`
-	position: fixed;
-	top: 0;
+export const TopbarLayout = styled.div<TopbarLayoutProps>`
 	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
 	width: 100%;
@@ -10,7 +9,15 @@ export const TopbarLayout = styled.div`
 	height: 2.75rem;
 	justify-contents: space-evenly;
 	align-items: center;
-	border-bottom: solid 1px ${({ theme }) => theme.colors.gray2};
+	${({ $withBorder, theme }) => $withBorder && `
+		border-bottom: solid 1px ${theme.colors.gray2};
+	`}
+`;
+
+export const TextLayout= styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 export const BackButton = styled.img`
@@ -31,4 +38,5 @@ export const KebabMenuButton = styled.img`
 	background-position: center;
 	margin: auto;
 	margin-right: 1.125rem;
+	visibility: ${props => props.src ? 'visible' : 'hidden'};
 `;

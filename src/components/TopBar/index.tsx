@@ -1,28 +1,45 @@
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import { TopbarLayout, BackButton, KebabMenuButton } from './styles';
+import { TopbarLayout,TextLayout, BackButton, KebabMenuButton } from './styles';
 import { useNavigate } from 'react-router-dom';
-import Back from '../../../assets/Chats/Back.svg';
-import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
+import { TopBarProps } from './dto';
 
-const TopBar: React.FC = () => {
+
+const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', kebabMenuSrc, BackIcon, onBackClick, onKebabClick  }) => {
 	const nav = useNavigate();
 
 	return (
-		<TopbarLayout>
+		<TopbarLayout $withBorder={false}> {/*border-bottom 유무*/}
 			<BackButton
-				src={Back}
-				alt="back"
-				onClick={() => {
-					nav(-1);
-				}}
-			/>
-			<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.black}>
-				IDID
-			</StyledText>
-			<KebabMenuButton src={KebabMenu} alt="menu" onClick={() => {}} />
-		</TopbarLayout>
-	);
+			src={BackIcon || ''}
+			alt="back"
+			onClick={() => {
+			if (onBackClick) {
+				onBackClick();
+			} else {
+				nav(-1);
+			}
+			}}
+      	/>
+			<TextLayout>
+				<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+					{ID}
+				</StyledText>
+				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+					{text}
+				</StyledText>
+			</TextLayout>
+			<KebabMenuButton
+			src={kebabMenuSrc || ''} // 이미지 사용 || 이미지 사용 X
+			alt="menu"
+			onClick={() => {
+			if (onKebabClick) {
+				onKebabClick();
+			}
+			}}
+      />
+    </TopbarLayout>
+  );
 };
 
 export default TopBar;
