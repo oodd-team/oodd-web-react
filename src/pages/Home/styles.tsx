@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const HomeContainer = styled.div`
 	flex-grow: 1;
 	height: auto;
+	width: 100%;
 `;
 
 // HomeTopBar
@@ -19,7 +20,6 @@ export const HomeTopBarContainer = styled.div`
 	z-index: 10;
 	align-items: center;
 	position: fixed;
-	width: 100%;
 `;
 
 export const HomeLogo = styled.img`
@@ -42,15 +42,16 @@ export const NotiIcon = styled.img`
 export const TabLayout = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	height: auto;
 `;
 
 export const HomeTabBarLayout = styled.div`
 	position: fixed;
 	width: 100%;
+	max-width: 32rem;
 	background-color: white;
 	z-index: 10;
-	max-width: 32rem;
 	top: 2.75rem;
 	height: 2.5rem;
 	border-bottom: 0.063rem solid ${({ theme }) => theme.colors.gray2};
