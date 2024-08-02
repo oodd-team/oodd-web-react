@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ImageSelectorContainer = styled.div`
+export const ImageDragDropContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -20,6 +20,10 @@ export const ImageSelectorContainer = styled.div`
 		font-size: 80px;
 		color: ${({ theme }) => theme.colors.gray3};
 		margin-top: 30px;
+	}
+
+	&.active svg {
+		color: ${({ theme }) => theme.colors.black};
 	}
 
 	input {
