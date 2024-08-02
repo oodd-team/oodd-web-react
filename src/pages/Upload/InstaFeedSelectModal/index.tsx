@@ -4,7 +4,7 @@ import { Header, PrevButton } from '../Header';
 import { StyledText } from '../../../components/Text/StyledText';
 import Modal from '../../../components/Modal';
 import close from '../assets/close.svg';
-import { InstaFeedSelectModalProps, Post } from '../dto';
+import { InstaFeedSelectModalProps, Post } from './dto';
 
 const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({
 	instagramId,

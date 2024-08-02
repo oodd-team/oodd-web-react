@@ -4,7 +4,7 @@ import { Header, PrevButton } from '../Header';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
-import { ImageReviewModalProps } from '../dto';
+import { ImageReviewModalProps } from './dto';
 import ImageSwiper from './ImageSwiper';
 
 const ImageReviewModal: React.FC<ImageReviewModalProps> = ({

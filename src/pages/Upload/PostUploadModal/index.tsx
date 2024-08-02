@@ -26,7 +26,7 @@ import pin from '../assets/pin.svg';
 import next from '../assets/next.svg';
 import next_up from '../assets/next_up.svg';
 import close from '../assets/close2.svg';
-import { PostUploadModalProps, ClothingInfo, Hashtag } from '../dto';
+import { PostUploadModalProps, ClothingInfo, Hashtag } from './dto';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
 	const [caption, setCaption] = useState('');
