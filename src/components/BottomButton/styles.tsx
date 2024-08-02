@@ -10,6 +10,7 @@ export const ButtonWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.white};
 	justify-content: flex-end;
 	z-index: 1;
+	border: none;
 `;
 
 export const Button = styled.button`

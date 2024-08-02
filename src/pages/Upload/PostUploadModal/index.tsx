@@ -19,12 +19,12 @@ import { StyledText } from '../../../components/Text/StyledText';
 import SearchBottomSheet from './SearchBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
 import back from '../assets/back.svg';
-import clothingTag from './assets/clothingTag.svg';
-import styleTag from './assets/styleTag.svg';
-import pin from './assets/pin.svg';
-import next from './assets/next.svg';
-import next_up from './assets/next_up.svg';
-import close from './assets/close.svg';
+import clothingTag from '../assets/clothingTag.svg';
+import styleTag from '../assets/styleTag.svg';
+import pin from '../assets/pin.svg';
+import next from '../assets/next.svg';
+import next_up from '../assets/next_up.svg';
+import close from '../assets/close2.svg';
 import { PostUploadModalProps, ClothingInfo, Hashtag } from '../dto';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
@@ -80,7 +80,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		};
 
 		console.log(postData);
+		navigate('/profile');
 
+		/*
 		try {
 			setIsLoading(true);
 			const response = await axios.post('http://localhost:3001/posts', postData, {
@@ -102,6 +104,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		} finally {
 			setIsLoading(false);
 		}
+		*/
 	};
 
 	return (

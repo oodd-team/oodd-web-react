@@ -1110,6 +1110,13 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
+dom7@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-3.0.0.tgz#b861ce5d67a6becd7aaa3ad02942ff14b1240331"
+  integrity sha512-oNlcUdHsC4zb7Msx7JN3K0Nro1dzJ48knvBOnDPKJ2GV9wl1i5vydJZUSyOfrkKFDZEud/jBsTk92S/VGSAe/g==
+  dependencies:
+    ssr-window "^3.0.0-alpha.1"
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -2384,6 +2391,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^3.0.0, ssr-window@^3.0.0-alpha.1:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-3.0.0.tgz#fd5b82801638943e0cc704c4691801435af7ac37"
+  integrity sha512-q+8UfWDg9Itrg0yWK7oe5p/XRCJpJF9OBtXfOPgSJl+u3Xd5KI328RUEvUqSMVM9CiQUEf1QdBzJMkYGErj9QA==
+
 statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"
@@ -2440,10 +2452,13 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-swiper@^11.1.5:
-  version "11.1.5"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.1.5.tgz#fac11a45e34f571e73e89cb232165a146e716943"
-  integrity sha512-JJQWFXdxiMGC2j6ZGTYat5Z7NN9JORJBgHp0/joX9uPod+cRj0wr5H5VnWSNIz9JeAamQvYKaG7aFrGHIF9OEg==
+swiper@6.8.4:
+  version "6.8.4"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-6.8.4.tgz#938fed4144f4d7952fbf9c44e5832d133a4de794"
+  integrity sha512-O+buF9Q+sMA0H7luMS8R59hCaJKlpo8PXhQ6ZYu6Rn2v9OsFd4d1jmrv14QvxtQpKAvL/ZiovEeANI/uDGet7g==
+  dependencies:
+    dom7 "^3.0.0"
+    ssr-window "^3.0.0"
 
 synckit@^0.9.1:
   version "0.9.1"

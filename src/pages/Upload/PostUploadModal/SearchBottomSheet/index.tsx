@@ -28,6 +28,10 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 	const [scrollPosition, setScrollPosition] = useState(0);
 
+	const handleInputChange = (query: string) => {
+		setSearchQuery(query);
+	};
+
 	const fetchSearchResult = async (searchQuery: string, start: number) => {
 		try {
 			//프록시 서버 사용
@@ -125,14 +129,10 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 		};
 	}, [start, reachedEnd, searchQuery, isLoading]);
 
-	// 스크롤 위치를 유지하도록 추가된 부분
+	// 스크롤 위치 유지
 	useEffect(() => {
 		window.scrollTo(0, scrollPosition);
 	}, [searchResult]);
-
-	const handleInputChange = (query: string) => {
-		setSearchQuery(query);
-	};
 
 	const handleAddClothingInfo = (item: any) => {
 		onSelectClothingInfo({
@@ -144,20 +144,20 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 		onClose();
 	};
 
-	const handleCloseSheet = (e: React.MouseEvent<HTMLDivElement>) => {
-		onClose();
-	};
-
 	const removeBrandFromTitle = (title: string, brand: string) => {
 		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
 		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 		// 변환된 브랜드 이름을 대소문자 구분 없이(g) 모든 위치에서(i) 찾기 위한 정규 표현식 생성
 		const regex = new RegExp(escapedBrand, 'gi');
-		// 제목에서 브랜드 이름과 HTML 태그를 제거하고 양쪽 끝의 공백을 제거하여 반환
+		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거하여 반환
 		return title
 			.replace(/<[^>]+>/g, '')
 			.replace(regex, '')
 			.trim();
+	};
+
+	const handleCloseSheet = (e: React.MouseEvent<HTMLDivElement>) => {
+		onClose();
 	};
 
 	return (

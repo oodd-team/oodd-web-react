@@ -66,7 +66,7 @@ export const AddButton = styled.button`
 	justify-content: center;
 	cursor: pointer;
 	border-radius: 50%;
-	margin: 0 40px 0 30px;
+	padding: 0 40px 0 30px;
 
 	&:hover {
 		border-color: #666;

@@ -1,12 +1,11 @@
 import React, { useRef } from 'react';
-import { Content, ImageContainer, ImageWrapper, RemoveButton, AddButton, HiddenFileInput } from './styles';
+import { Content } from './styles';
 import { Header, PrevButton } from '../Header';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
-import plus from './assets/plus.svg';
-import remove from './assets/remove.svg';
 import { ImageReviewModalProps } from '../dto';
+import ImageSwiper from './ImageSwiper';
 
 const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	onPrev,
@@ -16,25 +15,6 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	onNext,
 }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files) {
-			const filesArray = Array.from(event.target.files);
-			const newImages: string[] = [];
-			filesArray.forEach((file) => {
-				const reader = new FileReader();
-				reader.onloadend = () => {
-					if (reader.result) {
-						newImages.push(reader.result.toString());
-						if (newImages.length === filesArray.length) {
-							onAddImages(newImages);
-						}
-					}
-				};
-				reader.readAsDataURL(file);
-			});
-		}
-	};
 
 	const handleAddImageClick = () => {
 		if (fileInputRef.current) {
@@ -58,22 +38,7 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
 			</Header>
 			<Content>
-				<ImageContainer>
-					{selectedImages.map((image, index) => (
-						<ImageWrapper key={index}>
-							<img src={image} alt={`Selected ${index}`} />
-							{selectedImages.length > 1 && (
-								<RemoveButton onClick={() => handleRemoveImage(image)}>
-									<img src={remove} />
-								</RemoveButton>
-							)}
-						</ImageWrapper>
-					))}
-					<AddButton onClick={handleAddImageClick}>
-						<img src={plus} />
-					</AddButton>
-					<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
-				</ImageContainer>
+				<ImageSwiper images={selectedImages} onRemove={handleRemoveImage} onAddImages={onAddImages} />
 			</Content>
 			<BottomButton content="다음" onClick={onNext} />
 		</>
