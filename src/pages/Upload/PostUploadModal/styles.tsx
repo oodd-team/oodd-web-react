@@ -65,10 +65,41 @@ export const StyledInput = styled.textarea`
 	}
 
 	::placeholder {
-		font-size: 1rem;
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Pretendard Variable';
-		font-weight: light;
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Firefox */
+	&:-moz-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Internet Explorer 10-11 */
+	&:-ms-input-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Edge */
+	&::-ms-input-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Safari */
+	&::placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
 		font-size: 16px;
 	}
 `;

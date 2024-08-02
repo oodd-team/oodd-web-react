@@ -14,14 +14,6 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 	onDeleteImages,
 	onNext,
 }) => {
-	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	const handleAddImageClick = () => {
-		if (fileInputRef.current) {
-			fileInputRef.current.click();
-		}
-	};
-
 	const handleRemoveImage = (image: string) => {
 		if (selectedImages.length > 1) {
 			const newImages = selectedImages.filter((img) => img !== image);

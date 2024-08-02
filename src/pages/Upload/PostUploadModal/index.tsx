@@ -16,6 +16,7 @@ import {
 import { Header, PrevButton } from '../Header';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
+import ImageSwiper from './ImageSwiper';
 import SearchBottomSheet from './SearchBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
 import back from '../assets/back.svg';
@@ -117,11 +118,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			</Header>
 
 			<Content>
-				<ImageContainer>
-					{selectedImages.map((image, index) => (
-						<img src={image} alt={`Selected ${index}`} key={index} />
-					))}
-				</ImageContainer>
+				<ImageSwiper images={selectedImages} />
 				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
 					<div onClick={handleOpenSearchSheet}>
