@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
+import { StyledText } from '../../../components/Text/StyledText';
+import theme from '../../../styles/theme';
 import { TabBarLayout, TabBarContainer, TabBox } from './styles';
 
 interface TabBarProps {

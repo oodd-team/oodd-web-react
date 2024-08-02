@@ -3,7 +3,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { Header } from './styles';
 import theme from '../../styles/theme';
 import NavBar from '../../components/NavBar';
-import TabBar from '../../components/TabBar';
+import TabBar from './TabBar';
 import RecentChat from './RecentChat';
 import Request from './Request';
 
