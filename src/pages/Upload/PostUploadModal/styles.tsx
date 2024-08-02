@@ -17,34 +17,6 @@ export const Content = styled.div`
 	}
 `;
 
-export const ImageContainer = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
-	min-height: 380px;
-	padding: 30px 0;
-	overflow-x: scroll;
-
-	// 스크롤바 스타일 없애기
-	scrollbar-width: none; // Firefox
-	-ms-overflow-style: none; // IE 10+
-	&::-webkit-scrollbar {
-		display: none; // Safari & Chrome
-	}
-
-	img {
-		width: 256px;
-		height: 320px;
-		aspect-ratio: 3 / 4;
-		margin-right: 10px;
-		object-fit: cover;
-
-		&:first-child {
-			margin-left: calc((100% - 256px) / 2);
-		}
-	}
-`;
-
 export const StyledInput = styled.textarea`
 	width: calc(100% - 40px);
 	min-height: 50px;
@@ -163,7 +135,7 @@ export const ClothingInfoItem = styled.li`
 	> img {
 		width: 56px;
 		height: 56px;
-		border-radius: 10px;
+		border-radius: 5px;
 		border: none;
 	}
 
@@ -214,9 +186,9 @@ export const HashtagItem = styled.span<{ selected: boolean }>`
 	padding: 0 16px;
 	background-color: ${({ color }) => color};
 	color: black;
-	//border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
-	border-radius: 10px;
-	box-shadow: ${({ selected }) => (selected ? `0px 0px 8px rgba(0, 0, 0, 0.2)` : 'none')};
+	border: ${({ selected }) => (selected ? `solid 1px black` : 'none')};
+	border-radius: 5px;
+	//box-shadow: ${({ selected }) => (selected ? `0px 0px 8px rgba(0, 0, 0, 0.2)` : 'none')};
 	cursor: pointer;
 `;
 

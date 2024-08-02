@@ -13,13 +13,16 @@ export const ImageDragDropContainer = styled.div`
 	left: 0;
 
 	div {
-		margin-bottom: 30px;
+		margin-bottom: 120px;
 	}
 
 	svg {
 		font-size: 80px;
 		color: ${({ theme }) => theme.colors.gray3};
-		margin-top: 30px;
+	}
+
+	:nth-child(2) {
+		margin-bottom: 100px;
 	}
 
 	&.active svg {

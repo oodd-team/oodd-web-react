@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
-import Loader from '../../InstaConnectModal/Loader/Loader';
 import theme from '../../../../styles/theme';
 
 interface ClothingInfo {
@@ -201,7 +200,11 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 							</SearchResultItem>
 						))}
 						<div className="ref" ref={loadMoreRef}></div>
-						{isLoading && <Loader />}
+						{isLoading && (
+							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
+								로딩 중
+							</StyledText>
+						)}
 					</SearchResultList>
 				) : null}
 			</SheetContent>

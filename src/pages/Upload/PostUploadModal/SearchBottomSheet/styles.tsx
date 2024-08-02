@@ -59,7 +59,7 @@ export const SheetContent = styled.div`
 		border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
 
 		div {
-			margin-left: 10px;
+			padding: 20px 0 20px 20px;
 			color: ${({ theme }) => theme.colors.black};
 			cursor: pointer;
 		}
@@ -73,11 +73,50 @@ export const Input = styled.input`
 	text-align: left;
 	font-size: 16px;
 	background-color: ${({ theme }) => theme.colors.gray1};
-	border: none;
-	border-radius: 10px;
+	border: 1px solid ${({ theme }) => theme.colors.gray2};
+	border-radius: 5px;
 
 	&:focus {
 		outline: none;
+	}
+
+	::placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Firefox */
+	&:-moz-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Internet Explorer 10-11 */
+	&:-ms-input-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Edge */
+	&::-ms-input-placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
+	}
+
+	/* Safari */
+	&::placeholder {
+		color: ${({ theme }) => theme.colors.gray3};
+		font-family: 'Pretendard Variable';
+		font-weight: 300;
+		font-size: 16px;
 	}
 `;
 
@@ -111,7 +150,7 @@ export const SearchResultItem = styled.div`
 	img {
 		width: 60px;
 		height: 60px;
-		border-radius: 10px;
+		border-radius: 5px;
 		aspect-ratio: 1 / 1;
 		object-fit: cover;
 	}
