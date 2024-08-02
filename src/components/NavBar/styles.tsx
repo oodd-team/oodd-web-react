@@ -17,8 +17,8 @@ export const NavBarContainer = styled.nav`
 
 export const NavBarWrapper = styled.div`
 	display: flex;
-	margin: 0.5rem 3.563rem 0;
-	justify-content: space-between;
+	margin-top: 0.5rem;
+	justify-content: space-around;
 `;
 
 export const IconWrapper = styled.div`
