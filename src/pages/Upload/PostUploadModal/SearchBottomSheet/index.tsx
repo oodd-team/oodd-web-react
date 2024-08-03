@@ -1,20 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem } from './styles';
+import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem, Loader } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-
-interface ClothingInfo {
-	image: string;
-	brand: string;
-	model: string;
-	url: string;
-}
-
-interface BottomSheetProps {
-	onClose: () => void;
-	onSelectClothingInfo: (clothingInfo: ClothingInfo) => void;
-}
+import { BottomSheetProps } from '../dto';
 
 const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothingInfo }) => {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -22,10 +11,8 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 	const [start, setStart] = useState(1);
 	const [reachedEnd, setReachedEnd] = useState(false);
 	const [searchResult, setSearchResult] = useState<any[]>([]);
-	const [total, setTotal] = useState(0);
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
-	const [scrollPosition, setScrollPosition] = useState(0);
 
 	const handleInputChange = (query: string) => {
 		setSearchQuery(query);
@@ -62,12 +49,10 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 			setSearchResult([]);
 			setStart(1);
 			setReachedEnd(false);
-			setTotal(0);
 
 			if (searchQuery) {
 				fetchSearchResult(searchQuery, 1).then((data) => {
 					if (data) {
-						setTotal(data.total);
 						setSearchResult(data.items);
 					} else {
 						setReachedEnd(true);
@@ -91,11 +76,10 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 
 				if (data) {
 					setSearchResult((prevResult) => [...prevResult, ...data.items]);
-					setStart((prevStart) => prevStart + 30);
+					setStart((prevStart) => prevStart + 20);
 				} else {
 					setReachedEnd(true);
 				}
-				setScrollPosition(window.scrollY);
 				setIsLoading(false);
 			}
 		};
@@ -126,12 +110,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 		return () => {
 			if (observerRef.current) observerRef.current.disconnect();
 		};
-	}, [start, reachedEnd, searchQuery, isLoading]);
-
-	// 스크롤 위치 유지
-	useEffect(() => {
-		window.scrollTo(0, scrollPosition);
-	}, [searchResult]);
+	}, [reachedEnd, searchQuery, isLoading, searchResult]);
 
 	const handleAddClothingInfo = (item: any) => {
 		onSelectClothingInfo({
@@ -146,12 +125,15 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 	const removeBrandFromTitle = (title: string, brand: string) => {
 		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
 		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		// 변환된 브랜드 이름을 대소문자 구분 없이(g) 모든 위치에서(i) 찾기 위한 정규 표현식 생성
-		const regex = new RegExp(escapedBrand, 'gi');
-		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거하여 반환
+		// 브랜드 이름을 감싸고 있는 [ ]를 제거
+		const bracketRegex = new RegExp(`[\\[\\]()<>]*${escapedBrand}[\\[\\]()<>]*`, 'gi'); //gi: 대소문자 구분 없이(g) 모든 위치에서(i)
+		// 변환된 브랜드 이름을 제거
+		const brandRegex = new RegExp(escapedBrand, 'gi');
+		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거
 		return title
 			.replace(/<[^>]+>/g, '')
-			.replace(regex, '')
+			.replace(bracketRegex, '')
+			.replace(brandRegex, '')
 			.trim();
 	};
 
@@ -175,13 +157,6 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 				</div>
 				{searchQuery && searchResult.length > 0 ? (
 					<SearchResultList>
-						{total > 1 && (
-							<div>
-								<StyledText className="total" $textTheme={{ style: 'body4-light', lineHeight: 1 }}>
-									{total}
-								</StyledText>
-							</div>
-						)}
 						{searchResult.map((searchResultItem, index) => (
 							<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
 								<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
@@ -201,9 +176,11 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 						))}
 						<div className="ref" ref={loadMoreRef}></div>
 						{isLoading && (
-							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
-								로딩 중
-							</StyledText>
+							<Loader>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
+									로딩 중
+								</StyledText>
+							</Loader>
 						)}
 					</SearchResultList>
 				) : null}

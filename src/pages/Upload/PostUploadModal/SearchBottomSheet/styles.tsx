@@ -133,7 +133,7 @@ export const SearchResultList = styled.div`
 	}
 
 	.ref {
-		min-height: 5px;
+		min-height: 20px;
 		width: 100%;
 	}
 `;
@@ -176,4 +176,12 @@ export const SearchResultItem = styled.div`
 	&:last-child {
 		border-bottom: none;
 	}
+`;
+
+export const Loader = styled.div`
+	display: flex;
+	width: 100%;
+	height: 30px;
+	align-items: center;
+	justify-content: center;
 `;

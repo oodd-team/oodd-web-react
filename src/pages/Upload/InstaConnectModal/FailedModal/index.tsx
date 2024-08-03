@@ -1,13 +1,9 @@
 import React from 'react';
 import { ModalWrapper, ModalContent } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
+import { FailedModalProps } from '../dto';
 
-interface ModalProps {
-	onNext: () => void;
-	instagramId: string;
-}
-
-const FailedModal: React.FC<ModalProps> = ({ onNext, instagramId }) => {
+const FailedModal: React.FC<FailedModalProps> = ({ onNext, instagramId }) => {
 	const handleButtonClick = () => {
 		onNext();
 	};

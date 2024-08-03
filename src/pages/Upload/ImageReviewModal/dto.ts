@@ -5,3 +5,9 @@ export interface ImageReviewModalProps {
 	onDeleteImages: (images: string[]) => void;
 	onNext: () => void;
 }
+
+export interface ImageSwiperProps {
+	images: string[];
+	onRemove: (image: string) => void;
+	onAddImages: (images: string[]) => void;
+}

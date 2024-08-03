@@ -3,3 +3,8 @@ export interface InstaConnectModalProps {
 	onClose: () => void;
 	onNext: () => void;
 }
+
+export interface FailedModalProps {
+	onNext: () => void;
+	instagramId: string;
+}

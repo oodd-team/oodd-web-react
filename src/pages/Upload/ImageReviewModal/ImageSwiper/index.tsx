@@ -6,14 +6,9 @@ import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButto
 import remove from '../../assets/remove.svg';
 import plus from '../../assets/plus.svg';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { ImageSwiperProps } from '../dto';
 
 SwiperCore.use([Navigation, Pagination]);
-
-interface ImageSwiperProps {
-	images: string[];
-	onRemove: (image: string) => void;
-	onAddImages: (images: string[]) => void;
-}
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);

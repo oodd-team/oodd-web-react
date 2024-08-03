@@ -14,3 +14,18 @@ export interface ClothingInfo {
 	model: string;
 	url: string;
 }
+
+export interface ImageSwiperProps {
+	images: string[];
+}
+
+export interface BottomSheetProps {
+	onClose: () => void;
+	onSelectClothingInfo: (clothingInfo: ClothingInfo) => void;
+}
+
+export interface ToggleSwitchProps {
+	checked: boolean;
+	onChange: () => void;
+	disabled?: boolean;
+}
