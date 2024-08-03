@@ -154,7 +154,9 @@ const ChatRoom: React.FC = () => {
 				{newMockMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>
-							{message.isNewDate && <DateBar formattedDate={message.timestamp.format('YYYY년 MM월 DD일 dddd')} />}
+							{message.isNewDate && (
+								<DateBar formattedDate={message.timestamp.locale('ko').format('YYYY년 MM월 DD일 dddd')} />
+							)}
 							{message.sentMessage ? (
 								<SentMessage {...message.sentMessage} />
 							) : message.rcvdMessage ? (
