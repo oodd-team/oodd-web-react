@@ -31,6 +31,7 @@ export const ContentBox = styled.div`
 	flex: 1;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 `;
 
 export const ButtonContainer = styled.div`

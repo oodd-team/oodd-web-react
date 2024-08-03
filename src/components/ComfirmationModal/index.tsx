@@ -20,7 +20,11 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 		>
 			<ConfirmationModalLayout>
 				<ContentBox>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
+					<StyledText
+						style={{ whiteSpace: 'pre-line' }}
+						$textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}
+						color={theme.colors.black}
+					>
 						{content}
 					</StyledText>
 				</ContentBox>

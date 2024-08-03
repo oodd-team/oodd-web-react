@@ -8,7 +8,7 @@ const ConfirmationModalTest: React.FC = () => {
 	const [modalWithoutCancle, setModalWithoutCancle] = useState(false);
 
 	const modalWithCancleProps: ConfirmationModalProps = {
-		content: '취소 버튼이 있는 모달입니다',
+		content: '취소 버튼이 있는 모달입니다\n개행은 이렇게 해 주세요',
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',
