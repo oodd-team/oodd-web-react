@@ -5,9 +5,11 @@ export const OODDFrame = styled.div`
 	background-color: #ffffff;
 	max-width: 512px;
 	min-height: 844px;
-	height: auto;
+	//height: auto;
+	height: 100vh;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	position: relative;
 `;

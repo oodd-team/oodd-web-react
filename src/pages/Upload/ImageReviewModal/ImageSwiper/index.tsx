@@ -69,7 +69,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 						</ImageWrapper>
 					</SwiperSlide>
 				))}
-				<SwiperSlide className="add-btn">
+				<SwiperSlide className="add-btn-box">
 					<AddButton onClick={handleAddImageClick}>
 						<img src={plus} />
 					</AddButton>

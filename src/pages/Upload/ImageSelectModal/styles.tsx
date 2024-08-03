@@ -8,7 +8,7 @@ export const ImageDragDropContainer = styled.div`
 	text-align: center;
 	width: 100%;
 	height: calc(100% - 160px);
-	position: fixed;
+	position: absolute;
 	top: 60px;
 	left: 0;
 

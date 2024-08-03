@@ -1,7 +1,8 @@
 // src/pages/ProfilePage/index.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Overlay, PageOverlay, AddButton } from './styles';
+import { AddButton } from './styles';
+import { OODDFrame } from '../../components/Frame/Frame';
 import BottomSheet from './BottomSheet';
 import button_plus from './assets/button_plus.svg';
 
@@ -28,20 +29,18 @@ const ProfilePage: React.FC = () => {
 	};
 
 	return (
-		<Overlay>
-			<PageOverlay>
-				<AddButton onClick={handleOpenSheet}>
-					<img src={button_plus} />
-				</AddButton>
-				{isSheetOpen && (
-					<BottomSheet
-						onClose={handleCloseSheet}
-						onInstagramSelect={handleInstagramSelect}
-						onPhotoUploadSelect={handlePhotoUploadSelect}
-					/>
-				)}
-			</PageOverlay>
-		</Overlay>
+		<OODDFrame>
+			<AddButton onClick={handleOpenSheet}>
+				<img src={button_plus} />
+			</AddButton>
+			{isSheetOpen && (
+				<BottomSheet
+					onClose={handleCloseSheet}
+					onInstagramSelect={handleInstagramSelect}
+					onPhotoUploadSelect={handlePhotoUploadSelect}
+				/>
+			)}
+		</OODDFrame>
 	);
 };
 

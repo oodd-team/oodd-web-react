@@ -20,7 +20,7 @@ const slideDown = keyframes`
 `;
 
 export const SheetContainer = styled.div`
-	position: relative;
+	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;

@@ -44,13 +44,21 @@ export const StyledNavigation = styled.button`
 	top: 50%;
 	transform: translateY(-50%);
 	color: white;
-	width: 30px;
-	height: 30px;
-	margin: 0 60px;
+	width: 50px;
+	height: 50px;
+	padding: 10px;
 
 	&::after {
 		font-size: 20px;
 		color: white;
+	}
+
+	&.swiper-button-prev {
+		margin: 0 0 0 max(calc((100% - 247px) / 2 - 20px), 50px);
+	}
+
+	&.swiper-button-next {
+		margin: 0 max(calc((100% - 247px) / 2 - 20px), 50px) 0 0;
 	}
 `;
 
