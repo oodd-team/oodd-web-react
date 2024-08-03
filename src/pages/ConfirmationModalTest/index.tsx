@@ -17,7 +17,7 @@ const ConfirmationModalTest: React.FC = () => {
 				console.log('차단되었습니다.');
 			},
 		},
-		onClickBackground: () => {
+		onCloseModal: () => {
 			setModalWithCancle(false);
 		},
 	};
@@ -32,7 +32,7 @@ const ConfirmationModalTest: React.FC = () => {
 				console.log('차단되었습니다.');
 			},
 		},
-		onClickBackground: () => {
+		onCloseModal: () => {
 			setModalWithoutCancle(false);
 		},
 	};

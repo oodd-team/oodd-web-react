@@ -7,14 +7,14 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 	content,
 	isCancelButtonVisible,
 	confirm,
-	onClickBackground,
+	onCloseModal,
 }) => {
 	return (
 		<ConfirmationModalWrapper
 			onClick={(e) => {
 				// Modal 외부를 클릭했을 경우 Modal 닫음
 				if (e.target === e.currentTarget) {
-					onClickBackground();
+					onCloseModal();
 				}
 			}}
 		>
@@ -29,7 +29,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 						<>
 							<Button
 								onClick={() => {
-									onClickBackground();
+									onCloseModal();
 								}}
 							>
 								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
