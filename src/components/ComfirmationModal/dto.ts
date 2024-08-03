@@ -5,6 +5,7 @@ export interface Confirm {
 
 export interface ConfirmationModalProps {
 	content: string; // 모달 내용
-	confirms: Confirm[]; // 하단 버튼 배열
+	isCancelButtonVisible: boolean; // 취소 버튼 유무
+	confirm: Confirm; // 하단 버튼 배열
 	onClickBackground: () => void; // 모달 닫는 함수
 }

@@ -1,9 +1,14 @@
 import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { ConfirmationModalLayout, ConfirmationModalWrapper, ContentBox, ButtonContainer, Button } from './styles';
-import { Confirm, ConfirmationModalProps } from './dto';
+import { ConfirmationModalProps } from './dto';
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ content, confirms, onClickBackground }) => {
+const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+	content,
+	isCancelButtonVisible,
+	confirm,
+	onClickBackground,
+}) => {
 	return (
 		<ConfirmationModalWrapper
 			onClick={(e) => {
@@ -20,18 +25,25 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ content, confirms
 					</StyledText>
 				</ContentBox>
 				<ButtonContainer>
-					{confirms.map((confirm: Confirm, index: number) => (
-						<div key={index} style={{ display: 'flex', flex: '1' }}>
-							<Button onClick={confirm.action}>
+					{isCancelButtonVisible && (
+						<>
+							<Button
+								onClick={() => {
+									onClickBackground();
+								}}
+							>
 								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
-									{confirm.text}
+									취소
 								</StyledText>
 							</Button>
-							{index < confirms.length - 1 && (
-								<div style={{ height: '100%', borderRight: '1px solid rgba(0,0,0,0.3)', margin: 'auto' }} />
-							)}
-						</div>
-					))}
+							<div style={{ height: '100%', borderRight: '1px solid rgba(0,0,0,0.3)', margin: 'auto' }} />
+						</>
+					)}
+					<Button onClick={confirm.action}>
+						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={'#F00'}>
+							{confirm.text}
+						</StyledText>
+					</Button>
 				</ButtonContainer>
 			</ConfirmationModalLayout>
 		</ConfirmationModalWrapper>
