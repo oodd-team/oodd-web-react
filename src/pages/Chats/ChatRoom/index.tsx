@@ -15,7 +15,7 @@ import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import { OODDFrame } from '../../../components/Frame/Frame';
-import { MessageDto, ExtendedMessageDto } from '../dto';
+import { MessageDto, ExtendedMessageDto, SentMessageProps, RcvdMessageProps } from '../dto';
 import { SheetItemDto } from '../../../components/SheetItemWithDivider/dto';
 import { ConfirmationModalDto } from '../../../components/ConfirmationModal/dto';
 import { BottomSheetDto } from '../../../components/BottomSheet/dto';
@@ -118,37 +118,40 @@ const ChatRoom: React.FC = () => {
 	// 기존 대화 내역에 대한 정보 추가
 	useEffect(() => {
 		const temp: ExtendedMessageDto[] = mockMessages.map((message: MessageDto, index: number) => {
-			let isFirst = false;
-			let isNewDate = false;
-			let printTime = false;
-
 			const prevMessage = index !== 0 ? mockMessages[index - 1] : null;
 			const nextMessage = index !== mockMessages.length - 1 ? mockMessages[index + 1] : null;
+			const formattedTime = formatTime(message.timestamp);
 
-			// 첫 메시지거나, 전송자가 바뀐 경우에
-			// 프로필 사진 출력
-			if (prevMessage === null || prevMessage.sender !== message.sender) {
-				isFirst = true;
-			}
+			// 채팅의 첫 메시지가 아니고, 날짜가 바뀐 경우 날짜 표시줄 출력
+			let isNewDate = prevMessage !== null && isNextDay(message.timestamp, prevMessage.timestamp);
 
-			// 첫 메시지가 아니고, 날짜가 바뀐 경우에
-			// 날짜 표시줄 출력
-			if (prevMessage !== null && isNextDay(message.timestamp, prevMessage.timestamp)) {
-				isNewDate = true;
-			}
+			// 채팅의 첫 메시지이거나 전송자 또는 날짜가 바뀐 경우 프로필 사진 출력
+			let isFirst = prevMessage === null || prevMessage.sender !== message.sender || isNewDate;
 
-			// 가장 마지막 메시지이거나
-			// 전송자가 바뀌기 직전 또는 시간이 바뀌기 직전인 경우
+			// 가장 마지막 메시지이거나,
+			// 전송자 또는 시간 또는 날짜가 바뀌기 직전인 경우
 			// 메시지 전송 시각 출력
-			if (
+			let printTime =
 				nextMessage === null ||
 				message.sender !== nextMessage.sender ||
-				formatTime(message.timestamp) !== formatTime(nextMessage.timestamp)
-			) {
-				printTime = true;
-			}
+				formattedTime !== formatTime(nextMessage.timestamp) ||
+				isNextDay(nextMessage.timestamp, message.timestamp);
 
-			return { ...message, isFirst, isNewDate, printTime, formattedTime: formatTime(message.timestamp) };
+			// 보낸 메시지일 경우 sentMessage 속성 추가
+			// 받은 메시지일 경우 rcvdMessage 속성 추가
+			if (message.sender === 'me') {
+				const sentMessage: SentMessageProps = { text: message.text, printTime, formattedTime };
+				return { ...message, isNewDate, sentMessage };
+			} else {
+				const rcvdMessage: RcvdMessageProps = {
+					sender: message.sender,
+					text: message.text,
+					isFirst,
+					printTime,
+					formattedTime,
+				};
+				return { ...message, isNewDate, rcvdMessage };
+			}
 		});
 
 		setNewMockMessages(temp);
@@ -167,7 +170,11 @@ const ChatRoom: React.FC = () => {
 							{message.isNewDate && (
 								<DateBar formattedDate={format(message.timestamp, 'yyyy년 MM월 dd일 EEEE', { locale: ko })} />
 							)}
-							{message.sender === 'user1' ? <SentMessage {...message} /> : <RcvdMessage {...message} />}
+							{message.sentMessage ? (
+								<SentMessage {...message.sentMessage} />
+							) : message.rcvdMessage ? (
+								<RcvdMessage {...message.rcvdMessage} />
+							) : null}
 						</div>
 					);
 				})}

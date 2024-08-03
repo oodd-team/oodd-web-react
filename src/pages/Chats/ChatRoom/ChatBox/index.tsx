@@ -20,7 +20,7 @@ const ChatBox: React.FC = () => {
 			...mockMessages,
 			{
 				id: idRef.current++,
-				sender: 'user1',
+				sender: 'me',
 				receiver: 'user2',
 				text: newMessage,
 				timestamp: new Date(),
