@@ -36,7 +36,6 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 									취소
 								</StyledText>
 							</Button>
-							<div style={{ height: '100%', borderRight: '1px solid rgba(0,0,0,0.2)', margin: 'auto' }} />
 						</>
 					)}
 					<Button onClick={confirm.action}>
