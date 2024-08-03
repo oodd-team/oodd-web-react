@@ -13,9 +13,10 @@ interface TabBarProps {
 
 const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, element1, element2, defaultViewTab1 }) => {
 	const [viewTab1, setViewTab1] = useState<boolean>(defaultViewTab1);
+	const hasNewRequest = true; // 요청 정보를 받아와 배열 길이가 0이면 false...
 
 	const onClickTab1 = (): void => {
-		setViewTab1(true);
+		setViewTab1(hasNewRequest && true);
 	};
 
 	const onClickTab2 = (): void => {
