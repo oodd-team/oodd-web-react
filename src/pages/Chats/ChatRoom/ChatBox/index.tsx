@@ -3,9 +3,10 @@ import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { MockMessagesAtom } from '../../../../recoil/MockMessages';
 import Send from '../../../../assets/Chats/Send.svg';
+import dayjs from 'dayjs';
 
 const ChatBox: React.FC = () => {
-	const idRef = useRef(8);
+	const idRef = useRef(9);
 	const [newMessage, setNewMessage] = useState<string>('');
 	const [mockMessages, setMockMessages] = useRecoilState(MockMessagesAtom);
 
@@ -23,7 +24,7 @@ const ChatBox: React.FC = () => {
 				sender: 'me',
 				receiver: 'user2',
 				text: newMessage,
-				timestamp: new Date(),
+				timestamp: dayjs(),
 			},
 		]);
 		setNewMessage('');

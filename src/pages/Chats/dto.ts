@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
+
 export interface MessageDto {
 	id: number;
 	text: string;
 	sender: string;
 	receiver: string;
-	timestamp: Date;
+	timestamp: dayjs.Dayjs;
 }
 
 export interface ExtendedMessageDto extends MessageDto {

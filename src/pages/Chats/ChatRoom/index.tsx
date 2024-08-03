@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { MessagesContainer } from './styles';
 import TopBar from './TopBar';
 import RcvdMessage from './RcvdMessage';
@@ -11,8 +10,8 @@ import { MockMessagesAtom } from '../../../recoil/MockMessages';
 import { isClickedMenuAtom } from '../../../recoil/isClickedMenu';
 import BottomSheet from '../../../components/BottomSheet';
 import SheetItemWithDivider from '../../../components/SheetItemWithDivider';
-import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import { OODDFrame } from '../../../components/Frame/Frame';
 import { MessageDto, ExtendedMessageDto, SentMessageProps, RcvdMessageProps } from '../dto';
@@ -22,15 +21,7 @@ import { BottomSheetDto } from '../../../components/BottomSheet/dto';
 import Leave from '../../../assets/Chats/Leave.svg';
 import Block from '../../../assets/Chats/Block.svg';
 
-// 타임스탬프를 메시지 옆에 출력되는 시간의 형태로 반환하는 함수
-export const formatTime = (date: Date): string => {
-	const hours = String(date.getHours()).padStart(2, '0');
-	const minutes = String(date.getMinutes()).padStart(2, '0');
-	return `${hours}:${minutes}`;
-};
-
 const ChatRoom: React.FC = () => {
-	const { id } = useParams<string>();
 	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
 	const mockMessages = useRecoilValue(MockMessagesAtom);
 	const [isClickedMenu, setIsClickedMenu] = useRecoilState(isClickedMenuAtom);
@@ -107,12 +98,8 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// DateBar 표시 여부를 결정하는 함수
-	const isNextDay = (curDate: Date, lastDate: Date): boolean => {
-		return (
-			curDate.getFullYear() !== lastDate.getFullYear() ||
-			curDate.getMonth() !== lastDate.getMonth() ||
-			curDate.getDate() !== lastDate.getDate()
-		);
+	const isNextDay = (curDate: dayjs.Dayjs, lastDate: dayjs.Dayjs): boolean => {
+		return !curDate.isSame(lastDate, 'day');
 	};
 
 	// 기존 대화 내역에 대한 정보 추가
@@ -120,7 +107,7 @@ const ChatRoom: React.FC = () => {
 		const temp: ExtendedMessageDto[] = mockMessages.map((message: MessageDto, index: number) => {
 			const prevMessage = index !== 0 ? mockMessages[index - 1] : null;
 			const nextMessage = index !== mockMessages.length - 1 ? mockMessages[index + 1] : null;
-			const formattedTime = formatTime(message.timestamp);
+			const formattedTime = message.timestamp.format('HH:mm');
 
 			// 채팅의 첫 메시지가 아니고, 날짜가 바뀐 경우 날짜 표시줄 출력
 			let isNewDate = prevMessage !== null && isNextDay(message.timestamp, prevMessage.timestamp);
@@ -134,7 +121,7 @@ const ChatRoom: React.FC = () => {
 			let printTime =
 				nextMessage === null ||
 				message.sender !== nextMessage.sender ||
-				formattedTime !== formatTime(nextMessage.timestamp) ||
+				formattedTime !== nextMessage.timestamp.format('HH:mm') ||
 				isNextDay(nextMessage.timestamp, message.timestamp);
 
 			// 보낸 메시지일 경우 sentMessage 속성 추가
@@ -167,9 +154,7 @@ const ChatRoom: React.FC = () => {
 				{newMockMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>
-							{message.isNewDate && (
-								<DateBar formattedDate={format(message.timestamp, 'yyyy년 MM월 dd일 EEEE', { locale: ko })} />
-							)}
+							{message.isNewDate && <DateBar formattedDate={message.timestamp.format('YYYY년 MM월 DD일 dddd')} />}
 							{message.sentMessage ? (
 								<SentMessage {...message.sentMessage} />
 							) : message.rcvdMessage ? (
