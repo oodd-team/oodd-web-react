@@ -6,6 +6,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
 	isBackgroundDimmed,
 	Component,
+	componentProps,
 	onCloseBottomSheet,
 }) => {
 	const startY = useRef<number | null>(null);
@@ -62,7 +63,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				// 두 값의 변화량이 50px보다 크면 아래로 드래그한 것으로 간주하여 바텀시트 닫음
 				const deltaY = endY - startY.current;
 
-				if (deltaY > 50) {
+				if (deltaY > 100) {
 					onCloseBottomSheet();
 				} else {
 					setCurrentTranslateY(0);
@@ -120,7 +121,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				$isOpenBottomSheet={isOpenBottomSheet}
 			>
 				<Handler />
-				<Component />
+				<Component {...componentProps} />
 			</BottomSheetLayout>
 		</BottomSheetWrapper>
 	);
