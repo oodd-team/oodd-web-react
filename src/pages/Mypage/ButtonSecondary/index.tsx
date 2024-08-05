@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './styles';
+import { StyledText } from '../../../components/Text/StyledText';
+import theme from '../../../styles/theme';
 
 const ButtonSecondary: React.FC = () => {
 	const navigate = useNavigate();
@@ -9,7 +11,13 @@ const ButtonSecondary: React.FC = () => {
 		navigate('/edit-profile');
 	};
 
-	return <Button onClick={handleClick}>프로필 수정</Button>;
+	return (
+		<Button onClick={handleClick}>
+			<StyledText $textTheme={{ style: 'Button1/Regular', lineHeight: 2 }} color={theme.colors.black}>
+				프로필 수정
+			</StyledText>
+		</Button>
+	);
 };
 
 export default ButtonSecondary;

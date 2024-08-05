@@ -100,7 +100,7 @@ const Verification: React.FC = () => {
 			<NavbarVerification />
 			<Container>
 				<Title>
-					<StyledText textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
+					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
 						휴대전화번호로 본인인증하기
 					</StyledText>
 				</Title>

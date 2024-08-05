@@ -8,7 +8,7 @@ import theme from '../../styles/theme';
 const NavbarProfile: React.FC = () => {
 	return (
 		<Nav>
-			<StyledText textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.gray4}>
+			<StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 2 }} color={theme.colors.gray4}>
 				Profile
 			</StyledText>
 			<IconContainer>

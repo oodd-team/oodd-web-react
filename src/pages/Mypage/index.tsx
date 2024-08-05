@@ -74,7 +74,7 @@ const Mypage: React.FC = () => {
 						likes={post.likes}
 						comments={post.comments}
 						onClick={() => handlePostClick(post.id)}
-						isFirst={index === 0} // 첫 번째 포스트에만 pin.svg를 표시
+						isFirst={index === 0}
 					/>
 				))}
 			</PostsContainer>
