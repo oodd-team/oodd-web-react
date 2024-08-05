@@ -6,25 +6,25 @@ export const Content = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: calc(100% - 160px);
+	height: calc(100% - 10rem);
 	position: absolute;
-	top: 60px;
+	top: 3.75rem;
 	left: 0;
 
 	.tab-to-write {
-		margin-bottom: 80px;
+		margin-bottom: 5rem;
 	}
 `;
 
 export const StyledInput = styled.input`
-	min-width: 200px;
-	height: 40px;
+	min-width: 12.5rem;
+	height: 2.5rem;
 	padding: 0;
-	margin: 100px 0 15px 0;
+	margin: 6.25rem 0 0.9375rem 0;
 	border: none;
 	font-family: 'Gmarket Sans';
 	font-weight: 400;
-	font-size: 32px;
+	font-size: 2rem;
 	text-align: center;
 
 	&:focus {
@@ -35,7 +35,7 @@ export const StyledInput = styled.input`
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Gmarket Sans';
 		font-weight: 400;
-		font-size: 32px;
+		font-size: 2rem;
 	}
 
 	/* Firefox */
@@ -43,7 +43,7 @@ export const StyledInput = styled.input`
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Gmarket Sans';
 		font-weight: 400;
-		font-size: 32px;
+		font-size: 2rem;
 	}
 
 	/* Internet Explorer 10-11 */
@@ -51,7 +51,7 @@ export const StyledInput = styled.input`
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Gmarket Sans';
 		font-weight: 400;
-		font-size: 32px;
+		font-size: 2rem;
 	}
 
 	/* Edge */
@@ -59,7 +59,7 @@ export const StyledInput = styled.input`
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Gmarket Sans';
 		font-weight: 400;
-		font-size: 32px;
+		font-size: 2rem;
 	}
 
 	/* Safari */
@@ -67,6 +67,6 @@ export const StyledInput = styled.input`
 		color: ${({ theme }) => theme.colors.gray3};
 		font-family: 'Gmarket Sans';
 		font-weight: 400;
-		font-size: 32px;
+		font-size: 2rem;
 	}
 `;

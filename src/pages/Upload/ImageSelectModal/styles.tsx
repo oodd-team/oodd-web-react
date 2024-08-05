@@ -7,22 +7,22 @@ export const ImageDragDropContainer = styled.div`
 	justify-content: center;
 	text-align: center;
 	width: 100%;
-	height: calc(100% - 160px);
+	height: calc(100% - 10rem);
 	position: absolute;
-	top: 60px;
+	top: 3.75rem;
 	left: 0;
 
 	div {
-		margin-bottom: 120px;
+		margin-bottom: 7.5rem;
 	}
 
 	svg {
-		font-size: 80px;
+		font-size: 5rem;
 		color: ${({ theme }) => theme.colors.gray3};
 	}
 
 	:nth-child(2) {
-		margin-bottom: 0px;
+		margin-bottom: 0rem;
 	}
 
 	&.active svg {

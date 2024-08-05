@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
 import { Header, PrevButton } from '../styles';
@@ -13,7 +13,7 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onIdSelect, onClo
 	const [instagramID, setInstagramID] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [isSuccess, setIsSuccess] = useState(false);
+	//const [isSuccess, setIsSuccess] = useState(false);
 
 	const handleConnect = () => {
 		onIdSelect(instagramID);

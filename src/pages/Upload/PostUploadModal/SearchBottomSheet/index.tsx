@@ -137,7 +137,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 			.trim();
 	};
 
-	const handleCloseSheet = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleCloseSheet = () => {
 		onClose();
 	};
 

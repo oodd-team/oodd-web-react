@@ -29,6 +29,18 @@ app.post('/posts', (req, res) => {
 	}
 });
 
+app.get('/instagram-import', (req, res) => {
+	try {
+		const { insta_id } = req.body;
+		if (typeof insta_id === 'string') {
+		} else {
+			throw new Error('Invalid Instagram ID');
+		}
+	} catch (error) {
+		res.status(400).send({ error: 'Invalid request data' });
+	}
+});
+
 app.listen(3001, function () {
 	console.log('http://localhost:3001 app listening on port 3001!');
 });

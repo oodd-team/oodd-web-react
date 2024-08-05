@@ -6,7 +6,7 @@ export const Header = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 60px;
+	height: 3.75rem;
 	align-items: center;
 	background-color: white;
 	z-index: 1;
@@ -19,7 +19,7 @@ export const Header = styled.div`
 
 export const PrevButton = styled.button`
 	position: absolute;
-	left: 20px;
+	left: 1.25rem;
 	background: none;
 	border: none;
 	cursor: pointer;

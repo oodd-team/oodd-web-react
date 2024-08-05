@@ -3,22 +3,22 @@ import styled from 'styled-components';
 export const SwiperContainer = styled.div`
 	display: flex;
 	width: 100%;
-	height: calc(100% - 160px);
+	height: calc(100% - 10rem);
 	align-items: center;
 	justify-content: center;
 
 	.swiper-wrapper {
-		height: 467px;
+		height: 29.1875rem;
 		width: 100%;
 		max-height: 70%;
 	}
 
 	.swiper-slide {
-		//height: 423px;
-		//width: 318px;
+		//height: 26.4375rem;
+		//width: 19.875rem;
 		//height: 100%;
-		width: 350px;
-		max-width: calc(100% - 40px);
+		width: 21.875rem;
+		max-width: calc(100% - 2.5rem);
 		aspect-ratio: 3 / 4;
 		height: auto;
 		object-fit: cover;
@@ -33,8 +33,8 @@ export const SwiperContainer = styled.div`
 
 	.swiper-slide.main-slide {
 		//height: 100%;
-		width: 350px;
-		max-width: calc(100% - 40px);
+		width: 21.875rem;
+		max-width: calc(100% - 2.5rem);
 		aspect-ratio: 3 / 4;
 		height: auto;
 		object-fit: cover;
@@ -42,8 +42,8 @@ export const SwiperContainer = styled.div`
 
 	.add-btn-box {
 		display: flex;
-		width: 350px;
-		max-width: calc(100% - 40px);
+		width: 21.875rem;
+		max-width: calc(100% - 2.5rem);
 		height: 100%;
 	}
 `;
@@ -69,31 +69,31 @@ export const StyledNavigation = styled.button`
 	top: 50%;
 	transform: translateY(-50%);
 	color: white;
-	width: 70px;
-	height: 70px;
-	padding: 20px;
+	width: 4.375rem;
+	height: 4.375rem;
+	padding: 1.25rem;
 
 	&::after {
-		font-size: 20px;
+		font-size: 1.25rem;
 		color: white;
 	}
 
 	&.swiper-button-prev {
-		margin: 0 0 0 max(calc((100% - 350px) / 2 - 20px), 0px);
+		margin: 0 0 0 max(calc((100% - 21.875rem) / 2 - 1.25rem), 0rem);
 	}
 
 	&.swiper-button-next {
-		margin: 0 max(calc((100% - 350px) / 2) - 20px, 0px) 0 0;
+		margin: 0 max(calc((100% - 21.875rem) / 2) - 1.25rem, 0rem) 0 0;
 	}
 `;
 
 export const RemoveButton = styled.button`
 	position: absolute;
-	bottom: 20px;
+	bottom: 1.25rem;
 	left: 50%;
 	transform: translateX(-50%);
-	height: 60px;
-	width: 60px;
+	height: 3.75rem;
+	width: 3.75rem;
 	padding: 0;
 `;
 
@@ -103,9 +103,9 @@ export const AddButton = styled.button`
 	justify-content: center;
 	background: none;
 	color: #999;
-	font-size: 30px;
-	width: 100px;
-	height: 100px;
+	font-size: 1.875rem;
+	width: 6.25rem;
+	height: 6.25rem;
 	margin: auto;
 
 	&:hover {

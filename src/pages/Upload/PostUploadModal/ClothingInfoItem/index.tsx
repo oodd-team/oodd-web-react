@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import close from '../../assets/close2.svg';
-import { ClothingInfo, ClothingInfoItemProps } from '../dto';
+import { ClothingInfoItemProps } from '../dto';
 import { ClothingInfoItemContainer } from './styles';
 
 const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete }) => {

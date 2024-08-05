@@ -6,10 +6,10 @@ export const Content = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	top: 60px;
+	top: 3.75rem;
 	left: 0;
 	width: 100%;
-	height: calc(100% - 160px);
+	height: calc(100% - 10rem);
 	flex: 1;
 `;
 
@@ -30,10 +30,10 @@ export const ImageContainer = styled.div`
 export const ImageWrapper = styled.div`
 	position: relative;
 	height: 60%;
-	//max-height: 400px;
+	//max-height: 25rem;
 	aspect-ratio: 3 / 4;
-	max-width: calc(100% - 40px);
-	margin-right: 10px;
+	max-width: calc(100% - 2.5rem);
+	margin-right: 0.625rem;
 
 	img {
 		height: 100%;
@@ -42,15 +42,15 @@ export const ImageWrapper = styled.div`
 	}
 
 	&:first-child {
-		margin-left: max(calc((100% - ((100vh - 160px) * 0.6 * 3 / 4)) / 2), 20px);
+		margin-left: max(calc((100% - ((100vh - 10rem) * 0.6 * 3 / 4)) / 2), 1.25rem);
 	}
 `;
 
 export const RemoveButton = styled.button`
 	position: absolute;
-	bottom: 5px;
-	left: calc(50% - 30px);
-	//width: 60px;
+	bottom: 0.3125rem;
+	left: calc(50% - 1.875rem);
+	//width: 3.75rem;
 	//max-width: 30%;
 	cursor: pointer;
 `;
@@ -58,15 +58,15 @@ export const RemoveButton = styled.button`
 export const AddButton = styled.button`
 	background: none;
 	color: #999;
-	font-size: 30px;
-	width: 100px;
-	height: 100px;
+	font-size: 1.875rem;
+	width: 6.25rem;
+	height: 6.25rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
 	border-radius: 50%;
-	padding: 0 40px 0 30px;
+	padding: 0 2.5rem 0 1.875rem;
 
 	&:hover {
 		border-color: #666;

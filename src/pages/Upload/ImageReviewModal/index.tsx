@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Content } from './styles';
 import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';

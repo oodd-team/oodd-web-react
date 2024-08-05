@@ -6,13 +6,7 @@ import Modal from '../../../components/Modal';
 import close from '../assets/close.svg';
 import { InstaFeedSelectModalProps, Post } from './dto';
 
-const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({
-	instagramId,
-	selectedImages,
-	onAddImages,
-	onClose,
-	onNext,
-}) => {
+const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({ instagramId, onAddImages, onClose, onNext }) => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
 
 	const posts: Post[] = [

@@ -35,10 +35,10 @@ export const SheetContent = styled.div`
 	bottom: 0;
 	width: 100%;
 	background-color: ${({ theme }) => theme.colors.white};
-	padding: 20px 20px 30px 20px;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+	padding: 1.25rem 1.25rem 1.875rem 1.25rem;
+	border-top-left-radius: 1.25rem;
+	border-top-right-radius: 1.25rem;
+	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 	z-index: 999;
 
 	/* 애니메이션 적용 */
@@ -51,26 +51,26 @@ export const SheetContent = styled.div`
 `;
 
 export const HandleBar = styled.div`
-	width: 50px;
-	height: 3px;
+	width: 3.125rem;
+	height: 0.1875rem;
 	background-color: ${({ theme }) => theme.colors.gray3};
-	border-radius: 3px;
-	margin: 0 auto 30px auto;
+	border-radius: 0.1875rem;
+	margin: 0 auto 1.875rem auto;
 `;
 
 export const OptionButton = styled.button`
 	display: flex;
 	width: 100%;
-	padding: 10px 0;
+	padding: 0.625rem 0;
 	border: none;
 	text-align: left;
-	font-size: 16px;
+	font-size: 1rem;
 	cursor: pointer;
 	align-items: center;
-	border-bottom: solid 1px ${({ theme }) => theme.colors.gray1};
+	border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray1};
 
 	img {
-		padding-right: 20px;
+		padding-right: 1.25rem;
 	}
 
 	&:last-child {

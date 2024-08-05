@@ -24,7 +24,6 @@ import styleTag from '../assets/styleTag.svg';
 import pin from '../assets/pin.svg';
 import next from '../assets/next.svg';
 import next_up from '../assets/next_up.svg';
-import close from '../assets/close2.svg';
 import { PostUploadModalProps, ClothingInfo, Hashtag } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
@@ -36,7 +35,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
+	//const [isLoading, setIsLoading] = useState(false);
 
 	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -82,7 +81,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const handleSubmit = async () => {
-		setIsLoading(true);
+		//setIsLoading(true);
 
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
@@ -111,7 +110,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		} catch (error) {
 			console.error(error);
 		} finally {
-			setIsLoading(false);
+			//setIsLoading(false);
 		}
 	};
 

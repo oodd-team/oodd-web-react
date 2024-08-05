@@ -5,14 +5,14 @@ export const ClothingInfoItemContainer = styled.li`
 	flex-direction: row;
 	align-items: center;
 	//justify-content: space-between;
-	margin-bottom: 15px;
+	margin-bottom: 0.9375rem;
 
 	> img {
-		width: 56px;
-		height: 56px;
+		width: 3.5rem;
+		height: 3.5rem;
 		object-fit: cover;
-		border-radius: 5px;
-		margin-right: 15px;
+		border-radius: 0.3125rem;
+		margin-right: 0.9375rem;
 	}
 
 	.infoContainer {
@@ -20,7 +20,7 @@ export const ClothingInfoItemContainer = styled.li`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		//height: 56px;
+		//height: 3.5rem;
 	}
 
 	.brand {

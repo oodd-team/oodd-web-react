@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 	appearance: none;
 	position: relative;
-	border: 1.5px solid ${({ theme }) => theme.colors.gray3};
-	border-radius: 10px;
-	width: 35px;
-	height: 20px;
+	border: 0.0938rem solid ${({ theme }) => theme.colors.gray3};
+	border-radius: 0.625rem;
+	width: 2.1875rem;
+	height: 1.25rem;
 	margin: 0;
 	cursor: pointer;
 
@@ -15,8 +15,8 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 17px;
-		height: 17px;
+		width: 1.0625rem;
+		height: 1.0625rem;
 		border-radius: 50%;
 		background-color: ${({ theme }) => theme.colors.gray3};
 		transition: left 250ms linear;
@@ -29,6 +29,6 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 	&:checked::before {
 		background-color: white;
-		left: 15px;
+		left: 0.9375rem;
 	}
 `;

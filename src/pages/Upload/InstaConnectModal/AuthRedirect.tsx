@@ -8,7 +8,7 @@ const AuthRedirect: React.FC = () => {
 	useEffect(() => {
 		const fetchInstagramMedia = async (code: string) => {
 			try {
-				const response = await axios.post('http://localhost:3000/auth/instagram', { code });
+				const response = await axios.post('http://localhost:3000/instagram-import', { code });
 				const images = response.data.data.map((item: any) => item.media_url);
 				navigate('/upload', { state: { images } });
 			} catch (error) {

@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-	grid-gap: 5px;
+	grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
+	grid-gap: 0.3125rem;
 	position: absolute;
-	top: 60px;
+	top: 3.75rem;
 	left: 0;
 	width: 100%;
-	//height: calc(100% - 60px);
-	padding: 20px;
+	//height: calc(100% - 3.75rem);
+	padding: 1.25rem;
 	//overflow-y: auto;
 
 	scrollbar-width: none; /* Firefox */
@@ -23,10 +23,10 @@ export const PostContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 100px;
-	max-width: 150px;
+	min-width: 6.25rem;
+	max-width: 9.375rem;
 	aspect-ratio: 3 / 4;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	overflow: hidden;
 
 	scrollbar-width: none; /* Firefox */

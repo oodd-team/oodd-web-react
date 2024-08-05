@@ -14,13 +14,13 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContent = styled.div`
-	width: 340px;
-	max-width: calc(100% - 40px);
-	height: 230px;
+	width: 21.25rem;
+	max-width: calc(100% - 2.5rem);
+	height: 14.375rem;
 	max-height: 40%;
 	background-color: ${({ theme }) => theme.colors.white};
-	border-radius: 10px;
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 0.625rem;
+	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 	z-index: 999;
 
 	> div {
@@ -29,7 +29,7 @@ export const ModalContent = styled.div`
 		justify-content: center;
 		width: 100%;
 		height: 75%;
-		border-bottom: solid 1px ${({ theme }) => theme.colors.gray2};
+		border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray2};
 	}
 
 	button {
