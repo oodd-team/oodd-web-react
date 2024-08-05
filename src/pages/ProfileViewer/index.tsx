@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import UserInfo from "./components/UserInfo";
 import PostItem from "./components/PostItem";
 import { mockUserData } from "./MocData"; // Mock 데이터 임포트
-import { ProfileViewerContainer, Vector, CounterContainer, Count,  PostListContainer } from "./style";
+import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer } from "./style";
 import { StyledText } from "../../components/Text/StyledText";
 import theme from '../../styles/theme';
 import { OODDFrame } from "../../components/Frame/Frame";
@@ -15,17 +15,20 @@ import BackSvg from '../../assets/ProfileViewer/backIcon.svg'
 import BottomSheet from "../../components/BottomSheet";
 import BottomSheetMenu from "../../components/BottomSheetMenu";
 import { mainMenuItems, reportMenuItems } from "./dto";
+import ConfirmationModal from "../../components/ComfirmationModal";
 
 const ProfileViewer: React.FC = () => {
     const { userId } = useParams<{ userId: string }>(); // URL 파라미터에서 userId 가져오기
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false); // Local state 사용
     const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // ConfirmationModal 상태
+    const [confirmAction, setConfirmAction] = useState<() => void>(() => () => {}); // 확인 버튼 액션 처리
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                setUserDetails(mockUserData); // // Mock 데이터 사용, 추후 실제 API 호출로 대체
+                setUserDetails(mockUserData); // Mock 데이터 사용, 추후 실제 API 호출로 대체
             } catch (error) {
                 console.error('Failed to fetch user details', error);
             }
@@ -55,6 +58,19 @@ const ProfileViewer: React.FC = () => {
     const handleCloseBottomSheet = () => {
         setIsBottomSheetOpen(false);
         setActiveBottomSheet(null);
+    };
+
+    const handleOpenConfirmationModal = () => {
+        setIsConfirmationModalOpen(true); // 모달 열기
+        setConfirmAction(() => () => {
+            console.log("User blocked"); // 차단하기 버튼 클릭 시 액션 처리
+            handleCloseConfirmationModal(); // 모달 닫기
+        });
+        setIsBottomSheetOpen(false);
+    };
+
+    const handleCloseConfirmationModal = () => {
+        setIsConfirmationModalOpen(false); // 모달 닫기
     };
 
     return (
@@ -100,7 +116,7 @@ const ProfileViewer: React.FC = () => {
                     isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
-                        <BottomSheetMenu items={mainMenuItems(handleOpenBottomSheet)} marginBottom="4rem" />
+                        <BottomSheetMenu items={mainMenuItems(handleOpenBottomSheet, handleOpenConfirmationModal)} marginBottom="4rem" />
                     )}
                 /> )}
                 {isBottomSheetOpen && activeBottomSheet === 'report' && (
@@ -112,12 +128,21 @@ const ProfileViewer: React.FC = () => {
                         <BottomSheetMenu items={reportMenuItems} marginBottom="4rem" />
                     )}
                 /> )}
+                {isConfirmationModalOpen && (
+                <ConfirmationModal
+                    content={`${mockUserData.userId}님을 정말로 차단하시겠습니까?`}
+                    isCancelButtonVisible={true}
+                    confirm={{ text: '차단하기', action: confirmAction }}
+                    onCloseModal={handleCloseConfirmationModal}
+                />
+                )}
             </ProfileViewerContainer>
         </OODDFrame>
     );
 };
 
 export default ProfileViewer;
+
 
 
 

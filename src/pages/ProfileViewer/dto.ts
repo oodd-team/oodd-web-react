@@ -24,7 +24,7 @@ export interface PostItemProps {
     isFixed: boolean;
 }
 
-export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void) => [
+export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void, handleOpenConfirmationModal: () => void) => [
     {
         text: "신고하기",
         action: () => handleOpenBottomSheet('report'),
@@ -32,7 +32,7 @@ export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void) => 
     },
     {
         text: "차단하기",
-        action: () => console.log("Action 2"),
+        action: () => handleOpenConfirmationModal(), // ConfirmationModal을 여는 함수 호출
         icon: BlockIcon
     }
 ];
