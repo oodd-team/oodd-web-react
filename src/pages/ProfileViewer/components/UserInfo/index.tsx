@@ -18,10 +18,10 @@ const UserInfo: React.FC = React.memo(() => {
     const [friend, setFriend] = useRecoilState(friendState);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
-    if (!userDetails) return null; // userDetails가 없으면 아무것도 렌더링하지 않음
+    if (!userDetails) return null; // 사용자의 정보, 즉 userDetails가 없으면 아무것도 렌더링하지 않음
 
     const { userId, userBio, userImg } = userDetails;
-    const truncatedBio = userBio.length > 50 ? userBio.substring(0, 50) + '...' : userBio;
+    const truncatedBio = userBio.length > 50 ? userBio.substring(0, 50) + '...' : userBio; // 자기소개 글자 수 제한
 
     const messageType = useMemo(() => {
         if (requestMessage === `${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`) {
@@ -32,7 +32,7 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
-        setRequestMessage(`${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`);
+        setRequestMessage(`${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`); // 처음 bottomsheets가 열렸을 때의 문구
     };
 
     const handleCloseBottomSheet = () => {
@@ -40,19 +40,19 @@ const UserInfo: React.FC = React.memo(() => {
     };
 
     const handleInputFocus = () => {
-        setRequestMessage(`${userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${userId}님에게만 전달됩니다.`);
+        setRequestMessage(`${userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${userId}님에게만 전달됩니다.`); // 입력창이 focus 되었을 때 문구
     };
 
     const handleMsgIconClick = () => {
         if (inputRef.current?.value.trim() === "") {
-            return; // 입력 값이 없을 시 전송 버튼 비활성화
+            return; // 입력창에 입력 값이 없을 시 전송 버튼 비활성화
         }
         console.log(inputRef.current?.value);
         if (inputRef.current) {
             inputRef.current.value = ""; // 전송 버튼 클릭 후 입력 값 초기화
         }
         setIsBottomSheetOpen(false);
-        setFriend(true); // 친구 신청이 완료되었음을 반영하여 상태 업데이트
+        setFriend(true); // 친구 신청이 완료되었음을 반영하여 상태 업데이트 (버튼 UI 변경)
     };
 
     const handleInterestedClick = () => {
@@ -83,7 +83,7 @@ const UserInfo: React.FC = React.memo(() => {
                                 친구 신청
                             </StyledText>
                         </Button>
-                        <Button $backgroundcolor="white" onClick={handleInterestedClick}>
+                        <Button $backgroundcolor="white" onClick={handleInterestedClick}> {/*관심 친구 버튼이 눌리면 interest 상태 업데이트 되어 버튼 렌더링 변경*/}
                             <Icon src={StatSvg} alt="star icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}>
                                 관심 친구
