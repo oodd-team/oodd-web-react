@@ -132,7 +132,7 @@ const UserInfo: React.FC = React.memo(() => {
                     Component={() => (
                         <RequestContainer>
                             <RequestMessage $messageType={messageType}>
-                                <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.gray3}>
+                                <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
                                     {requestMessage}
                                 </StyledText>
                             </RequestMessage>

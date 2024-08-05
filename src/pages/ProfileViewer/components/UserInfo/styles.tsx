@@ -9,7 +9,7 @@ export const UserInfoContainer = styled.div`
     width: 100%;
     max-width: 32rem;
     flex-direction: column; // 전체적으로 감싸는 요소들이 세로로 정렬
-    padding: 0.55rem; // 10px
+    padding: 0.625rem; // 10px
 `;
 
 export const UserProfile = styled.div`
@@ -19,8 +19,8 @@ export const UserProfile = styled.div`
 `;
 
 export const UserImg = styled.div<UserImgProps>`
-    width: 4rem; // 72px
-    min-height: 4rem; // 72px
+    width: 4.5rem; // 72px
+    min-height: 4.5rem; // 72px
     background-color: #D9D9D9;
     background-image: url(${props => props.$imgUrl});
     background-size: cover;
@@ -42,14 +42,14 @@ export const Bio = styled.div`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    max-width: 19.4rem;
+    max-width: 15.5rem;
     width: 100%;
     text-overflow: ellipsis;
 `;
 
 export const ButtonContainer = styled.div`
     display: flex;
-    gap: 2.18rem; // 35px
+    gap: 2.1875rem; // 35px
     margin-top: 1rem;
     justify-content: center;
 `;
@@ -100,7 +100,7 @@ export const RequestContainer = styled.div`
 export const RequestMessage = styled.div<{ $messageType: 'initial' | 'comment' }>`
     display: flex;
     text-align: center;
-    width: ${({ $messageType }) => ($messageType === 'initial' ? '14rem' : '16rem')};
+    width: ${({ $messageType }) => ($messageType === 'initial' ? '15.25rem' : '18rem')};
     height: 100%;
 `;
 export const ComentContainer = styled.div`

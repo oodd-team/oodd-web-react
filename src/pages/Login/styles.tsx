@@ -12,11 +12,12 @@ export const LoginContainer = styled.div`
 `;
 
 export const LogoWrapper = styled.div`
-  width: 100%;
-  max-width: 6.45rem; /* 116px / 16 */
-  height: 1.8rem; /* 32px / 16 */
-  margin: 10.8rem 0 1.2rem 0;  /* 195px */
+    width: 100%;
+    max-width: 7.25rem; /* 116px / 16 */
+    height: 4rem; /* 32px / 16 */
+    margin-top: 10.8rem  /* 195px */
 `;
+
 
 export const WelcomeWrapper = styled.div`
   display: flex;
@@ -33,6 +34,6 @@ export const Service = styled.button`
   border: none;
   width: fit-content; /* 버튼 너비가 내용에 맞도록 설정 */
   padding: 0 1rem; /* 16px / 16 */
-  margin-bottom: 10.8rem;
+  margin-bottom: 15.8rem;
 `;
 

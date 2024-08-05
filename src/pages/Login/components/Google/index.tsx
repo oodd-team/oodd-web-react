@@ -7,7 +7,7 @@ import { SocialLogin,LogoImgWrapper,LogoImage, TextWrapper} from "../style";
 const Google:React.FC = () => {
     return (
         <SocialLogin $bgColor="#ffffff" $border >
-            <LogoImgWrapper $logowidth="2.2rem" $logoheight="2.2rem">
+            <LogoImgWrapper $logowidth="2.5rem" $logoheight="2.2rem">
                 <LogoImage src={google} alt="Google logo" />
             </LogoImgWrapper>
             <TextWrapper $left="1.5rem">
