@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
 
-const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', kebabMenuSrc, BackIcon, onBackClick, onKebabClick  }) => {
+const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', kebabMenuSrc, BackIcon, onBackClick, onKebabClick, $withBorder = false }) => {
 	const nav = useNavigate();
 
 	return (
-		<TopbarLayout $withBorder={false}> {/*border-bottom 유무*/}
+		<TopbarLayout $withBorder={$withBorder}> {/*border-bottom 유무*/}
 			<BackButton
 			src={BackIcon || ''}
 			alt="back"

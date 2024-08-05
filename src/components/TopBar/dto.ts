@@ -5,6 +5,7 @@ export interface TopBarProps {
     BackIcon?: string; // BackButton src의 Optional prop
     onBackClick?: () => void; // BackButton src의 Optional prop
     onKebabClick?: () => void; // KebabMenuButton src의 Optional prop
+    $withBorder?: boolean;
     }
 
 export interface TopbarLayoutProps {
