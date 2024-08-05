@@ -6,8 +6,8 @@ export const MatchingContainer = styled.div`
 `;
 
 export const Like = styled.div`
-	margin-top: 21px;
-	margin-left: 20px;
+	margin-top: 1.313rem;
+	margin-left: 1.25rem;
 	width: auto;
-	height: 16px;
+	height: 1rem;
 `;
