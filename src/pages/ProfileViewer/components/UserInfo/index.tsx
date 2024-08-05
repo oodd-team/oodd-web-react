@@ -1,31 +1,38 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useRef, useMemo } from "react";
 import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon, RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from "./styles";
-import { UserInfoProps } from "../../dto";
+import { useRecoilValue, useRecoilState} from 'recoil';
+import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState } from '../../../../recoil/atoms';
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
 import StatSvg from '../../../../assets/ProfileViewer/star.svg';
-import MsgSvg from '../../../../assets/ProfileViewer/message_send _gray.svg';
+import MsgSvg from '../../../../assets/ProfileViewer/message_send.svg';
+import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
 import BottomSheet from "../../../../components/BottomSheet";
-import { mockUserData } from "../../MocData";
 
-const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg, isFriend, isInterested }) => {
-    const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-    const [requestMessage, setRequestMessage] = useState(`${mockUserData.userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`);
+const UserInfo: React.FC = React.memo(() => {
+    const userDetails = useRecoilValue(userDetailsState);
+    const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
+    const [requestMessage, setRequestMessage] = useRecoilState(requestMessageState);
+    const [interested, setInterested] = useRecoilState(interestedState);
+    const [friend, setFriend] = useRecoilState(friendState);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
+    if (!userDetails) return null; // userDetails가 없으면 아무것도 렌더링하지 않음
+
+    const { userId, userBio, userImg } = userDetails;
     const truncatedBio = userBio.length > 50 ? userBio.substring(0, 50) + '...' : userBio;
 
     const messageType = useMemo(() => {
-        if (requestMessage === `${mockUserData.userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`) {
+        if (requestMessage === `${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`) {
             return 'initial';
         }
         return 'comment';
-    }, [requestMessage]);
+    }, [requestMessage, userId]); // 리렌더링 시 불필요한 계산 방지, userId의 값이 바뀔 때만 messageType을 새롭게 계산! 그렇지 않으면 이전에 계산된 값을 재사용
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
-        setRequestMessage(`${mockUserData.userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`)
+        setRequestMessage(`${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`);
     };
 
     const handleCloseBottomSheet = () => {
@@ -33,7 +40,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
     };
 
     const handleInputFocus = () => {
-        setRequestMessage(`${mockUserData.userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${mockUserData.userId}님에게만 전달됩니다.`);
+        setRequestMessage(`${userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${userId}님에게만 전달됩니다.`);
     };
 
     const handleMsgIconClick = () => {
@@ -45,6 +52,11 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
             inputRef.current.value = ""; // 전송 버튼 클릭 후 입력 값 초기화
         }
         setIsBottomSheetOpen(false);
+        setFriend(true); // 친구 신청이 완료되었음을 반영하여 상태 업데이트
+    };
+
+    const handleInterestedClick = () => {
+        setInterested(true);
     };
 
     return (
@@ -63,7 +75,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                 </UserDetails>
             </UserProfile>
             <ButtonContainer>
-                {!isFriend && !isInterested && (
+                {!friend && !interested && (
                     <>
                         <Button $backgroundcolor="#000" onClick={handleOpenBottomSheet}>
                             <Icon src={HeartSvg} alt="heart icon" />
@@ -71,7 +83,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                                 친구 신청
                             </StyledText>
                         </Button>
-                        <Button $backgroundcolor="white">
+                        <Button $backgroundcolor="white" onClick={handleInterestedClick}>
                             <Icon src={StatSvg} alt="star icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}>
                                 관심 친구
@@ -79,7 +91,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                         </Button>
                     </>
                 )}
-                {isFriend && !isInterested && (
+                {friend && !interested && (
                     <>
                         <Button $color="white" $backgroundcolor="#000">
                             <Icon src={MsgSvg} alt="message icon" />
@@ -87,7 +99,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                                 메세지 보내기
                             </StyledText>
                         </Button>
-                        <Button $color="#000" $backgroundcolor="white">
+                        <Button $color="#000" $backgroundcolor="white" onClick={handleInterestedClick}>
                             <Icon src={StatSvg} alt="star icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}>
                                 관심 친구
@@ -95,7 +107,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                         </Button>
                     </>
                 )}
-                {isFriend && isInterested && (
+                {friend && interested && (
                     <LongButton>
                         <Icon src={MsgSvg} alt="message icon" />
                         <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
@@ -103,7 +115,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                         </StyledText>
                     </LongButton>
                 )}
-                {!isFriend && isInterested && (
+                {!friend && interested && (
                     <LongButton onClick={handleOpenBottomSheet}>
                         <Icon src={HeartSvg} alt="heart icon" />
                         <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
@@ -130,7 +142,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
                                     maxLength={100}
                                     onFocus={handleInputFocus}
                                 />
-                                <MsgIcon src={MsgSvg} alt="message icon" onClick={handleMsgIconClick} />
+                                <MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
                             </ComentContainer>
                         </RequestContainer>
                     )}
@@ -141,6 +153,8 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ userId, userBio, userImg
 });
 
 export default UserInfo;
+
+
 
 
 

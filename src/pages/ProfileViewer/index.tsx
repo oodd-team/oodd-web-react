@@ -55,13 +55,7 @@ const ProfileViewer: React.FC = () => {
                     </UserID>
                     <MoreIcon />
                 </HeaderContainer>
-                <UserInfo 
-                    userId={userDetails.userId}
-                    userBio={userDetails.userBio}
-                    userImg={userDetails.userImg}
-                    isFriend={userDetails.isFriend}
-                    isInterested={userDetails.isInterested}
-                />
+                <UserInfo />
                 <Vector />
                 <CounterContainer>
                     <Count>
