@@ -16,7 +16,7 @@ export const ConfirmationModalLayout = styled.div`
 	flex-direction: column;
 	width: 90%;
 	max-width: 21.375rem;
-	height: 14rem;
+	height: 14.25rem;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
@@ -40,7 +40,7 @@ export const ButtonContainer = styled.div`
 	margin: auto;
 	border-top: 1px solid ${({ theme }) => theme.colors.gray2};
 	width: 100%;
-	height: 3.1rem;
+	height: 3.5rem;
 `;
 
 export const Button = styled.button`
