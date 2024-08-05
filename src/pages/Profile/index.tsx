@@ -6,7 +6,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import BottomSheet from './BottomSheet';
 import button_plus from './assets/button_plus.svg';
 
-const ProfilePage: React.FC = () => {
+const Profile: React.FC = () => {
 	const [isSheetOpen, setIsSheetOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -44,4 +44,4 @@ const ProfilePage: React.FC = () => {
 	);
 };
 
-export default ProfilePage;
+export default Profile;

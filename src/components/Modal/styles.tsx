@@ -18,12 +18,12 @@ export const ModalContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 340px;
-	max-width: calc(100% - 40px);
-	height: 160px;
+	width: 21.25rem;
+	max-width: calc(100% - 2.5rem);
+	height: 10rem;
 	max-height: 30%;
 	background-color: ${({ theme }) => theme.colors.white};
-	border-radius: 10px;
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 0.625rem;
+	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 	z-index: 999;
 `;

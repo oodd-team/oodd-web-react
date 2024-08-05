@@ -7,7 +7,7 @@ import InstaConnectModal from './InstaConnectModal';
 import InstaFeedSelectModal from './InstaFeedSelectModal';
 import ImageReviewModal from './ImageReviewModal';
 
-const PostUploadPage: React.FC = () => {
+const PostUpload: React.FC = () => {
 	const location = useLocation();
 	const [isImageSelectModalOpen, setIsImageSelectModalOpen] = useState(false);
 	const [isImageReviewModalOpen, setIsImageReviewModalOpen] = useState(false);
@@ -117,4 +117,4 @@ const PostUploadPage: React.FC = () => {
 	);
 };
 
-export default PostUploadPage;
+export default PostUpload;
