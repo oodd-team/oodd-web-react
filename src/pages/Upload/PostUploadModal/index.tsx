@@ -7,7 +7,6 @@ import {
 	StyledInput,
 	TagContainer,
 	ClothingInfoList,
-	ClothingInfoItem,
 	HashtagList,
 	HashtagItem,
 	PinnedPostToggleContainer,
@@ -16,6 +15,7 @@ import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import ImageSwiper from './ImageSwiper';
+import ClothingInfoItem from './ClothingInfoItem';
 import SearchBottomSheet from './SearchBottomSheet/index';
 import ToggleSwitch from './ToggleSwitch';
 import back from '../assets/back.svg';
@@ -94,8 +94,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				clothing_infos: clothingInfos,
 			};
 
-			console.log(postData);
-
 			const response = await axios.post('http://localhost:3001/posts', postData, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -145,20 +143,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 					{clothingInfos.length > 0 && (
 						<ClothingInfoList>
 							{clothingInfos.map((clothingObj, index) => (
-								<ClothingInfoItem key={index}>
-									<img src={clothingObj.image} />
-									<div className="infoContainer">
-										<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
-											{clothingObj.brand}
-										</StyledText>
-										<StyledText className="detail" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-											{clothingObj.model}
-										</StyledText>
-									</div>
-									<button onClick={() => handleDeleteClothingInfo(clothingObj)}>
-										<img src={close} />
-									</button>
-								</ClothingInfoItem>
+								<ClothingInfoItem key={index} clothingObj={clothingObj} onDelete={handleDeleteClothingInfo} />
 							))}
 						</ClothingInfoList>
 					)}

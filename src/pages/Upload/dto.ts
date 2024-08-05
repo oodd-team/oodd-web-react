@@ -46,3 +46,8 @@ export interface ClothingInfo {
 	model: string;
 	url: string;
 }
+
+export interface ClothingInfoItemProps {
+	clothingObj: ClothingInfo;
+	onDelete: (clothingObj: ClothingInfo) => void;
+}

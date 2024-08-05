@@ -126,43 +126,6 @@ export const ClothingInfoList = styled.ul`
 	flex-direction: column;
 `;
 
-export const ClothingInfoItem = styled.li`
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 15px;
-	display: flex;
-
-	> img {
-		width: 56px;
-		height: 56px;
-		border-radius: 5px;
-		border: none;
-	}
-
-	.infoContainer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding-left: 15px;
-		height: 56px;
-	}
-
-	.brand {
-		margin-right: auto;
-	}
-
-	.detail {
-		margin-right: auto;
-		color: ${({ theme }) => theme.colors.gray3};
-		//overflow-x: hidden;
-	}
-
-	button {
-		padding: 0;
-		margin-left: auto;
-	}
-`;
-
 export const HashtagList = styled.ul`
 	display: flex;
 	flex-direction: row;

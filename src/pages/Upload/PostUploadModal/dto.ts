@@ -15,6 +15,11 @@ export interface ClothingInfo {
 	url: string;
 }
 
+export interface ClothingInfoItemProps {
+	clothingObj: ClothingInfo;
+	onDelete: (clothingObj: ClothingInfo) => void;
+}
+
 export interface ImageSwiperProps {
 	images: string[];
 }
