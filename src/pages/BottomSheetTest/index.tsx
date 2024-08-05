@@ -8,10 +8,13 @@ import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import Exit from '../../assets/BottomSheetMenu/Edit.svg';
 import Delete from '../../assets/BottomSheetMenu/Delete.svg';
 import Pin from '../../assets/BottomSheetMenu/Pin.svg';
+import Comment from '../../components/Comment';
+import { CommentProps } from '../../components/Comment/dto';
 
 const BottomSheetTest: React.FC = () => {
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenBottomSheet2, setIsOpenBottomSheet2] = useState(false);
+	const [isOpenBottomSheet3, setIsOpenBottomSheet3] = useState(false);
 
 	// 바텀시트 내부 컴포넌트에 전달할 props가 없는 경우
 	const bottomSheetProps: BottomSheetProps = {
@@ -61,11 +64,28 @@ const BottomSheetTest: React.FC = () => {
 		},
 	};
 
+	const commentProps: CommentProps = {
+		sendComment: (comment) => {
+			console.log(`api에 ${comment} 전달`);
+		},
+	};
+
+	const bottomSheet3Props: BottomSheetProps = {
+		isOpenBottomSheet: isOpenBottomSheet3,
+		isBackgroundDimmed: true,
+		Component: Comment,
+		componentProps: commentProps,
+		onCloseBottomSheet: () => {
+			setIsOpenBottomSheet3(false);
+		},
+	};
+
 	return (
 		<OODDFrame>
 			바텀시트 사용 예입니다 확인 후 폴더를 삭제해 주세요
 			<BottomSheet {...bottomSheetProps} />
 			<BottomSheet {...bottomSheet2Props} />
+			<BottomSheet {...bottomSheet3Props} />
 			<button
 				style={{ padding: '10px', margin: '10px', border: '1px solid gray' }}
 				onClick={() => {
@@ -81,6 +101,14 @@ const BottomSheetTest: React.FC = () => {
 				}}
 			>
 				BottomSheetMenu 사용 예입니다
+			</button>
+			<button
+				style={{ padding: '10px', margin: '10px', border: '1px solid gray' }}
+				onClick={() => {
+					setIsOpenBottomSheet3(true);
+				}}
+			>
+				Comment 사용 예입니다
 			</button>
 		</OODDFrame>
 	);
