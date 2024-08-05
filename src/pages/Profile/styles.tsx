@@ -1,12 +1,19 @@
 // src/pages/ProfilePage/styles.tsx
 import styled from 'styled-components';
 
+export const ProfileContainer = styled.div`
+	flex-grow: 1;
+	height: 100vh;
+	width: 100%;
+	position: relative;
+`;
+
 export const AddButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: absolute;
-	bottom: 1.25rem;
+	bottom: 6.75rem;
 	right: 1.25rem;
 	width: 5rem;
 	height: 5rem;

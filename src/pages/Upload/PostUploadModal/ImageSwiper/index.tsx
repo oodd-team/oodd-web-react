@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
-import 'swiper/swiper.min.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { SwiperContainer, ImageWrapper, StyledNavigation, StyledPagination } from './styles';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
 import picture2 from '../../assets/picture2.svg';
+import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
-
-SwiperCore.use([Navigation, Pagination]);
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	const [currentSlide, setCurrentSlide] = useState(0);
@@ -33,6 +32,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 							</div>`;
 					},
 				}}
+				modules={[Navigation, Pagination]}
 				onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
 				onSwiper={(swiper) => setCurrentSlide(swiper.activeIndex)}
 			>

@@ -8,12 +8,6 @@ import { HomeContainer } from './styles';
 // Home 페이지입니다.
 const Home: React.FC = () => {
 	return (
-<<<<<<< HEAD
-		<div>
-			<Navbar />
-			<h1>Home Page입니다</h1>
-		</div>
-=======
 		<OODDFrame>
 			<HomeContainer>
 				<HomeTopBar />
@@ -21,7 +15,6 @@ const Home: React.FC = () => {
 			</HomeContainer>
 			<NavBar />
 		</OODDFrame>
->>>>>>> refs/remotes/origin/dev
 	);
 };
 

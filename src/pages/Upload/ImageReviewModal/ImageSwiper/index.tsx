@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
-import 'swiper/swiper.min.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButton, HiddenFileInput } from './styles';
 import remove from '../../assets/remove.svg';
 import plus from '../../assets/plus.svg';
-import SwiperCore, { Navigation, Pagination } from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
-
-SwiperCore.use([Navigation, Pagination]);
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -49,6 +49,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 					nextEl: '.swiper-button-next',
 					prevEl: '.swiper-button-prev',
 				}}
+				modules={[Navigation, Pagination]}
 				onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
 				onSwiper={(swiper) => setCurrentSlide(swiper.activeIndex)}
 			>

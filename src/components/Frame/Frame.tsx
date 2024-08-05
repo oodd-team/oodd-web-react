@@ -10,5 +10,4 @@ export const OODDFrame = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	position: relative;
 `;

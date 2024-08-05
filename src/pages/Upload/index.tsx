@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { OODDFrame } from '../../components/Frame/Frame';
+import { UploadContainer } from './styles';
 import PostUploadModal from './PostUploadModal';
 import ImageSelectModal from './ImageSelectModal';
 import InstaConnectModal from './InstaConnectModal';
 import InstaFeedSelectModal from './InstaFeedSelectModal';
 import ImageReviewModal from './ImageReviewModal';
 
-const PostUpload: React.FC = () => {
+const Upload: React.FC = () => {
 	const location = useLocation();
 	const [isImageSelectModalOpen, setIsImageSelectModalOpen] = useState(false);
 	const [isImageReviewModalOpen, setIsImageReviewModalOpen] = useState(false);
@@ -82,39 +83,41 @@ const PostUpload: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{isImageSelectModalOpen && (
-				<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleSelectImages} />
-			)}
-			{isImageReviewModalOpen && selectedImages.length > 0 && (
-				<ImageReviewModal
-					selectedImages={selectedImages}
-					onAddImages={handleAddImages}
-					onDeleteImages={handleDeleteImages}
-					onPrev={handleReviewPrev}
-					onNext={handleOpenPostUpload}
-				/>
-			)}
-			{isInstaConnectModalOpen && (
-				<InstaConnectModal
-					onIdSelect={handleSelectInstaId}
-					onClose={handleCloseModals}
-					onNext={handleOpenInstaFeedSelect}
-				/>
-			)}
-			{isInstaFeedSelectModalOpen && (
-				<InstaFeedSelectModal
-					instagramId={instagramId}
-					selectedImages={selectedImages}
-					onAddImages={handleAddImages}
-					onNext={handleOpenImageReview}
-					onClose={handleCloseModals}
-				/>
-			)}
-			{isPostUploadModalOpen && selectedImages.length > 0 && (
-				<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
-			)}
+			<UploadContainer>
+				{isImageSelectModalOpen && (
+					<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleSelectImages} />
+				)}
+				{isImageReviewModalOpen && selectedImages.length > 0 && (
+					<ImageReviewModal
+						selectedImages={selectedImages}
+						onAddImages={handleAddImages}
+						onDeleteImages={handleDeleteImages}
+						onPrev={handleReviewPrev}
+						onNext={handleOpenPostUpload}
+					/>
+				)}
+				{isInstaConnectModalOpen && (
+					<InstaConnectModal
+						onIdSelect={handleSelectInstaId}
+						onClose={handleCloseModals}
+						onNext={handleOpenInstaFeedSelect}
+					/>
+				)}
+				{isInstaFeedSelectModalOpen && (
+					<InstaFeedSelectModal
+						instagramId={instagramId}
+						selectedImages={selectedImages}
+						onAddImages={handleAddImages}
+						onNext={handleOpenImageReview}
+						onClose={handleCloseModals}
+					/>
+				)}
+				{isPostUploadModalOpen && selectedImages.length > 0 && (
+					<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
+				)}
+			</UploadContainer>
 		</OODDFrame>
 	);
 };
 
-export default PostUpload;
+export default Upload;

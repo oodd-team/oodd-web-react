@@ -26,7 +26,7 @@
     "request": "^2.88.2",
     "styled-components": "^6.1.11",
     "styled-reset": "^4.5.2",
-    "swiper": "6.8.4"
+    "swiper": "^11.1.9"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

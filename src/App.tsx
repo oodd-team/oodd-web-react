@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Chats from './pages/Chats';
 import Profile from './pages/Profile';
-import PostUpload from './pages/Upload';
+import Upload from './pages/Upload';
 import BottomSheetTest from './pages/BottomSheetTest';
 
 const App: React.FC = () => {
@@ -16,7 +16,7 @@ const App: React.FC = () => {
 					<Route path="/login" element={<Login />} />
 					<Route path="/chats" element={<Chats />} />
 					<Route path="/profile" element={<Profile />} />
-					<Route path="/upload" element={<PostUpload />} />
+					<Route path="/upload" element={<Upload />} />
 					<Route path="/bottomsheet-test" element={<BottomSheetTest />} />
 				</Routes>
 			</BrowserRouter>
