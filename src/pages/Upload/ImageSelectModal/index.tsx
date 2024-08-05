@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ImageDragDropContainer } from './styles';
-import { Header, PrevButton } from '../Header';
+import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import close from '../assets/close.svg';

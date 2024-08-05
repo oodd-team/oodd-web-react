@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Content, PostContainer, ImageWrapper } from './styles';
-import { Header, PrevButton } from '../Header';
+import { Header, PrevButton } from '../styles';
 import { StyledText } from '../../../components/Text/StyledText';
 import Modal from '../../../components/Modal';
 import close from '../assets/close.svg';

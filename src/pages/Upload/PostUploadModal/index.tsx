@@ -12,7 +12,7 @@ import {
 	HashtagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-import { Header, PrevButton } from '../Header';
+import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import ImageSwiper from './ImageSwiper';
@@ -26,6 +26,8 @@ import next from '../assets/next.svg';
 import next_up from '../assets/next_up.svg';
 import close from '../assets/close2.svg';
 import { PostUploadModalProps, ClothingInfo, Hashtag } from './dto';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../firebaseConfig';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
 	const [caption, setCaption] = useState('');
@@ -45,12 +47,12 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 	const navigate = useNavigate();
 
-	const handleOpenSearchSheet = () => {
+	const handleToggleSearchSheet = () => {
 		setIsSearchSheetOpen((open) => !open);
 	};
 
-	const handleOpenStyleTagList = () => {
-		setIsHashtagListOpen((prev) => !prev);
+	const handleToggleStyleTagList = () => {
+		setIsHashtagListOpen((open) => !open);
 	};
 
 	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
@@ -62,29 +64,38 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setClothingInfos(deletedClothingInfo);
 	};
 
-	const handleTagSelect = (tag: Hashtag) => {
+	const handleSelectTag = (tag: Hashtag) => {
 		setSelectedHashtag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
 		setIsHashtagListOpen(false);
 	};
 
-	const handleToggle = () => {
+	const handleToggleOOTD = () => {
 		setIsOOTD(!isOOTD);
 	};
 
+	const uploadImageToFirebase = async (image: string) => {
+		const response = await fetch(image);
+		const blob = await response.blob();
+		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
+		await uploadBytes(storageRef, blob);
+		return getDownloadURL(storageRef);
+	};
+
 	const handleSubmit = async () => {
-		const postData = {
-			photo_urls: selectedImages,
-			caption,
-			hashtags: selectedHashtag ? [selectedHashtag.tag] : [],
-			clothing_infos: clothingInfos,
-		};
+		setIsLoading(true);
 
-		console.log(postData);
-		navigate('/profile');
-
-		/*
 		try {
-			setIsLoading(true);
+			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
+
+			const postData = {
+				photo_urls: uploadedImages,
+				caption,
+				hashtags: selectedHashtag ? [selectedHashtag.tag] : [],
+				clothing_infos: clothingInfos,
+			};
+
+			console.log(postData);
+
 			const response = await axios.post('http://localhost:3001/posts', postData, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -104,7 +115,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		} finally {
 			setIsLoading(false);
 		}
-		*/
 	};
 
 	return (
@@ -120,7 +130,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				<ImageSwiper images={selectedImages} />
 				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
-					<div onClick={handleOpenSearchSheet}>
+					<div onClick={handleToggleSearchSheet}>
 						<img src={clothingTag} />
 						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 							옷 정보 태그
@@ -154,7 +164,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 					)}
 				</TagContainer>
 				<TagContainer>
-					<div onClick={handleOpenStyleTagList}>
+					<div onClick={handleToggleStyleTagList}>
 						<img src={styleTag} />
 						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 							스타일 태그
@@ -179,7 +189,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 							{hashtags.map((tagObj, index) => (
 								<HashtagItem
 									key={index}
-									onClick={() => handleTagSelect(tagObj)}
+									onClick={() => handleSelectTag(tagObj)}
 									selected={selectedHashtag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
@@ -193,7 +203,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 					<img src={pin} />
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 					<div>
-						<ToggleSwitch checked={isOOTD} onChange={handleToggle} />
+						<ToggleSwitch checked={isOOTD} onChange={handleToggleOOTD} />
 					</div>
 				</PinnedPostToggleContainer>
 			</Content>
@@ -201,7 +211,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			<BottomButton content="공유" onClick={handleSubmit} />
 
 			{isSearchSheetOpen && (
-				<SearchBottomSheet onClose={handleOpenSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
+				<SearchBottomSheet onClose={handleToggleSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
 			)}
 		</>
 	);

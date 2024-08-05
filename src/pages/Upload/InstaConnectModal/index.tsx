@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
-import { Header, PrevButton } from '../Header';
+import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';

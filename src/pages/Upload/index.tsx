@@ -29,21 +29,14 @@ const PostUploadPage: React.FC = () => {
 	}, [location.state]);
 
 	const handleCloseModals = () => {
-		setIsImageSelectModalOpen(false);
-		setIsInstaConnectModalOpen(false);
-		setIsImageReviewModalOpen(false);
 		setSelectedImages([]);
 		navigate('/profile');
 	};
 
-	const handleImageSelect = (images: string[]) => {
-		setSelectedImages(images);
+	const handleSelectImages = (images: string[]) => {
+		handleAddImages(images);
 		setIsImageSelectModalOpen(false);
 		setIsImageReviewModalOpen(true);
-	};
-
-	const handleInstaIdSelect = (id: string) => {
-		setInstagramId(id);
 	};
 
 	const handleAddImages = (images: string[]) => {
@@ -52,6 +45,10 @@ const PostUploadPage: React.FC = () => {
 
 	const handleDeleteImages = (images: string[]) => {
 		setSelectedImages([...images]);
+	};
+
+	const handleSelectInstaId = (id: string) => {
+		setInstagramId(id);
 	};
 
 	const handleReviewPrev = () => {
@@ -86,7 +83,7 @@ const PostUploadPage: React.FC = () => {
 	return (
 		<OODDFrame>
 			{isImageSelectModalOpen && (
-				<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleImageSelect} />
+				<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleSelectImages} />
 			)}
 			{isImageReviewModalOpen && selectedImages.length > 0 && (
 				<ImageReviewModal
@@ -99,7 +96,7 @@ const PostUploadPage: React.FC = () => {
 			)}
 			{isInstaConnectModalOpen && (
 				<InstaConnectModal
-					onIdSelect={handleInstaIdSelect}
+					onIdSelect={handleSelectInstaId}
 					onClose={handleCloseModals}
 					onNext={handleOpenInstaFeedSelect}
 				/>

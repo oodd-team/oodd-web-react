@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Content } from './styles';
-import { Header, PrevButton } from '../Header';
+import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import back from '../assets/back.svg';
