@@ -26,7 +26,6 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1;
     font-family: 'Pretendard Variable', 'Gmarket Sans', sans-serif;
     background-color: #FFFFFF;
-    margin-bottom: 6.25rem;
   }
   
   ol, ul {
