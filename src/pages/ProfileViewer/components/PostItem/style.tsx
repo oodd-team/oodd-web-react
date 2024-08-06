@@ -1,31 +1,33 @@
 import styled from "styled-components";
 
 export const PostItemContainer = styled.div`
-    width: 100%;
-    max-width: 16rem; /* 256px */
+    flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
+    max-width: 16rem; /* 최대 너비 설정 */
     height: 19.4375rem;
     aspect-ratio: 14.2225 / 19.4375; /* 가로 세로 비율 유지 */
     display: flex;
     flex-direction: column;
     position: relative; /* LikesOverlay 위치 조정을 위한 설정 */
+    box-sizing: border-box;
 
     @media (max-width: 33.125rem) {
-        max-width: 100vw;
+        flex: 1 1 calc(50% - 0.5rem); /* 작은 화면에서도 두 개씩 배치되도록 설정 */
+        max-width: 50%; /* 화면 크기에 따라 너비를 조정하여 두 개씩 배치 */
         height: auto; /* 높이 자동 조정 */
-        aspect-ratio: auto; /* 작은 화면에서는 비율 유지 없이 자동 조정 */
+        aspect-ratio: auto; /* 비율 유지 없이 자동 조정 */
     }
-`; // 좋아요 수, Img 감싸는 큰 틀
+`;
 
 export const PostImageContainer = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden; /* 이미지 잘리지 않도록 */
-`; // Img 감싸는 큰 틀
+`;
 
 export const PostImage = styled.img`
     width: 100%;
-    height: auto; /* 비율을 유지하려면 height는 auto로 설정 */
+    height: 100%; /* 높이 100%로 설정하여 비율 유지 */
     object-fit: cover; /* 이미지가 컨테이너를 덮도록 설정, 잘릴 수 있음 */
 `;
 
