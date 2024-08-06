@@ -4,6 +4,7 @@ import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
+	isHandlerVisible,
 	isBackgroundDimmed,
 	Component,
 	componentProps,
@@ -120,7 +121,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				$currentTranslateY={currentTranslateY}
 				$isOpenBottomSheet={isOpenBottomSheet}
 			>
-				<Handler />
+				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />
 			</BottomSheetLayout>
 		</BottomSheetWrapper>
