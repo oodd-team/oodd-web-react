@@ -36,7 +36,7 @@ const BottomSheetTest: React.FC = () => {
 		isBackgroundDimmed: true,
 		Component: Items,
 		onCloseBottomSheet: () => {
-			setIsOpenBottomSheet(false);
+			setIsOpenBottomSheet0(false);
 		},
 	};
 
