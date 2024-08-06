@@ -120,23 +120,27 @@ const ChatRoom: React.FC = () => {
 			// 가장 마지막 메시지이거나,
 			// 전송자 또는 시간 또는 날짜가 바뀌기 직전인 경우
 			// 메시지 전송 시각 출력
-			let printTime =
+			let isPrintTime =
 				nextMessage === null ||
 				message.sender !== nextMessage.sender ||
 				formattedTime !== nextMessage.timestamp.format('HH:mm') ||
 				isNextDay(nextMessage.timestamp, message.timestamp);
 
+			// 채팅의 첫 메시지가 아니고, 전송자가 바뀐 경우 margin-top 추가
+			let isSenderChanged = prevMessage !== null && !isNewDate && prevMessage.sender !== message.sender;
+
 			// 보낸 메시지일 경우 sentMessage 속성 추가
 			// 받은 메시지일 경우 rcvdMessage 속성 추가
 			if (message.sender === 'me') {
-				const sentMessage: SentMessageProps = { text: message.text, printTime, formattedTime };
+				const sentMessage: SentMessageProps = { text: message.text, isSenderChanged, isPrintTime, formattedTime };
 				return { ...message, isNewDate, sentMessage };
 			} else {
 				const rcvdMessage: RcvdMessageProps = {
 					sender: message.sender,
 					text: message.text,
 					isFirst,
-					printTime,
+					isSenderChanged,
+					isPrintTime,
 					formattedTime,
 				};
 				return { ...message, isNewDate, rcvdMessage };

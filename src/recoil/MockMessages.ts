@@ -50,23 +50,23 @@ export const MockMessagesAtom = atom<MessageDto[]>({
 		{
 			id: 6,
 			text: 'ㅋㅋㅋㅋㅋㅋ',
-			sender: 'me',
-			receiver: 'user2',
+			sender: 'user2',
+			receiver: 'me',
 			timestamp: dayjs('2024-07-22T01:57:50'),
 		},
 		{
 			id: 7,
-			text: 'ㅋㅋㅋㅋㅋㅋ',
+			text: 'ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
 			sender: 'me',
 			receiver: 'user2',
-			timestamp: dayjs('2024-08-02T00:16:59'),
+			timestamp: dayjs('2024-07-22T03:16:59'),
 		},
 		{
 			id: 8,
 			text: 'ㅋㅋㅋㅋㅋㅋ',
 			sender: 'me',
 			receiver: 'user2',
-			timestamp: dayjs('2024-08-03T00:16:59'),
+			timestamp: dayjs('2024-08-03T03:16:59'),
 		},
 	],
 });
