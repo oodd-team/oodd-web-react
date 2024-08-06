@@ -91,6 +91,7 @@ const ChatRoom: React.FC = () => {
 
 	const MenuBottomSheet: BottomSheetProps = {
 		isOpenBottomSheet: isOpenMenu,
+		isHandlerVisible: true,
 		isBackgroundDimmed: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
