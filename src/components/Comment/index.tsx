@@ -5,7 +5,7 @@ import Send from '/Send.svg';
 import { useEffect, useRef, useState } from 'react';
 import { CommentProps } from './dto';
 
-const Comment: React.FC<CommentProps> = ({ sendComment }) => {
+const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 	const [comment, setComment] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -52,12 +52,11 @@ const Comment: React.FC<CommentProps> = ({ sendComment }) => {
 	return (
 		<CommentLayout>
 			<StyledText
-				style={{ padding: '0 3.31rem', whiteSpace: 'normal', wordBreak: 'keep-all' }}
+				style={{ whiteSpace: 'pre-line' }}
 				$textTheme={{ style: 'body2-light', lineHeight: 1.5 }}
 				color={theme.colors.gray3}
 			>
-				{/* TODO: 내용 고정? props로 받기? padding에 따라 개행? 고정 개행? 결정 후 수정 */}
-				IDID님에게 대표 이미지와 함께 전달될 한줄 메시지를 보내보세요!
+				{content}
 			</StyledText>
 			<SendContainer>
 				<CommentTextarea ref={textareaRef} value={comment} onChange={onChangeComment} onKeyDown={onKeyDown} />

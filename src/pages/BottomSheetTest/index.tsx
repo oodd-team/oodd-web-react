@@ -12,6 +12,7 @@ import Comment from '../../components/Comment';
 import { CommentProps } from '../../components/Comment/dto';
 
 const BottomSheetTest: React.FC = () => {
+	const username = 'IDID';
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenBottomSheet2, setIsOpenBottomSheet2] = useState(false);
 	const [isOpenBottomSheet3, setIsOpenBottomSheet3] = useState(false);
@@ -65,6 +66,7 @@ const BottomSheetTest: React.FC = () => {
 	};
 
 	const commentProps: CommentProps = {
+		content: `${username}님에게 대표 OOTD와 함께 전달될\n한줄 메시지를 보내보세요!`,
 		sendComment: (comment) => {
 			console.log(`api에 ${comment} 전달`);
 		},
