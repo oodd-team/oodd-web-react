@@ -5,33 +5,36 @@ import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer } from './s
 import Tag from './Tag';
 import { FeedProps, TagProps } from './dto';
 import Feed from './Feed';
+import profileImg2 from '../../../assets/Home/profileImg2.svg';
+import feedImg from '../../../assets/Home/feedImg.svg';
+import tag from '../../../assets/Home/tag.svg';
 
 // 추후 변경
 const tagData: TagProps[] = [
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#hip' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#classic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#vintage' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#casual' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#chic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#bohemian' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#sporty' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#formal' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#street' },
+	{ tagImgUrl: tag, tagName: '#hip' },
+	{ tagImgUrl: tag, tagName: '#classic' },
+	{ tagImgUrl: tag, tagName: '#vintage' },
+	{ tagImgUrl: tag, tagName: '#casual' },
+	{ tagImgUrl: tag, tagName: '#chic' },
+	{ tagImgUrl: tag, tagName: '#bohemian' },
+	{ tagImgUrl: tag, tagName: '#sporty' },
+	{ tagImgUrl: tag, tagName: '#formal' },
+	{ tagImgUrl: tag, tagName: '#street' },
 ];
 
 // 추후 변경
 const feedData: FeedProps[] = [
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: profileImg2,
 		userName: 'IDID',
 		text: 'Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: profileImg2,
 		userName: 'IDID2',
 		text: '굳굳',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 ];
 

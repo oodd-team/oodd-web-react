@@ -9,15 +9,15 @@ import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Re
 import { CardLayoutProps } from './dto';
 import xBtn from '../../../../assets/Home/button_reject.svg';
 import checkBtn from '../../../../assets/Home/button_check.svg';
+import profileImg1 from '../../../../assets/Home/profileImg1.svg';
+import ootdImg1 from '../../../../assets/Home/OOTDImg1.svg';
+import ootdImg2 from '../../../../assets/Home/OOTDImg2.svg';
+import ootdImg3 from '../../../../assets/Home/OOTDImg3.svg';
+import ootdImg4 from '../../../../assets/Home/OOTDImg4.svg';
 
 const cardItem: CardLayoutProps = {
-	profileImgUrl: './../../../../assets/Home/profileImg.svg',
-	ootdImgUrls: [
-		'./../../../../assets/Home/OOTDImg1.svg',
-		'./../../../../assets/Home/OOTDImg2.svg',
-		'./../../../../assets/Home/OOTDImg3.svg',
-		'./../../../../assets/Home/OOTDImg4.svg',
-	],
+	profileImgUrl: profileImg1,
+	ootdImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 };
 
 // OODD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
