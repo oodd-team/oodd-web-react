@@ -5,66 +5,66 @@ import RcvdMessage from './RcvdMessage';
 import SentMessage from './SentMessage';
 import DateBar from './DateBar';
 import ChatBox from './ChatBox';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { MockMessagesAtom } from '../../../recoil/MockMessages';
-import { isClickedMenuAtom } from '../../../recoil/isClickedMenu';
 import BottomSheet from '../../../components/BottomSheet';
-import SheetItemWithDivider from '../../../components/SheetItemWithDivider';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import { OODDFrame } from '../../../components/Frame/Frame';
 import { MessageDto, ExtendedMessageDto, SentMessageProps, RcvdMessageProps } from '../dto';
-import { SheetItemDto } from '../../../components/SheetItemWithDivider/dto';
 import { ConfirmationModalDto } from '../../../components/ConfirmationModal/dto';
-import { BottomSheetDto } from '../../../components/BottomSheet/dto';
-import Leave from '../../../assets/Chats/Leave.svg';
-import Block from '../../../assets/Chats/Block.svg';
+import Exit from '../../../assets/BottomSheetMenu/Exit.svg';
+import Block from '../../../assets/BottomSheetMenu/Block.svg';
+import { BottomSheetProps } from '../../../components/BottomSheet/dto';
+import BottomSheetMenu from '../../../components/BottomSheetMenu';
+import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 
 const ChatRoom: React.FC = () => {
 	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
 	const mockMessages = useRecoilValue(MockMessagesAtom);
-	const [isClickedMenu, setIsClickedMenu] = useRecoilState(isClickedMenuAtom);
-	const [isClickedLeave, setIsClickedLeave] = useState<boolean>(false);
-	const [isClickedBlock, setIsClickedBlock] = useState<boolean>(false);
+	const [isOpenMenu, setIsOpenMenu] = useState(false);
+	const [isOpenExit, setIsOpenExit] = useState<boolean>(false);
+	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
 
-	const sheetItems: SheetItemDto[] = [
-		{
-			text: '채팅방 나가기',
-			action: (): void => {
-				setIsClickedMenu(false);
-				setIsClickedLeave(true);
+	const bottomSheetMenuProps: BottomSheetMenuProps = {
+		items: [
+			{
+				text: '채팅방 나가기',
+				action: () => {
+					setIsOpenMenu(false);
+				},
+				icon: Exit,
 			},
-			icon: Leave,
-		},
-		{
-			text: '차단하기',
-			action: (): void => {
-				setIsClickedMenu(false);
-				setIsClickedBlock(true);
+			{
+				text: '차단하기',
+				action: () => {
+					setIsOpenMenu(false);
+				},
+				icon: Block,
 			},
-			icon: Block,
-		},
-	];
+		],
+		marginBottom: '4.38rem',
+	};
 
-	const leaveModal: ConfirmationModalDto = {
+	const exitModal: ConfirmationModalDto = {
 		content: '채팅방을 나가면 지난 대화 내용을 볼 수 없어요',
 		confirms: [
 			{
 				text: '취소',
 				action: () => {
-					setIsClickedLeave(false);
+					setIsOpenExit(false);
 				},
 			},
 			{
 				text: '채팅방 나가기',
 				action: () => {
-					setIsClickedLeave(false);
+					setIsOpenExit(false);
 				},
 			},
 		],
 		onClickBackground: () => {
-			setIsClickedLeave(false);
+			setIsOpenExit(false);
 		},
 	};
 
@@ -74,26 +74,28 @@ const ChatRoom: React.FC = () => {
 			{
 				text: '취소',
 				action: () => {
-					setIsClickedBlock(false);
+					setIsOpenBlock(false);
 				},
 			},
 			{
 				text: '차단하기',
 				action: () => {
-					setIsClickedBlock(false);
+					setIsOpenBlock(false);
 				},
 			},
 		],
 		onClickBackground: () => {
-			setIsClickedBlock(false);
+			setIsOpenBlock(false);
 		},
 	};
 
-	const MenuBottomSheet: BottomSheetDto = {
+	const MenuBottomSheet: BottomSheetProps = {
+		isOpenBottomSheet: isOpenMenu,
 		isBackgroundDimmed: true,
-		component: <SheetItemWithDivider items={sheetItems} marginBottom={'60px'} />,
-		onClickBackground: () => {
-			setIsClickedMenu(false);
+		Component: BottomSheetMenu,
+		componentProps: bottomSheetMenuProps,
+		onCloseBottomSheet: () => {
+			setIsOpenMenu(false);
 		},
 	};
 
@@ -146,10 +148,14 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{isClickedLeave && <ConfirmationModal {...leaveModal} />}
-			{isClickedBlock && <ConfirmationModal {...blockModal} />}
-			{isClickedMenu && <BottomSheet {...MenuBottomSheet} />}
-			<TopBar />
+			{isOpenExit && <ConfirmationModal {...exitModal} />}
+			{isOpenBlock && <ConfirmationModal {...blockModal} />}
+			<BottomSheet {...MenuBottomSheet} />
+			<TopBar
+				handleMenu={() => {
+					setIsOpenMenu(true);
+				}}
+			/>
 			<MessagesContainer>
 				{newMockMessages.map((message: ExtendedMessageDto) => {
 					return (

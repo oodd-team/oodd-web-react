@@ -14,8 +14,8 @@ export const TopbarLayout = styled.div`
 `;
 
 export const BackButton = styled.img`
-	width: 1.4rem;
-	height: 1.4rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;
@@ -24,8 +24,8 @@ export const BackButton = styled.img`
 `;
 
 export const KebabMenuButton = styled.img`
-	width: 1.4rem;
-	height: 1.4rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;

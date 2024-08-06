@@ -10,7 +10,7 @@ export const ChatBoxContainer = styled.div`
 	max-width: 32rem;
 	display: flex;
 	gap: 1.12rem;
-	padding: 0.688rem 2rem 2rem 1.5rem;
+	padding: 0.688rem 1.12rem 2rem 1.5rem;
 	background-color: #f5f5f5;
 	border-top: 1px solid ${({ theme }) => theme.colors.gray2};
 	align-items: center;
@@ -35,7 +35,8 @@ export const Textarea = styled.textarea`
 `;
 
 export const SendIcon = styled.img`
-	width: 1.4rem;
-	height: 1.4rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
+	margin-right: 0.75rem;
 `;
