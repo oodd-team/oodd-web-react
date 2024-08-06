@@ -6,11 +6,11 @@ export const ModalWrapper = styled.div`
 	justify-content: center;
 	position: fixed;
 	top: 0;
-	left: 0;
 	width: 100%;
+	max-width: 32rem;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 2;
+	z-index: 999;
 `;
 
 export const ModalContainer = styled.div`

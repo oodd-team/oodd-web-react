@@ -12,12 +12,13 @@ export const Header = styled.div`
 	display: flex;
 	position: fixed;
 	top: 0;
-	left: 0;
+	//left: 0;
 	width: 100%;
+	max-width: 32rem;
 	height: 3.75rem;
 	align-items: center;
 	background-color: white;
-	z-index: 1;
+	z-index: 2;
 
 	:nth-child(2) {
 		color: ${({ theme }) => theme.colors.black};

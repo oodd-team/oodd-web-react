@@ -5,7 +5,9 @@ export const ProfileContainer = styled.div`
 	flex-grow: 1;
 	height: 100vh;
 	width: 100%;
+	max-width: 32rem;
 	position: relative;
+	margin-bottom: 0;
 `;
 
 export const AddButton = styled.button`
@@ -14,6 +16,7 @@ export const AddButton = styled.button`
 	justify-content: center;
 	position: absolute;
 	bottom: 6.75rem;
+	//bottom: 1.25rem;
 	right: 1.25rem;
 	width: 5rem;
 	height: 5rem;
