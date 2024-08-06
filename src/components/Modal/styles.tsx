@@ -22,6 +22,7 @@ export const ModalContainer = styled.div`
 	max-width: calc(100% - 2.5rem);
 	height: 10rem;
 	max-height: 30%;
+	padding: 10px;
 	background-color: ${({ theme }) => theme.colors.white};
 	border-radius: 0.625rem;
 	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
