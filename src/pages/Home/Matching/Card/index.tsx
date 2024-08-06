@@ -1,3 +1,8 @@
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
@@ -7,7 +12,12 @@ import checkBtn from '../../../../assets/Home/button_check.svg';
 
 const cardItem: CardLayoutProps = {
 	profileImgUrl: './../../../../assets/Home/profileImg.svg',
-	ootdImgUrl: './../../../../assets/Home/OOTDImg.svg',
+	ootdImgUrls: [
+		'./../../../../assets/Home/OOTDImg1.svg',
+		'./../../../../assets/Home/OOTDImg2.svg',
+		'./../../../../assets/Home/OOTDImg3.svg',
+		'./../../../../assets/Home/OOTDImg4.svg',
+	],
 };
 
 // OODD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
@@ -33,7 +43,20 @@ const Card: React.FC = () => {
 				</SeeMore>
 			</ProfileBox>
 			<OOTDImgBox>
-				<img src={cardItem.ootdImgUrl} />
+				<Swiper
+					direction="vertical"
+					pagination={{
+						clickable: true,
+					}}
+					modules={[Pagination]}
+					className="mySwiper"
+				>
+					{cardItem.ootdImgUrls.map((url, index) => (
+						<SwiperSlide key={index}>
+							<img src={url} alt={`OOTD ${index + 1}`} />
+						</SwiperSlide>
+					))}
+				</Swiper>
 				<Reaction>
 					<Btn>
 						<img src={xBtn} />

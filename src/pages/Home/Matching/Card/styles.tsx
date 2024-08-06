@@ -55,6 +55,25 @@ export const OOTDImgBox = styled.div`
 		height: 100%;
 		object-fit: cover;
 	}
+
+	.swiper-pagination {
+		right: 20px;
+	}
+
+	.swiper-pagination-bullet {
+		width: 6px;
+		height: 6px;
+		border: 1px solid rgba(255, 255, 255, 1);
+		background: rgba(255, 255, 255, 0);
+		opacity: 0.5;
+	}
+
+	.swiper-pagination-bullet-active {
+		width: 6px;
+		height: 6px;
+		background-color: white;
+		opacity: 1;
+	}
 `;
 
 export const Reaction = styled.div`
@@ -64,6 +83,7 @@ export const Reaction = styled.div`
 	bottom: 2rem;
 	gap: 1.75rem;
 	display: flex;
+	z-index: 100;
 `;
 
 export const Btn = styled.div`
