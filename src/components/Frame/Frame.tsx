@@ -5,9 +5,8 @@ export const OODDFrame = styled.div`
 	background-color: ${({ theme }) => theme.colors.white};
 	max-width: 512px;
 	min-width: 300px;
-	height: auto;
+	height: 100vh;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 `;
