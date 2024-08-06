@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const MatchingContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 100px;
 `;
 
 export const Like = styled.div`
