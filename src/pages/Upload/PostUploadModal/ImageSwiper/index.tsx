@@ -24,7 +24,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 				pagination={{
 					el: '.swiper-pagination',
 					type: 'custom',
-					renderCustom: (swiper, current, total) => {
+					renderCustom: (_, current, total) => {
 						return `
 							<div class="swiper-pagination-custom">
 								<img src="${picture2}" alt="Pagination Icon" />
@@ -34,7 +34,6 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 				}}
 				modules={[Navigation, Pagination]}
 				onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
-				onSwiper={(swiper) => setCurrentSlide(swiper.activeIndex)}
 			>
 				{images.map((image, index) => (
 					<SwiperSlide key={index} className={currentSlide === index ? 'main-slide' : ''}>
