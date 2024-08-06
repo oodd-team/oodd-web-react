@@ -1,7 +1,8 @@
 import React, { useRef, useMemo } from "react";
+import axios from "axios";
 import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon, RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from "./styles";
 import { useRecoilValue, useRecoilState} from 'recoil';
-import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState } from '../../../../recoil/atoms';
+import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState, authTokenState } from '../../../../recoil/atoms';
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
@@ -16,6 +17,7 @@ const UserInfo: React.FC = React.memo(() => {
     const [requestMessage, setRequestMessage] = useRecoilState(requestMessageState);
     const [interested, setInterested] = useRecoilState(interestedState);
     const [friend, setFriend] = useRecoilState(friendState);
+    const authToken = useRecoilValue(authTokenState); // 사용자의 로그인 토큰...
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     if (!userDetails) return null; // 사용자의 정보, 즉 userDetails가 없으면 아무것도 렌더링하지 않음
@@ -43,16 +45,38 @@ const UserInfo: React.FC = React.memo(() => {
         setRequestMessage(`${userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${userId}님에게만 전달됩니다.`); // 입력창이 focus 되었을 때 문구
     };
 
-    const handleMsgIconClick = () => {
+    const handleMsgIconClick = async () => {
         if (inputRef.current?.value.trim() === "") {
-            return; // 입력창에 입력 값이 없을 시 전송 버튼 비활성화
+            return; // 빈 값이 전송되지 않도록
         }
-        console.log(inputRef.current?.value);
+
+        try {
+            const response = await axios.post('http://localhost:3000/friends/request', 
+                {
+                    userId,
+                    message: inputRef.current?.value.trim()
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`, // 로그인 토큰
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ); // 친구 신청 요청을 서버로 전송
+            console.log(response);
+            if (response.status === 200) {
+                setFriend(true);
+                setIsBottomSheetOpen(false);
+                alert(response.data.message); // 성공 메시지를 알림으로 표시
+            }
+        } catch (error) {
+            console.error("친구 추가 요청 실패:", error);
+            alert("친구 추가 요청에 실패했습니다. 다시 시도해주세요.");
+        }
+
         if (inputRef.current) {
-            inputRef.current.value = ""; // 전송 버튼 클릭 후 입력 값 초기화
+            inputRef.current.value = "";
         }
-        setIsBottomSheetOpen(false);
-        setFriend(true); // 친구 신청이 완료되었음을 반영하여 상태 업데이트 (버튼 UI 변경)
     };
 
     const handleInterestedClick = () => {
@@ -153,11 +177,3 @@ const UserInfo: React.FC = React.memo(() => {
 });
 
 export default UserInfo;
-
-
-
-
-
-
-
-

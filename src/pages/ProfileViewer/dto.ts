@@ -54,3 +54,4 @@ export const reportMenuItems = [
         icon: ReportIcon
     }
 ];
+
