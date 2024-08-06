@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
 
-const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', kebabMenuSrc, BackIcon, onBackClick, onKebabClick, $withBorder = false }) => {
+const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', RightButtonSrc, LeftButtonSrc, onLeftClick, onRightClick, $withBorder = false }) => {
 	const nav = useNavigate();
 
 	return (
 		<TopbarLayout $withBorder={$withBorder}> {/*border-bottom 유무*/}
 			<BackButton
-			src={BackIcon || ''}
+			src={LeftButtonSrc || ''}
 			alt="back"
 			onClick={() => {
-			if (onBackClick) {
-				onBackClick();
+			if (onLeftClick) {
+				onLeftClick();
 			} else {
 				nav(-1);
 			}
@@ -30,11 +30,11 @@ const TopBar: React.FC<TopBarProps> = ({ ID = '', text = '', kebabMenuSrc, BackI
 				</StyledText>
 			</TextLayout>
 			<KebabMenuButton
-			src={kebabMenuSrc || ''} // 이미지 사용 || 이미지 사용 X
+			src={RightButtonSrc || ''} // 이미지 사용 || 이미지 사용 X
 			alt="menu"
 			onClick={() => {
-			if (onKebabClick) {
-				onKebabClick();
+			if (onRightClick) {
+				onRightClick();
 			}
 			}}
       />
