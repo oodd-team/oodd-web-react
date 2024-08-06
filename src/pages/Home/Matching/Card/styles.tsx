@@ -57,20 +57,20 @@ export const OOTDImgBox = styled.div`
 	}
 
 	.swiper-pagination {
-		right: 20px;
+		right: 1.25rem;
 	}
 
 	.swiper-pagination-bullet {
-		width: 6px;
-		height: 6px;
-		border: 1px solid rgba(255, 255, 255, 1);
+		width: 0.375rem;
+		height: 0.375rem;
+		border: 0.0625rem solid rgba(255, 255, 255, 1);
 		background: rgba(255, 255, 255, 0);
 		opacity: 0.5;
 	}
 
 	.swiper-pagination-bullet-active {
-		width: 6px;
-		height: 6px;
+		width: 0.375rem;
+		height: 0.375rem;
 		background-color: white;
 		opacity: 1;
 	}

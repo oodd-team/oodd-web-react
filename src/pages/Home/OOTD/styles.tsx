@@ -5,6 +5,7 @@ export const OOTDContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	align-items: flex-start;
+	margin-bottom: 3.25rem;
 `;
 
 // Tag
