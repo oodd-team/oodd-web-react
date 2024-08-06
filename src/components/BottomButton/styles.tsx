@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ButtonWrapper = styled.div`
 	display: flex;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;

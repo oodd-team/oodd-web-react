@@ -10,7 +10,7 @@ export const UploadContainer = styled.div`
 
 export const Header = styled.div`
 	display: flex;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
