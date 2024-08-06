@@ -14,12 +14,25 @@ import { CommentProps } from '../../components/Comment/dto';
 const BottomSheetTest: React.FC = () => {
 	const username = 'IDID';
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+	const [isOpenBottomSheet0, setIsOpenBottomSheet0] = useState(false);
 	const [isOpenBottomSheet2, setIsOpenBottomSheet2] = useState(false);
 	const [isOpenBottomSheet3, setIsOpenBottomSheet3] = useState(false);
 
 	// 바텀시트 내부 컴포넌트에 전달할 props가 없는 경우
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isOpenBottomSheet,
+		isHandlerVisible: true,
+		isBackgroundDimmed: true,
+		Component: Items,
+		onCloseBottomSheet: () => {
+			setIsOpenBottomSheet(false);
+		},
+	};
+
+	// 바텀시트 내부에 핸들러가 없는 경우
+	const bottomSheet0Props: BottomSheetProps = {
+		isOpenBottomSheet: isOpenBottomSheet0,
+		isHandlerVisible: false,
 		isBackgroundDimmed: true,
 		Component: Items,
 		onCloseBottomSheet: () => {
@@ -57,6 +70,7 @@ const BottomSheetTest: React.FC = () => {
 	// 바텀시트 내부 컴포넌트에 전달할 props가 있는 경우
 	const bottomSheet2Props: BottomSheetProps = {
 		isOpenBottomSheet: isOpenBottomSheet2,
+		isHandlerVisible: true,
 		isBackgroundDimmed: true,
 		Component: BottomSheetMenu, // 렌더링하고자 하는 컴포넌트와
 		componentProps: bottomSheetMenuProps, // 해당 컴포넌트의 props를 작성
@@ -74,6 +88,7 @@ const BottomSheetTest: React.FC = () => {
 
 	const bottomSheet3Props: BottomSheetProps = {
 		isOpenBottomSheet: isOpenBottomSheet3,
+		isHandlerVisible: true,
 		isBackgroundDimmed: true,
 		Component: Comment,
 		componentProps: commentProps,
@@ -86,6 +101,7 @@ const BottomSheetTest: React.FC = () => {
 		<OODDFrame>
 			바텀시트 사용 예입니다 확인 후 폴더를 삭제해 주세요
 			<BottomSheet {...bottomSheetProps} />
+			<BottomSheet {...bottomSheet0Props} />
 			<BottomSheet {...bottomSheet2Props} />
 			<BottomSheet {...bottomSheet3Props} />
 			<button
@@ -95,6 +111,14 @@ const BottomSheetTest: React.FC = () => {
 				}}
 			>
 				누르면 바텀시트가 올라옵니다
+			</button>
+			<button
+				style={{ padding: '10px', margin: '10px', border: '1px solid gray' }}
+				onClick={() => {
+					setIsOpenBottomSheet0(true);
+				}}
+			>
+				핸들러가 없는 바텀시트입니다
 			</button>
 			<button
 				style={{ padding: '10px', margin: '10px', border: '1px solid gray' }}
