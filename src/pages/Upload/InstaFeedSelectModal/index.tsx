@@ -3,6 +3,7 @@ import { Content, PostContainer, ImageWrapper } from './styles';
 import { Header, PrevButton } from '../styles';
 import { StyledText } from '../../../components/Text/StyledText';
 import Modal from '../../../components/Modal';
+import { ModalProps } from '../../../components/Modal/dto';
 import close from '../assets/close.svg';
 import { InstaFeedSelectModalProps, Post } from './dto';
 
@@ -28,17 +29,13 @@ const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({ instagramId
 				'https://s3-alpha-sig.figma.com/img/06fa/b9bb/18b1e3848853db6d9d905acaf805bb7a?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UbFJuuZEYu2rLflK6eBv8sgoqdLIL6RW5SL3WUCr7rrK971hVw4fc1o0i9~IWN2MrqYM~Ekr8h5jdFeNHQkXq4Kr3xc2rnzMWQe-05U7gTHS2qkE21Tz8Fw1vvUGsOwCQn3UP-0YK-hybqbXwPsjzqCTd7VoBOIo1C73J3bXRmGMj3sRBvEBE3BpR7VQzn~qKg0-RR0RErNS3R31JLf9H4nW6-J-SMwldPK3ZTTIAn3sAQvTsrH19BTFKEuXTJXZjjQr-5m7AhkH3V1PgihMjlUePipfrOSwBOlSKB-IKtW6rntI6FLP4bNs~udxwAI3f0Bra~uJnNEbut8pFEVESw__',
 			],
 		},
-		{
-			imgs: [
-				'https://s3-alpha-sig.figma.com/img/f6d4/9528/c555318e88c459e09782e3c96f522932?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VliO97bcps6uRHmzcKKd3aC1YiGJ0aHeua~f8Pj3bp7wmP4-lkB3wOecDpy2OJUoRgRQyRKQaIFIv1~aQ2HQmJmSuRWOEhf0kpu10JPM51fpUqu~Ol4oOaqckua1Vy2Fvcdb-4geyuJzh08913pOhwu2HMxJo~lhm0e6~Jp6BNxybFUtvSiKNtgsMB0P3spNaEBt900Z~r56~gXhXtwEj29vkFT3AMhGbo2ntRUCZsnjJ0qGSkWax5ezwa4A2RcKl3zpth44E8qS5q7u7hYqcnDJ9q9QPT6oGnHSBZUAicsyuLZZKLcUZMEbXN8lWQUqFcXGB6GTaJE2hzxrkGWVVw__',
-				'https://s3-alpha-sig.figma.com/img/3369/b705/d2bac0b2d1ca06765b7534d13da10acd?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RqpTY-ySq97P4crNIwUzN6T1qeYJ9dBy3~4--uHZCFYwNuHbA7lZRvmaCViDsdkJpjEwe~vHJ2KHu3aiLufIkWkd6fzGLSgz1ienSfZziQyWtBzlJ1WLs3Y8zkLnvCSIUc7Y1bg-apB6nqpaU1pG3sDzzUyCVPRkqrHLBvMh-hEEB9kN7xF-J7YR1sGFD1yBonfyBYC3vw~ixnRcLz25WsutLMVGlsu6JM09tUwR5bbZ4gZaze3Rfd36DEr3t1kf8~00mOqlP0aqhgtqY65I4-CYxFYtw~p4JJHjhVzbstrrYGxrltL5GgKLQv6QrzCDToT9p5CBS3Nx~vevNVNKlA__',
-				'https://s3-alpha-sig.figma.com/img/9d49/32a9/63320bcff4acaa403ad583f94863bc53?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RePjrG7gfby7zl02DCVQ9qyrCygvtrSlFUmS6DJ2imL8z8cDvv1sXEZQ0YaFZjYiPLMxJOzTp1bq-8QavE81PUR1pTnzJMz6O2E2ahrbQRhUC7k0RFqZ3wBTUFI-z98hzBfnLMiz3edn4A3KALQL3JXieGVd6~7Ufnq3WKC2PFx-Bd4M6D~3yLM6CqmOsOQrTFM~LhB92j9WLFa4-84VijgHMZv0wrUj1eYu3wjg4UFVlF2kV0JJO8GXF80zJklxSzaZ6v6M2CJ9f-aZhxoTQUki4mF5LK-ezei8MuDGUxSBnLfGW40Q7U4wtbp~X6LlNkscoTGvxk0lKzFewCRyHg__',
-			],
-		},
 	];
 
-	const handleSuccessModalClose = () => {
-		setIsSuccessModalOpen(false);
+	const modalProps: ModalProps = {
+		content: `${instagramId} 계정 연동에 성공했어요!\n가져올 OOTD를 선택해 보세요`,
+		onClose: () => {
+			setIsSuccessModalOpen(false);
+		},
 	};
 
 	const handlePostSelect = (post: Post) => {
@@ -49,13 +46,7 @@ const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({ instagramId
 
 	return (
 		<>
-			{isSuccessModalOpen && (
-				<Modal
-					content={`${instagramId} 계정 연동에 성공했어요!`}
-					contentTwo="가져올 OOTD를 선택해 보세요"
-					onClose={handleSuccessModalClose}
-				/>
-			)}
+			{isSuccessModalOpen && <Modal {...modalProps} />}
 			<Header>
 				<PrevButton onClick={onClose}>
 					<img src={close} />

@@ -18,6 +18,7 @@ export const ModalContainer = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 	width: 21.25rem;
 	max-width: calc(100% - 2.5rem);
 	height: 10rem;
