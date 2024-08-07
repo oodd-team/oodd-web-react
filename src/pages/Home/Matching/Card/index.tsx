@@ -49,11 +49,11 @@ const Card: React.FC = () => {
 						clickable: true,
 					}}
 					modules={[Pagination]}
-					className="mySwiper"
+					className="childSwiper"
 				>
 					{cardItem.ootdImgUrls.map((url, index) => (
 						<SwiperSlide key={index}>
-							<img src={url} alt={`OOTD ${index + 1}`} />
+							<img src={url} alt={`OOTD ${index + 1}`} className="slide-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>

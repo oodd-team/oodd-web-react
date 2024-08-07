@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CardLayout = styled.div`
-	margin: 0.625rem 1.25rem 0;
+	margin: 0.625rem 0 0;
 	background-color: black;
 	border-radius: 0.75rem;
 	position: relative;
@@ -56,11 +56,11 @@ export const OOTDImgBox = styled.div`
 		object-fit: cover;
 	}
 
-	.swiper-pagination {
+	.childSwiper .swiper-pagination {
 		right: 1.25rem;
 	}
 
-	.swiper-pagination-bullet {
+	.childSwiper .swiper-pagination-bullet {
 		width: 0.375rem;
 		height: 0.375rem;
 		border: 0.0625rem solid rgba(255, 255, 255, 1);
@@ -68,11 +68,15 @@ export const OOTDImgBox = styled.div`
 		opacity: 0.5;
 	}
 
-	.swiper-pagination-bullet-active {
+	.childSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
 		background-color: white;
 		opacity: 1;
+	}
+
+	.childSwiper .swiper-slide-small img {
+		transition: none !important;
 	}
 `;
 
