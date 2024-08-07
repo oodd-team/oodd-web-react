@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import UserInfo from "./components/UserInfo";
 import PostItem from "./components/PostItem";
 import { mockUserData } from "./MocData"; // Mock 데이터 임포트
-import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer } from "./style";
+import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer} from "./style";
 import { StyledText } from "../../components/Text/StyledText";
 import theme from '../../styles/theme';
 import { OODDFrame } from "../../components/Frame/Frame";
@@ -16,6 +16,7 @@ import BottomSheet from "../../components/BottomSheet";
 import BottomSheetMenu from "../../components/BottomSheetMenu";
 import { mainMenuItems, reportMenuItems } from "./dto";
 import ConfirmationModal from "../../components/ComfirmationModal";
+import ReportText from "./components/ReportText";
 
 const ProfileViewer: React.FC = () => {
     const { userId } = useParams<{ userId: string }>(); // URL 파라미터에서 userId 가져오기
@@ -24,6 +25,14 @@ const ProfileViewer: React.FC = () => {
     const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // ConfirmationModal 상태
     const [confirmAction, setConfirmAction] = useState<() => void>(() => () => {}); // 확인 버튼 액션 처리
+    const [isInputVisible, setIsInputVisible] = useState(false); // 입력창 표시 여부, 직접 입력 버튼이 눌렸을 때 표시
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (textareaRef.current && isInputVisible) {
+            textareaRef.current.focus(); // 입력창이 보일 때 포커스 유지
+        }
+    }, [isInputVisible]);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -70,7 +79,11 @@ const ProfileViewer: React.FC = () => {
     };
 
     const handleCloseConfirmationModal = () => {
-        setIsConfirmationModalOpen(false); // 모달 닫기
+        setIsConfirmationModalOpen(false); // ~ 하겠습니까? 모달 닫기
+    };
+
+    const handleDirectInput = () => { // reportMenuItem으로 전달 되어, 직접 입력의 action이 됨. 즉 직접 입력을 클릭하면 입력창 표시
+        setIsInputVisible(true); // 입력창 표시
     };
 
     return (
@@ -78,9 +91,10 @@ const ProfileViewer: React.FC = () => {
             <ProfileViewerContainer>
                 <TopBar 
                 text={mockUserData.userId}
-                kebabMenuSrc={MoreSvg} // KebabMenuButton src의 Optional prop
-                BackIcon={BackSvg} // BackButton src의 Optional prop
-                onKebabClick={() => handleOpenBottomSheet('main')} // 신고하기, 차단하기 bottomsheets
+                RightButtonSrc={MoreSvg} 
+                LeftButtonSrc={BackSvg}
+                onRightClick={() => handleOpenBottomSheet('main')} // 신고하기, 차단하기 bottomsheets
+
                 />
                 <UserInfo />
                 <Vector />
@@ -120,21 +134,30 @@ const ProfileViewer: React.FC = () => {
                     )}
                 /> )}
                 {isBottomSheetOpen && activeBottomSheet === 'report' && (
-                <BottomSheet
+                    <BottomSheet
                     isOpenBottomSheet={isBottomSheetOpen}
                     isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
-                        <BottomSheetMenu items={reportMenuItems} marginBottom="4rem" />
+                        <>
+                            <BottomSheetMenu items={reportMenuItems(handleDirectInput)} marginBottom="1rem" />
+                            {isInputVisible && (
+                                <ReportText 
+                                    onCloseBottomSheet={handleCloseBottomSheet} 
+                                    setIsInputVisible={setIsInputVisible}
+                                />
+                            )}
+                        </>
                     )}
-                /> )}
-                {isConfirmationModalOpen && (
-                <ConfirmationModal
-                    content={`${mockUserData.userId}님을 정말로 차단하시겠습니까?`}
-                    isCancelButtonVisible={true}
-                    confirm={{ text: '차단하기', action: confirmAction }}
-                    onCloseModal={handleCloseConfirmationModal}
                 />
+            )}
+                {isConfirmationModalOpen && (
+                    <ConfirmationModal
+                        content={`${mockUserData.userId}님을 정말로 차단하시겠습니까?`}
+                        isCancelButtonVisible={true}
+                        confirm={{ text: '차단하기', action: confirmAction }}
+                        onCloseModal={handleCloseConfirmationModal}
+                    />
                 )}
             </ProfileViewerContainer>
         </OODDFrame>

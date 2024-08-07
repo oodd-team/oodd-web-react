@@ -24,6 +24,20 @@ export interface PostItemProps {
     isFixed: boolean;
 }
 
+export interface RequestComponentProps {
+    userId: string;
+    $messageType: 'initial' | 'comment';
+    requestMessage: string;
+    setFriend: (visible: boolean) => void;
+    setIsBottomSheetOpen: (visible: boolean) => void;
+    setRequestMessage: (message: string) => void;
+}
+
+export interface ReportTextProps {
+    onCloseBottomSheet: () => void;
+    setIsInputVisible: (visible: boolean) => void;
+}
+
 export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void, handleOpenConfirmationModal: () => void) => [
     {
         text: "신고하기",
@@ -37,20 +51,42 @@ export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void, han
     }
 ];
 
-export const reportMenuItems = [
+export const reportMenuItems = (handleDirectInput: () => void)=> [
     {
-        text: "불쾌한 콘텐츠",
+        text: "불법정보",
         action: () => console.log("Report 1"),
         icon: ReportIcon
     },
     {
-        text: "스팸",
+        text: "욕설/인신공격",
         action: () => console.log("Report 2"),
         icon: ReportIcon
     },
     {
-        text: "허위사실",
+        text: "음란성/선정성",
         action: () => console.log("Report 3"),
+        icon: ReportIcon
+    },
+    {
+        text: "영리목적/홍보성",
+        action: () => console.log("Report 1"),
+        icon: ReportIcon
+    },
+    {
+        text: "개인정보노출",
+        action: () => console.log("Report 2"),
+        icon: ReportIcon
+    },
+    {
+        text: "같은 내용의 반복 게시(도배)",
+        action: () => console.log("Report 3"),
+        icon: ReportIcon
+    },
+    {
+        text: "직접입력",
+        action: () => {
+            handleDirectInput()
+        },
         icon: ReportIcon
     }
 ];

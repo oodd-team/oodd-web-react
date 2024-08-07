@@ -1,14 +1,13 @@
-import React, { useRef, useMemo } from "react";
-import axios from "axios";
-import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon, RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from "./styles";
+import React, { useMemo } from "react";
+import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon } from "./styles";
 import { useRecoilValue, useRecoilState} from 'recoil';
-import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState, authTokenState } from '../../../../recoil/atoms';
+import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState } from '../../../../recoil/atoms';
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
 import StatSvg from '../../../../assets/ProfileViewer/star.svg';
 import MsgSvg from '../../../../assets/ProfileViewer/message_send.svg';
-import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
+import RequestComponent from "../RequestComponent";
 import BottomSheet from "../../../../components/BottomSheet";
 
 const UserInfo: React.FC = React.memo(() => {
@@ -17,8 +16,6 @@ const UserInfo: React.FC = React.memo(() => {
     const [requestMessage, setRequestMessage] = useRecoilState(requestMessageState);
     const [interested, setInterested] = useRecoilState(interestedState);
     const [friend, setFriend] = useRecoilState(friendState);
-    const authToken = useRecoilValue(authTokenState); // 사용자의 로그인 토큰...
-    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     if (!userDetails) return null; // 사용자의 정보, 즉 userDetails가 없으면 아무것도 렌더링하지 않음
 
@@ -39,44 +36,6 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleCloseBottomSheet = () => {
         setIsBottomSheetOpen(false);
-    };
-
-    const handleInputFocus = () => {
-        setRequestMessage(`${userId}님의 게시물에 대한 코멘트를 남겨보세요. 코멘트는 ${userId}님에게만 전달됩니다.`); // 입력창이 focus 되었을 때 문구
-    };
-
-    const handleMsgIconClick = async () => {
-        if (inputRef.current?.value.trim() === "") {
-            return; // 빈 값이 전송되지 않도록
-        }
-
-        try {
-            const response = await axios.post('http://localhost:3000/friends/request', 
-                {
-                    userId,
-                    message: inputRef.current?.value.trim()
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`, // 로그인 토큰
-                        'Content-Type': 'application/json'
-                    }
-                }
-            ); // 친구 신청 요청을 서버로 전송
-            console.log(response);
-            if (response.status === 200) {
-                setFriend(true);
-                setIsBottomSheetOpen(false);
-                alert(response.data.message); // 성공 메시지를 알림으로 표시
-            }
-        } catch (error) {
-            console.error("친구 추가 요청 실패:", error);
-            alert("친구 추가 요청에 실패했습니다. 다시 시도해주세요.");
-        }
-
-        if (inputRef.current) {
-            inputRef.current.value = "";
-        }
     };
 
     const handleInterestedClick = () => {
@@ -154,21 +113,14 @@ const UserInfo: React.FC = React.memo(() => {
                     isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
-                        <RequestContainer>
-                            <RequestMessage $messageType={messageType}>
-                                <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
-                                    {requestMessage}
-                                </StyledText>
-                            </RequestMessage>
-                            <ComentContainer>
-                                <Coment 
-                                    ref={inputRef}
-                                    maxLength={100}
-                                    onFocus={handleInputFocus}
-                                />
-                                <MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
-                            </ComentContainer>
-                        </RequestContainer>
+                        <RequestComponent
+                            userId={userId}
+                            $messageType={messageType}
+                            requestMessage={requestMessage}
+                            setFriend={setFriend}
+                            setIsBottomSheetOpen={setIsBottomSheetOpen}
+                            setRequestMessage={setRequestMessage}
+                        />
                     )}
                 />
             )}
