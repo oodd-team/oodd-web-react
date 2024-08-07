@@ -22,7 +22,7 @@ export const ImageDragDropContainer = styled.div`
 	}
 
 	:nth-child(2) {
-		margin-bottom: 0rem;
+		margin-bottom: 5rem;
 	}
 
 	&.active svg {

@@ -13,14 +13,14 @@ export const ButtonWrapper = styled.div`
 	border: none;
 `;
 
-export const Button = styled.button`
-	background-color: black;
+export const Button = styled.button<{ disabled: boolean }>`
+	background-color: ${({ disabled, theme }) => (disabled ? theme.colors.gray3 : theme.colors.black)};
 	border-radius: 0.625rem;
 	font-size: 1rem;
-	cursor: pointer;
 	width: calc(100% - 2.5rem);
 	height: 3.75rem;
 	margin: 1.25rem;
+	cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
 	div {
 		color: white;

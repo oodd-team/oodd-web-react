@@ -35,7 +35,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
-	//const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -81,7 +81,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const handleSubmit = async () => {
-		//setIsLoading(true);
+		setIsLoading(true);
 
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
@@ -110,7 +110,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		} catch (error) {
 			console.error(error);
 		} finally {
-			//setIsLoading(false);
+			setIsLoading(false);
 		}
 	};
 
@@ -192,7 +192,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</PinnedPostToggleContainer>
 			</Content>
 
-			<BottomButton content="공유" onClick={handleSubmit} />
+			<BottomButton content="공유" onClick={handleSubmit} disabled={isLoading} />
 
 			{isSearchSheetOpen && (
 				<SearchBottomSheet onClose={handleToggleSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
