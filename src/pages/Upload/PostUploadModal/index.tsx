@@ -1,6 +1,6 @@
 //PostUploadModal/index.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -93,6 +93,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				clothing_infos: clothingInfos,
 			};
 
+			/*
 			const response = await axios.post('http://localhost:3001/posts', postData, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -106,6 +107,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			const result = response.data;
 
 			console.log(result);
+			*/
+
+			console.log(postData);
 			navigate('/profile');
 		} catch (error) {
 			console.error(error);
