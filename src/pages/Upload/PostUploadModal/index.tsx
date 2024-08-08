@@ -1,6 +1,6 @@
 //PostUploadModal/index.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -35,7 +35,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
 	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
-	//const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const hashtags: Hashtag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -81,7 +81,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const handleSubmit = async () => {
-		//setIsLoading(true);
+		setIsLoading(true);
 
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
@@ -93,6 +93,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				clothing_infos: clothingInfos,
 			};
 
+			/*
 			const response = await axios.post('http://localhost:3001/posts', postData, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -106,11 +107,14 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			const result = response.data;
 
 			console.log(result);
+			*/
+
+			console.log(postData);
 			navigate('/profile');
 		} catch (error) {
 			console.error(error);
 		} finally {
-			//setIsLoading(false);
+			setIsLoading(false);
 		}
 	};
 
@@ -192,7 +196,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</PinnedPostToggleContainer>
 			</Content>
 
-			<BottomButton content="공유" onClick={handleSubmit} />
+			<BottomButton content="공유" onClick={handleSubmit} disabled={isLoading} />
 
 			{isSearchSheetOpen && (
 				<SearchBottomSheet onClose={handleToggleSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />

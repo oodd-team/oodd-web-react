@@ -13,7 +13,7 @@ dist-dev
 dist-ssr
 *.local
 .env
-.http
+server.cjs
 
 # Editor directories and files
 .vscode/*
