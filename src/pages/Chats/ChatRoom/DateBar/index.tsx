@@ -11,7 +11,11 @@ const DateBar: React.FC<DateBarProps> = ({ formattedDate }) => {
 		<DatebarLayout>
 			<Divider />
 			<DateWrapper>
-				<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray3}>
+				<StyledText
+					style={{ whiteSpace: 'nowrap' }}
+					$textTheme={{ style: 'body6-light', lineHeight: 1 }}
+					color={theme.colors.gray3}
+				>
 					{formattedDate}
 				</StyledText>
 			</DateWrapper>
