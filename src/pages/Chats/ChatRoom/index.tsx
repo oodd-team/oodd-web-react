@@ -10,10 +10,10 @@ import { MockMessagesAtom } from '../../../recoil/MockMessages';
 import BottomSheet from '../../../components/BottomSheet';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import ConfirmationModal from '../../../components/ConfirmationModal';
+import ConfirmationModal from '../../../components/ComfirmationModal';
 import { OODDFrame } from '../../../components/Frame/Frame';
 import { MessageDto, ExtendedMessageDto, SentMessageProps, RcvdMessageProps } from '../dto';
-import { ConfirmationModalDto } from '../../../components/ConfirmationModal/dto';
+import { ConfirmationModalProps } from '../../../components/ComfirmationModal/dto';
 import Exit from '../../../assets/BottomSheetMenu/Exit.svg';
 import Block from '../../../assets/BottomSheetMenu/Block.svg';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
@@ -47,44 +47,30 @@ const ChatRoom: React.FC = () => {
 		marginBottom: '4.38rem',
 	};
 
-	const exitModal: ConfirmationModalDto = {
+	const exitModal: ConfirmationModalProps = {
 		content: '채팅방을 나가면 지난 대화 내용을 볼 수 없어요',
-		confirms: [
-			{
-				text: '취소',
-				action: () => {
-					setIsOpenExit(false);
-				},
+		isCancelButtonVisible: true,
+		confirm: {
+			text: '채팅방 나가기',
+			action: () => {
+				setIsOpenExit(false);
 			},
-			{
-				text: '채팅방 나가기',
-				action: () => {
-					setIsOpenExit(false);
-				},
-			},
-		],
-		onClickBackground: () => {
+		},
+		onCloseModal: () => {
 			setIsOpenExit(false);
 		},
 	};
 
-	const blockModal: ConfirmationModalDto = {
+	const blockModal: ConfirmationModalProps = {
 		content: 'IDID님을 정말로 차단하시겠어요?',
-		confirms: [
-			{
-				text: '취소',
-				action: () => {
-					setIsOpenBlock(false);
-				},
+		isCancelButtonVisible: true,
+		confirm: {
+			text: '차단하기',
+			action: () => {
+				setIsOpenBlock(false);
 			},
-			{
-				text: '차단하기',
-				action: () => {
-					setIsOpenBlock(false);
-				},
-			},
-		],
-		onClickBackground: () => {
+		},
+		onCloseModal: () => {
 			setIsOpenBlock(false);
 		},
 	};
