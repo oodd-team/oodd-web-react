@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Chats from './pages/Chats';
 import Profile from './pages/Profile';
+import Upload from './pages/Upload';
 import BottomSheetTest from './pages/BottomSheetTest';
 import ConfirmationModalTest from './pages/ConfirmationModalTest';
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
 					<Route path="/login" element={<Login />} />
 					<Route path="/chats" element={<Chats />} />
 					<Route path="/profile" element={<Profile />} />
+					<Route path="/upload" element={<Upload />} />
 					<Route path="/bottomsheet-test" element={<BottomSheetTest />} />
 					<Route path="/confirmation-modal-test" element={<ConfirmationModalTest />} />
 				</Routes>
