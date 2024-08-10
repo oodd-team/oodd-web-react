@@ -8,20 +8,26 @@
     "build": "tsc -b && vite build",
     "build-dev": "tsc -b && vite build --outDir dist-dev",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "node": "node src/pages/Upload/server.cjs"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.34",
     "axios": "^1.7.2",
-    "dayjs": "^1.11.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase": "^10.12.5",
+    "http-proxy-middleware": "^3.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
     "recoil": "^0.7.7",
+    "request": "^2.88.2",
     "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.11",
     "styled-reset": "^4.5.2",
-    "swiper": "^11.1.8"
+    "swiper": "^11.1.9"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
