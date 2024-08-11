@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
 import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
 import { Header, PrevButton } from '../styles';
@@ -9,24 +8,25 @@ import FailedModal from './FailedModal';
 import close from '../assets/close.svg';
 import { InstaConnectModalProps } from './dto';
 
-const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onIdSelect, onClose, onNext }) => {
+const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose }) => {
 	const [instagramID, setInstagramID] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	//const [isSuccess, setIsSuccess] = useState(false);
 
-	const handleConnect = () => {
-		onIdSelect(instagramID);
-		setIsLoading(true);
-		setTimeout(() => {
+	const handleConnect = async () => {
+		try {
+			setIsLoading(true);
+			window.location.href = 'https://localhost:3001/auth'; //인스타그램 인증 처리
+		} catch (error) {
+			console.error('Failed to fetch Instagram media:', error);
 			setIsLoading(false);
 			setIsModalOpen(true);
-		}, 3000);
+		}
 	};
 
 	const handleModalClose = () => {
 		setIsModalOpen(false);
-		onNext();
+		handleConnect();
 	};
 
 	return (

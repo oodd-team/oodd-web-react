@@ -28,6 +28,7 @@ export interface InstaFeedSelectModalProps {
 
 export interface Post {
 	imgs: string[];
+    caption: string;
 }
 
 export interface PostUploadModalProps {

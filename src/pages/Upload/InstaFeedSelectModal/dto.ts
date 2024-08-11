@@ -1,9 +1,8 @@
 export interface InstaFeedSelectModalProps {
-	instagramId: string;
-	selectedImages: string[];
 	onAddImages: (images: string[]) => void;
 	onClose: () => void;
 	onNext: () => void;
+	posts: Post[];
 }
 
 export interface Post {
