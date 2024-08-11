@@ -2,31 +2,32 @@ import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { RecentChatInfo } from './styles';
 import ChatList from '../ChatList/index';
+import { MockUserId } from '../../../recoil/MockUserId';
+import { useEffect, useState } from 'react';
+import request from '../../../apis/core';
+import { ChatRoomDto, GetChatRoomListDto } from './dto';
 
-interface RecentChatList {
-	id: number;
-	isWaiting: boolean;
-}
-
-const RecentChatLists: RecentChatList[] = [
-	{
-		id: 0,
-		isWaiting: false,
-	},
-	{
-		id: 1,
-		isWaiting: false,
-	},
-	{
-		id: 2,
-		isWaiting: true,
-	},
-	{
-		id: 3,
-		isWaiting: false,
-	},
-];
 const RecentChat: React.FC = () => {
+	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
+
+	useEffect(() => {
+		const getChatRoomList = async () => {
+			try {
+				const response = await request<GetChatRoomListDto>(`/chat-room/${MockUserId}`);
+
+				if (response.data.isSuccess) {
+					setChatRoomList(response.data.result);
+				} else {
+					console.error(response.data.message);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		getChatRoomList();
+	}, []);
+
 	return (
 		<>
 			<RecentChatInfo>
@@ -34,9 +35,11 @@ const RecentChat: React.FC = () => {
 					최근 채팅방
 				</StyledText>
 			</RecentChatInfo>
-			{RecentChatLists.map((chat) => {
-				return <ChatList key={chat.id} isWaiting={chat.isWaiting} />;
-			})}
+			{chatRoomList
+				? chatRoomList.map((room) => {
+						return <ChatList key={room.id} {...room} />;
+					})
+				: null}
 		</>
 	);
 };
