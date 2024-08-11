@@ -19,19 +19,24 @@ import Block from '../../../assets/BottomSheetMenu/Block.svg';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
+import { useParams } from 'react-router-dom';
+import request from '../../../apis/core';
+import { MockUserId } from '../../../recoil/MockUserId';
 
 const ChatRoom: React.FC = () => {
 	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
 	const mockMessages = useRecoilValue(MockMessagesAtom);
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
-	const [isOpenExit, setIsOpenExit] = useState<boolean>(false);
+	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
+	const roomId = useParams();
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
 			{
 				text: '채팅방 나가기',
 				action: () => {
+					setIsOpenLeave(true);
 					setIsOpenMenu(false);
 				},
 				icon: Exit,
@@ -39,6 +44,7 @@ const ChatRoom: React.FC = () => {
 			{
 				text: '차단하기',
 				action: () => {
+					setIsOpenBlock(true);
 					setIsOpenMenu(false);
 				},
 				icon: Block,
@@ -47,17 +53,25 @@ const ChatRoom: React.FC = () => {
 		marginBottom: '4.38rem',
 	};
 
-	const exitModal: ConfirmationModalProps = {
-		content: '채팅방을 나가면 지난 대화 내용을 볼 수 없어요',
+	const leaveModal: ConfirmationModalProps = {
+		content: '채팅방을 나가면\n지난 대화 내용을 볼 수 없어요',
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '채팅방 나가기',
 			action: () => {
-				setIsOpenExit(false);
+				const leaveChatRoom = async () => {
+					try {
+						await request.patch(`/chat-rooms/${roomId}/leave/${MockUserId}`);
+					} catch (error) {
+						console.error(error);
+					}
+				};
+				leaveChatRoom();
+				setIsOpenLeave(false);
 			},
 		},
 		onCloseModal: () => {
-			setIsOpenExit(false);
+			setIsOpenLeave(false);
 		},
 	};
 
@@ -139,7 +153,7 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{isOpenExit && <ConfirmationModal {...exitModal} />}
+			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
 			<BottomSheet {...MenuBottomSheet} />
 			<TopBar
