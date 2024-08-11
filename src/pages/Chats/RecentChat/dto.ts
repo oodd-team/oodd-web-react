@@ -19,7 +19,7 @@ export interface ChatRoomDto {
 	latestMessage: LatestMessage;
 }
 
-export interface GetChatRoomListDto {
+export interface ChatRoomListDto {
 	isSuccess: boolean;
 	code: number;
 	message: string;

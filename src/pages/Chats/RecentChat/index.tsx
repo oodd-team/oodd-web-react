@@ -1,11 +1,11 @@
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { RecentChatInfo } from './styles';
-import ChatList from '../ChatList/index';
 import { MockUserId } from '../../../recoil/MockUserId';
 import { useEffect, useState } from 'react';
 import request from '../../../apis/core';
-import { ChatRoomDto, GetChatRoomListDto } from './dto';
+import { ChatRoomDto, ChatRoomListDto } from './dto';
+import ChatRoomList from '../ChatRoomList';
 
 const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
@@ -13,7 +13,7 @@ const RecentChat: React.FC = () => {
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
-				const response = await request<GetChatRoomListDto>(`/chat-room/${MockUserId}`);
+				const response = await request<ChatRoomListDto>(`/chat-room/${MockUserId}`);
 
 				if (response.data.isSuccess) {
 					setChatRoomList(response.data.result);
@@ -37,7 +37,7 @@ const RecentChat: React.FC = () => {
 			</RecentChatInfo>
 			{chatRoomList
 				? chatRoomList.map((room) => {
-						return <ChatList key={room.id} {...room} />;
+						return <ChatRoomList key={room.id} {...room} />;
 					})
 				: null}
 		</>

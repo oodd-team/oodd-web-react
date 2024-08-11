@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ChatListLayout = styled.div`
+export const ChatRoomListLayout = styled.div`
 	width: 100%;
 	padding: 0 1.25rem;
 	height: 3rem;

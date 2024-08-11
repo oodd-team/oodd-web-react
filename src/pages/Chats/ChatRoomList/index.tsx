@@ -1,17 +1,17 @@
 import { StyledText } from '../../../components/Text/StyledText';
-import { UserImage, ChatListLayout, LeftBox, RightBox } from './styles';
+import { UserImage, ChatRoomListLayout, LeftBox, RightBox } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 
 // createdAt은 어디에 사용?
-const ChatList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMessage }) => {
+const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMessage }) => {
 	let isUnread = false;
 	if (latestMessage.createdAt && latestMessage.toUserReadAt) {
 		isUnread = latestMessage.createdAt.getTime() > latestMessage.toUserReadAt.getTime();
 	}
 
 	return (
-		<ChatListLayout id={String(id)}>
+		<ChatRoomListLayout id={String(id)}>
 			<UserImage src="../../../../0.png" alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
@@ -31,8 +31,8 @@ const ChatList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMessag
 					</StyledText>
 				)}
 			</RightBox>
-		</ChatListLayout>
+		</ChatRoomListLayout>
 	);
 };
 
-export default ChatList;
+export default ChatRoomList;
