@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 18px;
+    font-size: 1rem;
     vertical-align: baseline;
   }
   
@@ -26,7 +26,7 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1;
     font-family: 'Pretendard Variable', 'Gmarket Sans', sans-serif;
     background-color: #FFFFFF;
-    margin-bottom: 100px;
+    margin-bottom: 6.25rem;
   }
   
   ol, ul {

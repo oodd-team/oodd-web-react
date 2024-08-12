@@ -1,151 +1,93 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
-interface OverlayProps {
-	$isOpen: boolean;
-}
-
-interface BottomSheetContainerProps {
-	$isOpen: boolean;
-}
-
-interface TabButtonProps {
-	$isActive: boolean;
-}
-
-export const BottomSheetContainer = styled.div<BottomSheetContainerProps>`
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: white;
-	border-top-left-radius: 1rem; /* 16px */
-	border-top-right-radius: 1rem; /* 16px */
-	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1); /* 0 -2px 10px */
-	transform: translateY(100%);
-	transition: transform 0.3s ease-out;
-	${({ $isOpen }) =>
-		$isOpen &&
-		`
-        transform: translateY(0);
-    `}
-`;
-
-export const Overlay = styled.div<OverlayProps>`
+export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isBackgroundDimmed: boolean }>`
 	position: fixed;
 	top: 0;
-	bottom: 0;
 	left: 0;
-	right: 0;
-	background: rgba(0, 0, 0, 0.5);
-	opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-	visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
-	transition:
-		opacity 0.3s ease-out,
-		visibility 0.3s ease-out;
-`;
-
-export const DragHandle = styled.div`
-	width: 2.5rem; /* 40px */
-	height: 0.25rem; /* 4px */
-	background-color: #ccc;
-	border-radius: 0.125rem; /* 2px */
-	margin: 0.5rem auto; /* 8px */
-`;
-
-export const Tab = styled.div`
-	display: flex;
-	justify-content: space-around;
-	padding: 1rem; /* 16px */
-	border-bottom: 1px solid #eee;
-`;
-
-export const TabButton = styled.button<TabButtonProps>`
-	background: none;
-	border: none;
-	font-size: 1rem; /* 16px */
-	cursor: pointer;
-	${({ $isActive }) =>
-		$isActive &&
-		`
-        font-weight: bold;
-        border-bottom: 2px solid black;
-    `}
-`;
-
-export const TabContent = styled.div`
-	padding: 1rem; /* 16px */
-`;
-
-export const LikesList = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
-export const CommentsList = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
-export const UserRow = styled.div`
-	display: flex;
-	align-items: center;
-	padding: 0.5rem 0; /* 8px 0 */
-	display: flex;
-	align-items: center;
-	margin-bottom: 0.625rem; /* 10px */
-`;
-
-export const Pic = styled.div`
-	width: 2.25rem; /* 36px */
-	height: 2.25rem; /* 36px */
-	margin-right: 0.5rem; /* 8px */
-	svg {
-		width: 100%;
-		height: 100%;
-	}
-`;
-
-export const UserID = styled.div`
-	font-size: 1rem; /* 16px */
-`;
-
-export const PostDetailContainer = styled.div`
-	padding: 1.25rem; /* 20px */
-`;
-
-export const UserInfoContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 1.25rem; /* 20px */
-`;
-
-export const Pic_exam = styled.div`
-	width: 2.25rem; /* 36px */
-	height: 2.25rem; /* 36px */
-	margin-right: 0.625rem; /* 10px */
-	svg {
-		width: 100%;
-		height: 100%;
-	}
-`;
-
-export const Text = styled.div`
-	font-size: 0.875rem; /* 14px */
-	color: #666;
-`;
-
-export const Menu = styled.div`
-	position: absolute;
-	top: 1.25rem; /* 20px */
-	right: 1.25rem; /* 20px */
-	cursor: pointer;
-`;
-
-export const ImageWrapper = styled.div`
-	margin-top: 1.25rem; /* 20px */
-`;
-
-export const Image = styled.img`
 	width: 100%;
-	height: auto;
+	height: 100%;
+	z-index: 100;
+	background-color: ${(props) => (props.$isBackgroundDimmed ? 'rgba(0, 0, 0, 0.2)' : 'none')};
+	animation: ${(props) =>
+		props.$isOpenBottomSheet
+			? css`
+					${fadeIn} 0.2s ease-out forwards
+				`
+			: css`
+					${fadeOut} 0.2s ease-out forwards
+				`};
+`;
+
+export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number }>(({ $currentTranslateY }) => ({
+	style: {
+		transform: `translate(-50%, ${$currentTranslateY}px)`,
+	},
+}))<{ $isOpenBottomSheet: boolean; $currentTranslateY: number }>`
+	position: fixed;
+	bottom: 0;
+	flex-direction: column;
+	width: 100%;
+	max-width: 32rem;
+	left: 50%;
+	border-radius: 0.938rem 0.938rem 0 0;
+	background-color: ${({ theme }) => theme.colors.white};
+	padding-top: 1.1rem;
+	z-index: 200;
+	user-select: none;
+	touch-action: none;
+	animation: ${(props) =>
+		props.$isOpenBottomSheet
+			? css`
+					${slideUp} 0.2s ease-out
+				`
+			: css`
+					${slideDown} 0.2s ease-out forwards
+				`};
+`;
+
+export const Handler = styled.hr`
+	width: 3rem;
+	margin: 0 auto;
+	height: 0.188rem;
+	background-color: ${({ theme }) => theme.colors.gray3};
+	border: none;
+	border-radius: 0.125rem;
+	z-index: 300;
+	cursor: pointer;
+`;
+
+const fadeIn = keyframes`
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+`;
+
+const fadeOut = keyframes`
+	from {
+		opacity: 1;
+		visibility: visible;
+	}
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
+`;
+
+const slideUp = keyframes`
+  from {
+    transform: translate(-50%, 100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+`;
+
+const slideDown = keyframes`
+  to {
+    transform: translate(-50%, 100%);
+		visibility: hidden;
+  }
 `;

@@ -1,121 +1,129 @@
-import React, { useState, useEffect, TouchEvent } from 'react';
-import {
-	BottomSheetContainer,
-	Overlay,
-	Tab,
-	TabContent,
-	TabButton,
-	LikesList,
-	CommentsList,
-	UserRow,
-	Pic,
-	UserID,
-	DragHandle,
-} from './styles';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { BottomSheetProps } from './dto';
+import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
-interface BottomSheetProps {
-	isOpen: boolean;
-	onClose: () => void;
-	initialTab: 'likes' | 'comments';
-}
-
-const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose, initialTab }) => {
-	const [currentTab, setCurrentTab] = useState<'likes' | 'comments'>(initialTab);
-	const [dragStart, setDragStart] = useState(0);
-	const [translateY, setTranslateY] = useState(0);
-
-	const handleTabChange = (tab: 'likes' | 'comments') => {
-		setCurrentTab(tab);
-	};
-
-	const handleOverlayClick = () => {
-		onClose();
-	};
-
-	const handleDragStart = (e: TouchEvent<HTMLDivElement>) => {
-		setDragStart(e.touches[0].clientY);
-	};
-
-	const handleDrag = (e: TouchEvent<HTMLDivElement>) => {
-		const touchY = e.touches[0].clientY;
-		const diff = touchY - dragStart;
-		if (diff > 0) {
-			setTranslateY(diff);
-		}
-	};
-
-	const handleDragEnd = () => {
-		if (translateY > 100) {
-			onClose();
-		}
-		setTranslateY(0);
-	};
+const BottomSheet: React.FC<BottomSheetProps> = ({
+	isOpenBottomSheet,
+	isBackgroundDimmed,
+	Component,
+	componentProps,
+	onCloseBottomSheet,
+}) => {
+	const startY = useRef<number | null>(null);
+	const [initialRender, setInitialRender] = useState(true);
+	const [currentTranslateY, setCurrentTranslateY] = useState(0);
+	const [isDragging, setIsDragging] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = 'hidden';
+		if (isOpenBottomSheet) {
+			setInitialRender(false);
+			setCurrentTranslateY(0); // 초기화
+		}
+	}, [isOpenBottomSheet]);
+
+	// 드래그 시작 시점의 y값
+	const onPointerDown = useCallback((event: React.PointerEvent | React.TouchEvent) => {
+		if ('touches' in event) {
+			startY.current = event.touches[0].clientY;
 		} else {
-			document.body.style.overflow = 'auto';
+			startY.current = event.clientY;
 		}
-	}, [isOpen]);
+		setIsDragging(true);
+	}, []);
+
+	const onPointerMove = useCallback(
+		(event: PointerEvent | TouchEvent) => {
+			if (startY.current !== null) {
+				let currentY;
+				if ('touches' in event) {
+					currentY = event.touches[0].clientY;
+				} else {
+					currentY = event.clientY;
+				}
+				const deltaY = currentY - startY.current;
+				if (deltaY > 0) {
+					setCurrentTranslateY(deltaY);
+				}
+			}
+		},
+		[startY],
+	);
+
+	// 드래그 종료 시점의 y값
+	const onPointerUp = useCallback(
+		(event: PointerEvent | TouchEvent) => {
+			if (startY.current !== null) {
+				let endY;
+				if ('changedTouches' in event) {
+					endY = event.changedTouches[0].clientY;
+				} else {
+					endY = event.clientY;
+				}
+
+				// 두 값의 변화량이 50px보다 크면 아래로 드래그한 것으로 간주하여 바텀시트 닫음
+				const deltaY = endY - startY.current;
+
+				if (deltaY > 100) {
+					onCloseBottomSheet();
+				} else {
+					setCurrentTranslateY(0);
+				}
+				startY.current = null; // 초기화
+
+				// PointerUp 직후 onClick 동작 방지
+				setTimeout(() => {
+					setIsDragging(false);
+				}, 100);
+			}
+		},
+		[startY, onCloseBottomSheet],
+	);
 
 	useEffect(() => {
-		setCurrentTab(initialTab);
-	}, [initialTab]);
+		// pc
+		const handlePointerUp = (event: PointerEvent) => onPointerUp(event);
+		const handlePointerMove = (event: PointerEvent) => onPointerMove(event);
+		// 모바일
+		const handleTouchEnd = (event: TouchEvent) => onPointerUp(event);
+		const handleTouchMove = (event: TouchEvent) => onPointerMove(event);
 
-	const likes = ['IDID1', 'IDID2', 'IDID3', 'IDID4', 'IDID5']; // 예시 데이터
-	const comments = ['Comment1', 'Comment2', 'Comment3', 'Comment4', 'Comment5']; // 예시 데이터
+		window.addEventListener('pointermove', handlePointerMove);
+		window.addEventListener('touchmove', handleTouchMove);
+		window.addEventListener('pointerup', handlePointerUp);
+		window.addEventListener('touchend', handleTouchEnd);
+
+		return () => {
+			window.removeEventListener('pointermove', handlePointerMove);
+			window.removeEventListener('touchmove', handleTouchMove);
+			window.removeEventListener('pointerup', handlePointerUp);
+			window.removeEventListener('touchend', handleTouchEnd);
+		};
+	}, [onPointerMove, onPointerUp]);
+
+	// 초기 렌더링 시 바텀시트 안 보이게 설정
+	if (initialRender && !isOpenBottomSheet) return null;
 
 	return (
-		<>
-			<Overlay $isOpen={isOpen} onClick={handleOverlayClick} />
-			<BottomSheetContainer
-				$isOpen={isOpen}
-				style={{ transform: `translateY(${translateY}px)` }}
-				onTouchStart={handleDragStart}
-				onTouchMove={handleDrag}
-				onTouchEnd={handleDragEnd}
+		<BottomSheetWrapper
+			$isOpenBottomSheet={isOpenBottomSheet}
+			$isBackgroundDimmed={isBackgroundDimmed}
+			onClick={(e: React.MouseEvent) => {
+				// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
+				if (!isDragging && e.target === e.currentTarget) {
+					onCloseBottomSheet();
+				}
+			}}
+		>
+			<BottomSheetLayout
+				onPointerDown={onPointerDown}
+				onTouchStart={onPointerDown}
+				$currentTranslateY={currentTranslateY}
+				$isOpenBottomSheet={isOpenBottomSheet}
 			>
-				<DragHandle />
-				<Tab>
-					<TabButton onClick={() => handleTabChange('likes')} $isActive={currentTab === 'likes'}>
-						좋아요 {likes.length}
-					</TabButton>
-					<TabButton onClick={() => handleTabChange('comments')} $isActive={currentTab === 'comments'}>
-						코멘트 {comments.length}
-					</TabButton>
-				</Tab>
-				<TabContent>
-					{currentTab === 'likes' ? (
-						<LikesList>
-							{likes.map((id, index) => (
-								<UserRow key={index}>
-									<Pic>
-										<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-											<circle cx="18" cy="18" r="18" fill="#D9D9D9" />
-										</svg>
-									</Pic>
-									<UserID>{id}</UserID>
-								</UserRow>
-							))}
-						</LikesList>
-					) : (
-						<CommentsList>
-							{comments.map((comment, index) => (
-								<UserRow key={index}>
-									<Pic>
-										<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-											<circle cx="18" cy="18" r="18" fill="#D9D9D9" />
-										</svg>
-									</Pic>
-									<UserID>{comment}</UserID>
-								</UserRow>
-							))}
-						</CommentsList>
-					)}
-				</TabContent>
-			</BottomSheetContainer>
-		</>
+				<Handler />
+				<Component {...componentProps} />
+			</BottomSheetLayout>
+		</BottomSheetWrapper>
 	);
 };
 
