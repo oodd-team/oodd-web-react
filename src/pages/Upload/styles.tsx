@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const UploadContainer = styled.div`
 	flex-grow: 1;
 	height: 100vh;
-	//height: auto;
 	width: 100%;
 	position: relative;
 `;
@@ -12,7 +11,6 @@ export const Header = styled.div`
 	display: flex;
 	position: fixed;
 	top: 0;
-	//left: 0;
 	width: 100%;
 	max-width: 32rem;
 	height: 3.75rem;
