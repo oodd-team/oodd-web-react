@@ -43,12 +43,18 @@ const ChatRoom: React.FC = () => {
 			socket.on('AllMessages', (messages) => {
 				setAllMessages(messages);
 			});
+
+			// 최근 메시지 조회
+			socket.on('latestMessage', (message) => {
+				setAllMessages([...allMessages, message]);
+			});
 		}
 
 		// 컴포넌트 언마운트 시 실행
 		return () => {
 			if (socket) {
 				socket.removeListener('AllMessages');
+				socket.removeListener('latestMessage');
 			}
 		};
 	}, [socket, roomId]);
