@@ -7,20 +7,22 @@ import request from '../../../apis/core';
 import { ChatRoomDto, ChatRoomListDto } from './dto';
 import ChatRoomList from '../ChatRoomList';
 import { useRecoilValue } from 'recoil';
+import { AllMesagesAtom } from '../../../recoil/AllMessages';
 
 const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const userId = useRecoilValue(MockUserIdAtom);
+	const allMessages = useRecoilValue(AllMesagesAtom);
 
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
-				const response = await request<ChatRoomListDto>(`/chat-room/${userId}`);
+				const response = await request.get<ChatRoomListDto>(`/chat-room/${userId}`);
 
-				if (response.data.isSuccess) {
-					setChatRoomList(response.data.result);
+				if (response.isSuccess) {
+					setChatRoomList(response.result);
 				} else {
-					console.error(response.data.message);
+					console.error(response.message);
 				}
 			} catch (error) {
 				console.error(error);
@@ -28,7 +30,7 @@ const RecentChat: React.FC = () => {
 		};
 
 		getChatRoomList();
-	}, []);
+	}, [allMessages]);
 
 	return (
 		<>
