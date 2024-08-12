@@ -23,6 +23,8 @@ import request from '../../../apis/core';
 import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import { SocketStateAtom } from '../../../recoil/SocketState';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
+import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
+import ProfileImg from '../../../../public/ProfileImg.svg';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setExtendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -32,6 +34,7 @@ const ChatRoom: React.FC = () => {
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
 	const userId = useRecoilValue(MockUserIdAtom);
 	const socket = useRecoilValue(SocketStateAtom);
+	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const roomId = useParams();
 
 	useEffect(() => {
@@ -167,7 +170,8 @@ const ChatRoom: React.FC = () => {
 				return { ...message, isNewDate, sentMessage };
 			} else {
 				const rcvdMessage: RcvdMessageProps = {
-					fromUserId: message.fromUserId,
+					fromUserName: opponentInfo?.name || '알수없음',
+					profilePictureUrl: opponentInfo?.profilePictureUrl || ProfileImg,
 					text: message.text,
 					isFirst,
 					isSenderChanged,

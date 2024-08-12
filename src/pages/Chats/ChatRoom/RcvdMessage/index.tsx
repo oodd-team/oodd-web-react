@@ -4,7 +4,8 @@ import { RcvdMessageProps } from '../../dto';
 import { FirstMessageLayout, UserImage, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
 const RcvdMessage: React.FC<RcvdMessageProps> = ({
-	sender,
+	fromUserName,
+	profilePictureUrl,
 	text,
 	isFirst,
 	isSenderChanged,
@@ -16,10 +17,10 @@ const RcvdMessage: React.FC<RcvdMessageProps> = ({
 			<>
 				{isSenderChanged && <div style={{ margin: '0', padding: '0', height: '2.25rem' }} />}
 				<FirstMessageLayout>
-					<UserImage src="../../../../../0.png" alt="user" />
+					<UserImage src={profilePictureUrl} alt="프로필 사진" />
 					<MessageBox>
 						<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1 }} color={theme.colors.black}>
-							{sender}
+							{fromUserName}
 						</StyledText>
 						<Message>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>

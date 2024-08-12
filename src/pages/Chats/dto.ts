@@ -21,7 +21,8 @@ export interface SentMessageProps {
 }
 
 export interface RcvdMessageProps {
-	fromUserId: number; // 사용자명
+	fromUserName: string; // 사용자명
+	profilePictureUrl: string; // 프로필 이미지
 	text: string; // 메시지 내용
 	isSenderChanged: boolean; // 상단 마진 추가 여부
 	isFirst: boolean; // 사용자 프로필 표시 여부

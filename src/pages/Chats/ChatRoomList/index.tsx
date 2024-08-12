@@ -3,23 +3,28 @@ import { UserImage, ChatRoomListLayout, LeftBox, RightBox } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
+import ProfileImg from '../../../../public/ProfileImg.svg';
 
 // createdAt은 어디에 사용?
 const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMessage }) => {
 	let isUnread = false;
 	const nav = useNavigate();
+	const [opponentInfo, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 
 	if (latestMessage.createdAt && latestMessage.toUserReadAt) {
 		isUnread = latestMessage.createdAt.getTime() > latestMessage.toUserReadAt.getTime();
 	}
 
 	const onClickChatRoom = () => {
+		setOpponentInfo(opponent);
 		nav(`/chats/${id}/${opponent.id}`);
 	};
 
 	return (
 		<ChatRoomListLayout onClick={onClickChatRoom}>
-			<UserImage src="../../../../0.png" alt="user" />
+			<UserImage src={opponent.profilePictureUrl || ProfileImg} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
 					{opponent.name}
