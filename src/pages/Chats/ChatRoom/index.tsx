@@ -21,6 +21,7 @@ import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { useParams } from 'react-router-dom';
 import request from '../../../apis/core';
 import { MockUserIdAtom } from '../../../recoil/MockUserId';
+import { SocketStateAtom } from '../../../recoil/SocketState';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 
 const ChatRoom: React.FC = () => {
@@ -30,7 +31,27 @@ const ChatRoom: React.FC = () => {
 	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
 	const userId = useRecoilValue(MockUserIdAtom);
+	const socket = useRecoilValue(SocketStateAtom);
 	const roomId = useParams();
+
+	useEffect(() => {
+		if (socket) {
+			// 채팅방 입장
+			socket.emit('enterChatRoom', roomId);
+
+			// 전체 메시지 조회
+			socket.on('AllMessages', (messages) => {
+				setAllMessages(messages);
+			});
+		}
+
+		// 컴포넌트 언마운트 시 실행
+		return () => {
+			if (socket) {
+				socket.removeListener('AllMessages');
+			}
+		};
+	}, [socket, roomId]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
