@@ -5,8 +5,7 @@ import RcvdMessage from './RcvdMessage';
 import SentMessage from './SentMessage';
 import DateBar from './DateBar';
 import ChatBox from './ChatBox';
-import { useRecoilValue } from 'recoil';
-import { MockMessagesAtom } from '../../../recoil/MockMessages';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import BottomSheet from '../../../components/BottomSheet';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -22,10 +21,11 @@ import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { useParams } from 'react-router-dom';
 import request from '../../../apis/core';
 import { MockUserIdAtom } from '../../../recoil/MockUserId';
+import { AllMesagesAtom } from '../../../recoil/AllMessages';
 
 const ChatRoom: React.FC = () => {
-	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
-	const mockMessages = useRecoilValue(MockMessagesAtom);
+	const [extendedMessages, setExtendedMessages] = useState<ExtendedMessageDto[]>([]);
+	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
-	const MenuBottomSheet: BottomSheetProps = {
+	const kebabMenuBottomSheet: BottomSheetProps = {
 		isOpenBottomSheet: isOpenMenu,
 		isHandlerVisible: true,
 		isBackgroundDimmed: true,
@@ -102,43 +102,45 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// DateBar 표시 여부를 결정하는 함수
-	const isNextDay = (curDate: dayjs.Dayjs, lastDate: dayjs.Dayjs): boolean => {
-		return !curDate.isSame(lastDate, 'day');
+	const isNextDay = (curDate: Date, lastDate: Date): boolean => {
+		const curDateDayjs = dayjs(curDate);
+		const lastDateDayjs = dayjs(lastDate);
+		return !curDateDayjs.isSame(lastDateDayjs, 'day');
 	};
 
 	// 기존 대화 내역에 대한 정보 추가
 	useEffect(() => {
-		const temp: ExtendedMessageDto[] = mockMessages.map((message: MessageDto, index: number) => {
-			const prevMessage = index !== 0 ? mockMessages[index - 1] : null;
-			const nextMessage = index !== mockMessages.length - 1 ? mockMessages[index + 1] : null;
-			const formattedTime = message.timestamp.format('HH:mm');
+		const temp: ExtendedMessageDto[] = allMessages.map((message: MessageDto, index: number) => {
+			const prevMessage = index !== 0 ? allMessages[index - 1] : null;
+			const nextMessage = index !== allMessages.length - 1 ? allMessages[index + 1] : null;
+			const formattedTime = dayjs(message.datetime).format('HH:mm');
 
 			// 채팅의 첫 메시지가 아니고, 날짜가 바뀐 경우 날짜 표시줄 출력
-			let isNewDate = prevMessage !== null && isNextDay(message.timestamp, prevMessage.timestamp);
+			let isNewDate = prevMessage !== null && isNextDay(message.datetime, prevMessage.datetime);
 
 			// 채팅의 첫 메시지이거나 전송자 또는 날짜가 바뀐 경우 프로필 사진 출력
-			let isFirst = prevMessage === null || prevMessage.sender !== message.sender || isNewDate;
+			let isFirst = prevMessage === null || prevMessage.fromUserId !== message.fromUserId || isNewDate;
 
 			// 가장 마지막 메시지이거나,
 			// 전송자 또는 시간 또는 날짜가 바뀌기 직전인 경우
 			// 메시지 전송 시각 출력
 			let isPrintTime =
 				nextMessage === null ||
-				message.sender !== nextMessage.sender ||
-				formattedTime !== nextMessage.timestamp.format('HH:mm') ||
-				isNextDay(nextMessage.timestamp, message.timestamp);
+				message.fromUserId !== nextMessage.fromUserId ||
+				formattedTime !== dayjs(nextMessage.datetime).format('HH:mm') ||
+				isNextDay(nextMessage.datetime, message.datetime);
 
 			// 채팅의 첫 메시지가 아니고, 전송자가 바뀐 경우 margin-top 추가
-			let isSenderChanged = prevMessage !== null && !isNewDate && prevMessage.sender !== message.sender;
+			let isSenderChanged = prevMessage !== null && !isNewDate && prevMessage.fromUserId !== message.fromUserId;
 
 			// 보낸 메시지일 경우 sentMessage 속성 추가
 			// 받은 메시지일 경우 rcvdMessage 속성 추가
-			if (message.sender === 'me') {
+			if (message.fromUserId === userId) {
 				const sentMessage: SentMessageProps = { text: message.text, isSenderChanged, isPrintTime, formattedTime };
 				return { ...message, isNewDate, sentMessage };
 			} else {
 				const rcvdMessage: RcvdMessageProps = {
-					sender: message.sender,
+					fromUserId: message.fromUserId,
 					text: message.text,
 					isFirst,
 					isSenderChanged,
@@ -149,25 +151,25 @@ const ChatRoom: React.FC = () => {
 			}
 		});
 
-		setNewMockMessages(temp);
-	}, [mockMessages]);
+		setExtendedMessages(temp);
+	}, [allMessages]);
 
 	return (
 		<OODDFrame>
 			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
-			<BottomSheet {...MenuBottomSheet} />
+			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
 				handleMenu={() => {
 					setIsOpenMenu(true);
 				}}
 			/>
 			<MessagesContainer>
-				{newMockMessages.map((message: ExtendedMessageDto) => {
+				{extendedMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>
 							{message.isNewDate && (
-								<DateBar formattedDate={message.timestamp.locale('ko').format('YYYY년 MM월 DD일 dddd')} />
+								<DateBar formattedDate={dayjs(message.datetime).locale('ko').format('YYYY년 MM월 DD일 dddd')} />
 							)}
 							{message.sentMessage ? (
 								<SentMessage {...message.sentMessage} />

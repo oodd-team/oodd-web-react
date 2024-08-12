@@ -1,11 +1,10 @@
-import dayjs from 'dayjs';
-
 export interface MessageDto {
+	chatRoomId: number;
 	id: number;
 	text: string;
-	sender: string;
-	receiver: string;
-	timestamp: dayjs.Dayjs;
+	fromUserId: number;
+	toUserId: number;
+	datetime: Date;
 }
 
 export interface ExtendedMessageDto extends MessageDto {
@@ -22,7 +21,7 @@ export interface SentMessageProps {
 }
 
 export interface RcvdMessageProps {
-	sender: string; // 사용자명
+	fromUserId: number; // 사용자명
 	text: string; // 메시지 내용
 	isSenderChanged: boolean; // 상단 마진 추가 여부
 	isFirst: boolean; // 사용자 프로필 표시 여부
