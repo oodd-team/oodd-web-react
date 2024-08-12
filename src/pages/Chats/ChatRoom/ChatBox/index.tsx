@@ -1,14 +1,21 @@
 import { ChatBoxContainer, Textarea, SendIcon } from './styles';
 import { useState, useRef } from 'react';
-import { useRecoilState } from 'recoil';
-import { MockMessagesAtom } from '../../../../recoil/MockMessages';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Send from '../../../../assets/Chats/Send.svg';
-import dayjs from 'dayjs';
+import { AllMesagesAtom } from '../../../../recoil/AllMessages';
+import { MockUserIdAtom } from '../../../../recoil/MockUserId';
+import { useParams } from 'react-router-dom';
+import { SocketStateAtom } from '../../../../recoil/SocketState';
 
 const ChatBox: React.FC = () => {
-	const idRef = useRef(9);
+	const messageId = useRef(0);
+	const { roomId, opponentId } = useParams<{ roomId: string; opponentId: string }>();
+	const roomIdNumber = Number(roomId);
+	const opponentIdNumber = Number(opponentId);
+	const userId = useRecoilValue(MockUserIdAtom);
 	const [newMessage, setNewMessage] = useState<string>('');
-	const [mockMessages, setMockMessages] = useRecoilState(MockMessagesAtom);
+	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
+	const socket = useRecoilValue(SocketStateAtom);
 
 	const onChangeMessage = (e: any): void => {
 		setNewMessage(e.target.value);
@@ -17,14 +24,21 @@ const ChatBox: React.FC = () => {
 		if (newMessage === '') {
 			return;
 		}
-		setMockMessages([
-			...mockMessages,
+
+		// 메시지 전송
+		if (socket) {
+			socket.emit('message', roomIdNumber, userId, opponentIdNumber, newMessage);
+		}
+
+		setAllMessages([
+			...allMessages,
 			{
-				id: idRef.current++,
-				sender: 'me',
-				receiver: 'user2',
+				chatRoomId: roomIdNumber,
+				id: messageId.current++,
+				toUserId: userId,
+				fromUserId: opponentIdNumber,
 				text: newMessage,
-				timestamp: dayjs(),
+				datetime: new Date(),
 			},
 		]);
 		setNewMessage('');
