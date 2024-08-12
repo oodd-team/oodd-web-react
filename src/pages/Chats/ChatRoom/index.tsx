@@ -21,7 +21,7 @@ import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { useParams } from 'react-router-dom';
 import request from '../../../apis/core';
-import { MockUserId } from '../../../recoil/MockUserId';
+import { MockUserIdAtom } from '../../../recoil/MockUserId';
 
 const ChatRoom: React.FC = () => {
 	const [newMockMessages, setNewMockMessages] = useState<ExtendedMessageDto[]>([]);
@@ -29,6 +29,7 @@ const ChatRoom: React.FC = () => {
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
+	const userId = useRecoilValue(MockUserIdAtom);
 	const roomId = useParams();
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -61,7 +62,7 @@ const ChatRoom: React.FC = () => {
 			action: () => {
 				const leaveChatRoom = async () => {
 					try {
-						await request.patch(`/chat-rooms/${roomId}/leave/${MockUserId}`);
+						await request.patch(`/chat-rooms/${roomId}/leave/${userId}`);
 					} catch (error) {
 						console.error(error);
 					}

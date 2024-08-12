@@ -1,19 +1,21 @@
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { RecentChatInfo } from './styles';
-import { MockUserId } from '../../../recoil/MockUserId';
+import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import { useEffect, useState } from 'react';
 import request from '../../../apis/core';
 import { ChatRoomDto, ChatRoomListDto } from './dto';
 import ChatRoomList from '../ChatRoomList';
+import { useRecoilValue } from 'recoil';
 
 const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
+	const userId = useRecoilValue(MockUserIdAtom);
 
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
-				const response = await request<ChatRoomListDto>(`/chat-room/${MockUserId}`);
+				const response = await request<ChatRoomListDto>(`/chat-room/${userId}`);
 
 				if (response.data.isSuccess) {
 					setChatRoomList(response.data.result);
