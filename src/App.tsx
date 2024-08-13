@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import ProfileViewer from './pages/ProfileViewer';
+import Home from './pages/Home';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
 import Profile from './pages/Profile';
@@ -14,6 +16,8 @@ const App: React.FC = () => {
 		<>
 			<BrowserRouter>
 				<Routes>
+					<Route path="signup" element={<SignUp />} />
+					<Route path="/users/:userId" element={<ProfileViewer />} />
 					<Route path="/" element={<Home />} />
 					<Route path="/chats/:roomId/:opponentId" element={<ChatRoom />} />
 					<Route path="/login" element={<Login />} />
