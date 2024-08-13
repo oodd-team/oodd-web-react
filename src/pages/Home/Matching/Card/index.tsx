@@ -1,9 +1,9 @@
 import React from 'react';
+import { StyledText } from '../../../../components/Text/StyledText';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
 import { CardLayoutProps } from './dto';
@@ -14,14 +14,25 @@ import ootdImg1 from '../../../../assets/Home/OOTDImg1.svg';
 import ootdImg2 from '../../../../assets/Home/OOTDImg2.svg';
 import ootdImg3 from '../../../../assets/Home/OOTDImg3.svg';
 import ootdImg4 from '../../../../assets/Home/OOTDImg4.svg';
+import { useNavigate } from 'react-router-dom';
 
 const cardItem: CardLayoutProps = {
 	profileImgUrl: profileImg1,
 	ootdImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 };
 
-// OODD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
-const Card: React.FC = () => {
+interface CardProps {
+	onReject: () => void; // 부모로부터 전달받는 prop
+}
+
+// OOTD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
+const Card: React.FC<CardProps> = ({ onReject }) => {
+	const nav = useNavigate();
+
+	const handleReject = () => {
+		onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
+	};
+
 	return (
 		<CardLayout>
 			<ProfileBox>
@@ -36,7 +47,7 @@ const Card: React.FC = () => {
 						#classic
 					</StyledText>
 				</ProfileInfo>
-				<SeeMore>
+				<SeeMore onClick={() => nav('/profile')}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1.2 }} color={theme.colors.white}>
 						OOTD 더 보기 &gt;
 					</StyledText>
@@ -58,10 +69,10 @@ const Card: React.FC = () => {
 					))}
 				</Swiper>
 				<Reaction>
-					<Btn>
+					<Btn onClick={handleReject}>
 						<img src={xBtn} />
 					</Btn>
-					<Btn>
+					<Btn onClick={() => nav('/chats')}>
 						<img src={checkBtn} />
 					</Btn>
 				</Reaction>
