@@ -18,9 +18,9 @@ export const TabBarContainer = styled.div`
 	border-bottom: solid 1px;
 `;
 
-export const TabBox = styled.div<{ $isActive: boolean }>`
+export const TabBox = styled.div<{ $isActive: boolean; $isUnpointer?: boolean }>`
 	flex: 1;
 	text-align: center;
-	cursor: pointer;
+	cursor: ${({ $isUnpointer }) => ($isUnpointer ? '' : 'pointer')};
 	border-bottom: solid 2px ${({ $isActive, theme }) => ($isActive ? theme.colors.black : 'transparent')};
 `;

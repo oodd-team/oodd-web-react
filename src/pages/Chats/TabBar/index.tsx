@@ -26,7 +26,7 @@ const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, element1, element2, default
 	return (
 		<TabBarLayout>
 			<TabBarContainer>
-				<TabBox $isActive={viewTab1} onClick={onClickTab1}>
+				<TabBox $isUnpointer={!hasNewRequest} $isActive={viewTab1} onClick={onClickTab1}>
 					<StyledText
 						$textTheme={{ style: `${viewTab1 ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
 						color={`${viewTab1 ? theme.colors.black : theme.colors.gray3}`}
