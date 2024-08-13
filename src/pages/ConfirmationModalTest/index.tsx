@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import ConfirmationModal from '../../components/ComfirmationModal';
-import { ConfirmationModalProps } from '../../components/ComfirmationModal/dto';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
 
 const ConfirmationModalTest: React.FC = () => {
 	const [modalWithCancle, setModalWithCancle] = useState(false);
