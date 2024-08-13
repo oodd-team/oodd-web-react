@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
-import close from '../../assets/close2.svg';
+import close from '../../../../assets/Upload/close2.svg';
 import { ClothingInfoItemProps } from '../dto';
 import { ClothingInfoItemContainer } from './styles';
 

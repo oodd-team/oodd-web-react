@@ -6,7 +6,7 @@ import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
-import close from '../assets/close.svg';
+import close from '../../../assets/Upload/close.svg';
 import { InstaConnectModalProps } from './dto';
 import { Post } from '../dto';
 

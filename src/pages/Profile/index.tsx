@@ -9,7 +9,7 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 
-import button_plus from './assets/button_plus.svg';
+import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
 

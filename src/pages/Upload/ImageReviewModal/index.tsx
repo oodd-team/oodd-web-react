@@ -3,7 +3,7 @@ import { Content } from './styles';
 import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
-import back from '../assets/back.svg';
+import back from '../../../assets/Upload/back.svg';
 import { ImageReviewModalProps } from './dto';
 import ImageSwiper from './ImageSwiper';
 

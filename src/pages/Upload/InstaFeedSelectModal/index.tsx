@@ -4,9 +4,8 @@ import { Header, PrevButton } from '../styles';
 import { StyledText } from '../../../components/Text/StyledText';
 import Modal from '../../../components/Modal';
 import { ModalProps } from '../../../components/Modal/dto';
-import close from '../assets/close.svg';
+import close from '../../../assets/Upload/close.svg';
 import { InstaFeedSelectModalProps, Post } from './dto';
-//import { posts } from './dummyPosts';
 
 const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({ posts, onAddImages, onClose, onNext }) => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);

@@ -3,8 +3,8 @@ import { ImageDragDropContainer } from './styles';
 import { Header, PrevButton } from '../styles';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
-import close from '../assets/close.svg';
-import picture from '../assets/picture.svg';
+import close from '../../../assets/Upload/close.svg';
+import picture from '../../../assets/Upload/picture.svg';
 import { ImageSelectModalProps } from './dto';
 
 const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onClose, onSelect }) => {
