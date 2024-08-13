@@ -1,11 +1,14 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import {
 	Btn,
 	Comment,
 	CommentBtn,
-	FeedBottom,
 	FeedImgBox,
 	FeedProfileImgWrapper,
 	FeedText,
@@ -40,41 +43,51 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Info>
 				<img src={more} style={{ cursor: 'pointer' }} />
 			</FeedTop>
-			<FeedBottom>
-				<FeedText>
-					<StyledText
-						$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-						color={theme.colors.black}
-						style={{ opacity: '50%' }}
-					>
-						{feed.text}
-					</StyledText>
-				</FeedText>
-				<FeedImgBox>
-					<img src={feed.feedImgUrl} />
-					<ReactionWrapper>
-						<Reaction>
-							<Btn>
-								<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
-							</Btn>
-							<Btn>
-								<img src={heartBtn} />
-							</Btn>
-							<Btn>
-								<img src={starBtn} />
-							</Btn>
-						</Reaction>
-						<Comment>
-							<CommentBtn>
-								<img src={commentBtn} />
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
-									코멘트 남기기
-								</StyledText>
-							</CommentBtn>
-						</Comment>
-					</ReactionWrapper>
-				</FeedImgBox>
-			</FeedBottom>
+			<FeedText>
+				<StyledText
+					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+					color={theme.colors.black}
+					style={{ opacity: '50%' }}
+				>
+					{feed.text}
+				</StyledText>
+			</FeedText>
+			<FeedImgBox>
+				<Swiper
+					pagination={{
+						clickable: true,
+					}}
+					modules={[Pagination]}
+					className="ootdSwiper"
+				>
+					{feed.feedImgUrls.map((url, index) => (
+						<SwiperSlide key={index}>
+							<img src={url} alt={`feed ${index + 1}`} className="ootd-image-small" />
+						</SwiperSlide>
+					))}
+				</Swiper>
+				<ReactionWrapper>
+					<Reaction>
+						<Btn>
+							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
+						</Btn>
+						<Btn>
+							<img src={heartBtn} />
+						</Btn>
+						<Btn>
+							<img src={starBtn} />
+						</Btn>
+					</Reaction>
+					<Comment>
+						<CommentBtn>
+							<img src={commentBtn} />
+							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
+								코멘트 남기기
+							</StyledText>
+						</CommentBtn>
+					</Comment>
+				</ReactionWrapper>
+			</FeedImgBox>
 		</FeedWrapper>
 	);
 };

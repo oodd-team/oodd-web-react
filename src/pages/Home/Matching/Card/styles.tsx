@@ -50,7 +50,7 @@ export const OOTDImgBox = styled.div`
 	display: flex;
 	justify-content: center;
 
-	img {
+	.slide-image-small {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

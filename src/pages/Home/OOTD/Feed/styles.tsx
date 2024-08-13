@@ -29,10 +29,6 @@ export const FeedProfileImgWrapper = styled.div`
 	align-items: center;
 `;
 
-export const FeedBottom = styled.div`
-	cursor: pointer;
-`;
-
 export const FeedText = styled.div`
 	margin-top: 0.75rem;
 	margin-bottom: 0.4875rem;
@@ -47,15 +43,45 @@ export const FeedImgBox = styled.div`
 	width: 100%;
 	border-radius: 0.75rem;
 	background-color: ${({ theme }) => theme.colors.gray1};
-	height: auto;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 
-	img {
+	.ootd-image-small {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	.ootdSwiper,
+	.swiper-wrapper {
+		z-index: 10;
+		align-items: stretch;
+	}
+
+	.ootdSwiper .swiper-pagination {
+		top: 0.75rem;
+		/* z-index: 11; */
+	}
+
+	.ootdSwiper .swiper-pagination-bullet {
+		width: 0.375rem;
+		height: 0.375rem;
+		border: 0.0625rem solid rgba(255, 255, 255, 1);
+		background: rgba(255, 255, 255, 0);
+		opacity: 0.5;
+	}
+
+	.ootdSwiper .swiper-pagination-bullet-active {
+		width: 0.375rem;
+		height: 0.375rem;
+		background-color: white;
+		opacity: 1;
+	}
+
+	.ootdSwiper .ootd-slide-small {
+		transition: none !important;
 	}
 `;
 
@@ -67,6 +93,7 @@ export const ReactionWrapper = styled.div`
 	gap: 0.5rem;
 	display: flex;
 	flex-direction: column;
+	z-index: 10;
 `;
 
 export const Reaction = styled.div`

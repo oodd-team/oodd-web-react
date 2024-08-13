@@ -6,8 +6,11 @@ import Tag from './Tag';
 import { FeedProps, TagProps } from './dto';
 import Feed from './Feed';
 import profileImg2 from '../../../assets/Home/profileImg2.svg';
-import feedImg from '../../../assets/Home/feedImg.svg';
 import tag from '../../../assets/Home/tag.svg';
+import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
+import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
+import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
+import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 
 // 추후 변경
 const tagData: TagProps[] = [
@@ -28,13 +31,13 @@ const feedData: FeedProps[] = [
 		profileUrl: profileImg2,
 		userName: 'IDID',
 		text: 'Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...',
-		feedImgUrl: feedImg,
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 	},
 	{
 		profileUrl: profileImg2,
 		userName: 'IDID2',
 		text: '굳굳',
-		feedImgUrl: feedImg,
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 	},
 ];
 

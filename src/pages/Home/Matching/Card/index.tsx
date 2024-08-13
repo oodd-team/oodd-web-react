@@ -53,7 +53,7 @@ const Card: React.FC = () => {
 				>
 					{cardItem.ootdImgUrls.map((url, index) => (
 						<SwiperSlide key={index}>
-							<img src={url} alt={`OOTD ${index + 1}`} className="slide-image-small" />
+							<img src={url} alt={`matching ${index + 1}`} className="slide-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>
