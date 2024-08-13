@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
 import { Header, PrevButton } from '../styles';
@@ -7,8 +8,9 @@ import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
 import close from '../assets/close.svg';
 import { InstaConnectModalProps } from './dto';
+import { Post } from '../dto';
 
-const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose }) => {
+const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, accessToken }) => {
 	const [instagramID, setInstagramID] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +23,28 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose }) => {
 			console.error('Failed to fetch Instagram media:', error);
 			setIsLoading(false);
 			setIsModalOpen(true);
+		}
+	};
+
+	useEffect(() => {
+		if (accessToken) {
+			fetchInstagramData(accessToken);
+		}
+	}, [accessToken]);
+
+	const fetchInstagramData = async (accessToken: string) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.get('https://localhost:3001/instagram-import', {
+				params: { access_token: accessToken },
+			});
+			const fetchedPosts = response.data as Post[];
+			onNext(fetchedPosts);
+		} catch (error) {
+			console.error('Failed to fetch Instagram media:', error);
+			setIsModalOpen(true);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

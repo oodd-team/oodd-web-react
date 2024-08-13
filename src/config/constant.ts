@@ -1,2 +1,2 @@
 // JWT를 로컬 스토리지에 저장할 때 사용하는 키. 추후 수정
-export const JWT_KEY = 'jwt_token';
+export const JWT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlcm5hbWUiOiLslpHsp4Dsm5AiLCJrYWthb0lkIjoiaW1nIiwiZW1haWwiOiJ5Z3cwMjEyMjdAbmF2ZXIuY29tIn0.0bNIs5eSJif7qeTfllNB0FtqMVM8KOZ8vactqZF2Tm0';

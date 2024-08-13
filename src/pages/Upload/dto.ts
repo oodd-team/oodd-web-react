@@ -13,9 +13,10 @@ export interface ImageSelectModalProps {
 }
 
 export interface InstaConnectModalProps {
-	onIdSelect: (id: string) => void;
+	//onIdSelect: (id: string) => void;
 	onClose: () => void;
 	onNext: () => void;
+	accessToken?: string;
 }
 
 export interface InstaFeedSelectModalProps {

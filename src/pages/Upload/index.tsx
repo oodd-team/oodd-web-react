@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { UploadContainer } from './styles';
 import PostUploadModal from './PostUploadModal';
@@ -12,66 +11,52 @@ import { Post } from './dto';
 
 const Upload: React.FC = () => {
 	const location = useLocation();
-	const [isImageSelectModalOpen, setIsImageSelectModalOpen] = useState(false);
-	const [isImageReviewModalOpen, setIsImageReviewModalOpen] = useState(false);
-	const [isInstaConnectModalOpen, setIsInstaConnectModalOpen] = useState(false);
-	const [isInstaFeedSelectModalOpen, setIsInstaFeedSelectModalOpen] = useState(false);
-	const [isPostUploadModalOpen, setIsPostUploadModalOpen] = useState(false);
+	const [modals, setModals] = useState({
+		imageSelect: false,
+		imageReview: false,
+		instaConnect: false,
+		instaFeedSelect: false,
+		postUpload: false,
+	});
 	const [selectedImages, setSelectedImages] = useState<string[]>([]);
 	const [instagramPosts, setInstagramPosts] = useState<Post[]>([]);
-
 	const navigate = useNavigate();
-
-	/*
-	useEffect(() => {
-		const state = location.state as { mode?: string };
-		if (state?.mode === 'image') {
-			setIsImageSelectModalOpen(true);
-		} else if (state?.mode === 'instagram') {
-			setIsInstaConnectModalOpen(true);
-		}
-	}, [location.state]);
-	*/
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
 		const accessToken = queryParams.get('access_token');
 
 		if (accessToken) {
-			fetchInstagramData(accessToken);
+			setModals({ ...modals, instaConnect: true });
 		} else {
-			const state = location.state as { mode?: string };
-			if (state?.mode === 'image') {
-				setIsImageSelectModalOpen(true);
-			} else if (state?.mode === 'instagram') {
-				setIsInstaConnectModalOpen(true);
-			}
+			handleInitialModalState();
 		}
 	}, [location.search, location.state]);
 
-	const fetchInstagramData = async (accessToken: string) => {
-		try {
-			const response = await axios.get(`https://localhost:3001/instagram-import`, {
-				params: {
-					access_token: accessToken,
-				},
-			});
-			const fetchedPosts = response.data as Post[];
-			handleOpenInstaFeedSelect(fetchedPosts);
-		} catch (error) {
-			console.error('Failed to fetch Instagram media:', error);
+	const handleInitialModalState = () => {
+		const state = location.state as { mode?: string };
+		if (state?.mode === 'image') {
+			setModals({ ...modals, imageSelect: true });
+		} else if (state?.mode === 'instagram') {
+			setModals({ ...modals, instaConnect: true });
 		}
 	};
 
 	const handleCloseModals = () => {
+		setModals({
+			imageSelect: false,
+			imageReview: false,
+			instaConnect: false,
+			instaFeedSelect: false,
+			postUpload: false,
+		});
 		setSelectedImages([]);
 		navigate('/profile');
 	};
 
 	const handleSelectImages = (images: string[]) => {
-		handleAddImages(images);
-		setIsImageSelectModalOpen(false);
-		setIsImageReviewModalOpen(true);
+		setSelectedImages((prevImages) => [...prevImages, ...images]);
+		setModals({ ...modals, imageSelect: false, imageReview: true });
 	};
 
 	const handleAddImages = (images: string[]) => {
@@ -84,41 +69,35 @@ const Upload: React.FC = () => {
 
 	const handleReviewPrev = () => {
 		const state = location.state as { mode?: string };
-		setIsImageReviewModalOpen(false);
 
 		if (state?.mode === 'image') {
-			setIsImageSelectModalOpen(true);
+			setModals({ ...modals, imageSelect: true, imageReview: false });
 		} else if (state?.mode === 'instagram') {
-			setIsInstaFeedSelectModalOpen(true);
+			setModals({ ...modals, instaFeedSelect: true, imageReview: false });
 		}
 		setSelectedImages([]);
 	};
 
 	const handleOpenInstaFeedSelect = (fetchedPosts: Post[]) => {
 		setInstagramPosts(fetchedPosts);
-		setIsInstaConnectModalOpen(false);
-		setIsImageReviewModalOpen(false);
-		setIsInstaFeedSelectModalOpen(true);
+		setModals({ ...modals, instaConnect: false, instaFeedSelect: true });
 	};
 
 	const handleOpenImageReview = () => {
-		setIsInstaFeedSelectModalOpen(false);
-		setIsPostUploadModalOpen(false);
-		setIsImageReviewModalOpen(true);
+		setModals({ ...modals, instaFeedSelect: false, postUpload: false, imageReview: true });
 	};
 
 	const handleOpenPostUpload = () => {
-		setIsImageReviewModalOpen(false);
-		setIsPostUploadModalOpen(true);
+		setModals({ ...modals, imageReview: false, postUpload: true });
 	};
 
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				{isImageSelectModalOpen && (
+				{modals.imageSelect && (
 					<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleSelectImages} />
 				)}
-				{isImageReviewModalOpen && selectedImages.length > 0 && (
+				{modals.imageReview && selectedImages.length > 0 && (
 					<ImageReviewModal
 						selectedImages={selectedImages}
 						onAddImages={handleAddImages}
@@ -127,8 +106,14 @@ const Upload: React.FC = () => {
 						onNext={handleOpenPostUpload}
 					/>
 				)}
-				{isInstaConnectModalOpen && <InstaConnectModal onClose={handleCloseModals} />}
-				{isInstaFeedSelectModalOpen && (
+				{modals.instaConnect && (
+					<InstaConnectModal
+						onClose={handleCloseModals}
+						onNext={handleOpenInstaFeedSelect}
+						accessToken={new URLSearchParams(location.search).get('access_token') || ''}
+					/>
+				)}
+				{modals.instaFeedSelect && (
 					<InstaFeedSelectModal
 						posts={instagramPosts}
 						onAddImages={handleAddImages}
@@ -136,7 +121,7 @@ const Upload: React.FC = () => {
 						onClose={handleCloseModals}
 					/>
 				)}
-				{isPostUploadModalOpen && selectedImages.length > 0 && (
+				{modals.postUpload && selectedImages.length > 0 && (
 					<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
 				)}
 			</UploadContainer>

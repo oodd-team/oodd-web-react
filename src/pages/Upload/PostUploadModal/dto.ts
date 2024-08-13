@@ -3,7 +3,7 @@ export interface PostUploadModalProps {
 	selectedImages: string[];
 }
 
-export interface Hashtag {
+export interface Styletag {
 	tag: string;
 	color: string;
 }

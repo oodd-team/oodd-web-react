@@ -1,14 +1,13 @@
 //PostUploadModal/index.tsx
 import React, { useState } from 'react';
-//import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
 	StyledInput,
 	TagContainer,
 	ClothingInfoList,
-	HashtagList,
-	HashtagItem,
+	StyletagList,
+	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
 import { Header, PrevButton } from '../styles';
@@ -24,20 +23,21 @@ import styleTag from '../assets/styleTag.svg';
 import pin from '../assets/pin.svg';
 import next from '../assets/next.svg';
 import next_up from '../assets/next_up.svg';
-import { PostUploadModalProps, ClothingInfo, Hashtag } from './dto';
+import { PostUploadModalProps, ClothingInfo, Styletag } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
+import request, { BaseResponse } from '../../../apis/core';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
-	const [caption, setCaption] = useState('');
+	const [content, setContent] = useState('');
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
-	const [selectedHashtag, setSelectedHashtag] = useState<Hashtag | null>(null);
+	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
-	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
+	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const hashtags: Hashtag[] = [
+	const styletags: Styletag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
 		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' },
 		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' },
@@ -51,7 +51,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const handleToggleStyleTagList = () => {
-		setIsHashtagListOpen((open) => !open);
+		setIsStyletagListOpen((open) => !open);
 	};
 
 	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
@@ -63,9 +63,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setClothingInfos(deletedClothingInfo);
 	};
 
-	const handleSelectTag = (tag: Hashtag) => {
-		setSelectedHashtag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
-		setIsHashtagListOpen(false);
+	const handleSelectStyletag = (tag: Styletag) => {
+		setSelectedStyletag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
+		setIsStyletagListOpen(false);
 	};
 
 	const handleToggleOOTD = () => {
@@ -87,29 +87,21 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
 
 			const postData = {
-				photo_urls: uploadedImages,
-				caption,
-				hashtags: selectedHashtag ? [selectedHashtag.tag] : [],
-				clothing_infos: clothingInfos,
+				photoUrls: uploadedImages,
+				content,
+				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
+				clothingInfo: clothingInfos,
 			};
+			//console.log(postData);
 
-			/*
-			const response = await axios.post('http://localhost:3001/posts', postData, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+			// 서버에 게시물 데이터 업로드
+			const response = await request.post<BaseResponse>('posts', postData);
 
-			if (response.status !== 201) {
-				throw new Error('Failed');
+			if (!response.isSuccess) {
+				throw new Error(response.message || 'Failed');
 			}
 
-			const result = response.data;
-
-			console.log(result);
-			*/
-
-			console.log(postData);
+			console.log(response.result);
 			navigate('/profile');
 		} catch (error) {
 			console.error(error);
@@ -129,7 +121,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 			<Content>
 				<ImageSwiper images={selectedImages} />
-				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
+				<StyledInput value={content} onChange={(e) => setContent(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
 					<div onClick={handleToggleSearchSheet}>
 						<img src={clothingTag} />
@@ -157,9 +149,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 							스타일 태그
 						</StyledText>
-						{isHashtagListOpen ? (
+						{isStyletagListOpen ? (
 							<img src={next_up} />
-						) : !selectedHashtag ? (
+						) : !selectedStyletag ? (
 							<>
 								<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 									미지정
@@ -167,24 +159,24 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								<img src={next} />
 							</>
 						) : (
-							<HashtagItem selected={false} color={selectedHashtag?.color}>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedHashtag?.tag}</StyledText>
-							</HashtagItem>
+							<StyletagItem selected={false} color={selectedStyletag?.color}>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedStyletag?.tag}</StyledText>
+							</StyletagItem>
 						)}
 					</div>
-					{isHashtagListOpen && (
-						<HashtagList>
-							{hashtags.map((tagObj, index) => (
-								<HashtagItem
+					{isStyletagListOpen && (
+						<StyletagList>
+							{styletags.map((tagObj, index) => (
+								<StyletagItem
 									key={index}
-									onClick={() => handleSelectTag(tagObj)}
-									selected={selectedHashtag?.tag === tagObj.tag}
+									onClick={() => handleSelectStyletag(tagObj)}
+									selected={selectedStyletag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
 									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{tagObj.tag}</StyledText>
-								</HashtagItem>
+								</StyletagItem>
 							))}
-						</HashtagList>
+						</StyletagList>
 					)}
 				</TagContainer>
 				<PinnedPostToggleContainer>

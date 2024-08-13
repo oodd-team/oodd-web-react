@@ -126,7 +126,7 @@ export const ClothingInfoList = styled.ul`
 	flex-direction: column;
 `;
 
-export const HashtagList = styled.ul`
+export const StyletagList = styled.ul`
 	display: flex;
 	flex-direction: row;
 	padding: 0 1.25rem 1.25rem 1.25rem;
@@ -140,7 +140,7 @@ export const HashtagList = styled.ul`
 	}
 `;
 
-export const HashtagItem = styled.span<{ selected: boolean }>`
+export const StyletagItem = styled.span<{ selected: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
