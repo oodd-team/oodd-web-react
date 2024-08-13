@@ -7,7 +7,7 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
 	const [socket, setSocket] = useRecoilState(SocketStateAtom);
 
 	useEffect(() => {
-		const newSocket = io('https://api-dev.oodd.today');
+		const newSocket = io(import.meta.env.VITE_API_URL);
 		setSocket(newSocket);
 
 		// 컴포넌트 언마운트 시 소켓 연결 종료
