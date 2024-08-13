@@ -9,9 +9,10 @@ export interface Styletag {
 }
 
 export interface ClothingInfo {
-	image: string;
+	image_url: string;
 	brand: string;
 	model: string;
+	modelNumber: number;
 	url: string;
 }
 

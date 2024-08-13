@@ -7,6 +7,11 @@ import axios, {
 } from 'axios';
 import { JWT_KEY } from '../../config/constant';
 
+localStorage.setItem(
+	JWT_KEY,
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6IuyehOuvvOyEnCIsImVtYWlsIjoibGltbXMxMjE3QG5hdmVyLmNvbSJ9.QB9vUJiu7YTqzwaA2NYDXC20xDfWWQ7ck2QhDh7Lsqs',
+);
+
 export type BaseResponse<T = any> = {
 	isSuccess: boolean;
 	message: string;
@@ -47,7 +52,9 @@ export const request: CustomInstance = axios.create({
 request.interceptors.request.use(
 	(config) => {
 		const jwt = window.localStorage.getItem(JWT_KEY);
-		config.headers.Authorization = `Bearer ${jwt}`;
+		if (jwt) {
+			config.headers.Authorization = `Bearer ${jwt}`;
+		}
 		return config;
 	},
 	(error) => {

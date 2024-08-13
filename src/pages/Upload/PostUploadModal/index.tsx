@@ -10,7 +10,7 @@ import {
 	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-import { Header, PrevButton } from '../styles';
+import TopBar from '../../../components/TopBar';
 import BottomSheet from '../../../components/BottomSheet';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import BottomButton from '../../../components/BottomButton';
@@ -48,16 +48,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		{ tag: '#vintage', color: 'rgba(0, 255, 0, 0.15)' },
 	];
 
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isSearchBottomSheetOpen,
-		isHandlerVisible: false,
-		isBackgroundDimmed: true,
-		Component: SearchBottomSheetContent,
-		onCloseBottomSheet: () => {
-			setIsSearchBottomSheetOpen(false);
-		},
-	};
-
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
 	};
@@ -73,6 +63,20 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const handleDeleteClothingInfo = (deleteClothingInfo: ClothingInfo) => {
 		const deletedClothingInfo = clothingInfos.filter((clothing) => clothing !== deleteClothingInfo);
 		setClothingInfos(deletedClothingInfo);
+	};
+
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isSearchBottomSheetOpen,
+		isHandlerVisible: false,
+		isBackgroundDimmed: true,
+		Component: SearchBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsSearchBottomSheetOpen(false);
+		},
+		componentProps: {
+			onClose: () => setIsSearchBottomSheetOpen(false),
+			onSelectClothingInfo: handleAddClothingInfo,
+		},
 	};
 
 	const handleSelectStyletag = (tag: Styletag) => {
@@ -98,16 +102,21 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
 
+			// clothingInfos 배열에서 image_url 필드를 제거한 새로운 배열을 생성
+			const processedClothingInfos = clothingInfos.map(({ image_url, ...rest }) => rest);
+
 			const postData = {
 				photoUrls: uploadedImages,
 				content,
 				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
-				clothingInfo: clothingInfos,
+				//clothingInfo: clothingInfos,
+				clothingInfo: processedClothingInfos,
 			};
-			//console.log(postData);
+			console.log(postData);
 
 			// 서버에 게시물 데이터 업로드
-			const response = await request.post<BaseResponse>('posts', postData);
+			//const userId = '2'; //임의 지정
+			const response = await request.post<BaseResponse>(`/posts`, postData);
 
 			if (!response.isSuccess) {
 				throw new Error(response.message || 'Failed');
@@ -124,13 +133,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 	return (
 		<>
-			<Header>
-				<PrevButton onClick={onPrev}>
-					<img src={back} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
-			</Header>
-
+			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={onPrev} />
 			<Content>
 				<ImageSwiper images={selectedImages} />
 				<StyledInput value={content} onChange={(e) => setContent(e.target.value)} placeholder="문구를 작성하세요..." />

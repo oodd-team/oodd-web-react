@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ImageDragDropContainer } from './styles';
-import { Header, PrevButton } from '../styles';
+import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import close from '../../../assets/Upload/close.svg';
@@ -64,12 +64,7 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 
 	return (
 		<>
-			<Header>
-				<PrevButton onClick={onClose}>
-					<img src={close} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
-			</Header>
+			<TopBar text="OOTD 업로드" LeftButtonSrc={close} onLeftClick={onClose} />
 			<ImageDragDropContainer
 				className={`${isActive ? ' active' : ''}`}
 				onDragEnter={handleDragEnter}

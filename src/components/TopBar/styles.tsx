@@ -6,15 +6,18 @@ export const TopbarLayout = styled.div<TopbarLayoutProps>`
 	display: flex;
 	width: 100%;
 	max-width: 32rem;
-	height: 2.75rem;
-	justify-contents: space-evenly;
+	//height: 2.75rem;
+	height: 3.75rem;
+	justify-content: space-evenly;
 	align-items: center;
-	${({ $withBorder, theme }) => $withBorder && `
+	${({ $withBorder, theme }) =>
+		$withBorder &&
+		`
 		border-bottom: solid 1px ${theme.colors.gray2};
 	`}
 `;
 
-export const TextLayout= styled.div`
+export const TextLayout = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -27,7 +30,7 @@ export const BackButton = styled.img`
 	background-size: cover;
 	background-position: center;
 	margin: auto;
-	margin-left: 0.813rem;
+	margin-left: 1.25rem;
 `;
 
 export const KebabMenuButton = styled.img`
@@ -38,5 +41,5 @@ export const KebabMenuButton = styled.img`
 	background-position: center;
 	margin: auto;
 	margin-right: 1.125rem;
-	visibility: ${props => props.src ? 'visible' : 'hidden'};
+	visibility: ${(props) => (props.src ? 'visible' : 'hidden')};
 `;

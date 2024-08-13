@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Content, PostContainer, ImageWrapper } from './styles';
-import { Header, PrevButton } from '../styles';
-import { StyledText } from '../../../components/Text/StyledText';
+import TopBar from '../../../components/TopBar';
 import Modal from '../../../components/Modal';
 import { ModalProps } from '../../../components/Modal/dto';
 import close from '../../../assets/Upload/close.svg';
@@ -26,12 +25,7 @@ const InstaFeedSelectModal: React.FC<InstaFeedSelectModalProps> = ({ posts, onAd
 	return (
 		<>
 			{isSuccessModalOpen && <Modal {...modalProps} />}
-			<Header>
-				<PrevButton onClick={onClose}>
-					<img src={close} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>가져올 OOTD 선택</StyledText>
-			</Header>
+			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={close} onLeftClick={onClose} />
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>

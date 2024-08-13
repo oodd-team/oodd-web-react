@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
-import { Header, PrevButton } from '../styles';
+import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import FailedModal from './FailedModal';
@@ -55,12 +55,7 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, 
 
 	return (
 		<>
-			<Header>
-				<PrevButton onClick={onClose}>
-					<img src={close} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>인스타 계정 연동</StyledText>
-			</Header>
+			<TopBar text="인스타 계정 연동" LeftButtonSrc={close} onLeftClick={onClose} />
 			<Content>
 				{isLoading ? (
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>
