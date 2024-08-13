@@ -7,7 +7,7 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
 	const [socket, setSocket] = useRecoilState(SocketStateAtom);
 
 	useEffect(() => {
-		const newSocket = io('http://52.78.141.5:8080');
+		const newSocket = io('https://api-dev.oodd.today');
 		setSocket(newSocket);
 
 		// 컴포넌트 언마운트 시 소켓 연결 종료
