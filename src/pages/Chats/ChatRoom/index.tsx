@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MessagesContainer } from './styles';
-import TopBar from './TopBar';
+import TopBar from '../../../components/TopBar';
 import RcvdMessage from './RcvdMessage';
 import SentMessage from './SentMessage';
 import DateBar from './DateBar';
@@ -18,13 +18,15 @@ import Block from '../../../assets/BottomSheetMenu/Block.svg';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../../apis/core';
 import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import { SocketStateAtom } from '../../../recoil/SocketState';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '../../../../public/ProfileImg.svg';
+import Back from '../../../assets/Chats/Back.svg';
+import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setExtendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -36,6 +38,7 @@ const ChatRoom: React.FC = () => {
 	const socket = useRecoilValue(SocketStateAtom);
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const roomId = useParams();
+	const nav = useNavigate();
 
 	useEffect(() => {
 		if (socket) {
@@ -191,9 +194,16 @@ const ChatRoom: React.FC = () => {
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
-				handleMenu={() => {
+				ID={opponentInfo?.name!}
+				LeftButtonSrc={Back}
+				RightButtonSrc={KebabMenu}
+				onLeftClick={() => {
+					nav(-1);
+				}}
+				onRightClick={() => {
 					setIsOpenMenu(true);
 				}}
+				$withBorder={true}
 			/>
 			<MessagesContainer>
 				{extendedMessages.map((message: ExtendedMessageDto) => {
