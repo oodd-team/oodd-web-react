@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyledText } from '../../../../components/Text/StyledText';
+import { StyledText } from '../../Text/StyledText';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import theme from '../../../../styles/theme';
+import theme from '../../../styles/theme';
 import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
 import { CardLayoutProps } from './dto';
-import xBtn from '../../../../assets/Home/button_reject.svg';
-import checkBtn from '../../../../assets/Home/button_check.svg';
-import profileImg1 from '../../../../assets/Home/profileImg1.svg';
-import ootdImg1 from '../../../../assets/Home/OOTDImg1.svg';
-import ootdImg2 from '../../../../assets/Home/OOTDImg2.svg';
-import ootdImg3 from '../../../../assets/Home/OOTDImg3.svg';
-import ootdImg4 from '../../../../assets/Home/OOTDImg4.svg';
+import xBtn from '../../../assets/Home/button_reject.svg';
+import checkBtn from '../../../assets/Home/button_check.svg';
+import profileImg1 from '../../../assets/Home/profileImg1.svg';
+import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
+import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
+import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
+import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 import { useNavigate } from 'react-router-dom';
 
 const cardItem: CardLayoutProps = {
@@ -22,7 +22,7 @@ const cardItem: CardLayoutProps = {
 };
 
 interface CardProps {
-	onReject: () => void; // 부모로부터 전달받는 prop
+	onReject: () => void;
 }
 
 // OOTD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
@@ -70,10 +70,10 @@ const Card: React.FC<CardProps> = ({ onReject }) => {
 				</Swiper>
 				<Reaction>
 					<Btn onClick={handleReject}>
-						<img src={xBtn} />
+						<img src={xBtn} alt="reject" />
 					</Btn>
 					<Btn onClick={() => nav('/chats')}>
-						<img src={checkBtn} />
+						<img src={checkBtn} alt="accept" />
 					</Btn>
 				</Reaction>
 			</OOTDImgBox>
