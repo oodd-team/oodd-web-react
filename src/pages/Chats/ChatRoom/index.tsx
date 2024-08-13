@@ -24,7 +24,7 @@ import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import { SocketStateAtom } from '../../../recoil/SocketState';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
-import ProfileImg from '../../../../public/ProfileImg.svg';
+import ProfileImg from '/ProfileImg.svg';
 import Back from '../../../assets/Chats/Back.svg';
 import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
 

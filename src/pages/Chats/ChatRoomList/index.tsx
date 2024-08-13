@@ -5,7 +5,7 @@ import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
-import ProfileImg from '../../../../public/ProfileImg.svg';
+import ProfileImg from '/ProfileImg.svg';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
