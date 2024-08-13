@@ -17,7 +17,7 @@ const RecentChat: React.FC = () => {
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
-				const response = await request.get<ChatRoomListDto>(`/chat-room/${userId}`);
+				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
 
 				if (response.isSuccess) {
 					setChatRoomList(response.result);
