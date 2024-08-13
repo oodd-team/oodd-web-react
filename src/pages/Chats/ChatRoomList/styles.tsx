@@ -18,10 +18,10 @@ export const UserImage = styled.img`
 `;
 
 export const LeftBox = styled.div`
-	margin: 0.313rem 0 0.25rem 1.25rem;
+	margin: 0.313rem 0 0.313rem 1.06rem;
 	display: flex;
 	flex-direction: column;
-	gap: 0.25rem;
+	justify-content: space-between;
 `;
 
 export const RightBox = styled.div<{ $isUnread: boolean }>`

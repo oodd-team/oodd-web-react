@@ -55,9 +55,9 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 			<UserImage src={opponent.profilePictureUrl || ProfileImg} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-					{opponent.name}
+					{opponent.name || '알수없음'}
 				</StyledText>
-				<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1.2 }} color={theme.colors.gray3}>
+				<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray3}>
 					{latestMessage.content}
 				</StyledText>
 			</LeftBox>
