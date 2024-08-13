@@ -24,7 +24,7 @@ export interface ImageSwiperProps {
 	images: string[];
 }
 
-export interface BottomSheetProps {
+export interface SearchBottomSheetProps {
 	onClose: () => void;
 	onSelectClothingInfo: (clothingInfo: ClothingInfo) => void;
 }

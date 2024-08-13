@@ -11,11 +11,13 @@ import {
 	PinnedPostToggleContainer,
 } from './styles';
 import { Header, PrevButton } from '../styles';
+import BottomSheet from '../../../components/BottomSheet';
+import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import ImageSwiper from './ImageSwiper';
 import ClothingInfoItem from './ClothingInfoItem';
-import SearchBottomSheet from './SearchBottomSheet/index';
+import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
 import back from '../../../assets/Upload/back.svg';
 import clothingTag from '../../../assets/Upload/clothingTag.svg';
@@ -33,9 +35,11 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
-	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
+	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	const styletags: Styletag[] = [
 		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
@@ -44,10 +48,18 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		{ tag: '#vintage', color: 'rgba(0, 255, 0, 0.15)' },
 	];
 
-	const navigate = useNavigate();
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isSearchBottomSheetOpen,
+		isHandlerVisible: false,
+		isBackgroundDimmed: true,
+		Component: SearchBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsSearchBottomSheetOpen(false);
+		},
+	};
 
 	const handleToggleSearchSheet = () => {
-		setIsSearchSheetOpen((open) => !open);
+		setIsSearchBottomSheetOpen((open) => !open);
 	};
 
 	const handleToggleStyleTagList = () => {
@@ -190,9 +202,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 			<BottomButton content="공유" onClick={handleSubmit} disabled={isLoading} />
 
-			{isSearchSheetOpen && (
-				<SearchBottomSheet onClose={handleToggleSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
-			)}
+			{isSearchBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
 		</>
 	);
 };
