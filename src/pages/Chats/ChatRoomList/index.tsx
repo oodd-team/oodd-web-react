@@ -31,11 +31,11 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 	useEffect(() => {
 		if (latestMessage.createdAt) {
 			// 초기 시간 설정
-			setTimeAgo(dayjs(latestMessage.createdAt).fromNow());
+			setTimeAgo(dayjs(latestMessage.createdAt).locale('ko').fromNow());
 
 			// 60초마다 `timeAgo`를 업데이트
 			const interval = setInterval(() => {
-				setTimeAgo(dayjs(latestMessage.createdAt).fromNow());
+				setTimeAgo(dayjs(latestMessage.createdAt).locale('ko').fromNow());
 			}, 60000);
 
 			// 컴포넌트 언마운트 시 타이머 정리
