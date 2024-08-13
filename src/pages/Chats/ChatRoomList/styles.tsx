@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const ChatRoomListLayout = styled.div`
 	width: 100%;
-	padding: 0 1.25rem;
-	height: 3rem;
+	padding: 0.5rem 1.25rem;
+	height: 4rem;
 	display: flex;
 	margin: 0 auto;
-	margin-bottom: 1rem;
 	cursor: pointer;
+	box-sizing: border-box;
 `;
 
 export const UserImage = styled.img`
