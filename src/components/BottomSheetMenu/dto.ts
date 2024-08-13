@@ -6,6 +6,6 @@ export interface SheetItemDto {
 }
 
 export interface BottomSheetMenuProps {
-	items: SheetItemDto[]; // TODO: Item에서 메뉴별 아이콘 받도록 수정해야 함
+	items: SheetItemDto[];
 	marginBottom: string;
 }
