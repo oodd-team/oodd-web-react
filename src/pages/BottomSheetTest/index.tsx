@@ -7,7 +7,6 @@ import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import Exit from '../../assets/BottomSheetMenu/Edit.svg';
 import Delete from '../../assets/BottomSheetMenu/Delete.svg';
-import Pin from '../../assets/BottomSheetMenu/Pin.svg';
 import Comment from '../../components/Comment';
 import { CommentProps } from '../../components/Comment/dto';
 
