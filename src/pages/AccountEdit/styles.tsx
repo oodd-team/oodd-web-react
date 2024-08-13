@@ -36,14 +36,15 @@ export const SNSIcon = styled.img`
 	width: 2.5rem; /* 40px */
 	height: 2.5rem; /* 40px */
 	margin-right: 0.625rem; /* 10px */
-	margin-top: 1.25rem; /* 20px */
+	margin-top: 1.875rem;
 	flex-shrink: 0;
+	object-fit: cover;
 `;
 
 export const Text = styled.div`
 	font-size: 0.875rem; /* 14px */
 	color: #666;
-	margin-top: 0.3125rem; /* 5px */
+	margin-top: 2.1875rem;
 `;
 
 export const SnsConnection = styled.div`
@@ -56,12 +57,14 @@ export const SnsConnection = styled.div`
 export const MemberInfo = styled.div`
 	display: flex;
 	flex-direction: column;
+	margin-top: 35px;
 `;
 
 export const MemberInfoRow = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 0.625rem; /* 10px */
+	margin-top: 10px;
 `;
 
 export const Label = styled.div`

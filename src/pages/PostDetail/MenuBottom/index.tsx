@@ -4,14 +4,17 @@ import PinIcon from './assets/PinIcon.svg';
 import EditIcon from './assets/EditIcon.svg';
 import DeleteIcon from './assets/DeleteIcon.png';
 import DeleteModal from './DeleteModal';
+import request from '../../../apis/core';
+import { BaseResponse } from '../../../apis/core';
 
 interface MenuBottomProps {
 	isOpen: boolean;
 	onClose: () => void;
 	onPinPost: () => void;
+	postId: string; // 삭제할 포스트의 id
 }
 
-const MenuBottom: React.FC<MenuBottomProps> = ({ isOpen, onClose, onPinPost }) => {
+const MenuBottom: React.FC<MenuBottomProps> = ({ isOpen, onClose, onPinPost, postId }) => {
 	const [dragStart, setDragStart] = useState(0);
 	const [translateY, setTranslateY] = useState(0);
 	const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -48,12 +51,26 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ isOpen, onClose, onPinPost }) =
 		onClose(); // MenuBottom 닫기
 	};
 
-	const handleConfirmDelete = () => {
-		// 삭제 로직 추가
-		console.log('삭제되었습니다.');
-		setDeleteModalOpen(false);
-		onClose(); // MenuBottom 닫기
+	///// 에러남//////
+
+	const handleConfirmDelete = async () => {
+		try {
+			const response = await request.delete<BaseResponse<{ message: string }>>(`/post/${postId}`);
+
+			if (response.isSuccess) {
+				console.log(response.result.message); // "Post deleted successfully" 메시지 출력
+			} else {
+				console.error(response.message);
+			}
+		} catch (error) {
+			console.error('Error deleting post:', error);
+		} finally {
+			setDeleteModalOpen(false);
+			onClose();
+		}
 	};
+
+	///////////
 
 	useEffect(() => {
 		if (isOpen) {

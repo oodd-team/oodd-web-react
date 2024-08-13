@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
-	max-width: 32rem; /* 512px */
+	width: 100%;
+	flex-grow: 1;
+	max-width: 512px; /* 부모 요소의 최대 너비와 맞춤 */
 	margin: 0 auto; /* 중앙 정렬 */
-	padding-top: 0;
-	margin: 0 auto;
-	padding-top: 0.625rem; /* 10px */
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box; /* 패딩을 포함한 전체 크기를 설정 */
+	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
 `;
 
 export const Header = styled.div`

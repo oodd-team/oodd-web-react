@@ -34,40 +34,20 @@ export const ProfilePic = styled.div`
 export const Label = styled.label`
 	font-size: 0.875rem; /* 14px */
 	color: #333;
-	margin-top: 0.625rem; /* 10px */
-	align-self: flex-start;
 `;
 
 export const Input = styled.input`
-	width: 100%;
+	width: calc(100% - 6.25rem - 10px); /* 라벨과 간격을 제외한 너비 */
 	padding: 0.5rem; /* 8px */
-	margin-top: 0.3125rem; /* 5px */
-	margin-bottom: 1.25rem; /* 20px */
-	border: 0px solid #ccc;
-	border-radius: 0.25rem; /* 4px */
-`;
-
-export const TextArea = styled.textarea`
-	width: 100%;
-	padding: 0.5rem; /* 8px */
-	height: 6.25rem; /* 100px */
-	margin-top: 0.3125rem; /* 5px */
-	margin-bottom: 1.25rem; /* 20px */
-	border: 0px solid #ccc;
-	border-radius: 0.25rem; /* 4px */
+	margin-left: 10px;
+	border: 1px solid #ccc;
+	border: 0px;
+	box-sizing: border-box;
 `;
 
 export const Button = styled.button`
 	text-decoration: underline;
-	color: var(--Color-black, #000);
-
-	/* Button2/Medium */
-	font-family: 'Pretendard Variable';
-	font-size: 0.8125rem; /* 13px */
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	margin-top: 0.625rem; /* 10px */
+	margin-top: 0.8rem;
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -77,14 +57,10 @@ export const Row = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-	margin-top: 0.625rem; /* 10px */
+	margin-top: 10px; /* Row 간격 10px */
 
 	${Label} {
 		width: 6.25rem; /* 100px */
-	}
-
-	${Input}, ${TextArea} {
-		flex: 1;
 	}
 `;
 

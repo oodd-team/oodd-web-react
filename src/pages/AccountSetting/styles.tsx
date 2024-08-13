@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	max-width: 32rem; /* 512px */
 	margin: 0 auto;
+	width: 100%;
+
 	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
@@ -71,8 +72,12 @@ export const ListItem = styled.li`
 	border-bottom: 1px solid #eee;
 	cursor: pointer;
 
-	& img {
-		margin-right: 1rem; /* 16px */
+	& img:first-child {
+		margin-right: 1rem; /* 첫 번째 이미지(왼쪽 아이콘)의 오른쪽 간격 설정 */
+	}
+
+	& img:last-child {
+		margin-left: auto; /* 마지막 이미지(오른쪽 화살표 아이콘)를 오른쪽으로 정렬 */
 	}
 
 	&:hover {
@@ -81,6 +86,7 @@ export const ListItem = styled.li`
 
 	span {
 		flex: 1;
+		text-align: left; /* 텍스트 왼쪽 정렬 */
 	}
 `;
 

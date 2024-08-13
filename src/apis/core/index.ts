@@ -36,7 +36,7 @@ interface CustomInstance extends AxiosInstance {
 }
 
 export const request: CustomInstance = axios.create({
-	baseURL: process.env.REACT_APP_API,
+	baseURL: import.meta.env.VITE_API_BASE_URL, // 환경 변수를 이용한 baseURL 설정
 	timeout: 20000,
 	headers: {
 		accept: 'application/json',

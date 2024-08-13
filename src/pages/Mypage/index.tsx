@@ -13,14 +13,15 @@ import {
 	StatLabel,
 	PostsContainer,
 } from './styles';
+import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
+import NavBar from '../../components/NavBar';
 import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
-import BottomNav from '../../components/BottomNav';
 import Post from './Post';
 import { useNavigate } from 'react-router-dom';
 import { PostData } from './dto';
-import postImage from '../../assets/postImage.png'; // postImage 임포트
+import postImage from '../../assets/postImage.png';
 
 const Mypage: React.FC = () => {
 	const navigate = useNavigate();
@@ -39,47 +40,50 @@ const Mypage: React.FC = () => {
 	];
 
 	return (
-		<ProfileContainer>
-			<NavbarProfile />
-			<Header>
-				<AvatarWrapper>
-					<Avatar src={avatarImage} alt="User Avatar" />
-				</AvatarWrapper>
-				<UserInfo>
-					<Username>IDID</Username>
-					<Bio>간단 소개글.....</Bio>
-					<Bio>두 줄까지 가능</Bio>
-				</UserInfo>
-			</Header>
-			<ButtonSecondary />
-			<StatsContainer>
-				<Stat>
-					<StatLabel>OOTD</StatLabel>
-					<StatNumber>6</StatNumber>
-				</Stat>
-				<Stat>
-					<StatLabel>코멘트</StatLabel>
-					<StatNumber>110</StatNumber>
-				</Stat>
-				<Stat>
-					<StatLabel>좋아요</StatLabel>
-					<StatNumber>110</StatNumber>
-				</Stat>
-			</StatsContainer>
-			<PostsContainer>
-				{posts.map((post, index) => (
-					<Post
-						key={post.id}
-						imgUrl={post.imgUrl}
-						likes={post.likes}
-						comments={post.comments}
-						onClick={() => handlePostClick(post.id)}
-						isFirst={index === 0}
-					/>
-				))}
-			</PostsContainer>
-			<BottomNav />
-		</ProfileContainer>
+		<OODDFrame>
+			<ProfileContainer>
+				<NavbarProfile />
+				<Header>
+					<AvatarWrapper>
+						<Avatar src={avatarImage} alt="User Avatar" />
+					</AvatarWrapper>
+					<UserInfo>
+						<Username>IDID</Username>
+						<Bio>간단 소개글.....</Bio>
+						<Bio>두 줄까지 가능</Bio>
+					</UserInfo>
+				</Header>
+				<ButtonSecondary />
+				<StatsContainer>
+					<Stat>
+						<StatLabel>OOTD</StatLabel>
+						<StatNumber>6</StatNumber>
+					</Stat>
+					<Stat>
+						<StatLabel>코멘트</StatLabel>
+						<StatNumber>110</StatNumber>
+					</Stat>
+					<Stat>
+						<StatLabel>좋아요</StatLabel>
+						<StatNumber>110</StatNumber>
+					</Stat>
+				</StatsContainer>
+
+				<PostsContainer>
+					{posts.map((post, index) => (
+						<Post
+							key={post.id}
+							imgUrl={post.imgUrl}
+							likes={post.likes}
+							comments={post.comments}
+							onClick={() => handlePostClick(post.id)}
+							isFirst={index === 0}
+						/>
+					))}
+				</PostsContainer>
+				<NavBar />
+			</ProfileContainer>
+		</OODDFrame>
 	);
 };
 

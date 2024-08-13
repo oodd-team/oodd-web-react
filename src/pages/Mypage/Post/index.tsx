@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PostContainer, ImageWrapper, Image, IconContainer, Icon, PinIcon } from './styles';
-import Heart from './assets/Heart.svg';
-import Comment from './assets/comment.svg';
-import Pin from './assets/pin.svg';
+import Heart from './Heart.svg';
+import Comment from './comment.svg';
+import Pin from './pin.svg';
 
 interface PostProps {
 	imgUrl: string;

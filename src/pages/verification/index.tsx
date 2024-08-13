@@ -12,6 +12,9 @@ import {
 	ResendButton,
 	InputWrapper,
 } from './styles';
+
+import { OODDFrame } from '../../components/Frame/Frame';
+
 import NavbarVerification from '../../components/NavbarVerification';
 import { StyledText } from '../../components/Text/StyledText';
 
@@ -96,55 +99,57 @@ const Verification: React.FC = () => {
 	};
 
 	return (
-		<VerificationWrapper>
-			<NavbarVerification />
-			<Container>
-				<Title>
-					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
-						휴대전화번호로 본인인증하기
-					</StyledText>
-				</Title>
-				<Form onSubmit={handleSubmit}>
-					<InputWrapper>
-						<StyledInput
-							type="text"
-							placeholder="이름"
-							value={name}
-							onChange={handleNameChange}
-							data-theme-style="heading2-light"
-							data-theme-lineheight="1"
-						/>
-					</InputWrapper>
-					<InputWrapper>
-						<StyledInput
-							type="text"
-							placeholder="전화번호"
-							value={phone}
-							onChange={handlePhoneChange}
-							data-theme-style="body2-light"
-							data-theme-lineheight="1"
-						/>
-						{isVerificationSent && <ResendButton onClick={handleResend}>인증번호 새로 받기</ResendButton>}
-					</InputWrapper>
-					{isVerificationSent && (
-						<VerificationInputWrapper>
-							<StyledVerificationInput
+		<OODDFrame>
+			<VerificationWrapper>
+				<NavbarVerification />
+				<Container>
+					<Title>
+						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
+							휴대전화번호로 본인인증하기
+						</StyledText>
+					</Title>
+					<Form onSubmit={handleSubmit}>
+						<InputWrapper>
+							<StyledInput
 								type="text"
-								placeholder="인증번호를 입력하세요"
-								value={verificationCode}
-								onChange={handleVerificationCodeChange}
+								placeholder="이름"
+								value={name}
+								onChange={handleNameChange}
+								data-theme-style="heading2-light"
+								data-theme-lineheight="1"
+							/>
+						</InputWrapper>
+						<InputWrapper>
+							<StyledInput
+								type="text"
+								placeholder="전화번호"
+								value={phone}
+								onChange={handlePhoneChange}
 								data-theme-style="body2-light"
 								data-theme-lineheight="1"
 							/>
-							<Timer>{formatTime(timer)}</Timer>
-						</VerificationInputWrapper>
-					)}
-					<Button type="submit" disabled={isVerificationSent && verificationCode.length !== 6}>
-						{isVerificationSent ? '인증하기' : '인증번호 받기'}
-					</Button>
-				</Form>
-			</Container>
-		</VerificationWrapper>
+							{isVerificationSent && <ResendButton onClick={handleResend}>인증번호 새로 받기</ResendButton>}
+						</InputWrapper>
+						{isVerificationSent && (
+							<VerificationInputWrapper>
+								<StyledVerificationInput
+									type="text"
+									placeholder="인증번호를 입력하세요"
+									value={verificationCode}
+									onChange={handleVerificationCodeChange}
+									data-theme-style="body2-light"
+									data-theme-lineheight="1"
+								/>
+								<Timer>{formatTime(timer)}</Timer>
+							</VerificationInputWrapper>
+						)}
+						<Button type="submit" disabled={isVerificationSent && verificationCode.length !== 6}>
+							{isVerificationSent ? '인증하기' : '인증번호 받기'}
+						</Button>
+					</Form>
+				</Container>
+			</VerificationWrapper>
+		</OODDFrame>
 	);
 };
 

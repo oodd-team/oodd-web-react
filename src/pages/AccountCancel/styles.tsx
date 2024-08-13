@@ -5,7 +5,6 @@ interface ButtonProps {
 }
 
 export const CancelContainer = styled.div`
-	max-width: 32rem; /* 512px */
 	margin: 0 auto;
 	padding: 1.25rem; /* 20px */
 	display: flex;
@@ -24,6 +23,7 @@ export const Text = styled.p`
 	font-size: 0.875rem; /* 14px */
 	margin-bottom: 1.25rem; /* 20px */
 	text-align: left;
+	margin-top: 16px;
 `;
 
 export const InfoBox = styled.div`
