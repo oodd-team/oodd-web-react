@@ -4,8 +4,9 @@ import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
 import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
+import ConfirmationModal from '../../../components/ComfirmationModal';
+import { ConfirmationModalProps } from '../../../components/ComfirmationModal/dto';
 import { StyledText } from '../../../components/Text/StyledText';
-import FailedModal from './FailedModal';
 import close from '../../../assets/Upload/close.svg';
 import { InstaConnectModalProps } from './dto';
 import { Post } from '../dto';
@@ -24,6 +25,21 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, 
 			setIsLoading(false);
 			setIsModalOpen(true);
 		}
+	};
+
+	const failedModalProps: ConfirmationModalProps = {
+		content: `${instagramID} 계정 연동에 실패했어요`,
+		isCancelButtonVisible: false,
+		confirm: {
+			text: '다시 시도하기',
+			action: () => {
+				setIsModalOpen(false);
+				handleConnect();
+			},
+		},
+		onCloseModal: () => {
+			setIsModalOpen(false);
+		},
 	};
 
 	useEffect(() => {
@@ -46,11 +62,6 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, 
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-		handleConnect();
 	};
 
 	return (
@@ -86,7 +97,7 @@ const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, 
 
 			<BottomButton content="연동하기" onClick={handleConnect} />
 
-			{isModalOpen && <FailedModal onNext={handleModalClose} instagramId={instagramID} />}
+			{isModalOpen && <ConfirmationModal {...failedModalProps} />}
 		</>
 	);
 };
