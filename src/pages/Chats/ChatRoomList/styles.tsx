@@ -7,7 +7,6 @@ export const ChatRoomListLayout = styled.div`
 	display: flex;
 	margin: 0 auto;
 	cursor: pointer;
-	box-sizing: border-box;
 `;
 
 export const UserImage = styled.img`
@@ -18,7 +17,7 @@ export const UserImage = styled.img`
 `;
 
 export const LeftBox = styled.div`
-	margin: 0.4rem 0 0.2rem 1.06rem;
+	margin: 0.4rem 0.5rem 0.2rem 1.06rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

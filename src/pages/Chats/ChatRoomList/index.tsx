@@ -57,12 +57,27 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
 					{opponent.name || '알수없음'}
 				</StyledText>
-				<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray3}>
+				<StyledText
+					style={{
+						width: 'auto',
+						display: '-webkit-box',
+						WebkitLineClamp: 1,
+						WebkitBoxOrient: 'vertical',
+						overflow: 'hidden',
+						textOverflow: 'ellipsis',
+					}}
+					$textTheme={{ style: 'body6-light', lineHeight: 1 }}
+					color={theme.colors.gray3}
+				>
 					{latestMessage.content}
 				</StyledText>
 			</LeftBox>
 			<RightBox $isUnread={isUnread}>
-				<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.193 }} color={theme.colors.gray3}>
+				<StyledText
+					style={{ whiteSpace: 'nowrap' }}
+					$textTheme={{ style: 'body6-regular', lineHeight: 1.193 }}
+					color={theme.colors.gray3}
+				>
 					{timeAgo}
 				</StyledText>
 				{timeAgo && isUnread && (
