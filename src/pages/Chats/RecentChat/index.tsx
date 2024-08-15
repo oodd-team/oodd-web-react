@@ -9,6 +9,11 @@ import ChatRoomList from '../ChatRoomList';
 import { useRecoilValue } from 'recoil';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 
+localStorage.setItem(
+	'jwt_token',
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6IuyehOuvvOyEnCIsImVtYWlsIjoibGltbXMxMjE3QG5hdmVyLmNvbSJ9.QB9vUJiu7YTqzwaA2NYDXC20xDfWWQ7ck2QhDh7Lsqs',
+);
+
 const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const userId = useRecoilValue(MockUserIdAtom);

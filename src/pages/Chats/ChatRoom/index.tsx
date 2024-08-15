@@ -42,9 +42,7 @@ const ChatRoom: React.FC = () => {
 
 	useEffect(() => {
 		// 채팅방 입장
-		socket.emit('enterChatRoom', roomId, () => {
-			console.log('채팅방 입장 성공');
-		});
+		socket.emit('enterChatRoom', roomId);
 
 		// 전체 메시지 조회
 		socket.on('AllMessages', (messages) => {
@@ -53,7 +51,8 @@ const ChatRoom: React.FC = () => {
 
 		// 최근 메시지 조회
 		socket.on('latestMessage', (message) => {
-			setAllMessages([...allMessages, message]);
+			console.log(message);
+			// setAllMessages([...allMessages, message]);
 		});
 
 		// 컴포넌트 언마운트 시 실행

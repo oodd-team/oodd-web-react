@@ -1,26 +1,26 @@
 export interface UserDto {
 	id: number;
-	status: string; // ?
-	createdAt: Date; // ?
-	updatedAt: Date; // ?
-	deletedAt: boolean | null; // ?
-	name: string;
-	email: string;
-	nickname: string | null;
-	phoneNumber: string | null;
-	profilePictureUrl: string;
-	bio: string | null;
-	joinedAt: Date;
+	status?: string; // ?
+	createdAt?: Date; // ?
+	updatedAt?: Date; // ?
+	deletedAt?: boolean | null; // ?
+	name?: string;
+	email?: string;
+	nickname?: string | null;
+	phoneNumber?: string | null;
+	profilePictureUrl?: string;
+	bio?: string | null;
+	joinedAt?: Date;
 }
 
 export interface MessageDto {
 	id: number; // messageId
-	status: string; //?
+	status?: string; //?
 	createdAt: Date; // 메시지 생성 시각
-	updatedAt: Date; // ?
-	deletedAt: boolean | null; // ?
+	updatedAt?: Date; // ?
+	deletedAt?: boolean | null; // ?
 	content: string; // 메시지 내용
-	toUserReadAt: boolean; // ?
+	toUserReadAt?: boolean; // ?
 	fromUser: UserDto;
 	toUser: UserDto;
 }

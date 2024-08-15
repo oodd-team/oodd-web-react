@@ -5,17 +5,17 @@ import Send from '../../../../assets/Chats/Send.svg';
 import { AllMesagesAtom } from '../../../../recoil/AllMessages';
 import { MockUserIdAtom } from '../../../../recoil/MockUserId';
 import { useParams } from 'react-router-dom';
-import { SocketStateAtom } from '../../../../recoil/SocketState';
+import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
+import { useSocket } from '../../../../recoil/SocketProvider';
 
 const ChatBox: React.FC = () => {
-	const messageId = useRef(0);
-	const { roomId, opponentId } = useParams<{ roomId: string; opponentId: string }>();
+	const opponentInfo = useRecoilValue(OpponentInfoAtom);
+	const { roomId, opponentId } = useParams();
 	const roomIdNumber = Number(roomId);
-	const opponentIdNumber = Number(opponentId);
 	const userId = useRecoilValue(MockUserIdAtom);
 	const [newMessage, setNewMessage] = useState<string>('');
 	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
-	const socket = useRecoilValue(SocketStateAtom);
+	const socket = useSocket();
 
 	const onChangeMessage = (e: any): void => {
 		setNewMessage(e.target.value);
@@ -27,21 +27,25 @@ const ChatBox: React.FC = () => {
 
 		// 메시지 전송
 		if (socket) {
-			socket.emit('message', roomIdNumber, userId, opponentIdNumber, newMessage);
+			socket.emit('message', roomIdNumber, userId, opponentInfo?.id, newMessage, () => {
+				console.log('메시지 전송');
+				setAllMessages([
+					...allMessages,
+					{
+						id: new Date().getTime(),
+						createdAt: new Date(),
+						content: newMessage,
+						fromUser: {
+							id: userId,
+						},
+						toUser: {
+							id: opponentInfo?.id!,
+						},
+					},
+				]);
+				setNewMessage('');
+			});
 		}
-
-		setAllMessages([
-			...allMessages,
-			{
-				chatRoomId: roomIdNumber,
-				id: messageId.current++,
-				toUserId: userId,
-				fromUserId: opponentIdNumber,
-				text: newMessage,
-				datetime: new Date(),
-			},
-		]);
-		setNewMessage('');
 	};
 
 	const onKeyDown = (e: any): void => {

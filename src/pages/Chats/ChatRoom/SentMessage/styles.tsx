@@ -7,7 +7,7 @@ export const MessageLayout = styled.div`
 `;
 
 export const Message = styled.div`
-	padding: 0.45rem 0.75rem 0.45rem 1rem;
+	padding: 0.45rem 0.75rem;
 	border-radius: 0.625rem 0 0.625rem 0.625rem;
 	max-width: 16rem;
 	background-color: ${({ theme }) => theme.colors.gray1};

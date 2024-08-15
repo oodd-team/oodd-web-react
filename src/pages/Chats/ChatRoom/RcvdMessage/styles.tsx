@@ -25,7 +25,7 @@ export const MessageBox = styled.div`
 `;
 
 export const Message = styled.div`
-	padding: 0.45rem 0.62rem 0.45rem 0.69rem;
+	padding: 0.45rem 0.75rem;
 	border-radius: 0 0.625rem 0.625rem 0.625rem;
 	background-color: ${({ theme }) => theme.colors.gray1};
 	max-width: 16rem;
