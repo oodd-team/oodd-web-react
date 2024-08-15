@@ -1,22 +1,39 @@
-import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { SocketStateAtom } from './SocketState';
-import io from 'socket.io-client';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 
-const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [socket, setSocket] = useRecoilState(SocketStateAtom);
+const SocketContext = createContext<Socket | null>(null);
+
+export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	const [socket, setSocket] = useState<Socket | null>(null);
 
 	useEffect(() => {
 		const newSocket = io(import.meta.env.VITE_API_URL);
 		setSocket(newSocket);
 
-		// 컴포넌트 언마운트 시 소켓 연결 종료
+		newSocket.on('connect', () => {
+			console.log(newSocket);
+		});
+
+		newSocket.on('disconnect', (reason) => {
+			console.log('Disconnected from server:', reason);
+		});
+
+		newSocket.on('connect_error', (err) => {
+			console.log(err.message);
+		});
+
 		return () => {
 			newSocket.disconnect();
 		};
-	}, [setSocket]);
+	}, []);
 
-	return <>{children}</>;
+	return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
 };
 
-export default SocketProvider;
+export const useSocket = () => {
+	const context = useContext(SocketContext);
+	if (context === null) {
+		throw new Error('useSocket must be used within a SocketProvider');
+	}
+	return context;
+};

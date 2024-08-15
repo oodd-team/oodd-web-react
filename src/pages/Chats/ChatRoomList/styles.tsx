@@ -18,7 +18,7 @@ export const UserImage = styled.img`
 `;
 
 export const LeftBox = styled.div`
-	margin: 0.313rem 0 0.313rem 1.06rem;
+	margin: 0.4rem 0 0.2rem 1.06rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

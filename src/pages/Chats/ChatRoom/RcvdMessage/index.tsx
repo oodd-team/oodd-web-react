@@ -6,7 +6,7 @@ import { FirstMessageLayout, UserImage, MessageBox, Message, TimeWrapper, Messag
 const RcvdMessage: React.FC<RcvdMessageProps> = ({
 	fromUserName,
 	profilePictureUrl,
-	text,
+	content,
 	isFirst,
 	isSenderChanged,
 	isPrintTime,
@@ -24,7 +24,7 @@ const RcvdMessage: React.FC<RcvdMessageProps> = ({
 						</StyledText>
 						<Message>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
-								{text}
+								{content}
 							</StyledText>
 						</Message>
 					</MessageBox>
@@ -39,7 +39,7 @@ const RcvdMessage: React.FC<RcvdMessageProps> = ({
 				<MessageLayout>
 					<Message>
 						<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
-							{text}
+							{content}
 						</StyledText>
 					</Message>
 					{isPrintTime && <TimeWrapper>{formattedTime}</TimeWrapper>}

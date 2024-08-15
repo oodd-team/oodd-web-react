@@ -21,12 +21,12 @@ import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../../apis/core';
 import { MockUserIdAtom } from '../../../recoil/MockUserId';
-import { SocketStateAtom } from '../../../recoil/SocketState';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
 import Back from '../../../assets/Chats/Back.svg';
 import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
+import { useSocket } from '../../../recoil/SocketProvider';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -35,30 +35,30 @@ const ChatRoom: React.FC = () => {
 	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
 	const userId = useRecoilValue(MockUserIdAtom);
-	const socket = useRecoilValue(SocketStateAtom);
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const roomId = useParams();
+	const { roomId, opponentId } = useParams();
 	const nav = useNavigate();
+	const socket = useSocket();
 
 	useEffect(() => {
-		if (socket) {
-			// 채팅방 입장
-			socket.emit('enterChatRoom', roomId);
+		// 채팅방 입장
+		socket.emit('enterChatRoom', roomId, () => {
+			console.log('채팅방 입장 성공');
+		});
 
-			// 전체 메시지 조회
-			socket.on('AllMessages', (messages) => {
-				setAllMessages(messages);
-			});
+		// 전체 메시지 조회
+		socket.on('AllMessages', (messages) => {
+			setAllMessages(messages);
+		});
 
-			// 최근 메시지 조회
-			socket.on('latestMessage', (message) => {
-				setAllMessages([...allMessages, message]);
-			});
-		}
+		// 최근 메시지 조회
+		socket.on('latestMessage', (message) => {
+			setAllMessages([...allMessages, message]);
+		});
 
 		// 컴포넌트 언마운트 시 실행
 		return () => {
-			if (socket) {
+			if (socket?.connected) {
 				socket.removeListener('AllMessages');
 				socket.removeListener('latestMessage');
 			}
@@ -194,7 +194,7 @@ const ChatRoom: React.FC = () => {
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
-				ID={opponentInfo?.name!}
+				text={opponentInfo?.name || '알수없음'}
 				LeftButtonSrc={Back}
 				RightButtonSrc={KebabMenu}
 				onLeftClick={() => {
