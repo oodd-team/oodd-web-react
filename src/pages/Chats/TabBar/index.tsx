@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
 import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
-
+import request from '../../../apis/core';
 import Request from '../Request';
 import RecentChat from '../RecentChat';
 
@@ -13,13 +12,17 @@ import 'swiper/css';
 const tabs = ['요청', '최근 채팅'];
 
 const TabBar: React.FC = () => {
-	const hasNewRequest = true; // 요청 정보를 받아와 배열 길이가 0이면 false...
+	const [matchingRequest, setMatchingRequest] = useState(0);
+	const [hasNewRequest, setHasNewRequest] = useState(false);
 
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const swiperRef = useRef<SwiperCore | null>(null);
 
 	const handleTabClick = (index: number) => {
-		setActiveIndex(index);
+		// 요청이 있는 경우에만 탭 변경 가능
+		if (hasNewRequest) {
+			setActiveIndex(index);
+		}
 		if (swiperRef.current) {
 			swiperRef.current.slideTo(index);
 		}
@@ -29,14 +32,41 @@ const TabBar: React.FC = () => {
 		setActiveIndex(swiper.activeIndex);
 	};
 
+	useEffect(() => {
+		// 요청이 없으면 최근 채팅 탭이 active
+		if (!hasNewRequest) {
+			setActiveIndex(1);
+		}
+		// 	const getRequestList = async () => {
+		// 		try {
+		// 			const response = await request.get<{ [key: string]: any }>('/user-relationships');
+
+		// 			if (response?.isSuccess) {
+		// 				setMatchingRequest(response.result.length);
+		//				setHasNewRequest(response.result.length !== 0);
+		// 			}
+		// 		} catch {}
+		// 	};
+
+		// 	getRequestList();
+	}, []);
+
 	return (
 		<TabBarLayout>
 			<TabBarContainer>
 				<TabBarList>
 					{tabs.map((tab, index) => (
-						<TabBarWrapper key={tab} $isSelected={activeIndex === index} onClick={() => handleTabClick(index)}>
+						<TabBarWrapper
+							key={tab}
+							$isSelected={!!(activeIndex === index && (index || hasNewRequest))}
+							$isPointer={!!(hasNewRequest || index)}
+							onClick={() => handleTabClick(index)}
+						>
 							<StyledText
-								$textTheme={{ style: activeIndex === index ? 'body2-medium' : 'body2-light', lineHeight: 1.5 }}
+								$textTheme={{
+									style: activeIndex === index && (index || hasNewRequest) ? 'body2-medium' : 'body2-light',
+									lineHeight: 1.5,
+								}}
 							>
 								{tab}
 							</StyledText>
@@ -55,9 +85,11 @@ const TabBar: React.FC = () => {
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 					style={{ height: '100%' }}
 				>
-					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
-						<Request />
-					</SwiperSlide>
+					{hasNewRequest && (
+						<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+							<Request />
+						</SwiperSlide>
+					)}
 					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
 						<RecentChat />
 					</SwiperSlide>
