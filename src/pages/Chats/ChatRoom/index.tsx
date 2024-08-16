@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { MessagesContainer } from './styles';
 import TopBar from '../../../components/TopBar';
 import RcvdMessage from './RcvdMessage';
@@ -34,6 +34,12 @@ const ChatRoom: React.FC = () => {
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
 	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
+
+	const [isScroll, setIsScroll] = useState<boolean>(false);
+	const [isLoaded, setIsLoaded] = useState(false);
+	const chatWindowRef = useRef<HTMLDivElement>(null);
+	const messageLengthRef = useRef(0);
+
 	const userId = useRecoilValue(MockUserIdAtom);
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const { roomId, opponentId } = useParams();
@@ -47,22 +53,50 @@ const ChatRoom: React.FC = () => {
 		// 전체 메시지 조회
 		socket.on('AllMessages', (messages) => {
 			setAllMessages(messages);
+			if (messages.length > messageLengthRef.current) {
+				setIsScroll(true);
+				setIsLoaded(true);
+			}
 		});
 
 		// 최근 메시지 조회
 		socket.on('latestMessage', (message) => {
 			console.log(message);
+			if (allMessages.length > messageLengthRef.current) {
+				setIsScroll(true);
+			}
 			// setAllMessages([...allMessages, message]);
 		});
 
 		// 컴포넌트 언마운트 시 실행
 		return () => {
-			if (socket?.connected) {
+			if (socket.connected) {
 				socket.removeListener('AllMessages');
 				socket.removeListener('latestMessage');
 			}
 		};
 	}, [socket, roomId]);
+
+	function scrollToBottom(ref: React.RefObject<HTMLDivElement>) {
+		if (ref.current) ref.current.scrollIntoView();
+	}
+
+	// 채팅방 입장 시 스크롤 아래로 이동
+	useEffect(() => {
+		const messagesContainer = chatWindowRef.current?.parentElement; // MessagesContainer에 접근
+		if (messagesContainer) {
+			messagesContainer.style.scrollBehavior = 'auto';
+			messagesContainer.scrollTop = messagesContainer.scrollHeight; // 애니메이션 없이 스크롤 이동
+		}
+	}, []);
+
+	// 메시지 수신 시 스크롤 아래로 이동
+	useEffect(() => {
+		if (isScroll) {
+			scrollToBottom(chatWindowRef);
+			setIsScroll((prev) => !prev);
+		}
+	}, [isScroll]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -204,7 +238,7 @@ const ChatRoom: React.FC = () => {
 				}}
 				$withBorder={true}
 			/>
-			<MessagesContainer>
+			<MessagesContainer style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
 				{extendedMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>
@@ -219,6 +253,7 @@ const ChatRoom: React.FC = () => {
 						</div>
 					);
 				})}
+				<div ref={chatWindowRef} />
 			</MessagesContainer>
 			<ChatBox></ChatBox>
 		</OODDFrame>

@@ -13,7 +13,7 @@ export const MessagesContainer = styled.div`
 	scroll-behavior: smooth;
 
 	&::-webkit-scrollbar {
-		width: 6px;
+		width: 4px;
 	}
 
 	&::-webkit-scrollbar-thumb {
