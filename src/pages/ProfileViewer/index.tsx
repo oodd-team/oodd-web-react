@@ -24,6 +24,7 @@ import { BlockDto } from "./ResponseDto/BlockDto";
 const ProfileViewer: React.FC = () => {
     const { userId } = useParams<{ userId: string }>(); // URL 파라미터에서 userId 가져오기
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
+
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false); // Local state 사용
     const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // ConfirmationModal 상태
