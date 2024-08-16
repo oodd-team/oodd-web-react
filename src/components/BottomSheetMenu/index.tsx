@@ -12,7 +12,7 @@ const BottomSheetMenu: React.FC<BottomSheetMenuProps> = ({ items, marginBottom }
 						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
 							{item.text}
 						</StyledText>
-						<Icon src={item.icon} />
+						{item.icon && <Icon src={item.icon} />}
 					</SheetItem>
 					{index < items.length - 1 && <hr style={{ color: 'rgba(0,0,0,0.2)', margin: '0' }} />}
 				</div>
