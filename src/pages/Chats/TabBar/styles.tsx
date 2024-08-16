@@ -14,13 +14,28 @@ export const TabBarContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 	align-items: flex-end;
-	padding: 0 1.25rem;
-	border-bottom: solid 1px;
+	border-bottom: 0.063rem solid ${({ theme }) => theme.colors.gray2};
 `;
 
-export const TabBox = styled.div<{ $isActive: boolean; $isUnpointer?: boolean }>`
+export const TabBarList = styled.ul`
+	height: 2.5rem;
+	display: flex;
 	flex: 1;
+	justify-content: space-between;
+	margin: 0 1.25rem;
+`;
+
+export const TabBarWrapper = styled.li<{ $isSelected: boolean }>`
+	margin-top: 1rem;
+	border-bottom: 0.125rem solid ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')};
 	text-align: center;
-	cursor: ${({ $isUnpointer }) => ($isUnpointer ? '' : 'pointer')};
-	border-bottom: solid 2px ${({ $isActive, theme }) => ($isActive ? theme.colors.black : 'transparent')};
+	flex-grow: 1;
+	cursor: pointer;
+`;
+
+export const Tabs = styled.div`
+	width: 100%;
+	.swiper-container {
+		height: 100vh - 10.75rem;
+	}
 `;

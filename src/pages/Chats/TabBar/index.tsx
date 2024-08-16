@@ -1,49 +1,68 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { TabBarLayout, TabBarContainer, TabBox } from './styles';
+import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
 
-interface TabBarProps {
-	tab1: string; // tab1 이름
-	tab2: string; // tab2 이름
-	element1: React.ReactNode; // tab1에 보여질 컴포넌트
-	element2: React.ReactNode; // tab2에 보여질 컴포넌트
-	defaultViewTab1: boolean; // true: 초기 탭이 좌측(tab1)으로 설정
-}
+import Request from '../Request';
+import RecentChat from '../RecentChat';
 
-const TabBar: React.FC<TabBarProps> = ({ tab1, tab2, element1, element2, defaultViewTab1 }) => {
-	const [viewTab1, setViewTab1] = useState<boolean>(defaultViewTab1);
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from 'swiper';
+import 'swiper/css';
+
+const tabs = ['요청', '최근 채팅'];
+
+const TabBar: React.FC = () => {
 	const hasNewRequest = true; // 요청 정보를 받아와 배열 길이가 0이면 false...
 
-	const onClickTab1 = (): void => {
-		setViewTab1(hasNewRequest && true);
+	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const swiperRef = useRef<SwiperCore | null>(null);
+
+	const handleTabClick = (index: number) => {
+		setActiveIndex(index);
+		if (swiperRef.current) {
+			swiperRef.current.slideTo(index);
+		}
 	};
 
-	const onClickTab2 = (): void => {
-		setViewTab1(false);
+	const handleSwiperChange = (swiper: SwiperCore) => {
+		setActiveIndex(swiper.activeIndex);
 	};
 
 	return (
 		<TabBarLayout>
 			<TabBarContainer>
-				<TabBox $isUnpointer={!hasNewRequest} $isActive={viewTab1} onClick={onClickTab1}>
-					<StyledText
-						$textTheme={{ style: `${viewTab1 ? 'body2-medium' : 'body2-light'}`, lineHeight: 1.5 }}
-						color={`${viewTab1 ? theme.colors.black : theme.colors.gray3}`}
-					>
-						{tab1}
-					</StyledText>
-				</TabBox>
-				<TabBox $isActive={!viewTab1} onClick={onClickTab2}>
-					<StyledText
-						$textTheme={{ style: `${viewTab1 ? 'body2-light' : 'body2-medium'}`, lineHeight: 1.5 }}
-						color={`${viewTab1 ? theme.colors.gray3 : theme.colors.black}`}
-					>
-						{tab2}
-					</StyledText>
-				</TabBox>
+				<TabBarList>
+					{tabs.map((tab, index) => (
+						<TabBarWrapper key={tab} $isSelected={activeIndex === index} onClick={() => handleTabClick(index)}>
+							<StyledText
+								$textTheme={{ style: activeIndex === index ? 'body2-medium' : 'body2-light', lineHeight: 1.5 }}
+							>
+								{tab}
+							</StyledText>
+						</TabBarWrapper>
+					))}
+				</TabBarList>
 			</TabBarContainer>
-			{viewTab1 ? element1 : element2}
+			<Tabs>
+				<Swiper
+					onSwiper={(swiper) => {
+						swiperRef.current = swiper;
+					}}
+					onSlideChange={handleSwiperChange}
+					spaceBetween={0}
+					slidesPerView={1}
+					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
+					style={{ height: '100%' }}
+				>
+					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+						<Request />
+					</SwiperSlide>
+					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+						<RecentChat />
+					</SwiperSlide>
+				</Swiper>
+			</Tabs>
 		</TabBarLayout>
 	);
 };
