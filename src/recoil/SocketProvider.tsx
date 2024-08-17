@@ -27,6 +27,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 		};
 	}, []);
 
+	// 소켓 설정이 완료되지 않은 경우 렌더링 방지
+	// 채팅방에서 새로고침했을 때 오류 방지
+	if (!socket) {
+		return null;
+	}
+
 	return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
 };
 
