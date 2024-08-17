@@ -13,9 +13,9 @@ const tabs = ['요청', '최근 채팅'];
 
 const TabBar: React.FC = () => {
 	const [matchingRequest, setMatchingRequest] = useState(0);
-	const [hasNewRequest, setHasNewRequest] = useState(false);
+	const [hasNewRequest, setHasNewRequest] = useState(true);
 
-	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
 
 	const handleTabClick = (index: number) => {
@@ -33,9 +33,8 @@ const TabBar: React.FC = () => {
 	};
 
 	useEffect(() => {
-		// 요청이 없으면 최근 채팅 탭이 active
-		if (!hasNewRequest) {
-			setActiveIndex(1);
+		if (swiperRef.current) {
+			swiperRef.current.slideTo(1, 0);
 		}
 		// 	const getRequestList = async () => {
 		// 		try {
