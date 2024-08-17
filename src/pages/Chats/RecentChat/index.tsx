@@ -25,7 +25,18 @@ const RecentChat: React.FC = () => {
 				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
 
 				if (response.isSuccess) {
-					setChatRoomList(response.result);
+					const sortedList = response.result.sort((a, b) => {
+						// a와 b의 latestMessage.createdAt 값을 가져오고, 만약 null이면 createdAt 값을 사용
+						const aDate = a.latestMessage?.createdAt
+							? new Date(a.latestMessage.createdAt).getTime()
+							: new Date(a.createdAt).getTime();
+						const bDate = b.latestMessage?.createdAt
+							? new Date(b.latestMessage.createdAt).getTime()
+							: new Date(b.createdAt).getTime();
+						// 가장 최근의 것이 먼저 오도록 내림차순 정렬
+						return bDate - aDate;
+					});
+					setChatRoomList(sortedList);
 				} else {
 					console.error(response.message);
 				}
