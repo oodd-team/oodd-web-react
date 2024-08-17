@@ -27,6 +27,7 @@ import ProfileImg from '/ProfileImg.svg';
 import Back from '../../../assets/Chats/Back.svg';
 import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
 import { useSocket } from '../../../recoil/SocketProvider';
+import { ApiDto } from './dto';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -126,7 +127,13 @@ const ChatRoom: React.FC = () => {
 			action: () => {
 				const leaveChatRoom = async () => {
 					try {
-						await request.patch(`/chat-rooms/${roomId}/leave/${userId}`);
+						const response = await request.patch<ApiDto>(`/chat-rooms/${roomId}/leave/${userId}`);
+
+						if (response.isSuccess) {
+							nav(-1);
+						} else {
+							console.error(response.message);
+						}
 					} catch (error) {
 						console.error(error);
 					}
@@ -146,6 +153,23 @@ const ChatRoom: React.FC = () => {
 		confirm: {
 			text: '차단하기',
 			action: () => {
+				const blockUser = async () => {
+					try {
+						const requestBody = {
+							userId: userId,
+							friendId: opponentInfo?.id,
+							action: 'toggle',
+						};
+						const response = await request.put<ApiDto>('/block', requestBody);
+
+						if (response.isSuccess) {
+							nav(-1);
+						} else {
+							console.error(response.message);
+						}
+					} catch {}
+				};
+				blockUser();
 				setIsOpenBlock(false);
 			},
 		},
