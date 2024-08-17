@@ -130,7 +130,7 @@ const ChatRoom: React.FC = () => {
 						const response = await request.patch<ApiDto>(`/chat-rooms/${roomId}/leave/${userId}`);
 
 						if (response.isSuccess) {
-							nav(-1);
+							nav('/chats', { replace: true });
 						} else {
 							console.error(response.message);
 						}
@@ -163,7 +163,7 @@ const ChatRoom: React.FC = () => {
 						const response = await request.put<ApiDto>('/block', requestBody);
 
 						if (response.isSuccess) {
-							nav(-1);
+							nav('/chats', { replace: true });
 						} else {
 							console.error(response.message);
 						}
