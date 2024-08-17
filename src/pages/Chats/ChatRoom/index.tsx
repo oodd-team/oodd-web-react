@@ -61,11 +61,8 @@ const ChatRoom: React.FC = () => {
 
 		// 최근 메시지 조회
 		socket.on('latestMessage', (message) => {
-			console.log(message);
-			if (allMessages.length > messageLengthRef.current) {
-				setIsScroll(true);
-			}
-			// setAllMessages([...allMessages, message]);
+			setAllMessages([...allMessages, message]);
+			setIsScroll(true);
 		});
 
 		// 컴포넌트 언마운트 시 실행

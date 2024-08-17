@@ -27,24 +27,8 @@ const ChatBox: React.FC = () => {
 
 		// 메시지 전송
 		if (socket) {
-			socket.emit('message', roomIdNumber, userId, opponentInfo?.id, newMessage, () => {
-				console.log('메시지 전송');
-				setAllMessages([
-					...allMessages,
-					{
-						id: new Date().getTime(),
-						createdAt: new Date(),
-						content: newMessage,
-						fromUser: {
-							id: userId,
-						},
-						toUser: {
-							id: opponentInfo?.id!,
-						},
-					},
-				]);
-				setNewMessage('');
-			});
+			socket.emit('message', roomIdNumber, userId, opponentInfo?.id, newMessage);
+			setNewMessage('');
 		}
 	};
 
