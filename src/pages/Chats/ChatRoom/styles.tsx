@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-// OODDFrame height: 100vh
-// GlobalStyles body margin-bottom: 0 환경에서 테스트
 export const MessagesContainer = styled.div`
 	width: 100%;
 	overflow-y: scroll;
@@ -9,11 +7,11 @@ export const MessagesContainer = styled.div`
 	flex: 1;
 	flex-direction: column;
 	padding: 1rem 0.875rem 0 1.25rem;
-	margin: 2.75rem auto 5.2rem auto;
+	margin: 0 auto 5.2rem auto;
 	scroll-behavior: smooth;
 
 	&::-webkit-scrollbar {
-		width: 4px;
+		width: 6px;
 	}
 
 	&::-webkit-scrollbar-thumb {
