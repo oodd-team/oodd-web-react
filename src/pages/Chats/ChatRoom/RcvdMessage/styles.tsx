@@ -21,7 +21,7 @@ export const UserImage = styled.img`
 export const MessageBox = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 0.25rem;
+	gap: 0.1rem;
 `;
 
 export const Message = styled.div`

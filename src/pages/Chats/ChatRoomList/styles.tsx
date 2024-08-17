@@ -17,17 +17,17 @@ export const UserImage = styled.img`
 `;
 
 export const LeftBox = styled.div`
-	margin: 0.4rem 0.5rem 0.2rem 1.06rem;
+	margin: 0.4rem 0.5rem 0.25rem 1rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 `;
 
 export const RightBox = styled.div<{ $isUnread: boolean }>`
-	margin: 0 0 auto auto;
+	margin: 0.1rem 0 0.1rem auto;
 	text-align: right;
 	display: flex;
 	flex-direction: column;
-	gap: 0.25rem;
+	justify-content: space-between;
 	opacity: ${(props) => (props.$isUnread ? '0.5' : '1')};
 `;
