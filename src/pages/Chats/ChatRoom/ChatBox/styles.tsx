@@ -16,7 +16,7 @@ export const ChatBoxContainer = styled.div`
 	align-items: center;
 `;
 
-export const Textarea = styled.textarea`
+export const Textarea = styled.textarea<{ $isOpponentValid: boolean }>`
 	width: 100%;
 	height: 2.5rem;
 	border: 1px solid ${({ theme }) => theme.colors.gray3};
@@ -26,6 +26,7 @@ export const Textarea = styled.textarea`
 	resize: none;
 	overflow: hidden;
 	color: ${({ theme }) => theme.colors.black};
+	cursor: ${({ $isOpponentValid }) => ($isOpponentValid ? '' : 'not-allowed')};
 	background-color: transparent;
 	font-family: 'Pretendard Variable';
 	font-size: 0.75rem;
@@ -34,9 +35,9 @@ export const Textarea = styled.textarea`
 	line-height: 120%; /* 0.9rem */
 `;
 
-export const SendIcon = styled.img`
+export const SendIcon = styled.img<{ $isOpponentValid: boolean }>`
 	width: 1.5rem;
 	height: 1.5rem;
-	cursor: pointer;
+	cursor: ${({ $isOpponentValid }) => ($isOpponentValid ? 'pointer' : '')};
 	margin-right: 0.75rem;
 `;

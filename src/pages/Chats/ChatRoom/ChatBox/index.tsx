@@ -1,5 +1,5 @@
 import { ChatBoxContainer, Textarea, SendIcon } from './styles';
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Send from '../../../../assets/Chats/Send.svg';
 import { AllMesagesAtom } from '../../../../recoil/AllMessages';
@@ -10,12 +10,25 @@ import { useSocket } from '../../../../recoil/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
+	const userId = useRecoilValue(MockUserIdAtom);
 	const { roomId } = useParams();
 	const roomIdNumber = Number(roomId);
-	const userId = useRecoilValue(MockUserIdAtom);
+	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
 	const [newMessage, setNewMessage] = useState<string>('');
 	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
+
 	const socket = useSocket();
+	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
+
+	useEffect(() => {
+		console.log(opponentInfo);
+		if (textareaRef.current && !isOpponentValid) {
+			console.log(textareaRef.current);
+			textareaRef.current.disabled = true;
+			textareaRef.current.placeholder = '메시지를 보낼 수 없습니다.';
+		}
+	}, []);
 
 	const onChangeMessage = (e: any): void => {
 		setNewMessage(e.target.value);
@@ -41,8 +54,15 @@ const ChatBox: React.FC = () => {
 
 	return (
 		<ChatBoxContainer>
-			<Textarea value={newMessage} onKeyDown={onKeyDown} onChange={onChangeMessage} onSubmit={sendNewMessage} />
-			<SendIcon src={Send} alt="send" onClick={sendNewMessage} />
+			<Textarea
+				$isOpponentValid={isOpponentValid}
+				ref={textareaRef}
+				value={newMessage}
+				onKeyDown={onKeyDown}
+				onChange={onChangeMessage}
+				onSubmit={sendNewMessage}
+			/>
+			<SendIcon $isOpponentValid={isOpponentValid} src={Send} alt="send" onClick={sendNewMessage} />
 		</ChatBoxContainer>
 	);
 };
