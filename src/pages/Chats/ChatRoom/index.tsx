@@ -28,22 +28,27 @@ import Back from '../../../assets/Chats/Back.svg';
 import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
 import { useSocket } from '../../../recoil/SocketProvider';
 import { ApiDto } from './dto';
+import { ModalProps } from '../../../components/Modal/dto';
+import Modal from '../../../components/Modal';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
 	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
-	const [isOpenLeave, setIsOpenLeave] = useState<boolean>(false);
-	const [isOpenBlock, setIsOpenBlock] = useState<boolean>(false);
+	const [isOpenLeave, setIsOpenLeave] = useState(false);
+	const [isOpenBlock, setIsOpenBlock] = useState(false);
+	const [isOpenAlert, setIsOpenAlert] = useState(false);
 
-	const [isScroll, setIsScroll] = useState<boolean>(false);
+	const [isScroll, setIsScroll] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const messageLengthRef = useRef(0);
 
 	const userId = useRecoilValue(MockUserIdAtom);
-	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const { roomId } = useParams();
+	const opponentInfo = useRecoilValue(OpponentInfoAtom);
+	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
+
 	const nav = useNavigate();
 	const socket = useSocket();
 
@@ -110,8 +115,13 @@ const ChatRoom: React.FC = () => {
 			{
 				text: '차단하기',
 				action: () => {
-					setIsOpenBlock(true);
-					setIsOpenMenu(false);
+					if (isOpponentValid) {
+						setIsOpenBlock(true);
+						setIsOpenMenu(false);
+					} else {
+						setIsOpenAlert(true);
+						setIsOpenMenu(false);
+					}
 				},
 				icon: Block,
 			},
@@ -175,6 +185,13 @@ const ChatRoom: React.FC = () => {
 		},
 		onCloseModal: () => {
 			setIsOpenBlock(false);
+		},
+	};
+
+	const alertModal: ModalProps = {
+		content: '차단할 수 없는 사용자입니다',
+		onClose: () => {
+			setIsOpenAlert(false);
 		},
 	};
 
@@ -247,6 +264,7 @@ const ChatRoom: React.FC = () => {
 		<OODDFrame>
 			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
+			{isOpenAlert && <Modal {...alertModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
 				text={opponentInfo?.name || '알수없음'}
