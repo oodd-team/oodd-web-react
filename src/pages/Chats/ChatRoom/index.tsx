@@ -43,7 +43,7 @@ const ChatRoom: React.FC = () => {
 
 	const userId = useRecoilValue(MockUserIdAtom);
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const { roomId, opponentId } = useParams();
+	const { roomId } = useParams();
 	const nav = useNavigate();
 	const socket = useSocket();
 
@@ -53,7 +53,7 @@ const ChatRoom: React.FC = () => {
 
 		// 전체 메시지 조회
 		socket.on('AllMessages', (messages) => {
-			setAllMessages(messages);
+			setAllMessages(messages.reverse());
 			if (messages.length > messageLengthRef.current) {
 				setIsScroll(true);
 				setIsLoaded(true);

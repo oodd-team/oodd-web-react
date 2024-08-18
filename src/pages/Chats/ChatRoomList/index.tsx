@@ -47,7 +47,7 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 
 	const onClickChatRoom = () => {
 		setOpponentInfo(opponent);
-		nav(`/chats/${id}/${opponent.id}`);
+		nav(`/chats/${id}`);
 	};
 
 	return (

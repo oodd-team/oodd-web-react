@@ -10,7 +10,7 @@ import { useSocket } from '../../../../recoil/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const { roomId, opponentId } = useParams();
+	const { roomId } = useParams();
 	const roomIdNumber = Number(roomId);
 	const userId = useRecoilValue(MockUserIdAtom);
 	const [newMessage, setNewMessage] = useState<string>('');
