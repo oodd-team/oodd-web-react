@@ -61,7 +61,7 @@ export const FeedImgBox = styled.div`
 	}
 
 	.ootdSwiper .swiper-pagination {
-		top: 0.75rem;
+		transform: translateY(-42.5rem);
 		/* z-index: 11; */
 	}
 

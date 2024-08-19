@@ -54,6 +54,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 			</FeedText>
 			<FeedImgBox>
 				<Swiper
+					slidesPerView={1}
 					pagination={{
 						clickable: true,
 					}}
