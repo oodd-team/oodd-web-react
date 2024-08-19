@@ -24,7 +24,8 @@ const UserInfo: React.FC = React.memo(() => {
     const { id, nickname, bio, userImg } = userDetails; // 서버로부터 가져 온 사용자 정보를 꺼내서 사용
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
 
-
+    const userId= localStorage.getItem('id');
+    const token = localStorage.getItem('jwt_token');
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
     };
@@ -35,8 +36,15 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleInterestedClick = async () => {
         try {
-            const response = await axios.put(`http://localhost:5000/users/${id}/interests`, {
-                action: 'toggle'
+            console.log(userId,id);
+            const response = await axios.patch(`https://api-dev.ootd.today/users/interests`, {
+                userId: userId,
+                friendId: id,
+              },{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
               });        
     
             console.log(response.data.message); // 서버로부터의 응답 메시지
