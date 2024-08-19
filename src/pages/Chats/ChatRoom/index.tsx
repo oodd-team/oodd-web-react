@@ -65,8 +65,8 @@ const ChatRoom: React.FC = () => {
 			if (messages.length > messageLengthRef.current) {
 				setIsScroll((prev) => !prev);
 				setIsLoaded(true);
-				setLoading(false);
 			}
+			setLoading(false);
 		});
 
 		// 최근 메시지 조회
@@ -240,7 +240,7 @@ const ChatRoom: React.FC = () => {
 			{isOpenCannotCheck && <Modal {...cannotCheckModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
-				text={opponentInfo?.name || '알수없음'}
+				text={opponentInfo?.nickname || opponentInfo?.name || '알수없음'}
 				LeftButtonSrc={Back}
 				RightButtonSrc={KebabMenu}
 				onLeftClick={() => {

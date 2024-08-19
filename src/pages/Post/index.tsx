@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
@@ -34,13 +34,19 @@ import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
-import { PostResponse, PostData, UserResponse, UserData, ClothingInfo } from './dto';
+import { PostResponse, UserResponse, ClothingInfo } from './dto';
 import request from '../../apis/core';
+
+interface CommentResponse {
+	isSuccess: boolean;
+	message: string;
+	result?: any; // 성공 시 반환되는 데이터가 있다면 여기에 정의할 수 있습니다.
+}
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
-	const [postData, setPostData] = useState<PostData>();
-	const [user, setUser] = useState<UserData>();
+	const [postData, setPostData] = useState<PostResponse['result']>();
+	const [user, setUser] = useState<UserResponse['result']>();
 	const [userName, setUserName] = useState<string>('');
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
@@ -50,20 +56,21 @@ const Post: React.FC = () => {
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 	const nav = useNavigate();
+	const location = useLocation();
 
-	// 서버에서 게시물 데이터 가져오기
+	useEffect(() => {
+		if (location.state && location.state.isCommentModalOpen) {
+			setIsCommentModalOpen(true);
+		}
+	}, [location.state]);
+
 	useEffect(() => {
 		const fetchPostData = async () => {
 			try {
 				const response = await request.get<PostResponse>(`/posts/${postId}`);
 				if (response.isSuccess) {
 					setPostData(response.result);
-
-					response.result.clothingInfo?.forEach((clothingInfo) => {
-						console.log('clothing: ', clothingInfo);
-					});
-
-					fetchUser();
+					fetchUser(response.result.userId);
 				} else {
 					console.error('Failed to fetch post data');
 				}
@@ -72,27 +79,40 @@ const Post: React.FC = () => {
 			}
 		};
 
-		const fetchUser = async () => {
-			if (postData) {
-				try {
-					const response = await request.get<UserResponse>(`/users/${postData.userId}`);
-
-					if (response.isSuccess) {
-						setUser(response.result);
-						if (user) {
-							setUserName(user.nickname || user.name);
-						}
-					} else {
-						console.error('Failed to fetch user data');
-					}
-				} catch (error) {
-					console.error('Error fetching user data:', error);
+		const fetchUser = async (userId: number) => {
+			try {
+				const response = await request.get<UserResponse>(`/users/${userId}`);
+				if (response.isSuccess) {
+					setUser(response.result);
+					setUserName(response.result.nickname || response.result.name);
+				} else {
+					console.error('Failed to fetch user data');
 				}
+			} catch (error) {
+				console.error('Error fetching user data:', error);
 			}
 		};
 
 		fetchPostData();
 	}, [postId]);
+
+	// 코멘트를 보내는 함수
+	const sendComment = async (comment: string) => {
+		try {
+			setIsCommentModalOpen(false);
+			const response = await request.post<CommentResponse>(`/posts/${postId}/comment`, {
+				content: comment,
+			});
+
+			if (response.isSuccess) {
+				console.log('Comment sent successfully');
+			} else {
+				console.error('Failed to send comment:', response.message);
+			}
+		} catch (error) {
+			console.error('Error sending comment:', error);
+		}
+	};
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -162,9 +182,7 @@ const Post: React.FC = () => {
 
 	const commentProps: CommentProps = {
 		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
-		sendComment: (comment: string) => {
-			console.log(`api에 ${comment} 전달`);
-		},
+		sendComment: sendComment, // API 함수 전달
 	};
 
 	const commentSheetProps: BottomSheetProps = {
@@ -178,7 +196,7 @@ const Post: React.FC = () => {
 	};
 
 	const confirmationModalProps = {
-		content: `${userName}님의 OOTD를 차단합니다.`,
+		content: `${userName}님을 정말로 차단하시겠습니까?`,
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',
@@ -222,10 +240,7 @@ const Post: React.FC = () => {
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
-				<Modal
-					content={`${user?.nickname || user?.name}님을 차단했어요.`}
-					onClose={() => setIsBlockedModalOpen(false)}
-				/>
+				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
 
 			<PostTopBar userName={userName} />
