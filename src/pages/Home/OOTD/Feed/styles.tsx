@@ -69,8 +69,8 @@ export const FeedImgBox = styled.div`
 		width: 0.375rem;
 		height: 0.375rem;
 		border: 0.0625rem solid rgba(255, 255, 255, 1);
-		background: rgba(255, 255, 255, 0);
-		opacity: 0.5;
+		background: rgba(255, 255, 255, 0.5);
+		opacity: 1;
 	}
 
 	.ootdSwiper .swiper-pagination-bullet-active {

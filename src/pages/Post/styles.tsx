@@ -92,8 +92,43 @@ export const PostText = styled.span`
 	word-break: break-all;
 `;
 
-export const PostImg = styled.img`
-	width: 100%;
+export const PostImg = styled.div`
+	.postSwiper .swiper-pagination {
+		transform: translateY(-29.5rem);
+	}
+
+	.postSwiper .swiper-pagination-bullet {
+		width: 0.375rem;
+		height: 0.375rem;
+		border: 0.0625rem solid rgba(255, 255, 255, 1);
+		background: rgba(255, 255, 255, 0.5);
+		opacity: 1;
+	}
+
+	.postSwiper .swiper-pagination-bullet-active {
+		width: 0.375rem;
+		height: 0.375rem;
+		background-color: white;
+		opacity: 1;
+	}
+  
+	.postSwiper .swiper-button-prev,
+	.postSwiper .swiper-button-next {
+		color: white; /* 화살표 색상 변경 */
+	}
+
+	/* 필요한 경우 화살표의 크기 조정 */
+	.postSwiper .swiper-button-prev,
+	.postSwiper .swiper-button-next {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	/* 화살표가 더 잘 보이도록 호버 시 색상 변경 */
+	.postSwiper .swiper-button-prev:hover,
+	.postSwiper .swiper-button-next:hover {
+		color: rgba(255, 255, 255, 0.8); /* 호버 시 약간 투명한 흰색 */
+	}
 `;
 
 export const Products = styled.div`
