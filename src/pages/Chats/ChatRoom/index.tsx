@@ -26,7 +26,7 @@ import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
 import Back from '../../../assets/Chats/Back.svg';
 import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
-import { useSocket } from '../../../recoil/SocketProvider';
+import { useSocket } from '../../../context/SocketProvider';
 import { ApiDto } from './dto';
 import { ModalProps } from '../../../components/Modal/dto';
 import Modal from '../../../components/Modal';

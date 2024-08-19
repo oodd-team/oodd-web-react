@@ -1,12 +1,11 @@
 import { ChatBoxContainer, Textarea, SendIcon } from './styles';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import Send from '../../../../assets/Chats/Send.svg';
-import { AllMesagesAtom } from '../../../../recoil/AllMessages';
 import { MockUserIdAtom } from '../../../../recoil/MockUserId';
 import { useParams } from 'react-router-dom';
 import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
-import { useSocket } from '../../../../recoil/SocketProvider';
+import { useSocket } from '../../../../context/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
@@ -15,16 +14,13 @@ const ChatBox: React.FC = () => {
 	const roomIdNumber = Number(roomId);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-	const [newMessage, setNewMessage] = useState<string>('');
-	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
+	const [newMessage, setNewMessage] = useState('');
 
 	const socket = useSocket();
 	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
 
 	useEffect(() => {
-		console.log(opponentInfo);
 		if (textareaRef.current && !isOpponentValid) {
-			console.log(textareaRef.current);
 			textareaRef.current.disabled = true;
 			textareaRef.current.placeholder = '메시지를 보낼 수 없습니다.';
 		}
