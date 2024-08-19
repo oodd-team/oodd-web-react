@@ -9,10 +9,18 @@ import { MoreBtn, PostImg, PostInfo, PostText, PostWrapper, Products, UserInfo, 
 import theme from '../../styles/theme';
 import ProductCard from './ProductCard';
 import { useNavigate } from 'react-router-dom';
+import productImg from './../../assets/Post/productImg.svg';
 
 // Post 페이지입니다.
 const Post: React.FC = () => {
 	const nav = useNavigate();
+
+	const productData = [
+		{ id: 1, brandName: '브랜드1', modelName: '모델1/모델번호/URL...', productImgSrc: productImg },
+		{ id: 2, brandName: '브랜드2', modelName: '모델2/모델번호/URL...', productImgSrc: productImg },
+		{ id: 3, brandName: '브랜드3', modelName: '모델3/모델번호/URL...', productImgSrc: productImg },
+		{ id: 4, brandName: '브랜드4', modelName: '모델4/모델번호/URL...', productImgSrc: productImg },
+	];
 
 	return (
 		<OODDFrame>
@@ -44,7 +52,14 @@ const Post: React.FC = () => {
 				</PostText>
 				<PostImg src={postImg1} alt="postImg1" />
 				<Products>
-					<ProductCard /> <ProductCard /> <ProductCard /> <ProductCard />
+					{productData.map((product) => (
+						<ProductCard
+							key={product.id}
+							brandName={product.brandName}
+							modelName={product.modelName}
+							productImgSrc={product.productImgSrc}
+						/>
+					))}
 				</Products>
 			</PostWrapper>
 		</OODDFrame>
