@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { OODDFrame } from '../../components/Frame/Frame';
+import Loading from '../../components/Loading';
 import { UploadContainer } from './styles';
 import PostUploadModal from './PostUploadModal';
 import InstaConnectModal from './InstaConnectModal';
@@ -25,6 +26,7 @@ const Upload: React.FC = () => {
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [instagramPosts, setInstagramPosts] = useState<Post[]>([]);
 	const [postId, setPostId] = useState<number | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -40,6 +42,7 @@ const Upload: React.FC = () => {
 
 	const handleInitialModalState = async () => {
 		const state = location.state as { mode?: string; postId?: number };
+
 		if (state?.mode === 'image') {
 			setModals({ ...modals, imageSelect: true });
 		} else if (state?.mode === 'instagram') {
@@ -52,6 +55,8 @@ const Upload: React.FC = () => {
 	};
 
 	const fetchPostDetails = async (postId: number) => {
+		setIsLoading(true);
+
 		try {
 			const response = await request.get<PostResponse>(`/posts/${postId}`);
 			if (response.isSuccess && response.result) {
@@ -60,10 +65,12 @@ const Upload: React.FC = () => {
 				setSelectedImages(photoUrls);
 				setContent(content || '');
 				setClothingInfos(clothingInfo);
-				setSelectedStyletag(styletags.length ? { tag: styletags[0], color: '' } : null);
+				setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
 			}
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -102,6 +109,9 @@ const Upload: React.FC = () => {
 			setModals({ ...modals, imageSelect: true, imageReview: false });
 		} else if (state?.mode === 'instagram') {
 			setModals({ ...modals, instaFeedSelect: true, imageReview: false });
+		} else if (state?.mode === 'edit') {
+			setModals({ ...modals, imageReview: false });
+			navigate('/mypage');
 		}
 		setSelectedImages([]);
 	};
@@ -122,6 +132,8 @@ const Upload: React.FC = () => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
+				{isLoading && <Loading />}
+
 				{modals.imageSelect && (
 					<ImageSelectModal selectedImages={selectedImages} onClose={handleCloseModals} onSelect={handleSelectImages} />
 				)}

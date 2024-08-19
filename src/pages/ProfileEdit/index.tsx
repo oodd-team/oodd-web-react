@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
-import { BaseResponse } from '../PostDetail/dto';
+import { BaseResponse } from '../MyPost/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
