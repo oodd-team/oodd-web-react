@@ -23,11 +23,16 @@ export const HomeTopBarContainer = styled.div`
 `;
 
 export const HomeLogo = styled.img`
-	width: 7.375rem;
-	height: 2.25rem;
-	background-color: #d9d9d9;
+	width: 6.6875rem;
+	height: 1.6875rem;
 	margin-left: 1.25rem;
 	cursor: pointer;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 export const NotiIcon = styled.img`
