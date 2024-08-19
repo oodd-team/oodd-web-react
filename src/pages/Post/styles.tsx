@@ -44,6 +44,11 @@ export const RightSpace = styled.div`
 
 // Post
 
+export const PostWrapper = styled.div`
+	width: 100%;
+	height: auto;
+`;
+
 export const PostInfo = styled.div`
 	display: flex;
 	margin-top: 3.375rem;
@@ -52,6 +57,7 @@ export const PostInfo = styled.div`
 `;
 
 export const UserInfo = styled.div`
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 `;
@@ -73,6 +79,7 @@ export const MoreBtn = styled.div`
 	width: 1.5rem;
 	height: 1.5rem;
 	margin-right: 1.25rem;
+	cursor: pointer;
 `;
 
 export const PostText = styled.span`
@@ -85,7 +92,9 @@ export const PostText = styled.span`
 	word-break: break-all;
 `;
 
-export const PostImg = styled.img``;
+export const PostImg = styled.img`
+	width: 100%;
+`;
 
 export const Products = styled.div`
 	margin-top: 0.6687rem;

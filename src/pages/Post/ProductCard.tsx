@@ -1,14 +1,11 @@
 import React from 'react';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import { useNavigate } from 'react-router-dom';
 import { NextBtn, ProductCardContainer, ProductImg, ProductInfo, ProductLeft } from './styles';
 import productImg from './../../assets/Post/productImg.svg';
 import nextBtn from './../../assets/Post/next.svg';
 
 const ProductCard: React.FC = () => {
-	const nav = useNavigate();
-
 	return (
 		<ProductCardContainer>
 			<ProductLeft>
