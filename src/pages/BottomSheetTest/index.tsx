@@ -7,7 +7,6 @@ import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import Exit from '../../assets/BottomSheetMenu/Edit.svg';
 import Delete from '../../assets/BottomSheetMenu/Delete.svg';
-import Pin from '../../assets/BottomSheetMenu/Pin.svg';
 import Comment from '../../components/Comment';
 import { CommentProps } from '../../components/Comment/dto';
 
@@ -60,8 +59,8 @@ const BottomSheetTest: React.FC = () => {
 				text: '고정하기',
 				action: () => {
 					setIsOpenBottomSheet2(false);
+					// icon이 없는 사용 예 ex. 신고하기 - 신고 사유
 				},
-				icon: Pin,
 			},
 		],
 		marginBottom: '50px',
