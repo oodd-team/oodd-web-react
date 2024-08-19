@@ -8,11 +8,11 @@ export const RequestContainer = styled.div`
     gap: 2.0625rem;
 `;
 
-export const RequestMessage = styled.div<{ $messageType: 'initial' | 'comment' }>`
+export const RequestMessage = styled.div`
     display: flex;
     text-align: center;
-    width: ${({ $messageType }) => ($messageType === 'initial' ? '15.25rem' : '18rem')};
     height: 100%;
+    width: 15rem;
 `;
 export const ComentContainer = styled.div`
     align-items: center;
@@ -23,6 +23,10 @@ export const ComentContainer = styled.div`
 
 export const Coment = styled.textarea`
     display:flex;
+    font-family: 'Pretendard Variable';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 0.85rem;
     background-color: #F5F5F5;
     border: 1px solid #7B7B7B;
     border-radius: 0.1875rem;

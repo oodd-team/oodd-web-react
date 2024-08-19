@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
+import axios from "axios";
 import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon } from "./styles";
 import { useRecoilValue, useRecoilState} from 'recoil';
-import { userDetailsState, isBottomSheetOpenState, requestMessageState, interestedState, friendState } from '../../../../recoil/atoms';
+import { userDetailsState, isBottomSheetOpenState, interestedState, friendState } from '../../../../recoil/atoms';
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
@@ -12,34 +13,45 @@ import BottomSheet from "../../../../components/BottomSheet";
 
 const UserInfo: React.FC = React.memo(() => {
     const userDetails = useRecoilValue(userDetailsState);
+    
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
-    const [requestMessage, setRequestMessage] = useRecoilState(requestMessageState);
     const [interested, setInterested] = useRecoilState(interestedState);
     const [friend, setFriend] = useRecoilState(friendState);
 
     if (!userDetails) return null; // 사용자의 정보, 즉 userDetails가 없으면 아무것도 렌더링하지 않음
 
-    const { userId, userBio, userImg } = userDetails;
-    const truncatedBio = userBio.length > 50 ? userBio.substring(0, 50) + '...' : userBio; // 자기소개 글자 수 제한
+    const { id, nickname, bio, userImg } = userDetails; // 서버로부터 가져 온 사용자 정보를 꺼내서 사용
+    const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
 
-    const messageType = useMemo(() => {
-        if (requestMessage === `${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`) {
-            return 'initial';
-        }
-        return 'comment';
-    }, [requestMessage, userId]); // 리렌더링 시 불필요한 계산 방지, userId의 값이 바뀔 때만 messageType을 새롭게 계산! 그렇지 않으면 이전에 계산된 값을 재사용
-
+    const userId= localStorage.getItem('id');
+    const token = localStorage.getItem('jwt_token');
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
-        setRequestMessage(`${userId}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!`); // 처음 bottomsheets가 열렸을 때의 문구
     };
 
     const handleCloseBottomSheet = () => {
         setIsBottomSheetOpen(false);
     };
 
-    const handleInterestedClick = () => {
-        setInterested(true);
+    const handleInterestedClick = async () => {
+        try {
+            console.log(userId,id);
+            const response = await axios.patch(`https://api-dev.ootd.today/users/interests`, {
+                userId: userId,
+                friendId: id,
+              },{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+              });        
+    
+            console.log(response.data.message); // 서버로부터의 응답 메시지
+            setInterested(!interested); // 관심친구 상태 토글
+        } catch (error) {
+            console.error('관심 친구 등록 오류:', error);
+            alert('관심 친구 등록에 실패했습니다.');
+        }
     };
 
     return (
@@ -48,7 +60,7 @@ const UserInfo: React.FC = React.memo(() => {
                 <UserImg $imgUrl={userImg} />
                 <UserDetails>
                     <StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }}>
-                        {userId}
+                        {nickname}
                     </StyledText>
                     <Bio>
                         <StyledText $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray4}>
@@ -114,12 +126,10 @@ const UserInfo: React.FC = React.memo(() => {
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
                         <RequestComponent
-                            userId={userId}
-                            $messageType={messageType}
-                            requestMessage={requestMessage}
+                            userId={id}
+                            nickname={nickname}
                             setFriend={setFriend}
                             setIsBottomSheetOpen={setIsBottomSheetOpen}
-                            setRequestMessage={setRequestMessage}
                         />
                     )}
                 />

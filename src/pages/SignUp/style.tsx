@@ -8,15 +8,17 @@ export const SignUpContainer = styled.div`
     max-width: 32rem; /* 최대 너비 512px */
     height: auto;
     margin: 0 auto; /* 중앙 정렬 */
-    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
+    //box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
 export const LogoWrapper = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     max-width: 7.25rem; /* 116px / 16 */
-    height: 4rem; /* 32px / 16 */
-    margin-top: 10.8rem  /* 195px */
+    margin: 10.8rem 0 1.5637rem 0 /* 195px */
 `;
+export const LogoImg = styled.img` display: flex; `;
 
 export const IntroWrapper = styled.div`
     display: flex;
@@ -25,7 +27,6 @@ export const IntroWrapper = styled.div`
     width: 100%;
     height: 4rem; /* 64px / 16 */
     text-align: center;
-    margin-bottom: 2.25rem; /* 36px / 16 */
 `;
 
 export const NickNameContainer = styled.div`
@@ -35,7 +36,7 @@ export const NickNameContainer = styled.div`
     width: 100%;
     max-width: 12.125rem;  /* 194px; */
     height: 2.625rem; 
-    margin-top: 5.9375rem;  /* 95px */
+    margin-top: 7.0625rem;
 `;
 
 export const NickName = styled.input`
@@ -76,7 +77,7 @@ export const NextButton = styled.button`
     height: 3.5rem;  /* 4 */
     background-color: black;
     border-radius: 0.625rem;  /* 10px */
-    margin-top: 16.25rem;
+    margin-top: 17rem;
     margin-bottom: 1.5rem;  /* 24px */
 `;
 

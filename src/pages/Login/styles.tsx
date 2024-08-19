@@ -8,16 +8,20 @@ export const LoginContainer = styled.div`
   max-width: 32rem; /* 최대 너비 512px */
   height: auto;
   margin: 0 auto; /* 중앙 정렬 */
-  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
+  //box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
 export const LogoWrapper = styled.div`
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
     width: 100%;
     max-width: 7.25rem; /* 116px / 16 */
-    height: 4rem; /* 32px / 16 */
     margin-top: 10.8rem  /* 195px */
 `;
 
+export const LogoImg = styled.img`
+    display: flex;
+`;
 
 export const WelcomeWrapper = styled.div`
   display: flex;
@@ -26,7 +30,7 @@ export const WelcomeWrapper = styled.div`
   width: 100%;
   height: 4rem; /* 64px / 16 */
   text-align: center;
-  margin-bottom: 2.25rem; /* 36px / 16 */
+  margin: 1.5637rem 0 2.25rem 0; /* 36px / 16 */
 `;
 
 export const Service = styled.button`
@@ -34,6 +38,6 @@ export const Service = styled.button`
   border: none;
   width: fit-content; /* 버튼 너비가 내용에 맞도록 설정 */
   padding: 0 1rem; /* 16px / 16 */
-  margin-bottom: 15.8rem;
+  margin: 0.75rem 0 16rem 0; 
 `;
 

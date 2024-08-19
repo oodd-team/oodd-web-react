@@ -2,35 +2,35 @@ import ReportIcon from "../../assets/ProfileViewer/carbon_warning.svg";
 import BlockIcon from "../../assets/ProfileViewer/block.svg";
 
 export interface Post {
-    id: number;
-    imageUrl: string;
+    postId: number;
+    firstPhoto: string;
     likes: number;
+    isRepresentative: boolean;
 }
 
 export interface UserInfoProps {
-    userId: string;
-    userBio: string;
+    id: number;
+    nickname: string;
+    bio: string;
     userImg?: string;
-    isFriend: boolean;
-    isInterested: boolean;
+    isFriend?: boolean;
+    isInterested?: boolean;
     postsCount?: number;
     likesCount?: number;
-    fixedPostIds?: number[];
     posts?: Post[];
+    status: 'blank' | 'unblocked' | 'blocked';
 }
 
 export interface PostItemProps {
     post: Post;
-    isFixed: boolean;
+    isRepresentative: boolean;
 }
 
 export interface RequestComponentProps {
-    userId: string;
-    $messageType: 'initial' | 'comment';
-    requestMessage: string;
+    userId: number;
+    nickname: string;
     setFriend: (visible: boolean) => void;
     setIsBottomSheetOpen: (visible: boolean) => void;
-    setRequestMessage: (message: string) => void;
 }
 
 export interface ReportTextProps {
@@ -38,18 +38,26 @@ export interface ReportTextProps {
     setIsInputVisible: (visible: boolean) => void;
 }
 
-export const mainMenuItems = (handleOpenBottomSheet: (type: string) => void, handleOpenConfirmationModal: () => void) => [
-    {
-        text: "신고하기",
-        action: () => handleOpenBottomSheet('report'),
-        icon: ReportIcon
-    },
-    {
-        text: "차단하기",
-        action: () => handleOpenConfirmationModal(), // ConfirmationModal을 여는 함수 호출
-        icon: BlockIcon
-    }
-];
+export const mainMenuItems = (
+    userDetails: UserInfoProps, 
+    handleOpenBottomSheet: (type: string) => void, 
+    handleOpenConfirmationModal: () => void
+) => {
+    const BottomsheetsText = userDetails.status === 'blocked' ? "차단 해제하기" : "차단하기";
+    
+    return [
+        {
+            text: "신고하기",
+            action: () => handleOpenBottomSheet('report'),
+            icon: ReportIcon
+        },
+        {
+            text: BottomsheetsText,
+            action: () => handleOpenConfirmationModal(),
+            icon: BlockIcon
+        }
+    ];
+};
 
 export const reportMenuItems = (handleDirectInput: () => void)=> [
     {
