@@ -24,16 +24,18 @@ import xBtn from '../../../../assets/Home/button_reject.svg';
 import heartBtn from '../../../../assets/Home/button_heart.svg';
 import starBtn from '../../../../assets/Home/button_star.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	feed: FeedProps;
 }
 
 const Feed: React.FC<Props> = ({ feed }) => {
+	const nav = useNavigate();
 	return (
 		<FeedWrapper>
 			<FeedTop>
-				<Info>
+				<Info onClick={() => nav('/users/:userId')}>
 					<FeedProfileImgWrapper>
 						<img src={feed.profileUrl} alt="tag" />
 					</FeedProfileImgWrapper>
@@ -43,7 +45,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Info>
 				<img src={more} style={{ cursor: 'pointer' }} />
 			</FeedTop>
-			<FeedText>
+			<FeedText onClick={() => nav('/post')}>
 				<StyledText
 					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
 					color={theme.colors.black}
