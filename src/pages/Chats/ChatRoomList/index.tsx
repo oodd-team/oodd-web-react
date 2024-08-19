@@ -20,12 +20,8 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 
 	if (latestMessage.createdAt) {
-		// toUserReadAt이 내가 마지막으로 읽은 시간이 아니라면
-		// 즉 해당 메시지의 receiver가 해당 메시지를 읽은 시간이라면
-		// toUserReadAt === null일 때 isUnread가 될 수 없고,
-		// (내가 메시지를 보내고 상대방이 읽지 않은 상황에도 응답 대기중 발생)
 		// fromUserId가 필요할 듯
-		isUnread = false;
+		isUnread = !latestMessage.toUserReadAt;
 	}
 
 	useEffect(() => {
@@ -80,7 +76,7 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 				>
 					{timeAgo}
 				</StyledText>
-				{timeAgo && isUnread && (
+				{!!timeAgo && isUnread && (
 					<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.193 }} color={theme.colors.gray3}>
 						응답 대기중
 					</StyledText>
