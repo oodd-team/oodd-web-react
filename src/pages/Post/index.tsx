@@ -5,8 +5,9 @@ import profileImg from './../../assets/Post/profileImg.svg';
 import postImg1 from './../../assets/Post/postImg1.svg';
 import more from './../../assets/Post/more.svg';
 import { StyledText } from '../../components/Text/StyledText';
-import { MoreBtn, PostImg, PostInfo, PostText, UserInfo, UserName, UserProfile } from './styles';
+import { MoreBtn, PostImg, PostInfo, PostText, Products, UserInfo, UserName, UserProfile } from './styles';
 import theme from '../../styles/theme';
+import ProductCard from './ProductCard';
 
 // Post 페이지입니다.
 const Post: React.FC = () => {
@@ -38,6 +39,9 @@ const Post: React.FC = () => {
 				</StyledText>
 			</PostText>
 			<PostImg src={postImg1} alt="postImg1" />
+			<Products>
+				<ProductCard /> <ProductCard /> <ProductCard /> <ProductCard />
+			</Products>
 		</OODDFrame>
 	);
 };
