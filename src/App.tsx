@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Upload from './pages/Upload';
 import BottomSheetTest from './pages/BottomSheetTest';
 import ConfirmationModalTest from './pages/ConfirmationModalTest';
+import Post from './pages/Post';
 
 const App: React.FC = () => {
 	return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
 					<Route path="/chats" element={<Chats />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/upload" element={<Upload />} />
+					<Route path="/post" element={<Post />} />
 					<Route path="/bottomsheet-test" element={<BottomSheetTest />} />
 					<Route path="/confirmation-modal-test" element={<ConfirmationModalTest />} />
 				</Routes>

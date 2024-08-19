@@ -11,6 +11,7 @@ import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
 import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
 import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
 import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
+import { useNavigate } from 'react-router-dom';
 
 // 추후 변경
 const tagData: TagProps[] = [
@@ -59,6 +60,7 @@ const OOTD: React.FC = () => {
 	const middleIndex = Math.ceil(tagData.length / 2);
 	const firstHalf = tagData.slice(0, middleIndex);
 	const secondHalf = tagData.slice(middleIndex);
+	const nav = useNavigate();
 
 	return (
 		<OOTDContainer>
@@ -89,7 +91,7 @@ const OOTD: React.FC = () => {
 					))}
 				</TagRow>
 			</TagContainer>
-			<FeedContainer>
+			<FeedContainer onClick={() => nav('/post')}>
 				{feedData.map((feed) => (
 					<Feed feed={feed} />
 				))}
