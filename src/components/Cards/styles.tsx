@@ -19,6 +19,6 @@ export const CardsContainer = styled.div`
 	}
 
 	.parentSwiper .swiper-container {
-		margin-left: 15px;
+		margin-left: 0.9375rem;
 	}
 `;

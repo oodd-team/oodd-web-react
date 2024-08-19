@@ -63,7 +63,7 @@ export const OOTDImgBox = styled.div`
 	.childSwiper .swiper-pagination-bullet {
 		width: 0.375rem;
 		height: 0.375rem;
-		border: 0.0625rem solid rgba(255, 255, 255, 1);
+		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
 		background: rgba(255, 255, 255, 0.5);
 		opacity: 1;
 	}
@@ -71,7 +71,7 @@ export const OOTDImgBox = styled.div`
 	.childSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
-		background-color: white;
+		background-color: ${({ theme }) => theme.colors.white};
 		opacity: 1;
 	}
 

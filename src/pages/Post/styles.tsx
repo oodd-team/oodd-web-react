@@ -94,40 +94,35 @@ export const PostText = styled.span`
 
 export const PostImg = styled.div`
 	.postSwiper .swiper-pagination {
-		transform: translateY(-29.5rem);
+		position: absolute;
+		top: 0.75rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		pointer-events: none;
 	}
 
 	.postSwiper .swiper-pagination-bullet {
 		width: 0.375rem;
 		height: 0.375rem;
-		border: 0.0625rem solid rgba(255, 255, 255, 1);
+		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
 		background: rgba(255, 255, 255, 0.5);
 		opacity: 1;
+		pointer-events: auto;
 	}
 
 	.postSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
-		background-color: white;
+		background-color: ${({ theme }) => theme.colors.white};
 		opacity: 1;
 	}
-  
-	.postSwiper .swiper-button-prev,
-	.postSwiper .swiper-button-next {
-		color: white; /* 화살표 색상 변경 */
-	}
 
-	/* 필요한 경우 화살표의 크기 조정 */
-	.postSwiper .swiper-button-prev,
-	.postSwiper .swiper-button-next {
-		width: 2rem;
-		height: 2rem;
-	}
-
-	/* 화살표가 더 잘 보이도록 호버 시 색상 변경 */
-	.postSwiper .swiper-button-prev:hover,
-	.postSwiper .swiper-button-next:hover {
-		color: rgba(255, 255, 255, 0.8); /* 호버 시 약간 투명한 흰색 */
+	.postSwiper .swiper-button-prev:after,
+	.postSwiper .swiper-button-next:after {
+		text-shadow: 0rem 0rem 0.25rem rgba(0, 0, 0, 0.25);
+		color: ${({ theme }) => theme.colors.white} !important;
+		font-size: 1.5rem !important;
 	}
 `;
 
@@ -176,7 +171,7 @@ export const NextBtn = styled.div`
 	width: 1.5rem;
 	height: 1.5rem;
 	overflow: hidden;
-	margin-right: 6px;
+	margin-right: 0.375rem;
 	img {
 		width: 100%;
 		height: 100%;

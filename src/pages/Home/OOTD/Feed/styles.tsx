@@ -61,22 +61,27 @@ export const FeedImgBox = styled.div`
 	}
 
 	.ootdSwiper .swiper-pagination {
-		transform: translateY(-42.5rem);
-		/* z-index: 11; */
+		position: absolute;
+		top: 0.75rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		pointer-events: none; /* 마우스 이벤트 무시 */
 	}
 
 	.ootdSwiper .swiper-pagination-bullet {
 		width: 0.375rem;
 		height: 0.375rem;
-		border: 0.0625rem solid rgba(255, 255, 255, 1);
+		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
 		background: rgba(255, 255, 255, 0.5);
 		opacity: 1;
+		pointer-events: auto; /* 페이지네이션 클릭 가능 */
 	}
 
 	.ootdSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
-		background-color: white;
+		background-color: ${({ theme }) => theme.colors.white};
 		opacity: 1;
 	}
 

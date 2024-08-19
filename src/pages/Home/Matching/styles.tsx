@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MatchingContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 100px;
+	margin-bottom: 6.25rem;
 
 	.parentSwiper .swiper-slide {
 		transition: transform 0.3s;
@@ -20,7 +20,7 @@ export const MatchingContainer = styled.div`
 	}
 
 	.parentSwiper .swiper-container {
-		margin-left: 15px;
+		margin-left: 0.9375rem;
 	}
 `;
 
