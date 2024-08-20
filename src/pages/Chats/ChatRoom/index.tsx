@@ -67,7 +67,7 @@ const ChatRoom: React.FC = () => {
 
 		// 최근 메시지 조회
 		socket.on('latestMessage', (message) => {
-			setAllMessages([...allMessages, message]);
+			setAllMessages((prevMessages) => [...prevMessages, message]);
 			setIsScroll(true);
 		});
 
@@ -96,7 +96,6 @@ const ChatRoom: React.FC = () => {
 	// 메시지 수신 시 스크롤 아래로 이동
 	useEffect(() => {
 		if (isScroll) {
-			chatWindowRef.current?.scrollIntoView({ behavior: 'smooth' });
 			scrollToBottom(chatWindowRef);
 			setIsScroll(false);
 		}
