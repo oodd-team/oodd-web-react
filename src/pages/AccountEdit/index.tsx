@@ -96,6 +96,7 @@ const AccountEdit: React.FC = () => {
 			<BottomButton
 				content="본인인증하고 정보 수정하기" // 버튼에 표시할 텍스트
 				onClick={handleVerification} // 버튼 클릭 시 호출할 함수
+				disabled={true} // 비활성화 시킴
 			/>
 		</OODDFrame>
 	);
