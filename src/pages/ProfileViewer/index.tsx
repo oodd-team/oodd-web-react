@@ -1,67 +1,164 @@
-import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import UserInfo from "./components/UserInfo";
 import PostItem from "./components/PostItem";
-import { mockUserData } from "./MocData"; // Mock 데이터 임포트
-import { ProfileViewerContainer, HeaderContainer, UserID, Vector, MoreIcon, BackButton, CounterContainer, Count,  PostListContainer } from "./style";
+import BottomSheet from "../../components/BottomSheet";
+import BottomSheetMenu from "../../components/BottomSheetMenu";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import ReportText from "./components/ReportText";
+import TopBar from "../../components/TopBar";
 import { StyledText } from "../../components/Text/StyledText";
 import theme from '../../styles/theme';
 import { OODDFrame } from "../../components/Frame/Frame";
 import { useRecoilState } from 'recoil';
 import { userDetailsState } from '../../recoil/atoms'; // Recoil atom 임포트
+import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg'
+import BackSvg from '../../assets/ProfileViewer/backIcon.svg'
+import { mainMenuItems, reportMenuItems, UserInfoProps } from "./dto";
+import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer} from "./style";
+import { UserInfoDto } from "./ResponseDto/UserInfoDto";
+import request from "../../apis/core";
+import { PostListDto } from "./ResponseDto/PostListDto";
+import { BlockDto } from "./ResponseDto/BlockDto";
+import Modal from '../../components/Modal'; // Modal 컴포넌트 임포트
 
 const ProfileViewer: React.FC = () => {
-    const navigate = useNavigate();
-    const { userId } = useParams<{ userId: string }>(); // URL 파라미터에서 userId 가져오기
+    const { userId } = useParams<{ userId: string }>(); 
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
+    const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false); 
+    const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [confirmAction, setConfirmAction] = useState<() => void>(() => () => {});
+    const [isInputVisible, setIsInputVisible] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 추가
+
+    const token = localStorage.getItem('jwt_token');
+    const myid = localStorage.getItem('id');
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                // Mock 데이터 사용
-                setUserDetails(mockUserData); // 실제 API 호출로 대체
+                const response = await request.get<UserInfoDto>(`/users/${userId}`, {});
+                console.log('사용자 정보 조회: ', response);
+    
+                const postsResponse = await request.get<PostListDto>(`posts?userId=${userId}`, {});
+                console.log('게시물 리스트 조회:', postsResponse);
+                const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
+                const combinedData : UserInfoProps = {
+                    ...response, 
+                    status: storedUserDetails.status || 'blank',
+                    posts: postsResponse.result.posts,
+                    likesCount: postsResponse.result.totalLikes,
+                    postsCount: postsResponse.result.totalPosts,
+                    isInterested: storedUserDetails.isInterested || false, 
+                    isFriend: storedUserDetails.isFriend || false,
+                    userImg: storedUserDetails.profilePictureUrl
+                };
+    
+                setUserDetails(combinedData);
             } catch (error) {
                 console.error('Failed to fetch user details', error);
             }
         };
+    
         fetchUserDetails();
-    }, [userId, setUserDetails]); // userId가 변경될 때마다 호출
+    }, [userId, token, setUserDetails]);
+    
+    
+    useEffect(() => {
+        const storedUserDetails = localStorage.getItem(`userDetails_${userId}`);
+        if (storedUserDetails) {
+            setUserDetails(JSON.parse(storedUserDetails));
+        }
+    }, [setUserDetails, userId]);
+    
 
-    const handleGoBack = () => {
-        navigate(-1); // 이전 페이지로 이동
-    };
-
+    useEffect(() => {
+        if (userDetails) {
+            localStorage.setItem(`userDetails_${userId}`, JSON.stringify(userDetails));
+        }
+    }, [userDetails, userId]);
+    
     if (!userDetails) {
-        return <div>Loading...</div>; // 데이터 로딩 중 표시
+        return <div>Loading...</div>;
     }
 
-    // 고정 게시물과 나머지 게시물 구분
-    const fixedPostIds = userDetails.fixedPostIds || []; // undefined일 경우 빈 배열
-    const posts = userDetails.posts || []; // undefined일 경우 빈 배열
+    const posts = userDetails.posts || []; 
 
-    // fixedPostIds와 posts가 정의된 경우에만 필터링
-    const fixedPosts = fixedPostIds.length > 0 ? posts.filter(post => fixedPostIds.includes(post.id)) : [];
-    const otherPosts = posts.filter(post => !fixedPostIds.includes(post.id));
+    const representativePosts = posts.filter(post => post.isRepresentative);
+    const otherPosts = posts.filter(post => !post.isRepresentative);
+
+    const isBlockingAllowed = myid !== userId;
+
+    const handleOpenBottomSheet = (type: string) => {
+        setActiveBottomSheet(type);
+        setIsBottomSheetOpen(true);
+    }; 
+
+    const handleCloseBottomSheet = () => {
+        setIsBottomSheetOpen(false);
+        setActiveBottomSheet(null);
+    };
+
+    const handleOpenConfirmationModal = () => {
+        if (!isBlockingAllowed) {
+            alert("자신을 차단할 수 없습니다."); 
+            return;
+        }
+
+        setIsConfirmationModalOpen(true); 
+        setConfirmAction(() => async () => {
+            try {
+                console.log(myid, userId);
+                const response = await request.post<BlockDto>(`/block`, {
+                    'userId': myid,
+                    'friendId': Number(userId),
+                    'action': 'toggle'
+                });
+                if (response.message === "OK") {
+                    const newStatus = userDetails.status === 'blocked' ? 'unblocked' : 'blocked';
+                    setUserDetails(prevState => ({
+                        ...prevState!,
+                        status: newStatus,
+                    }));
+                }
+                console.log(response);
+            } catch (error) {
+                console.error('Failed to toggle block status', error);
+            }
+            handleCloseConfirmationModal();
+            setIsModalOpen(true); // 차단/해제 후 모달 열기
+        });
+        setIsBottomSheetOpen(false);
+    };
+
+    const buttonText = userDetails.status === 'blocked' ? "차단 해제하기" : "차단하기";
+    const confirmationMessage = userDetails.status === 'blocked'
+        ? `${userDetails.nickname}님을 차단 해제하시겠습니까?`
+        : `${userDetails.nickname}님을 정말로 차단하시겠습니까?`;
+    
+    const handleCloseConfirmationModal = () => {
+        setIsConfirmationModalOpen(false); 
+    };
+
+    const handleDirectInput = () => { 
+        setIsInputVisible(true); 
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Modal 닫기
+    };
 
     return (
         <OODDFrame>
             <ProfileViewerContainer>
-                <HeaderContainer>
-                    <BackButton onClick={handleGoBack} />
-                    <UserID>
-                        <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.gray4}>
-                            {userId}
-                        </StyledText>
-                    </UserID>
-                    <MoreIcon />
-                </HeaderContainer>
-                <UserInfo 
-                    userId={userDetails.userId}
-                    userBio={userDetails.userBio}
-                    userImg={userDetails.userImg}
-                    isFriend={userDetails.isFriend}
-                    isInterested={userDetails.isInterested}
+                <TopBar 
+                text={userDetails.nickname}
+                RightButtonSrc={MoreSvg} 
+                LeftButtonSrc={BackSvg}
+                onRightClick={() => handleOpenBottomSheet('main')} 
                 />
+                <UserInfo />
                 <Vector />
                 <CounterContainer>
                     <Count>
@@ -82,21 +179,62 @@ const ProfileViewer: React.FC = () => {
                     </Count>
                 </CounterContainer>
                 <PostListContainer>
-                    {/* 고정된 게시물이 있는 경우 렌더링 */}
-                    {fixedPosts.length > 0 && fixedPosts.map(post => (
-                        <PostItem key={post.id} post={post} isFixed={true} />
+                {representativePosts.length > 0 && representativePosts.map(post => (
+                        <PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={true} />
                     ))}
-                    {/* 나머지 게시물 렌더링 */}
                     {otherPosts.length > 0 && otherPosts.map(post => (
-                        <PostItem key={post.id} post={post} isFixed={false} />
+                        <PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
                     ))}
                 </PostListContainer>
+                {isBottomSheetOpen && activeBottomSheet === 'main' && (
+                <BottomSheet
+                    isOpenBottomSheet={isBottomSheetOpen}
+                    onCloseBottomSheet={handleCloseBottomSheet}
+                    Component={() => (
+                        <BottomSheetMenu items={mainMenuItems(userDetails,handleOpenBottomSheet, handleOpenConfirmationModal)} marginBottom="4rem" />
+                    )}
+                /> )}
+                {isBottomSheetOpen && activeBottomSheet === 'report' && (
+                    <BottomSheet
+                    isOpenBottomSheet={isBottomSheetOpen}
+                    onCloseBottomSheet={handleCloseBottomSheet}
+                    Component={() => (
+                        <>
+                            <BottomSheetMenu items={reportMenuItems(handleDirectInput)} marginBottom="1rem" />
+                            {isInputVisible && (
+                                <ReportText 
+                                    onCloseBottomSheet={handleCloseBottomSheet} 
+                                    setIsInputVisible={setIsInputVisible}
+                                />
+                            )}
+                        </>
+                    )}
+                />
+            )}
+                {isConfirmationModalOpen && (
+                    <ConfirmationModal
+                        content={confirmationMessage}
+                        isCancelButtonVisible={true}
+                        confirm={{ text: buttonText, action: confirmAction }}
+                        onCloseModal={handleCloseConfirmationModal}
+                    />
+                )}
+                {isModalOpen && ( 
+                    <Modal 
+                        content={userDetails.status === 'blocked' ? `${userDetails.nickname}님을 차단했어요` : `${userDetails.nickname}님을 차단 해제했어요.`}
+                        onClose={handleCloseModal} 
+                    />
+                )}
             </ProfileViewerContainer>
         </OODDFrame>
     );
 };
 
 export default ProfileViewer;
+
+
+
+
 
 
 

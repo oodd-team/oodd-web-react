@@ -14,30 +14,22 @@ export const SwiperContainer = styled.div`
 	}
 
 	.swiper-slide {
-		//height: 26.4375rem;
-		//width: 19.875rem;
-		//height: 100%;
 		width: 21.875rem;
 		max-width: calc(100% - 2.5rem);
 		aspect-ratio: 3 / 4;
 		height: auto;
 		object-fit: cover;
-		//margin-top: auto;
-		//margin-bottom: auto;
-
-		transition:
-			transform 0.5s ease,
-			width 0.5s ease,
-			height 0.5s ease;
+		transition: transform 0.3s;
+		transform: scale(0.95);
 	}
 
-	.swiper-slide.main-slide {
-		//height: 100%;
-		width: 21.875rem;
-		max-width: calc(100% - 2.5rem);
-		aspect-ratio: 3 / 4;
-		height: auto;
-		object-fit: cover;
+	.swiper-slide.swiper-slide-active {
+		transform: scale(1);
+	}
+
+	.swiper-slide.swiper-slide-next,
+	.parentSwiper.swiper-slide-prev {
+		transform: scale(0.95);
 	}
 
 	.add-btn-box {

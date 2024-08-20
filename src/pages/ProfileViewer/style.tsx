@@ -77,21 +77,15 @@ export const Count = styled.div`
 
 export const PostListContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     max-width: 32rem;
-    flex-wrap: wrap;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
         display: none;
-    }
-
-    @media (max-width: 530px) {
-        max-width: 100%;
-        justify-content: center;
-        align-items: center;
     }
 `;
 

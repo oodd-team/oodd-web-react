@@ -6,7 +6,7 @@ export const Content = styled.div`
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	top: 3.75rem;
+	top: 2.75rem;
 	left: 0;
 	width: 100%;
 	height: calc(100% - 10rem);

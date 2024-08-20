@@ -1,65 +1,20 @@
 // src/pages/ProfilePage/BottomSheet/styles.tsx
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-const slideUp = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideDown = keyframes`
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(100%);
-  }
-`;
-
-export const SheetWrapper = styled.div`
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 2;
-`;
-
-export const SheetContent = styled.div`
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: calc(100% - 3.75rem);
-	background-color: ${({ theme }) => theme.colors.white};
-	border-top-left-radius: 0.625rem;
-	border-top-right-radius: 0.625rem;
-	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
-	z-index: 999;
-
-	/* 애니메이션 적용 */
-	animation: ${slideUp} 0.3s ease-out;
-
-	/* 사라질 때 애니메이션 */
-	&.closing {
-		animation: ${slideDown} 0.3s ease-out;
-	}
+export const Content = styled.div`
+	height: calc(100vh - 4rem);
 
 	.input_container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		width: 100%;
-		padding: 0.625rem 1.25rem;
-		height: 3.75rem;
+		padding: 0 1.25rem 0.825rem 1.25rem;
+
 		border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray1};
 
 		div {
-			padding: 1.25rem 0 1.25rem 1.25rem;
+			padding-left: 1.25rem;
 			color: ${({ theme }) => theme.colors.black};
 			cursor: pointer;
 		}

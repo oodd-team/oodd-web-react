@@ -10,6 +10,17 @@ export const ProfileContainer = styled.div`
 	margin-bottom: 0;
 `;
 
+export const EditButton = styled.button`
+	position: absolute;
+	bottom: 15rem;
+	right: 1.25rem;
+	width: 5rem;
+	height: 5rem;
+	background-color: ${({ theme }) => theme.colors.white};
+	color: ${({ theme }) => theme.colors.black};
+	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+`;
+
 export const AddButton = styled.button`
 	display: flex;
 	align-items: center;
