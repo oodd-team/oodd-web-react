@@ -6,7 +6,7 @@ import { LogoWrapper, LoginContainer, WelcomeWrapper, Service, LogoImg } from ".
 import Naver from "./components/Naver";
 import Kakao from "./components/Kakao";
 import Google from "./components/Google";
-import OODDlogo from '../../../public/assets/OODDlogo.svg';
+import OODDlogo from '../../../src/assets/OODDlogo.svg';
 
 
 const Login: React.FC = () => {

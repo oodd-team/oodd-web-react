@@ -4,7 +4,7 @@ import { StyledText } from "../../components/Text/StyledText";
 import theme from '../../styles/theme';
 import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName, Tap, NextButton, LogoImg } from "./style"; 
 import { OODDFrame } from "../../components/Frame/Frame";
-import OODDlogo from '../../../public/assets/OODDlogo.svg';
+import OODDlogo from '../../../src/assets/OODDlogo.svg'
 import request from "../../apis/core";
 import { SignUpDto } from "./SignUpDto";
 

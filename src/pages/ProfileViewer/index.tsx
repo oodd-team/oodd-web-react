@@ -52,6 +52,7 @@ const ProfileViewer: React.FC = () => {
                     likesCount: postsResponse.result.totalLikes,
                     postsCount: postsResponse.result.totalPosts,
                     isInterested: storedUserDetails.isInterested || false, 
+                    isFriend: storedUserDetails.isFriend || false,
                     userImg: storedUserDetails.profilePictureUrl
                 };
     
@@ -71,7 +72,6 @@ const ProfileViewer: React.FC = () => {
             setUserDetails(JSON.parse(storedUserDetails));
         }
     }, [setUserDetails, userId]);
-    
     
 
     useEffect(() => {
