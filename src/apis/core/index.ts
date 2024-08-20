@@ -41,7 +41,7 @@ interface CustomInstance extends AxiosInstance {
 }
 
 export const request: CustomInstance = axios.create({
-	baseURL: import.meta.env.VITE_DEV_DOMAIN,
+	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 20000,
 	headers: {
 		accept: 'application/json',
