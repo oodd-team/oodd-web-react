@@ -21,13 +21,18 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 	const handleProcessFiles = (files: FileList) => {
 		const filesArray = Array.from(files);
 		filesArray.forEach((file) => {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				if (reader.result) {
-					handleAddImage(reader.result.toString());
-				}
-			};
-			reader.readAsDataURL(file);
+			if (file.type.startsWith('image/')) {
+				// 이미지 파일인지 확인
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					if (reader.result) {
+						handleAddImage(reader.result.toString());
+					}
+				};
+				reader.readAsDataURL(file);
+			} else {
+				alert('이미지 파일만 업로드할 수 있습니다.');
+			}
 		});
 	};
 
@@ -74,7 +79,7 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 			>
 				<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>사진을 여기에 끌어다 놓으세요</StyledText>
 				<img src={picture} />
-				<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple />
+				<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*" />
 			</ImageDragDropContainer>
 			<BottomButton content="컴퓨터에서 사진 선택" onClick={handleFileSelectClick} />
 		</>
