@@ -86,7 +86,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isSearchBottomSheetOpen,
 		isHandlerVisible: false,
-		isBackgroundDimmed: true,
 		Component: SearchBottomSheetContent,
 		onCloseBottomSheet: () => {
 			setIsSearchBottomSheetOpen(false);
