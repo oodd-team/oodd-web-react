@@ -42,7 +42,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 	return (
 		<SwiperContainer>
 			<Swiper
-				spaceBetween={10}
+				spaceBetween={1}
 				slidesPerView="auto"
 				centeredSlides={true}
 				navigation={{

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { TopbarLayoutProps } from './dto';
 
 export const TopbarLayout = styled.div<TopbarLayoutProps>`
+	position: fixed;
+	top: 0;
+	left: 0;
 	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
 	width: 100%;

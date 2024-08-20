@@ -1,9 +1,7 @@
 import React from 'react';
 import { Content } from './styles';
-import { Header, PrevButton } from '../styles';
 import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
-import { StyledText } from '../../../components/Text/StyledText';
 import back from '../../../assets/Upload/back.svg';
 import { ImageReviewModalProps } from './dto';
 import ImageSwiper from './ImageSwiper';

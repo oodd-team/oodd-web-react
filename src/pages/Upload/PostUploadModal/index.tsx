@@ -25,13 +25,13 @@ import styleTag from '../../../assets/Upload/styleTag.svg';
 import pin from '../../../assets/Upload/pin.svg';
 import next from '../../../assets/Upload/next.svg';
 import next_up from '../../../assets/Upload/next_up.svg';
-import { PostUploadModalProps, ClothingInfo, Styletag } from './dto';
+import { PostUploadModalProps, ClothingInfo, Styletag, Post } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import request, { BaseResponse } from '../../../apis/core';
 
 const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
-	const [content, setContent] = useState('');
+	const [content, setContent] = useState<string>('');
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [isOOTD, setIsOOTD] = useState(false);
@@ -42,10 +42,16 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	const navigate = useNavigate();
 
 	const styletags: Styletag[] = [
-		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
-		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' },
-		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' },
-		{ tag: '#vintage', color: 'rgba(0, 255, 0, 0.15)' },
+		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
+		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
+		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
+		{ tag: '#casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
+		{ tag: '#sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
+		{ tag: '#feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
+		{ tag: '#minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
+		{ tag: '#formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
+		{ tag: '#outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
+		{ tag: '#luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
 	];
 
 	const handleToggleSearchSheet = () => {
@@ -103,19 +109,18 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
 
 			// clothingInfos 배열에서 image_url 필드를 제거한 새로운 배열을 생성
-			const processedClothingInfos = clothingInfos.map(({ image_url, ...rest }) => rest);
+			//const processedClothingInfos = clothingInfos.map(({ image_url, ...rest }) => rest);
 
-			const postData = {
+			const postData: Post = {
 				photoUrls: uploadedImages,
 				content,
 				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
-				//clothingInfo: clothingInfos,
-				clothingInfo: processedClothingInfos,
+				clothingInfo: clothingInfos,
+				//clothingInfo: processedClothingInfos
 			};
 			console.log(postData);
 
 			// 서버에 게시물 데이터 업로드
-			//const userId = '2'; //임의 지정
 			const response = await request.post<BaseResponse>(`/posts`, postData);
 
 			if (!response.isSuccess) {

@@ -35,3 +35,10 @@ export interface ToggleSwitchProps {
 	onChange: () => void;
 	disabled?: boolean;
 }
+
+export interface Post {
+	photoUrls: string[],
+	content?: string,
+	styletags?: string[],
+	clothingInfo?: ClothingInfo[],
+}
