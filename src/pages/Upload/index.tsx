@@ -47,6 +47,7 @@ const Upload: React.FC = () => {
 		} else if (state?.mode === 'edit' && state?.postId) {
 			await fetchPostDetails(state.postId);
 			setModals({ ...modals, postUpload: true });
+			setPostId(state.postId);
 		}
 	};
 

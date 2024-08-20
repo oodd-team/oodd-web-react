@@ -1,5 +1,5 @@
 //PostUploadModal/index.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -46,6 +46,10 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		console.log(postId);
+	}, []);
 
 	const navigate = useNavigate();
 
@@ -103,6 +107,12 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	const uploadImageToFirebase = async (image: string) => {
+		// Firebase URL 형식을 확인합니다.
+		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
+			return image; // 이미 업로드된 경우, URL을 그대로 반환합니다.
+		}
+
+		// 새로 업로드해야 하는 경우
 		const response = await fetch(image);
 		const blob = await response.blob();
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
