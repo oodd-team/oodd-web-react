@@ -8,13 +8,14 @@ import { ChatRoomDto, ChatRoomListDto } from './dto';
 import ChatRoomList from '../ChatRoomList';
 import { useRecoilValue } from 'recoil';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
+import SwiperCore from 'swiper';
 
 localStorage.setItem(
 	'jwt_token',
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6IuyehOuvvOyEnCIsImVtYWlsIjoibGltbXMxMjE3QG5hdmVyLmNvbSJ9.QB9vUJiu7YTqzwaA2NYDXC20xDfWWQ7ck2QhDh7Lsqs',
 );
 
-const RecentChat: React.FC = () => {
+const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({ swiperRef }) => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const userId = useRecoilValue(MockUserIdAtom);
 	const allMessages = useRecoilValue(AllMesagesAtom);
@@ -25,7 +26,8 @@ const RecentChat: React.FC = () => {
 				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
 
 				if (response.isSuccess) {
-					const sortedList = response.result.sort((a, b) => {
+					const requestsList = response.result.filter((matchingRequest) => matchingRequest.fromUserId !== userId);
+					const sortedList = requestsList.sort((a, b) => {
 						// a와 b의 latestMessage.createdAt 값을 가져오고, 만약 null이면 createdAt 값을 사용
 						const aDate = a.latestMessage?.createdAt
 							? new Date(a.latestMessage.createdAt).getTime()
@@ -57,7 +59,7 @@ const RecentChat: React.FC = () => {
 			</RecentChatInfo>
 			{chatRoomList
 				? chatRoomList.map((room) => {
-						return <ChatRoomList key={room.id} {...room} />;
+						return <ChatRoomList key={room.id} swiperRef={swiperRef} {...room} />;
 					})
 				: null}
 		</>

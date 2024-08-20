@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
-import request from '../../../apis/core';
 import Request from '../Request';
 import RecentChat from '../RecentChat';
 
@@ -90,7 +89,7 @@ const TabBar: React.FC = () => {
 						</SwiperSlide>
 					)}
 					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
-						<RecentChat />
+						<RecentChat swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>
 			</Tabs>

@@ -3,25 +3,35 @@ import { UserImage, ChatRoomListLayout, LeftBox, RightBox } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import { useEffect, useState } from 'react';
+import { MockUserIdAtom } from '../../../recoil/MockUserId';
+import SwiperCore from 'swiper';
 dayjs.extend(relativeTime);
 
-// createdAt은 어디에 사용?
-const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMessage }) => {
+const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({
+	swiperRef,
+	id,
+	fromUserId,
+	requestStatus,
+	createdAt,
+	opponent,
+	latestMessage,
+}) => {
 	let isUnread = false;
 	const nav = useNavigate();
 	const [opponentInfo, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
+	const userId = useRecoilValue(MockUserIdAtom);
 
-	if (latestMessage.createdAt) {
-		// fromUserId가 필요할 듯
-		isUnread = !latestMessage.toUserReadAt;
+	if (createdAt) {
+		// 상대방에게서 온 pending 상태의 요청
+		isUnread = fromUserId !== userId && requestStatus === 'pending';
 	}
 
 	useEffect(() => {
@@ -42,8 +52,12 @@ const ChatRoomList: React.FC<ChatRoomDto> = ({ id, createdAt, opponent, latestMe
 	}, [latestMessage.createdAt]);
 
 	const onClickChatRoom = () => {
-		setOpponentInfo(opponent);
-		nav(`/chats/${id}`);
+		if (requestStatus === 'pending' && swiperRef.current) {
+			swiperRef?.current.slideTo(0);
+		} else {
+			setOpponentInfo(opponent);
+			nav(`/chats/${id}`);
+		}
 	};
 
 	return (

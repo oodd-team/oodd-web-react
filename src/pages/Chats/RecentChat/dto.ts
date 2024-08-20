@@ -14,6 +14,8 @@ export interface LatestMessage {
 
 export interface ChatRoomDto {
 	id: number; // roomId
+	fromUserId: number;
+	requestStatus: string; // 요청 수락 여부
 	createdAt: Date; // 채팅방이 만들어진 시간
 	opponent: Opponent;
 	latestMessage: LatestMessage;
