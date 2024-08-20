@@ -2,31 +2,40 @@ import styled from 'styled-components';
 
 export const SwiperContainer = styled.div`
 	display: flex;
+	//align-items: center;
+	//justify-content: center;
 	min-height: 23.75rem;
-	align-items: center;
-	justify-content: center;
 
-	.swiper-slide {
-		//width: 14.1875rem;
-		//height: 18.875rem;
-		width: 15.4375rem;
-		height: 20.5625rem;
-		object-fit: cover;
-		transition:
-			transform 0.5s ease,
-			width 0.5s ease,
-			height 0.5s ease;
+	.swiper {
+		height: 23.75rem;
+		width: 100%;
+		position: relative;
 	}
 
-	.swiper-slide.main-slide {
+	.swiper-wrapper {
+		display: flex;
+		align-items: center;
+	}
+
+	.swiper-slide {
 		width: 15.4375rem;
 		height: 20.5625rem;
 		object-fit: cover;
+		transition: transform 0.3s;
+		transform: scale(0.95);
+	}
+
+	.swiper-slide.swiper-slide-active {
+		transform: scale(1);
+	}
+
+	.swiper-slide.swiper-slide-next,
+	.parentSwiper.swiper-slide-prev {
+		transform: scale(0.95);
 	}
 `;
 
 export const ImageWrapper = styled.div`
-	position: relative;
 	height: 100%;
 
 	img {
@@ -64,7 +73,7 @@ export const StyledNavigation = styled.button`
 
 export const StyledPagination = styled.div`
 	position: absolute;
-	top: 0.625rem;
+	top: 2.5rem;
 	left: 50%;
 	transform: translateX(-50%);
 	display: flex;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { SheetWrapper, SheetContent, Input, SearchResultList, SearchResultItem, Loader } from './styles';
+import { Content, Input, SearchResultList, SearchResultItem, Loader } from './styles';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { BottomSheetProps } from '../dto';
+import { SearchBottomSheetProps } from '../dto';
 
-const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothingInfo }) => {
+const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, onSelectClothingInfo }) => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [start, setStart] = useState(1);
@@ -20,7 +20,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 
 	const fetchSearchResult = async (searchQuery: string, start: number) => {
 		try {
-			//프록시 서버 사용
+			//네이버 쇼핑 api 프록시 서버 사용
 			const response = await axios.get(
 				'https://0dd3w25c7c.execute-api.ap-northeast-2.amazonaws.com/default/getNaverShopping',
 				{
@@ -60,7 +60,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 					setIsLoading(false);
 				});
 			}
-		}, 500); // 500ms 동안 입력이 없을 경우 타이머가 실행됨
+		}, 300); // 300ms 동안 입력이 없을 경우 타이머가 실행됨
 
 		return () => clearTimeout(timer);
 	}, [searchQuery]);
@@ -76,7 +76,7 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 
 				if (data) {
 					setSearchResult((prevResult) => [...prevResult, ...data.items]);
-					setStart((prevStart) => prevStart + 20);
+					setStart((prevStart) => prevStart + 20); //무한 스크롤 한 번 당 데이터 20개 씩 로드하므로
 				} else {
 					setReachedEnd(true);
 				}
@@ -114,9 +114,10 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 
 	const handleAddClothingInfo = (item: any) => {
 		onSelectClothingInfo({
-			image: item.image,
+			image_url: item.image,
 			brand: item.brand,
 			model: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
+			modelNumber: 1,
 			url: item.link,
 		});
 		onClose();
@@ -142,51 +143,49 @@ const SearchBottomSheet: React.FC<BottomSheetProps> = ({ onClose, onSelectClothi
 	};
 
 	return (
-		<SheetWrapper>
-			<SheetContent>
-				<div className="input_container">
-					<Input
-						placeholder="브랜드명, 모델명, 모델번호, URL 등"
-						type="text"
-						value={searchQuery}
-						onChange={(e) => handleInputChange(e.target.value)}
-					/>
-					<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-						취소
-					</StyledText>
-				</div>
-				{searchQuery && searchResult.length > 0 ? (
-					<SearchResultList>
-						{searchResult.map((searchResultItem, index) => (
-							<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
-								<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
-								<div className="infoContainer">
-									<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
-										{searchResultItem.brand}
-									</StyledText>
-									<StyledText
-										className="detail"
-										$textTheme={{ style: 'body2-light', lineHeight: 1 }}
-										color={theme.colors.gray3}
-									>
-										{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
-									</StyledText>
-								</div>
-							</SearchResultItem>
-						))}
-						<div className="ref" ref={loadMoreRef}></div>
-						{isLoading && (
-							<Loader>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
-									로딩 중
+		<Content>
+			<div className="input_container">
+				<Input
+					placeholder="브랜드명, 모델명, 모델번호, URL 등"
+					type="text"
+					value={searchQuery}
+					onChange={(e) => handleInputChange(e.target.value)}
+				/>
+				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+					취소
+				</StyledText>
+			</div>
+			{searchQuery && searchResult.length > 0 ? (
+				<SearchResultList>
+					{searchResult.map((searchResultItem, index) => (
+						<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
+							<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
+							<div className="infoContainer">
+								<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
+									{searchResultItem.brand}
 								</StyledText>
-							</Loader>
-						)}
-					</SearchResultList>
-				) : null}
-			</SheetContent>
-		</SheetWrapper>
+								<StyledText
+									className="detail"
+									$textTheme={{ style: 'body2-light', lineHeight: 1 }}
+									color={theme.colors.gray3}
+								>
+									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
+								</StyledText>
+							</div>
+						</SearchResultItem>
+					))}
+					<div className="ref" ref={loadMoreRef}></div>
+					{isLoading && (
+						<Loader>
+							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
+								로딩 중
+							</StyledText>
+						</Loader>
+					)}
+				</SearchResultList>
+			) : null}
+		</Content>
 	);
 };
 
-export default SearchBottomSheet;
+export default SearchBottomSheetContent;
