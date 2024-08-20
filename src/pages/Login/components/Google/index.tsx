@@ -6,7 +6,7 @@ import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from "../style";
 
 const Google: React.FC<{ disabled?: boolean }> = ({ disabled }) => {
         const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-        const redirectUri = encodeURIComponent('http://localhost:3000/auth/google/callback');
+        const redirectUri = encodeURIComponent(import.meta.env.VITE_DEV_DOMAIN ? import.meta.env.VITE_DEV_DOMAIN + '/auth/google/callback' : 'http://localhost:3000/auth/google/callback');
         const responseType = 'code';
         const scope = 'profile email'; // 요청할 권한 범위
 

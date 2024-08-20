@@ -7,7 +7,7 @@ import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from "../style";
 const Kakao: React.FC = () => {
     // 환경 변수에서 값을 읽어옴
     const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-    const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    const REDIRECT_URI = encodeURIComponent(import.meta.env.VITE_DEV_DOMAIN ? import.meta.env.VITE_DEV_DOMAIN + '/auth/kakao/callback' : 'http://localhost:3000/auth/kakao/callback');
 
     const handleLogin = () => {
         window.location.href= `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
