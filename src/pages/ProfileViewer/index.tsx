@@ -191,7 +191,6 @@ const ProfileViewer: React.FC = () => {
                 {isBottomSheetOpen && activeBottomSheet === 'main' && (
                 <BottomSheet
                     isOpenBottomSheet={isBottomSheetOpen}
-                    isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
                         <BottomSheetMenu items={mainMenuItems(userDetails,handleOpenBottomSheet, handleOpenConfirmationModal)} marginBottom="4rem" />
@@ -200,7 +199,6 @@ const ProfileViewer: React.FC = () => {
                 {isBottomSheetOpen && activeBottomSheet === 'report' && (
                     <BottomSheet
                     isOpenBottomSheet={isBottomSheetOpen}
-                    isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
                         <>

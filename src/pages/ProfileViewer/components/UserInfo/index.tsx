@@ -148,7 +148,6 @@ const UserInfo: React.FC = React.memo(() => {
             {isBottomSheetOpen && (
                 <BottomSheet
                     isOpenBottomSheet={isBottomSheetOpen}
-                    isBackgroundDimmed={true}
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
                         <RequestComponent

@@ -7,8 +7,6 @@ import Home from './pages/Home';
 import Chats from './pages/Chats';
 import Profile from './pages/Profile';
 import Upload from './pages/Upload';
-import BottomSheetTest from './pages/BottomSheetTest';
-import ConfirmationModalTest from './pages/ConfirmationModalTest';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
 import GoogleCallback from './pages/Login/components/Google/GoogleCallback';
@@ -25,11 +23,9 @@ const App: React.FC = () => {
 					<Route path="/auth/kakao/callback" element={<KakaoCallback/>}></Route>
 					<Route path="/auth/naver/callback" element={<NaverCallback/>}></Route>
 					<Route path="/auth/google/callback" element={<GoogleCallback/>}></Route>
+					<Route path="/upload" element={<Upload />} />
 					<Route path="/chats" element={<Chats />} />
 					<Route path="/profile" element={<Profile />} />
-					<Route path="/upload" element={<Upload />} />
-					<Route path="/bottomsheet-test" element={<BottomSheetTest />} />
-					<Route path="/confirmation-modal-test" element={<ConfirmationModalTest />} />
 				</Routes>
 			</BrowserRouter>
 		</>
