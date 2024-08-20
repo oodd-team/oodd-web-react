@@ -27,6 +27,13 @@ export const FeedProfileImgWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
 
 export const FeedText = styled.div`

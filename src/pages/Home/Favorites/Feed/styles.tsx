@@ -14,7 +14,7 @@ export const FeedImgBox = styled.div`
 	background-color: ${({ theme }) => theme.colors.gray1};
 	overflow: hidden;
 	aspect-ratio: 173 / 230;
-	
+
 	img {
 		width: 100%;
 		height: 100%;
@@ -44,6 +44,13 @@ export const FeedProfileImgWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
 
 export const FeedText = styled.div`
