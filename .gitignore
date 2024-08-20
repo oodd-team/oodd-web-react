@@ -25,3 +25,4 @@ server.cjs
 *.njsproj
 *.sln
 *.sw?
+.env

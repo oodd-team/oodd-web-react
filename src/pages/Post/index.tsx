@@ -136,7 +136,6 @@ const Post: React.FC = () => {
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isOpenBottomSheet,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {
@@ -155,7 +154,6 @@ const Post: React.FC = () => {
 	const commentSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isCommentModalOpen,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: Comment,
 		componentProps: commentProps,
 		onCloseBottomSheet: () => {
@@ -166,7 +164,6 @@ const Post: React.FC = () => {
 	const reportSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isOpenReportSheet,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: () => (
 			<div style={{ overflow: 'auto' }}>
 				<BottomSheetMenu {...reportSheetMenuProps} />

@@ -7,15 +7,15 @@ export const ConfirmationModalWrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	z-index: 100;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export const ConfirmationModalLayout = styled.div`
 	position: fixed;
 	display: flex;
 	flex-direction: column;
-	width: 90%;
-	max-width: 21.375rem;
+	width: 21.25rem;
+	max-width: calc(100% - 2.5rem);
 	height: 14.25rem;
 	left: 50%;
 	top: 50%;
