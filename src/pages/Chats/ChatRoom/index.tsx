@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MessagesContainer } from './styles';
 import TopBar from '../../../components/TopBar';
 import RcvdMessage from './RcvdMessage';
@@ -9,10 +9,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import BottomSheet from '../../../components/BottomSheet';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import ConfirmationModal from '../../../components/ComfirmationModal';
+import ConfirmationModal from '../../../components/ConfirmationModal';
 import { OODDFrame } from '../../../components/Frame/Frame';
 import { MessageDto, ExtendedMessageDto, SentMessageProps, RcvdMessageProps } from '../dto';
-import { ConfirmationModalProps } from '../../../components/ComfirmationModal/dto';
+import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import Exit from '../../../assets/BottomSheetMenu/Exit.svg';
 import Block from '../../../assets/BottomSheetMenu/Block.svg';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
@@ -198,7 +198,6 @@ const ChatRoom: React.FC = () => {
 	const kebabMenuBottomSheet: BottomSheetProps = {
 		isOpenBottomSheet: isOpenMenu,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {
