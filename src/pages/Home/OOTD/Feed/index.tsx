@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -22,17 +22,23 @@ import { FeedProps } from '../dto';
 import more from '../../../../assets/Home/grommet-icons_more.svg';
 import xBtn from '../../../../assets/Home/button_reject.svg';
 import heartBtn from '../../../../assets/Home/button_heart.svg';
+import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
 import starBtn from '../../../../assets/Home/button_star.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	feed: FeedProps;
-	onRemove: () => void; // Feed를 제거하는 함수를 부모 컴포넌트에서 받아옴
+	onRemove: () => void;
 }
 
 const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 	const nav = useNavigate();
+	const [isHeartClicked, setIsHeartClicked] = useState(false);
+
+	const handleHeartClick = () => {
+		setIsHeartClicked((prev) => !prev);
+	};
 
 	return (
 		<FeedWrapper>
@@ -76,13 +82,19 @@ const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 						<Btn onClick={onRemove}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
-						<Btn>
-							<img src={heartBtn} />
-						</Btn>
+						{!isHeartClicked && (
+							<Btn onClick={handleHeartClick}>
+								<img src={heartBtn} />
+							</Btn>
+						)}
+						{isHeartClicked && (
+							<img src={clickedHeart} onClick={handleHeartClick} style={{ width: '3.75rem', height: '3.75rem' }} />
+						)}
 						<Btn>
 							<img src={starBtn} />
 						</Btn>
 					</Reaction>
+
 					<Comment>
 						<CommentBtn>
 							<img src={commentBtn} />

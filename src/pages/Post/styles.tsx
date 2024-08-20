@@ -149,17 +149,17 @@ export const InputLayout = styled.div`
 
 	textarea {
 		display: block;
-		width: calc(100% - 48px);
-		height: 92px;
-		border-radius: 2px;
-		border: 1px solid ${({ theme }) => theme.colors.gray3};
-		margin-bottom: 94px;
+		width: calc(100% - 3rem);
+		height: 5.75rem;
+		border-radius: 0.125rem;
+		border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
+		margin-bottom: 5.875rem;
 		z-index: 2;
-		margin-top: -60px;
+		margin-top: -3.75rem;
 		outline: none;
-		padding: 13px 15px;
+		padding: 0.8125rem 0.9375rem;
 		font-family: 'Pretendard Variable';
-		font-size: 16px;
+		font-size: 1rem;
 		font-style: normal;
 		font-weight: 300;
 		line-height: 150%;
@@ -170,17 +170,17 @@ export const InputLayout = styled.div`
 
 // export const InputWrapper = styled.textarea`
 // 	display: block;
-// 	width: calc(100% - 48px);
-// 	height: 92px;
-// 	border-radius: 2px;
-// 	border: 1px solid ${({ theme }) => theme.colors.gray3};
-// 	margin-bottom: 94px;
+// 	width: calc(100% - 3rem);
+// 	height: 5.75rem;
+// 	border-radius: 0.125rem;
+// 	border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
+// 	margin-bottom: 5.875rem;
 // 	z-index: 2;
-// 	margin-top: -60px;
+// 	margin-top: -3.75rem;
 // 	outline: none;
-// 	padding: 13px 15px;
+// 	padding: 0.8125rem 0.9375rem;
 // 	font-family: 'Pretendard Variable';
-// 	font-size: 16px;
+// 	font-size: 1rem;
 // 	font-style: normal;
 // 	font-weight: 300;
 // 	line-height: 150%;

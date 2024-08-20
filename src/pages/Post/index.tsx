@@ -80,7 +80,7 @@ const Post: React.FC = () => {
 				icon: block,
 			},
 		],
-		marginBottom: '50px',
+		marginBottom: '3.125rem',
 	};
 
 	const reportSheetMenuProps: BottomSheetMenuProps = {
@@ -120,7 +120,7 @@ const Post: React.FC = () => {
 				},
 			},
 		],
-		marginBottom: '50px',
+		marginBottom: '3.125rem',
 	};
 
 	const bottomSheetProps: BottomSheetProps = {
