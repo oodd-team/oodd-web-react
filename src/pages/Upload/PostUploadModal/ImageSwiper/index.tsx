@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { SwiperContainer, ImageWrapper, StyledNavigation, StyledPagination } from './styles';
-import picture2 from '../../assets/picture2.svg';
+import picture2 from '../../../../assets/Upload/picture2.svg';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
-	const [currentSlide, setCurrentSlide] = useState(0);
+	const swiperRef = useRef<any>(null);
 
 	return (
 		<SwiperContainer>
 			<Swiper
-				spaceBetween={10}
+				ref={swiperRef}
+				spaceBetween={5}
 				slidesPerView="auto"
 				centeredSlides={true}
 				navigation={{
@@ -33,10 +34,21 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 					},
 				}}
 				modules={[Navigation, Pagination]}
-				onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
+				onSlideChange={(swiper) => {
+					swiper.slides.forEach((slide) => {
+						slide.classList.remove('swiper-slide-prev', 'swiper-slide-next', 'swiper-slide-active');
+					});
+
+					const activeSlide = swiper.slides[swiper.activeIndex];
+					activeSlide.classList.add('swiper-slide-active');
+					const prevSlide = activeSlide.previousElementSibling;
+					if (prevSlide) prevSlide.classList.add('swiper-slide-prev');
+					const nextSlide = activeSlide.nextElementSibling;
+					if (nextSlide) nextSlide.classList.add('swiper-slide-next');
+				}}
 			>
 				{images.map((image, index) => (
-					<SwiperSlide key={index} className={currentSlide === index ? 'main-slide' : ''}>
+					<SwiperSlide key={index}>
 						<ImageWrapper>
 							<img src={image} alt={`Selected ${index}`} />
 						</ImageWrapper>
