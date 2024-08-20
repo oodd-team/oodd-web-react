@@ -7,10 +7,10 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		port: 3000,
-		proxy: {
-		  '/api': 'http://localhost:3001',
-		},
-	  },
+	},
+	define: {
+		'process.env': {},
+	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

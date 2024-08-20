@@ -41,7 +41,6 @@ const Profile: React.FC = () => {
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {

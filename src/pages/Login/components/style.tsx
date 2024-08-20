@@ -4,7 +4,7 @@ export const SocialLogin = styled.button<{ $bgColor: string; $border?: boolean; 
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 19rem; /* 342px / 16 */
+    max-width: 21.375rem; /* 342px / 16 */
     height: 3.5rem; /* 56px / 16 */
     background-color: ${({ $bgColor }) => $bgColor};
     border-radius: 0.1875rem; /* 3px / 16 */
@@ -29,8 +29,8 @@ export const LogoImage = styled.img`
 
 export const TextWrapper = styled.div<{ $left?: string;}>`
     display: flex;
-    width: 200px;
-    padding-left: ${({ $left }) => $left || '1rem'};
+    width: 12.5rem;
+    padding-left: ${({ $left }) => $left || '1.2rem'};
     align-items: center;
     margin: 0 auto;
 `;
