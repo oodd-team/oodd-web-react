@@ -5,7 +5,6 @@ import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
 	isHandlerVisible,
-	isBackgroundDimmed,
 	Component,
 	componentProps,
 	onCloseBottomSheet,
@@ -107,7 +106,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	return (
 		<BottomSheetWrapper
 			$isOpenBottomSheet={isOpenBottomSheet}
-			$isBackgroundDimmed={isBackgroundDimmed}
 			onClick={(e: React.MouseEvent) => {
 				// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
 				if (!isDragging && e.target === e.currentTarget) {

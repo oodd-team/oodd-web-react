@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
+import { ModalProps } from '../../components/Modal/dto';
+import Modal from '../../components/Modal';
 
 const ConfirmationModalTest: React.FC = () => {
 	const [modalWithCancle, setModalWithCancle] = useState(false);
 	const [modalWithoutCancle, setModalWithoutCancle] = useState(false);
+	const [modal, setModal] = useState(false);
 
 	const modalWithCancleProps: ConfirmationModalProps = {
 		content: '취소 버튼이 있는 모달입니다\n개행은 이렇게 해 주세요',
@@ -37,11 +40,19 @@ const ConfirmationModalTest: React.FC = () => {
 		},
 	};
 
+	const modalProps: ModalProps = {
+		content: '모달입니다',
+		onClose: () => {
+			setModal(false);
+		},
+	};
+
 	return (
 		<OODDFrame>
 			ConfirmationModal 테스트 페이지입니다 사용 후 폴더를 삭제해 주세요
 			{modalWithCancle && <ConfirmationModal {...modalWithCancleProps} />}
 			{modalWithoutCancle && <ConfirmationModal {...modalWithoutCancleProps} />}
+			{modal && <Modal {...modalProps} />}
 			<button
 				style={{ padding: '10px', margin: '10px', border: '1px solid black' }}
 				onClick={() => {
@@ -57,6 +68,14 @@ const ConfirmationModalTest: React.FC = () => {
 				}}
 			>
 				취소 버튼이 없는 모달
+			</button>
+			<button
+				style={{ padding: '10px', margin: '10px', border: '1px solid black' }}
+				onClick={() => {
+					setModal(true);
+				}}
+			>
+				버튼이 없는 모달
 			</button>
 		</OODDFrame>
 	);
