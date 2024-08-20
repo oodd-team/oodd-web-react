@@ -12,12 +12,15 @@ import BottomSheet from "../../../../components/BottomSheet";
 import request from "../../../../apis/core";
 import { InterestDto } from "./InterestDto";
 import { UserInfoProps } from "../../dto";
+import Modal from '../../../../components/Modal';
 
 const UserInfo: React.FC = React.memo(() => {
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
     const [interested, setInterested] = useState<boolean | undefined>(undefined);
     const [friend, setFriend] = useRecoilState(friendState);
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
+    const [modalContent, setModalContent] = useState(''); // 모달 내용
 
     if (!userDetails) return null; // 사용자의 정보가 없으면 아무것도 렌더링하지 않음
 
@@ -60,6 +63,15 @@ const UserInfo: React.FC = React.memo(() => {
         setIsBottomSheetOpen(false);
     };
 
+    const handleOpenModal = (message: string) => {
+        setModalContent(message);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     const handleInterestedClick = async () => {
         try {
             const response = await request.patch<InterestDto>(`/user-interests`, {
@@ -76,6 +88,9 @@ const UserInfo: React.FC = React.memo(() => {
             localStorage.setItem(`userDetails_${id}`, JSON.stringify(updatedUserDetails));
             setUserDetails(updatedUserDetails);
             setInterested(isInterested);
+
+            // 성공적으로 응답이 오면 모달을 띄우기
+            handleOpenModal(isInterested ? `${userDetails.nickname}님을 관심 친구로 등록했습니다!` : '관심 친구 등록이 해제되었습니다.');
         } catch (error) {
             console.error('관심 친구 등록 오류:', error);
             alert('관심 친구 등록에 실패했습니다.');
@@ -161,9 +176,16 @@ const UserInfo: React.FC = React.memo(() => {
                     )}
                 />
             )}
+            {isModalOpen && (
+                <Modal
+                    content={modalContent}
+                    onClose={handleCloseModal}
+                />
+            )}
         </UserInfoContainer>
     );
 });
 
 export default UserInfo;
+
 
