@@ -135,7 +135,6 @@ const PostDetail: React.FC = () => {
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
-		isBackgroundDimmed: true,
 		Component: () => {
 			if (activeTab === 'menu') {
 				return <BottomSheetMenu {...bottomSheetMenuProps} />;

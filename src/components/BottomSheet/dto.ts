@@ -5,5 +5,4 @@ export interface BottomSheetProps {
 	componentProps?: any; // props가 있는 경우 객체 형태로 전달
 	onCloseBottomSheet: () => void; // BottomSheet을 닫는 함수
 	initialTab?: 'likes' | 'comments'; // 추가: initialTab 속성
-	isBackgroundDimmed?: boolean; // 선택적 속성으로 변경
 }
