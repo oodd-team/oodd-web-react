@@ -1,6 +1,9 @@
 export interface PostUploadModalProps {
 	onPrev: () => void;
 	selectedImages: string[];
+	initialContent?: string;
+	initialClothingInfos?: ClothingInfo[];
+	initialStyletag?: Styletag | null;
 }
 
 export interface Styletag {
@@ -37,8 +40,8 @@ export interface ToggleSwitchProps {
 }
 
 export interface Post {
-	photoUrls: string[],
-	content?: string,
-	styletags?: string[],
-	clothingInfo?: ClothingInfo[],
+	photoUrls: string[];
+	content?: string;
+	styletags?: string[];
+	clothingInfo?: ClothingInfo[];
 }

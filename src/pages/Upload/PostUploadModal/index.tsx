@@ -30,10 +30,16 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import request, { BaseResponse } from '../../../apis/core';
 
-const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
-	const [content, setContent] = useState<string>('');
-	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
-	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
+const PostUploadModal: React.FC<PostUploadModalProps> = ({
+	onPrev,
+	selectedImages,
+	initialContent = '',
+	initialClothingInfos = [],
+	initialStyletag = null,
+}) => {
+	const [content, setContent] = useState<string>(initialContent);
+	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
+	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(initialStyletag);
 	const [isOOTD, setIsOOTD] = useState(false);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);

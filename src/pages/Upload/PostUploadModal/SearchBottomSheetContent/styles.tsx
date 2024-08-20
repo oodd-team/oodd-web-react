@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-	height: calc(100vh - 5rem);
+	height: calc(100vh - 4rem);
 
 	.input_container {
 		display: flex;

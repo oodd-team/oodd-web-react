@@ -7,7 +7,8 @@ import InstaConnectModal from './InstaConnectModal';
 import InstaFeedSelectModal from './InstaFeedSelectModal';
 import ImageSelectModal from './ImageSelectModal';
 import ImageReviewModal from './ImageReviewModal';
-import { Post } from './dto';
+import { Post, ClothingInfo, Styletag, PostResponse } from './dto';
+import request from '../../apis/core';
 
 const Upload: React.FC = () => {
 	const location = useLocation();
@@ -19,6 +20,9 @@ const Upload: React.FC = () => {
 		postUpload: false,
 	});
 	const [selectedImages, setSelectedImages] = useState<string[]>([]);
+	const [content, setContent] = useState<string>('');
+	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
+	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [instagramPosts, setInstagramPosts] = useState<Post[]>([]);
 	const navigate = useNavigate();
 
@@ -33,12 +37,31 @@ const Upload: React.FC = () => {
 		}
 	}, [location.search, location.state]);
 
-	const handleInitialModalState = () => {
-		const state = location.state as { mode?: string };
+	const handleInitialModalState = async () => {
+		const state = location.state as { mode?: string; postId?: number };
 		if (state?.mode === 'image') {
 			setModals({ ...modals, imageSelect: true });
 		} else if (state?.mode === 'instagram') {
 			setModals({ ...modals, instaConnect: true });
+		} else if (state?.mode === 'edit' && state?.postId) {
+			await fetchPostDetails(state.postId);
+			setModals({ ...modals, postUpload: true });
+		}
+	};
+
+	const fetchPostDetails = async (postId: number) => {
+		try {
+			const response = await request.get<PostResponse>(`/posts/${postId}`);
+			if (response.isSuccess && response.result) {
+				const { photoUrls, content, styletags, clothingInfo } = response.result;
+
+				setSelectedImages(photoUrls);
+				setContent(content || '');
+				setClothingInfos(clothingInfo);
+				setSelectedStyletag(styletags.length ? { tag: styletags[0], color: '' } : null);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
@@ -51,6 +74,9 @@ const Upload: React.FC = () => {
 			postUpload: false,
 		});
 		setSelectedImages([]);
+		setContent('');
+		setClothingInfos([]);
+		setSelectedStyletag(null);
 		navigate('/profile');
 	};
 
@@ -122,7 +148,13 @@ const Upload: React.FC = () => {
 					/>
 				)}
 				{modals.postUpload && selectedImages.length > 0 && (
-					<PostUploadModal onPrev={handleOpenImageReview} selectedImages={selectedImages} />
+					<PostUploadModal
+						onPrev={handleOpenImageReview}
+						selectedImages={selectedImages}
+						initialContent={content}
+						initialClothingInfos={clothingInfos}
+						initialStyletag={selectedStyletag}
+					/>
 				)}
 			</UploadContainer>
 		</OODDFrame>

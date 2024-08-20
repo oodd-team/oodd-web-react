@@ -29,22 +29,42 @@ export interface InstaFeedSelectModalProps {
 
 export interface Post {
 	imgs: string[];
-    caption: string;
+	caption: string;
 }
 
 export interface PostUploadModalProps {
 	onPrev: () => void;
 	selectedImages: string[];
+	initialContent?: string;
+	initialClothingInfos?: ClothingInfo[];
+	initialStyletag?: Styletag | null;
 }
 
-export interface Hashtag {
+export interface Styletag {
 	tag: string;
 	color: string;
 }
 
 export interface ClothingInfo {
-	image: string;
+	image_url: string;
 	brand: string;
 	model: string;
+	modelNumber: number;
 	url: string;
+}
+
+export interface PostResponse {
+	isSuccess: boolean;
+	code: number;
+	message: string;
+	result: {
+		postId: number;
+		userId: number;
+		likes: any;
+		comments: any;
+		photoUrls: string[];
+		content: string;
+		styletags: string[];
+		clothingInfo: ClothingInfo[];
+	};
 }

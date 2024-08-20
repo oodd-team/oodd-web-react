@@ -2,15 +2,11 @@ import styled from 'styled-components';
 import { TopbarLayoutProps } from './dto';
 
 export const TopbarLayout = styled.div<TopbarLayoutProps>`
-	position: fixed;
-	top: 0;
-	left: 0;
 	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
 	width: 100%;
 	max-width: 32rem;
-	//height: 2.75rem;
-	height: 3.75rem;
+	height: 2.75rem;
 	justify-content: space-evenly;
 	align-items: center;
 	${({ $withBorder, theme }) =>
