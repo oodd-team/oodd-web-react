@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({ onReject }) => {
 						#classic
 					</StyledText>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav('/profile')}>
+				<SeeMore onClick={() => nav('/users/:userId')}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1.2 }} color={theme.colors.white}>
 						OOTD 더 보기 &gt;
 					</StyledText>
