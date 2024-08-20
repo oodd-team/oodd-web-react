@@ -1,13 +1,13 @@
 import styled, { keyframes, css } from 'styled-components';
 
-export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean; $isBackgroundDimmed: boolean }>`
+export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	z-index: 100;
-	background-color: ${(props) => (props.$isBackgroundDimmed ? 'rgba(0, 0, 0, 0.2)' : 'none')};
+	background-color: rgba(0, 0, 0, 0.3);
 	animation: ${(props) =>
 		props.$isOpenBottomSheet
 			? css`
