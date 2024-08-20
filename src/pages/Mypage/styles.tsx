@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const ProfileContainer = styled.div`
 	width: 100%;
 	flex-grow: 1;
-	max-width: 512px; /* 부모 요소의 최대 너비와 맞춤 */
 	margin: 0 auto; /* 중앙 정렬 */
 	display: flex;
 	flex-direction: column;
+	align-self: center;
 	box-sizing: border-box; /* 패딩을 포함한 전체 크기를 설정 */
 
 	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */

@@ -13,7 +13,6 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
-import Profile from './pages/Profile';
 import Upload from './pages/Upload';
 const App: React.FC = () => {
 	return (
@@ -30,7 +29,6 @@ const App: React.FC = () => {
 				<Route path="/Verification" element={<Verification />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
-				<Route path="/profile" element={<Profile />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />

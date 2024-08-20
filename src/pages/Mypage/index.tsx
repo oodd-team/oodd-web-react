@@ -22,6 +22,8 @@ import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
 import request from '../../apis/core';
 
+import ProfileActions from '../Profile';
+
 // API 응답에 맞는 타입 정의
 type PostItem = {
 	postId: number;
@@ -132,7 +134,6 @@ const Mypage: React.FC = () => {
 						<StatNumber>{totalLikes}</StatNumber>
 					</Stat>
 				</StatsContainer>
-
 				<PostsContainer>
 					{posts
 						.sort((a, b) => {
@@ -151,7 +152,7 @@ const Mypage: React.FC = () => {
 							/>
 						))}
 				</PostsContainer>
-
+				<ProfileActions /> {/* ProfileActions 컴포넌트 추가 */}
 				<NavBar />
 			</ProfileContainer>
 		</OODDFrame>
