@@ -68,7 +68,7 @@ const Profile: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileContainer>
-				<EditButton onClick={handleEditPost}>게시물 수정</EditButton>
+				<EditButton onClick={handleEditPost}>게시물 수정(우선 postId:139 고정)</EditButton>
 				<AddButton onClick={handleOpenSheet}>
 					<img src={button_plus} />
 				</AddButton>
