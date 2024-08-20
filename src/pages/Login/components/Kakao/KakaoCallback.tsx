@@ -20,14 +20,14 @@ const KakaoCallback: React.FC = () => {
                 .then(response => {
                     const statusCode = response.status; // 200 OK
                     console.log(JSON.stringify(response.data))
-                    const token = response.data.accessToken; 
-
-                    localStorage.setItem('id', '12'); // 응답으로 id가 오지 않기 때문에 여기서 설정해야 함 수정 필요?
-                    localStorage.removeItem('jwt_token');
-                    localStorage.setItem('jwt_token', token);
-                    const userid = localStorage.getItem('id');
                     if (statusCode === 200) { // 추후 Postman에서 api 호출해 보고 응답을 보고 적어야 함
                         // userid를 서버로 보내 해당 유저의 nickname 유무에 따른 리디렉션
+                        const token = response.data.accessToken; 
+                    
+                        localStorage.setItem('id', response.data.id); // 응답으로 id가 오지 않기 때문에 여기서 설정해야 함 수정 필요?
+                        localStorage.removeItem('jwt_token');
+                        localStorage.setItem('jwt_token', token);
+                        const userid = localStorage.getItem('id');
 
                         request.get<UserInfoDto>(`/users/${userid}`, {
                             headers: {
