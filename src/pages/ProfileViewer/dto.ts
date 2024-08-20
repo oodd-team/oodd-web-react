@@ -3,9 +3,9 @@ import BlockIcon from "../../assets/ProfileViewer/block.svg";
 
 export interface Post {
     postId: number;
-    firstPhoto: string;
     likes: number;
     isRepresentative: boolean;
+    firstPhoto: string;
 }
 
 export interface UserInfoProps {
@@ -24,6 +24,7 @@ export interface UserInfoProps {
 export interface PostItemProps {
     post: Post;
     isRepresentative: boolean;
+    firstPhoto: string;
 }
 
 export interface RequestComponentProps {

@@ -182,10 +182,10 @@ const ProfileViewer: React.FC = () => {
                 </CounterContainer>
                 <PostListContainer>
                 {representativePosts.length > 0 && representativePosts.map(post => (
-                        <PostItem key={post.postId} post={post} isRepresentative={true} />
+                        <PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={true} />
                     ))}
                     {otherPosts.length > 0 && otherPosts.map(post => (
-                        <PostItem key={post.postId} post={post} isRepresentative={false} />
+                        <PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
                     ))}
                 </PostListContainer>
                 {isBottomSheetOpen && activeBottomSheet === 'main' && (
