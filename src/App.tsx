@@ -24,9 +24,9 @@ const App: React.FC = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/Mypage" element={<Mypage />} />
-				<Route path="/post/:id" element={<PostDetail />} />
-				<Route path="/post/:id/:type" element={<PostDetail />} />
-				<Route path="/edit-profile" element={<ProfileEdit />} />
+				<Route path="/post/:postId" element={<PostDetail />} />
+				<Route path="/profile/edit/:userId" element={<ProfileEdit />} />
+
 				<Route path="/account-setting" element={<AccountSetting />} />
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />

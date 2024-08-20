@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-import {
-	ProfileEditContainer,
-	ProfilePic,
-	ProfilePicWrapper,
-	Label,
-	Row,
-	List,
-	ListItem,
-	ModalOverlay,
-	ModalContent,
-	ModalButtonContainer,
-	ModalButton,
-} from './styles';
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 
+import ConfirmationModal from '../../components/ConfirmationModal';
 import avatar from '../../assets/avatar.png';
 import NavbarAccSetting from '../../components/NavbarAccSetting';
 import { useNavigate } from 'react-router-dom';
@@ -90,17 +79,12 @@ const AccountSetting: React.FC = () => {
 					</ListItem>
 				</List>
 				{isLogoutModalOpen && (
-					<ModalOverlay>
-						<ModalContent>
-							<Label>이 기기에서 정말 로그아웃 할까요?</Label>
-							<ModalButtonContainer>
-								<ModalButton onClick={handleCloseModal}>취소</ModalButton>
-								<ModalButton onClick={handleConfirmLogout} style={{ color: 'red' }}>
-									로그아웃
-								</ModalButton>
-							</ModalButtonContainer>
-						</ModalContent>
-					</ModalOverlay>
+					<ConfirmationModal
+						content="이 기기에서 정말 로그아웃 할까요?"
+						isCancelButtonVisible={true}
+						confirm={{ text: '로그아웃', action: handleConfirmLogout }}
+						onCloseModal={handleCloseModal}
+					/>
 				)}
 			</ProfileEditContainer>
 		</OODDFrame>

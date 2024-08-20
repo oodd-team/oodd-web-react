@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../styles/theme';
 
 export const PostDetailContainer = styled.div`
 	max-width: 512px; /* 32rem */
@@ -81,6 +82,7 @@ export const IconRow = styled.div`
 export const IconWrapper = styled.div`
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 
 	img {
 		width: 24px; /* 아이콘 크기 */
@@ -147,4 +149,74 @@ export const BrandLink = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
+`;
+
+export const TabContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	border-bottom: 1px solid ${theme.colors.gray3};
+`;
+
+export const TabButton = styled.button<{ active: boolean }>`
+	flex: 1;
+	padding: 10px;
+	background-color: ${({ active }) => (active ? theme.colors.white : theme.colors.gray1)};
+	color: ${({ active }) => (active ? theme.colors.black : theme.colors.gray4)};
+	border: none;
+	cursor: pointer;
+	font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
+`;
+
+export const TabContent = styled.div`
+	padding: 20px;
+	background-color: ${theme.colors.white};
+`;
+
+export const ModalContainer = styled.div`
+	background: white;
+	border-radius: 10px 10px 0 0;
+	max-width: 512px;
+	position: flex;
+	height: 377px;
+	flex-shrink: 0;
+`;
+
+export const Tab = styled.div<{ active: boolean }>`
+	flex: 1;
+	text-align: center;
+	padding: 16px 0;
+	cursor: pointer;
+	font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+	border-bottom: ${(props) => (props.active ? '2px solid black' : 'none')};
+	color: var(--Color-black, #000);
+	text-align: center;
+	font-family: 'Pretendard Variable';
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 150%; /* 24px */
+`;
+
+export const ContentContainer = styled.div`
+	padding: 16px;
+`;
+
+export const UserItem = styled.div`
+	display: flex;
+	align-items: center;
+	padding: 8px 0;
+	border-bottom: 1px solid #eee;
+`;
+
+export const CircleIcon = styled.div`
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background-color: red; /* 동그라미 색상 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: bold;
+	margin-right: 8px;
 `;

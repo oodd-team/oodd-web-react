@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
 	ProfileContainer,
 	Header,
@@ -19,25 +20,89 @@ import NavBar from '../../components/NavBar';
 import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
-import { useNavigate } from 'react-router-dom';
-import { PostData } from './dto';
-import postImage from '../../assets/postImage.png';
+import request from '../../apis/core';
+
+// API 응답에 맞는 타입 정의
+type PostItem = {
+	postId: number;
+	userId: number;
+	likes: number;
+	firstPhoto: string;
+	isRepresentative: boolean;
+	commentsCount?: number; // Optional since it might not be included for other users
+};
+
+type PostsResponse = {
+	isSuccess: boolean;
+	code: number;
+	message: string;
+	result: {
+		totalPosts: number;
+		totalLikes: number;
+		posts: PostItem[];
+	};
+};
+
+type UserResponse = {
+	id: number;
+	name: string;
+	email: string;
+	nickname: string | null;
+	phoneNumber: string | null;
+	profilePictureUrl: string;
+	bio: string | null;
+	joinedAt: string;
+};
 
 const Mypage: React.FC = () => {
+	const { userId } = useParams<{ userId: string }>(); // URL에서 userId 가져오기
 	const navigate = useNavigate();
+	const [user, setUser] = useState<UserResponse | null>(null);
+	const [posts, setPosts] = useState<PostItem[]>([]);
+	const [totalPosts, setTotalPosts] = useState(0);
+	const [totalLikes, setTotalLikes] = useState(0);
+	const [totalComments, setTotalComments] = useState(0); // Comments count
 
 	const handlePostClick = (postId: string) => {
 		navigate(`/post/${postId}`);
 	};
 
-	const posts: PostData[] = [
-		{ id: '1', imgUrl: postImage, likes: 11, comments: 5 },
-		{ id: '2', imgUrl: postImage, likes: 22, comments: 10 },
-		{ id: '3', imgUrl: postImage, likes: 33, comments: 15 },
-		{ id: '4', imgUrl: postImage, likes: 44, comments: 20 },
-		{ id: '5', imgUrl: postImage, likes: 55, comments: 25 },
-		{ id: '6', imgUrl: postImage, likes: 66, comments: 30 },
-	];
+	// 사용자 정보 가져오기 함수
+	const fetchUserData = async () => {
+		try {
+			const response = await request.get<UserResponse>(`/users/${2}`);
+			setUser(response);
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+	};
+
+	// API에서 포스트 리스트를 가져오는 함수
+	const handlePostList = async () => {
+		try {
+			const response = await request.get<PostsResponse>(`/posts?userId=${2}`);
+			if (response.isSuccess) {
+				const { totalPosts, totalLikes, posts } = response.result;
+				setTotalPosts(totalPosts);
+				setTotalLikes(totalLikes);
+				setPosts(posts);
+
+				// 코멘트 수 합산
+				const totalComments = posts.reduce((sum, post) => sum + (post.commentsCount || 0), 0);
+				setTotalComments(totalComments);
+			} else {
+				console.error('Unexpected response:', response.message);
+			}
+		} catch (error) {
+			console.error('Error fetching posts:', error);
+		}
+	};
+
+	// 컴포넌트가 마운트될 때 사용자 정보와 포스트 리스트를 가져옴
+	useEffect(() => {
+		fetchUserData();
+		handlePostList();
+	}, [userId]);
 
 	return (
 		<OODDFrame>
@@ -45,39 +110,38 @@ const Mypage: React.FC = () => {
 				<NavbarProfile />
 				<Header>
 					<AvatarWrapper>
-						<Avatar src={avatarImage} alt="User Avatar" />
+						<Avatar src={user?.profilePictureUrl || avatarImage} alt="User Avatar" />
 					</AvatarWrapper>
 					<UserInfo>
-						<Username>IDID</Username>
-						<Bio>간단 소개글.....</Bio>
-						<Bio>두 줄까지 가능</Bio>
+						<Username>{user?.name || 'Loading...'}</Username>
+						<Bio>{user?.bio || '소개글이 없습니다.'}</Bio>
 					</UserInfo>
 				</Header>
 				<ButtonSecondary />
 				<StatsContainer>
 					<Stat>
 						<StatLabel>OOTD</StatLabel>
-						<StatNumber>6</StatNumber>
+						<StatNumber>{totalPosts}</StatNumber>
 					</Stat>
 					<Stat>
 						<StatLabel>코멘트</StatLabel>
-						<StatNumber>110</StatNumber>
+						<StatNumber>{totalComments}</StatNumber>
 					</Stat>
 					<Stat>
 						<StatLabel>좋아요</StatLabel>
-						<StatNumber>110</StatNumber>
+						<StatNumber>{totalLikes}</StatNumber>
 					</Stat>
 				</StatsContainer>
 
 				<PostsContainer>
-					{posts.map((post, index) => (
+					{posts.map((post) => (
 						<Post
-							key={post.id}
-							imgUrl={post.imgUrl}
+							key={post.postId}
+							imgUrl={post.firstPhoto}
 							likes={post.likes}
-							comments={post.comments}
-							onClick={() => handlePostClick(post.id)}
-							isFirst={index === 0}
+							comments={post.commentsCount || 0}
+							onClick={() => handlePostClick(post.postId.toString())}
+							isFirst={post.isRepresentative}
 						/>
 					))}
 				</PostsContainer>

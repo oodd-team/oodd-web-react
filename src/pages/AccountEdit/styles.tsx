@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	max-width: 32rem; /* 512px */
 	margin: 0 auto;
-	padding: 1.25rem; /* 20px */
+	padding: 40px; /* 20px */
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `;
 
 export const Section = styled.div`
