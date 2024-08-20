@@ -1,8 +1,7 @@
-import React from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon } from "./styles";
-import { useRecoilValue, useRecoilState} from 'recoil';
-import { userDetailsState, isBottomSheetOpenState, interestedState, friendState } from '../../../../recoil/atoms';
+import { useRecoilState } from 'recoil';
+import { userDetailsState, isBottomSheetOpenState, friendState } from '../../../../recoil/atoms';
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
@@ -10,22 +9,47 @@ import StatSvg from '../../../../assets/ProfileViewer/star.svg';
 import MsgSvg from '../../../../assets/ProfileViewer/message_send.svg';
 import RequestComponent from "../RequestComponent";
 import BottomSheet from "../../../../components/BottomSheet";
+import request from "../../../../apis/core";
+import { InterestDto } from "./InterestDto";
+import { UserInfoProps } from "../../dto";
 
 const UserInfo: React.FC = React.memo(() => {
-    const userDetails = useRecoilValue(userDetailsState);
-    
-    
+    const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
-    const [interested, setInterested] = useRecoilState(interestedState);
+    const [interested, setInterested] = useState<boolean | undefined>(undefined);
     const [friend, setFriend] = useRecoilState(friendState);
 
-    if (!userDetails) return null; // 사용자의 정보, 즉 userDetails가 없으면 아무것도 렌더링하지 않음
+    if (!userDetails) return null; // 사용자의 정보가 없으면 아무것도 렌더링하지 않음
 
-    const { id, nickname, bio, userImg } = userDetails; // 서버로부터 가져 온 사용자 정보를 꺼내서 사용
+    const { id, nickname, bio, userImg } = userDetails;
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
 
-    const userId= localStorage.getItem('id');
-    const token = localStorage.getItem('jwt_token');
+    useEffect(() => {
+        if (!id) return;
+
+        const storedUserDetails = localStorage.getItem(`userDetails_${id}`);
+        if (storedUserDetails) {
+            try {
+                const parsedDetails = JSON.parse(storedUserDetails);
+                setInterested(parsedDetails.isInterested || false);
+
+                setUserDetails(prevDetails => {
+                    if (!prevDetails || prevDetails.isInterested === parsedDetails.isInterested) {
+                        return prevDetails;
+                    }
+                    return {
+                        ...prevDetails,
+                        isInterested: parsedDetails.isInterested || false,
+                    }; // 이전 상태와 비교하여 필요한 경우 상태를 업데이트
+                });
+            } catch (error) {
+                console.error('JSON 파싱 오류:', error);
+            }
+        }
+    }, [id, setUserDetails]);
+
+    const userId = localStorage.getItem('id');
+
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
     };
@@ -36,19 +60,20 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleInterestedClick = async () => {
         try {
-            console.log(userId,id);
-            const response = await axios.patch(`https://api-dev.ootd.today/users/interests`, {
+            const response = await request.patch<InterestDto>(`/user-interests`, {
                 userId: userId,
-                friendId: id,
-              },{
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-              });        
-    
-            console.log(response.data.message); // 서버로부터의 응답 메시지
-            setInterested(!interested); // 관심친구 상태 토글
+                friendId: id
+            });
+
+            const isInterested = response.result.status === 'activated';
+            const updatedUserDetails: UserInfoProps = {
+                ...userDetails,
+                isInterested,
+            };
+
+            localStorage.setItem(`userDetails_${id}`, JSON.stringify(updatedUserDetails));
+            setUserDetails(updatedUserDetails);
+            setInterested(isInterested);
         } catch (error) {
             console.error('관심 친구 등록 오류:', error);
             alert('관심 친구 등록에 실패했습니다.');
@@ -79,7 +104,7 @@ const UserInfo: React.FC = React.memo(() => {
                                 친구 신청
                             </StyledText>
                         </Button>
-                        <Button $backgroundcolor="white" onClick={handleInterestedClick}> {/*관심 친구 버튼이 눌리면 interest 상태 업데이트 되어 버튼 렌더링 변경*/}
+                        <Button $backgroundcolor="white" onClick={handleInterestedClick}>
                             <Icon src={StatSvg} alt="star icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}>
                                 관심 친구
@@ -140,3 +165,4 @@ const UserInfo: React.FC = React.memo(() => {
 });
 
 export default UserInfo;
+

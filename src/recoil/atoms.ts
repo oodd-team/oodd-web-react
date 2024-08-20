@@ -11,7 +11,6 @@ export const userIdState = atom({
     default: null,
 });
 
-
 export const tokenState = atom({
     key: 'tokenState',
     default: null,
@@ -19,11 +18,6 @@ export const tokenState = atom({
 
 export const isBottomSheetOpenState = atom<boolean>({
     key: 'isBottomSheetOpenState',
-    default: false,
-});
-
-export const interestedState = atom<boolean>({
-    key: 'interestedState',
     default: false,
 });
 
