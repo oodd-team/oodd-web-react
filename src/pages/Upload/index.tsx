@@ -24,6 +24,7 @@ const Upload: React.FC = () => {
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
 	const [instagramPosts, setInstagramPosts] = useState<Post[]>([]);
+	const [postId, setPostId] = useState<number | null>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -154,6 +155,7 @@ const Upload: React.FC = () => {
 						initialContent={content}
 						initialClothingInfos={clothingInfos}
 						initialStyletag={selectedStyletag}
+						postId={postId}
 					/>
 				)}
 			</UploadContainer>

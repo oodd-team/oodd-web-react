@@ -1,14 +1,13 @@
 // src/pages/ProfilePage/index.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ProfileContainer, AddButton } from './styles';
+import { ProfileContainer, EditButton, AddButton } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavBar from '../../components/NavBar';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
-
 import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
@@ -62,9 +61,14 @@ const Profile: React.FC = () => {
 		navigate('/upload', { state: { mode: 'image' } });
 	};
 
+	const handleEditPost = () => {
+		navigate('/upload', { state: { mode: 'edit', postId: 139 } });
+	};
+
 	return (
 		<OODDFrame>
 			<ProfileContainer>
+				<EditButton onClick={handleEditPost}>게시물 수정</EditButton>
 				<AddButton onClick={handleOpenSheet}>
 					<img src={button_plus} />
 				</AddButton>

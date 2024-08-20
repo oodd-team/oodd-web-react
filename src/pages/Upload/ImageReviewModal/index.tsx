@@ -3,7 +3,7 @@ import { Content } from './styles';
 import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
 import back from '../../../assets/Upload/back.svg';
-import { ImageReviewModalProps } from './dto';
+import { ImageReviewModalProps } from '../dto';
 import ImageSwiper from './ImageSwiper';
 
 const ImageReviewModal: React.FC<ImageReviewModalProps> = ({

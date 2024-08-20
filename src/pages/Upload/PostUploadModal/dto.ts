@@ -44,4 +44,5 @@ export interface Post {
 	content?: string;
 	styletags?: string[];
 	clothingInfo?: ClothingInfo[];
+	isRepresentive: boolean;
 }

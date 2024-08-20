@@ -25,7 +25,8 @@ import styleTag from '../../../assets/Upload/styleTag.svg';
 import pin from '../../../assets/Upload/pin.svg';
 import next from '../../../assets/Upload/next.svg';
 import next_up from '../../../assets/Upload/next_up.svg';
-import { PostUploadModalProps, ClothingInfo, Styletag, Post } from './dto';
+import { PostUploadModalProps } from '../dto';
+import { ClothingInfo, Styletag, Post } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import request, { BaseResponse } from '../../../apis/core';
@@ -36,6 +37,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	initialContent = '',
 	initialClothingInfos = [],
 	initialStyletag = null,
+	postId = null,
 }) => {
 	const [content, setContent] = useState<string>(initialContent);
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
@@ -114,20 +116,23 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
 
-			// clothingInfos 배열에서 image_url 필드를 제거한 새로운 배열을 생성
-			//const processedClothingInfos = clothingInfos.map(({ image_url, ...rest }) => rest);
-
 			const postData: Post = {
 				photoUrls: uploadedImages,
 				content,
 				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
 				clothingInfo: clothingInfos,
-				//clothingInfo: processedClothingInfos
+				isRepresentive: isOOTD,
 			};
 			console.log(postData);
 
-			// 서버에 게시물 데이터 업로드
-			const response = await request.post<BaseResponse>(`/posts`, postData);
+			let response;
+			if (postId) {
+				// 게시물 수정 (PATCH)
+				response = await request.patch<BaseResponse>(`/posts/${postId}`, postData);
+			} else {
+				// 새 게시물 업로드 (POST)
+				response = await request.post<BaseResponse>(`/posts`, postData);
+			}
 
 			if (!response.isSuccess) {
 				throw new Error(response.message || 'Failed');
@@ -214,7 +219,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 				</PinnedPostToggleContainer>
 			</Content>
 
-			<BottomButton content="공유" onClick={handleSubmit} disabled={isLoading} />
+			<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
 
 			{isSearchBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
 		</>

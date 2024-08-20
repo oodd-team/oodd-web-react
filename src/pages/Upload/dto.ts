@@ -15,7 +15,7 @@ export interface ImageSelectModalProps {
 export interface InstaConnectModalProps {
 	//onIdSelect: (id: string) => void;
 	onClose: () => void;
-	onNext: () => void;
+	onNext: (posts: Post[]) => void;
 	accessToken?: string;
 }
 
@@ -38,6 +38,7 @@ export interface PostUploadModalProps {
 	initialContent?: string;
 	initialClothingInfos?: ClothingInfo[];
 	initialStyletag?: Styletag | null;
+	postId?: number | null;
 }
 
 export interface Styletag {

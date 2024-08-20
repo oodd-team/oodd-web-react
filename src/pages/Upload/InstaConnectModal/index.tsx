@@ -8,8 +8,7 @@ import ConfirmationModal from '../../../components/ComfirmationModal';
 import { ConfirmationModalProps } from '../../../components/ComfirmationModal/dto';
 import { StyledText } from '../../../components/Text/StyledText';
 import close from '../../../assets/Upload/close.svg';
-import { InstaConnectModalProps } from './dto';
-import { Post } from '../dto';
+import { InstaConnectModalProps, Post } from '../dto';
 
 const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, accessToken }) => {
 	const [instagramID, setInstagramID] = useState('');
