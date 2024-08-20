@@ -5,34 +5,31 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import request from '../../apis/core';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
-import { useNavigate } from 'react-router-dom';
-
-type UserProfileResponse = {
-	id: number;
-	name: string;
-	email: string;
-	nickname: string | null;
-	phoneNumber: string | null;
-	profilePictureUrl: string | null;
-	bio: string | null;
-	joinedAt: string;
-};
+import { BaseResponse } from '../PostDetail/dto';
+import BottomButton from '../../components/BottomButton';
+import { UserProfileResponse } from './dto';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { userId } = useParams<{ userId: string }>();
 	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
-	const navigate = useNavigate(); // useNavigate 훅 사용
+	const [nickname, setNickname] = useState<string>('');
+	const [bio, setBio] = useState<string>('');
+	const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
 			try {
-				const response = await request.get<UserProfileResponse>(`/users/2`);
+				const response = await request.get<UserProfileResponse>(`/users/${2}`);
 				setUserProfile(response);
+				setNickname(response.nickname || response.name);
+				setBio(response.bio || '');
+				setProfilePictureUrl(response.profilePictureUrl);
 			} catch (error) {
 				console.error('Error fetching user profile:', error);
 			}
@@ -48,8 +45,28 @@ const ProfileEdit: React.FC = () => {
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
-			// 프로필 사진 업데이트 로직 추가
+			const imageUrl = URL.createObjectURL(file);
+			setProfilePictureUrl(imageUrl);
 			console.log('Selected file:', file);
+		}
+	};
+
+	const handleSave = async () => {
+		try {
+			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${2}`, {
+				nickname,
+				profilePictureUrl,
+				bio,
+			});
+
+			if (response.isSuccess) {
+				navigate(`/mypage`); // 마이페이지로 이동
+			} else {
+				alert('프로필 수정에 실패했습니다.');
+			}
+		} catch (error) {
+			console.error('Error updating profile:', error);
+			alert('프로필 수정 중 오류가 발생했습니다.');
 		}
 	};
 
@@ -64,7 +81,7 @@ const ProfileEdit: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={userProfile.profilePictureUrl || avatar} alt="프로필 사진" />
+						<img src={profilePictureUrl || avatar} alt="프로필 사진" />
 					</ProfilePic>
 					<Button onClick={handleButtonClick}>
 						<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
@@ -77,14 +94,18 @@ const ProfileEdit: React.FC = () => {
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						닉네임
 					</StyledText>
-					<Input type="text" defaultValue={userProfile.nickname || userProfile.name} />
+					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
 				</Row>
 				<Row>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						소개글
 					</StyledText>
-					<Input defaultValue={userProfile.bio || ''} />
+					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
+				<BottomButton
+					content="저장하기" // 버튼에 표시할 텍스트
+					onClick={handleSave} // 버튼 클릭 시 호출할 함수
+				/>
 			</ProfileEditContainer>
 		</OODDFrame>
 	);

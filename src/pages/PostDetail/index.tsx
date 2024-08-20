@@ -230,18 +230,9 @@ const PostDetail: React.FC = () => {
 		}
 	};
 
-	const handleEditPost = async () => {
-		try {
-			const response = await request.patch<BaseResponse>(`/posts/${postId}`);
-			if (response.isSuccess) {
-				console.log('Post updated successfully:', response.result);
-				navigate(`/post/${postId}`); // 예시로, 포스트 상세 페이지로 이동
-			} else {
-				console.error('Failed to update post:', response.message);
-			}
-		} catch (error) {
-			console.error('Error updating post:', error);
-		}
+	//수정페이지!!!!!!!!!!!!!!페이지이름 받으면 수정하기
+	const handleEditPost = () => {
+		navigate(`/edit/${postId}`);
 	};
 
 	const handlePinPost = async () => {
