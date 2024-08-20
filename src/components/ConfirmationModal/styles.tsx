@@ -49,5 +49,8 @@ export const Button = styled.button`
 	align-items: center;
 	flex: 1;
 	height: 100%;
-	border-right: 1px solid ${({ theme }) => theme.colors.gray2};
+
+	& + & {
+		border-left: 1px solid ${({ theme }) => theme.colors.gray2};
+	}
 `;

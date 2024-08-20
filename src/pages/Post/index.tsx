@@ -34,6 +34,7 @@ import productImg from './../../assets/Post/productImg.svg';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 import BottomButton from '../../components/BottomButton/index.tsx';
+import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 
 const Post: React.FC = () => {
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
@@ -41,7 +42,8 @@ const Post: React.FC = () => {
 	const [showInput, setShowInput] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [modalContent, setModalContent] = useState('');
+	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // 추가
+	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const nav = useNavigate();
 
@@ -74,6 +76,7 @@ const Post: React.FC = () => {
 				text: '차단하기',
 				action: () => {
 					setIsOpenBottomSheet(false);
+					setIsConfirmationModalOpen(true);
 				},
 				icon: block,
 			},
@@ -166,11 +169,30 @@ const Post: React.FC = () => {
 		},
 	};
 
+	const confirmationModalProps = {
+		content: `${userName}님의 OOTD를 차단합니다.`,
+		isCancelButtonVisible: true,
+		confirm: {
+			text: '차단하기',
+			action: () => {
+				setIsConfirmationModalOpen(false);
+				setIsBlockedModalOpen(true); // 차단 완료 모달 열기
+			},
+		},
+		onCloseModal: () => {
+			setIsConfirmationModalOpen(false);
+		},
+	};
+
 	return (
 		<OODDFrame>
 			{isOpenBottomSheet && <BottomSheet {...bottomSheetProps} />}
 			{isOpenReportSheet && <BottomSheet {...reportSheetProps} />}
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
+			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
+			{isBlockedModalOpen && (
+				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
+			)}
 			<PostTopBar />
 			<PostWrapper>
 				<PostInfo>
