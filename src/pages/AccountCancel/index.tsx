@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper, StyledButton } from './styles';
-import NavbarCancel from '../../components/NavbarCancel';
+import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
+import { useNavigate } from 'react-router-dom';
+
+import TopBar from '../../components/TopBar';
+import back from '../../assets/back.svg';
+
+import BottomButton from '../../components/BottomButton';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
+	const navigate = useNavigate(); // useNavigate 훅 사용
 
 	const handleCheckboxChange = () => {
 		setIsChecked(!isChecked);
@@ -15,7 +21,8 @@ const AccountCancel: React.FC = () => {
 	return (
 		<OODDFrame>
 			<CancelContainer>
-				<NavbarCancel />
+				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<SubTitle>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color={theme.colors.black}>
 						OOTD 탈퇴 전 확인하세요!
@@ -46,10 +53,11 @@ const AccountCancel: React.FC = () => {
 						</StyledText>
 					</Text>
 				</CheckboxWrapper>
-				<StyledButton onClick={handleCheckboxChange} disabled={!isChecked} isChecked={isChecked}>
-					탈퇴하기
-				</StyledButton>
 			</CancelContainer>
+			<BottomButton
+				content="탈퇴하기" // 버튼에 표시할 텍스트
+				onClick={handleCheckboxChange} // 버튼 클릭 시 호출할 함수
+			/>
 		</OODDFrame>
 	);
 };

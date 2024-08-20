@@ -134,17 +134,24 @@ const Mypage: React.FC = () => {
 				</StatsContainer>
 
 				<PostsContainer>
-					{posts.map((post) => (
-						<Post
-							key={post.postId}
-							imgUrl={post.firstPhoto}
-							likes={post.likes}
-							comments={post.commentsCount || 0}
-							onClick={() => handlePostClick(post.postId.toString())}
-							isFirst={post.isRepresentative}
-						/>
-					))}
+					{posts
+						.sort((a, b) => {
+							if (b.isRepresentative && !a.isRepresentative) return 1; // b가 대표 포스트일 때 a보다 앞에 위치
+							if (a.isRepresentative && !b.isRepresentative) return -1; // a가 대표 포스트일 때 b보다 앞에 위치
+							return 0; // 둘 다 대표 포스트가 아니거나 둘 다 대표 포스트일 경우, 순서를 유지
+						})
+						.map((post) => (
+							<Post
+								key={post.postId}
+								imgUrl={post.firstPhoto}
+								likes={post.likes}
+								comments={post.commentsCount || 0}
+								onClick={() => handlePostClick(post.postId.toString())}
+								isFirst={post.isRepresentative}
+							/>
+						))}
 				</PostsContainer>
+
 				<NavBar />
 			</ProfileContainer>
 		</OODDFrame>

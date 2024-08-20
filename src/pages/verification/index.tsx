@@ -14,11 +14,14 @@ import {
 } from './styles';
 
 import { OODDFrame } from '../../components/Frame/Frame';
-
-import NavbarVerification from '../../components/NavbarVerification';
 import { StyledText } from '../../components/Text/StyledText';
+import TopBar from '../../components/TopBar';
+import back from '../../assets/back.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Verification: React.FC = () => {
+	const navigate = useNavigate(); // useNavigate 훅 사용
+
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [verificationCode, setVerificationCode] = useState('');
@@ -101,7 +104,8 @@ const Verification: React.FC = () => {
 	return (
 		<OODDFrame>
 			<VerificationWrapper>
-				<NavbarVerification />
+				<TopBar text="본인인증" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<Container>
 					<Title>
 						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
@@ -143,6 +147,7 @@ const Verification: React.FC = () => {
 								<Timer>{formatTime(timer)}</Timer>
 							</VerificationInputWrapper>
 						)}
+
 						<Button type="submit" disabled={isVerificationSent && verificationCode.length !== 6}>
 							{isVerificationSent ? '인증하기' : '인증번호 받기'}
 						</Button>

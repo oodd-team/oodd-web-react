@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
-export const VerificationWrapper = styled.div``;
-
-export const Container = styled.div`
-	max-width: 32rem;
+export const VerificationWrapper = styled.div`
 	margin: 0 auto;
-	padding: 1.25rem;
+	width: 100%;
+	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
+	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
-	position: relative;
+	align-items: center;
+`;
+
+export const Container = styled.div`
+	margin-top: 5px; /* TopBar 높이만큼 위로 밀기 */
+	padding: 1rem;
 `;
 
 export const Title = styled.h1`

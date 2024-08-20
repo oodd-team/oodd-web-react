@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	max-width: 32rem; /* 512px */
+	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
+	width: 100%;
+	max-width: 600px;
 	margin: 0 auto;
 	padding: 1.25rem; /* 20px */
 	display: flex;
@@ -13,7 +15,7 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 1.25rem; /* 20px */
+	margin-bottom: 50px; /* 20px */
 `;
 
 export const ProfilePic = styled.div`
@@ -23,6 +25,7 @@ export const ProfilePic = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-top: 2.125rem; /* 34px */
+	margin-bottom: 15px; /* 20px */
 
 	img {
 		width: 100%;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const ProfileEditContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
+	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
 
 	padding: 1.25rem; /* 20px */
 	display: flex;
@@ -34,9 +35,7 @@ export const ProfilePic = styled.div`
 `;
 
 export const Label = styled.div`
-	font-size: 0.875rem; /* 14px */
-	color: #333;
-	margin-top: 3.75rem; /* 60px */
+	margin-top: 600px; /* 60px */
 	text-align: center;
 `;
 
@@ -45,7 +44,7 @@ export const Row = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 0.875rem; /* 14px */
+	margin-bottom: 1.875rem; /* 14px */
 
 	${Label} {
 		width: auto;
@@ -60,7 +59,7 @@ export const FileInput = styled.input`
 export const List = styled.ul`
 	width: 100%;
 	padding: 0;
-	margin-top: 12.5rem; /* 200px */
+	margin-top: 300px; /* 200px */
 	list-style: none;
 	border-top: 1px solid #eee;
 `;
@@ -68,7 +67,7 @@ export const List = styled.ul`
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 0.9375rem 1.25rem; /* 15px 20px */
+	padding: 15px 1.25rem; /* 15px 20px */
 	border-bottom: 1px solid #eee;
 	cursor: pointer;
 

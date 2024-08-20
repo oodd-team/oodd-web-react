@@ -2,14 +2,19 @@ import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
 	margin: 0 auto;
-	padding: 40px; /* 20px */
+	width: 100%;
+	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
+	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	align-items: center;
 `;
 
 export const Section = styled.div`
+	margin-top: 1.875rem; /* 30px */
+
 	margin-bottom: 1.875rem; /* 30px */
+	width: 100%; /* Section이 부모 컨테이너의 전체 너비를 차지하도록 설정 */
 `;
 
 export const SectionTitle = styled.div`
@@ -17,6 +22,7 @@ export const SectionTitle = styled.div`
 	font-weight: bold;
 	margin-bottom: 0.625rem; /* 10px */
 	margin-top: 1.125rem; /* 18px */
+	text-align: left; /* 텍스트를 왼쪽 정렬 */
 `;
 
 export const SNSInfo = styled.div`
@@ -45,6 +51,7 @@ export const Text = styled.div`
 	font-size: 0.875rem; /* 14px */
 	color: #666;
 	margin-top: 2.1875rem;
+	text-align: left; /* 텍스트를 왼쪽 정렬 */
 `;
 
 export const SnsConnection = styled.div`
@@ -52,17 +59,20 @@ export const SnsConnection = styled.div`
 	font-weight: bold;
 	color: #333;
 	margin-bottom: 0.625rem; /* 10px */
+	text-align: left; /* 텍스트를 왼쪽 정렬 */
 `;
 
 export const MemberInfo = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 35px;
+	width: 100%; /* 부모 컨테이너의 전체 너비를 차지하도록 설정 */
 `;
 
 export const MemberInfoRow = styled.div`
 	display: flex;
-	justify-content: space-between;
+	align-items: center;
+	justify-content: flex-start; /* 아이템들을 왼쪽으로 정렬 */
 	margin-bottom: 0.625rem; /* 10px */
 	margin-top: 10px;
 `;
@@ -72,26 +82,13 @@ export const Label = styled.div`
 	color: #333;
 	display: flex;
 	align-items: center;
+	width: 6.25rem; /* 100px, 라벨의 고정 너비 설정 */
 `;
 
 export const Info = styled.div`
 	font-size: 0.875rem; /* 14px */
 	color: #999;
 	margin-left: 0.625rem; /* 10px */
-`;
-
-export const VerifyButton = styled.button`
-	width: 100%;
-	padding: 1.25rem; /* 20px */
-	margin-top: 12.5rem; /* 200px */
-	font-size: 0.875rem; /* 14px */
-	color: #fff;
-	background-color: #000;
-	border: none;
-	border-radius: 0.3125rem; /* 5px */
-	cursor: pointer;
-
-	&:hover {
-		background-color: #333;
-	}
+	flex-grow: 1; /* 라벨과 함께 라인을 맞추기 위해 넓이를 확장 */
+	text-align: left; /* 텍스트를 왼쪽 정렬 */
 `;

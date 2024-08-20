@@ -8,6 +8,7 @@ export const ProfileContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box; /* 패딩을 포함한 전체 크기를 설정 */
+
 	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
 `;
 

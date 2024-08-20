@@ -4,7 +4,6 @@ import { OODDFrame } from '../../components/Frame/Frame';
 
 import ConfirmationModal from '../../components/ConfirmationModal';
 import avatar from '../../assets/avatar.png';
-import NavbarAccSetting from '../../components/NavbarAccSetting';
 import { useNavigate } from 'react-router-dom';
 import useredit from './assets/useredit.svg';
 import exit from './assets/exit.svg';
@@ -12,6 +11,8 @@ import cancleaccount from './assets/cancleaccount.svg';
 import next from './assets/next.svg';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
+import TopBar from '../../components/TopBar';
+import back from '../../assets/back.svg';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -43,16 +44,25 @@ const AccountSetting: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<NavbarAccSetting />
+				<TopBar text="계정 관리" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<ProfilePicWrapper>
 					<ProfilePic>
 						<img src={avatar} alt="프로필 사진" />
 					</ProfilePic>
 					<Row>
-						<Label>IDID</Label>
+						<Label>
+							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+								IDID
+							</StyledText>
+						</Label>
 					</Row>
 					<Row>
-						<Label>이름 | thscks000@naver.com</Label>
+						<Label>
+							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+								이름 | thscks000@naver.com
+							</StyledText>
+						</Label>
 					</Row>
 				</ProfilePicWrapper>
 				<List>

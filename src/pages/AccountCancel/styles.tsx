@@ -6,9 +6,12 @@ interface ButtonProps {
 
 export const CancelContainer = styled.div`
 	margin: 0 auto;
+	width: 100%;
+	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
 	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 `;
 
 export const SubTitle = styled.h3`

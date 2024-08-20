@@ -23,14 +23,15 @@ import {
 	TabContainer,
 } from './styles';
 
+import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import NavbarDetail from '../../components/NavbarDetail';
 import mockImage from './mockImage.png';
 import heartIcon from './heartIcon.svg';
 import commentIcon from './commentIcon.svg';
 import nextIcon from './nextIcon.svg';
+import back from '../../assets/back.svg';
 
 import ConfirmationModal from '../../components/ConfirmationModal';
 import DeleteIcon from './assets/DeleteIcon.png';
@@ -42,6 +43,7 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import request from '../../apis/core';
+import { UserResponse } from '../Mypage/dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 
 const PostDetail: React.FC = () => {
@@ -53,6 +55,7 @@ const PostDetail: React.FC = () => {
 	const [comments, setComments] = useState<CommentsResponse['result']['comments']>([]);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const navigate = useNavigate();
+	const [user, setUser] = useState<UserResponse | null>(null);
 
 	// 좋아요 리스트 불러오기
 	const fetchLikes = async () => {
@@ -81,6 +84,23 @@ const PostDetail: React.FC = () => {
 			console.error('Error fetching comments:', error);
 		}
 	};
+
+	// 유저 정보 가져오기
+	const fetchUserData = async () => {
+		try {
+			const response = await request.get<UserResponse>(`/users/${2}`);
+			if (response) {
+				setUser(response);
+			}
+		} catch (error) {
+			console.error('Error fetching user data:', error);
+		}
+	};
+
+	useEffect(() => {
+		fetchPostDetail();
+		fetchUserData(); // 유저 데이터 불러오기
+	}, [postId]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -198,34 +218,8 @@ const PostDetail: React.FC = () => {
 
 	// OOTD 수정하기 기능 추가
 	const handleEditPost = async () => {
-		if (!postDetail) return;
-
-		// 실제 사용자가 입력한 데이터를 여기에 할당합니다.
-		const updatedData = {
-			photoUrls: ['http://abc', 'http://abc'],
-			content: 'abc',
-			styletags: ['#sporty'],
-			clothingInfo: [
-				{
-					imageUrl: 'http://abc',
-					brand: 'somin',
-					model: 'somin',
-					modelNumber: '12345',
-					url: 'http://somin.com/somin',
-				},
-				{
-					imageUrl: 'http://hi',
-					brand: 'hello',
-					model: 'lexi',
-					modelNumber: '1000',
-					url: 'http://somin.com/somin',
-				},
-			],
-			isRepresentative: true,
-		};
-
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/${postId}`, updatedData);
+			const response = await request.patch<BaseResponse>(`/posts/${postId}`);
 			if (response.isSuccess) {
 				console.log('Post updated successfully:', response.result);
 				navigate(`/post/${postId}`); // 예시로, 포스트 상세 페이지로 이동
@@ -239,15 +233,19 @@ const PostDetail: React.FC = () => {
 
 	const handlePinPost = async () => {
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/82/isRepresentative/2`);
-			if (response.message === 'Post pinned successfully') {
-				console.log(response.message);
-				navigate('/mypage'); // 성공적으로 작업 후 다른 페이지로 이동
+			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${2}`, {
+				isRepresentative: true,
+			});
+			if (response.isSuccess) {
+				console.log('Post pinned successfully:', response.result);
+				// PostDetail 재로드
+				fetchPostDetail();
+				navigate('/mypage');
 			} else {
-				console.error('Unexpected response:', response.message);
+				console.error('Failed to pin post:', response.message);
 			}
 		} catch (error) {
-			console.error('Error pinning OOTD:', error);
+			console.error('Error pinning post:', error);
 		}
 	};
 
@@ -282,15 +280,18 @@ const PostDetail: React.FC = () => {
 	return (
 		<OODDFrame>
 			<PostDetailContainer>
-				<NavbarDetail />
+				<TopBar ID={user?.id.toString()} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<UserInfoContainer>
 					<UserRow>
 						<Pic_exam>
-							<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-								<circle cx="18" cy="18" r="18" fill="#D9D9D9" />
-							</svg>
+							<img
+								src={user?.profilePictureUrl || mockImage}
+								alt="User Profile"
+								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
+							/>
 						</Pic_exam>
-						<UserID>IDID</UserID>
+						<UserID>{user?.nickname || 'Unknown User'}</UserID>
 					</UserRow>
 					<Text>{postDetail?.content || 'Loading...'}</Text>
 				</UserInfoContainer>
@@ -308,7 +309,6 @@ const PostDetail: React.FC = () => {
 					<Image src={postDetail?.photoUrls?.[0] || mockImage} alt="Post" />
 				</ImageWrapper>
 				{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
-
 				{isConfirmationModalOpen && (
 					<ConfirmationModal
 						content="해당 OOTD를 삭제하시겠습니까?"
@@ -317,7 +317,6 @@ const PostDetail: React.FC = () => {
 						onCloseModal={handleCancelDelete}
 					/>
 				)}
-
 				<IconRow>
 					<IconWrapper onClick={() => handleOpenSheet('likes')}>
 						<img src={heartIcon} alt="Heart Icon" />
@@ -328,7 +327,6 @@ const PostDetail: React.FC = () => {
 						<span>{postDetail?.comments?.length || 0}</span> {/* 댓글 수 */}
 					</IconWrapper>
 				</IconRow>
-
 				<BrandBoxContainer>
 					{postDetail?.clothingInfo?.map((clothing, index) => (
 						<BrandBox key={index}>

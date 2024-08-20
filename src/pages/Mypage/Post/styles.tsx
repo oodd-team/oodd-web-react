@@ -56,5 +56,5 @@ export const PinIcon = styled.img`
 	left: 0.625rem; /* 10px */
 	width: 1.25rem; /* 20px */
 	height: 1.25rem; /* 20px */
-	z-index: 1;
+	z-index: 1; /* 이미지 위에 표시되도록 z-index 추가 */
 `;

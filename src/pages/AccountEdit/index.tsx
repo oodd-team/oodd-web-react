@@ -12,12 +12,12 @@ import {
 	MemberInfoRow,
 	Label,
 	Info,
-	VerifyButton,
 } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 
-import NavbarAccountEdit from '../../components/NavbarAccountEdit';
-import { Link } from 'react-router-dom';
+import BottomButton from '../../components/BottomButton'; // BottomButton 컴포넌트 임포트
+
+import { useNavigate } from 'react-router-dom';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 
@@ -26,11 +26,22 @@ import googleIcon from './assets/googleIcon.png';
 import kakaoIcon from './assets/kakaoIcon.png';
 import facebookIcon from './assets/facebookIcon.png';
 
+import TopBar from '../../components/TopBar';
+import back from '../../assets/back.svg';
+
 const AccountEdit: React.FC = () => {
+	const navigate = useNavigate(); // useNavigate 훅 사용
+
+	// 본인 인증 페이지로 이동하는 함수
+	const handleVerification = () => {
+		navigate('/Verification');
+	};
+
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<NavbarAccountEdit />
+				<TopBar text="회원 정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<Section>
 					<SectionTitle>
 						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
@@ -81,10 +92,11 @@ const AccountEdit: React.FC = () => {
 						</MemberInfoRow>
 					</MemberInfo>
 				</Section>
-				<Link to="/Verification">
-					<VerifyButton>본인인증하고 정보 수정하기</VerifyButton>
-				</Link>
 			</ProfileEditContainer>
+			<BottomButton
+				content="본인인증하고 정보 수정하기" // 버튼에 표시할 텍스트
+				onClick={handleVerification} // 버튼 클릭 시 호출할 함수
+			/>
 		</OODDFrame>
 	);
 };

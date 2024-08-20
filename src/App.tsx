@@ -15,9 +15,6 @@ import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
 import Profile from './pages/Profile';
 import Upload from './pages/Upload';
-import BottomSheetTest from './pages/BottomSheetTest';
-import ConfirmationModalTest from './pages/ConfirmationModalTest';
-
 const App: React.FC = () => {
 	return (
 		<BrowserRouter>
@@ -36,8 +33,6 @@ const App: React.FC = () => {
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
-				<Route path="/bottomsheet-test" element={<BottomSheetTest />} />
-				<Route path="/confirmation-modal-test" element={<ConfirmationModalTest />} />
 				<Route path="/upload" element={<Upload />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />

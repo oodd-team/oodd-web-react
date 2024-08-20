@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput } from './styles';
 import avatar from '../../assets/avatar.png';
-import NavbarEdit from '../../components/NavbarEdit';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import request from '../../apis/core';
 import { useParams } from 'react-router-dom';
+
+import TopBar from '../../components/TopBar';
+import back from '../../assets/back.svg';
+import { useNavigate } from 'react-router-dom';
 
 type UserProfileResponse = {
 	id: number;
@@ -23,6 +26,7 @@ const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { userId } = useParams<{ userId: string }>();
 	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
+	const navigate = useNavigate(); // useNavigate 훅 사용
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -56,7 +60,8 @@ const ProfileEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<NavbarEdit />
+				<TopBar text="프로필 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+
 				<ProfilePicWrapper>
 					<ProfilePic>
 						<img src={userProfile.profilePictureUrl || avatar} alt="프로필 사진" />
