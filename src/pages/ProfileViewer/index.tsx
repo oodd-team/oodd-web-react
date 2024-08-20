@@ -4,7 +4,7 @@ import UserInfo from "./components/UserInfo";
 import PostItem from "./components/PostItem";
 import BottomSheet from "../../components/BottomSheet";
 import BottomSheetMenu from "../../components/BottomSheetMenu";
-import ConfirmationModal from "../../components/ComfirmationModal";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import ReportText from "./components/ReportText";
 import TopBar from "../../components/TopBar";
 import { StyledText } from "../../components/Text/StyledText";
