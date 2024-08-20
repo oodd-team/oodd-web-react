@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
@@ -23,6 +23,7 @@ import ProductCard from './ProductCard';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import Modal from '../../components/Modal';
+import Comment from '../../components/Comment';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../styles/theme';
@@ -34,6 +35,7 @@ import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 import BottomButton from '../../components/BottomButton/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
+import { CommentProps } from '../../components/Comment/dto.ts';
 
 const Post: React.FC = () => {
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
@@ -41,10 +43,18 @@ const Post: React.FC = () => {
 	const [showInput, setShowInput] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // 추가
+	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
+	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false); // 코멘트 모달 상태
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const nav = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state && location.state.isCommentModalOpen) {
+			setIsCommentModalOpen(true);
+		}
+	}, [location.state]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputValue(e.target.value);
@@ -135,6 +145,24 @@ const Post: React.FC = () => {
 		},
 	};
 
+	const commentProps: CommentProps = {
+		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
+		sendComment: (comment: string) => {
+			console.log(`api에 ${comment} 전달`);
+		},
+	};
+
+	const commentSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isCommentModalOpen,
+		isHandlerVisible: true,
+		isBackgroundDimmed: true,
+		Component: Comment,
+		componentProps: commentProps,
+		onCloseBottomSheet: () => {
+			setIsCommentModalOpen(false);
+		},
+	};
+
 	const reportSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isOpenReportSheet,
 		isHandlerVisible: true,
@@ -147,7 +175,7 @@ const Post: React.FC = () => {
 						<textarea
 							ref={textareaRef}
 							placeholder="해당 OOTD를 신고하려는 이유를 작성해주세요."
-							value={inputValue} // value 속성으로 상태를 바인딩
+							value={inputValue}
 							onChange={handleInputChange}
 						></textarea>
 						<BottomButton
@@ -187,11 +215,13 @@ const Post: React.FC = () => {
 		<OODDFrame>
 			{isOpenBottomSheet && <BottomSheet {...bottomSheetProps} />}
 			{isOpenReportSheet && <BottomSheet {...reportSheetProps} />}
+			{isCommentModalOpen && <BottomSheet {...commentSheetProps} />}
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
 				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
+
 			<PostTopBar />
 			<PostWrapper>
 				<PostInfo>

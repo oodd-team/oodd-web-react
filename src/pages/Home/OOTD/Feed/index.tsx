@@ -7,7 +7,6 @@ import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import {
 	Btn,
-	Comment,
 	CommentBtn,
 	FeedImgBox,
 	FeedProfileImgWrapper,
@@ -38,6 +37,11 @@ const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 
 	const handleHeartClick = () => {
 		setIsHeartClicked((prev) => !prev);
+	};
+
+	const handleCommentClick = () => {
+		// Post 페이지로 이동하면서 isCommentModalOpen 값을 true로 전달
+		nav('/post', { state: { isCommentModalOpen: true } });
 	};
 
 	return (
@@ -95,14 +99,12 @@ const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 						</Btn>
 					</Reaction>
 
-					<Comment>
-						<CommentBtn>
-							<img src={commentBtn} />
-							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
-								코멘트 남기기
-							</StyledText>
-						</CommentBtn>
-					</Comment>
+					<CommentBtn onClick={handleCommentClick}>
+						<img src={commentBtn} />
+						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
+							코멘트 남기기
+						</StyledText>
+					</CommentBtn>
 				</ReactionWrapper>
 			</FeedImgBox>
 		</FeedWrapper>
