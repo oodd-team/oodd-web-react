@@ -21,6 +21,8 @@ import {
 	CircleIcon,
 	ModalContainer,
 	TabContainer,
+	Arrow,
+	Indicator,
 } from './styles';
 
 import TopBar from '../../components/TopBar';
@@ -30,7 +32,7 @@ import theme from '../../styles/theme';
 import mockImage from './mockImage.png';
 import heartIcon from './heartIcon.svg';
 import commentIcon from './commentIcon.svg';
-import nextIcon from './nextIcon.svg';
+import nextIcon from '../../assets/Upload/next.svg';
 import back from '../../assets/back.svg';
 
 import ConfirmationModal from '../../components/ConfirmationModal';
@@ -49,6 +51,7 @@ import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } fro
 const PostDetail: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postDetail, setPostDetail] = useState<PostDetailResponse['result'] | null>(null);
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments' | 'menu'>('menu');
 	const [likes, setLikes] = useState<LikesResponse['result']['likes']>([]);
@@ -215,7 +218,18 @@ const PostDetail: React.FC = () => {
 		}
 	};
 
-	// OOTD 수정하기 기능 추가
+	const handleNextImage = () => {
+		if (postDetail && currentImageIndex < postDetail.photoUrls.length - 1) {
+			setCurrentImageIndex(currentImageIndex + 1);
+		}
+	};
+
+	const handlePrevImage = () => {
+		if (currentImageIndex > 0) {
+			setCurrentImageIndex(currentImageIndex - 1);
+		}
+	};
+
 	const handleEditPost = async () => {
 		try {
 			const response = await request.patch<BaseResponse>(`/posts/${postId}`);
@@ -304,9 +318,28 @@ const PostDetail: React.FC = () => {
 						/>
 					</svg>
 				</Menu>
+
 				<ImageWrapper>
-					<Image src={postDetail?.photoUrls?.[0] || mockImage} alt="Post" />
+					{postDetail?.photoUrls && postDetail.photoUrls.length > 1 && (
+						<>
+							<Arrow direction="left" onClick={handlePrevImage} disabled={currentImageIndex === 0}>
+								<img src={nextIcon} style={{ transform: 'rotate(180deg)' }} alt="Previous" />
+							</Arrow>
+							<Arrow
+								direction="right"
+								onClick={handleNextImage}
+								disabled={currentImageIndex === postDetail.photoUrls.length - 1}
+							>
+								<img src={nextIcon} alt="Next" />
+							</Arrow>
+							<Indicator>
+								{currentImageIndex + 1} / {postDetail.photoUrls.length}
+							</Indicator>
+						</>
+					)}
+					<Image src={postDetail?.photoUrls?.[currentImageIndex] || mockImage} alt="Post" />
 				</ImageWrapper>
+
 				{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
 				{isConfirmationModalOpen && (
 					<ConfirmationModal

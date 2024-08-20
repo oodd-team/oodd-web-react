@@ -220,3 +220,24 @@ export const CircleIcon = styled.div`
 	font-weight: bold;
 	margin-right: 8px;
 `;
+
+export const Arrow = styled.div<{ direction: string; disabled: boolean }>`
+	position: absolute;
+	top: 50%;
+	${({ direction }) => (direction === 'left' ? 'left: 10px;' : 'right: 10px;')}
+	transform: translateY(-50%);
+	cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+`;
+
+export const Indicator = styled.div`
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 15px;
+	font-size: 14px;
+`;
