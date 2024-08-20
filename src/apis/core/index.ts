@@ -36,7 +36,7 @@ interface CustomInstance extends AxiosInstance {
 }
 
 export const request: CustomInstance = axios.create({
-	baseURL: process.env.REACT_APP_API,
+	baseURL: process.env.REACT_APP_API ? process.env.REACT_APP_API : 'https://api-dev.oodd.today',
 	timeout: 20000,
 	headers: {
 		accept: 'application/json',
