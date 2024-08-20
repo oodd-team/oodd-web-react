@@ -23,6 +23,7 @@ import PostTopBar from './PostTopBar';
 import ProductCard from './ProductCard';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
+import Modal from '../../components/Modal';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../styles/theme';
@@ -39,12 +40,16 @@ const Post: React.FC = () => {
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
 	const [showInput, setShowInput] = useState(false);
 	const [inputValue, setInputValue] = useState('');
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const nav = useNavigate();
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputValue(e.target.value);
 	};
+
+	const userName = 'IDID';
 
 	const productData = [
 		{ id: 1, brandName: '브랜드1', modelName: '모델1/모델번호/URL...', productImgSrc: productImg },
@@ -82,24 +87,28 @@ const Post: React.FC = () => {
 				text: '스팸',
 				action: () => {
 					setIsOpenReportSheet(false);
+					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '부적절한 콘텐츠',
 				action: () => {
 					setIsOpenReportSheet(false);
+					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '괴롭힘',
 				action: () => {
 					setIsOpenReportSheet(false);
+					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '그 외',
 				action: () => {
 					setIsOpenReportSheet(false);
+					setIsModalOpen(true);
 				},
 			},
 			{
@@ -141,7 +150,10 @@ const Post: React.FC = () => {
 						></textarea>
 						<BottomButton
 							content="신고하기"
-							onClick={() => setIsOpenReportSheet(false)}
+							onClick={() => {
+								setIsOpenReportSheet(false);
+								setIsModalOpen(true); // 모달을 연다
+							}}
 							disabled={inputValue.trim().length === 0} // 값이 없을 때 비활성화
 						/>
 					</InputLayout>
@@ -157,24 +169,8 @@ const Post: React.FC = () => {
 	return (
 		<OODDFrame>
 			{isOpenBottomSheet && <BottomSheet {...bottomSheetProps} />}
-			{isOpenReportSheet && (
-				<BottomSheet {...reportSheetProps}>
-					{showInput && (
-						<InputLayout>
-							<textarea
-								placeholder="해당 OOTD를 신고하려는 이유를 작성해주세요."
-								value={inputValue} // value 속성으로 상태를 바인딩
-								onChange={(e) => setInputValue(e.target.value)}
-							/>
-							<BottomButton
-								content="신고하기"
-								onClick={() => setIsOpenReportSheet(false)}
-								disabled={inputValue.trim().length === 0} // 값이 없을 때 비활성화
-							/>
-						</InputLayout>
-					)}
-				</BottomSheet>
-			)}
+			{isOpenReportSheet && <BottomSheet {...reportSheetProps} />}
+			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			<PostTopBar />
 			<PostWrapper>
 				<PostInfo>
