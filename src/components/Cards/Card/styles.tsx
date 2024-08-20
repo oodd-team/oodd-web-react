@@ -19,6 +19,7 @@ export const ProfileImgBox = styled.div`
 	border-radius: 50%;
 	margin-left: 1rem;
 	cursor: pointer;
+	overflow: hidden;
 
 	img {
 		width: 100%;

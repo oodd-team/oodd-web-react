@@ -6,28 +6,20 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../../styles/theme';
 import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
-import { CardLayoutProps } from './dto';
 import xBtn from '../../../assets/Home/button_reject.svg';
 import checkBtn from '../../../assets/Home/button_check.svg';
-import profileImg1 from '../../../assets/Home/profileImg1.svg';
-import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
-import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
-import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
-import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 import { useNavigate } from 'react-router-dom';
-
-const cardItem: CardLayoutProps = {
-	profileImgUrl: profileImg1,
-	ootdImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
-};
+import { Relationship } from './dto';
 
 interface CardProps {
 	onReject: () => void;
+	relationship: Relationship;
 }
 
 // OOTD 카드 컴포넌트입니다. 매칭 탭에 있습니다.
-const Card: React.FC<CardProps> = ({ onReject }) => {
+const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 	const nav = useNavigate();
+	const { requester } = relationship;
 
 	const handleReject = () => {
 		onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
@@ -37,17 +29,24 @@ const Card: React.FC<CardProps> = ({ onReject }) => {
 		<CardLayout>
 			<ProfileBox>
 				<ProfileImgBox>
-					<img src={cardItem.profileImgUrl} />
+					<img src={requester.profilePictureUrl} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>
-						IDID
+						{requester.nickname || requester.name}
 					</StyledText>
 					<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray1}>
-						#classic
+						{requester.representativePost?.postStyletags.length
+							? requester.representativePost.postStyletags.map((tag, index) => (
+									<span key={index}>
+										#{tag.status}
+										{index < requester.representativePost!.postStyletags.length - 1 && ' '}
+									</span>
+								))
+							: '#classic'}
 					</StyledText>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav('/users/:userId')}>
+				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1.2 }} color={theme.colors.white}>
 						OOTD 더 보기 &gt;
 					</StyledText>
@@ -62,9 +61,9 @@ const Card: React.FC<CardProps> = ({ onReject }) => {
 					modules={[Pagination]}
 					className="childSwiper"
 				>
-					{cardItem.ootdImgUrls.map((url, index) => (
-						<SwiperSlide key={index}>
-							<img src={url} alt={`matching ${index + 1}`} className="slide-image-small" />
+					{requester.representativePost?.images.map((image) => (
+						<SwiperSlide key={image.id}>
+							<img src={image.url} alt="OOTD" className="slide-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>
