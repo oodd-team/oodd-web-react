@@ -1,5 +1,5 @@
 import React from 'react';
-import noti from './../../assets/Home/noti.svg';
+// import noti from './../../assets/Home/noti.svg';
 import { HomeLogo, HomeTopBarContainer, NotiIcon } from './styles';
 import logo from './../../assets/logo.svg';
 
@@ -8,7 +8,7 @@ const HomeTopBar: React.FC = () => {
 	return (
 		<HomeTopBarContainer>
 			<HomeLogo src={logo} alt="logo" />
-			<NotiIcon src={noti} alt="noti" />
+			{/* <NotiIcon src={noti} alt="noti" /> */}
 		</HomeTopBarContainer>
 	);
 };
