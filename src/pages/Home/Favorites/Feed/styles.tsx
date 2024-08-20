@@ -12,12 +12,13 @@ export const FeedImgBox = styled.div`
 	width: 100%;
 	border-radius: 0.75rem;
 	background-color: ${({ theme }) => theme.colors.gray1};
-	height: auto;
 	overflow: hidden;
-
+	aspect-ratio: 173 / 230;
+	
 	img {
 		width: 100%;
 		height: 100%;
+
 		object-fit: cover;
 	}
 `;

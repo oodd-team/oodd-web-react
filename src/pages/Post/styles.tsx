@@ -141,6 +141,57 @@ export const Products = styled.div`
 	}
 `;
 
+export const InputLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	textarea {
+		display: block;
+		width: calc(100% - 48px);
+		height: 92px;
+		border-radius: 2px;
+		border: 1px solid ${({ theme }) => theme.colors.gray3};
+		margin-bottom: 94px;
+		z-index: 2;
+		margin-top: -60px;
+		outline: none;
+		padding: 13px 15px;
+		font-family: 'Pretendard Variable';
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 300;
+		line-height: 150%;
+		color: ${({ theme }) => theme.colors.black};
+		resize: none;
+	}
+`;
+
+// export const InputWrapper = styled.textarea`
+// 	display: block;
+// 	width: calc(100% - 48px);
+// 	height: 92px;
+// 	border-radius: 2px;
+// 	border: 1px solid ${({ theme }) => theme.colors.gray3};
+// 	margin-bottom: 94px;
+// 	z-index: 2;
+// 	margin-top: -60px;
+// 	outline: none;
+// 	padding: 13px 15px;
+// 	font-family: 'Pretendard Variable';
+// 	font-size: 16px;
+// 	font-style: normal;
+// 	font-weight: 300;
+// 	line-height: 150%;
+// 	color: ${({ theme }) => theme.colors.black};
+// 	resize: none;
+
+// 	&::placeholder {
+// 		color: ${({ theme }) => theme.colors.gray3};
+// 	}
+// `;
+
 // ProductCard
 
 export const ProductCardContainer = styled.div`
@@ -153,6 +204,7 @@ export const ProductCardContainer = styled.div`
 	flex-shrink: 0;
 	justify-content: space-between;
 	margin-right: 0.75rem;
+	cursor: pointer;
 `;
 
 export const ProductLeft = styled.div`
