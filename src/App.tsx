@@ -8,6 +8,9 @@ import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
 import Profile from './pages/Profile';
 import Upload from './pages/Upload';
+import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
+import NaverCallback from './pages/Login/components/Naver/NaverCallback';
+import GoogleCallback from './pages/Login/components/Google/GoogleCallback';
 
 const App: React.FC = () => {
 	return (
@@ -19,9 +22,12 @@ const App: React.FC = () => {
 					<Route path="/" element={<Home />} />
 					<Route path="/chats/:roomId" element={<ChatRoom />} />
 					<Route path="/login" element={<Login />} />
+					<Route path="/auth/kakao/callback" element={<KakaoCallback/>}></Route>
+					<Route path="/auth/naver/callback" element={<NaverCallback/>}></Route>
+					<Route path="/auth/google/callback" element={<GoogleCallback/>}></Route>
+					<Route path="/upload" element={<Upload />} />
 					<Route path="/chats" element={<Chats />} />
 					<Route path="/profile" element={<Profile />} />
-					<Route path="/upload" element={<Upload />} />
 				</Routes>
 			</BrowserRouter>
 		</>

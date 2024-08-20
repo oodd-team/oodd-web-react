@@ -6,18 +6,18 @@ import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
 import PinIcon from '../../../../assets/ProfileViewer/Group 87.svg';
 import { PostItemProps } from '../../dto';
 
-const PostItem: React.FC<PostItemProps> = ({ post, isFixed }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative}) => {
     return (
         <PostItemContainer>
             <PostImageContainer>
-                <PostImage src={post.imageUrl} alt={`post-${post.id}`} />
-                {isFixed && (
+                <PostImage src="https://via.placeholder.com/72" alt={`post-${post.postId}`} />
+                {isRepresentative && (
                         <PinSvg src={PinIcon} />
                 )}
                 <LikesOverlay>
                     <HeartIcon src={HeartSvg} alt="heart icon" />
                     <LikesCount>
-                     <StyledText $textTheme={{ style: "body1-medium", lineHeight: 1.5 }} color={theme.colors.white}>
+                     <StyledText $textTheme={{ style: "body5-medium", lineHeight: 1.5 }} color={theme.colors.white}>
                         {post.likes}
                     </StyledText>
                     </LikesCount>
