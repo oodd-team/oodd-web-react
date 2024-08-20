@@ -28,10 +28,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	feed: FeedProps;
+	onRemove: () => void; // Feed를 제거하는 함수를 부모 컴포넌트에서 받아옴
 }
 
-const Feed: React.FC<Props> = ({ feed }) => {
+const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 	const nav = useNavigate();
+
 	return (
 		<FeedWrapper>
 			<FeedTop>
@@ -71,7 +73,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<Btn>
+						<Btn onClick={onRemove}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
 						<Btn>

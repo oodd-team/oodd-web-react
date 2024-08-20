@@ -8,7 +8,6 @@ import { BottomSheetProps } from '../Upload/PostUploadModal/dto.ts';
 import { StyledText } from '../../components/Text/StyledText';
 import {
 	InputLayout,
-	InputWrapper,
 	MoreBtn,
 	PostImg,
 	PostInfo,

@@ -26,7 +26,7 @@ const tagData: TagProps[] = [
 ];
 
 // 추후 변경
-const feedData: FeedProps[] = [
+const initialFeedData: FeedProps[] = [
 	{
 		profileUrl: profileImg2,
 		userName: 'IDID',
@@ -44,6 +44,7 @@ const feedData: FeedProps[] = [
 // OOTD 탭입니다.
 const OOTD: React.FC = () => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
+	const [feeds, setFeeds] = useState<FeedProps[]>(initialFeedData);
 
 	const handleTagClick = (index: number) => {
 		setSelectedTags((prevSelectedTags) => {
@@ -53,6 +54,10 @@ const OOTD: React.FC = () => {
 				return [...prevSelectedTags, index];
 			}
 		});
+	};
+
+	const handleRemoveFeed = (userName: string) => {
+		setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== userName));
 	};
 
 	// tag 데이터를 반으로 나누기, 홀수일 경우 위에 줄이 하나 더 많게
@@ -90,8 +95,8 @@ const OOTD: React.FC = () => {
 				</TagRow>
 			</TagContainer>
 			<FeedContainer>
-				{feedData.map((feed) => (
-					<Feed feed={feed} />
+				{feeds.map((feed) => (
+					<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} />
 				))}
 			</FeedContainer>
 		</OOTDContainer>
