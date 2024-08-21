@@ -14,7 +14,6 @@ import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
-import Profile from './pages/Profile';
 import Upload from './pages/Upload';
 
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
@@ -37,7 +36,6 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />
-				<Route path="/profile" element={<Profile />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />
 				<Route path="/auth/kakao/callback" element={<KakaoCallback />}></Route>
