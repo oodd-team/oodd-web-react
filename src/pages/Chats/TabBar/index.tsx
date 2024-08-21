@@ -12,8 +12,7 @@ const tabs = ['요청', '최근 채팅'];
 
 const TabBar: React.FC = () => {
 	// const [matchingRequest, setMatchingRequest] = useState(0);
-	const [hasNewRequest, setHasNewRequest] = useState(true);
-	setHasNewRequest(true);
+	const [hasNewRequest, _] = useState(true);
 
 	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
