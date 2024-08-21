@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import request from '../../../../apis/core';
 import { ResponseDto } from './ResponseDto';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
@@ -8,19 +8,32 @@ import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
 import { RequestComponentProps } from '../../dto';
 import { useRecoilState } from 'recoil';
 import { friendState } from '../../../../recoil/atoms';
+import Modal from '../../../../components/Modal';
 
 const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, setIsBottomSheetOpen }) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [inputValue, setInputValue] = useState('');
     const [, setFriend] = useRecoilState(friendState);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.style.height = 'auto';
+            inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+        }
+    }, [inputValue]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInputValue(event.target.value);
+        const textarea = event.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+        setInputValue(textarea.value);
     };
 
     const handleMsgIconClick = async () => {
         if (inputValue.trim() === "") {
-            return; // 빈 값이 전송되지 않도록
+            return;
         }
 
         try {
@@ -32,31 +45,29 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
 
             console.log(response.result);
 
-            // 상태 업데이트 및 UI 변경
             setFriend(true);
             setIsBottomSheetOpen(false);
 
-            // 로컬 스토리지에 저장
             const updatedUserDetails = {
                 ...JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}'),
                 isFriend: true
             };
             localStorage.setItem(`userDetails_${userId}`, JSON.stringify(updatedUserDetails));
 
-            // 입력 필드 초기화
             if (inputRef.current) {
                 inputRef.current.value = "";
             }
             setInputValue('');
+
+            setModalContent(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
+            setIsModalOpen(true);
         } catch (error: any) {
             console.error('친구 신청 오류:', error);
 
-            // 이미 요청한 관계일 때 상태 업데이트
             if (error.response?.data?.message === "이미 요청한 관계입니다.") {
                 setFriend(true);
                 setIsBottomSheetOpen(false);
 
-                // 로컬 스토리지에 저장
                 const updatedUserDetails = {
                     ...JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}'),
                     isFriend: true
@@ -70,27 +81,37 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
         }
     };
 
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
-        <RequestContainer>
-            <RequestMessage>
-                <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
-                    {nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
-                </StyledText>
-            </RequestMessage>
-            <ComentContainer>
-                <Coment 
-                    ref={inputRef}
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    maxLength={100}
-                />
-                <MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
-            </ComentContainer>
-        </RequestContainer>
+        <>
+            <RequestContainer>
+                <RequestMessage>
+                    <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+                        {nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
+                    </StyledText>
+                </RequestMessage>
+                <ComentContainer>
+                    <Coment 
+                        ref={inputRef}
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        maxLength={100}
+                    />
+                    <MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
+                </ComentContainer>
+            </RequestContainer>
+            {isModalOpen && (
+                <Modal content={modalContent} onClose={handleCloseModal} />
+            )}
+        </>
     );
 };
 
 export default RequestComponent;
+
 
 
 
