@@ -91,15 +91,18 @@ const PostDetail: React.FC = () => {
 	// 유저 정보 가져오기
 	const fetchUserData = async () => {
 		try {
-			const response = await request.get<UserResponse>(`/users/${2}`);
-			if (response) {
-				setUser(response);
+			const storedUserId = localStorage.getItem('userId');
+			if (!storedUserId) {
+				console.error('User is not logged in');
+				return;
 			}
+
+			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
+			setUser(response);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
 	};
-
 	useEffect(() => {
 		fetchPostDetail();
 		fetchUserData(); // 유저 데이터 불러오기
