@@ -1,19 +1,20 @@
 // src/pages/ProfilePage/index.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ProfileContainer, AddButton } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import NavBar from '../../components/NavBar';
+import { AddButton } from './styles';
+
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
-
-import button_plus from './assets/button_plus.svg';
+import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
+import { OODDFrame } from '../../components/Frame/Frame';
 
-const Profile: React.FC = () => {
+//페이지에서 컴포넌트로 변경했음!
+
+const ProfileActions: React.FC = () => {
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -63,15 +64,12 @@ const Profile: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			<ProfileContainer>
-				<AddButton onClick={handleOpenSheet}>
-					<img src={button_plus} />
-				</AddButton>
-				<NavBar />
-				{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
-			</ProfileContainer>
+			<AddButton onClick={handleOpenSheet}>
+				<img src={button_plus} />
+			</AddButton>
+			{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
 		</OODDFrame>
 	);
 };
 
-export default Profile;
+export default ProfileActions;

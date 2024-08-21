@@ -5,8 +5,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButton, HiddenFileInput } from './styles';
-import remove from '../../assets/remove.svg';
-import plus from '../../assets/plus.svg';
+import remove from '../../../../assets/Upload/remove.svg';
+import plus from '../../../../assets/Upload/plus.svg';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
 
@@ -42,7 +42,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 	return (
 		<SwiperContainer>
 			<Swiper
-				spaceBetween={10}
+				spaceBetween={1}
 				slidesPerView="auto"
 				centeredSlides={true}
 				navigation={{
