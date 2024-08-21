@@ -20,7 +20,6 @@ import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../../apis/core';
-import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
@@ -44,7 +43,8 @@ const ChatRoom: React.FC = () => {
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const messageLengthRef = useRef(0);
 
-	const userId = useRecoilValue(MockUserIdAtom);
+	const storageValue = localStorage.getItem('id');
+	const userId = storageValue ? Number(storageValue) : -1;
 	const { roomId } = useParams();
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);

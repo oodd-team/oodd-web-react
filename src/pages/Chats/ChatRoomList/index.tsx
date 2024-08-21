@@ -10,7 +10,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import { useEffect, useState } from 'react';
-import { MockUserIdAtom } from '../../../recoil/MockUserId';
 import SwiperCore from 'swiper';
 dayjs.extend(relativeTime);
 
@@ -27,7 +26,8 @@ const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 	const nav = useNavigate();
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
-	const userId = useRecoilValue(MockUserIdAtom);
+	const storageValue = localStorage.getItem('id');
+	const userId = storageValue ? Number(storageValue) : -1;
 
 	if (createdAt) {
 		// 상대방에게서 온 pending 상태의 요청

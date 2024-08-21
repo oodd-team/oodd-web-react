@@ -2,14 +2,14 @@ import { ChatBoxContainer, Textarea, SendIcon } from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import Send from '../../../../assets/Chats/Send.svg';
-import { MockUserIdAtom } from '../../../../recoil/MockUserId';
 import { useParams } from 'react-router-dom';
 import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
 import { useSocket } from '../../../../context/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const userId = useRecoilValue(MockUserIdAtom);
+	const storageValue = localStorage.getItem('id');
+	const userId = storageValue ? Number(storageValue) : -1;
 	const { roomId } = useParams();
 	const roomIdNumber = Number(roomId);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
