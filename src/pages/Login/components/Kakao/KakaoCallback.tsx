@@ -29,11 +29,7 @@ const KakaoCallback: React.FC = () => {
                         localStorage.setItem('jwt_token', token);
                         const userid = localStorage.getItem('id');
 
-                        request.get<UserInfoDto>(`/users/${userid}`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}` // Authorization 헤더 추가
-                            }
-                        })
+                        request.get<UserInfoDto>(`/users/${userid}`)
                         .then(response => {
                             console.log(response);
                             if(response.nickname){

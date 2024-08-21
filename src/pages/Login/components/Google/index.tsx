@@ -6,12 +6,10 @@ import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from "../style";
 
 const Google: React.FC<{ disabled?: boolean }> = ({ disabled }) => {
         const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-        const redirectUri = encodeURIComponent(import.meta.env.VITE_DEV_DOMAIN ? import.meta.env.VITE_DEV_DOMAIN + '/auth/google/callback' : 'http://localhost:3000/auth/google/callback');
-        const responseType = 'code';
-        const scope = 'profile email'; // 요청할 권한 범위
+        const redirectUri = encodeURIComponent(import.meta.env.VITE_DEV_DOMAIN ? import.meta.env.VITE_DEV_DOMAIN + '/auth/google/callback' : 'http://localhost:8080/auth/google/callback');
 
     const handleLogin = () => {
-        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=profile email`;
     };
 
     return (
