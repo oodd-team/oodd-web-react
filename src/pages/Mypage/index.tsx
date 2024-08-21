@@ -21,9 +21,7 @@ import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
 import request from '../../apis/core';
-
 import ProfileActions from '../Profile';
-
 // API 응답에 맞는 타입 정의
 type PostItem = {
 	postId: number;
@@ -33,7 +31,6 @@ type PostItem = {
 	isRepresentative: boolean;
 	commentsCount?: number; // Optional since it might not be included for other users
 };
-
 type PostsResponse = {
 	isSuccess: boolean;
 	code: number;
@@ -44,7 +41,6 @@ type PostsResponse = {
 		posts: PostItem[];
 	};
 };
-
 type UserResponse = {
 	id: number;
 	name: string;
@@ -55,7 +51,6 @@ type UserResponse = {
 	bio: string | null;
 	joinedAt: string;
 };
-
 const Mypage: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>(); // URL에서 userId 가져오기
 	const navigate = useNavigate();
@@ -64,31 +59,27 @@ const Mypage: React.FC = () => {
 	const [totalPosts, setTotalPosts] = useState(0);
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [totalComments, setTotalComments] = useState(0); // Comments count
-
 	const handlePostClick = (postId: string) => {
 		navigate(`/post/${postId}`);
 	};
-
 	// 사용자 정보 가져오기 함수
 	const fetchUserData = async () => {
 		try {
-			const response = await request.get<UserResponse>(`/users/${2}`);
+			const response = await request.get<UserResponse>(`/users/${userId}`);
 			setUser(response);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
 	};
-
 	// API에서 포스트 리스트를 가져오는 함수
 	const handlePostList = async () => {
 		try {
-			const response = await request.get<PostsResponse>(`/posts?userId=${2}`);
+			const response = await request.get<PostsResponse>(`/posts?userId=${userId}`);
 			if (response.isSuccess) {
 				const { totalPosts, totalLikes, posts } = response.result;
 				setTotalPosts(totalPosts);
 				setTotalLikes(totalLikes);
 				setPosts(posts);
-
 				// 코멘트 수 합산
 				const totalComments = posts.reduce((sum, post) => sum + (post.commentsCount || 0), 0);
 				setTotalComments(totalComments);
@@ -99,13 +90,11 @@ const Mypage: React.FC = () => {
 			console.error('Error fetching posts:', error);
 		}
 	};
-
 	// 컴포넌트가 마운트될 때 사용자 정보와 포스트 리스트를 가져옴
 	useEffect(() => {
 		fetchUserData();
 		handlePostList();
 	}, [userId]);
-
 	return (
 		<OODDFrame>
 			<ProfileContainer>
@@ -158,5 +147,4 @@ const Mypage: React.FC = () => {
 		</OODDFrame>
 	);
 };
-
 export default Mypage;
