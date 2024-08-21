@@ -7,6 +7,11 @@ import axios, {
 } from 'axios';
 import { JWT_KEY } from '../../config/constant';
 
+localStorage.setItem(
+	JWT_KEY,
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VybmFtZSI6IuyehOuvvOyEnCIsImVtYWlsIjoibGltbXMxMjE3QG5hdmVyLmNvbSJ9.QB9vUJiu7YTqzwaA2NYDXC20xDfWWQ7ck2QhDh7Lsqs',
+);
+
 export type BaseResponse<T = any> = {
 	isSuccess: boolean;
 	message: string;
@@ -36,7 +41,7 @@ interface CustomInstance extends AxiosInstance {
 }
 
 export const request: CustomInstance = axios.create({
-	baseURL: import.meta.env.VITE_API_URL,
+	baseURL: import.meta.env.VITE_API_URL, // 환경 변수를 이용한 baseURL 설정
 	timeout: 20000,
 	headers: {
 		accept: 'application/json',
@@ -47,7 +52,9 @@ export const request: CustomInstance = axios.create({
 request.interceptors.request.use(
 	(config) => {
 		const jwt = window.localStorage.getItem(JWT_KEY);
-		config.headers.Authorization = `Bearer ${jwt}`;
+		if (jwt) {
+			config.headers.Authorization = `Bearer ${jwt}`;
+		}
 		return config;
 	},
 	(error) => {

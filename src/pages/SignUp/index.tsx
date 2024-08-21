@@ -1,12 +1,12 @@
 import React, { useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledText } from "../../components/Text/StyledText";
-import theme from '../../styles/theme';
-import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName, Tap, NextButton, LogoImg } from "./style"; 
+import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName, Tap, LogoImg } from "./style"; 
 import { OODDFrame } from "../../components/Frame/Frame";
-import OODDlogo from '../../../public/assets/OODDlogo.svg';
+import OODDlogo from '../../../src/assets/OODDlogo.svg'
 import request from "../../apis/core";
 import { SignUpDto } from "./SignUpDto";
+import BottomButton from "../../components/BottomButton";
 
 // 소셜 로그인 시도 후 회원 정보가 없을 때 보여질 화면
 
@@ -67,11 +67,7 @@ const SignUp: React.FC = () => {
                         </StyledText>
                     </Tap>}
                 </NickNameContainer>
-                <NextButton onClick={handleNextClick}>
-                    <StyledText $textTheme={{ style: 'button1-medium', lineHeight: 1.5 }} color={theme.colors.white}>
-                        다음
-                    </StyledText>
-                </NextButton>
+                <BottomButton content="다음" onClick={handleNextClick}/>
             </SignUpContainer>
         </OODDFrame>
     );

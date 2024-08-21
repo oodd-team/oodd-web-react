@@ -5,12 +5,12 @@ import { PostItemContainer, PostImageContainer, PostImage, LikesCount, HeartIcon
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
 import PinIcon from '../../../../assets/ProfileViewer/Group 87.svg';
 import { PostItemProps } from '../../dto';
-
-const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative}) => {
+const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative, firstPhoto}) => {
+    const imageUrl = firstPhoto || "https://via.placeholder.com/72"
     return (
         <PostItemContainer>
             <PostImageContainer>
-                <PostImage src="https://via.placeholder.com/72" alt={`post-${post.postId}`} />
+                <PostImage src={imageUrl} alt={`post-${post.postId}`} />
                 {isRepresentative && (
                         <PinSvg src={PinIcon} />
                 )}
