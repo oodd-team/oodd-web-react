@@ -30,6 +30,7 @@ import { useSocket } from '../../../context/SocketProvider';
 import { ApiDto } from './dto';
 import { ModalProps } from '../../../components/Modal/dto';
 import Modal from '../../../components/Modal';
+import Loading from '../../../components/Loading';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -39,6 +40,7 @@ const ChatRoom: React.FC = () => {
 	const [isOpenBlock, setIsOpenBlock] = useState(false);
 	const [isOpenAlert, setIsOpenAlert] = useState(false);
 
+	const [loading, setLoading] = useState(true);
 	const [isScroll, setIsScroll] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const chatWindowRef = useRef<HTMLDivElement>(null);
@@ -62,6 +64,7 @@ const ChatRoom: React.FC = () => {
 			if (messages.length > messageLengthRef.current) {
 				setIsScroll(true);
 				setIsLoaded(true);
+				setLoading(false);
 			}
 		});
 
@@ -260,6 +263,7 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			{loading && <Loading />}
 			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
 			{isOpenAlert && <Modal {...alertModal} />}
