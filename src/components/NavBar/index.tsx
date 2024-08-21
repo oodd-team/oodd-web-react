@@ -11,7 +11,7 @@ import Profile_f from './../../assets/NavBar/Profile_f.svg';
 const tabs = [
 	{ name: 'Chats', iconSelected: Chat_f, iconUnselected: Chat_s, route: '/chats' },
 	{ name: 'Home', iconSelected: Home_f, iconUnselected: Home_s, route: '/' },
-	{ name: 'Profile', iconSelected: Profile_f, iconUnselected: Profile_s, route: '/profile' },
+	{ name: 'Profile', iconSelected: Profile_f, iconUnselected: Profile_s, route: '/mypage' },
 ];
 
 const NavBar: React.FC = () => {

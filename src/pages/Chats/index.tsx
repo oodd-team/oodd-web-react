@@ -1,12 +1,23 @@
-import React from 'react';
-import NavBar from '../../components/NavBar';
+import { StyledText } from '../../components/Text/StyledText';
 import { OODDFrame } from '../../components/Frame/Frame';
+import { Header } from './styles';
+import theme from '../../styles/theme';
+import NavBar from '../../components/NavBar';
+import TabBar from './TabBar';
 
 const Chats: React.FC = () => {
 	return (
 		<OODDFrame>
-			{/* 각자 작업 height에 맞게 조절하여 ChatsContainer을 위치시킵니다. HomeContainer를 참고해주세요. */}
-			채팅페이지입니다
+			<Header>
+				<StyledText
+					style={{ padding: '0.375rem 0' }}
+					$textTheme={{ style: 'heading1-medium', lineHeight: 2 }}
+					color={theme.colors.black}
+				>
+					Chats
+				</StyledText>
+			</Header>
+			<TabBar></TabBar>
 			<NavBar />
 		</OODDFrame>
 	);

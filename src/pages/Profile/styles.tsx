@@ -25,9 +25,8 @@ export const AddButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
+	position: fixed; /* absolute에서 fixed로 변경 */
 	bottom: 6.75rem;
-	//bottom: 1.25rem;
 	right: 1.25rem;
 	width: 5rem;
 	height: 5rem;
@@ -38,6 +37,7 @@ export const AddButton = styled.button`
 	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 	font-size: 1rem;
 	cursor: pointer;
+	z-index: 1000; /* 다른 요소들 위에 위치하도록 z-index 추가 */
 
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray3};

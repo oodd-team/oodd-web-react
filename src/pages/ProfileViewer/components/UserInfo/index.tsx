@@ -13,6 +13,11 @@ import request from "../../../../apis/core";
 import { InterestDto } from "./InterestDto";
 import { UserInfoProps } from "../../dto";
 import Modal from '../../../../components/Modal';
+import { OpponentInfoAtom } from "../../../../recoil/OpponentInfo";
+import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
+import { Opponent } from "../../../Chats/RecentChat/dto";
+import { useNavigate } from "react-router-dom";
+
 
 const UserInfo: React.FC = React.memo(() => {
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
@@ -21,6 +26,8 @@ const UserInfo: React.FC = React.memo(() => {
     const [friend, setFriend] = useRecoilState(friendState);
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
     const [modalContent, setModalContent] = useState(''); // 모달 내용
+    const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+    const nav = useNavigate();
 
     if (!userDetails) return null; // 사용자의 정보가 없으면 아무것도 렌더링하지 않음
 
@@ -71,6 +78,25 @@ const UserInfo: React.FC = React.memo(() => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    const handleMessageClick = async () => {
+        try{
+            const response = await request.get<UserInfoDto>(`/users/${id}`);
+            const opponent: Opponent = {
+                id: response.id,
+                nickname: response.nickname,
+                profilePictureUrl: response.profilePictureUrl,
+                name: response.name, // 또는 다른 필드
+            };
+            console.log(opponent);
+            setOpponentInfo(opponent);
+            nav(`/chats/roomId`);
+        }   
+        catch (error) {
+            console.error('메세지 보내기 오류:', error);
+            alert('사용자 정보를 불러오지 못했습니다.');
+        }
+    }
 
     const handleInterestedClick = async () => {
         try {
@@ -131,7 +157,7 @@ const UserInfo: React.FC = React.memo(() => {
                 )}
                 {friend && !interested && (
                     <>
-                        <Button $color="white" $backgroundcolor="#000">
+                        <Button $color="white" $backgroundcolor="#000"  onClick={handleMessageClick}>
                             <Icon src={MsgSvg} alt="message icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
                                 메세지 보내기
@@ -146,7 +172,7 @@ const UserInfo: React.FC = React.memo(() => {
                     </>
                 )}
                 {friend && interested && (
-                    <LongButton>
+                    <LongButton  onClick={handleMessageClick}>
                         <Icon src={MsgSvg} alt="message icon" />
                         <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
                             메세지 보내기
