@@ -4,7 +4,7 @@ import theme from '../../../styles/theme';
 import Cards from '../../../components/Cards';
 import { MatchingContainer, Like } from './styles';
 
-const Matching: React.FC = () => {
+const Matching: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement | null> }> = ({ tooltipRef }) => {
 	return (
 		<MatchingContainer>
 			<Like>
@@ -12,7 +12,9 @@ const Matching: React.FC = () => {
 					Likes you 4
 				</StyledText>
 			</Like>
-			<Cards />
+			<div ref={tooltipRef}>
+				<Cards />
+			</div>
 		</MatchingContainer>
 	);
 };

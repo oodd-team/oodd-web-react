@@ -8,12 +8,16 @@ import Matching from './Matching';
 import OOTD from './OOTD';
 import Favorites from './Favorites';
 import { HomeTabBarLayout, HomeTabBarList, HomeTabBarWrapper, TabLayout, Tabs } from './styles';
+import Tooltip from './Tooltip';
 
 const tabs = ['매칭', 'OOTD', '즐겨찾기'];
 
 const HomeTabbar: React.FC = () => {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const swiperRef = useRef<SwiperCore | null>(null);
+
+	const cardRef = useRef<HTMLDivElement>(null);
+	const ootdTooltipRef = useRef<HTMLDivElement[]>([]);
 
 	const handleTabClick = (index: number) => {
 		setActiveIndex(index);
@@ -28,6 +32,7 @@ const HomeTabbar: React.FC = () => {
 
 	return (
 		<TabLayout>
+			<Tooltip cardRef={cardRef} ootdTooltipRef={ootdTooltipRef} activeIndex={activeIndex} />
 			<HomeTabBarLayout>
 				<HomeTabBarList>
 					{tabs.map((tab, index) => (
@@ -53,10 +58,10 @@ const HomeTabbar: React.FC = () => {
 					style={{ height: '100%' }}
 				>
 					<SwiperSlide style={{ height: 'auto' }}>
-						<Matching />
+						<Matching tooltipRef={cardRef} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
-						<OOTD />
+						<OOTD tooltipRef={ootdTooltipRef} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
 						<Favorites />
