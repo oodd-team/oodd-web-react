@@ -23,38 +23,7 @@ import Post from './Post';
 import request from '../../apis/core';
 
 import ProfileActions from '../Profile';
-
-// API 응답에 맞는 타입 정의
-type PostItem = {
-	postId: number;
-	userId: number;
-	likes: number;
-	firstPhoto: string;
-	isRepresentative: boolean;
-	commentsCount?: number; // Optional since it might not be included for other users
-};
-
-type PostsResponse = {
-	isSuccess: boolean;
-	code: number;
-	message: string;
-	result: {
-		totalPosts: number;
-		totalLikes: number;
-		posts: PostItem[];
-	};
-};
-
-type UserResponse = {
-	id: number;
-	name: string;
-	email: string;
-	nickname: string | null;
-	phoneNumber: string | null;
-	profilePictureUrl: string;
-	bio: string | null;
-	joinedAt: string;
-};
+import { PostItem, PostsResponse, UserResponse } from './dto';
 
 const Mypage: React.FC = () => {
 	const navigate = useNavigate();
