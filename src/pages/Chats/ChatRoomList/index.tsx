@@ -25,7 +25,7 @@ const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 }) => {
 	let isUnread = false;
 	const nav = useNavigate();
-	const [opponentInfo, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 	const userId = useRecoilValue(MockUserIdAtom);
 
