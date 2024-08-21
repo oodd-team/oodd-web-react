@@ -7,6 +7,7 @@ import request, { BaseResponse } from '../../../apis/core';
 
 interface Relationship {
   id: number;
+  requestStatus: string; // 추가된 필드
 }
 
 const Matching: React.FC = () => {
@@ -17,7 +18,13 @@ const Matching: React.FC = () => {
     const fetchMatchingCount = async () => {
       try {
         const response = await request.get<BaseResponse<Relationship[]>>('/user-relationships');
-        setMatchingCount(response.result.length); // 매칭 요청의 수를 설정
+        
+        // "pending" 상태의 요청만 카운트
+        const pendingCount = response.result.filter(
+          (relationship) => relationship.requestStatus === 'pending'
+        ).length;
+
+        setMatchingCount(pendingCount); // 매칭 요청의 수를 설정
       } catch (error) {
         console.error('Failed to fetch matching count:', error);
       }

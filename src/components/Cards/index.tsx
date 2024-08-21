@@ -25,8 +25,14 @@ const Cards: React.FC<CardsProps> = ({ onRemoveMatching }) => {
         message: string;
         result: Relationship[];
       }>('/user-relationships');
-      setRelationships(response.result);
-      setSlidesVisibility(new Array(response.result.length).fill(true)); // 가시성을 초기화
+      
+      // "pending" 상태의 요청만 필터링
+      const pendingRelationships = response.result.filter(
+        (relationship) => relationship.requestStatus === 'pending'
+      );
+      
+      setRelationships(pendingRelationships);
+      setSlidesVisibility(new Array(pendingRelationships.length).fill(true)); // 가시성을 초기화
     } catch (error) {
       console.error('Error fetching relationships:', error);
     }
