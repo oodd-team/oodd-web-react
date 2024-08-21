@@ -1,4 +1,4 @@
-import Card from '../../../components/Cards/Card';
+// import Card from '../../../components/Cards/Card';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
@@ -11,7 +11,7 @@ const Request: React.FC = () => {
 					Message 3
 				</StyledText>
 			</ReqeustInfo>
-			<Card></Card>
+			{/* <Card></Card> */}
 		</>
 	);
 };
