@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, Button, LongButton, Icon } from "./styles";
 import { useRecoilState } from 'recoil';
 import { userDetailsState, isBottomSheetOpenState, friendState } from '../../../../recoil/atoms';
@@ -32,6 +32,7 @@ const UserInfo: React.FC = React.memo(() => {
             try {
                 const parsedDetails = JSON.parse(storedUserDetails);
                 setInterested(parsedDetails.isInterested || false);
+                setFriend(parsedDetails.isFriend || false);
 
                 setUserDetails(prevDetails => {
                     if (!prevDetails || prevDetails.isInterested === parsedDetails.isInterested) {
@@ -40,13 +41,14 @@ const UserInfo: React.FC = React.memo(() => {
                     return {
                         ...prevDetails,
                         isInterested: parsedDetails.isInterested || false,
-                    }; // 이전 상태와 비교하여 필요한 경우 상태를 업데이트
+                        isFriend: parsedDetails.isFriend || false,
+                    };
                 });
             } catch (error) {
                 console.error('JSON 파싱 오류:', error);
             }
         }
-    }, [id, setUserDetails]);
+    }, [id, setUserDetails, setFriend]);
 
     const userId = localStorage.getItem('id');
 

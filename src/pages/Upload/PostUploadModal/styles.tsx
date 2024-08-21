@@ -4,7 +4,7 @@ export const Content = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	top: 3.75rem;
+	top: 2.75rem;
 	left: 0;
 	width: 100%;
 	height: calc(100% - 10rem);
@@ -126,10 +126,15 @@ export const ClothingInfoList = styled.ul`
 	flex-direction: column;
 `;
 
-export const HashtagList = styled.ul`
+export const StyletagList = styled.ul`
 	display: flex;
 	flex-direction: row;
 	padding: 0 1.25rem 1.25rem 1.25rem;
+	overflow-x: scroll;
+
+	&::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
 
 	span {
 		margin-right: 0.4375rem;
@@ -140,13 +145,13 @@ export const HashtagList = styled.ul`
 	}
 `;
 
-export const HashtagItem = styled.span<{ selected: boolean }>`
+export const StyletagItem = styled.span<{ selected: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	padding: 0 0.65rem;
 	height: 2rem;
-	min-width: 4.375rem;
-	padding: 0 1rem;
+	//min-width: 4.375rem;
 	background-color: ${({ color }) => color};
 	color: black;
 	border: ${({ selected }) => (selected ? `solid 0.0625rem black` : 'none')};

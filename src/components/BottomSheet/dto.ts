@@ -4,4 +4,5 @@ export interface BottomSheetProps {
 	Component: React.ComponentType<any>; // BottomSheet 내부에 전달할 컴포넌트
 	componentProps?: any; // props가 있는 경우 객체 형태로 전달
 	onCloseBottomSheet: () => void; // BottomSheet을 닫는 함수
+	initialTab?: 'likes' | 'comments'; // 추가: initialTab 속성
 }

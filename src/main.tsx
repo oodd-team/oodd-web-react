@@ -5,12 +5,15 @@ import theme from './styles/theme';
 import GlobalStyle from './styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
 import './styles/fonts/font.css';
+import { SocketProvider } from './context/SocketProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<ThemeProvider theme={theme}>
 		<GlobalStyle />
 		<RecoilRoot>
-			<App />
+			<SocketProvider>
+				<App />
+			</SocketProvider>
 		</RecoilRoot>
 	</ThemeProvider>,
 );
