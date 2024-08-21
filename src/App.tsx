@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
+import ChatRoom from './pages/Chats/ChatRoom';
 import Upload from './pages/Upload';
 
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/chats/:roomId" element={<ChatRoom />} />
 				<Route path="/Mypage" element={<Mypage />} />
 				<Route path="/post/:postId" element={<PostDetail />} />
 				<Route path="/profile/edit" element={<ProfileEdit />} />
@@ -31,8 +33,6 @@ const App: React.FC = () => {
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />
 				<Route path="/Verification" element={<Verification />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/chats" element={<Chats />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />
