@@ -16,8 +16,11 @@ const Tag: React.FC<Props> = ({ tag, isSelected, onClick }) => {
 			<TagImgWrapper>
 				<img src={tag.tagImgUrl} alt="tag" />
 			</TagImgWrapper>
-			<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.2 }} color={isSelected ? theme.colors.white : theme.colors.black}>
-				{tag.tagName}
+			<StyledText
+				$textTheme={{ style: 'body3-light', lineHeight: 1.2 }}
+				color={isSelected ? theme.colors.white : theme.colors.black}
+			>
+				#{tag.tagName}
 			</StyledText>
 		</TagWrapper>
 	);
