@@ -3,7 +3,7 @@ import { UserImage, ChatRoomListLayout, LeftBox, RightBox } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
 import dayjs from 'dayjs';
