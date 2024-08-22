@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
-import { BottomSheetProps } from '../Upload/PostUploadModal/dto.ts';
+
 import { StyledText } from '../../components/Text/StyledText';
 import {
 	InputLayout,
@@ -36,6 +36,7 @@ import block from '../../assets/Post/block.svg';
 import BottomButton from '../../components/BottomButton/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
+import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 
 const Post: React.FC = () => {
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);

@@ -35,13 +35,6 @@ export const HomeLogo = styled.img`
 	}
 `;
 
-export const NotiIcon = styled.img`
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 1.125rem;
-	cursor: pointer;
-`;
-
 // HomeTabBar
 
 export const TabLayout = styled.div`
