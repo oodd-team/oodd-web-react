@@ -5,7 +5,7 @@ import HomeTabBar from './HomeTabBar';
 import HomeTopBar from './HomeTopBar';
 import NavBar from '../../components/NavBar';
 import { HomeContainer } from './styles';
-import request from '../../apis/core';
+import request, { BaseResponse } from '../../apis/core';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
@@ -19,7 +19,7 @@ import BottomSheet from '../../components/BottomSheet/index.tsx';
 import Modal from '../../components/Modal/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 
-interface UserResponse {
+interface UserResponseType {
 	id: number;
 	name: string;
 	email: string;
@@ -29,6 +29,8 @@ interface UserResponse {
 	bio: string | null;
 	joinedAt: string;
 }
+
+interface UserResponse extends BaseResponse<UserResponseType> {}
 
 // Home 페이지입니다.
 const Home: React.FC = () => {
@@ -201,7 +203,8 @@ const Home: React.FC = () => {
 
 			try {
 				const response = await request.get<UserResponse>(`/users/${userId}`);
-				if (!response || !response.id) {
+				if (!response || !response.result.id) {
+					console.log(response);
 					navigate('/login');
 				}
 			} catch (error) {
