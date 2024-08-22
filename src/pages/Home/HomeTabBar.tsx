@@ -19,7 +19,14 @@ interface Relationship {
 
 const tabs = ['매칭', 'OOTD', '즐겨찾기'];
 
-const HomeTabbar: React.FC = () => {
+interface HomeTabBarProps {
+	onOpenBottomSheet: () => void;
+	onOpenReportSheet: () => void;
+	onOpenCommentModal: () => void;
+	onOpenConfirmationModal: () => void;
+}
+
+const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 	const [activeIndex, setActiveIndex] = useState<number>(1); // 초기화 시 OOTD 탭이 기본 활성화
 	const [hasMatchingRequests, setHasMatchingRequests] = useState<boolean>(false); // 매칭 요청 존재 여부
 	const [isMatchingReady, setIsMatchingReady] = useState<boolean>(false); // Matching 탭이 준비된 상태인지 확인
@@ -106,7 +113,7 @@ const HomeTabbar: React.FC = () => {
 						<Matching tooltipRef={cardRef} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
-						<OOTD tooltipRef={ootdTooltipRef} />
+						<OOTD tooltipRef={ootdTooltipRef} onMoreClick={onOpenBottomSheet} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
 						<Favorites />
@@ -117,4 +124,4 @@ const HomeTabbar: React.FC = () => {
 	);
 };
 
-export default HomeTabbar;
+export default HomeTabBar;
