@@ -26,7 +26,7 @@ interface HomeTabBarProps {
 	onOpenConfirmationModal: () => void;
 }
 
-const HomeTabbar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
+const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 	const [activeIndex, setActiveIndex] = useState<number>(1); // 초기화 시 OOTD 탭이 기본 활성화
 	const [hasMatchingRequests, setHasMatchingRequests] = useState<boolean>(false); // 매칭 요청 존재 여부
 	const [isMatchingReady, setIsMatchingReady] = useState<boolean>(false); // Matching 탭이 준비된 상태인지 확인
@@ -124,4 +124,4 @@ const HomeTabbar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 	);
 };
 
-export default HomeTabbar;
+export default HomeTabBar;
