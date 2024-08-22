@@ -5,9 +5,9 @@ import HomeTabBar from './HomeTabBar';
 import HomeTopBar from './HomeTopBar';
 import NavBar from '../../components/NavBar';
 import { HomeContainer } from './styles';
-import request from '../../apis/core';
+import request, { BaseResponse } from '../../apis/core';
 
-interface UserResponse {
+interface UserResponseType {
 	id: number;
 	name: string;
 	email: string;
@@ -17,6 +17,8 @@ interface UserResponse {
 	bio: string | null;
 	joinedAt: string;
 }
+
+interface UserResponse extends BaseResponse<UserResponseType>{}
 
 // Home 페이지입니다.
 const Home: React.FC = () => {
@@ -36,7 +38,7 @@ const Home: React.FC = () => {
 			try {
 				// JWT 토큰으로 사용자 정보 조회
 				const response = await request.get<UserResponse>(`/users/${userId}`);
-				if (!response || !response.id) {
+				if (!response || !response.result.id) {
 					// 사용자 정보가 유효하지 않으면 로그인 페이지로 리다이렉트
 					navigate('/login');
 				}

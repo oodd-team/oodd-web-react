@@ -33,7 +33,7 @@ const NaverCallback: React.FC = () => {
                         request.get<UserInfoDto>(`/users/${userid}`)
                         .then(response => {
                             console.log(response);
-                            if(response.nickname){
+                            if(response.result.nickname){
                                 navigate('/');
                             }
                             else{

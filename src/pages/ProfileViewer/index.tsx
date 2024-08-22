@@ -46,7 +46,7 @@ const ProfileViewer: React.FC = () => {
                 console.log('게시물 리스트 조회:', postsResponse);
                 const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
                 const combinedData : UserInfoProps = {
-                    ...response, 
+                    ...response.result,
                     status: storedUserDetails.status || 'blank',
                     posts: postsResponse.result.posts,
                     likesCount: postsResponse.result.totalLikes,
