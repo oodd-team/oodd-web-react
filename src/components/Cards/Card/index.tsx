@@ -31,7 +31,18 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 		if (response.isSuccess) {
 			onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
 		} else {
-			alert('프로필 수정에 실패했습니다.');
+			alert('매칭 거절에 실패했습니다.');
+		}
+	};
+
+	const handleAccept = async () => {
+		const response = await request.patch<BaseResponse>(`/user-relationships/${relationship.id}`, {
+			requestStatus: 'accepted',
+		});
+		if (response.isSuccess) {
+			nav('/chats');
+		} else {
+			alert('매칭 수락에 실패했습니다.');
 		}
 	};
 
@@ -81,7 +92,7 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 					<Btn onClick={handleReject}>
 						<img src={xBtn} alt="reject" />
 					</Btn>
-					<Btn onClick={() => nav('/chats')}>
+					<Btn onClick={handleAccept}>
 						<img src={checkBtn} alt="accept" />
 					</Btn>
 				</Reaction>
