@@ -55,7 +55,10 @@ const initialFeedData: FeedProps[] = [
 ];
 
 // OOTD 탭입니다.
-const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onMoreClick: () => void }> = ({
+	tooltipRef,
+	onMoreClick,
+}) => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
 	const [feeds, setFeeds] = useState<FeedProps[]>(initialFeedData);
 
@@ -110,7 +113,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 			<FeedContainer>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)}>
-						<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} />
+						<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} onMoreClick={onMoreClick} />
 					</div>
 				))}
 			</FeedContainer>

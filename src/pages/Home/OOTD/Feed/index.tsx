@@ -30,9 +30,10 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
 	feed: FeedProps;
 	onRemove: () => void;
+	onMoreClick: () => void;
 }
 
-const Feed: React.FC<Props> = ({ feed, onRemove }) => {
+const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
@@ -61,7 +62,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 						{feed.userName}
 					</StyledText>
 				</Info>
-				<img src={more} style={{ cursor: 'pointer' }} />
+				<img src={more} style={{ cursor: 'pointer' }} onClick={onMoreClick} />
 			</FeedTop>
 			<FeedText onClick={() => nav('/post')}>
 				<StyledText
