@@ -26,8 +26,9 @@ const App: React.FC = () => {
 				<Route path="/chats/:roomId" element={<ChatRoom />} />
 				<Route path="/Mypage" element={<Mypage />} />
 				<Route path="/post/:postId" element={<PostDetail />} />
-				<Route path="/profile/edit/:userId" element={<ProfileEdit />} />
+				<Route path="/profile/edit" element={<ProfileEdit />} />
 				<Route path="/account-setting" element={<AccountSetting />} />
+
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />
 				<Route path="/Verification" element={<Verification />} />
@@ -37,6 +38,7 @@ const App: React.FC = () => {
 				<Route path="/post" element={<Post />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />
+
 				<Route path="/auth/kakao/callback" element={<KakaoCallback />}></Route>
 				<Route path="/auth/naver/callback" element={<NaverCallback />}></Route>
 				<Route path="/auth/google/callback" element={<GoogleCallback />}></Route>

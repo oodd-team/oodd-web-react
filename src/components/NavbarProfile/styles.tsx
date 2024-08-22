@@ -5,13 +5,13 @@ export const Nav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
-	margin-left: -0.625rem; /* -10px */
+	margin-left: 0.8125rem;
 `;
 
 export const IconContainer = styled.div`
 	display: flex;
 	align-items: center;
-
+	margin-right: 18px;
 	a {
 		display: flex;
 		align-items: center;

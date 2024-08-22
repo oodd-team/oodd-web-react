@@ -5,7 +5,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import request from '../../apis/core';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
@@ -15,7 +15,6 @@ import { UserProfileResponse } from './dto';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const { userId } = useParams<{ userId: string }>();
 	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
 	const [nickname, setNickname] = useState<string>('');
 	const [bio, setBio] = useState<string>('');
@@ -25,7 +24,14 @@ const ProfileEdit: React.FC = () => {
 	useEffect(() => {
 		const fetchUserProfile = async () => {
 			try {
-				const response = await request.get<UserProfileResponse>(`/users/${2}`);
+				const storedUserId = localStorage.getItem('userId'); // 로그인된 사용자 ID 가져오기
+
+				if (!storedUserId) {
+					console.error('User is not logged in');
+					return;
+				}
+
+				const response = await request.get<UserProfileResponse>(`/users/${storedUserId}`);
 				setUserProfile(response);
 				setNickname(response.nickname || response.name);
 				setBio(response.bio || '');
@@ -36,7 +42,7 @@ const ProfileEdit: React.FC = () => {
 		};
 
 		fetchUserProfile();
-	}, [userId]);
+	}, []); // 빈 배열이지만, userId는 내부에서 가져옴
 
 	const handleButtonClick = () => {
 		fileInputRef.current?.click();
@@ -53,7 +59,14 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		try {
-			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${2}`, {
+			const storedUserId = localStorage.getItem('userId'); // 로그인된 사용자 ID 가져오기
+
+			if (!storedUserId) {
+				console.error('User is not logged in');
+				return;
+			}
+
+			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
 				nickname,
 				profilePictureUrl,
 				bio,

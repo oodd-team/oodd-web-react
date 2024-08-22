@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
-
 import ConfirmationModal from '../../components/ConfirmationModal';
 import avatar from '../../assets/avatar.png';
-import { useNavigate } from 'react-router-dom';
 import useredit from './assets/useredit.svg';
 import exit from './assets/exit.svg';
 import cancleaccount from './assets/cancleaccount.svg';
@@ -13,10 +13,33 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
+import request from '../../apis/core';
+import { UserProfileResponse } from '../ProfileEdit/dto';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
+
+	useEffect(() => {
+		const fetchUserProfile = async () => {
+			try {
+				const storedUserId = localStorage.getItem('userId'); // 로그인된 사용자 ID 가져오기
+
+				if (!storedUserId) {
+					console.error('User is not logged in');
+					return;
+				}
+
+				const response = await request.get<UserProfileResponse>(`/users/${storedUserId}`);
+				setUserProfile(response);
+			} catch (error) {
+				console.error('Error fetching user profile:', error);
+			}
+		};
+
+		fetchUserProfile();
+	}, []);
 
 	const handleEditProfileClick = () => {
 		navigate('/account-edit');
@@ -41,6 +64,10 @@ const AccountSetting: React.FC = () => {
 		navigate('/account-cancel');
 	};
 
+	if (!userProfile) {
+		return <div>Loading...</div>; // 로딩 상태
+	}
+
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
@@ -48,19 +75,19 @@ const AccountSetting: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={avatar} alt="프로필 사진" />
+						<img src={userProfile.profilePictureUrl || avatar} alt="프로필 사진" />
 					</ProfilePic>
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
-								IDID
+								{userProfile.name}
 							</StyledText>
 						</Label>
 					</Row>
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-								이름 | thscks000@naver.com
+								{userProfile.email}
 							</StyledText>
 						</Label>
 					</Row>
