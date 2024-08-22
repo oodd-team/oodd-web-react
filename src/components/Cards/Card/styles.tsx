@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CardLayout = styled.div`
-	margin: 0.625rem 1.25rem 0;
+	margin: 0.625rem 0 0;
 	background-color: black;
 	border-radius: 0.75rem;
 	position: relative;
@@ -19,6 +19,7 @@ export const ProfileImgBox = styled.div`
 	border-radius: 50%;
 	margin-left: 1rem;
 	cursor: pointer;
+	overflow: hidden;
 
 	img {
 		width: 100%;
@@ -50,10 +51,33 @@ export const OOTDImgBox = styled.div`
 	display: flex;
 	justify-content: center;
 
-	img {
+	.slide-image-small {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	.childSwiper .swiper-pagination {
+		right: 1.25rem;
+	}
+
+	.childSwiper .swiper-pagination-bullet {
+		width: 0.375rem;
+		height: 0.375rem;
+		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
+		background: rgba(255, 255, 255, 0.5);
+		opacity: 1;
+	}
+
+	.childSwiper .swiper-pagination-bullet-active {
+		width: 0.375rem;
+		height: 0.375rem;
+		background-color: ${({ theme }) => theme.colors.white};
+		opacity: 1;
+	}
+
+	.childSwiper .swiper-slide-small img {
+		transition: none !important;
 	}
 `;
 
@@ -64,6 +88,7 @@ export const Reaction = styled.div`
 	bottom: 2rem;
 	gap: 1.75rem;
 	display: flex;
+	z-index: 100;
 `;
 
 export const Btn = styled.div`

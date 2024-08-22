@@ -7,4 +7,5 @@ export interface UserInfoDto{
         profilePictureUrl: string;
         bio: string;
         joinedAt: string;
+        isFriend: boolean;
 }

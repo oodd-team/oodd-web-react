@@ -17,6 +17,7 @@ import { OpponentInfoAtom } from "../../../../recoil/OpponentInfo";
 import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
 import { ChatRoomDto, Opponent } from "../../../Chats/RecentChat/dto";
 import { useNavigate } from "react-router-dom";
+import { Relationship } from "../../../../components/Cards/Card/dto";
 
 
 const UserInfo: React.FC = React.memo(() => {
@@ -54,7 +55,6 @@ const UserInfo: React.FC = React.memo(() => {
                     return {
                         ...prevDetails,
                         isInterested: parsedDetails.isInterested || false,
-                        isFriend: parsedDetails.isFriend || false,
                     };
                 });
             } catch (error) {
@@ -70,9 +70,42 @@ const UserInfo: React.FC = React.memo(() => {
                     id: response.id,
                     nickname: response.nickname,
                     profilePictureUrl: response.profilePictureUrl,
-                    name: response.name
+                    name: response.name,
                 };
+                //const isFriend = response.isFriend;
                 setUserInfo(User);
+                if(response.isFriend === true)
+                {
+                    setFriend(true);
+                } else{
+                    const getMatchingList = async () => {
+
+                        if (!userInfo) {
+                            console.error('userInfo가 null입니다.');
+                            return;
+                        }
+                        try{
+                            const response = await request.get<{ isSuccess: boolean, code: number, message: string, result: Relationship[] }>(`/user-relationships`);
+                            if(Array.isArray(response.result)){
+                                response.result.forEach(list => {
+                                    if(list.target.id === id && list.requester.id === userInfo.id)
+                                    {
+                                        if(list.requestStatus === 'pending'){
+                                            setFriend(true);
+                                        }
+                                        else{
+                                            setFriend(false);
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                        catch (error) {
+                            console.error('매칭 불러오기 실패!:', error);
+                        }
+                        getMatchingList();
+                    }
+                }
             } catch (error) {
                 console.error('사용자 정보 조회 오류:', error);
             }
@@ -81,6 +114,7 @@ const UserInfo: React.FC = React.memo(() => {
         fetchUserInfo();
 
     }, [id, setUserDetails, setFriend]);
+
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);

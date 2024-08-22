@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	ProfileContainer,
 	Header,
@@ -21,74 +21,51 @@ import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
 import request from '../../apis/core';
-
 import ProfileActions from '../Profile';
-
-// API 응답에 맞는 타입 정의
-type PostItem = {
-	postId: number;
-	userId: number;
-	likes: number;
-	firstPhoto: string;
-	isRepresentative: boolean;
-	commentsCount?: number; // Optional since it might not be included for other users
-};
-
-type PostsResponse = {
-	isSuccess: boolean;
-	code: number;
-	message: string;
-	result: {
-		totalPosts: number;
-		totalLikes: number;
-		posts: PostItem[];
-	};
-};
-
-type UserResponse = {
-	id: number;
-	name: string;
-	email: string;
-	nickname: string | null;
-	phoneNumber: string | null;
-	profilePictureUrl: string;
-	bio: string | null;
-	joinedAt: string;
-};
+import { PostItem, PostsResponse, UserResponse } from './dto';
 
 const Mypage: React.FC = () => {
-	const { userId } = useParams<{ userId: string }>(); // URL에서 userId 가져오기
 	const navigate = useNavigate();
 	const [user, setUser] = useState<UserResponse | null>(null);
 	const [posts, setPosts] = useState<PostItem[]>([]);
 	const [totalPosts, setTotalPosts] = useState(0);
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [totalComments, setTotalComments] = useState(0); // Comments count
-
 	const handlePostClick = (postId: string) => {
 		navigate(`/post/${postId}`);
 	};
-
 	// 사용자 정보 가져오기 함수
 	const fetchUserData = async () => {
 		try {
-			const response = await request.get<UserResponse>(`/users/${2}`);
+			// userId를 localStorage에서 가져옴
+			const storedUserId = localStorage.getItem('id'); // 또는 상태관리에서 가져오기
+
+			if (!storedUserId) {
+				console.error('User is not logged in');
+				return;
+			}
+
+			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
 			setUser(response);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
 	};
-
 	// API에서 포스트 리스트를 가져오는 함수
 	const handlePostList = async () => {
 		try {
-			const response = await request.get<PostsResponse>(`/posts?userId=${2}`);
+			const storedUserId = localStorage.getItem('id');
+			if (!storedUserId) {
+				console.error('User is not logged in');
+				return;
+			}
+
+			const response = await request.get<PostsResponse>(`/posts?userId=${storedUserId}`);
 			if (response.isSuccess) {
 				const { totalPosts, totalLikes, posts } = response.result;
 				setTotalPosts(totalPosts);
 				setTotalLikes(totalLikes);
 				setPosts(posts);
-
 				// 코멘트 수 합산
 				const totalComments = posts.reduce((sum, post) => sum + (post.commentsCount || 0), 0);
 				setTotalComments(totalComments);
@@ -99,12 +76,11 @@ const Mypage: React.FC = () => {
 			console.error('Error fetching posts:', error);
 		}
 	};
-
 	// 컴포넌트가 마운트될 때 사용자 정보와 포스트 리스트를 가져옴
 	useEffect(() => {
 		fetchUserData();
 		handlePostList();
-	}, [userId]);
+	}, []);
 
 	return (
 		<OODDFrame>
@@ -158,5 +134,4 @@ const Mypage: React.FC = () => {
 		</OODDFrame>
 	);
 };
-
 export default Mypage;

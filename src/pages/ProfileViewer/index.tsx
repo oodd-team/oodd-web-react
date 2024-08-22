@@ -38,9 +38,9 @@ const ProfileViewer: React.FC = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await request.get<UserInfoDto>(`/users/${userId}`, {});
+                const response = await request.get<UserInfoDto>(`/users/${userId}`);
                 console.log('사용자 정보 조회: ', response);
-    
+
                 const postsResponse = await request.get<PostListDto>(`posts?userId=${userId}`, {});
                 console.log('게시물 리스트 조회:', postsResponse);
                 const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
@@ -51,7 +51,6 @@ const ProfileViewer: React.FC = () => {
                     likesCount: postsResponse.result.totalLikes,
                     postsCount: postsResponse.result.totalPosts,
                     isInterested: storedUserDetails.isInterested || false, 
-                    isFriend: storedUserDetails.isFriend || false,
                     userImg: storedUserDetails.profilePictureUrl
                 };
     
@@ -231,7 +230,6 @@ const ProfileViewer: React.FC = () => {
 };
 
 export default ProfileViewer;
-
 
 
 

@@ -5,6 +5,7 @@ export const FavoritesContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	align-items: flex-start;
+	margin-bottom: 4.625rem;
 `;
 
 export const FavoritesMent = styled.div`

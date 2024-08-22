@@ -36,7 +36,7 @@ interface CustomInstance extends AxiosInstance {
 }
 
 export const request: CustomInstance = axios.create({
-	baseURL: import.meta.env.VITE_API_URL, // 환경 변수를 이용한 baseURL 설정
+	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 20000,
 	headers: {
 		accept: 'application/json',
@@ -47,9 +47,7 @@ export const request: CustomInstance = axios.create({
 request.interceptors.request.use(
 	(config) => {
 		const jwt = window.localStorage.getItem(JWT_KEY);
-		if (jwt) {
-			config.headers.Authorization = `Bearer ${jwt}`;
-		}
+		config.headers.Authorization = `Bearer ${jwt}`;
 		return config;
 	},
 	(error) => {

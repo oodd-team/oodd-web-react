@@ -37,12 +37,16 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
         }
 
         try {
+            console.log(localStorage.getItem('id')); // 친구 신청을 보내는 id
+            console.log(userId); // 친구 신청을 받는 id
+            console.log(inputValue);
             const response = await request.post<ResponseDto>(`/user-relationships`, {
                 requesterId: Number.parseInt(localStorage.getItem('id') as string),
                 targetId: userId,
                 message: inputValue
-            });
-
+            }
+        );
+    
             console.log(response.result);
 
             setFriend(true);
@@ -66,6 +70,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+    
 
     return (
         <>
