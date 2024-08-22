@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-export const MatchingContainer = styled.div`
+export const CardsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 6.25rem;
 
 	.parentSwiper .swiper-slide {
 		transition: transform 0.3s;
@@ -22,11 +21,4 @@ export const MatchingContainer = styled.div`
 	.parentSwiper .swiper-container {
 		margin-left: 0.9375rem;
 	}
-`;
-
-export const Like = styled.div`
-	margin-top: 1.313rem;
-	margin-left: 1.25rem;
-	width: auto;
-	height: 1rem;
 `;

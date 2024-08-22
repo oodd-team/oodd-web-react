@@ -5,39 +5,59 @@ import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer } from './s
 import Tag from './Tag';
 import { FeedProps, TagProps } from './dto';
 import Feed from './Feed';
+import profileImg2 from '../../../assets/Home/profileImg2.svg';
+import tag from '../../../assets/Home/tag.svg';
+import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
+import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
+import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
+import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 
 // 추후 변경
 const tagData: TagProps[] = [
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#hip' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#classic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#vintage' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#casual' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#chic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#bohemian' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#sporty' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#formal' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#street' },
+	{ tagImgUrl: tag, tagName: '#classic' },
+	{ tagImgUrl: tag, tagName: '#street' },
+	{ tagImgUrl: tag, tagName: '#hip' },
+	{ tagImgUrl: tag, tagName: '#casual' },
+	{ tagImgUrl: tag, tagName: '#sporty' },
+	{ tagImgUrl: tag, tagName: '#feminine' },
+	{ tagImgUrl: tag, tagName: '#minimal' },
+	{ tagImgUrl: tag, tagName: '#formal' },
+	{ tagImgUrl: tag, tagName: '#outdoor' },
+	{ tagImgUrl: tag, tagName: '#luxury' },
 ];
 
 // 추후 변경
-const feedData: FeedProps[] = [
+const initialFeedData: FeedProps[] = [
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: profileImg2,
 		userName: 'IDID',
 		text: 'Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
+		profileUrl: profileImg2,
 		userName: 'IDID2',
 		text: '굳굳',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
+	},
+	{
+		profileUrl: profileImg2,
+		userName: 'IDID2',
+		text: '굳굳',
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
+	},
+	{
+		profileUrl: profileImg2,
+		userName: 'IDID2',
+		text: '굳굳',
+		feedImgUrls: [ootdImg1, ootdImg2, ootdImg3, ootdImg4],
 	},
 ];
 
 // OOTD 탭입니다.
-const OOTD: React.FC = () => {
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
+	const [feeds, setFeeds] = useState<FeedProps[]>(initialFeedData);
 
 	const handleTagClick = (index: number) => {
 		setSelectedTags((prevSelectedTags) => {
@@ -47,6 +67,10 @@ const OOTD: React.FC = () => {
 				return [...prevSelectedTags, index];
 			}
 		});
+	};
+
+	const handleRemoveFeed = (userName: string) => {
+		setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== userName));
 	};
 
 	// tag 데이터를 반으로 나누기, 홀수일 경우 위에 줄이 하나 더 많게
@@ -84,8 +108,10 @@ const OOTD: React.FC = () => {
 				</TagRow>
 			</TagContainer>
 			<FeedContainer>
-				{feedData.map((feed) => (
-					<Feed feed={feed} />
+				{feeds.map((feed, index) => (
+					<div ref={(el) => (tooltipRef.current[index] = el!)}>
+						<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} />
+					</div>
 				))}
 			</FeedContainer>
 		</OOTDContainer>

@@ -5,48 +5,51 @@ import { FavoritesContainer, FavoritesMent, FeedContainer, UserContainer, UserRo
 import Feed from './Feed';
 import { FeedProps, UserProps } from './dto';
 import User from './User';
+import profileImg3 from './../../../assets/Home/profileImg3.svg';
+import tag from "./../../../assets/Home/tag.svg";
+import feedImg from "./../../../assets/Home/feedImg.svg";
 
 // 추후 변경
 const userData: UserProps[] = [
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID' },
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID2' },
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID3' },
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID4' },
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID5' },
-	{ userImgUrl: './../../../../assets/Home/tag.svg', userName: 'IDID6' },
+	{ userImgUrl: tag, userName: 'IDID' },
+	{ userImgUrl: tag, userName: 'IDID2' },
+	{ userImgUrl: tag, userName: 'IDID3' },
+	{ userImgUrl: tag, userName: 'IDID4' },
+	{ userImgUrl: tag, userName: 'IDID5' },
+	{ userImgUrl: tag, userName: 'IDID6' },
 ];
 
 // 추후 변경
 const feedData: FeedProps[] = [
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID2',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID3',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID4',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID5',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 	{
-		profileUrl: './../../../../assets/Home/profileImg3.svg',
+		profileUrl: profileImg3,
 		userName: 'IDID6',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
+		feedImgUrl: feedImg,
 	},
 ];
 

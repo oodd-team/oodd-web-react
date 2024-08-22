@@ -3,17 +3,18 @@ import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { Btn, CheckedBtn, FeedImgBox, FeedProfileImgWrapper, FeedTop, FeedWrapper, Info, Reaction } from './styles';
 import { FeedProps } from '../dto';
-import starBtn from '../../../../assets/Home/button_star.svg'
-import checkedHeart from '../../../../assets/Home/clicked_heart.svg'
-
+import starBtn from '../../../../assets/Home/button_star.svg';
+import checkedHeart from '../../../../assets/Home/clicked_heart.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	feed: FeedProps;
 }
 
 const Feed: React.FC<Props> = ({ feed }) => {
+	const nav = useNavigate();
 	return (
-		<FeedWrapper>
+		<FeedWrapper onClick={() => nav('/post')}>
 			<FeedImgBox>
 				<img src={feed.feedImgUrl} />
 				<FeedTop>
