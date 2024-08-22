@@ -226,9 +226,9 @@ const Home: React.FC = () => {
 			</HomeContainer>
 			<NavBar />
 
-			{isOpenBottomSheet && <BottomSheet {...bottomSheetProps} />}
-			{isOpenReportSheet && <BottomSheet {...reportSheetProps} />}
-			{isCommentModalOpen && <BottomSheet {...commentSheetProps} />}
+			<BottomSheet {...bottomSheetProps} />
+			<BottomSheet {...reportSheetProps} />
+			<BottomSheet {...commentSheetProps} />
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
