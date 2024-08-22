@@ -66,6 +66,12 @@ export interface CommentsResponse {
 		}>;
 	};
 }
+export interface User {
+	id: number;
+	name: string;
+	profilePictureUrl: string;
+	nickname: string;
+}
 
 export interface UserResponse {
 	id: number;
@@ -76,4 +82,7 @@ export interface UserResponse {
 	profilePictureUrl: string;
 	bio: string | null;
 	joinedAt: string;
+	isSuccess: boolean;
+	result: User;
+	message: string;
 }
