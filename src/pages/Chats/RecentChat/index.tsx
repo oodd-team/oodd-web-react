@@ -8,16 +8,19 @@ import ChatRoomList from '../ChatRoomList';
 import { useRecoilValue } from 'recoil';
 import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import SwiperCore from 'swiper';
+import Loading from '../../../components/Loading';
 
 const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({ swiperRef }) => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const storageValue = localStorage.getItem('id');
 	const userId = storageValue ? Number(storageValue) : -1;
+	const [loading, setLoading] = useState(false);
 	const allMessages = useRecoilValue(AllMesagesAtom);
 
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
+				setLoading(true);
 				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
 
 				if (response.isSuccess) {
@@ -39,6 +42,8 @@ const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null
 				}
 			} catch (error) {
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -48,6 +53,7 @@ const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null
 	return (
 		<>
 			<RecentChatInfo>
+				{loading && <Loading />}
 				<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
 					최근 채팅방
 				</StyledText>

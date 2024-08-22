@@ -12,6 +12,7 @@ import BottomSheet from '../../../components/BottomSheet';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import Modal from '../../../components/Modal';
+import Loading from '../../../components/Loading';
 import { ExtendedMessageDto } from '../dto';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
@@ -39,6 +40,7 @@ const ChatRoom: React.FC = () => {
 	const [isOpenCannotBlock, setIsOpenCannotBlock] = useState(false);
 	const [isOpenCannotCheck, setIsOpenCannotCheck] = useState(false);
 
+	const [loading, setLoading] = useState(true);
 	const [isScroll, setIsScroll] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const chatWindowRef = useRef<HTMLDivElement>(null);
@@ -63,6 +65,7 @@ const ChatRoom: React.FC = () => {
 			if (messages.length > messageLengthRef.current) {
 				setIsScroll((prev) => !prev);
 				setIsLoaded(true);
+				setLoading(false);
 			}
 		});
 
@@ -230,6 +233,7 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			{loading && <Loading />}
 			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
 			{isOpenCannotBlock && <Modal {...cannotBlockModal} />}
