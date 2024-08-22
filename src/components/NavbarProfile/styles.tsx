@@ -5,7 +5,7 @@ export const Nav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
-	margin-left: 10px;
+	margin-left: 0px;
 	position: fixed; /* 화면 상단에 고정 */
 	top: 0; /* 상단에 위치 */
 	left: 0; /* 왼쪽에 위치 */
