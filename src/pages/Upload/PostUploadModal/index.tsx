@@ -148,7 +148,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 			}
 
 			console.log(response.result);
-			navigate('/profile');
+			navigate('/mypage');
 		} catch (error) {
 			console.error(error);
 		} finally {
