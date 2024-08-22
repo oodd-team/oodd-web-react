@@ -7,5 +7,5 @@ export interface FeedProps {
 	profileUrl: string;
 	userName: string;
 	text: string;
-	feedImgUrl: string;
+	feedImgUrls: string[];
 }

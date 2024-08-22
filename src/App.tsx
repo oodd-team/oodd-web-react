@@ -8,14 +8,13 @@ import AccountSetting from './pages/AccountSetting';
 import AccountEdit from './pages/AccountEdit';
 import AccountCancel from './pages/AccountCancel';
 import Verification from './pages/verification';
-
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
 import Upload from './pages/Upload';
-
+import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
 import GoogleCallback from './pages/Login/components/Google/GoogleCallback';
@@ -36,6 +35,7 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />
+				<Route path="/post" element={<Post />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />
 
