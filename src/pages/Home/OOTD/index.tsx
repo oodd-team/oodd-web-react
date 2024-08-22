@@ -14,16 +14,16 @@ import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 
 // 추후 변경
 const tagData: TagProps[] = [
-	{ tagImgUrl: tag, tagName: '#classic' },
-	{ tagImgUrl: tag, tagName: '#street' },
-	{ tagImgUrl: tag, tagName: '#hip' },
-	{ tagImgUrl: tag, tagName: '#casual' },
-	{ tagImgUrl: tag, tagName: '#sporty' },
-	{ tagImgUrl: tag, tagName: '#feminine' },
-	{ tagImgUrl: tag, tagName: '#minimal' },
-	{ tagImgUrl: tag, tagName: '#formal' },
-	{ tagImgUrl: tag, tagName: '#outdoor' },
-	{ tagImgUrl: tag, tagName: '#luxury' },
+	{ tagImgUrl: tag, tagName: 'classic' },
+	{ tagImgUrl: tag, tagName: 'street' },
+	{ tagImgUrl: tag, tagName: 'hip' },
+	{ tagImgUrl: tag, tagName: 'casual' },
+	{ tagImgUrl: tag, tagName: 'sporty' },
+	{ tagImgUrl: tag, tagName: 'feminine' },
+	{ tagImgUrl: tag, tagName: 'minimal' },
+	{ tagImgUrl: tag, tagName: 'formal' },
+	{ tagImgUrl: tag, tagName: 'outdoor' },
+	{ tagImgUrl: tag, tagName: 'luxury' },
 ];
 
 // 추후 변경
