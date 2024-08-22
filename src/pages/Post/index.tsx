@@ -6,7 +6,6 @@ import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
 import { StyledText } from '../../components/Text/StyledText';
 import {
-	InputLayout,
 	MoreBtn,
 	PostImg,
 	PostInfo,
@@ -34,6 +33,7 @@ import block from '../../assets/Post/block.svg';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
+import ReportTextarea from '../Home/ReportTextarea.tsx';
 import { PostResponse, PostData, UserResponse, UserData, ClothingInfo } from './dto';
 import request from '../../apis/core';
 
@@ -49,7 +49,6 @@ const Post: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const nav = useNavigate();
 
 	// 서버에서 게시물 데이터 가져오기
@@ -94,10 +93,6 @@ const Post: React.FC = () => {
 
 		fetchPostData();
 	}, [postId]);
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputValue(e.target.value);
-	};
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
