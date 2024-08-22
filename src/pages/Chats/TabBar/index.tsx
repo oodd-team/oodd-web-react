@@ -7,23 +7,25 @@ import RecentChat from '../RecentChat';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import 'swiper/css';
+import request from '../../../apis/core';
+import theme from '../../../styles/theme';
 
 const tabs = ['요청', '최근 채팅'];
 
 const TabBar: React.FC = () => {
-	// const [matchingRequest, setMatchingRequest] = useState(0);
-	const [hasNewRequest, _] = useState(true);
+	const [matchingRequests, setMatchingRequests] = useState(0);
+	const [hasMatchingRequests, setHasMatchingRequests] = useState(false);
 
 	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
 
 	const handleTabClick = (index: number) => {
-		// 요청이 있는 경우에만 탭 변경 가능
-		if (hasNewRequest) {
+		// 매칭 요청이 있는 경우에만 '매칭' 탭을 활성화
+		if (index !== 0 || hasMatchingRequests) {
 			setActiveIndex(index);
-		}
-		if (swiperRef.current) {
-			swiperRef.current.slideTo(index);
+			if (swiperRef.current) {
+				swiperRef.current.slideTo(index);
+			}
 		}
 	};
 
@@ -32,21 +34,26 @@ const TabBar: React.FC = () => {
 	};
 
 	useEffect(() => {
+		// 첫 탭을 최근 채팅으로 설정
 		if (swiperRef.current) {
 			swiperRef.current.slideTo(1, 0);
 		}
-		// 	const getRequestList = async () => {
-		// 		try {
-		// 			const response = await request.get<{ [key: string]: any }>('/user-relationships');
+		const getRequestList = async () => {
+			try {
+				const response = await request.get<{ [key: string]: any }>('/user-relationships');
 
-		// 			if (response?.isSuccess) {
-		// 				setMatchingRequest(response.result.length);
-		//				setHasNewRequest(response.result.length !== 0);
-		// 			}
-		// 		} catch {}
-		// 	};
+				if (response?.isSuccess) {
+					setMatchingRequests(response.result.length);
+					setHasMatchingRequests(response.result.length !== 0);
+				} else {
+					console.error(response.message);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		};
 
-		// 	getRequestList();
+		getRequestList();
 	}, []);
 
 	return (
@@ -56,15 +63,16 @@ const TabBar: React.FC = () => {
 					{tabs.map((tab, index) => (
 						<TabBarWrapper
 							key={tab}
-							$isSelected={!!(activeIndex === index && (index || hasNewRequest))}
-							$isPointer={!!(hasNewRequest || index)}
+							$isSelected={activeIndex === index && (index !== 0 || hasMatchingRequests)}
+							$isPointer={index !== 0 || hasMatchingRequests}
 							onClick={() => handleTabClick(index)}
 						>
 							<StyledText
 								$textTheme={{
-									style: activeIndex === index && (index || hasNewRequest) ? 'body2-medium' : 'body2-light',
+									style: activeIndex === index && (index !== 0 || hasMatchingRequests) ? 'body2-medium' : 'body2-light',
 									lineHeight: 1.5,
 								}}
+								color={index === 0 && !hasMatchingRequests ? theme.colors.gray3 : undefined} // 비활성화된 경우 글자 색을 변경
 							>
 								{tab}
 							</StyledText>
@@ -83,11 +91,9 @@ const TabBar: React.FC = () => {
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 					style={{ height: '100%' }}
 				>
-					{hasNewRequest && (
-						<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
-							<Request />
-						</SwiperSlide>
-					)}
+					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+						<Request />
+					</SwiperSlide>
 					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
 						<RecentChat swiperRef={swiperRef} />
 					</SwiperSlide>
