@@ -36,7 +36,8 @@ const ChatRoom: React.FC = () => {
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [isOpenLeave, setIsOpenLeave] = useState(false);
 	const [isOpenBlock, setIsOpenBlock] = useState(false);
-	const [isOpenAlert, setIsOpenAlert] = useState(false);
+	const [isOpenCannotBlock, setIsOpenCannotBlock] = useState(false);
+	const [isOpenCannotCheck, setIsOpenCannotCheck] = useState(false);
 
 	const [isScroll, setIsScroll] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -124,7 +125,7 @@ const ChatRoom: React.FC = () => {
 						setIsOpenBlock(true);
 						setIsOpenMenu(false);
 					} else {
-						setIsOpenAlert(true);
+						setIsOpenCannotBlock(true);
 						setIsOpenMenu(false);
 					}
 				},
@@ -193,10 +194,17 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
-	const alertModal: ModalProps = {
+	const cannotBlockModal: ModalProps = {
 		content: '차단할 수 없는 사용자입니다',
 		onClose: () => {
-			setIsOpenAlert(false);
+			setIsOpenCannotBlock(false);
+		},
+	};
+
+	const cannotCheckModal: ModalProps = {
+		content: '사용자 정보가 없습니다',
+		onClose: () => {
+			setIsOpenCannotCheck(false);
 		},
 	};
 
@@ -210,11 +218,22 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
+	// 프로필 사진 클릭 시 프로필 페이지로 이동
+	const onClickProfile = () => {
+		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
+		if (opponentId === -1) {
+			setIsOpenCannotCheck(true);
+		} else {
+			nav(`/users/${opponentId}`);
+		}
+	};
+
 	return (
 		<OODDFrame>
 			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
 			{isOpenBlock && <ConfirmationModal {...blockModal} />}
-			{isOpenAlert && <Modal {...alertModal} />}
+			{isOpenCannotBlock && <Modal {...cannotBlockModal} />}
+			{isOpenCannotCheck && <Modal {...cannotCheckModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
 				text={opponentInfo?.name || '알수없음'}
@@ -238,7 +257,7 @@ const ChatRoom: React.FC = () => {
 							{message.sentMessage ? (
 								<SentMessage {...message.sentMessage} />
 							) : message.rcvdMessage ? (
-								<RcvdMessage {...message.rcvdMessage} />
+								<RcvdMessage {...message.rcvdMessage} onClickProfile={onClickProfile} />
 							) : null}
 						</div>
 					);
