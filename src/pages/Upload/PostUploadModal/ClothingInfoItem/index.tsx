@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
-import close from '../../assets/close2.svg';
+import close from '../../../../assets/Upload/close2.svg';
 import { ClothingInfoItemProps } from '../dto';
 import { ClothingInfoItemContainer } from './styles';
 
 const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete }) => {
 	return (
 		<ClothingInfoItemContainer>
-			<img src={clothingObj.image} />
+			<img src={clothingObj.image_url} />
 			<div className="infoContainer">
 				<StyledText className="brand" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
 					{clothingObj.brand}

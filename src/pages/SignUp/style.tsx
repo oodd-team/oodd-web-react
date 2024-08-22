@@ -6,7 +6,7 @@ export const SignUpContainer = styled.div`
     align-items: center;
     width: 100%;
     max-width: 32rem; /* 최대 너비 512px */
-    height: auto;
+    height: 100vh;
     margin: 0 auto; /* 중앙 정렬 */
     //box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
@@ -69,16 +69,6 @@ export const Tap = styled.div`
     font-size: 0.875rem;  /* 14px */
     line-height: 1.3125rem;  /* 21px */
     margin-top: 0.3125rem;  /* 5px */
-`;
-
-export const NextButton = styled.button`
-    width: 100%;
-    max-width: 19rem;  /* 25 */
-    height: 3.5rem;  /* 4 */
-    background-color: black;
-    border-radius: 0.625rem;  /* 10px */
-    margin-top: 17rem;
-    margin-bottom: 1.5rem;  /* 24px */
 `;
 
 

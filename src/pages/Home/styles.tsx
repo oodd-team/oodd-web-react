@@ -35,13 +35,6 @@ export const HomeLogo = styled.img`
 	}
 `;
 
-export const NotiIcon = styled.img`
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 1.125rem;
-	cursor: pointer;
-`;
-
 // HomeTabBar
 
 export const TabLayout = styled.div`
@@ -70,13 +63,13 @@ export const HomeTabBarList = styled.ul`
 	margin: 0 1.25rem;
 `;
 
-export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean }>`
+export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
 	margin-top: 1rem;
 	border-bottom: 0.125rem solid ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')};
 	text-align: center;
 	flex-grow: 1;
 	flex-basis: 0;
-	cursor: pointer;
+	cursor: ${({ $isPointer }) => ($isPointer ? 'pointer' : '')};
 `;
 
 export const Tabs = styled.div`

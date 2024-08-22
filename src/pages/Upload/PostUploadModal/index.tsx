@@ -1,57 +1,77 @@
 //PostUploadModal/index.tsx
-import React, { useState } from 'react';
-//import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
 	StyledInput,
 	TagContainer,
 	ClothingInfoList,
-	HashtagList,
-	HashtagItem,
+	StyletagList,
+	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-import { Header, PrevButton } from '../styles';
+import TopBar from '../../../components/TopBar';
+import BottomSheet from '../../../components/BottomSheet';
+import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import BottomButton from '../../../components/BottomButton';
 import { StyledText } from '../../../components/Text/StyledText';
 import ImageSwiper from './ImageSwiper';
 import ClothingInfoItem from './ClothingInfoItem';
-import SearchBottomSheet from './SearchBottomSheet/index';
+import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
-import back from '../assets/back.svg';
-import clothingTag from '../assets/clothingTag.svg';
-import styleTag from '../assets/styleTag.svg';
-import pin from '../assets/pin.svg';
-import next from '../assets/next.svg';
-import next_up from '../assets/next_up.svg';
-import { PostUploadModalProps, ClothingInfo, Hashtag } from './dto';
+import back from '../../../assets/Upload/back.svg';
+import clothingTag from '../../../assets/Upload/clothingTag.svg';
+import styleTag from '../../../assets/Upload/styleTag.svg';
+import pin from '../../../assets/Upload/pin.svg';
+import next from '../../../assets/Upload/next.svg';
+import next_up from '../../../assets/Upload/next_up.svg';
+import { PostUploadModalProps } from '../dto';
+import { ClothingInfo, Styletag, Post } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
+import request, { BaseResponse } from '../../../apis/core';
 
-const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImages }) => {
-	const [caption, setCaption] = useState('');
-	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
-	const [selectedHashtag, setSelectedHashtag] = useState<Hashtag | null>(null);
+const PostUploadModal: React.FC<PostUploadModalProps> = ({
+	onPrev,
+	selectedImages,
+	initialContent = '',
+	initialClothingInfos = [],
+	initialStyletag = null,
+	postId = null,
+}) => {
+	const [content, setContent] = useState<string>(initialContent);
+	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
+	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(initialStyletag);
 	const [isOOTD, setIsOOTD] = useState(false);
-	const [isSearchSheetOpen, setIsSearchSheetOpen] = useState(false);
-	const [isHashtagListOpen, setIsHashtagListOpen] = useState(false);
+	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
+	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const hashtags: Hashtag[] = [
-		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' },
-		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' },
-		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' },
-		{ tag: '#vintage', color: 'rgba(0, 255, 0, 0.15)' },
-	];
+	useEffect(() => {
+		console.log(postId);
+	}, []);
 
 	const navigate = useNavigate();
 
+	const styletags: Styletag[] = [
+		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
+		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
+		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
+		{ tag: '#casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
+		{ tag: '#sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
+		{ tag: '#feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
+		{ tag: '#minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
+		{ tag: '#formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
+		{ tag: '#outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
+		{ tag: '#luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
+	];
+
 	const handleToggleSearchSheet = () => {
-		setIsSearchSheetOpen((open) => !open);
+		setIsSearchBottomSheetOpen((open) => !open);
 	};
 
 	const handleToggleStyleTagList = () => {
-		setIsHashtagListOpen((open) => !open);
+		setIsStyletagListOpen((open) => !open);
 	};
 
 	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
@@ -63,9 +83,22 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		setClothingInfos(deletedClothingInfo);
 	};
 
-	const handleSelectTag = (tag: Hashtag) => {
-		setSelectedHashtag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
-		setIsHashtagListOpen(false);
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isSearchBottomSheetOpen,
+		isHandlerVisible: false,
+		Component: SearchBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsSearchBottomSheetOpen(false);
+		},
+		componentProps: {
+			onClose: () => setIsSearchBottomSheetOpen(false),
+			onSelectClothingInfo: handleAddClothingInfo,
+		},
+	};
+
+	const handleSelectStyletag = (tag: Styletag) => {
+		setSelectedStyletag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
+		setIsStyletagListOpen(false);
 	};
 
 	const handleToggleOOTD = () => {
@@ -73,6 +106,12 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 	};
 
 	const uploadImageToFirebase = async (image: string) => {
+		// Firebase URL 형식을 확인합니다.
+		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
+			return image; // 이미 업로드된 경우, URL을 그대로 반환합니다.
+		}
+
+		// 새로 업로드해야 하는 경우
 		const response = await fetch(image);
 		const blob = await response.blob();
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
@@ -86,31 +125,30 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 		try {
 			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
 
-			const postData = {
-				photo_urls: uploadedImages,
-				caption,
-				hashtags: selectedHashtag ? [selectedHashtag.tag] : [],
-				clothing_infos: clothingInfos,
+			const postData: Post = {
+				photoUrls: uploadedImages,
+				content,
+				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
+				clothingInfo: clothingInfos,
+				isRepresentive: isOOTD,
 			};
+			console.log(postData);
 
-			/*
-			const response = await axios.post('http://localhost:3001/posts', postData, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-
-			if (response.status !== 201) {
-				throw new Error('Failed');
+			let response;
+			if (postId) {
+				// 게시물 수정 (PATCH)
+				response = await request.patch<BaseResponse>(`/posts/${postId}`, postData);
+			} else {
+				// 새 게시물 업로드 (POST)
+				response = await request.post<BaseResponse>(`/posts`, postData);
 			}
 
-			const result = response.data;
+			if (!response.isSuccess) {
+				throw new Error(response.message || 'Failed');
+			}
 
-			console.log(result);
-			*/
-
-			console.log(postData);
-			navigate('/profile');
+			console.log(response.result);
+			navigate('/mypage');
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -120,16 +158,10 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 
 	return (
 		<>
-			<Header>
-				<PrevButton onClick={onPrev}>
-					<img src={back} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
-			</Header>
-
+			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={onPrev} />
 			<Content>
 				<ImageSwiper images={selectedImages} />
-				<StyledInput value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="문구를 작성하세요..." />
+				<StyledInput value={content} onChange={(e) => setContent(e.target.value)} placeholder="문구를 작성하세요..." />
 				<TagContainer className="clothingTag">
 					<div onClick={handleToggleSearchSheet}>
 						<img src={clothingTag} />
@@ -157,9 +189,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 							스타일 태그
 						</StyledText>
-						{isHashtagListOpen ? (
+						{isStyletagListOpen ? (
 							<img src={next_up} />
-						) : !selectedHashtag ? (
+						) : !selectedStyletag ? (
 							<>
 								<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 									미지정
@@ -167,24 +199,24 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 								<img src={next} />
 							</>
 						) : (
-							<HashtagItem selected={false} color={selectedHashtag?.color}>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedHashtag?.tag}</StyledText>
-							</HashtagItem>
+							<StyletagItem selected={false} color={selectedStyletag?.color}>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedStyletag?.tag}</StyledText>
+							</StyletagItem>
 						)}
 					</div>
-					{isHashtagListOpen && (
-						<HashtagList>
-							{hashtags.map((tagObj, index) => (
-								<HashtagItem
+					{isStyletagListOpen && (
+						<StyletagList>
+							{styletags.map((tagObj, index) => (
+								<StyletagItem
 									key={index}
-									onClick={() => handleSelectTag(tagObj)}
-									selected={selectedHashtag?.tag === tagObj.tag}
+									onClick={() => handleSelectStyletag(tagObj)}
+									selected={selectedStyletag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
 									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{tagObj.tag}</StyledText>
-								</HashtagItem>
+								</StyletagItem>
 							))}
-						</HashtagList>
+						</StyletagList>
 					)}
 				</TagContainer>
 				<PinnedPostToggleContainer>
@@ -196,11 +228,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({ onPrev, selectedImage
 				</PinnedPostToggleContainer>
 			</Content>
 
-			<BottomButton content="공유" onClick={handleSubmit} disabled={isLoading} />
+			<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
 
-			{isSearchSheetOpen && (
-				<SearchBottomSheet onClose={handleToggleSearchSheet} onSelectClothingInfo={handleAddClothingInfo} />
-			)}
+			{isSearchBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
 		</>
 	);
 };

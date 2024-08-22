@@ -23,6 +23,7 @@ import xBtn from '../../../../assets/Home/button_reject.svg';
 import heartBtn from '../../../../assets/Home/button_heart.svg';
 import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
 import starBtn from '../../../../assets/Home/button_star.svg';
+import clickedStar from '../../../../assets/Home/clicked_bigstar.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,9 +35,14 @@ interface Props {
 const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
+	const [isStarClicked, setIsStarClicked] = useState(false);
 
 	const handleHeartClick = () => {
 		setIsHeartClicked((prev) => !prev);
+	};
+
+	const handleStarClick = () => {
+		setIsStarClicked((prev) => !prev);
 	};
 
 	const handleCommentClick = () => {
@@ -94,9 +100,14 @@ const Feed: React.FC<Props> = ({ feed, onRemove }) => {
 						{isHeartClicked && (
 							<img src={clickedHeart} onClick={handleHeartClick} style={{ width: '3.75rem', height: '3.75rem' }} />
 						)}
-						<Btn>
-							<img src={starBtn} />
-						</Btn>
+						{!isStarClicked && (
+							<Btn onClick={handleStarClick}>
+								<img src={starBtn} />
+							</Btn>
+						)}
+						{isStarClicked && (
+							<img src={clickedStar} onClick={handleStarClick} style={{ width: '3.75rem', height: '3.75rem' }} />
+						)}
 					</Reaction>
 
 					<CommentBtn onClick={handleCommentClick}>

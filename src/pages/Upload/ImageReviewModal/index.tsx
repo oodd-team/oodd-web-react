@@ -1,10 +1,9 @@
 import React from 'react';
 import { Content } from './styles';
-import { Header, PrevButton } from '../styles';
+import TopBar from '../../../components/TopBar';
 import BottomButton from '../../../components/BottomButton';
-import { StyledText } from '../../../components/Text/StyledText';
-import back from '../assets/back.svg';
-import { ImageReviewModalProps } from './dto';
+import back from '../../../assets/Upload/back.svg';
+import { ImageReviewModalProps } from '../dto';
 import ImageSwiper from './ImageSwiper';
 
 const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
@@ -23,12 +22,7 @@ const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 
 	return (
 		<>
-			<Header>
-				<PrevButton onClick={onPrev}>
-					<img src={back} />
-				</PrevButton>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>OOTD 업로드</StyledText>
-			</Header>
+			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={onPrev} />
 			<Content>
 				<ImageSwiper images={selectedImages} onRemove={handleRemoveImage} onAddImages={onAddImages} />
 			</Content>
