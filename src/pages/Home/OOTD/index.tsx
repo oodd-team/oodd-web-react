@@ -6,7 +6,16 @@ import Tag from './Tag';
 import { FeedProps, TagProps } from './dto';
 import Feed from './Feed';
 import profileImg2 from '../../../assets/Home/profileImg2.svg';
-import tag from '../../../assets/Home/tag.svg';
+import classic from '../../../assets/Home/classic.svg'
+import street from '../../../assets/Home/street.svg'
+import hip from '../../../assets/Home/hip.svg'
+import casual from '../../../assets/Home/casual.svg'
+import sporty from '../../../assets/Home/sporty.svg'
+import feminine from '../../../assets/Home/feminine.svg'
+import minimal from '../../../assets/Home/minimal.svg'
+import formal from '../../../assets/Home/formal.svg'
+import outdoor from '../../../assets/Home/outdoor.svg'
+import luxury from '../../../assets/Home/luxury.svg'
 import ootdImg1 from '../../../assets/Home/OOTDImg1.svg';
 import ootdImg2 from '../../../assets/Home/OOTDImg2.svg';
 import ootdImg3 from '../../../assets/Home/OOTDImg3.svg';
@@ -14,16 +23,16 @@ import ootdImg4 from '../../../assets/Home/OOTDImg4.svg';
 
 // 추후 변경
 const tagData: TagProps[] = [
-	{ tagImgUrl: tag, tagName: '#classic' },
-	{ tagImgUrl: tag, tagName: '#street' },
-	{ tagImgUrl: tag, tagName: '#hip' },
-	{ tagImgUrl: tag, tagName: '#casual' },
-	{ tagImgUrl: tag, tagName: '#sporty' },
-	{ tagImgUrl: tag, tagName: '#feminine' },
-	{ tagImgUrl: tag, tagName: '#minimal' },
-	{ tagImgUrl: tag, tagName: '#formal' },
-	{ tagImgUrl: tag, tagName: '#outdoor' },
-	{ tagImgUrl: tag, tagName: '#luxury' },
+	{ tagImgUrl: classic, tagName: 'classic' },
+	{ tagImgUrl: street, tagName: 'street' },
+	{ tagImgUrl: hip, tagName: 'hip' },
+	{ tagImgUrl: casual, tagName: 'casual' },
+	{ tagImgUrl: sporty, tagName: 'sporty' },
+	{ tagImgUrl: feminine, tagName: 'feminine' },
+	{ tagImgUrl: minimal, tagName: 'minimal' },
+	{ tagImgUrl: formal, tagName: 'formal' },
+	{ tagImgUrl: outdoor, tagName: 'outdoor' },
+	{ tagImgUrl: luxury, tagName: 'luxury' },
 ];
 
 // 추후 변경
@@ -55,7 +64,10 @@ const initialFeedData: FeedProps[] = [
 ];
 
 // OOTD 탭입니다.
-const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onMoreClick: () => void }> = ({
+	tooltipRef,
+	onMoreClick,
+}) => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
 	const [feeds, setFeeds] = useState<FeedProps[]>(initialFeedData);
 
@@ -110,7 +122,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 			<FeedContainer>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)}>
-						<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} />
+						<Feed key={feed.userName} feed={feed} onRemove={() => handleRemoveFeed(feed.userName)} onMoreClick={onMoreClick} />
 					</div>
 				))}
 			</FeedContainer>

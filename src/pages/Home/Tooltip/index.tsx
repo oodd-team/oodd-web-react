@@ -39,50 +39,69 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 		const seenMatching = Cookies.get('hasSeenMatchingTooltip');
 		const seenOotd = Cookies.get('hasSeenOotdTooltip');
 
+		// 매칭 탭에서 툴팁이 표시된 적이 없으면
 		if (!seenMatching && activeIndex === 0) {
-			if (cardRef) {
+			const element = cardRef.current;
+			if (element) {
 				setIsOpenMatchingTooltip(true);
 
-				const cardLocation = cardRef.current?.getBoundingClientRect();
-
-				// 현재 뷰포트에서 첫 번째 요소의 위치를 기준으로 계산
-				const tooltipBottom = cardLocation!.bottom - 90;
-				setMatchingTooltipBottom(tooltipBottom);
-			}
-		} else {
-			setIsOpenMatchingTooltip(false);
-		}
-
-		// 매칭 탭에서 툴팁이 표시된 적이 없으면
-		if (!seenOotd && activeIndex === 1) {
-			if (ootdTooltipRef) {
-				setIsOpenOotdTooltip(true);
-
-				const element = ootdTooltipRef.current[1];
-				console.log(element);
-
-				if (element) {
+				setTimeout(() => {
 					// 선택된 요소의 위치 계산
 					const rect = element.getBoundingClientRect();
 					const scrollTop = document.documentElement.scrollTop;
 					const viewportHeight = window.innerHeight;
 
 					const desiredPosition = viewportHeight - 73;
+					const scrollToPosition = rect.bottom + scrollTop - desiredPosition;
 
+					window.scrollTo({
+						top: scrollToPosition,
+						behavior: 'smooth',
+					});
+				}, 300); // 스와이퍼가 완료된 후 스크롤
+
+				// 스크롤 된 뷰포트를 기준으로 다시 위치 계산
+				setTimeout(() => {
+					const newRect = element.getBoundingClientRect();
+					const tooltipBottom = newRect.bottom - 225;
+
+					// 툴팁 위치 설정
+					setMatchingTooltipBottom(tooltipBottom);
+				}, 500); // 스크롤이 완료된 후 위치 계산
+			}
+		} else {
+			setIsOpenMatchingTooltip(false);
+		}
+
+		// ootd 탭에서 툴팁이 표시된 적이 없으면
+		if (!seenOotd && activeIndex === 1) {
+			if (ootdTooltipRef) {
+				setIsOpenOotdTooltip(true);
+
+				const element = ootdTooltipRef.current[1];
+
+				if (element) {
 					setTimeout(() => {
+						// 선택된 요소의 위치 계산
+						const rect = element.getBoundingClientRect();
+						const scrollTop = document.documentElement.scrollTop;
+						const viewportHeight = window.innerHeight;
+
+						const desiredPosition = viewportHeight - 73;
 						const scrollToPosition = rect.bottom + scrollTop - desiredPosition;
+
 						window.scrollTo({
 							top: scrollToPosition,
 							behavior: 'smooth',
 						});
-					}, 300); // 스와이퍼가 완료된 후 스크롤
+					}, 100); // 페이지가 다 렌더링 된 후 스크롤
 				}
 				setIsOpenOotdTooltip(true);
 			}
 		} else {
 			setIsOpenOotdTooltip(false);
 		}
-	}, [activeIndex]);
+	}, [activeIndex, ootdTooltipRef]);
 
 	return (
 		<>
