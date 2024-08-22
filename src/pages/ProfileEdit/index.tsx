@@ -12,6 +12,7 @@ import back from '../../assets/back.svg';
 import { BaseResponse } from '../PostDetail/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
+import imageBasic from '../../assets/imageBasic.svg';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,7 +93,7 @@ const ProfileEdit: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={profilePictureUrl || avatar} alt="프로필 사진" />
+						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
 					</ProfilePic>
 					<Button onClick={handleButtonClick}>
 						<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>

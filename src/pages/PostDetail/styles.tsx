@@ -14,7 +14,7 @@ export const UserInfoContainer = styled.div`
 	align-items: flex-start; /* 왼쪽 정렬 */
 	margin-left: 5px;
 	object-fit: cover;
-	padding: 0px 20px; /* 1.25rem */
+	padding: 10px 20px; /* 1.25rem */
 `;
 
 export const UserRow = styled.div`
@@ -67,7 +67,7 @@ export const Menu = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-	margin-top: 20px; /* 1.25rem */
+	margin-top: 0px; /* 1.25rem */
 	width: 100%;
 	display: flex;
 	justify-content: center;

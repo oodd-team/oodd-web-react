@@ -25,6 +25,7 @@ import {
 	Arrow,
 	Indicator,
 } from './styles';
+import imageBasic from '../../assets/imageBasic.svg';
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -304,7 +305,7 @@ const PostDetail: React.FC = () => {
 					<UserRow>
 						<Pic_exam>
 							<img
-								src={user?.profilePictureUrl || mockImage}
+								src={user?.profilePictureUrl || imageBasic}
 								alt="User Profile"
 								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
 							/>

@@ -15,6 +15,7 @@ import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
 import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
+import imageBasic from '../../assets/imageBasic.svg';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -78,7 +79,7 @@ const AccountSetting: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={userProfile.profilePictureUrl || avatar} alt="프로필 사진" />
+						<img src={userProfile.profilePictureUrl || imageBasic} alt="프로필 사진" />
 					</ProfilePic>
 					<Row>
 						<Label>
