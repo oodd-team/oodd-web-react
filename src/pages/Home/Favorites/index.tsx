@@ -7,37 +7,8 @@ import { FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from '
 import User from './User';
 import request from '../../../apis/core';
 
-// 추후 변경
-/*
-const userData: UserProps[] = [
-	{ userImgUrl: tag, userName: 'IDID' },
-	{ userImgUrl: tag, userName: 'IDID2' },
-	{ userImgUrl: tag, userName: 'IDID3' },
-];
-
-// 추후 변경
-const feedData: FeedProps[] = [
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID2',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID3',
-		feedImgUrl: feedImg,
-	},
-];
-*/
-
-// 즐겨찾기 탭입니다.
 const Favorites: React.FC = () => {
-	const [selectedUser, setSelectedUser] = useState<number | null>(0);
+	const [selectedUser, setSelectedUser] = useState<number | null>(null); // 초기값을 null로 설정
 	const [users, setUsers] = useState<UserProps[]>([]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
 
@@ -66,6 +37,7 @@ const Favorites: React.FC = () => {
 			const response: UserPostsResponse = await request.get(`/posts?userId=${userId}`);
 			if (response.isSuccess) {
 				const feedData = response.result.posts.map((post: any) => ({
+					postId: post.postId, // postId 추가
 					profileUrl: users.find((user) => user.userId === userId)?.userImgUrl || '',
 					userName: users.find((user) => user.userId === userId)?.userName || '',
 					feedImgUrl: post.firstPhoto,
@@ -92,8 +64,8 @@ const Favorites: React.FC = () => {
 	}, [selectedUser]);
 
 	// 유저를 클릭했을 때 상태를 업데이트하고 해당 유저의 게시물을 불러옴
-	const handleUserClick = (index: number) => {
-		setSelectedUser(index === selectedUser ? null : index);
+	const handleUserClick = (userId: number) => {
+		setSelectedUser(userId === selectedUser ? null : userId); // userId를 selectedUser로 설정
 	};
 
 	return (
@@ -105,8 +77,13 @@ const Favorites: React.FC = () => {
 			</FavoritesMent>
 			<UserContainer>
 				<UserRow>
-					{users.map((user, index) => (
-						<User key={index} user={user} isSelected={selectedUser === index} onClick={() => handleUserClick(index)} />
+					{users.map((user) => (
+						<User
+							key={user.userId}
+							user={user}
+							isSelected={selectedUser === user.userId}
+							onClick={() => handleUserClick(user.userId)} // userId를 전달
+						/>
 					))}
 				</UserRow>
 			</UserContainer>

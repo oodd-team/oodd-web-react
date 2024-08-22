@@ -13,8 +13,12 @@ interface Props {
 
 const Feed: React.FC<Props> = ({ feed }) => {
 	const nav = useNavigate();
+	const handleFeedClick = () => {
+		nav(`/post/${feed.postId}`); // 게시물 ID를 포함한 경로로 이동
+	};
+
 	return (
-		<FeedWrapper onClick={() => nav('/post')}>
+		<FeedWrapper onClick={handleFeedClick}>
 			<FeedImgBox>
 				<img src={feed.feedImgUrl} />
 				<FeedTop>

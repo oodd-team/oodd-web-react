@@ -5,6 +5,7 @@ export interface UserProps {
 }
 
 export interface FeedProps {
+	postId: number;
 	profileUrl: string;
 	userName: string;
 	feedImgUrl: string;

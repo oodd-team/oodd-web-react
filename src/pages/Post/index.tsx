@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
-
 import { StyledText } from '../../components/Text/StyledText';
 import {
 	InputLayout,
@@ -28,17 +27,19 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../styles/theme';
 import profileImg from './../../assets/Post/profileImg.svg';
-import postImg1 from './../../assets/Post/postImg1.svg';
 import more from './../../assets/Post/more.svg';
-import productImg from './../../assets/Post/productImg.svg';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 import BottomButton from '../../components/BottomButton/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
+import { PostResponse, PostData } from './dto';
+import request from '../../apis/core'; // 서버 요청을 위해 임포트
 
 const Post: React.FC = () => {
+	const { postId } = useParams<{ postId: string }>();
+	const [postData, setPostData] = useState<any>(null); // 서버에서 가져온 데이터 저장
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
 	const [showInput, setShowInput] = useState(false);
@@ -46,31 +47,31 @@ const Post: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
-	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false); // 코멘트 모달 상태
+	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const nav = useNavigate();
-	const location = useLocation();
 
+	// 서버에서 게시물 데이터 가져오기
 	useEffect(() => {
-		if (location.state && location.state.isCommentModalOpen) {
-			setIsCommentModalOpen(true);
-		}
-	}, [location.state]);
+		const fetchPostData = async () => {
+			try {
+				const response = await request.get<PostResponse>(`/posts/${postId}`);
+				if (response.isSuccess) {
+					setPostData(response.result);
+				} else {
+					console.error('Failed to fetch post data');
+				}
+			} catch (error) {
+				console.error('Error fetching post data:', error);
+			}
+		};
+
+		fetchPostData();
+	}, [postId]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setInputValue(e.target.value);
 	};
-
-	const userName = 'IDID';
-
-	const productData = [
-		{ id: 1, brandName: '브랜드1', modelName: '모델1/모델번호/URL...', productImgSrc: productImg },
-		{ id: 2, brandName: '브랜드2', modelName: '모델2/모델번호/URL...', productImgSrc: productImg },
-		{ id: 3, brandName: '브랜드3', modelName: '모델3/모델번호/URL...', productImgSrc: productImg },
-		{ id: 4, brandName: '브랜드4', modelName: '모델4/모델번호/URL...', productImgSrc: productImg },
-	];
-
-	const postImages = [postImg1, postImg1, postImg1, postImg1];
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -146,7 +147,7 @@ const Post: React.FC = () => {
 	};
 
 	const commentProps: CommentProps = {
-		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
+		content: `${postData?.userName || ''}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${postData?.userName || ''}님에게만 전달됩니다.`,
 		sendComment: (comment: string) => {
 			console.log(`api에 ${comment} 전달`);
 		},
@@ -195,7 +196,7 @@ const Post: React.FC = () => {
 	};
 
 	const confirmationModalProps = {
-		content: `${userName}님의 OOTD를 차단합니다.`,
+		content: `${postData?.userName || ''}님의 OOTD를 차단합니다.`,
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',
@@ -209,27 +210,33 @@ const Post: React.FC = () => {
 		},
 	};
 
+	if (!postData) {
+		return <div>Loading...</div>; // 로딩 중 표시
+	}
+
 	return (
 		<OODDFrame>
 			<BottomSheet {...bottomSheetProps} />
 			<BottomSheet {...reportSheetProps} />
 			<BottomSheet {...commentSheetProps} />
-			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
+			{isModalOpen && (
+				<Modal content={`${postData.userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />
+			)}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
-				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
+				<Modal content={`${postData.userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
 
 			<PostTopBar />
 			<PostWrapper>
 				<PostInfo>
-					<UserInfo onClick={() => nav('/users/:userId')}>
+					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
 						<UserProfile>
-							<img src={profileImg} alt="profileImg" />
+							<img src={postData.profilePictureUrl || profileImg} alt="profileImg" />
 						</UserProfile>
 						<UserName>
 							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-								IDID
+								{postData.userName}
 							</StyledText>
 						</UserName>
 					</UserInfo>
@@ -243,7 +250,7 @@ const Post: React.FC = () => {
 						color={theme.colors.black}
 						style={{ opacity: '50%' }}
 					>
-						Text~~~~~~~~~~~~~~~~~~~~~~~ ...Text~~~~~~~~~~~~~~~~~~~~~~~ ...Text~~~~~~~~~~~~~~~~~~~~~~~ ...
+						{postData.content}
 					</StyledText>
 				</PostText>
 				<PostImg>
@@ -254,20 +261,20 @@ const Post: React.FC = () => {
 						navigation
 						className="postSwiper"
 					>
-						{postImages.map((image, index) => (
+						{postData.photoUrls.map((image: string, index: number) => (
 							<SwiperSlide key={index}>
-								<img src={image} alt="postImg" style={{ width: '100%', height: 'auto' }} />
+								<img src={image} alt={`postImg-${index}`} style={{ width: '100%', height: 'auto' }} />
 							</SwiperSlide>
 						))}
 					</Swiper>
 				</PostImg>
 				<Products>
-					{productData.map((product) => (
+					{postData.clothingInfo.map((product: any, index: number) => (
 						<ProductCard
-							key={product.id}
-							brandName={product.brandName}
-							modelName={product.modelName}
-							productImgSrc={product.productImgSrc}
+							key={index}
+							brandName={product.brand}
+							modelName={`${product.model} / ${product.modelNumber} / ${product.url}`}
+							productImgSrc={product.imageUrl}
 						/>
 					))}
 				</Products>
