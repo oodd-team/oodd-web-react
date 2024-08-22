@@ -15,7 +15,7 @@ import { UserInfoProps } from "../../dto";
 import Modal from '../../../../components/Modal';
 import { OpponentInfoAtom } from "../../../../recoil/OpponentInfo";
 import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
-import { Opponent } from "../../../Chats/RecentChat/dto";
+import { ChatRoomDto, Opponent } from "../../../Chats/RecentChat/dto";
 import { useNavigate } from "react-router-dom";
 
 
@@ -24,15 +24,18 @@ const UserInfo: React.FC = React.memo(() => {
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
     const [interested, setInterested] = useState<boolean | undefined>(undefined);
     const [friend, setFriend] = useRecoilState(friendState);
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
-    const [modalContent, setModalContent] = useState(''); // 모달 내용
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
     const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+    const [userInfo, setUserInfo] = useState<Opponent | null>(null); // 사용자 정보 상태 추가
     const nav = useNavigate();
 
-    if (!userDetails) return null; // 사용자의 정보가 없으면 아무것도 렌더링하지 않음
+    if (!userDetails) return null;
 
     const { id, nickname, bio, userImg } = userDetails;
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
+
+    const userId = localStorage.getItem('id');
 
     useEffect(() => {
         if (!id) return;
@@ -58,9 +61,26 @@ const UserInfo: React.FC = React.memo(() => {
                 console.error('JSON 파싱 오류:', error);
             }
         }
-    }, [id, setUserDetails, setFriend]);
 
-    const userId = localStorage.getItem('id');
+        // 사용자 정보 조회
+        const fetchUserInfo = async () => {
+            try {
+                const response = await request.get<UserInfoDto>(`/users/${id}`);
+                const User: Opponent = {
+                    id: response.id,
+                    nickname: response.nickname,
+                    profilePictureUrl: response.profilePictureUrl,
+                    name: response.name
+                };
+                setUserInfo(User);
+            } catch (error) {
+                console.error('사용자 정보 조회 오류:', error);
+            }
+        };
+
+        fetchUserInfo();
+
+    }, [id, setUserDetails, setFriend]);
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
@@ -80,23 +100,43 @@ const UserInfo: React.FC = React.memo(() => {
     };
 
     const handleMessageClick = async () => {
-        try{
-            const response = await request.get<UserInfoDto>(`/users/${id}`);
-            const opponent: Opponent = {
-                id: response.id,
-                nickname: response.nickname,
-                profilePictureUrl: response.profilePictureUrl,
-                name: response.name, // 또는 다른 필드
-            };
-            console.log(opponent);
-            setOpponentInfo(opponent);
-            nav(`/chats/roomId`);
-        }   
-        catch (error) {
+        try {
+            if (!userInfo) {
+                console.error('사용자 정보가 없습니다.');
+                return;
+            }
+
+            // 본인이 참여하고 있는 채팅 리스트 조회
+            const chatRoomResponse = await request.get<{ isSuccess: boolean, code: number, message: string, result: ChatRoomDto[] }>(`/chat-rooms/${userId}`);
+    
+            let roomId: number | null = null;
+    
+            // chatRoomResponse.result 배열에서 User.id와 일치하는 채팅방 찾기
+            if (Array.isArray(chatRoomResponse.result)) {
+                chatRoomResponse.result.forEach(room => {
+                    if (room.opponent.id === userInfo.id) {
+                        roomId = room.id; // 일치하는 채팅방 ID 설정
+                    }
+                });
+            } else {
+                console.error("chatRoomResponse.result is not an array:", chatRoomResponse.result);
+            }
+    
+            if (roomId !== null) {
+                // 채팅방이 존재하면 해당 채팅방으로 이동
+                nav(`/chats/${roomId}`);
+            } else {
+                console.log('매칭이 실패했습니다.');
+            }
+    
+            // 상대방 정보 업데이트
+            setOpponentInfo(userInfo);
+    
+        } catch (error) {
             console.error('메세지 보내기 오류:', error);
             alert('사용자 정보를 불러오지 못했습니다.');
         }
-    }
+    };
 
     const handleInterestedClick = async () => {
         try {
@@ -115,7 +155,6 @@ const UserInfo: React.FC = React.memo(() => {
             setUserDetails(updatedUserDetails);
             setInterested(isInterested);
 
-            // 성공적으로 응답이 오면 모달을 띄우기
             handleOpenModal(isInterested ? `${userDetails.nickname}님을 관심 친구로 등록했습니다!` : '관심 친구 등록이 해제되었습니다.');
         } catch (error) {
             console.error('관심 친구 등록 오류:', error);

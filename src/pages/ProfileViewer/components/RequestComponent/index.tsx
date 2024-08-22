@@ -46,38 +46,20 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
             console.log(response.result);
 
             setFriend(true);
-            setIsBottomSheetOpen(false);
+            
+            setModalContent(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
+            setIsModalOpen(true);
 
-            const updatedUserDetails = {
-                ...JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}'),
-                isFriend: true
-            };
-            localStorage.setItem(`userDetails_${userId}`, JSON.stringify(updatedUserDetails));
+            setIsBottomSheetOpen(false);
 
             if (inputRef.current) {
                 inputRef.current.value = "";
             }
             setInputValue('');
 
-            setModalContent(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
-            setIsModalOpen(true);
         } catch (error: any) {
-            console.error('친구 신청 오류:', error);
-
-            if (error.response?.data?.message === "이미 요청한 관계입니다.") {
-                setFriend(true);
-                setIsBottomSheetOpen(false);
-
-                const updatedUserDetails = {
-                    ...JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}'),
-                    isFriend: true
-                };
-                localStorage.setItem(`userDetails_${userId}`, JSON.stringify(updatedUserDetails));
-
-                alert('이미 친구 신청을 보냈습니다.');
-            } else {
-                alert('친구 신청에 실패했습니다.');
-            }
+           console.log(error);
+           alert("친구 신청에 실패했습니다.");
         }
     };
 

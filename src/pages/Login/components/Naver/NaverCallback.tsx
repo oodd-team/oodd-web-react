@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import request from "../../../../apis/core";
 import { UserInfoDto } from "../../../ProfileViewer/ResponseDto/UserInfoDto";
+import { CallbackLayout, LoadingText, Img } from "../style";
+import { StyledText } from "../../../../components/Text/StyledText";
+import theme from "../../../../styles/theme";
+import OODDLogo from '../../../../assets/OODDlogo.svg'
 
 const NaverCallback: React.FC = () => {
     const navigate = useNavigate();
@@ -61,9 +65,15 @@ const NaverCallback: React.FC = () => {
         }, [navigate]);
 
     return (
-        <div>
-            <p>로그인 중입니다...</p>
-        </div>
+        <CallbackLayout>
+            <Img src={OODDLogo}/>
+            <LoadingText>
+                <StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 1.5 }} color={theme.colors.gray4}>
+                        잠시만 기다려 주세요!
+                </StyledText>
+            </LoadingText>
+            
+        </CallbackLayout>
     );
 };
 
