@@ -92,7 +92,7 @@ const TabBar: React.FC = () => {
 					style={{ height: '100%' }}
 				>
 					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
-						<Request />
+						<Request matchingRequests={matchingRequests} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
 						<RecentChat swiperRef={swiperRef} />
