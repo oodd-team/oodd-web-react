@@ -8,6 +8,8 @@ import theme from '../../../styles/theme';
 import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
 import xBtn from '../../../assets/Home/button_reject.svg';
 import checkBtn from '../../../assets/Home/button_check.svg';
+import noProfileImg from '../../../assets/Home/no_profileImg.svg';
+
 import { useNavigate } from 'react-router-dom';
 import { Relationship } from './dto';
 
@@ -29,7 +31,7 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 		<CardLayout>
 			<ProfileBox>
 				<ProfileImgBox>
-					<img src={requester.profilePictureUrl} alt="profile" />
+					<img src={requester.profilePictureUrl || noProfileImg} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>
