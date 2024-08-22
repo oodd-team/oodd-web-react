@@ -5,17 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
 import { StyledText } from '../../components/Text/StyledText';
-import {
-	MoreBtn,
-	PostImg,
-	PostInfo,
-	PostText,
-	PostWrapper,
-	Products,
-	UserInfo,
-	UserName,
-	UserProfile,
-} from './styles';
+import { MoreBtn, PostImg, PostInfo, PostText, PostWrapper, Products, UserInfo, UserName, UserProfile } from './styles';
 import PostTopBar from './PostTopBar';
 import ProductCard from './ProductCard';
 import BottomSheet from '../../components/BottomSheet';
@@ -103,14 +93,7 @@ const Post: React.FC = () => {
 				},
 			},
 			{
-				text: '괴롭힘',
-				action: () => {
-					setIsOpenReportSheet(false);
-					setIsModalOpen(true);
-				},
-			},
-			{
-				text: '그 외',
+				text: '선정적',
 				action: () => {
 					setIsOpenReportSheet(false);
 					setIsModalOpen(true);

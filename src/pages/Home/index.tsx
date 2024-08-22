@@ -85,14 +85,7 @@ const Home: React.FC = () => {
 				},
 			},
 			{
-				text: '괴롭힘',
-				action: () => {
-					setIsOpenReportSheet(false);
-					setIsModalOpen(true);
-				},
-			},
-			{
-				text: '그 외',
+				text: '선정적',
 				action: () => {
 					setIsOpenReportSheet(false);
 					setIsModalOpen(true);
