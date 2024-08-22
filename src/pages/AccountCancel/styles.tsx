@@ -11,7 +11,6 @@ export const CancelContainer = styled.div`
 	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 `;
 
 export const SubTitle = styled.h3`
@@ -20,6 +19,7 @@ export const SubTitle = styled.h3`
 	margin-bottom: 0.625rem; /* 10px */
 	text-align: center;
 	text-align: left;
+	margin-top: 10px;
 `;
 
 export const Text = styled.p`
@@ -62,6 +62,6 @@ export const StyledButton = styled.button<ButtonProps>`
 	cursor: ${(props) => (props.isChecked ? 'pointer' : 'not-allowed')};
 
 	&:disabled {
-		background: #aaa;
+		background: #00000080;
 	}
 `;

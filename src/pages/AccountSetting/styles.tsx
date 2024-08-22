@@ -5,7 +5,6 @@ export const ProfileEditContainer = styled.div`
 	width: 100%;
 	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
 
-	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -16,6 +15,7 @@ export const ProfilePicWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 1.25rem; /* 20px */
+	margin-top: 50px;
 `;
 
 export const ProfilePic = styled.div`

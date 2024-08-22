@@ -8,15 +8,16 @@ export const ProfileContainer = styled.div`
 	flex-direction: column;
 	align-self: center;
 	box-sizing: border-box; /* 패딩을 포함한 전체 크기를 설정 */
-
 	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+	padding-top: 4rem; /* 4rem은 Nav 바의 높이에 맞추어 조정, 필요에 따라 수정 */
 `;
 
 export const Header = styled.div`
 	margin-top: 0;
 	display: flex;
 	align-items: center;
-	padding: 1.25rem 0; /* 20px 0 */
+	padding: 0rem;
+	margin-left: -0.9375rem;
 `;
 
 export const AvatarWrapper = styled.div`

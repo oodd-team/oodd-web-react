@@ -17,12 +17,12 @@ import {
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
 import NavBar from '../../components/NavBar';
-import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
-import request from '../../apis/core';
+import request, { BaseResponse } from '../../apis/core';
 import ProfileActions from '../Profile';
 import { PostItem, PostsResponse, UserResponse } from './dto';
+import imageBasic from '../../assets/imageBasic.svg';
 
 const Mypage: React.FC = () => {
 	const navigate = useNavigate();
@@ -45,8 +45,8 @@ const Mypage: React.FC = () => {
 				return;
 			}
 
-			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
-			setUser(response);
+			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
+			setUser(response.result);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
@@ -88,7 +88,7 @@ const Mypage: React.FC = () => {
 				<NavbarProfile />
 				<Header>
 					<AvatarWrapper>
-						<Avatar src={user?.profilePictureUrl || avatarImage} alt="User Avatar" />
+						<Avatar src={user?.profilePictureUrl || imageBasic} alt="User Avatar" />
 					</AvatarWrapper>
 					<UserInfo>
 						<Username>{user?.name || 'Loading...'}</Username>

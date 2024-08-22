@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput } from './styles';
-import avatar from '../../assets/avatar.png';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -12,6 +11,7 @@ import back from '../../assets/back.svg';
 import { BaseResponse } from '../PostDetail/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
+import imageBasic from '../../assets/imageBasic.svg';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,11 +31,11 @@ const ProfileEdit: React.FC = () => {
 					return;
 				}
 
-				const response = await request.get<UserProfileResponse>(`/users/${storedUserId}`);
-				setUserProfile(response);
-				setNickname(response.nickname || response.name);
-				setBio(response.bio || '');
-				setProfilePictureUrl(response.profilePictureUrl);
+				const response = await request.get<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`);
+				setUserProfile(response.result as UserProfileResponse);
+				setNickname((response.result?.nickname as string) || (response.result?.name as string));
+				setBio(response.result?.bio || '');
+				setProfilePictureUrl(response.result?.profilePictureUrl || null);
 			} catch (error) {
 				console.error('Error fetching user profile:', error);
 			}
@@ -65,13 +65,11 @@ const ProfileEdit: React.FC = () => {
 				console.error('User is not logged in');
 				return;
 			}
-
 			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
 				nickname,
 				profilePictureUrl,
 				bio,
 			});
-
 			if (response.isSuccess) {
 				navigate(`/mypage`); // 마이페이지로 이동
 			} else {
@@ -94,7 +92,7 @@ const ProfileEdit: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={profilePictureUrl || avatar} alt="프로필 사진" />
+						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
 					</ProfilePic>
 					<Button onClick={handleButtonClick}>
 						<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
