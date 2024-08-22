@@ -3,8 +3,6 @@ import theme from '../../styles/theme';
 
 export const PostDetailContainer = styled.div`
 	max-width: 512px; /* 32rem */
-	margin: 0 auto;
-	padding: 20px; /* 1.25rem */
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -14,6 +12,9 @@ export const UserInfoContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start; /* 왼쪽 정렬 */
+	margin-left: 5px;
+	object-fit: cover;
+	padding: 10px 20px; /* 1.25rem */
 `;
 
 export const UserRow = styled.div`
@@ -39,6 +40,13 @@ export const Pic_exam = styled.div`
 	display: flex;
 	padding: 0;
 	margin-left: 0;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+	}
 `;
 
 export const Text = styled.div`
@@ -59,24 +67,23 @@ export const Menu = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-	margin-top: 20px; /* 1.25rem */
+	margin-top: 0px; /* 1.25rem */
 	width: 100%;
 	display: flex;
 	justify-content: center;
 `;
 
 export const Image = styled.img`
-	max-width: 512px; /* 32rem */
-	height: auto;
+	max-width: 512px;
 	width: 390px;
-	height: 519.3264px;
+	height: 519.326px;
 	flex-shrink: 0;
 `;
 
 export const IconRow = styled.div`
 	display: flex;
 	align-items: center;
-	padding: 10px 0;
+	padding: 10px 20px; /* 1.25rem */
 `;
 
 export const IconWrapper = styled.div`
@@ -104,6 +111,7 @@ export const BrandBoxContainer = styled.div`
 	white-space: nowrap; /* 줄바꿈 없이 한 줄로 나열 */
 	padding: 0.625rem 0;
 	margin-top: 16px; /* 상단과의 간격 */
+	padding: 0px 20px; /* 1.25rem */
 
 	&::-webkit-scrollbar {
 		height: 0rem;

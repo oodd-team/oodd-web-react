@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '../../components/Text/StyledText';
 
 // PostTopBar
 
@@ -65,11 +66,14 @@ export const UserInfo = styled.div`
 export const UserProfile = styled.div`
 	width: 2.25rem;
 	height: 2.25rem;
+	border-radius: 50%;
 	overflow: hidden;
 	margin: 0 0.75rem 0 1.25rem;
+
 	img {
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
 	}
 `;
 
@@ -93,6 +97,15 @@ export const PostText = styled.span`
 `;
 
 export const PostImg = styled.div`
+	width: 100%;
+	position: relative;
+
+	.postSwiper {
+		position: relative;
+		width: 100%;
+		padding-bottom: 133.33%;
+	}
+
 	.postSwiper .swiper-pagination {
 		position: absolute;
 		top: 0.75rem;
@@ -124,9 +137,18 @@ export const PostImg = styled.div`
 		color: ${({ theme }) => theme.colors.white} !important;
 		font-size: 1.5rem !important;
 	}
+
+	img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
 
-export const Products = styled.div`
+export const ClothingInfos = styled.div`
 	margin-top: 0.6687rem;
 	margin-left: 1.25rem;
 	margin-bottom: 4rem;
@@ -192,9 +214,10 @@ export const InputLayout = styled.div`
 // 	}
 // `;
 
-// ProductCard
+// ClothingInfoCard
 
-export const ProductCardContainer = styled.div`
+export const ClothingInfoCardContainer = styled.div`
+	position: relative;
 	width: 15.3125rem;
 	height: 4.5rem;
 	border-radius: 0.1875rem;
@@ -207,22 +230,39 @@ export const ProductCardContainer = styled.div`
 	cursor: pointer;
 `;
 
-export const ProductLeft = styled.div`
+export const ClothingInfoLeft = styled.div`
 	display: flex;
 	align-items: center;
 `;
 
-export const ProductImg = styled.img`
+export const ClothingInfoImg = styled.img`
 	width: 3.5rem;
 	height: 3.5rem;
 	margin: 0.5rem;
 `;
 
-export const ProductInfo = styled.div``;
+export const ClothingInfoDetail = styled.div`
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 8rem;
+	display: flex;
+	flex-direction: column;
+`;
+
+export const StyledTextClipped = styled(StyledText)`
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100%;
+	display: inline-block; /* 텍스트 클리핑을 적용하기 위해 inline-block으로 설정 */
+`;
+
 export const NextBtn = styled.div`
+	position: absolute;
+	right: 0;
 	width: 1.5rem;
 	height: 1.5rem;
-	overflow: hidden;
 	margin-right: 0.375rem;
 	img {
 		width: 100%;

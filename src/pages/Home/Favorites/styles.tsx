@@ -44,6 +44,7 @@ export const UserRow = styled.div`
 
 export const FeedContainer = styled.div`
 	width: calc(100% - 2.5rem);
+	min-height: 12.5rem;
 	margin: 1rem 1.25rem 1.625rem 1.25rem;
 	box-sizing: border-box;
 	display: grid;
