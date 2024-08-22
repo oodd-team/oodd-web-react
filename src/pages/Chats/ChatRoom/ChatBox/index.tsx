@@ -19,6 +19,14 @@ const ChatBox: React.FC = () => {
 	const socket = useSocket();
 	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
 
+	// textarea 내용에 따라 높이 조정
+	useEffect(() => {
+		if (textareaRef.current) {
+			textareaRef.current.style.height = '1.2rem';
+			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+		}
+	}, [newMessage]);
+
 	useEffect(() => {
 		if (textareaRef.current && !isOpponentValid) {
 			textareaRef.current.disabled = true;
