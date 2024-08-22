@@ -16,7 +16,7 @@ export const Header = styled.div`
 	margin-top: 0;
 	display: flex;
 	align-items: center;
-	padding: 1.25rem 0; /* 20px 0 */
+	padding: 0px; /* 20px 0 */
 `;
 
 export const AvatarWrapper = styled.div`

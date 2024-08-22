@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput } from './styles';
-import avatar from '../../assets/avatar.png';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';

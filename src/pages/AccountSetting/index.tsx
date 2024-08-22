@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import avatar from '../../assets/avatar.png';
 import useredit from './assets/useredit.svg';
 import exit from './assets/exit.svg';
 import cancleaccount from './assets/cancleaccount.svg';
