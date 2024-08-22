@@ -43,7 +43,7 @@ export interface Post {
 	content: string;
 	isRepresentative: boolean;
 	images: Image[];
-	postStyletags: StyleTag[];
+	postStyletags: PostStyleTag[];
 	postClothings: Clothing[];
 }
 
@@ -58,12 +58,22 @@ export interface Image {
 	order: number;
 }
 
+export interface PostStyleTag {
+	id: number;
+	status: string | null;
+	createdAt: string;
+	updatedAt: string;
+	deletedAt: string | null;
+	styletag: StyleTag;
+}
+
 export interface StyleTag {
 	id: number;
 	status: string | null;
 	createdAt: string;
 	updatedAt: string;
 	deletedAt: string | null;
+	tag: string;
 }
 
 export interface Clothing {

@@ -58,13 +58,8 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 					</StyledText>
 					<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray1}>
 						{requester.representativePost?.postStyletags.length
-							? requester.representativePost.postStyletags.map((tag, index) => (
-									<span key={index}>
-										#{tag.status}
-										{index < requester.representativePost!.postStyletags.length - 1 && ' '}
-									</span>
-								))
-							: '#classic'}
+							? `#${requester.representativePost.postStyletags[0].styletag?.tag ?? 'unknown'}`
+							: ''}
 					</StyledText>
 				</ProfileInfo>
 				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
