@@ -54,16 +54,16 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	const navigate = useNavigate();
 
 	const styletags: Styletag[] = [
-		{ tag: '#classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
-		{ tag: '#street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
-		{ tag: '#hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
-		{ tag: '#casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
-		{ tag: '#sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
-		{ tag: '#feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
-		{ tag: '#minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
-		{ tag: '#formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
-		{ tag: '#outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
-		{ tag: '#luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
+		{ tag: 'classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
+		{ tag: 'street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
+		{ tag: 'hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
+		{ tag: 'casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
+		{ tag: 'sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
+		{ tag: 'feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
+		{ tag: 'minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
+		{ tag: 'formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
+		{ tag: 'outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
+		{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
 	];
 
 	const handleToggleSearchSheet = () => {
@@ -120,6 +120,11 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	const handleSubmit = async () => {
+		if (!selectedStyletag) {
+			alert('스타일 태그를 지정해주세요.');
+			return;
+		}
+
 		setIsLoading(true);
 
 		try {
@@ -132,7 +137,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 				clothingInfo: clothingInfos,
 				isRepresentive: isOOTD,
 			};
-			console.log(postData);
 
 			let response;
 			if (postId) {
@@ -147,7 +151,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 				throw new Error(response.message || 'Failed');
 			}
 
-			console.log(response.result);
 			navigate('/mypage');
 		} catch (error) {
 			console.error(error);
@@ -213,7 +216,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 									selected={selectedStyletag?.tag === tagObj.tag}
 									color={tagObj.color}
 								>
-									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{tagObj.tag}</StyledText>
+									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{tagObj.tag}</StyledText>
 								</StyletagItem>
 							))}
 						</StyletagList>
