@@ -12,6 +12,7 @@ import noProfileImg from '../../../assets/Home/no_profileImg.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { Relationship } from './dto';
+import request, { BaseResponse } from '../../../apis/core';
 
 interface CardProps {
 	onReject: () => void;
@@ -23,8 +24,15 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 	const nav = useNavigate();
 	const { requester } = relationship;
 
-	const handleReject = () => {
-		onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
+	const handleReject = async () => {
+		const response = await request.patch<BaseResponse>(`/user-relationships/${relationship.id}`, {
+			requestStatus: 'rejected',
+		});
+		if (response.isSuccess) {
+			onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
+		} else {
+			alert('프로필 수정에 실패했습니다.');
+		}
 	};
 
 	return (
