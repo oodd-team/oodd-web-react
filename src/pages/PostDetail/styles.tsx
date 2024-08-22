@@ -40,6 +40,13 @@ export const Pic_exam = styled.div`
 	display: flex;
 	padding: 0;
 	margin-left: 0;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+	}
 `;
 
 export const Text = styled.div`
