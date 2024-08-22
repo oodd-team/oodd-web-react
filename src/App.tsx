@@ -26,7 +26,7 @@ const App: React.FC = () => {
 				<Route path="/chats/:roomId" element={<ChatRoom />} />
 				<Route path="/Mypage" element={<Mypage />} />
 				<Route path="/post/:postId" element={<PostDetail />} />
-				<Route path="/profile/edit/:userId" element={<ProfileEdit />} />
+				<Route path="/profile/edit" element={<ProfileEdit />} />
 				<Route path="/account-setting" element={<AccountSetting />} />
 
 				<Route path="/account-edit" element={<AccountEdit />} />

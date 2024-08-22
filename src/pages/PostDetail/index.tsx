@@ -45,7 +45,7 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import request from '../../apis/core';
-import { UserResponse } from '../Mypage/dto';
+import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 
 const PostDetail: React.FC = () => {
@@ -91,7 +91,7 @@ const PostDetail: React.FC = () => {
 	// 유저 정보 가져오기
 	const fetchUserData = async () => {
 		try {
-			const storedUserId = localStorage.getItem('userId');
+			const storedUserId = localStorage.getItem('id'); // Ensure correct key is used
 			if (!storedUserId) {
 				console.error('User is not logged in');
 				return;
@@ -103,9 +103,10 @@ const PostDetail: React.FC = () => {
 			console.error('Error fetching user data:', error);
 		}
 	};
+
 	useEffect(() => {
 		fetchPostDetail();
-		fetchUserData(); // 유저 데이터 불러오기
+		fetchUserData(); // Fetch user data
 	}, [postId]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {

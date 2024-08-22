@@ -24,7 +24,7 @@ const AccountSetting: React.FC = () => {
 	useEffect(() => {
 		const fetchUserProfile = async () => {
 			try {
-				const storedUserId = localStorage.getItem('userId'); // 로그인된 사용자 ID 가져오기
+				const storedUserId = localStorage.getItem('Id'); // 로그인된 사용자 ID 가져오기
 
 				if (!storedUserId) {
 					console.error('User is not logged in');
