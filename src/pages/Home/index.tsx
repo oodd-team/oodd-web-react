@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OODDFrame } from '../../components/Frame/Frame';
 import HomeTabBar from './HomeTabBar';
@@ -13,11 +13,10 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import { CommentProps } from '../../components/Comment/dto';
 import Comment from '../../components/Comment';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
-import { InputLayout } from '../Post/styles.tsx';
-import BottomButton from '../../components/BottomButton/index.tsx';
 import BottomSheet from '../../components/BottomSheet/index.tsx';
 import Modal from '../../components/Modal/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
+import ReportTextarea from './ReportTextarea.tsx';
 
 interface UserResponseType {
 	id: number;
@@ -40,13 +39,10 @@ const Home: React.FC = () => {
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
 	const [showInput, setShowInput] = useState(false);
-	const [inputValue, setInputValue] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const userName = 'IDID'; // 임의의 사용자 이름
 
@@ -112,10 +108,6 @@ const Home: React.FC = () => {
 		marginBottom: '3.125rem',
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputValue(e.target.value);
-	};
-
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isOpenBottomSheet,
 		isHandlerVisible: true,
@@ -144,38 +136,6 @@ const Home: React.FC = () => {
 		},
 	};
 
-	const reportSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isOpenReportSheet,
-		isHandlerVisible: true,
-		Component: () => (
-			<div style={{ overflow: 'auto' }}>
-				<BottomSheetMenu {...reportSheetMenuProps} />
-				{showInput && (
-					<InputLayout>
-						<textarea
-							ref={textareaRef}
-							placeholder="해당 OOTD를 신고하려는 이유를 작성해주세요."
-							value={inputValue}
-							onChange={handleInputChange}
-						></textarea>
-						<BottomButton
-							content="신고하기"
-							onClick={() => {
-								setIsOpenReportSheet(false);
-								setIsModalOpen(true); // 모달을 연다
-							}}
-							disabled={inputValue.trim().length === 0} // 값이 없을 때 비활성화
-						/>
-					</InputLayout>
-				)}
-			</div>
-		),
-		onCloseBottomSheet: () => {
-			setIsOpenReportSheet(false);
-			setShowInput(false);
-		},
-	};
-
 	const confirmationModalProps = {
 		content: `${userName}님의 OOTD를 차단합니다.`,
 		isCancelButtonVisible: true,
@@ -190,6 +150,8 @@ const Home: React.FC = () => {
 			setIsConfirmationModalOpen(false);
 		},
 	};
+
+	// 로그인 여부에 따라 navigate
 
 	useEffect(() => {
 		const checkAuth = async () => {
@@ -230,7 +192,25 @@ const Home: React.FC = () => {
 			<NavBar />
 
 			<BottomSheet {...bottomSheetProps} />
-			<BottomSheet {...reportSheetProps} />
+			<BottomSheet
+				isOpenBottomSheet={isOpenReportSheet}
+				isHandlerVisible={true}
+				Component={() => (
+					<div style={{ overflow: 'auto' }}>
+						<BottomSheetMenu {...reportSheetMenuProps} />
+						{showInput && (
+							<ReportTextarea
+								onCloseReportSheet={() => setIsOpenReportSheet(false)}
+								onOpenModal={() => setIsModalOpen(true)}
+							/>
+						)}
+					</div>
+				)}
+				onCloseBottomSheet={() => {
+					setIsOpenReportSheet(false);
+					setShowInput(false);
+				}}
+			/>
 			<BottomSheet {...commentSheetProps} />
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
