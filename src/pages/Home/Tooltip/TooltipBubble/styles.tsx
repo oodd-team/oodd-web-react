@@ -16,7 +16,7 @@ export const TooltipLayout = styled.div<{ $top?: number }>`
 	position: fixed;
 	display: flex;
 	left: 50%;
-	${({ $top }) => ($top ? `top: ${$top}` : 'bottom: 13.5rem')};
+	${({ $top }) => ($top ? `top: ${$top}px` : 'bottom: 13.5rem')};
 	transform: translate(-50%, -50%);
 	border-radius: 0.625rem;
 	width: 13rem;
