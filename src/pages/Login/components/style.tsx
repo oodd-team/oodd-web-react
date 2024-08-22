@@ -35,22 +35,5 @@ export const TextWrapper = styled.div<{ $left?: string;}>`
     margin: 0 auto;
 `;
 
-export const CallbackLayout = styled.div`
-    height: 100vh; /* 전체 화면 높이 */
-    width: 100vw; /* 전체 화면 너비 */     
-    display: flex;    
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: center;    
-    align-items: center;
-`;
-export const Img = styled.img`
-    display: flex;
-`
-export const LoadingText = styled.div`
-    display: flex;
-    text-align: center;
-`;
-
 
 

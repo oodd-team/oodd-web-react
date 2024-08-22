@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { CallbackLayout, LoadingText, Img } from "../style";
-import { StyledText } from "../../../../components/Text/StyledText";
-import theme from "../../../../styles/theme";
-import OODDLogo from '../../../../assets/OODDlogo.svg'
+import Loading from "../../../../components/Loading";
 
 const GoogleCallback: React.FC = () => {
     const navigate = useNavigate();
@@ -45,17 +42,7 @@ const GoogleCallback: React.FC = () => {
             }
         }, [navigate]);
         return(
-        <div>
-            <CallbackLayout>
-            <Img src={OODDLogo}/>
-            <LoadingText>
-                <StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 1.5 }} color={theme.colors.gray4}>
-                         잠시만 기다려 주세요!
-                </StyledText>
-            </LoadingText>
-            
-        </CallbackLayout>
-        </div>
+        <Loading/>
         );
 };
 

@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserInfoDto } from "../../../ProfileViewer/ResponseDto/UserInfoDto";
 import request from "../../../../apis/core";
-import { CallbackLayout, LoadingText, Img } from "../style";
-import { StyledText } from "../../../../components/Text/StyledText";
-import theme from "../../../../styles/theme";
-import OODDLogo from '../../../../assets/OODDlogo.svg'
+import Loading from "../../../../components/Loading";
 
 const KakaoCallback: React.FC = () => {
     const navigate = useNavigate();
@@ -65,15 +62,7 @@ const KakaoCallback: React.FC = () => {
             }
         }, [navigate]);
     return(
-        <CallbackLayout>
-            <Img src={OODDLogo}/>
-            <LoadingText>
-                <StyledText $textTheme={{ style: 'heading1-medium', lineHeight: 1.5 }} color={theme.colors.gray4}>
-                        잠시만 기다려 주세요!
-                </StyledText>
-            </LoadingText>
-            
-        </CallbackLayout>
+        <Loading/>
     )
 };
 
