@@ -304,7 +304,6 @@ const Post: React.FC = () => {
 							imageUrl={clothingInfo.imageUrl}
 							brand={clothingInfo.brand}
 							model={clothingInfo.model}
-							modelNumber={clothingInfo.modelNumber}
 							url={clothingInfo.url}
 						/>
 					))}

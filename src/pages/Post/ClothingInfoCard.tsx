@@ -12,9 +12,15 @@ import {
 import nextBtn from './../../assets/Post/next.svg';
 import { ClothingInfoCardProps } from './dto';
 
-const ClothingInfoCard: React.FC<ClothingInfoCardProps> = ({ imageUrl, brand, model, modelNumber, url }) => {
+const ClothingInfoCard: React.FC<ClothingInfoCardProps> = ({ imageUrl, brand, model, url }) => {
+	const handleClick = () => {
+		if (url) {
+			window.location.href = url;
+		}
+	};
+
 	return (
-		<ClothingInfoCardContainer>
+		<ClothingInfoCardContainer onClick={handleClick}>
 			<ClothingInfoLeft>
 				<ClothingInfoImg src={imageUrl} alt="ClothingInfoImg" />
 				<ClothingInfoDetail>

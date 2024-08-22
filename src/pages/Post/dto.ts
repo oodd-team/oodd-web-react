@@ -50,6 +50,5 @@ export interface ClothingInfoCardProps {
 	imageUrl: string;
 	brand: string;
 	model: string;
-	modelNumber: number;
 	url: string;
 }
