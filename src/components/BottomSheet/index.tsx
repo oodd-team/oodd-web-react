@@ -4,7 +4,7 @@ import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
-	isHandlerVisible,
+	isHandlerVisible = true,
 	Component,
 	componentProps,
 	onCloseBottomSheet,
@@ -118,6 +118,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				onTouchStart={onPointerDown}
 				$currentTranslateY={currentTranslateY}
 				$isOpenBottomSheet={isOpenBottomSheet}
+				$isHandlerVisible={isHandlerVisible}
 			>
 				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />
