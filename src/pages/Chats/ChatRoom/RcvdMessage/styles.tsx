@@ -16,6 +16,7 @@ export const UserImage = styled.img`
 	object-fit: cover;
 	border-radius: 1.25rem;
 	margin-right: 0.438rem;
+	cursor: pointer;
 `;
 
 export const MessageBox = styled.div`

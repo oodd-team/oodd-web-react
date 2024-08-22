@@ -5,8 +5,7 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
-
-export const JWT_KEY = 'jwt_token';
+import { JWT_KEY } from '../../config/constant';
 
 export type BaseResponse<T = any> = {
 	isSuccess: boolean;
@@ -47,7 +46,8 @@ export const request: CustomInstance = axios.create({
 
 request.interceptors.request.use(
 	(config) => {
-		const jwt = window.localStorage.getItem(JWT_KEY);
+		const jwt = localStorage.getItem(JWT_KEY);
+		console.log(jwt);
 		if (jwt) {
 			config.headers.Authorization = `Bearer ${jwt}`;
 		}
