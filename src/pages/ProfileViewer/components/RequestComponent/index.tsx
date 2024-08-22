@@ -8,14 +8,12 @@ import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
 import { RequestComponentProps } from '../../dto';
 import { useRecoilState } from 'recoil';
 import { friendState } from '../../../../recoil/atoms';
-import Modal from '../../../../components/Modal';
 
-const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, setIsBottomSheetOpen }) => {
+const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, setIsBottomSheetOpen, handleOpenModal }) => {
+
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [inputValue, setInputValue] = useState('');
     const [, setFriend] = useRecoilState(friendState);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState('');
 
     useEffect(() => {
         if (inputRef.current) {
@@ -35,69 +33,67 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
         if (inputValue.trim() === "") {
             return;
         }
-
+    
         try {
-            console.log(localStorage.getItem('id')); // 친구 신청을 보내는 id
-            console.log(userId); // 친구 신청을 받는 id
-            console.log(inputValue);
             const response = await request.post<ResponseDto>(`/user-relationships`, {
                 requesterId: Number.parseInt(localStorage.getItem('id') as string),
                 targetId: userId,
                 message: inputValue
-            }
-        );
+            });
     
             console.log(response.result);
-
-            setFriend(true);
-            
-            setModalContent(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
-            setIsModalOpen(true);
-
+    
             setIsBottomSheetOpen(false);
-
+    
             if (inputRef.current) {
                 inputRef.current.value = "";
             }
             setInputValue('');
-
+    
+            // 친구 신청 성공 시 모달 띄우기
+            handleOpenModal(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
+    
         } catch (error: any) {
-           console.log(error);
-           alert("친구 신청에 실패했습니다.");
+            console.error('친구 신청 오류:', error);
+    
+            if (error.response?.data?.message === "이미 요청한 관계입니다.") {
+                setFriend(true);
+                setIsBottomSheetOpen(false);
+                handleOpenModal('이미 친구 신청을 보냈습니다!');
+            } else {
+                handleOpenModal('친구 신청에 실패했습니다. 다시 시도해 주세요.');
+            }
         }
     };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
     
-
     return (
-        <>
-            <RequestContainer>
-                <RequestMessage>
-                    <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
-                        {nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
-                    </StyledText>
-                </RequestMessage>
-                <ComentContainer>
-                    <Coment 
-                        ref={inputRef}
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        maxLength={100}
-                    />
-                    <MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
-                </ComentContainer>
-            </RequestContainer>
-            {isModalOpen && (
-                <Modal content={modalContent} onClose={handleCloseModal} />
-            )}
-        </>
+        <RequestContainer>
+            <RequestMessage>
+                <StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+                    {nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
+                </StyledText>
+            </RequestMessage>
+            <ComentContainer>
+                <Coment 
+                    ref={inputRef}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    maxLength={100}
+                />
+                <MsgIcon 
+                    src={MsgSvg_g} 
+                    alt="message icon" 
+                    onClick={handleMsgIconClick} 
+                /> 
+            </ComentContainer>
+        </RequestContainer>
     );
 };
 
 export default RequestComponent;
+
+
+
 
 
 

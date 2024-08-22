@@ -32,6 +32,7 @@ export interface RequestComponentProps {
     nickname: string;
     setFriend: (visible: boolean) => void;
     setIsBottomSheetOpen: (visible: boolean) => void;
+    handleOpenModal: (message: string) => void;
 }
 
 export interface ReportTextProps {

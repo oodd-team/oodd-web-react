@@ -17,7 +17,6 @@ import { OpponentInfoAtom } from "../../../../recoil/OpponentInfo";
 import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
 import { ChatRoomDto, Opponent } from "../../../Chats/RecentChat/dto";
 import { useNavigate } from "react-router-dom";
-import { Relationship } from "../../../../components/Cards/Card/dto";
 
 
 const UserInfo: React.FC = React.memo(() => {
@@ -28,93 +27,36 @@ const UserInfo: React.FC = React.memo(() => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
-    const [userInfo, setUserInfo] = useState<Opponent | null>(null); // 사용자 정보 상태 추가
     const nav = useNavigate();
 
     if (!userDetails) return null;
 
     const { id, nickname, bio, userImg } = userDetails;
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
-
     const userId = localStorage.getItem('id');
 
-    useEffect(() => {
-        if (!id) return;
-
-        const storedUserDetails = localStorage.getItem(`userDetails_${id}`);
-        if (storedUserDetails) {
-            try {
-                const parsedDetails = JSON.parse(storedUserDetails);
-                setInterested(parsedDetails.isInterested || false);
-                setFriend(parsedDetails.isFriend || false);
-
-                setUserDetails(prevDetails => {
-                    if (!prevDetails || prevDetails.isInterested === parsedDetails.isInterested) {
-                        return prevDetails;
-                    }
-                    return {
-                        ...prevDetails,
-                        isInterested: parsedDetails.isInterested || false,
-                    };
-                });
-            } catch (error) {
-                console.error('JSON 파싱 오류:', error);
-            }
+    // 사용자 정보 조회 및 상태 업데이트 함수
+    const fetchUserInfo = async () => {
+        try {
+            const response = await request.get<UserInfoDto>(`/users/${id}`);
+            console.log("??",response);
+            const updatedUserDetails: UserInfoProps = {
+                ...userDetails,
+                isInterested: interested, // 현재 상태 유지
+            };
+            console.log("hey",userDetails);
+            setFriend(response.result.isFriend);
+            setUserDetails(updatedUserDetails);
+            setInterested(interested); // 현재 상태 유지
+        } catch (error) {
+            console.error('사용자 정보 조회 오류:', error);
         }
+    };
 
-        // 사용자 정보 조회
-        const fetchUserInfo = async () => {
-            try {
-                const response = await request.get<UserInfoDto>(`/users/${id}`);
-                const User: Opponent = {
-                    id: response.id,
-                    nickname: response.nickname,
-                    profilePictureUrl: response.profilePictureUrl,
-                    name: response.name,
-                };
-                //const isFriend = response.isFriend;
-                setUserInfo(User);
-                if(response.isFriend === true)
-                {
-                    setFriend(true);
-                } else{
-                    const getMatchingList = async () => {
-
-                        if (!userInfo) {
-                            console.error('userInfo가 null입니다.');
-                            return;
-                        }
-                        try{
-                            const response = await request.get<{ isSuccess: boolean, code: number, message: string, result: Relationship[] }>(`/user-relationships`);
-                            if(Array.isArray(response.result)){
-                                response.result.forEach(list => {
-                                    if(list.target.id === id && list.requester.id === userInfo.id)
-                                    {
-                                        if(list.requestStatus === 'pending'){
-                                            setFriend(true);
-                                        }
-                                        else{
-                                            setFriend(false);
-                                        }
-                                    }
-                                })
-                            }
-                        }
-                        catch (error) {
-                            console.error('매칭 불러오기 실패!:', error);
-                        }
-                        getMatchingList();
-                    }
-                }
-            } catch (error) {
-                console.error('사용자 정보 조회 오류:', error);
-            }
-        };
-
+    // 컴포넌트가 마운트되거나 userDetails가 변경될 때 사용자 정보를 조회
+    useEffect(() => {
         fetchUserInfo();
-
-    }, [id, setUserDetails, setFriend]);
-
+    }, [id]);
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
@@ -135,37 +77,45 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleMessageClick = async () => {
         try {
-            if (!userInfo) {
-                console.error('사용자 정보가 없습니다.');
-                return;
-            }
+            // 사용자 정보 조회
+            const response = await request.get<UserInfoDto>(`/users/${id}`);
+            const User: Opponent = {
+                id: response.result.id,
+                nickname: response.result.nickname,
+                profilePictureUrl: response.result.profilePictureUrl,
+                name: response.result.name
+            };
+
+            console.log(User);
 
             // 본인이 참여하고 있는 채팅 리스트 조회
             const chatRoomResponse = await request.get<{ isSuccess: boolean, code: number, message: string, result: ChatRoomDto[] }>(`/chat-rooms/${userId}`);
-    
+
             let roomId: number | null = null;
-    
+
+            console.log(chatRoomResponse); // chatRoomResponse가 무엇인지 확인하기 위해 로그 출력
+
             // chatRoomResponse.result 배열에서 User.id와 일치하는 채팅방 찾기
             if (Array.isArray(chatRoomResponse.result)) {
                 chatRoomResponse.result.forEach(room => {
-                    if (room.opponent.id === userInfo.id) {
+                    if (room.opponent.id === User.id) {
                         roomId = room.id; // 일치하는 채팅방 ID 설정
                     }
                 });
             } else {
                 console.error("chatRoomResponse.result is not an array:", chatRoomResponse.result);
             }
-    
             if (roomId !== null) {
                 // 채팅방이 존재하면 해당 채팅방으로 이동
                 nav(`/chats/${roomId}`);
             } else {
-                console.log('매칭이 실패했습니다.');
+                // 채팅방이 존재하지 않을 경우 처리
+                console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
             }
-    
+
             // 상대방 정보 업데이트
-            setOpponentInfo(userInfo);
-    
+            setOpponentInfo(User);
+
         } catch (error) {
             console.error('메세지 보내기 오류:', error);
             alert('사용자 정보를 불러오지 못했습니다.');
@@ -271,6 +221,7 @@ const UserInfo: React.FC = React.memo(() => {
                             nickname={nickname}
                             setFriend={setFriend}
                             setIsBottomSheetOpen={setIsBottomSheetOpen}
+                            handleOpenModal={handleOpenModal}
                         />
                     )}
                 />
@@ -286,5 +237,3 @@ const UserInfo: React.FC = React.memo(() => {
 });
 
 export default UserInfo;
-
-
