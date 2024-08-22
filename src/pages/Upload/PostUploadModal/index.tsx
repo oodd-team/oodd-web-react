@@ -1,5 +1,5 @@
 //PostUploadModal/index.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -46,10 +46,6 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-
-	useEffect(() => {
-		console.log(postId);
-	}, []);
 
 	const navigate = useNavigate();
 
@@ -233,7 +229,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 
 			<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
 
-			{isSearchBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
+			<BottomSheet {...bottomSheetProps} />
 		</>
 	);
 };

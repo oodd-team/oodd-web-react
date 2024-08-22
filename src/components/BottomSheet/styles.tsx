@@ -22,7 +22,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number }
 	style: {
 		transform: `translate(-50%, ${$currentTranslateY}px)`,
 	},
-}))<{ $isOpenBottomSheet: boolean; $currentTranslateY: number }>`
+}))<{ $isOpenBottomSheet: boolean; $currentTranslateY: number; isHandlerVisible: boolean }>`
 	position: fixed;
 	bottom: 0;
 	flex-direction: column;
@@ -31,7 +31,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number }
 	left: 50%;
 	border-radius: 0.938rem 0.938rem 0 0;
 	background-color: ${({ theme }) => theme.colors.white};
-	padding-top: 1.3rem;
+	padding-top: ${(props) => (props.isHandlerVisible ? '1.3rem' : '0.9375rem')};
 	z-index: 200;
 	user-select: none;
 	touch-action: none;
