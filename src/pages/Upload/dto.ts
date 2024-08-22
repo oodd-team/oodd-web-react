@@ -47,7 +47,7 @@ export interface Styletag {
 }
 
 export interface ClothingInfo {
-	image_url: string;
+	imageUrl: string;
 	brand: string;
 	model: string;
 	modelNumber: number;
