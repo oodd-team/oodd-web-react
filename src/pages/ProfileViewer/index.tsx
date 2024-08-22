@@ -21,6 +21,7 @@ import request from "../../apis/core";
 import { PostListDto } from "./ResponseDto/PostListDto";
 import { BlockDto } from "./ResponseDto/BlockDto";
 import Modal from '../../components/Modal'; // Modal 컴포넌트 임포트
+import Loading from "../../components/Loading";
 
 const ProfileViewer: React.FC = () => {
     const { userId } = useParams<{ userId: string }>(); 
@@ -79,7 +80,7 @@ const ProfileViewer: React.FC = () => {
     }, [userDetails, userId]);
     
     if (!userDetails) {
-        return <div>Loading...</div>;
+        return <Loading/>;
     }
 
     const posts = userDetails.posts || []; 
