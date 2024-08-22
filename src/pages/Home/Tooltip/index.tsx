@@ -51,7 +51,7 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 					const scrollTop = document.documentElement.scrollTop;
 					const viewportHeight = window.innerHeight;
 
-					const desiredPosition = viewportHeight - 170;
+					const desiredPosition = viewportHeight - 73;
 					const scrollToPosition = rect.bottom + scrollTop - desiredPosition;
 
 					window.scrollTo({
@@ -63,11 +63,11 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 				// 스크롤 된 뷰포트를 기준으로 다시 위치 계산
 				setTimeout(() => {
 					const newRect = element.getBoundingClientRect();
-					const tooltipBottom = newRect.bottom - 170;
+					const tooltipBottom = newRect.bottom - 225;
 
 					// 툴팁 위치 설정
 					setMatchingTooltipBottom(tooltipBottom);
-				}, 200); // 스크롤이 완료된 후 위치 계산
+				}, 500); // 스크롤이 완료된 후 위치 계산
 			}
 		} else {
 			setIsOpenMatchingTooltip(false);
