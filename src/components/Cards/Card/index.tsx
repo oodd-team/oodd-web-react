@@ -12,6 +12,7 @@ import noProfileImg from '../../../assets/Home/no_profileImg.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { Relationship } from './dto';
+import request, { BaseResponse } from '../../../apis/core';
 
 interface CardProps {
 	onReject: () => void;
@@ -23,8 +24,26 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 	const nav = useNavigate();
 	const { requester } = relationship;
 
-	const handleReject = () => {
-		onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
+	const handleReject = async () => {
+		const response = await request.patch<BaseResponse>(`/user-relationships/${relationship.id}`, {
+			requestStatus: 'rejected',
+		});
+		if (response.isSuccess) {
+			onReject(); // 부모 컴포넌트의 함수 호출 (다음 슬라이드로 이동)
+		} else {
+			alert('매칭 거절에 실패했습니다.');
+		}
+	};
+
+	const handleAccept = async () => {
+		const response = await request.patch<BaseResponse>(`/user-relationships/${relationship.id}`, {
+			requestStatus: 'accepted',
+		});
+		if (response.isSuccess) {
+			nav('/chats');
+		} else {
+			alert('매칭 수락에 실패했습니다.');
+		}
 	};
 
 	return (
@@ -39,13 +58,8 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 					</StyledText>
 					<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray1}>
 						{requester.representativePost?.postStyletags.length
-							? requester.representativePost.postStyletags.map((tag, index) => (
-									<span key={index}>
-										#{tag.status}
-										{index < requester.representativePost!.postStyletags.length - 1 && ' '}
-									</span>
-								))
-							: '#classic'}
+							? `#${requester.representativePost.postStyletags[0].styletag?.tag ?? 'unknown'}`
+							: ''}
 					</StyledText>
 				</ProfileInfo>
 				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
@@ -73,7 +87,7 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 					<Btn onClick={handleReject}>
 						<img src={xBtn} alt="reject" />
 					</Btn>
-					<Btn onClick={() => nav('/chats')}>
+					<Btn onClick={handleAccept}>
 						<img src={checkBtn} alt="accept" />
 					</Btn>
 				</Reaction>
