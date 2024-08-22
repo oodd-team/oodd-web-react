@@ -31,11 +31,11 @@ const ProfileEdit: React.FC = () => {
 					return;
 				}
 
-				const response = await request.get<UserProfileResponse>(`/users/${storedUserId}`);
-				setUserProfile(response);
-				setNickname(response.nickname || response.name);
-				setBio(response.bio || '');
-				setProfilePictureUrl(response.profilePictureUrl);
+				const response = await request.get<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`);
+				setUserProfile(response.result as UserProfileResponse);
+				setNickname((response.result?.nickname as string) || (response.result?.name as string));
+				setBio(response.result?.bio || '');
+				setProfilePictureUrl(response.result?.profilePictureUrl || null);
 			} catch (error) {
 				console.error('Error fetching user profile:', error);
 			}
@@ -65,13 +65,11 @@ const ProfileEdit: React.FC = () => {
 				console.error('User is not logged in');
 				return;
 			}
-
 			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
 				nickname,
 				profilePictureUrl,
 				bio,
 			});
-
 			if (response.isSuccess) {
 				navigate(`/mypage`); // 마이페이지로 이동
 			} else {

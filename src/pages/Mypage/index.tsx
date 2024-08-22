@@ -20,7 +20,7 @@ import NavBar from '../../components/NavBar';
 import avatarImage from '../../assets/avatar.png';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
-import request from '../../apis/core';
+import request, { BaseResponse } from '../../apis/core';
 import ProfileActions from '../Profile';
 import { PostItem, PostsResponse, UserResponse } from './dto';
 
@@ -32,7 +32,7 @@ const Mypage: React.FC = () => {
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [totalComments, setTotalComments] = useState(0); // Comments count
 	const handlePostClick = (postId: string) => {
-		navigate(`/post/${postId}`);
+		navigate(`/my-post/${postId}`);
 	};
 	// 사용자 정보 가져오기 함수
 	const fetchUserData = async () => {
@@ -45,8 +45,8 @@ const Mypage: React.FC = () => {
 				return;
 			}
 
-			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
-			setUser(response);
+			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
+			setUser(response.result);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
