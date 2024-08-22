@@ -38,7 +38,7 @@ const Mypage: React.FC = () => {
 	const fetchUserData = async () => {
 		try {
 			// userId를 localStorage에서 가져옴
-			const storedUserId = localStorage.getItem('userId'); // 또는 상태관리에서 가져오기
+			const storedUserId = localStorage.getItem('id'); // 또는 상태관리에서 가져오기
 
 			if (!storedUserId) {
 				console.error('User is not logged in');
@@ -54,7 +54,7 @@ const Mypage: React.FC = () => {
 	// API에서 포스트 리스트를 가져오는 함수
 	const handlePostList = async () => {
 		try {
-			const storedUserId = localStorage.getItem('userId');
+			const storedUserId = localStorage.getItem('id');
 			if (!storedUserId) {
 				console.error('User is not logged in');
 				return;
