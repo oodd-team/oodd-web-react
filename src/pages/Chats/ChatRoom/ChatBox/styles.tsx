@@ -19,6 +19,7 @@ export const ChatBoxContainer = styled.div`
 export const Textarea = styled.textarea<{ $isOpponentValid: boolean }>`
 	width: 100%;
 	height: 2.5rem;
+	max-height: 5rem;
 	border: 1px solid ${({ theme }) => theme.colors.gray3};
 	border-radius: 0.188rem;
 	padding: 0.7rem 0.5rem;

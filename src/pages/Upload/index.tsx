@@ -79,7 +79,7 @@ const Upload: React.FC = () => {
 		setContent('');
 		setClothingInfos([]);
 		setSelectedStyletag(null);
-		navigate('/profile');
+		navigate('/mypage');
 	};
 
 	const handleSelectImages = (images: string[]) => {
