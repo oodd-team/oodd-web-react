@@ -1,17 +1,10 @@
 import { ExtendedMessageDto, MessageDto, RcvdMessageProps, SentMessageProps } from '../dto';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { AllMesagesAtom } from '../../../recoil/AllMessages';
-import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
+import { Opponent } from '../RecentChat/dto';
 import ProfileImg from '/ProfileImg.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
-export const createExtendedMessages = () => {
-	const [allMessages, _] = useRecoilState(AllMesagesAtom);
-	const storageValue = localStorage.getItem('id');
-	const userId = storageValue ? Number(storageValue) : -1;
-	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-
+export const createExtendedMessages = (allMessages: MessageDto[], userId: number, opponentInfo: Opponent | null) => {
 	// DateBar 표시 여부를 결정하는 함수
 	const isNextDay = (curDate: Date, lastDate: Date): boolean => {
 		const curDateDayjs = dayjs(curDate);

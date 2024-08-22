@@ -82,7 +82,7 @@ const ChatRoom: React.FC = () => {
 
 	// 메시지 렌더링에 필요한 정보 추가
 	useEffect(() => {
-		const temp = createExtendedMessages();
+		const temp = createExtendedMessages(allMessages, userId, opponentInfo);
 		setextendedMessages(temp);
 	}, [allMessages]);
 
