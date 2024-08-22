@@ -93,4 +93,3 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
 export default RequestComponent;
 
 
-

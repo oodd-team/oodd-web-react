@@ -25,6 +25,7 @@ export const AvatarWrapper = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-right: 1.25rem; /* 20px */
+	margin-left: 30px;
 `;
 
 export const Avatar = styled.img`
@@ -59,6 +60,8 @@ export const Bio = styled.div`
 	font-style: normal;
 	font-weight: 300;
 	line-height: normal;
+
+	margin-top: 10px;
 `;
 
 export const StatsContainer = styled.div`
