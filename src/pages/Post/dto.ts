@@ -1,3 +1,7 @@
+export interface PostTopBarProps {
+	userName: string;
+}
+
 export interface PostResponse {
 	isSuccess: boolean;
 	code: number;
@@ -19,7 +23,33 @@ export interface PostData {
 export interface ClothingInfo {
 	brand: string;
 	model: string;
-	modelNumber: string;
+	modelNumber: number;
 	url: string;
 	imageUrl: string;
+}
+
+export interface UserResponse {
+	isSuccess: boolean;
+	code: number;
+	message: string;
+	result: UserData;
+}
+
+export interface UserData {
+	id: number;
+	name: string;
+	email: string;
+	nickname: string | null;
+	phoneNumber: string | null;
+	profilePictureUrl: string;
+	bio: string | null;
+	joinedAt: string;
+}
+
+export interface ClothingInfoCardProps {
+	imageUrl: string;
+	brand: string;
+	model: string;
+	modelNumber: number;
+	url: string;
 }

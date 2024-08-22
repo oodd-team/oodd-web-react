@@ -4,7 +4,9 @@ import theme from '../../../../styles/theme';
 import { Btn, CheckedBtn, FeedImgBox, FeedProfileImgWrapper, FeedTop, FeedWrapper, Info, Reaction } from './styles';
 import { FeedProps } from '../dto';
 import starBtn from '../../../../assets/Home/button_star.svg';
-import checkedHeart from '../../../../assets/Home/clicked_heart.svg';
+import checkedStarBtn from '../../../../assets/Home/clicked_star.svg';
+import heartBtn from '../../../../assets/Home/button_heart.svg';
+import checkedHeartBtn from '../../../../assets/Home/clicked_heart.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -32,12 +34,24 @@ const Feed: React.FC<Props> = ({ feed }) => {
 					</Info>
 				</FeedTop>
 				<Reaction>
-					<CheckedBtn>
-						<img src={checkedHeart} />
-					</CheckedBtn>
-					<Btn>
-						<img src={starBtn} />
-					</Btn>
+					{feed.hasLiked ? (
+						<CheckedBtn>
+							<img src={checkedHeartBtn} />
+						</CheckedBtn>
+					) : (
+						<Btn>
+							<img src={heartBtn} />
+						</Btn>
+					)}
+					{feed.hasInterested ? (
+						<CheckedBtn>
+							<img src={checkedStarBtn} />
+						</CheckedBtn>
+					) : (
+						<Btn>
+							<img src={starBtn} />
+						</Btn>
+					)}
 				</Reaction>
 			</FeedImgBox>
 		</FeedWrapper>

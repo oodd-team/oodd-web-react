@@ -12,13 +12,14 @@ import {
 	PostInfo,
 	PostText,
 	PostWrapper,
-	Products,
+	ClothingInfos,
 	UserInfo,
 	UserName,
 	UserProfile,
 } from './styles';
+import Loading from '../../components/Loading/index.tsx';
 import PostTopBar from './PostTopBar';
-import ProductCard from './ProductCard';
+import ClothingInfoCard from './ClothingInfoCard';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import Modal from '../../components/Modal';
@@ -34,12 +35,14 @@ import BottomButton from '../../components/BottomButton/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
-import { PostResponse, PostData } from './dto';
-import request from '../../apis/core'; // 서버 요청을 위해 임포트
+import { PostResponse, PostData, UserResponse, UserData, ClothingInfo } from './dto';
+import request from '../../apis/core';
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
-	const [postData, setPostData] = useState<any>(null); // 서버에서 가져온 데이터 저장
+	const [postData, setPostData] = useState<PostData>();
+	const [user, setUser] = useState<UserData>();
+	const [userName, setUserName] = useState<string>('');
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
 	const [showInput, setShowInput] = useState(false);
@@ -58,11 +61,36 @@ const Post: React.FC = () => {
 				const response = await request.get<PostResponse>(`/posts/${postId}`);
 				if (response.isSuccess) {
 					setPostData(response.result);
+
+					response.result.clothingInfo?.forEach((clothingInfo) => {
+						console.log('clothing: ', clothingInfo);
+					});
+
+					fetchUser();
 				} else {
 					console.error('Failed to fetch post data');
 				}
 			} catch (error) {
 				console.error('Error fetching post data:', error);
+			}
+		};
+
+		const fetchUser = async () => {
+			if (postData) {
+				try {
+					const response = await request.get<UserResponse>(`/users/${postData.userId}`);
+
+					if (response.isSuccess) {
+						setUser(response.result);
+						if (user) {
+							setUserName(user.nickname || user.name);
+						}
+					} else {
+						console.error('Failed to fetch user data');
+					}
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+				}
 			}
 		};
 
@@ -147,7 +175,7 @@ const Post: React.FC = () => {
 	};
 
 	const commentProps: CommentProps = {
-		content: `${postData?.userName || ''}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${postData?.userName || ''}님에게만 전달됩니다.`,
+		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
 		sendComment: (comment: string) => {
 			console.log(`api에 ${comment} 전달`);
 		},
@@ -196,7 +224,7 @@ const Post: React.FC = () => {
 	};
 
 	const confirmationModalProps = {
-		content: `${postData?.userName || ''}님의 OOTD를 차단합니다.`,
+		content: `${userName}님의 OOTD를 차단합니다.`,
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',
@@ -211,7 +239,7 @@ const Post: React.FC = () => {
 	};
 
 	if (!postData) {
-		return <div>Loading...</div>; // 로딩 중 표시
+		return <Loading />; // 로딩 중 표시
 	}
 
 	return (
@@ -219,24 +247,25 @@ const Post: React.FC = () => {
 			<BottomSheet {...bottomSheetProps} />
 			<BottomSheet {...reportSheetProps} />
 			<BottomSheet {...commentSheetProps} />
-			{isModalOpen && (
-				<Modal content={`${postData.userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />
-			)}
+			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
-				<Modal content={`${postData.userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
+				<Modal
+					content={`${user?.nickname || user?.name}님을 차단했어요.`}
+					onClose={() => setIsBlockedModalOpen(false)}
+				/>
 			)}
 
-			<PostTopBar />
+			<PostTopBar userName={userName} />
 			<PostWrapper>
 				<PostInfo>
 					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
 						<UserProfile>
-							<img src={postData.profilePictureUrl || profileImg} alt="profileImg" />
+							<img src={user?.profilePictureUrl || profileImg} alt="profileImg" />
 						</UserProfile>
 						<UserName>
 							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-								{postData.userName}
+								{userName}
 							</StyledText>
 						</UserName>
 					</UserInfo>
@@ -268,16 +297,18 @@ const Post: React.FC = () => {
 						))}
 					</Swiper>
 				</PostImg>
-				<Products>
-					{postData.clothingInfo.map((product: any, index: number) => (
-						<ProductCard
+				<ClothingInfos>
+					{postData.clothingInfo?.map((clothingInfo: ClothingInfo, index: number) => (
+						<ClothingInfoCard
 							key={index}
-							brandName={product.brand}
-							modelName={`${product.model} / ${product.modelNumber} / ${product.url}`}
-							productImgSrc={product.imageUrl}
+							imageUrl={clothingInfo.imageUrl}
+							brand={clothingInfo.brand}
+							model={clothingInfo.model}
+							modelNumber={clothingInfo.modelNumber}
+							url={clothingInfo.url}
 						/>
 					))}
-				</Products>
+				</ClothingInfos>
 			</PostWrapper>
 		</OODDFrame>
 	);

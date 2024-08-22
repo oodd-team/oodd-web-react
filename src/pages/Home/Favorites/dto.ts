@@ -9,6 +9,8 @@ export interface FeedProps {
 	profileUrl: string;
 	userName: string;
 	feedImgUrl: string;
+	hasLiked: boolean;
+	hasInterested: boolean;
 }
 
 export interface UserInterest {
@@ -35,6 +37,8 @@ export interface Post {
 	likes: number;
 	firstPhoto: string;
 	isRepresentative: boolean;
+	hasLiked: boolean;
+	hasInterested: boolean;
 }
 
 export interface PostsResult {

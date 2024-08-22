@@ -25,8 +25,8 @@ import styleTag from '../../../assets/Upload/styleTag.svg';
 import pin from '../../../assets/Upload/pin.svg';
 import next from '../../../assets/Upload/next.svg';
 import next_up from '../../../assets/Upload/next_up.svg';
-import { PostUploadModalProps } from '../dto';
-import { ClothingInfo, Styletag, Post } from './dto';
+import { PostUploadModalProps, ClothingInfo } from '../dto';
+import { Styletag, Post } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import request, { BaseResponse } from '../../../apis/core';
@@ -106,9 +106,9 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	const uploadImageToFirebase = async (image: string) => {
-		// Firebase URL 형식을 확인합니다.
+		// Firebase URL 형식인지 확인
 		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
-			return image; // 이미 업로드된 경우, URL을 그대로 반환합니다.
+			return image; // 이미 업로드된 경우, URL을 그대로 반환
 		}
 
 		// 새로 업로드해야 하는 경우

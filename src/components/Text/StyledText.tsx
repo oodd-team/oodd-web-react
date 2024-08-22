@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 
-interface StyledTextProps {
+export interface StyledTextProps {
 	$textTheme: {
 		style: keyof typeof theme.fontStyles;
 		lineHeight: number;

@@ -5,15 +5,19 @@ import { FavoritesContainer, FavoritesMent, FeedContainer, UserContainer, UserRo
 import Feed from './Feed';
 import { FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from './dto';
 import User from './User';
+import Loading from '../../../components/Loading';
 import request from '../../../apis/core';
 
 const Favorites: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<number | null>(null); // 초기값을 null로 설정
 	const [users, setUsers] = useState<UserProps[]>([]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
+	const [isUserLoading, setIsUserLoading] = useState(false);
+	const [isFeedLoading, setIsFeedLoading] = useState(false);
 
 	// 관심 친구 목록을 서버에서 가져오는 함수
 	const fetchUserInterests = async () => {
+		setIsUserLoading(true);
 		try {
 			const response: UserInterestsResponse = await request.get('/user-interests');
 			if (response.isSuccess) {
@@ -28,11 +32,14 @@ const Favorites: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error fetching user interests:', error);
+		} finally {
+			setIsUserLoading(false);
 		}
 	};
 
 	// 특정 유저의 게시물을 가져오는 함수
 	const fetchUserPosts = async (userId: number) => {
+		setIsFeedLoading(true);
 		try {
 			const response: UserPostsResponse = await request.get(`/posts?userId=${userId}`);
 			if (response.isSuccess) {
@@ -41,6 +48,8 @@ const Favorites: React.FC = () => {
 					profileUrl: users.find((user) => user.userId === userId)?.userImgUrl || '',
 					userName: users.find((user) => user.userId === userId)?.userName || '',
 					feedImgUrl: post.firstPhoto,
+					hasLiked: post.hasLiked,
+					hasInterested: post.hasInterested,
 				}));
 				setFeeds(feedData);
 			} else {
@@ -48,6 +57,8 @@ const Favorites: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error fetching posts:', error);
+		} finally {
+			setIsFeedLoading(false);
 		}
 	};
 
@@ -76,21 +87,23 @@ const Favorites: React.FC = () => {
 				</StyledText>
 			</FavoritesMent>
 			<UserContainer>
-				<UserRow>
-					{users.map((user) => (
-						<User
-							key={user.userId}
-							user={user}
-							isSelected={selectedUser === user.userId}
-							onClick={() => handleUserClick(user.userId)} // userId를 전달
-						/>
-					))}
-				</UserRow>
+				{isUserLoading ? (
+					<Loading />
+				) : (
+					<UserRow>
+						{users.map((user) => (
+							<User
+								key={user.userId}
+								user={user}
+								isSelected={selectedUser === user.userId}
+								onClick={() => handleUserClick(user.userId)} // userId를 전달
+							/>
+						))}
+					</UserRow>
+				)}
 			</UserContainer>
 			<FeedContainer>
-				{feeds.map((feed, index) => (
-					<Feed key={index} feed={feed} />
-				))}
+				{isFeedLoading ? <Loading /> : feeds.map((feed, index) => <Feed key={index} feed={feed} />)}
 			</FeedContainer>
 		</FavoritesContainer>
 	);
