@@ -32,7 +32,7 @@ const Mypage: React.FC = () => {
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [totalComments, setTotalComments] = useState(0); // Comments count
 	const handlePostClick = (postId: string) => {
-		navigate(`/post/${postId}`);
+		navigate(`/my-post/${postId}`);
 	};
 	// 사용자 정보 가져오기 함수
 	const fetchUserData = async () => {

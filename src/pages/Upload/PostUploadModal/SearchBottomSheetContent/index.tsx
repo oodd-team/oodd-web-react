@@ -114,7 +114,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 
 	const handleAddClothingInfo = (item: any) => {
 		onSelectClothingInfo({
-			image_url: item.image,
+			imageUrl: item.image,
 			brand: item.brand,
 			model: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
 			modelNumber: 1,
