@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { useParams, useNavigate } from 'react-router-dom';
 import {
 	PostDetailContainer,
@@ -24,6 +25,7 @@ import {
 	Arrow,
 	Indicator,
 } from './styles';
+import imageBasic from '../../assets/imageBasic.svg';
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -97,8 +99,8 @@ const PostDetail: React.FC = () => {
 				return;
 			}
 
-			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
-			setUser(response);
+			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
+			setUser(response.result as UserResponse);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
@@ -240,10 +242,19 @@ const PostDetail: React.FC = () => {
 	};
 
 	const handlePinPost = async () => {
+		// localStorage에서 storedUserId를 가져옴
+		const storedUserId = localStorage.getItem('id');
+
+		if (!storedUserId) {
+			console.error('User ID not found');
+			return;
+		}
+
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${2}`, {
+			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${storedUserId}`, {
 				isRepresentative: true,
 			});
+
 			if (response.isSuccess) {
 				console.log('Post pinned successfully:', response.result);
 				// PostDetail 재로드
@@ -294,7 +305,7 @@ const PostDetail: React.FC = () => {
 					<UserRow>
 						<Pic_exam>
 							<img
-								src={user?.profilePictureUrl || mockImage}
+								src={user?.profilePictureUrl || imageBasic}
 								alt="User Profile"
 								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
 							/>

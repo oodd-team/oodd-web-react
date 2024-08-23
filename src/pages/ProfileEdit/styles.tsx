@@ -5,7 +5,6 @@ export const ProfileEditContainer = styled.div`
 	width: 100%;
 	max-width: 600px;
 	margin: 0 auto;
-	padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -46,6 +45,7 @@ export const Input = styled.input`
 	border: 1px solid #ccc;
 	border: 0px;
 	box-sizing: border-box;
+	padding: 10px;
 `;
 
 export const Button = styled.button`
@@ -61,6 +61,7 @@ export const Row = styled.div`
 	align-items: center;
 	width: 100%;
 	margin-top: 10px; /* Row 간격 10px */
+	padding: 0px 20px;
 
 	${Label} {
 		width: 6.25rem; /* 100px */

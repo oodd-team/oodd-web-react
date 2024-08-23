@@ -25,7 +25,7 @@ const App: React.FC = () => {
 				<Route path="/" element={<Home />} />
 				<Route path="/chats/:roomId" element={<ChatRoom />} />
 				<Route path="/Mypage" element={<Mypage />} />
-				<Route path="/post/:postId" element={<PostDetail />} />
+				<Route path="/my-post/:postId" element={<PostDetail />} />
 				<Route path="/profile/edit" element={<ProfileEdit />} />
 				<Route path="/account-setting" element={<AccountSetting />} />
 
@@ -35,7 +35,7 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />
-				<Route path="/post" element={<Post />} />
+				<Route path="/post/:postId" element={<Post />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />
 

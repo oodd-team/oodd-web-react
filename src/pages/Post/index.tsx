@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
 import { StyledText } from '../../components/Text/StyledText';
-import { MoreBtn, PostImg, PostInfo, PostText, PostWrapper, Products, UserInfo, UserName, UserProfile } from './styles';
+import {
+	MoreBtn,
+	PostImg,
+	PostInfo,
+	PostText,
+	PostWrapper,
+	ClothingInfos,
+	UserInfo,
+	UserName,
+	UserProfile,
+} from './styles';
+import Loading from '../../components/Loading/index.tsx';
 import PostTopBar from './PostTopBar';
-import ProductCard from './ProductCard';
+import ClothingInfoCard from './ClothingInfoCard';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import Modal from '../../components/Modal';
@@ -16,43 +27,72 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../styles/theme';
 import profileImg from './../../assets/Post/profileImg.svg';
-import postImg1 from './../../assets/Post/postImg1.svg';
 import more from './../../assets/Post/more.svg';
-import productImg from './../../assets/Post/productImg.svg';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
+import { PostResponse, PostData, UserResponse, UserData, ClothingInfo } from './dto';
+import request from '../../apis/core';
 
 const Post: React.FC = () => {
+	const { postId } = useParams<{ postId: string }>();
+	const [postData, setPostData] = useState<PostData>();
+	const [user, setUser] = useState<UserData>();
+	const [userName, setUserName] = useState<string>('');
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
 	const [showInput, setShowInput] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
-	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false); // 코멘트 모달 상태
+	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 	const nav = useNavigate();
-	const location = useLocation();
 
+	// 서버에서 게시물 데이터 가져오기
 	useEffect(() => {
-		if (location.state && location.state.isCommentModalOpen) {
-			setIsCommentModalOpen(true);
-		}
-	}, [location.state]);
+		const fetchPostData = async () => {
+			try {
+				const response = await request.get<PostResponse>(`/posts/${postId}`);
+				if (response.isSuccess) {
+					setPostData(response.result);
 
-	const userName = 'IDID';
+					response.result.clothingInfo?.forEach((clothingInfo) => {
+						console.log('clothing: ', clothingInfo);
+					});
 
-	const productData = [
-		{ id: 1, brandName: '브랜드1', modelName: '모델1/모델번호/URL...', productImgSrc: productImg },
-		{ id: 2, brandName: '브랜드2', modelName: '모델2/모델번호/URL...', productImgSrc: productImg },
-		{ id: 3, brandName: '브랜드3', modelName: '모델3/모델번호/URL...', productImgSrc: productImg },
-		{ id: 4, brandName: '브랜드4', modelName: '모델4/모델번호/URL...', productImgSrc: productImg },
-	];
+					fetchUser();
+				} else {
+					console.error('Failed to fetch post data');
+				}
+			} catch (error) {
+				console.error('Error fetching post data:', error);
+			}
+		};
 
-	const postImages = [postImg1, postImg1, postImg1, postImg1];
+		const fetchUser = async () => {
+			if (postData) {
+				try {
+					const response = await request.get<UserResponse>(`/users/${postData.userId}`);
+
+					if (response.isSuccess) {
+						setUser(response.result);
+						if (user) {
+							setUserName(user.nickname || user.name);
+						}
+					} else {
+						console.error('Failed to fetch user data');
+					}
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+				}
+			}
+		};
+
+		fetchPostData();
+	}, [postId]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -152,6 +192,10 @@ const Post: React.FC = () => {
 		},
 	};
 
+	if (!postData) {
+		return <Loading />; // 로딩 중 표시
+	}
+
 	return (
 		<OODDFrame>
 			<BottomSheet {...bottomSheetProps} />
@@ -178,19 +222,22 @@ const Post: React.FC = () => {
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
-				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
+				<Modal
+					content={`${user?.nickname || user?.name}님을 차단했어요.`}
+					onClose={() => setIsBlockedModalOpen(false)}
+				/>
 			)}
 
-			<PostTopBar />
+			<PostTopBar userName={userName} />
 			<PostWrapper>
 				<PostInfo>
-					<UserInfo onClick={() => nav('/users/:userId')}>
+					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
 						<UserProfile>
-							<img src={profileImg} alt="profileImg" />
+							<img src={user?.profilePictureUrl || profileImg} alt="profileImg" />
 						</UserProfile>
 						<UserName>
 							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-								IDID
+								{userName}
 							</StyledText>
 						</UserName>
 					</UserInfo>
@@ -204,7 +251,7 @@ const Post: React.FC = () => {
 						color={theme.colors.black}
 						style={{ opacity: '50%' }}
 					>
-						Text~~~~~~~~~~~~~~~~~~~~~~~ ...Text~~~~~~~~~~~~~~~~~~~~~~~ ...Text~~~~~~~~~~~~~~~~~~~~~~~ ...
+						{postData.content}
 					</StyledText>
 				</PostText>
 				<PostImg>
@@ -215,23 +262,24 @@ const Post: React.FC = () => {
 						navigation
 						className="postSwiper"
 					>
-						{postImages.map((image, index) => (
+						{postData.photoUrls.map((image: string, index: number) => (
 							<SwiperSlide key={index}>
-								<img src={image} alt="postImg" style={{ width: '100%', height: 'auto' }} />
+								<img src={image} alt={`postImg-${index}`} style={{ width: '100%', height: 'auto' }} />
 							</SwiperSlide>
 						))}
 					</Swiper>
 				</PostImg>
-				<Products>
-					{productData.map((product) => (
-						<ProductCard
-							key={product.id}
-							brandName={product.brandName}
-							modelName={product.modelName}
-							productImgSrc={product.productImgSrc}
+				<ClothingInfos>
+					{postData.clothingInfo?.map((clothingInfo: ClothingInfo, index: number) => (
+						<ClothingInfoCard
+							key={index}
+							imageUrl={clothingInfo.imageUrl}
+							brand={clothingInfo.brand}
+							model={clothingInfo.model}
+							url={clothingInfo.url}
 						/>
 					))}
-				</Products>
+				</ClothingInfos>
 			</PostWrapper>
 		</OODDFrame>
 	);
