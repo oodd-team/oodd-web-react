@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
@@ -50,6 +50,13 @@ const Post: React.FC = () => {
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 	const nav = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state && location.state.isCommentModalOpen) {
+			setIsCommentModalOpen(true);
+		}
+	}, [location.state]);
 
 	// 서버에서 게시물 데이터 가져오기
 	useEffect(() => {

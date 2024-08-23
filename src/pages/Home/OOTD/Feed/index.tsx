@@ -48,13 +48,13 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 
 	const handleCommentClick = () => {
 		// Post 페이지로 이동하면서 isCommentModalOpen 값을 true로 전달
-		nav('/post', { state: { isCommentModalOpen: true } });
+		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
 	};
 
 	return (
 		<FeedWrapper>
 			<FeedTop>
-				<Info onClick={() => nav('/users/:userId')}>
+				<Info onClick={() => nav(`/users/${feed.userId}`)}>
 					<FeedProfileImgWrapper>
 						<img src={feed.profileUrl} alt="tag" />
 					</FeedProfileImgWrapper>
@@ -64,7 +64,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Info>
 				<img src={more} style={{ cursor: 'pointer' }} onClick={onMoreClick} />
 			</FeedTop>
-			<FeedText onClick={() => nav('/post')}>
+			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
 				<StyledText
 					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
 					color={theme.colors.black}
