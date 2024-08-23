@@ -33,11 +33,10 @@ import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../rec
 
 interface Props {
 	feed: FeedProps;
-	onRemove: () => void;
 	onMoreClick: () => void;
 }
 
-const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
+const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
@@ -95,23 +94,6 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 
 	const handleCommentClick = () => {
 		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
-	};
-
-	const handleBlockUser = async () => {
-		try {
-			const response = await request.post<{ message: string }>('/block', {
-				userId: localStorage.getItem('id'),
-				friendId: feed.userId,
-				action: 'toggle',
-			});
-			if (response.message === 'OK') {
-				onRemove();
-			} else {
-				console.error('Failed to block user:', response.message);
-			}
-		} catch (error) {
-			console.error('Error blocking user:', error);
-		}
 	};
 
 	return (

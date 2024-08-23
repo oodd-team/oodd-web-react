@@ -18,6 +18,8 @@ import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
+import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/BlockBottomSheetAtom';
+import { useRecoilValue } from 'recoil';
 
 const tagData: TagProps[] = [
 	{ tagImgUrl: classic, tagName: 'classic' },
@@ -39,6 +41,8 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
 	const [loading, setLoading] = useState<boolean>(false); // 로딩 상태 관리
+	const isOpenBlockSuccessModal = useRecoilValue(IsOpenBlockSuccessModalAtom);
+	const postBlock = useRecoilValue(PostBlockAtom);
 
 	// 여러 태그를 기반으로 피드를 가져오는 함수
 	const fetchFeedsByTags = async (tagNames: string[]) => {
@@ -85,9 +89,12 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 		});
 	};
 
-	const handleRemoveFeed = (userName: string) => {
-		setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== userName));
-	};
+	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
+	useEffect(() => {
+		if (isOpenBlockSuccessModal === true) {
+			setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== postBlock?.friendName));
+		}
+	}, [isOpenBlockSuccessModal]);
 
 	// 태그 데이터를 반으로 나눠서 UI에 표시
 	const middleIndex = Math.ceil(tagData.length / 2);
@@ -127,16 +134,15 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 					))}
 				</TagRow>
 			</TagContainer>
-			{loading && <OOTDLoading><Loading /></OOTDLoading>}
+			{loading && (
+				<OOTDLoading>
+					<Loading />
+				</OOTDLoading>
+			)}
 			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
-						<Feed
-							key={feed.userName}
-							feed={feed}
-							onRemove={() => handleRemoveFeed(feed.userName)}
-							onMoreClick={onMoreClick}
-						/>
+						<Feed key={feed.userName} feed={feed} onMoreClick={onMoreClick} />
 					</div>
 				))}
 			</FeedContainer>
