@@ -1,3 +1,7 @@
+export interface FavoritesProps {
+	onTabSelect?: () => void;
+}
+
 export interface UserProps {
 	userId: number;
 	userImgUrl: string;
