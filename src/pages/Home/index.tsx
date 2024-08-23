@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-	const [userName, setUserName] = useState<string>('');
+	const [userName] = useState<string>('');
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
