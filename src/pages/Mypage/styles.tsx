@@ -111,3 +111,26 @@ export const PostsContainer = styled.div`
 	gap: 0; /* 간격을 없앰 */
 	cursor: pointer;
 `;
+
+export const AddButton = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed; /* absolute에서 fixed로 변경 */
+	bottom: 6.75rem;
+	right: 1.25rem;
+	width: 5rem;
+	height: 5rem;
+	border: none;
+	border-radius: 50%;
+	background-color: ${({ theme }) => theme.colors.white};
+	color: ${({ theme }) => theme.colors.black};
+	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+	font-size: 1rem;
+	cursor: pointer;
+	z-index: 2;
+
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.gray3};
+	}
+`;
