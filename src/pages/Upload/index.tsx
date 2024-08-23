@@ -24,6 +24,7 @@ const Upload: React.FC = () => {
 	const [content, setContent] = useState<string>('');
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>([]);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(null);
+	const [isRepresentative, setIsRepresentative] = useState(false);
 	const [instagramPosts, setInstagramPosts] = useState<Post[]>([]);
 	const [postId, setPostId] = useState<number | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -60,12 +61,15 @@ const Upload: React.FC = () => {
 		try {
 			const response = await request.get<PostResponse>(`/posts/${postId}`);
 			if (response.isSuccess && response.result) {
-				const { photoUrls, content, styletags, clothingInfo } = response.result;
+				const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
 
 				setSelectedImages(photoUrls);
 				setContent(content || '');
 				setClothingInfos(clothingInfo);
 				setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
+				setIsRepresentative(isRepresentative);
+
+				console.log('Initial Post: ', response.result);
 			}
 		} catch (error) {
 			console.error(error);
@@ -168,6 +172,7 @@ const Upload: React.FC = () => {
 						initialContent={content}
 						initialClothingInfos={clothingInfos}
 						initialStyletag={selectedStyletag}
+						initialRepresentative={isRepresentative}
 						postId={postId}
 					/>
 				)}

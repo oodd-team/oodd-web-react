@@ -1,3 +1,7 @@
+export interface FavoritesProps {
+	onTabSelect?: () => void;
+}
+
 export interface UserProps {
 	userId: number;
 	userImgUrl: string;
@@ -6,6 +10,7 @@ export interface UserProps {
 
 export interface FeedProps {
 	postId: number;
+	userId: number;
 	profileUrl: string;
 	userName: string;
 	feedImgUrl: string;
