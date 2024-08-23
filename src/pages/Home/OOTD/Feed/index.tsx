@@ -141,7 +141,11 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 							</Btn>
 						)}
 						{isStarClicked && (
-							<img src={clickedStar} onClick={handleStarClick} style={{ width: '3.75rem', height: '3.75rem' }} />
+							<img
+								src={clickedStar}
+								onClick={handleStarClick}
+								style={{ width: '3.75rem', height: '3.75rem', cursor: 'pointer' }}
+							/>
 						)}
 					</Reaction>
 
