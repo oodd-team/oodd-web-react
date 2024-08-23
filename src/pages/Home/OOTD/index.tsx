@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer } from './styles';
+import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer, OOTDLoading } from './styles';
 import Tag from './Tag';
 import { FeedProps, TagProps, OOTDAPIResponse, UserResponse, Post } from './dto';
 import Feed from './Feed';
@@ -17,6 +17,7 @@ import minimal from '../../../assets/Home/minimal.svg';
 import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
+import Loading from '../../../components/Loading'; // Loading 컴포넌트
 
 const tagData: TagProps[] = [
 	{ tagImgUrl: classic, tagName: 'classic' },
@@ -37,11 +38,12 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 }) => {
 	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
+	const [loading, setLoading] = useState<boolean>(false); // 로딩 상태 관리
 
 	// 여러 태그를 기반으로 피드를 가져오는 함수
 	const fetchFeedsByTags = async (tagNames: string[]) => {
 		try {
-			// 여러 개의 태그를 쿼리 파라미터로 추가
+			setLoading(true); // API 호출 전에 로딩 상태를 true로 설정
 			const query = tagNames.map((tagName) => `styletag=${tagName}`).join('&');
 			const response = await request.get<OOTDAPIResponse>(`/ootd?${query}`);
 			if (response.isSuccess) {
@@ -64,6 +66,8 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 			}
 		} catch (error) {
 			console.error('Error fetching feeds:', error);
+		} finally {
+			setLoading(false); // API 호출 후 로딩 상태를 false로 설정
 		}
 	};
 
@@ -123,7 +127,8 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 					))}
 				</TagRow>
 			</TagContainer>
-			<FeedContainer>
+			{loading && <OOTDLoading><Loading /></OOTDLoading>}
+			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
 						<Feed
