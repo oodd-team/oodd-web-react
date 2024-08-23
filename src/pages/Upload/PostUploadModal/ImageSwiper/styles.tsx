@@ -6,18 +6,18 @@ export const SwiperContainer = styled.div`
 	//justify-content: center;
 	min-height: 23.75rem;
 
-	.swiper {
+	.upload-swiper {
 		height: 23.75rem;
 		width: 100%;
 		position: relative;
 	}
 
-	.swiper-wrapper {
+	.upload-swiper .swiper-wrapper {
 		display: flex;
 		align-items: center;
 	}
 
-	.swiper-slide {
+	.upload-swiper .swiper-slide {
 		width: 15.4375rem;
 		height: 20.5625rem;
 		object-fit: cover;
@@ -25,12 +25,12 @@ export const SwiperContainer = styled.div`
 		transform: scale(0.95);
 	}
 
-	.swiper-slide.swiper-slide-active {
+	.upload-swiper .swiper-slide-active {
 		transform: scale(1);
 	}
 
-	.swiper-slide.swiper-slide-next,
-	.parentSwiper.swiper-slide-prev {
+	.upload-swiper .swiper-slide-next,
+	.upload-swiper .swiper-slide-prev {
 		transform: scale(0.95);
 	}
 `;
