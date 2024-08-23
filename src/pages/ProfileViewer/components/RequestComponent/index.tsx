@@ -29,8 +29,24 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
         setInputValue(textarea.value);
     };
 
+    const checkPostCount = (): number => {
+        const userDetails = localStorage.getItem(`userDetails_${userId}`);
+        if (userDetails) {
+            const parsedDetails = JSON.parse(userDetails);
+            return parsedDetails.postsCount || 0;
+        }
+        return 0;
+    };
+
     const handleMsgIconClick = async () => {
         if (inputValue.trim() === "") {
+            return;
+        }
+        const postsCount = checkPostCount();
+
+        if (postsCount === 0) {
+            // 포스트가 없는 경우 모달 띄우기
+            handleOpenModal('게시물을 등록 후 \n친구 요청을 보낼 수 있어요!');
             return;
         }
     

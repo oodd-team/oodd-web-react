@@ -61,43 +61,66 @@ export const mainMenuItems = (
     ];
 };
 
-export const reportMenuItems = (handleDirectInput: () => void)=> [
+export const reportMenuItems = (
+    handleDirectInput: () => void,
+    Report: (text: string) => void,
+) => [
     {
         text: "불법정보",
-        action: () => console.log("Report 1"),
+        action: () => {
+            console.log("Report 1");
+            Report('불법정보');
+        },
         icon: ReportIcon
     },
     {
         text: "욕설/인신공격",
-        action: () => console.log("Report 2"),
+        action: () => {
+            console.log("Report 2");
+            Report('욕설/인신공격');
+        },
         icon: ReportIcon
     },
     {
         text: "음란성/선정성",
-        action: () => console.log("Report 3"),
+        action: () => {
+            console.log("Report 3");
+            Report('음란성/선정성');
+        },
         icon: ReportIcon
     },
     {
         text: "영리목적/홍보성",
-        action: () => console.log("Report 1"),
+        action: () => {
+            console.log("Report 4");
+            Report('영리목적/홍보성');
+        },
         icon: ReportIcon
     },
     {
         text: "개인정보노출",
-        action: () => console.log("Report 2"),
+        action: () => {
+            console.log("Report 5");
+            Report('개인정보노출');
+        },
         icon: ReportIcon
     },
     {
         text: "같은 내용의 반복 게시(도배)",
-        action: () => console.log("Report 3"),
+        action: () => {
+            console.log("Report 6");
+            Report('같은 내용의 반복 게시(도배)');
+        },
         icon: ReportIcon
     },
     {
         text: "직접입력",
         action: () => {
-            handleDirectInput()
+            handleDirectInput();
+            // 직접 입력 처리 후 Report 호출이 필요할 수 있음
         },
         icon: ReportIcon
     }
 ];
+
 
