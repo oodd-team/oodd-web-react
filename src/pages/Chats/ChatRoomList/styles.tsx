@@ -9,6 +9,14 @@ export const ChatRoomListLayout = styled.div`
 	cursor: pointer;
 `;
 
+export const ChatRoomUsername = styled.div`
+	font-family: 'Gmarket Sans';
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+`;
+
 export const UserImage = styled.img`
 	width: 3rem;
 	height: 3rem;
