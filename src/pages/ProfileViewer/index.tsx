@@ -21,6 +21,7 @@ import request from "../../apis/core";
 import { PostListDto } from "./ResponseDto/PostListDto";
 import { BlockDto } from "./ResponseDto/BlockDto";
 import Modal from '../../components/Modal'; // Modal 컴포넌트 임포트
+import Loading from "../../components/Loading";
 
 const ProfileViewer: React.FC = () => {
     const { userId } = useParams<{ userId: string }>(); 
@@ -31,6 +32,7 @@ const ProfileViewer: React.FC = () => {
     const [confirmAction, setConfirmAction] = useState<() => void>(() => () => {});
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 추가
+    const [modalContent, setModalContent] = useState<string>('');
 
     const token = localStorage.getItem('jwt_token');
     const myid = localStorage.getItem('id');
@@ -38,20 +40,19 @@ const ProfileViewer: React.FC = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await request.get<UserInfoDto>(`/users/${userId}`, {});
+                const response = await request.get<UserInfoDto>(`/users/${userId}`);
                 console.log('사용자 정보 조회: ', response);
-    
+
                 const postsResponse = await request.get<PostListDto>(`posts?userId=${userId}`, {});
                 console.log('게시물 리스트 조회:', postsResponse);
                 const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
                 const combinedData : UserInfoProps = {
-                    ...response, 
+                    ...response.result,
                     status: storedUserDetails.status || 'blank',
                     posts: postsResponse.result.posts,
                     likesCount: postsResponse.result.totalLikes,
                     postsCount: postsResponse.result.totalPosts,
                     isInterested: storedUserDetails.isInterested || false, 
-                    isFriend: storedUserDetails.isFriend || false,
                     userImg: storedUserDetails.profilePictureUrl
                 };
     
@@ -80,7 +81,7 @@ const ProfileViewer: React.FC = () => {
     }, [userDetails, userId]);
     
     if (!userDetails) {
-        return <div>Loading...</div>;
+        return <Loading/>;
     }
 
     const posts = userDetails.posts || []; 
@@ -99,6 +100,10 @@ const ProfileViewer: React.FC = () => {
         setIsBottomSheetOpen(false);
         setActiveBottomSheet(null);
     };
+    const handleOpenModal = (message: string) => {
+        setModalContent(message);
+        setIsModalOpen(true);
+    };
 
     const handleOpenConfirmationModal = () => {
         if (!isBlockingAllowed) {
@@ -111,7 +116,7 @@ const ProfileViewer: React.FC = () => {
             try {
                 console.log(myid, userId);
                 const response = await request.post<BlockDto>(`/block`, {
-                    'userId': myid,
+                    'userId': Number(myid),
                     'friendId': Number(userId),
                     'action': 'toggle'
                 });
@@ -128,6 +133,11 @@ const ProfileViewer: React.FC = () => {
             }
             handleCloseConfirmationModal();
             setIsModalOpen(true); // 차단/해제 후 모달 열기
+            setModalContent(
+                userDetails.status === 'blocked' 
+                    ? `${userDetails.nickname}님을 차단 해제했어요` 
+                    : `${userDetails.nickname}님을 차단했어요.`
+            );
         });
         setIsBottomSheetOpen(false);
     };
@@ -148,6 +158,22 @@ const ProfileViewer: React.FC = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false); // Modal 닫기
     };
+
+    const Report = async ( text: string ) => {
+        try {
+            await request.patch(`/user-report`, {
+                fromUserId: Number.parseInt(myid as string),
+                toUserId: Number.parseInt(userId as string),
+                reason: text
+            });
+            setIsModalOpen(true);
+        setModalContent(`${userDetails.nickname}님을 \n'${text}' 사유로 신고했어요.`);
+        setIsBottomSheetOpen(false);
+        } catch (error) {
+            console.error('Failed to fetch user details', error);
+        }
+    };
+
 
     return (
         <OODDFrame>
@@ -200,11 +226,12 @@ const ProfileViewer: React.FC = () => {
                     onCloseBottomSheet={handleCloseBottomSheet}
                     Component={() => (
                         <>
-                            <BottomSheetMenu items={reportMenuItems(handleDirectInput)} marginBottom="1rem" />
+                            <BottomSheetMenu items={reportMenuItems(handleDirectInput, Report)} marginBottom="1rem" />
                             {isInputVisible && (
                                 <ReportText 
                                     onCloseBottomSheet={handleCloseBottomSheet} 
                                     setIsInputVisible={setIsInputVisible}
+                                    handleOpenModal={handleOpenModal}
                                 />
                             )}
                         </>
@@ -221,7 +248,7 @@ const ProfileViewer: React.FC = () => {
                 )}
                 {isModalOpen && ( 
                     <Modal 
-                        content={userDetails.status === 'blocked' ? `${userDetails.nickname}님을 차단했어요` : `${userDetails.nickname}님을 차단 해제했어요.`}
+                        content={modalContent}
                         onClose={handleCloseModal} 
                     />
                 )}

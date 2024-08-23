@@ -6,8 +6,6 @@ export const ProfileViewerContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: auto;
-    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); // 구분용 10px
     position: relative;
 `;
 

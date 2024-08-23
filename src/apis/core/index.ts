@@ -46,11 +46,8 @@ export const request: CustomInstance = axios.create({
 
 request.interceptors.request.use(
 	(config) => {
-		const jwt = localStorage.getItem(JWT_KEY);
-		console.log(jwt);
-		if (jwt) {
-			config.headers.Authorization = `Bearer ${jwt}`;
-		}
+		const jwt = window.localStorage.getItem(JWT_KEY);
+		config.headers.Authorization = `Bearer ${jwt}`;
 		return config;
 	},
 	(error) => {

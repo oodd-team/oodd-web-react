@@ -26,7 +26,7 @@ const Login: React.FC = () => {
                 </WelcomeWrapper>
                 <Naver/>
                 <Kakao/>
-                <Google disabled/>
+                <Google/>
                 <Service>
                     <StyledText $textTheme={{ style: 'body4-regular', lineHeight: 1.2 }} color={theme.colors.gray4}>
                         서비스 약관 확인{' >'}

@@ -37,7 +37,3 @@ export const TextWrapper = styled.div<{ $left?: string;}>`
 
 
 
-
-
-
-

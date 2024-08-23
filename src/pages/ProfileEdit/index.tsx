@@ -12,6 +12,7 @@ import { BaseResponse } from '../MyPost/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
+import Loading from '../../components/Loading';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -82,7 +83,7 @@ const ProfileEdit: React.FC = () => {
 	};
 
 	if (!userProfile) {
-		return <div>Loading...</div>; // 또는 로딩 스피너 등을 사용할 수 있습니다.
+		return <Loading/>; // 또는 로딩 스피너 등을 사용할 수 있습니다.
 	}
 
 	return (
