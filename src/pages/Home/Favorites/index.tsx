@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { FavoritesContainer, FavoritesMent, FeedContainer, UserContainer, UserRow } from './styles';
+import {
+	FavoritesContainer,
+	FavoritesMent,
+	FeedContainer,
+	UserContainer,
+	UserRow,
+	NoFavoriteContainer,
+} from './styles';
 import Feed from './Feed';
 import { FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from './dto';
 import User from './User';
@@ -9,38 +16,29 @@ import Loading from '../../../components/Loading';
 import request, { BaseResponse } from '../../../apis/core';
 
 const Favorites: React.FC = () => {
-	const [selectedUser, setSelectedUser] = useState<number | null>(null); // 초기값을 null로 설정
+	const [selectedUser, setSelectedUser] = useState<number | null>(null);
 	const [users, setUsers] = useState<UserProps[]>([]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
 	const [isUserLoading, setIsUserLoading] = useState(false);
 	const [isFeedLoading, setIsFeedLoading] = useState(false);
 
-	// 로그인된 사용자 ID를 가져오는 함수 (예를 들어, 세션이나 쿠키에서 가져옴)
-	const getCurrentUserId = () => {
-		return 18; // 예를 들어 로그인한 사용자 ID가 12인 경우
-	};
-
 	// 즐겨찾기 친구 목록을 서버에서 가져오는 함수
-	const fetchUserInterests = async () => {
+	const fetchFavoriteUsers = async () => {
 		setIsUserLoading(true);
 		try {
-			const currentUserId = getCurrentUserId();
-
 			// 매칭 요청한 친구 목록 요청
 			const requestedResponse: BaseResponse = await request.get('/user-relationships/requested');
 			let requestedUserData: UserProps[] = [];
 
 			if (requestedResponse.isSuccess) {
-				requestedUserData = requestedResponse.result
-					.filter((relationship: any) => relationship.requester.id === currentUserId) // 현재 사용자가 요청자일 경우 필터링
-					.map((relationship: any) => {
-						const target = relationship.target;
-						return {
-							userId: target.id,
-							userImgUrl: target.profilePictureUrl,
-							userName: target.nickname || target.name,
-						};
-					});
+				requestedUserData = requestedResponse.result.map((relationship: any) => {
+					const target = relationship.target;
+					return {
+						userId: target.id,
+						userImgUrl: target.profilePictureUrl,
+						userName: target.nickname || target.name,
+					};
+				});
 				console.log('Requested User Data: ', requestedResponse);
 			} else {
 				console.error('Failed to fetch requested users');
@@ -100,8 +98,15 @@ const Favorites: React.FC = () => {
 
 	// 관심 친구 목록을 가져오는 effect
 	useEffect(() => {
-		fetchUserInterests();
+		fetchFavoriteUsers();
 	}, []);
+
+	// users가 업데이트될 때, 첫 번째 사용자를 selectedUser로 설정
+	useEffect(() => {
+		if (users.length > 0) {
+			setSelectedUser(users[0].userId);
+		}
+	}, [users]);
 
 	// 특정 친구를 클릭했을 때 해당 유저의 게시물을 가져오는 effect
 	useEffect(() => {
@@ -125,7 +130,7 @@ const Favorites: React.FC = () => {
 			<UserContainer>
 				{isUserLoading ? (
 					<Loading />
-				) : (
+				) : users.length !== 0 ? (
 					<UserRow>
 						{users.map((user) => (
 							<User
@@ -136,6 +141,18 @@ const Favorites: React.FC = () => {
 							/>
 						))}
 					</UserRow>
+				) : (
+					<NoFavoriteContainer>
+						<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.black}>
+							즐겨찾기 친구가 없습니다
+						</StyledText>
+						<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.black}>
+							친구 신청 또는
+						</StyledText>
+						<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.black}>
+							관심 친구 등록을 해보세요 !
+						</StyledText>
+					</NoFavoriteContainer>
 				)}
 			</UserContainer>
 			<FeedContainer>

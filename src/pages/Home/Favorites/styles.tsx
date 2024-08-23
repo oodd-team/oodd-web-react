@@ -51,3 +51,13 @@ export const FeedContainer = styled.div`
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 0.25rem;
 `;
+
+//
+export const NoFavoriteContainer = styled.div`
+	width: 100%;
+	height: 20rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+`;
