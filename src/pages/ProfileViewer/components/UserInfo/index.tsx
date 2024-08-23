@@ -18,7 +18,6 @@ import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
 import { ChatRoomDto, Opponent } from "../../../Chats/RecentChat/dto";
 import { useNavigate } from "react-router-dom";
 
-
 const UserInfo: React.FC = React.memo(() => {
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
@@ -35,28 +34,33 @@ const UserInfo: React.FC = React.memo(() => {
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
     const userId = localStorage.getItem('id');
 
-    // 사용자 정보 조회 및 상태 업데이트 함수
+    useEffect(() => {
+        const storedUserDetails = localStorage.getItem(`userDetails_${id}`);
+        if (storedUserDetails) {
+            const parsedDetails = JSON.parse(storedUserDetails);
+            setInterested(parsedDetails.isInterested);
+        }
+    }, [id]);
+
     const fetchUserInfo = async () => {
         try {
             const response = await request.get<UserInfoDto>(`/users/${id}`);
-            console.log("??",response);
-            const updatedUserDetails: UserInfoProps = {
-                ...userDetails,
-                isInterested: interested, // 현재 상태 유지
-            };
-            console.log("hey",userDetails);
             setFriend(response.result.isFriend);
-            setUserDetails(updatedUserDetails);
-            setInterested(interested); // 현재 상태 유지
         } catch (error) {
             console.error('사용자 정보 조회 오류:', error);
         }
     };
 
-    // 컴포넌트가 마운트되거나 userDetails가 변경될 때 사용자 정보를 조회
     useEffect(() => {
         fetchUserInfo();
     }, [id]);
+
+    useEffect(() => {
+        if (userDetails) {
+            const updatedUserDetails = { ...userDetails, isInterested: interested };
+            localStorage.setItem(`userDetails_${userDetails.id}`, JSON.stringify(updatedUserDetails));
+        }
+    }, [userDetails, interested]);
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
@@ -77,7 +81,6 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleMessageClick = async () => {
         try {
-            // 사용자 정보 조회
             const response = await request.get<UserInfoDto>(`/users/${id}`);
             const User: Opponent = {
                 id: response.result.id,
@@ -86,34 +89,26 @@ const UserInfo: React.FC = React.memo(() => {
                 name: response.result.name
             };
 
-            console.log(User);
-
-            // 본인이 참여하고 있는 채팅 리스트 조회
             const chatRoomResponse = await request.get<{ isSuccess: boolean, code: number, message: string, result: ChatRoomDto[] }>(`/chat-rooms/${userId}`);
 
             let roomId: number | null = null;
 
-            console.log(chatRoomResponse); // chatRoomResponse가 무엇인지 확인하기 위해 로그 출력
-
-            // chatRoomResponse.result 배열에서 User.id와 일치하는 채팅방 찾기
             if (Array.isArray(chatRoomResponse.result)) {
                 chatRoomResponse.result.forEach(room => {
                     if (room.opponent.id === User.id) {
-                        roomId = room.id; // 일치하는 채팅방 ID 설정
+                        roomId = room.id;
                     }
                 });
             } else {
                 console.error("chatRoomResponse.result is not an array:", chatRoomResponse.result);
             }
+
             if (roomId !== null) {
-                // 채팅방이 존재하면 해당 채팅방으로 이동
                 nav(`/chats/${roomId}`);
             } else {
-                // 채팅방이 존재하지 않을 경우 처리
                 console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
             }
 
-            // 상대방 정보 업데이트
             setOpponentInfo(User);
 
         } catch (error) {
@@ -130,16 +125,22 @@ const UserInfo: React.FC = React.memo(() => {
             });
 
             const isInterested = response.result.status === 'activated';
+
             const updatedUserDetails: UserInfoProps = {
                 ...userDetails,
                 isInterested,
             };
 
             localStorage.setItem(`userDetails_${id}`, JSON.stringify(updatedUserDetails));
+
             setUserDetails(updatedUserDetails);
             setInterested(isInterested);
 
-            handleOpenModal(isInterested ? `${userDetails.nickname}님을 관심 친구로 등록했습니다!` : '관심 친구 등록이 해제되었습니다.');
+            handleOpenModal(isInterested 
+                ? `${userDetails.nickname}님을\n관심 친구로 등록했습니다!` 
+                : '관심 친구 등록이 해제되었습니다.'
+            );
+
         } catch (error) {
             console.error('관심 친구 등록 오류:', error);
             alert('관심 친구 등록에 실패했습니다.');

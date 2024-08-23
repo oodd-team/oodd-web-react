@@ -51,17 +51,17 @@ const RequestComponent: React.FC<RequestComponentProps> = ({ userId, nickname, s
             setInputValue('');
     
             // 친구 신청 성공 시 모달 띄우기
-            handleOpenModal(`${nickname}님에게 대표 OOTD와 한 줄 메세지를 보냈어요!`);
+            handleOpenModal(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
     
         } catch (error: any) {
             console.error('친구 신청 오류:', error);
     
             if (error.response?.data?.message === "이미 요청한 관계입니다.") {
-                setFriend(true);
+                setFriend(false);
                 setIsBottomSheetOpen(false);
                 handleOpenModal('이미 친구 신청을 보냈습니다!');
             } else {
-                handleOpenModal('친구 신청에 실패했습니다. 다시 시도해 주세요.');
+                handleOpenModal('친구 신청에 실패했습니다.\n다시 시도해 주세요.');
             }
         }
     };
