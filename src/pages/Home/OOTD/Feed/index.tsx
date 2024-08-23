@@ -26,6 +26,7 @@ import starBtn from '../../../../assets/Home/button_star.svg';
 import clickedStar from '../../../../assets/Home/clicked_bigstar.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
+import request from '../../../../apis/core'; // request 인스턴스 임포트
 
 interface Props {
 	feed: FeedProps;
@@ -38,6 +39,8 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
 
+	const myid = localStorage.getItem('id');
+
 	const handleHeartClick = () => {
 		setIsHeartClicked((prev) => !prev);
 	};
@@ -47,8 +50,25 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	};
 
 	const handleCommentClick = () => {
-		// Post 페이지로 이동하면서 isCommentModalOpen 값을 true로 전달
 		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
+	};
+
+	const handleBlockUser = async () => {
+		try {
+			const response = await request.post<{ message: string }>('/block', {
+				userId: myid,
+				friendId: feed.userId,
+				action: 'toggle',
+			});
+			if (response.message === 'OK') {
+				// 요청이 성공하면 피드를 제거합니다.
+				onRemove();
+			} else {
+				console.error('Failed to block user:', response.message);
+			}
+		} catch (error) {
+			console.error('Error blocking user:', error);
+		}
 	};
 
 	return (
@@ -90,7 +110,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<Btn onClick={onRemove}>
+						<Btn onClick={handleBlockUser}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
 						{!isHeartClicked && (
