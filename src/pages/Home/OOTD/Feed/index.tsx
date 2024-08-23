@@ -39,14 +39,29 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
 
-	const myid = localStorage.getItem('id');
-
 	const handleHeartClick = () => {
 		setIsHeartClicked((prev) => !prev);
 	};
 
-	const handleStarClick = () => {
+	const handleStarClick = async () => {
+		// 별을 즉시 토글하여 UI를 업데이트합니다.
 		setIsStarClicked((prev) => !prev);
+
+		try {
+			const response = await request.patch<{ isSuccess: boolean; message: string; result: any }>('/user-interests', {
+				friendId: feed.userId,
+			});
+
+			if (!response.isSuccess) {
+				// 요청이 실패하면 원래 상태로 복구합니다.
+				setIsStarClicked((prev) => !prev);
+				console.error('Failed to toggle interest:', response.message);
+			}
+		} catch (error) {
+			// 요청이 실패하면 원래 상태로 복구합니다.
+			setIsStarClicked((prev) => !prev);
+			console.error('Error toggling interest:', error);
+		}
 	};
 
 	const handleCommentClick = () => {
@@ -56,12 +71,11 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	const handleBlockUser = async () => {
 		try {
 			const response = await request.post<{ message: string }>('/block', {
-				userId: myid,
+				userId: localStorage.getItem('id'),
 				friendId: feed.userId,
 				action: 'toggle',
 			});
 			if (response.message === 'OK') {
-				// 요청이 성공하면 피드를 제거합니다.
 				onRemove();
 			} else {
 				console.error('Failed to block user:', response.message);
@@ -76,7 +90,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 			<FeedTop>
 				<Info onClick={() => nav(`/users/${feed.userId}`)}>
 					<FeedProfileImgWrapper>
-						<img src={feed.profileUrl} alt="tag" />
+						<img src={feed.profileUrl} alt="profile" />
 					</FeedProfileImgWrapper>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.black}>
 						{feed.userName}
