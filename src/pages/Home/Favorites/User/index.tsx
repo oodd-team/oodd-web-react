@@ -11,8 +11,8 @@ interface Props {
 
 const User: React.FC<Props> = ({ user, isSelected, onClick }) => {
 	return (
-		<UserWrapper isSelected={isSelected} onClick={onClick}>
-			<UserImgBorder isSelected={isSelected}>
+		<UserWrapper $isSelected={isSelected} onClick={onClick}>
+			<UserImgBorder $isSelected={isSelected}>
 				<UserImgWrapper>
 					<img src={user.userImgUrl} alt="user" />
 				</UserImgWrapper>

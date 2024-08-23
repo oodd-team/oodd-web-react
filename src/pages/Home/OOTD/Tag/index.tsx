@@ -12,7 +12,7 @@ interface Props {
 
 const Tag: React.FC<Props> = ({ tag, isSelected, onClick }) => {
 	return (
-		<TagWrapper isSelected={isSelected} onClick={onClick}>
+		<TagWrapper $isSelected={isSelected} onClick={onClick}>
 			<TagImgWrapper>
 				<img src={tag.tagImgUrl} alt="tag" />
 			</TagImgWrapper>
