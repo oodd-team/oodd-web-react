@@ -160,7 +160,6 @@ const Home: React.FC = () => {
 			try {
 				const response = await request.get<UserResponse>(`/users/${userId}`);
 				if (!response || !response.result.id) {
-
 					console.log(response);
 					navigate('/login');
 				}
