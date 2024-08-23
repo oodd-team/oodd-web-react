@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Mypage from './pages/Mypage';
-import PostDetail from './pages/PostDetail';
+import MyPost from './pages/MyPost';
 import ProfileEdit from './pages/ProfileEdit';
 import AccountSetting from './pages/AccountSetting';
 import AccountEdit from './pages/AccountEdit';
@@ -24,8 +24,8 @@ const App: React.FC = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/chats/:roomId" element={<ChatRoom />} />
-				<Route path="/Mypage" element={<Mypage />} />
-				<Route path="/my-post/:postId" element={<PostDetail />} />
+				<Route path="/mypage" element={<Mypage />} />
+				<Route path="/my-post/:postId" element={<MyPost />} />
 				<Route path="/profile/edit" element={<ProfileEdit />} />
 				<Route path="/account-setting" element={<AccountSetting />} />
 
