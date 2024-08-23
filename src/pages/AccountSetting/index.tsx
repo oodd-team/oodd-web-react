@@ -15,6 +15,7 @@ import back from '../../assets/back.svg';
 import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
 import imageBasic from '../../assets/imageBasic.svg';
+import Loading from '../../components/Loading';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -68,7 +69,7 @@ const AccountSetting: React.FC = () => {
 	};
 
 	if (!userProfile) {
-		return <div>Loading...</div>; // 로딩 상태
+		return <Loading/>; // 로딩 상태
 	}
 
 	return (

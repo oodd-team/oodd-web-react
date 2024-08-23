@@ -8,10 +8,10 @@ import naver from '../../../../assets/Login/naver.png';
 const Naver: React.FC = () => {
     const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;// 네이버 개발자 센터에서 받은 클라이언트 ID
     const redirectUri = encodeURIComponent(import.meta.env.VITE_DEV_DOMAIN ? import.meta.env.VITE_DEV_DOMAIN + '/auth/naver/callback' : 'http://localhost:3000/auth/naver/callback');
-    const state = 'random_state_string'; // CSRF 공격 방지를 위한 랜덤 문자열
+    //const state = 'random_state_string'; // CSRF 공격 방지를 위한 랜덤 문자열
     
     const handleLogin = () => {
-        window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+        window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE_TOKEN`;
     };
 
     return (

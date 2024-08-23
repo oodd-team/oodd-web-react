@@ -117,12 +117,19 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
 			return image; // 이미 업로드된 경우, URL을 그대로 반환
 		}
-
+		console.log(1);
 		// 새로 업로드해야 하는 경우
 		const response = await fetch(image);
 		const blob = await response.blob();
+		console.log(2);
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
-		await uploadBytes(storageRef, blob);
+		console.log(3);
+		await uploadBytes(storageRef, blob).then(()=>{
+			console.log("success")
+		}).catch((error)=>{
+			console.log(JSON.stringify(error))
+		});
+		console.log(4);
 		return getDownloadURL(storageRef);
 	};
 
