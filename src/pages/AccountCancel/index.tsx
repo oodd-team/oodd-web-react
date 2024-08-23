@@ -85,7 +85,12 @@ const AccountCancel: React.FC = () => {
 				</SubTitle>
 				<Text as="div">
 					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-						탈퇴하시면 이용 중인 서비스가 폐쇄되며, 모든 데이터는 복구할 수 없습니다.
+						탈퇴하시면 이용 중인 서비스가 폐쇄되며,
+					</StyledText>
+				</Text>
+				<Text as="div">
+					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
+						모든 데이터는 복구할 수 없습니다.
 					</StyledText>
 				</Text>
 				<InfoBox>
