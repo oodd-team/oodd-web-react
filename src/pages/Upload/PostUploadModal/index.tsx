@@ -1,5 +1,5 @@
 //PostUploadModal/index.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -37,12 +37,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	initialContent = '',
 	initialClothingInfos = [],
 	initialStyletag = null,
+	initialRepresentative = false,
 	postId = null,
 }) => {
 	const [content, setContent] = useState<string>(initialContent);
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(initialStyletag);
-	const [isOOTD, setIsOOTD] = useState(false);
+	const [isRepresentative, setIsRepresentative] = useState(initialRepresentative);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +62,16 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		{ tag: 'outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
 		{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
 	];
+
+	// intialStyletag에 color 추가
+	useEffect(() => {
+		if (selectedStyletag && !selectedStyletag.color) {
+			const foundTag = styletags.find((tag) => tag.tag === selectedStyletag.tag);
+			if (foundTag) {
+				setSelectedStyletag({ ...selectedStyletag, color: foundTag.color });
+			}
+		}
+	}, [selectedStyletag]);
 
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
@@ -98,7 +109,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	const handleToggleOOTD = () => {
-		setIsOOTD(!isOOTD);
+		setIsRepresentative(!isRepresentative);
 	};
 
 	const uploadImageToFirebase = async (image: string) => {
@@ -131,7 +142,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 				content,
 				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
 				clothingInfo: clothingInfos,
-				isRepresentive: isOOTD,
+				isRepresentive: isRepresentative,
 			};
 
 			let response;
@@ -222,7 +233,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 					<img src={pin} />
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 					<div>
-						<ToggleSwitch checked={isOOTD} onChange={handleToggleOOTD} />
+						<ToggleSwitch checked={isRepresentative} onChange={handleToggleOOTD} />
 					</div>
 				</PinnedPostToggleContainer>
 			</Content>
