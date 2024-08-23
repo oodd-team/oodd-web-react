@@ -6,6 +6,7 @@ import HomeTopBar from './HomeTopBar';
 import NavBar from '../../components/NavBar';
 import { HomeContainer } from './styles';
 import request, { BaseResponse } from '../../apis/core';
+
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
