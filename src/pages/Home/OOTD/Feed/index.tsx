@@ -26,6 +26,7 @@ import starBtn from '../../../../assets/Home/button_star.svg';
 import clickedStar from '../../../../assets/Home/clicked_bigstar.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
+import request from '../../../../apis/core'; // request 인스턴스 임포트
 
 interface Props {
 	feed: FeedProps;
@@ -42,21 +43,54 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 		setIsHeartClicked((prev) => !prev);
 	};
 
-	const handleStarClick = () => {
+	const handleStarClick = async () => {
+		// 별을 즉시 토글하여 UI를 업데이트합니다.
 		setIsStarClicked((prev) => !prev);
+
+		try {
+			const response = await request.patch<{ isSuccess: boolean; message: string; result: any }>('/user-interests', {
+				friendId: feed.userId,
+			});
+
+			if (!response.isSuccess) {
+				// 요청이 실패하면 원래 상태로 복구합니다.
+				setIsStarClicked((prev) => !prev);
+				console.error('Failed to toggle interest:', response.message);
+			}
+		} catch (error) {
+			// 요청이 실패하면 원래 상태로 복구합니다.
+			setIsStarClicked((prev) => !prev);
+			console.error('Error toggling interest:', error);
+		}
 	};
 
 	const handleCommentClick = () => {
-		// Post 페이지로 이동하면서 isCommentModalOpen 값을 true로 전달
-		nav('/post', { state: { isCommentModalOpen: true } });
+		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
+	};
+
+	const handleBlockUser = async () => {
+		try {
+			const response = await request.post<{ message: string }>('/block', {
+				userId: localStorage.getItem('id'),
+				friendId: feed.userId,
+				action: 'toggle',
+			});
+			if (response.message === 'OK') {
+				onRemove();
+			} else {
+				console.error('Failed to block user:', response.message);
+			}
+		} catch (error) {
+			console.error('Error blocking user:', error);
+		}
 	};
 
 	return (
 		<FeedWrapper>
 			<FeedTop>
-				<Info onClick={() => nav('/users/:userId')}>
+				<Info onClick={() => nav(`/users/${feed.userId}`)}>
 					<FeedProfileImgWrapper>
-						<img src={feed.profileUrl} alt="tag" />
+						<img src={feed.profileUrl} alt="profile" />
 					</FeedProfileImgWrapper>
 					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.black}>
 						{feed.userName}
@@ -64,7 +98,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Info>
 				<img src={more} style={{ cursor: 'pointer' }} onClick={onMoreClick} />
 			</FeedTop>
-			<FeedText onClick={() => nav('/post')}>
+			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
 				<StyledText
 					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
 					color={theme.colors.black}
@@ -90,7 +124,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<Btn onClick={onRemove}>
+						<Btn onClick={handleBlockUser}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
 						{!isHeartClicked && (
@@ -107,7 +141,11 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 							</Btn>
 						)}
 						{isStarClicked && (
-							<img src={clickedStar} onClick={handleStarClick} style={{ width: '3.75rem', height: '3.75rem' }} />
+							<img
+								src={clickedStar}
+								onClick={handleStarClick}
+								style={{ width: '3.75rem', height: '3.75rem', cursor: 'pointer' }}
+							/>
 						)}
 					</Reaction>
 
