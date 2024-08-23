@@ -1,7 +1,7 @@
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { RcvdMessageProps } from '../../dto';
-import { FirstMessageLayout, UserImage, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
+import { FirstMessageLayout, UserImage, UsernameText, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
 const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> = ({
 	fromUserName,
@@ -20,14 +20,9 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> =
 				<FirstMessageLayout>
 					<UserImage onClick={onClickProfile} src={profilePictureUrl} alt="프로필 사진" />
 					<MessageBox>
-						<StyledText
-							onClick={onClickProfile}
-							style={{ cursor: 'pointer' }}
-							$textTheme={{ style: 'body5-medium', lineHeight: 1 }}
-							color={theme.colors.black}
-						>
+						<UsernameText onClick={onClickProfile} style={{ cursor: 'pointer' }} color={theme.colors.black}>
 							{fromUserName}
-						</StyledText>
+						</UsernameText>
 						<Message>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.1 }} color={theme.colors.black}>
 								{content}

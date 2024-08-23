@@ -1,5 +1,5 @@
 import { StyledText } from '../../../components/Text/StyledText';
-import { UserImage, ChatRoomListLayout, LeftBox, RightBox } from './styles';
+import { UserImage, ChatRoomListLayout, LeftBox, RightBox, ChatRoomUsername } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
@@ -64,9 +64,9 @@ const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 		<ChatRoomListLayout onClick={onClickChatRoom}>
 			<UserImage src={opponent.profilePictureUrl || ProfileImg} alt="user" />
 			<LeftBox>
-				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
+				<ChatRoomUsername color={theme.colors.black}>
 					{opponent.nickname || opponent.name || '알수없음'}
-				</StyledText>
+				</ChatRoomUsername>
 				<StyledText
 					style={{
 						width: 'auto',

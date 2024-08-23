@@ -19,6 +19,14 @@ export const UserImage = styled.img`
 	cursor: pointer;
 `;
 
+export const UsernameText = styled.div`
+	font-family: 'Gmarket Sans';
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+`;
+
 export const MessageBox = styled.div`
 	display: flex;
 	flex-direction: column;
