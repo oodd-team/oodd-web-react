@@ -199,7 +199,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 							</>
 						) : (
 							<StyletagItem selected={false} color={selectedStyletag?.color}>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedStyletag?.tag}</StyledText>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
 							</StyletagItem>
 						)}
 					</div>
