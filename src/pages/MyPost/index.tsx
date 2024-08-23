@@ -49,6 +49,7 @@ import commentIcon from './assets/commentIcon.svg';
 import request from '../../apis/core';
 import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
+import Loading from '../../components/Loading';
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
@@ -61,6 +62,7 @@ const MyPost: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const [user, setUser] = useState<UserResponse | null>(null);
+	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
 	// 좋아요 리스트 불러오기
 	const fetchLikes = async () => {
@@ -103,6 +105,8 @@ const MyPost: React.FC = () => {
 			setUser(response.result as UserResponse);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
+		} finally {
+			setIsLoading(false); // 로딩 완료 후 로딩 상태 false로 설정
 		}
 	};
 
@@ -221,6 +225,8 @@ const MyPost: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error fetching post details:', error);
+		} finally {
+			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
@@ -264,6 +270,8 @@ const MyPost: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error pinning post:', error);
+		} finally {
+			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
@@ -294,11 +302,13 @@ const MyPost: React.FC = () => {
 	useEffect(() => {
 		fetchPostDetail();
 	}, [postId]);
-
+	if (isLoading) {
+		return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
+	}
 	return (
 		<OODDFrame>
 			<PostDetailContainer>
-				<TopBar ID={user?.id.toString()} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar ID={user?.nickname || ''} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 
 				<UserInfoContainer>
 					<UserRow>
