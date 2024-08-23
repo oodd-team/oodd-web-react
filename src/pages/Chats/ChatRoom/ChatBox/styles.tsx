@@ -40,5 +40,5 @@ export const SendIcon = styled.img<{ $isOpponentValid: boolean }>`
 	width: 1.5rem;
 	height: 1.5rem;
 	cursor: ${({ $isOpponentValid }) => ($isOpponentValid ? 'pointer' : '')};
-	margin-right: 0.75rem;
+	margin: 0.35rem 0.75rem auto 0rem;
 `;

@@ -65,7 +65,7 @@ const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 			<UserImage src={opponent.profilePictureUrl || ProfileImg} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-					{opponent.name || '알수없음'}
+					{opponent.nickname || opponent.name || '알수없음'}
 				</StyledText>
 				<StyledText
 					style={{
