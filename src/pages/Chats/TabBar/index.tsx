@@ -30,7 +30,19 @@ const TabBar: React.FC = () => {
 	};
 
 	const handleSwiperChange = (swiper: SwiperCore) => {
-		setActiveIndex(swiper.activeIndex);
+		// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
+		if (!hasMatchingRequests && swiper.activeIndex < swiper.previousIndex) {
+			swiper.allowSlidePrev = false;
+		}
+		// 매칭 요청이 없고 0번 index에 있을 때 1번 탭으로 이동
+		else if (!hasMatchingRequests && swiper.activeIndex > swiper.previousIndex) {
+			swiper.slideNext();
+		}
+		// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
+		else {
+			swiper.allowSlidePrev = true;
+			setActiveIndex(swiper.activeIndex);
+		}
 	};
 
 	useEffect(() => {
@@ -86,15 +98,15 @@ const TabBar: React.FC = () => {
 						swiperRef.current = swiper;
 					}}
 					onSlideChange={handleSwiperChange}
+					allowSlidePrev={hasMatchingRequests}
 					spaceBetween={0}
 					slidesPerView={1}
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
-					style={{ height: '100%' }}
 				>
-					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+					<SwiperSlide style={{ height: 'calc(100vh - 5.25rem)' }}>
 						<Request matchingRequests={matchingRequests} />
 					</SwiperSlide>
-					<SwiperSlide style={{ height: 'calc(100vh - 10.75rem)' }}>
+					<SwiperSlide style={{ height: 'calc(100vh - 5.25rem)' }}>
 						<RecentChat swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>

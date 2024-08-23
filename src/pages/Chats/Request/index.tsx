@@ -1,9 +1,11 @@
-// import Card from '../../../components/Cards/Card';
+import Cards from '../../../components/Cards';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
 
 const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) => {
+	const handleRemoveMatching = () => {};
+
 	return (
 		<>
 			<ReqeustInfo>
@@ -11,7 +13,7 @@ const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) =
 					Message {matchingRequests}
 				</StyledText>
 			</ReqeustInfo>
-			{/* <Card></Card> */}
+			<Cards onRemoveMatching={handleRemoveMatching} />
 		</>
 	);
 };
