@@ -13,6 +13,7 @@ import {
 	StatNumber,
 	StatLabel,
 	PostsContainer,
+	AddButton,
 } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
@@ -20,19 +21,70 @@ import NavBar from '../../components/NavBar';
 import ButtonSecondary from './ButtonSecondary';
 import Post from './Post';
 import request, { BaseResponse } from '../../apis/core';
-import ProfileActions from '../Profile';
 import { PostItem, PostsResponse, UserResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
+import BottomSheet from '../../components/BottomSheet';
+import { BottomSheetProps } from '../../components/BottomSheet/dto';
+import BottomSheetMenu from '../../components/BottomSheetMenu';
+import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
+import button_plus from '../../assets/Profile/button_plus.svg';
+import Insta from '../../assets/BottomSheetMenu/Insta.svg';
+import Picture from '../../assets/BottomSheetMenu/Picture.svg';
 
-const Mypage: React.FC = () => {
-	const navigate = useNavigate();
+const MyPage: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
 	const [posts, setPosts] = useState<PostItem[]>([]);
 	const [totalPosts, setTotalPosts] = useState(0);
 	const [totalLikes, setTotalLikes] = useState(0);
 	const [totalComments, setTotalComments] = useState(0); // Comments count
 	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+	const navigate = useNavigate();
+
+	const bottomSheetMenuProps: BottomSheetMenuProps = {
+		items: [
+			{
+				text: '인스타 피드 가져오기',
+				action: () => {
+					setIsBottomSheetOpen(false);
+					handleInstagramSelect();
+				},
+				icon: Insta,
+			},
+			{
+				text: '사진 올리기',
+				action: () => {
+					setIsBottomSheetOpen(false);
+					handlePhotoUploadSelect();
+				},
+				icon: Picture,
+			},
+		],
+		marginBottom: '50px',
+	};
+
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isBottomSheetOpen,
+		isHandlerVisible: true,
+		Component: BottomSheetMenu,
+		componentProps: bottomSheetMenuProps,
+		onCloseBottomSheet: () => {
+			setIsBottomSheetOpen(false);
+		},
+	};
+
+	const handleOpenSheet = () => {
+		setIsBottomSheetOpen(true);
+	};
+
+	const handleInstagramSelect = () => {
+		navigate('/upload', { state: { mode: 'instagram' } });
+	};
+
+	const handlePhotoUploadSelect = () => {
+		navigate('/upload', { state: { mode: 'image' } });
+	};
 
 	const handlePostClick = (postId: string) => {
 		navigate(`/my-post/${postId}`);
@@ -94,6 +146,10 @@ const Mypage: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileContainer>
+				<AddButton onClick={handleOpenSheet}>
+					<img src={button_plus} />
+				</AddButton>
+				<BottomSheet {...bottomSheetProps} />
 				<NavbarProfile />
 				<Header>
 					<AvatarWrapper>
@@ -137,11 +193,10 @@ const Mypage: React.FC = () => {
 							/>
 						))}
 				</PostsContainer>
-				<ProfileActions />
 				<NavBar />
 			</ProfileContainer>
 		</OODDFrame>
 	);
 };
 
-export default Mypage;
+export default MyPage;

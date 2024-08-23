@@ -42,7 +42,7 @@ export const createExtendedMessages = (allMessages: MessageDto[], userId: number
 			return { ...message, isNewDate, sentMessage };
 		} else {
 			const rcvdMessage: RcvdMessageProps = {
-				fromUserName: opponentInfo?.name || '알수없음',
+				fromUserName: opponentInfo?.nickname || opponentInfo?.name || '알수없음',
 				profilePictureUrl: opponentInfo?.profilePictureUrl || ProfileImg,
 				content: message.content,
 				isFirst,

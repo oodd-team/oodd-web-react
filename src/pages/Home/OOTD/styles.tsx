@@ -8,6 +8,10 @@ export const OOTDContainer = styled.div`
 	margin-bottom: 3.25rem;
 `;
 
+export const OOTDLoading = styled.div`
+	margin-top: 200px;
+`;
+
 // Tag
 
 export const TagMent = styled.div`

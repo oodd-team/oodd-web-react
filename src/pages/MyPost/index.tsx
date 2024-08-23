@@ -25,32 +25,32 @@ import {
 	Arrow,
 	Indicator,
 } from './styles';
-import imageBasic from '../../assets/imageBasic.svg';
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
-import mockImage from './mockImage.png';
-import heartIcon from './heartIcon.svg';
-import commentIcon from './commentIcon.svg';
-import nextIcon from '../../assets/Upload/next.svg';
-import back from '../../assets/back.svg';
-
 import ConfirmationModal from '../../components/ConfirmationModal';
-import DeleteIcon from './assets/DeleteIcon.png';
-import EditIcon from './assets/EditIcon.svg';
-import PinIcon from './assets/PinIcon.svg';
-
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
+import theme from '../../styles/theme';
+
+import imageBasic from '../../assets/imageBasic.svg';
+import back from '../../assets/back.svg';
+import nextIcon from '../../assets/Upload/next.svg';
+import DeleteIcon from './assets/DeleteIcon.png';
+import EditIcon from './assets/EditIcon.svg';
+import PinIcon from './assets/PinIcon.svg';
+import mockImage from './assets/mockImage.png';
+import heartIcon from './assets/heartIcon.svg';
+import commentIcon from './assets/commentIcon.svg';
+
 import request from '../../apis/core';
 import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 
-const PostDetail: React.FC = () => {
+const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postDetail, setPostDetail] = useState<PostDetailResponse['result'] | null>(null);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -236,9 +236,8 @@ const PostDetail: React.FC = () => {
 		}
 	};
 
-	//수정페이지!!!!!!!!!!!!!!페이지이름 받으면 수정하기
 	const handleEditPost = () => {
-		navigate(`/edit/${postId}`);
+		navigate('/upload', { state: { mode: 'edit', postId: postId } });
 	};
 
 	const handlePinPost = async () => {
@@ -388,4 +387,4 @@ const PostDetail: React.FC = () => {
 	);
 };
 
-export default PostDetail;
+export default MyPost;

@@ -15,7 +15,7 @@ export const Nav = styled.nav`
 
 	position: sticky;
 	top: 0; /* 페이지의 최상단에 고정 */
-	z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+	z-index: 998; /* 다른 요소 위에 표시되도록 설정 */
 `;
 
 export const IconContainer = styled.div`
