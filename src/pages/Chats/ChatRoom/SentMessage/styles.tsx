@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MessageLayout = styled.div`
 	display: flex;
-	margin: 0 0 0.5rem auto;
+	margin: 0 0 0.25rem auto;
 	justify-content: flex-end;
 `;
 

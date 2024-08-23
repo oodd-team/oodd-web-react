@@ -16,7 +16,7 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> =
 	if (isFirst) {
 		return (
 			<>
-				{isSenderChanged && <div style={{ margin: '0', padding: '0', height: '2.25rem' }} />}
+				{isSenderChanged && <div style={{ margin: '0', padding: '0', height: '1rem' }} />}
 				<FirstMessageLayout>
 					<UserImage onClick={onClickProfile} src={profilePictureUrl} alt="프로필 사진" />
 					<MessageBox>
