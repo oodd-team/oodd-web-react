@@ -3,20 +3,40 @@ import { Textarea, ReportButton, ReportTextLayout } from "./style";
 import { StyledText } from "../../../../components/Text/StyledText";
 import theme from "../../../../styles/theme";
 import {ReportTextProps} from '../../dto';
+import request from "../../../../apis/core";
+import { useParams } from "react-router-dom";
 
-const ReportText: React.FC<ReportTextProps> = ({ onCloseBottomSheet, setIsInputVisible }) => {
+const ReportText: React.FC<ReportTextProps> = ({ onCloseBottomSheet, setIsInputVisible, handleOpenModal }) => {
     const [inputValue, setInputValue] = useState('');
+    const myid = localStorage.getItem('id');
+    const { userId } = useParams<{ userId: string }>(); 
 
+    const userDetail = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(event.target.value);
     };
 
     const handleReportSubmit = () => {
         console.log("Reported with input:", inputValue);
+        Report(inputValue);
         setInputValue("");
         onCloseBottomSheet(); // 바텀 시트 닫기
         setIsInputVisible(false); // 입력창 숨기기
     };
+
+    const Report = async (inputValue: string) => {
+        try {
+            await request.patch(`/user-report`, {
+                fromUserId: Number.parseInt(myid as string),
+                toUserId: Number.parseInt(userId as string),
+                reason: inputValue
+            });
+        handleOpenModal(`${userDetail.nickname}님을 \n'${inputValue}' 사유로 신고했어요.`);
+        } catch (error) {
+            console.error('Failed to fetch user details', error);
+        }
+    };
+
 
     return (
         <ReportTextLayout>

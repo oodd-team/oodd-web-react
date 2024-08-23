@@ -100,6 +100,10 @@ const ProfileViewer: React.FC = () => {
         setIsBottomSheetOpen(false);
         setActiveBottomSheet(null);
     };
+    const handleOpenModal = (message: string) => {
+        setModalContent(message);
+        setIsModalOpen(true);
+    };
 
     const handleOpenConfirmationModal = () => {
         if (!isBlockingAllowed) {
@@ -227,6 +231,7 @@ const ProfileViewer: React.FC = () => {
                                 <ReportText 
                                     onCloseBottomSheet={handleCloseBottomSheet} 
                                     setIsInputVisible={setIsInputVisible}
+                                    handleOpenModal={handleOpenModal}
                                 />
                             )}
                         </>

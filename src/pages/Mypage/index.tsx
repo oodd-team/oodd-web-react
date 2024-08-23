@@ -156,7 +156,7 @@ const MyPage: React.FC = () => {
 						<Avatar src={user?.profilePictureUrl || imageBasic} alt="User Avatar" />
 					</AvatarWrapper>
 					<UserInfo>
-						<Username>{user?.name || '김아무개...'}</Username>
+						<Username>{user?.nickname || '김아무개...'}</Username>
 						<Bio>{user?.bio || '소개글이 없습니다.'}</Bio>
 					</UserInfo>
 				</Header>

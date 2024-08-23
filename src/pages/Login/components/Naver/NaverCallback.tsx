@@ -16,7 +16,7 @@ const NaverCallback: React.FC = () => {
 
         if (code) {
             // 인증 코드를 쿼리스트링으로 백엔드 서버에 전송
-            axios.get(`https://api-dev.oodd.today/auth/login/naver?code=${code}`)
+            axios.get(`https://api-dev.oodd.today/auth/login/naver?code=${code}&state=STATE_TOKEN`)
                 .then(response => {
                     const statusCode = response.status; // 200 OK
                     console.log(JSON.stringify(response.data))
