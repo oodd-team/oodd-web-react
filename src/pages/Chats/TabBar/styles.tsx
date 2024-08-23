@@ -35,7 +35,18 @@ export const TabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boole
 
 export const Tabs = styled.div`
 	width: 100%;
+
 	.swiper-container {
 		height: 100vh - 10.75rem;
+	}
+
+	.swiper-slider {
+		height: calc(100vh - 10.75rem);
+		overflow-y: scroll;
+		padding-bottom: 0.7rem;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 `;
