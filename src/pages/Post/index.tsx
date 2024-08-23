@@ -37,6 +37,12 @@ import ReportTextarea from '../Home/ReportTextarea.tsx';
 import { PostResponse, UserResponse, ClothingInfo } from './dto';
 import request from '../../apis/core';
 
+interface CommentResponse {
+	isSuccess: boolean;
+	message: string;
+	result?: any; // 성공 시 반환되는 데이터가 있다면 여기에 정의할 수 있습니다.
+}
+
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postData, setPostData] = useState<PostResponse['result']>();
@@ -58,7 +64,6 @@ const Post: React.FC = () => {
 		}
 	}, [location.state]);
 
-	// 서버에서 게시물 데이터 가져오기
 	useEffect(() => {
 		const fetchPostData = async () => {
 			try {
@@ -71,7 +76,6 @@ const Post: React.FC = () => {
 				}
 			} catch (error) {
 				console.error('Error fetching post data:', error);
-			} finally {
 			}
 		};
 
@@ -91,6 +95,24 @@ const Post: React.FC = () => {
 
 		fetchPostData();
 	}, [postId]);
+
+	// 코멘트를 보내는 함수
+	const sendComment = async (comment: string) => {
+		try {
+			setIsCommentModalOpen(false);
+			const response = await request.post<CommentResponse>(`/posts/${postId}/comment`, {
+				content: comment,
+			});
+
+			if (response.isSuccess) {
+				console.log('Comment sent successfully');
+			} else {
+				console.error('Failed to send comment:', response.message);
+			}
+		} catch (error) {
+			console.error('Error sending comment:', error);
+		}
+	};
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -160,9 +182,7 @@ const Post: React.FC = () => {
 
 	const commentProps: CommentProps = {
 		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
-		sendComment: (comment: string) => {
-			console.log(`api에 ${comment} 전달`);
-		},
+		sendComment: sendComment, // API 함수 전달
 	};
 
 	const commentSheetProps: BottomSheetProps = {
