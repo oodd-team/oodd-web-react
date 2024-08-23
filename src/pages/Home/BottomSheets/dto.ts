@@ -10,3 +10,10 @@ export interface PostBlockDto {
 	friendName: string;
 	action: 'toggle';
 }
+
+export interface PostReportDto {
+	userId: number;
+	postId: number;
+	userName: string;
+	reason: string;
+}

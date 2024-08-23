@@ -8,7 +8,7 @@ import Matching from './Matching';
 import OOTD from './OOTD';
 import Favorites from './Favorites';
 import { HomeTabBarLayout, HomeTabBarList, HomeTabBarWrapper, TabLayout, Tabs } from './styles';
-import Tooltip from './Tooltip';
+// import Tooltip from './Tooltip';
 import request, { BaseResponse } from '../../apis/core';
 import theme from '../../styles/theme';
 
@@ -23,7 +23,6 @@ interface HomeTabBarProps {
 	onOpenBottomSheet: () => void;
 	onOpenReportSheet: () => void;
 	onOpenCommentModal: () => void;
-	onOpenConfirmationModal: () => void;
 }
 
 const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
@@ -72,7 +71,7 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 
 	return (
 		<TabLayout>
-			<Tooltip cardRef={cardRef} ootdTooltipRef={ootdTooltipRef} activeIndex={activeIndex} />
+			{/* <Tooltip cardRef={cardRef} ootdTooltipRef={ootdTooltipRef} activeIndex={activeIndex} /> */}
 			<HomeTabBarLayout>
 				<HomeTabBarList>
 					{tabs.map((tab, index) => (
