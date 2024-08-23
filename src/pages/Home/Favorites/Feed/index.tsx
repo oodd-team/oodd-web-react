@@ -19,15 +19,21 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	const [hasInterested, setHasInterested] = useState(feed.hasInterested);
 	const nav = useNavigate();
 
+	const currentUserId = 18;
+
 	const handleFeedClick = () => {
 		nav(`/post/${feed.postId}`); // 게시물 ID를 포함한 경로로 이동
 	};
 
 	const handleLikeClick = async () => {
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/${feed.postId}/like`);
+			const response = await request.post<BaseResponse>(`/user-relationships`, {
+				requesterId: currentUserId,
+				targetId: feed.userId,
+				message: '하이',
+			});
 			if (response.isSuccess) {
-				setHasLiked((prev) => !prev); // 현재 상태를 토글
+				setHasLiked((prev) => !prev);
 			} else {
 				console.error('Failed to like the post');
 			}
@@ -38,10 +44,11 @@ const Feed: React.FC<Props> = ({ feed }) => {
 
 	const handleInterestedClick = async () => {
 		try {
-			// 관심 등록 관련 로직을 서버와 통신하도록 추가합니다.
-			const response = await request.patch<BaseResponse>(`/posts/${feed.postId}/interest`);
+			const response = await request.patch<BaseResponse>(`/user-interests`, {
+				friendId: feed.userId, // feed.userId를 friendId로 보냄
+			});
 			if (response.isSuccess) {
-				setHasInterested((prev) => !prev); // 현재 상태를 토글
+				setHasInterested((prev) => !prev);
 			} else {
 				console.error('Failed to update interest status');
 			}

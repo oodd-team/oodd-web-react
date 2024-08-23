@@ -15,41 +15,58 @@ const Favorites: React.FC = () => {
 	const [isUserLoading, setIsUserLoading] = useState(false);
 	const [isFeedLoading, setIsFeedLoading] = useState(false);
 
-	// 관심 친구 목록을 서버에서 가져오는 함수
+	// 로그인된 사용자 ID를 가져오는 함수 (예를 들어, 세션이나 쿠키에서 가져옴)
+	const getCurrentUserId = () => {
+		return 18; // 예를 들어 로그인한 사용자 ID가 12인 경우
+	};
+
+	// 즐겨찾기 친구 목록을 서버에서 가져오는 함수
 	const fetchUserInterests = async () => {
 		setIsUserLoading(true);
 		try {
+			const currentUserId = getCurrentUserId();
+
 			// 매칭 요청한 친구 목록 요청
 			const requestedResponse: BaseResponse = await request.get('/user-relationships/requested');
+			let requestedUserData: UserProps[] = [];
 
-			// 관심 친구 목록 요청
-			const interestsResponse: UserInterestsResponse = await request.get('/user-interests');
-
-			// 매칭 요청한 친구 목록 처리
-			const requestedUserData = requestedResponse.isSuccess
-				? requestedResponse.result.map((relationship: any) => {
+			if (requestedResponse.isSuccess) {
+				requestedUserData = requestedResponse.result
+					.filter((relationship: any) => relationship.requester.id === currentUserId) // 현재 사용자가 요청자일 경우 필터링
+					.map((relationship: any) => {
 						const target = relationship.target;
 						return {
 							userId: target.id,
 							userImgUrl: target.profilePictureUrl,
 							userName: target.nickname || target.name,
 						};
-					})
-				: [];
+					});
+				console.log('Requested User Data: ', requestedResponse);
+			} else {
+				console.error('Failed to fetch requested users');
+			}
 
-			// 관심 친구 목록 처리
-			const userData = interestsResponse.isSuccess
-				? interestsResponse.result.map((user: any) => ({
-						userId: user.friendId,
-						userImgUrl: user.profilePictureUrl,
-						userName: user.nickname || user.name,
-					}))
-				: [];
+			// 관심 친구 목록 요청
+			const interestsResponse: UserInterestsResponse = await request.get('/user-interests');
+			let interestedUserData: UserProps[] = [];
 
-			// 두 데이터를 합쳐서 users로 설정
-			setUsers([...requestedUserData, ...userData]);
+			if (interestsResponse.isSuccess) {
+				interestedUserData = interestsResponse.result.map((user: any) => ({
+					userId: user.friendId,
+					userImgUrl: user.profilePictureUrl,
+					userName: user.nickname || user.name,
+				}));
+			} else {
+				console.error('Failed to fetch interested users');
+			}
+
+			// 두 데이터를 합쳐서 중복된 userId를 제거하고 users로 설정
+			const combinedData = [...requestedUserData, ...interestedUserData];
+			const uniqueUsers = Array.from(new Map(combinedData.map((user) => [user.userId, user])).values());
+
+			setUsers(uniqueUsers);
 		} catch (error) {
-			console.error('Error fetching user interests:', error);
+			console.error('Error fetching users:', error);
 		} finally {
 			setIsUserLoading(false);
 		}
@@ -63,6 +80,7 @@ const Favorites: React.FC = () => {
 			if (response.isSuccess) {
 				const feedData = response.result.posts.map((post: any) => ({
 					postId: post.postId, // postId 추가
+					userId: userId,
 					profileUrl: users.find((user) => user.userId === userId)?.userImgUrl || '',
 					userName: users.find((user) => user.userId === userId)?.userName || '',
 					feedImgUrl: post.firstPhoto,
