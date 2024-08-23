@@ -6,7 +6,7 @@ import Feed from './Feed';
 import { FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from './dto';
 import User from './User';
 import Loading from '../../../components/Loading';
-import request from '../../../apis/core';
+import request, { BaseResponse } from '../../../apis/core';
 
 const Favorites: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<number | null>(null); // 초기값을 null로 설정
@@ -19,17 +19,35 @@ const Favorites: React.FC = () => {
 	const fetchUserInterests = async () => {
 		setIsUserLoading(true);
 		try {
-			const response: UserInterestsResponse = await request.get('/user-interests');
-			if (response.isSuccess) {
-				const userData = response.result.map((user: any) => ({
-					userId: user.friendId,
-					userImgUrl: user.profilePictureUrl,
-					userName: user.nickname,
-				}));
-				setUsers(userData);
-			} else {
-				console.error('Failed to fetch user interests');
-			}
+			// 매칭 요청한 친구 목록 요청
+			const requestedResponse: BaseResponse = await request.get('/user-relationships/requested');
+
+			// 관심 친구 목록 요청
+			const interestsResponse: UserInterestsResponse = await request.get('/user-interests');
+
+			// 매칭 요청한 친구 목록 처리
+			const requestedUserData = requestedResponse.isSuccess
+				? requestedResponse.result.map((relationship: any) => {
+						const target = relationship.target;
+						return {
+							userId: target.id,
+							userImgUrl: target.profilePictureUrl,
+							userName: target.nickname || target.name,
+						};
+					})
+				: [];
+
+			// 관심 친구 목록 처리
+			const userData = interestsResponse.isSuccess
+				? interestsResponse.result.map((user: any) => ({
+						userId: user.friendId,
+						userImgUrl: user.profilePictureUrl,
+						userName: user.nickname || user.name,
+					}))
+				: [];
+
+			// 두 데이터를 합쳐서 users로 설정
+			setUsers([...requestedUserData, ...userData]);
 		} catch (error) {
 			console.error('Error fetching user interests:', error);
 		} finally {
