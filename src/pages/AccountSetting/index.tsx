@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import avatar from '../../assets/avatar.png';
 import useredit from './assets/useredit.svg';
 import exit from './assets/exit.svg';
 import cancleaccount from './assets/cancleaccount.svg';
@@ -13,8 +12,9 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
-import request from '../../apis/core';
+import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
+import imageBasic from '../../assets/imageBasic.svg';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -24,15 +24,15 @@ const AccountSetting: React.FC = () => {
 	useEffect(() => {
 		const fetchUserProfile = async () => {
 			try {
-				const storedUserId = localStorage.getItem('userId'); // 로그인된 사용자 ID 가져오기
+				const storedUserId = localStorage.getItem('id'); // 로그인된 사용자 ID 가져오기
 
 				if (!storedUserId) {
 					console.error('User is not logged in');
 					return;
 				}
 
-				const response = await request.get<UserProfileResponse>(`/users/${storedUserId}`);
-				setUserProfile(response);
+				const response = await request.get<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`);
+				setUserProfile(response.result);
 			} catch (error) {
 				console.error('Error fetching user profile:', error);
 			}
@@ -40,6 +40,15 @@ const AccountSetting: React.FC = () => {
 
 		fetchUserProfile();
 	}, []);
+
+	const handleConfirmLogout = () => {
+		// localStorage 비우기
+		localStorage.clear();
+		console.log('Logout confirmed');
+		setIsLogoutModalOpen(false);
+		// 로그인 페이지로 이동
+		navigate('/login');
+	};
 
 	const handleEditProfileClick = () => {
 		navigate('/account-edit');
@@ -50,12 +59,6 @@ const AccountSetting: React.FC = () => {
 	};
 
 	const handleCloseModal = () => {
-		setIsLogoutModalOpen(false);
-	};
-
-	const handleConfirmLogout = () => {
-		// Logout 로직 추가
-		console.log('Logout confirmed');
 		setIsLogoutModalOpen(false);
 	};
 
@@ -75,7 +78,7 @@ const AccountSetting: React.FC = () => {
 
 				<ProfilePicWrapper>
 					<ProfilePic>
-						<img src={userProfile.profilePictureUrl || avatar} alt="프로필 사진" />
+						<img src={userProfile.profilePictureUrl || imageBasic} alt="프로필 사진" />
 					</ProfilePic>
 					<Row>
 						<Label>

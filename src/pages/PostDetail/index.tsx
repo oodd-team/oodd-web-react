@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { useParams, useNavigate } from 'react-router-dom';
 import {
 	PostDetailContainer,
@@ -24,6 +25,7 @@ import {
 	Arrow,
 	Indicator,
 } from './styles';
+import imageBasic from '../../assets/imageBasic.svg';
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -45,7 +47,7 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import request from '../../apis/core';
-import { UserResponse } from '../Mypage/dto';
+import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 
 const PostDetail: React.FC = () => {
@@ -91,21 +93,22 @@ const PostDetail: React.FC = () => {
 	// 유저 정보 가져오기
 	const fetchUserData = async () => {
 		try {
-			const storedUserId = localStorage.getItem('userId');
+			const storedUserId = localStorage.getItem('id'); // Ensure correct key is used
 			if (!storedUserId) {
 				console.error('User is not logged in');
 				return;
 			}
 
-			const response = await request.get<UserResponse>(`/users/${storedUserId}`);
-			setUser(response);
+			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
+			setUser(response.result as UserResponse);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
 		}
 	};
+
 	useEffect(() => {
 		fetchPostDetail();
-		fetchUserData(); // 유저 데이터 불러오기
+		fetchUserData(); // Fetch user data
 	}, [postId]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -239,10 +242,19 @@ const PostDetail: React.FC = () => {
 	};
 
 	const handlePinPost = async () => {
+		// localStorage에서 storedUserId를 가져옴
+		const storedUserId = localStorage.getItem('id');
+
+		if (!storedUserId) {
+			console.error('User ID not found');
+			return;
+		}
+
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${2}`, {
+			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${storedUserId}`, {
 				isRepresentative: true,
 			});
+
 			if (response.isSuccess) {
 				console.log('Post pinned successfully:', response.result);
 				// PostDetail 재로드
@@ -293,7 +305,7 @@ const PostDetail: React.FC = () => {
 					<UserRow>
 						<Pic_exam>
 							<img
-								src={user?.profilePictureUrl || mockImage}
+								src={user?.profilePictureUrl || imageBasic}
 								alt="User Profile"
 								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
 							/>

@@ -42,6 +42,7 @@ export const SeeMore = styled.div`
 export const OOTDImgBox = styled.div`
 	position: relative;
 	width: 100%;
+	min-height: 30rem;
 	max-height: 33.438rem;
 	bottom: 0;
 	border-radius: 0 0 0.75rem 0.75rem;

@@ -1,63 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { FavoritesContainer, FavoritesMent, FeedContainer, UserContainer, UserRow } from './styles';
 import Feed from './Feed';
-import { FeedProps, UserProps } from './dto';
+import { FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from './dto';
 import User from './User';
-import profileImg3 from './../../../assets/Home/profileImg3.svg';
-import tag from "./../../../assets/Home/tag.svg";
-import feedImg from "./../../../assets/Home/feedImg.svg";
+import Loading from '../../../components/Loading';
+import request from '../../../apis/core';
 
-// 추후 변경
-const userData: UserProps[] = [
-	{ userImgUrl: tag, userName: 'IDID' },
-	{ userImgUrl: tag, userName: 'IDID2' },
-	{ userImgUrl: tag, userName: 'IDID3' },
-	{ userImgUrl: tag, userName: 'IDID4' },
-	{ userImgUrl: tag, userName: 'IDID5' },
-	{ userImgUrl: tag, userName: 'IDID6' },
-];
-
-// 추후 변경
-const feedData: FeedProps[] = [
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID2',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID3',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID4',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID5',
-		feedImgUrl: feedImg,
-	},
-	{
-		profileUrl: profileImg3,
-		userName: 'IDID6',
-		feedImgUrl: feedImg,
-	},
-];
-
-// 즐겨찾기 탭입니다.
 const Favorites: React.FC = () => {
-	const [selectedUsers, setSelectedUsers] = useState<number | null>(0);
-	const handleUserClick = (index: number) => {
-		setSelectedUsers(index === selectedUsers ? null : index);
+	const [selectedUser, setSelectedUser] = useState<number | null>(null); // 초기값을 null로 설정
+	const [users, setUsers] = useState<UserProps[]>([]);
+	const [feeds, setFeeds] = useState<FeedProps[]>([]);
+	const [isUserLoading, setIsUserLoading] = useState(false);
+	const [isFeedLoading, setIsFeedLoading] = useState(false);
+
+	// 관심 친구 목록을 서버에서 가져오는 함수
+	const fetchUserInterests = async () => {
+		setIsUserLoading(true);
+		try {
+			const response: UserInterestsResponse = await request.get('/user-interests');
+			if (response.isSuccess) {
+				const userData = response.result.map((user: any) => ({
+					userId: user.friendId,
+					userImgUrl: user.profilePictureUrl,
+					userName: user.nickname,
+				}));
+				setUsers(userData);
+			} else {
+				console.error('Failed to fetch user interests');
+			}
+		} catch (error) {
+			console.error('Error fetching user interests:', error);
+		} finally {
+			setIsUserLoading(false);
+		}
+	};
+
+	// 특정 유저의 게시물을 가져오는 함수
+	const fetchUserPosts = async (userId: number) => {
+		setIsFeedLoading(true);
+		try {
+			const response: UserPostsResponse = await request.get(`/posts?userId=${userId}`);
+			if (response.isSuccess) {
+				const feedData = response.result.posts.map((post: any) => ({
+					postId: post.postId, // postId 추가
+					profileUrl: users.find((user) => user.userId === userId)?.userImgUrl || '',
+					userName: users.find((user) => user.userId === userId)?.userName || '',
+					feedImgUrl: post.firstPhoto,
+					hasLiked: post.hasLiked,
+					hasInterested: post.hasInterested,
+				}));
+				setFeeds(feedData);
+			} else {
+				console.error('Failed to fetch posts');
+			}
+		} catch (error) {
+			console.error('Error fetching posts:', error);
+		} finally {
+			setIsFeedLoading(false);
+		}
+	};
+
+	// 관심 친구 목록을 가져오는 effect
+	useEffect(() => {
+		fetchUserInterests();
+	}, []);
+
+	// 특정 친구를 클릭했을 때 해당 유저의 게시물을 가져오는 effect
+	useEffect(() => {
+		if (selectedUser !== null) {
+			fetchUserPosts(selectedUser);
+		}
+	}, [selectedUser]);
+
+	// 유저를 클릭했을 때 상태를 업데이트하고 해당 유저의 게시물을 불러옴
+	const handleUserClick = (userId: number) => {
+		setSelectedUser(userId === selectedUser ? null : userId); // userId를 selectedUser로 설정
 	};
 
 	return (
@@ -68,16 +87,23 @@ const Favorites: React.FC = () => {
 				</StyledText>
 			</FavoritesMent>
 			<UserContainer>
-				<UserRow>
-					{userData.map((user, index) => (
-						<User key={index} user={user} isSelected={selectedUsers === index} onClick={() => handleUserClick(index)} />
-					))}
-				</UserRow>
+				{isUserLoading ? (
+					<Loading />
+				) : (
+					<UserRow>
+						{users.map((user) => (
+							<User
+								key={user.userId}
+								user={user}
+								isSelected={selectedUser === user.userId}
+								onClick={() => handleUserClick(user.userId)} // userId를 전달
+							/>
+						))}
+					</UserRow>
+				)}
 			</UserContainer>
 			<FeedContainer>
-				{feedData.map((feed) => (
-					<Feed feed={feed} />
-				))}
+				{isFeedLoading ? <Loading /> : feeds.map((feed, index) => <Feed key={index} feed={feed} />)}
 			</FeedContainer>
 		</FavoritesContainer>
 	);

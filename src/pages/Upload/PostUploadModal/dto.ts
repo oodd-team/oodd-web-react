@@ -11,13 +11,7 @@ export interface Styletag {
 	color: string;
 }
 
-export interface ClothingInfo {
-	image_url: string;
-	brand: string;
-	model: string;
-	modelNumber: number;
-	url: string;
-}
+import { ClothingInfo } from '../dto';
 
 export interface ClothingInfoItemProps {
 	clothingObj: ClothingInfo;

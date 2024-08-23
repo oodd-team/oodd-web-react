@@ -2,21 +2,23 @@ import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
 	width: 100%;
+	max-width: 32rem;
 	flex-grow: 1;
 	margin: 0 auto; /* 중앙 정렬 */
 	display: flex;
 	flex-direction: column;
 	align-self: center;
 	box-sizing: border-box; /* 패딩을 포함한 전체 크기를 설정 */
-
 	overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+	padding-top: 0rem;
 `;
 
 export const Header = styled.div`
 	margin-top: 0;
 	display: flex;
 	align-items: center;
-	padding: 1.25rem 0; /* 20px 0 */
+	padding: 0rem;
+	margin-left: -0.9375rem;
 `;
 
 export const AvatarWrapper = styled.div`
