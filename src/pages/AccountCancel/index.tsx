@@ -35,9 +35,6 @@ const AccountCancel: React.FC = () => {
 				return;
 			}
 
-			console.log('Stored User ID:', storedUserId);
-			console.log('Token:', token);
-
 			// API 요청
 			const response = await request.patch<BaseResponse<{ message?: string }>>(
 				`/users/${storedUserId}/sign-out`,
@@ -67,7 +64,6 @@ const AccountCancel: React.FC = () => {
 				alert(response.message || 'Failed to delete account');
 			}
 		} catch (error) {
-			// 예외 발생 시 오류 메시지 출력
 			console.error('계정 삭제하는데 오류남:', error);
 			alert('계정을 삭제하는 동안 오류가 발생했습니다. 다시 시도해 주세요.');
 		}
@@ -95,13 +91,8 @@ const AccountCancel: React.FC = () => {
 				</Text>
 				<InfoBox>
 					<InfoItem as="div">
-						<StyledText as="div" $textTheme={{ style: 'body4-light', lineHeight: 2 }} color={theme.colors.black}>
-							- 환불 규정이나, 주의사항
-						</StyledText>
-					</InfoItem>
-					<InfoItem as="div">
-						<StyledText as="div" $textTheme={{ style: 'body4-light', lineHeight: 0 }} color={theme.colors.black}>
-							- 2
+						<StyledText as="div" $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color={theme.colors.black}>
+							지금까지 OODD를 이용해주셔서 감사합니다!
 						</StyledText>
 					</InfoItem>
 				</InfoBox>
@@ -112,7 +103,15 @@ const AccountCancel: React.FC = () => {
 					</StyledText>
 				</CheckboxWrapper>
 			</CancelContainer>
-			<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} />
+			<div
+				style={{
+					backgroundColor: isChecked ? '#000000' : '#d3d3d3',
+					color: isChecked ? '#ffffff' : '#808080',
+					cursor: isChecked ? 'pointer' : 'not-allowed',
+				}}
+			>
+				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
+			</div>
 		</OODDFrame>
 	);
 };
