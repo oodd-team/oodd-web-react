@@ -30,6 +30,7 @@ import request from '../../../../apis/core'; // request 인스턴스 임포트
 import { useRecoilState } from 'recoil';
 import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/HeartBottomSheetAtom';
 import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/BlockBottomSheetAtom';
+import { PostCommentAtom } from '../../../../recoil/PostCommentBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;
@@ -44,6 +45,7 @@ const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
 	const [, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
 	const [, setPostBlock] = useRecoilState(PostBlockAtom);
 	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
+	const [, setPostComment] = useRecoilState(PostCommentAtom);
 	const storedValue = localStorage.getItem('id');
 	const userId = Number(storedValue);
 
@@ -93,6 +95,10 @@ const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
 	};
 
 	const handleCommentClick = () => {
+		setPostComment({
+			userName: feed.userName,
+			postId: feed.postId,
+		});
 		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
 	};
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OODDFrame } from '../../components/Frame/Frame';
 import HomeTabBar from './HomeTabBar';
@@ -7,10 +7,6 @@ import NavBar from '../../components/NavBar';
 import { HomeContainer } from './styles';
 import request, { BaseResponse } from '../../apis/core';
 
-import { BottomSheetProps } from '../../components/BottomSheet/dto';
-import { CommentProps } from '../../components/Comment/dto';
-import Comment from '../../components/Comment';
-import BottomSheet from '../../components/BottomSheet/index.tsx';
 import Modal from '../../components/Modal/index.tsx';
 import HeartBottomSheet from './BottomSheets/HeartBottomSheet.tsx';
 import {
@@ -36,6 +32,12 @@ import {
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
 } from '../../recoil/MeatballBottomSheetAtom.ts';
+import PostCommentBottomSheet from './BottomSheets/PostCommentBottomSheet.tsx';
+import {
+	IsOpenPostCommentBottomSheetAtom,
+	IsOpenPostCommentFailModalAtom,
+	IsOpenPostCommentSuccessModalAtom,
+} from '../../recoil/PostCommentBottomSheetAtom.ts';
 
 interface UserResponseType {
 	id: number;
@@ -55,9 +57,6 @@ const Home: React.FC = () => {
 	const navigate = useNavigate();
 
 	// 모달과 바텀시트 상태 및 로직
-	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-	const [userName] = useState<string>('');
-
 	const [isOpenRequestSuccessModal, setIsOpenRequestSuccessModal] = useRecoilState(IsOpenRequestSuccessModalAtom);
 	const [isOpenRequestFailModal, setIsOpenRequestFailModal] = useRecoilState(IsOpenRequestFailModalAtom);
 	const postRequest = useRecoilValue(PostRequestAtom);
@@ -70,6 +69,11 @@ const Home: React.FC = () => {
 	const [isOpenReportSuccessModal, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
 	const [isOpenReportFailModal, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
 	const postReport = useRecoilValue(PostReportAtom);
+	const [, setIsOpenPostCommentBottomSheet] = useRecoilState(IsOpenPostCommentBottomSheetAtom);
+	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
+		IsOpenPostCommentSuccessModalAtom,
+	);
+	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
 
 	// 로그인 여부에 따라 navigate
 	useEffect(() => {
@@ -128,6 +132,21 @@ const Home: React.FC = () => {
 		content: `요청에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
+	// 코멘트 남기기 버튼
+	const postCommentSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenPostCommentSuccessModal(false);
+		},
+		content: '코멘트가 전달되었어요',
+	};
+
+	const postCommentFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenPostCommentFailModal(false);
+		},
+		content: '일시적인 오류입니다다',
+	};
+
 	// 신고하기 메뉴
 	const reportSuccessModalProps: ModalProps = {
 		onClose: () => {
@@ -144,22 +163,43 @@ const Home: React.FC = () => {
 	};
 
 	// 코멘트 남기기 버튼 클릭 시
-	const commentProps: CommentProps = {
-		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
-		sendComment: (comment: string) => {
-			console.log(`api에 ${comment} 전달`);
-		},
-	};
+	// const commentProps: CommentProps = {
+	// 	content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
+	// 	sendComment: (message: string) => {
+	// 		const postNewRequest = async () => {
+	// 			if (postRequest) {
+	// 				const response = await request.post<ApiDto>('/user-relationships', {
+	// 					requesterId: postRequest.requesterId,
+	// 					targetId: postRequest.targetId,
+	// 					message: message,
+	// 				});
 
-	const commentSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isCommentModalOpen,
-		isHandlerVisible: true,
-		Component: Comment,
-		componentProps: commentProps,
-		onCloseBottomSheet: () => {
-			setIsCommentModalOpen(false);
-		},
-	};
+	// 				if (response.isSuccess) {
+	// 					setIsOpenHeartBottomSheet(false);
+	// 					setTimeout(() => {
+	// 						setIsOpenRequestSuccessModal(true);
+	// 					}, 100);
+	// 				} else {
+	// 					setIsOpenRequestFailModal(true);
+	// 				}
+	// 			} else {
+	// 				alert('잘못된 요청입니다.');
+	// 			}
+	// 		};
+
+	// 		postNewRequest();
+	// 	},
+	// };
+
+	// const commentSheetProps: BottomSheetProps = {
+	// 	isOpenBottomSheet: isCommentModalOpen,
+	// 	isHandlerVisible: true,
+	// 	Component: Comment,
+	// 	componentProps: commentProps,
+	// 	onCloseBottomSheet: () => {
+	// 		setIsCommentModalOpen(false);
+	// 	},
+	// };
 
 	return (
 		<OODDFrame>
@@ -171,19 +211,21 @@ const Home: React.FC = () => {
 			{isOpenRequestSuccessModal && <Modal {...requestSuccessModalProps} />}
 			{isOpenRequestFailModal && <Modal {...requestFailModalProps} />}
 
+			<PostCommentBottomSheet />
+			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
+			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
+
 			<MeatballBottomSheet />
 			<ReportBottomSheet />
 			{isOpenReportSuccessModal && <Modal {...reportSuccessModalProps} />}
 			{isOpenReportFailModal && <Modal {...reportFailModalProps} />}
-
-			<BottomSheet {...commentSheetProps} />
 
 			<HomeContainer>
 				<HomeTopBar />
 				<HomeTabBar
 					onOpenBottomSheet={() => setIsOpenMeatballBottomSheet(true)}
 					onOpenReportSheet={() => setIsOpenReportBottomSheet(true)}
-					onOpenCommentModal={() => setIsCommentModalOpen(true)}
+					onOpenCommentModal={() => setIsOpenPostCommentBottomSheet(true)}
 				/>
 			</HomeContainer>
 			<NavBar />

@@ -17,3 +17,8 @@ export interface PostReportDto {
 	userName: string;
 	reason: string;
 }
+
+export interface PostCommentDto {
+	userName: string;
+	postId: number;
+}
