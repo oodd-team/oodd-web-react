@@ -35,6 +35,7 @@ export const Info = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	padding-right: 0.75rem;
 `;
 
 export const FeedProfileImgWrapper = styled.div`

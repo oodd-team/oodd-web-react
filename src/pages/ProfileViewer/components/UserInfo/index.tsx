@@ -12,45 +12,55 @@ import BottomSheet from "../../../../components/BottomSheet";
 import request from "../../../../apis/core";
 import { InterestDto } from "./InterestDto";
 import { UserInfoProps } from "../../dto";
+import Modal from '../../../../components/Modal';
+import { OpponentInfoAtom } from "../../../../recoil/OpponentInfo";
+import { UserInfoDto } from "../../ResponseDto/UserInfoDto";
+import { ChatRoomDto, Opponent } from "../../../Chats/RecentChat/dto";
+import { useNavigate } from "react-router-dom";
 
 const UserInfo: React.FC = React.memo(() => {
     const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
     const [interested, setInterested] = useState<boolean | undefined>(undefined);
     const [friend, setFriend] = useRecoilState(friendState);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+    const nav = useNavigate();
 
-    if (!userDetails) return null; // 사용자의 정보가 없으면 아무것도 렌더링하지 않음
+    if (!userDetails) return null;
 
     const { id, nickname, bio, userImg } = userDetails;
     const truncatedBio = (bio && bio.length > 50) ? bio.substring(0, 50) + '...' : bio;
+    const userId = localStorage.getItem('id');
 
     useEffect(() => {
-        if (!id) return;
-
         const storedUserDetails = localStorage.getItem(`userDetails_${id}`);
         if (storedUserDetails) {
-            try {
-                const parsedDetails = JSON.parse(storedUserDetails);
-                setInterested(parsedDetails.isInterested || false);
-                setFriend(parsedDetails.isFriend || false);
-
-                setUserDetails(prevDetails => {
-                    if (!prevDetails || prevDetails.isInterested === parsedDetails.isInterested) {
-                        return prevDetails;
-                    }
-                    return {
-                        ...prevDetails,
-                        isInterested: parsedDetails.isInterested || false,
-                        isFriend: parsedDetails.isFriend || false,
-                    };
-                });
-            } catch (error) {
-                console.error('JSON 파싱 오류:', error);
-            }
+            const parsedDetails = JSON.parse(storedUserDetails);
+            setInterested(parsedDetails.isInterested);
         }
-    }, [id, setUserDetails, setFriend]);
+    }, [id]);
 
-    const userId = localStorage.getItem('id');
+    const fetchUserInfo = async () => {
+        try {
+            const response = await request.get<UserInfoDto>(`/users/${id}`);
+            setFriend(response.result.isFriend);
+        } catch (error) {
+            console.error('사용자 정보 조회 오류:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserInfo();
+    }, [id]);
+
+    useEffect(() => {
+        if (userDetails) {
+            const updatedUserDetails = { ...userDetails, isInterested: interested };
+            localStorage.setItem(`userDetails_${userDetails.id}`, JSON.stringify(updatedUserDetails));
+        }
+    }, [userDetails, interested]);
 
     const handleOpenBottomSheet = () => {
         setIsBottomSheetOpen(true);
@@ -58,6 +68,53 @@ const UserInfo: React.FC = React.memo(() => {
 
     const handleCloseBottomSheet = () => {
         setIsBottomSheetOpen(false);
+    };
+
+    const handleOpenModal = (message: string) => {
+        setModalContent(message);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleMessageClick = async () => {
+        try {
+            const response = await request.get<UserInfoDto>(`/users/${id}`);
+            const User: Opponent = {
+                id: response.result.id,
+                nickname: response.result.nickname,
+                profilePictureUrl: response.result.profilePictureUrl,
+                name: response.result.name
+            };
+
+            const chatRoomResponse = await request.get<{ isSuccess: boolean, code: number, message: string, result: ChatRoomDto[] }>(`/chat-rooms/${userId}`);
+
+            let roomId: number | null = null;
+
+            if (Array.isArray(chatRoomResponse.result)) {
+                chatRoomResponse.result.forEach(room => {
+                    if (room.opponent.id === User.id) {
+                        roomId = room.id;
+                    }
+                });
+            } else {
+                console.error("chatRoomResponse.result is not an array:", chatRoomResponse.result);
+            }
+
+            if (roomId !== null) {
+                nav(`/chats/${roomId}`);
+            } else {
+                console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
+            }
+
+            setOpponentInfo(User);
+
+        } catch (error) {
+            console.error('메세지 보내기 오류:', error);
+            alert('사용자 정보를 불러오지 못했습니다.');
+        }
     };
 
     const handleInterestedClick = async () => {
@@ -68,14 +125,22 @@ const UserInfo: React.FC = React.memo(() => {
             });
 
             const isInterested = response.result.status === 'activated';
+
             const updatedUserDetails: UserInfoProps = {
                 ...userDetails,
                 isInterested,
             };
 
             localStorage.setItem(`userDetails_${id}`, JSON.stringify(updatedUserDetails));
+
             setUserDetails(updatedUserDetails);
             setInterested(isInterested);
+
+            handleOpenModal(isInterested 
+                ? `${userDetails.nickname}님을\n관심 친구로 등록했습니다!` 
+                : '관심 친구 등록이 해제되었습니다.'
+            );
+
         } catch (error) {
             console.error('관심 친구 등록 오류:', error);
             alert('관심 친구 등록에 실패했습니다.');
@@ -116,7 +181,7 @@ const UserInfo: React.FC = React.memo(() => {
                 )}
                 {friend && !interested && (
                     <>
-                        <Button $color="white" $backgroundcolor="#000">
+                        <Button $color="white" $backgroundcolor="#000"  onClick={handleMessageClick}>
                             <Icon src={MsgSvg} alt="message icon" />
                             <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
                                 메세지 보내기
@@ -131,7 +196,7 @@ const UserInfo: React.FC = React.memo(() => {
                     </>
                 )}
                 {friend && interested && (
-                    <LongButton>
+                    <LongButton  onClick={handleMessageClick}>
                         <Icon src={MsgSvg} alt="message icon" />
                         <StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
                             메세지 보내기
@@ -157,8 +222,15 @@ const UserInfo: React.FC = React.memo(() => {
                             nickname={nickname}
                             setFriend={setFriend}
                             setIsBottomSheetOpen={setIsBottomSheetOpen}
+                            handleOpenModal={handleOpenModal}
                         />
                     )}
+                />
+            )}
+            {isModalOpen && (
+                <Modal
+                    content={modalContent}
+                    onClose={handleCloseModal}
                 />
             )}
         </UserInfoContainer>
@@ -166,4 +238,3 @@ const UserInfo: React.FC = React.memo(() => {
 });
 
 export default UserInfo;
-

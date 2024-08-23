@@ -13,9 +13,7 @@ import {
 	Image,
 	IconRow,
 	IconWrapper,
-	BrandBoxContainer,
-	BrandBox,
-	BrandLink,
+	ClothingInfoContainer,
 	Tab,
 	ContentContainer,
 	UserItem,
@@ -25,32 +23,32 @@ import {
 	Arrow,
 	Indicator,
 } from './styles';
-import imageBasic from '../../assets/imageBasic.svg';
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
-import mockImage from './mockImage.png';
-import heartIcon from './heartIcon.svg';
-import commentIcon from './commentIcon.svg';
-import nextIcon from '../../assets/Upload/next.svg';
-import back from '../../assets/back.svg';
-
 import ConfirmationModal from '../../components/ConfirmationModal';
-import DeleteIcon from './assets/DeleteIcon.png';
-import EditIcon from './assets/EditIcon.svg';
-import PinIcon from './assets/PinIcon.svg';
-
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
+import ClothingInfoCard from '../Post/ClothingInfoCard';
+
+import imageBasic from '../../assets/imageBasic.svg';
+import back from '../../assets/back.svg';
+import nextIcon from '../../assets/Upload/next.svg';
+import DeleteIcon from './assets/DeleteIcon.png';
+import EditIcon from './assets/EditIcon.svg';
+import PinIcon from './assets/PinIcon.svg';
+import mockImage from './assets/mockImage.png';
+import heartIcon from './assets/heartIcon.svg';
+import commentIcon from './assets/commentIcon.svg';
+
 import request from '../../apis/core';
 import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
+import Loading from '../../components/Loading';
 
-const PostDetail: React.FC = () => {
+const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postDetail, setPostDetail] = useState<PostDetailResponse['result'] | null>(null);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -61,6 +59,7 @@ const PostDetail: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const [user, setUser] = useState<UserResponse | null>(null);
+	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
 	// 좋아요 리스트 불러오기
 	const fetchLikes = async () => {
@@ -103,6 +102,8 @@ const PostDetail: React.FC = () => {
 			setUser(response.result as UserResponse);
 		} catch (error) {
 			console.error('Error fetching user data:', error);
+		} finally {
+			setIsLoading(false); // 로딩 완료 후 로딩 상태 false로 설정
 		}
 	};
 
@@ -221,6 +222,8 @@ const PostDetail: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error fetching post details:', error);
+		} finally {
+			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
@@ -236,9 +239,8 @@ const PostDetail: React.FC = () => {
 		}
 	};
 
-	//수정페이지!!!!!!!!!!!!!!페이지이름 받으면 수정하기
 	const handleEditPost = () => {
-		navigate(`/edit/${postId}`);
+		navigate('/upload', { state: { mode: 'edit', postId: postId } });
 	};
 
 	const handlePinPost = async () => {
@@ -265,6 +267,8 @@ const PostDetail: React.FC = () => {
 			}
 		} catch (error) {
 			console.error('Error pinning post:', error);
+		} finally {
+			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
@@ -295,11 +299,13 @@ const PostDetail: React.FC = () => {
 	useEffect(() => {
 		fetchPostDetail();
 	}, [postId]);
-
+	if (isLoading) {
+		return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
+	}
 	return (
 		<OODDFrame>
 			<PostDetailContainer>
-				<TopBar ID={user?.id.toString()} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar ID={user?.nickname || ''} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 
 				<UserInfoContainer>
 					<UserRow>
@@ -365,27 +371,20 @@ const PostDetail: React.FC = () => {
 						<span>{postDetail?.comments?.length || 0}</span> {/* 댓글 수 */}
 					</IconWrapper>
 				</IconRow>
-				<BrandBoxContainer>
-					{postDetail?.clothingInfo?.map((clothing, index) => (
-						<BrandBox key={index}>
-							<img src={clothing.imageUrl || mockImage} alt="브랜드 이미지" />
-							<div>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-									{clothing.brand}
-								</StyledText>
-								<BrandLink>
-									<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
-										{clothing.model}/{clothing.modelNumber}/<a href={clothing.url}>URL</a>
-									</StyledText>
-								</BrandLink>
-							</div>
-							<img src={nextIcon} alt="Next Icon" className="next-icon" />
-						</BrandBox>
+				<ClothingInfoContainer>
+					{postDetail?.clothingInfo?.map((clothingInfo, index: number) => (
+						<ClothingInfoCard
+							key={index}
+							imageUrl={clothingInfo.imageUrl}
+							brand={clothingInfo.brand}
+							model={clothingInfo.model}
+							url={clothingInfo.url}
+						/>
 					))}
-				</BrandBoxContainer>
+				</ClothingInfoContainer>
 			</PostDetailContainer>
 		</OODDFrame>
 	);
 };
 
-export default PostDetail;
+export default MyPost;

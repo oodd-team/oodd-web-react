@@ -67,6 +67,7 @@ export const Menu = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
+	position: relative;
 	margin-top: 0px; /* 1.25rem */
 	width: 100%;
 	display: flex;
@@ -74,10 +75,10 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-	max-width: 512px;
-	width: 390px;
-	height: 519.326px;
-	flex-shrink: 0;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	height: auto;
+	object-fit: cover;
 `;
 
 export const IconRow = styled.div`
@@ -105,12 +106,12 @@ export const IconWrapper = styled.div`
 	}
 `;
 
-export const BrandBoxContainer = styled.div`
+export const ClothingInfoContainer = styled.div`
 	display: flex;
 	overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
 	white-space: nowrap; /* 줄바꿈 없이 한 줄로 나열 */
 	padding: 0.625rem 0;
-	margin-top: 16px; /* 상단과의 간격 */
+	//margin-top: 16px; /* 상단과의 간격 */
 	padding: 0px 20px; /* 1.25rem */
 
 	&::-webkit-scrollbar {
@@ -118,15 +119,16 @@ export const BrandBoxContainer = styled.div`
 	}
 `;
 
+/*
 export const BrandBox = styled.div`
-	display: inline-flex; /* inline-flex를 사용하여 가로 배치 유지 */
+	display: inline-flex; // inline-flex를 사용하여 가로 배치 유지 
 	align-items: center;
 	padding: 0.625rem;
 	border: 0.0625rem solid #7b7b7b;
 	margin-right: 0.625rem;
-	width: 15.3243rem; /* 지정된 너비 */
-	height: 4.5rem; /* 지정된 높이 */
-	flex-shrink: 0; /* 크기 고정 */
+	width: 15.3243rem; // 지정된 너비 
+	height: 4.5rem; // 지정된 높이 
+	flex-shrink: 0; // 크기 고정 
 
 	img {
 		width: 3.125rem;
@@ -138,7 +140,7 @@ export const BrandBox = styled.div`
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		flex-grow: 1; /* 텍스트 영역 확장 */
+		flex-grow: 1; /./ 텍스트 영역 확장 
 	}
 
 	&:last-child {
@@ -146,9 +148,9 @@ export const BrandBox = styled.div`
 	}
 
 	.next-icon {
-		width: 1.875rem; /* 아이콘 크기 */
+		width: 1.875rem; // 아이콘 크기 
 		height: 19px;
-		margin-left: auto; /* 자동으로 오른쪽 끝으로 배치 */
+		margin-left: auto; // 자동으로 오른쪽 끝으로 배치 
 	}
 `;
 
@@ -158,6 +160,7 @@ export const BrandLink = styled.div`
 	justify-content: space-between;
 	width: 100%;
 `;
+*/
 
 export const TabContainer = styled.div`
 	display: flex;
@@ -240,7 +243,7 @@ export const Arrow = styled.div<{ direction: string; disabled: boolean }>`
 
 export const Indicator = styled.div`
 	position: absolute;
-	bottom: 10px;
+	top: 10px;
 	left: 50%;
 	transform: translateX(-50%);
 	background-color: rgba(0, 0, 0, 0.5);

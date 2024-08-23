@@ -39,3 +39,13 @@ export const UserImgWrapper = styled.div`
 		object-fit: cover;
 	}
 `;
+
+import { StyledText } from '../../../../components/Text/StyledText';
+export const StyledTextClipped = styled(StyledText)`
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
+	width: 5rem;
+	display: inline-block; /* 텍스트 클리핑을 적용하기 위해 inline-block으로 설정 */
+`;

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../../../../components/Loading";
 
 const GoogleCallback: React.FC = () => {
     const navigate = useNavigate();
@@ -41,9 +42,7 @@ const GoogleCallback: React.FC = () => {
             }
         }, [navigate]);
         return(
-        <div>
-            <p>로그인 중입니다...</p>
-        </div>
+        <Loading/>
         );
 };
 

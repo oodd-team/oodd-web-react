@@ -31,8 +31,8 @@ export const Coment = styled.textarea`
     border: 1px solid #7B7B7B;
     border-radius: 0.1875rem;
     width: 100%; // 21.875rem -> 100%
-    height: 3rem;
-    padding: 1rem 2rem 1rem 1rem;
+    min-height: 3rem; // 최소 높이 설정
+    padding: 1rem 2rem 0 0.5rem;
     box-sizing: border-box;
     overflow: hidden; // 스크롤을 숨김
     resize: none; // 사용자가 크기를 조절할 수 없도록 함

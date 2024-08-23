@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	margin: 0 auto;
-	width: 100%;
-	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
-	padding: 1.25rem; /* 20px */
+	max-width: 512px; /* 32rem */
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	position: relative;
 `;
 
 export const Section = styled.div`
@@ -15,6 +12,7 @@ export const Section = styled.div`
 
 	margin-bottom: 1.875rem; /* 30px */
 	width: 100%; /* Section이 부모 컨테이너의 전체 너비를 차지하도록 설정 */
+	padding: 0px 30px;
 `;
 
 export const SectionTitle = styled.div`

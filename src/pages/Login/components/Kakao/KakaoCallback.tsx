@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserInfoDto } from "../../../ProfileViewer/ResponseDto/UserInfoDto";
 import request from "../../../../apis/core";
+import Loading from "../../../../components/Loading";
 
 const KakaoCallback: React.FC = () => {
     const navigate = useNavigate();
@@ -29,14 +30,10 @@ const KakaoCallback: React.FC = () => {
                         localStorage.setItem('jwt_token', token);
                         const userid = localStorage.getItem('id');
 
-                        request.get<UserInfoDto>(`/users/${userid}`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}` // Authorization 헤더 추가
-                            }
-                        })
+                        request.get<UserInfoDto>(`/users/${userid}`)
                         .then(response => {
                             console.log(response);
-                            if(response.nickname){
+                            if(response.result.nickname){
                                 navigate('/');
                             }
                             else{
@@ -65,7 +62,7 @@ const KakaoCallback: React.FC = () => {
             }
         }, [navigate]);
     return(
-        <>잠시만 기다려 주세요!</>
+        <Loading/>
     )
 };
 

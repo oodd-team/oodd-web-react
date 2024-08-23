@@ -1,5 +1,5 @@
 //PostUploadModal/index.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Content,
@@ -37,12 +37,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	initialContent = '',
 	initialClothingInfos = [],
 	initialStyletag = null,
+	initialRepresentative = false,
 	postId = null,
 }) => {
 	const [content, setContent] = useState<string>(initialContent);
 	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
 	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(initialStyletag);
-	const [isOOTD, setIsOOTD] = useState(false);
+	const [isRepresentative, setIsRepresentative] = useState(initialRepresentative);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +62,16 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		{ tag: 'outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
 		{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
 	];
+
+	// intialStyletag에 color 추가
+	useEffect(() => {
+		if (selectedStyletag && !selectedStyletag.color) {
+			const foundTag = styletags.find((tag) => tag.tag === selectedStyletag.tag);
+			if (foundTag) {
+				setSelectedStyletag({ ...selectedStyletag, color: foundTag.color });
+			}
+		}
+	}, [selectedStyletag]);
 
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
@@ -98,7 +109,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	const handleToggleOOTD = () => {
-		setIsOOTD(!isOOTD);
+		setIsRepresentative(!isRepresentative);
 	};
 
 	const uploadImageToFirebase = async (image: string) => {
@@ -106,12 +117,19 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
 			return image; // 이미 업로드된 경우, URL을 그대로 반환
 		}
-
+		console.log(1);
 		// 새로 업로드해야 하는 경우
 		const response = await fetch(image);
 		const blob = await response.blob();
+		console.log(2);
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
-		await uploadBytes(storageRef, blob);
+		console.log(3);
+		await uploadBytes(storageRef, blob).then(()=>{
+			console.log("success")
+		}).catch((error)=>{
+			console.log(JSON.stringify(error))
+		});
+		console.log(4);
 		return getDownloadURL(storageRef);
 	};
 
@@ -131,7 +149,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 				content,
 				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
 				clothingInfo: clothingInfos,
-				isRepresentive: isOOTD,
+				isRepresentive: isRepresentative,
 			};
 
 			let response;
@@ -199,7 +217,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 							</>
 						) : (
 							<StyletagItem selected={false} color={selectedStyletag?.color}>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{selectedStyletag?.tag}</StyledText>
+								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
 							</StyletagItem>
 						)}
 					</div>
@@ -222,7 +240,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 					<img src={pin} />
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 					<div>
-						<ToggleSwitch checked={isOOTD} onChange={handleToggleOOTD} />
+						<ToggleSwitch checked={isRepresentative} onChange={handleToggleOOTD} />
 					</div>
 				</PinnedPostToggleContainer>
 			</Content>
