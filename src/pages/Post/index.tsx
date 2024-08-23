@@ -34,13 +34,13 @@ import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
-import { PostResponse, PostData, UserResponse, UserData, ClothingInfo } from './dto';
+import { PostResponse, UserResponse, ClothingInfo } from './dto';
 import request from '../../apis/core';
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
-	const [postData, setPostData] = useState<PostData>();
-	const [user, setUser] = useState<UserData>();
+	const [postData, setPostData] = useState<PostResponse['result']>();
+	const [user, setUser] = useState<UserResponse['result']>();
 	const [userName, setUserName] = useState<string>('');
 	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
@@ -65,36 +65,27 @@ const Post: React.FC = () => {
 				const response = await request.get<PostResponse>(`/posts/${postId}`);
 				if (response.isSuccess) {
 					setPostData(response.result);
-
-					response.result.clothingInfo?.forEach((clothingInfo) => {
-						console.log('clothing: ', clothingInfo);
-					});
-
-					fetchUser();
+					fetchUser(response.result.userId);
 				} else {
 					console.error('Failed to fetch post data');
 				}
 			} catch (error) {
 				console.error('Error fetching post data:', error);
+			} finally {
 			}
 		};
 
-		const fetchUser = async () => {
-			if (postData) {
-				try {
-					const response = await request.get<UserResponse>(`/users/${postData.userId}`);
-
-					if (response.isSuccess) {
-						setUser(response.result);
-						if (user) {
-							setUserName(user.nickname || user.name);
-						}
-					} else {
-						console.error('Failed to fetch user data');
-					}
-				} catch (error) {
-					console.error('Error fetching user data:', error);
+		const fetchUser = async (userId: number) => {
+			try {
+				const response = await request.get<UserResponse>(`/users/${userId}`);
+				if (response.isSuccess) {
+					setUser(response.result);
+					setUserName(response.result.nickname || response.result.name);
+				} else {
+					console.error('Failed to fetch user data');
 				}
+			} catch (error) {
+				console.error('Error fetching user data:', error);
 			}
 		};
 
@@ -185,7 +176,7 @@ const Post: React.FC = () => {
 	};
 
 	const confirmationModalProps = {
-		content: `${userName}님의 OOTD를 차단합니다.`,
+		content: `${userName}님을 정말로 차단하시겠습니까?`,
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',
@@ -229,10 +220,7 @@ const Post: React.FC = () => {
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
-				<Modal
-					content={`${user?.nickname || user?.name}님을 차단했어요.`}
-					onClose={() => setIsBlockedModalOpen(false)}
-				/>
+				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
 
 			<PostTopBar userName={userName} />
