@@ -15,7 +15,7 @@ import User from './User';
 import Loading from '../../../components/Loading';
 import request, { BaseResponse } from '../../../apis/core';
 
-const Favorites: React.FC<FavoritesProps> = ({ onTabSelect }) => {
+const Favorites: React.FC<FavoritesProps> = () => {
 	const [selectedUser, setSelectedUser] = useState<number | null>(null);
 	const [users, setUsers] = useState<UserProps[]>([]);
 	const [feeds, setFeeds] = useState<FeedProps[]>([]);
@@ -39,7 +39,6 @@ const Favorites: React.FC<FavoritesProps> = ({ onTabSelect }) => {
 						userName: target.nickname || target.name,
 					};
 				});
-				console.log('Requested User Data: ', requestedResponse);
 			} else {
 				console.error('Failed to fetch requested users');
 			}
@@ -98,11 +97,8 @@ const Favorites: React.FC<FavoritesProps> = ({ onTabSelect }) => {
 
 	// 컴포넌트가 마운트되거나 탭이 선택될 때마다 fetchFavoriteUsers 호출
 	useEffect(() => {
-		if (onTabSelect) {
-			setUsers([]);
-			fetchFavoriteUsers();
-		}
-	}, [onTabSelect]);
+		fetchFavoriteUsers();
+	}, []);
 
 	// users가 업데이트될 때, 첫 번째 사용자를 selectedUser로 설정
 	useEffect(() => {
@@ -158,9 +154,11 @@ const Favorites: React.FC<FavoritesProps> = ({ onTabSelect }) => {
 					</NoFavoriteContainer>
 				)}
 			</UserContainer>
-			<FeedContainer>
-				{isFeedLoading || isUserLoading ? <Loading /> : feeds.map((feed, index) => <Feed key={index} feed={feed} />)}
-			</FeedContainer>
+			{!isUserLoading && (
+				<FeedContainer>
+					{isFeedLoading ? <Loading /> : feeds.map((feed, index) => <Feed key={index} feed={feed} />)}
+				</FeedContainer>
+			)}
 		</FavoritesContainer>
 	);
 };

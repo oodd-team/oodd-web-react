@@ -19,7 +19,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	const [hasInterested, setHasInterested] = useState(feed.hasInterested);
 	const nav = useNavigate();
 
-	const currentUserId = 18;
+	const handleProfileClick = () => {
+		nav(`/users/${feed.userId}`);
+	};
 
 	const handleFeedClick = () => {
 		nav(`/post/${feed.postId}`); // 게시물 ID를 포함한 경로로 이동
@@ -28,9 +30,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	const handleLikeClick = async () => {
 		try {
 			const response = await request.post<BaseResponse>(`/user-relationships`, {
-				requesterId: currentUserId,
 				targetId: feed.userId,
-				message: '하이',
 			});
 			if (response.isSuccess) {
 				setHasLiked((prev) => !prev);
@@ -58,12 +58,12 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	};
 
 	return (
-		<FeedWrapper onClick={handleFeedClick}>
+		<FeedWrapper>
 			<FeedImgBox>
-				<img src={feed.feedImgUrl} />
+				<img src={feed.feedImgUrl} onClick={handleFeedClick} />
 				<FeedTop>
 					<Info>
-						<FeedProfileImgWrapper>
+						<FeedProfileImgWrapper onClick={handleProfileClick}>
 							<img src={feed.profileUrl} alt="profile" />
 						</FeedProfileImgWrapper>
 						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>

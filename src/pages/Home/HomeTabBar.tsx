@@ -116,7 +116,7 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 						<OOTD tooltipRef={ootdTooltipRef} onMoreClick={onOpenBottomSheet} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
-						<Favorites onTabSelect={() => setActiveIndex(2)} />
+						<Favorites />
 					</SwiperSlide>
 				</Swiper>
 			</Tabs>
