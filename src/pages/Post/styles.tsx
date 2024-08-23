@@ -143,7 +143,8 @@ export const PostImg = styled.div`
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		aspect-ratio: 3 / 4;
+		height: auto;
 		object-fit: cover;
 	}
 `;

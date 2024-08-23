@@ -13,9 +13,7 @@ import {
 	Image,
 	IconRow,
 	IconWrapper,
-	BrandBoxContainer,
-	BrandBox,
-	BrandLink,
+	ClothingInfoContainer,
 	Tab,
 	ContentContainer,
 	UserItem,
@@ -28,13 +26,12 @@ import {
 
 import TopBar from '../../components/TopBar';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
-import theme from '../../styles/theme';
+import ClothingInfoCard from '../Post/ClothingInfoCard';
 
 import imageBasic from '../../assets/imageBasic.svg';
 import back from '../../assets/back.svg';
@@ -374,24 +371,17 @@ const MyPost: React.FC = () => {
 						<span>{postDetail?.comments?.length || 0}</span> {/* 댓글 수 */}
 					</IconWrapper>
 				</IconRow>
-				<BrandBoxContainer>
-					{postDetail?.clothingInfo?.map((clothing, index) => (
-						<BrandBox key={index}>
-							<img src={clothing.imageUrl || mockImage} alt="브랜드 이미지" />
-							<div>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-									{clothing.brand}
-								</StyledText>
-								<BrandLink>
-									<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
-										{clothing.model}/{clothing.modelNumber}/<a href={clothing.url}>URL</a>
-									</StyledText>
-								</BrandLink>
-							</div>
-							<img src={nextIcon} alt="Next Icon" className="next-icon" />
-						</BrandBox>
+				<ClothingInfoContainer>
+					{postDetail?.clothingInfo?.map((clothingInfo, index: number) => (
+						<ClothingInfoCard
+							key={index}
+							imageUrl={clothingInfo.imageUrl}
+							brand={clothingInfo.brand}
+							model={clothingInfo.model}
+							url={clothingInfo.url}
+						/>
 					))}
-				</BrandBoxContainer>
+				</ClothingInfoContainer>
 			</PostDetailContainer>
 		</OODDFrame>
 	);
