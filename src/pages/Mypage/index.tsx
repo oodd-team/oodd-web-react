@@ -32,7 +32,7 @@ import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
 
-const Mypage: React.FC = () => {
+const MyPage: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
 	const [posts, setPosts] = useState<PostItem[]>([]);
 	const [totalPosts, setTotalPosts] = useState(0);
@@ -199,4 +199,4 @@ const Mypage: React.FC = () => {
 	);
 };
 
-export default Mypage;
+export default MyPage;
