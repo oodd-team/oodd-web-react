@@ -44,8 +44,7 @@ const Home: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-
-	const userName = 'IDID'; // 임의의 사용자 이름
+	const [userName] = useState<string>('');
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -131,7 +130,7 @@ const Home: React.FC = () => {
 	};
 
 	const confirmationModalProps = {
-		content: `${userName}님의 OOTD를 차단합니다.`,
+		content: `${userName}님을 정말로 차단하시겠습니까?`,
 		isCancelButtonVisible: true,
 		confirm: {
 			text: '차단하기',

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const FirstMessageLayout = styled.div`
 	display: flex;
-	margin: 0 auto 0.5rem 0;
+	margin: 0 auto 0.25rem 0;
 `;
 
 export const MessageLayout = styled.div`
@@ -17,6 +17,14 @@ export const UserImage = styled.img`
 	border-radius: 1.25rem;
 	margin-right: 0.438rem;
 	cursor: pointer;
+`;
+
+export const UsernameText = styled.div`
+	font-family: 'Gmarket Sans';
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 `;
 
 export const MessageBox = styled.div`
