@@ -103,10 +103,10 @@ const TabBar: React.FC = () => {
 					slidesPerView={1}
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 				>
-					<SwiperSlide style={{ height: 'calc(100vh - 5.25rem)' }}>
+					<SwiperSlide className="swiper-slider">
 						<Request matchingRequests={matchingRequests} />
 					</SwiperSlide>
-					<SwiperSlide style={{ height: 'calc(100vh - 5.25rem)' }}>
+					<SwiperSlide className="swiper-slider">
 						<RecentChat swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>
