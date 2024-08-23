@@ -75,10 +75,10 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-	max-width: 512px;
-	width: 390px;
-	height: 519.326px;
-	flex-shrink: 0;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	height: auto;
+	object-fit: cover;
 `;
 
 export const IconRow = styled.div`
