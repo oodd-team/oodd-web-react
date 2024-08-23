@@ -12,6 +12,10 @@ export const Nav = styled.nav`
 	width: 100%; /* 화면의 전체 너비 차지 */
 	background-color: white; /* 배경색 설정 (필요에 따라 변경) */
 	z-index: 1000; /* 다른 요소들보다 위에 오도록 설정 */
+
+	position: sticky;
+	top: 0; /* 페이지의 최상단에 고정 */
+	z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
 `;
 
 export const IconContainer = styled.div`
