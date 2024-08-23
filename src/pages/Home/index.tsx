@@ -18,6 +18,21 @@ import BottomSheet from '../../components/BottomSheet/index.tsx';
 import Modal from '../../components/Modal/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import ReportTextarea from './ReportTextarea.tsx';
+import HeartBottomSheet from './BottomSheets/HeartBottomSheet.tsx';
+import {
+	IsOpenRequestFailModalAtom,
+	IsOpenRequestSuccessModalAtom,
+	PostRequestAtom,
+} from '../../recoil/HeartBottomSheetAtom.ts';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ModalProps } from '../../components/Modal/dto.ts';
+import {
+	IsOpenBlockConfirmationModalAtom,
+	IsOpenBlockFailModalAtom,
+	IsOpenBlockSuccessModalAtom,
+	PostBlockAtom,
+} from '../../recoil/BlockBottomSheetAtom.ts';
+import BlockConfirmationModal from './BottomSheets/BlockBottomSheet.tsx';
 
 interface UserResponseType {
 	id: number;
@@ -45,6 +60,42 @@ const Home: React.FC = () => {
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 	const [userName] = useState<string>('');
+
+	const [isOpenRequestSuccessModal, setIsOpenRequestSuccessModal] = useRecoilState(IsOpenRequestSuccessModalAtom);
+	const [isOpenRequestFailModal, setIsOpenRequestFailModal] = useRecoilState(IsOpenRequestFailModalAtom);
+	const postRequest = useRecoilValue(PostRequestAtom);
+	const [isOpenBlockSuccessModal, setIsOpenBlockSuccessModal] = useRecoilState(IsOpenBlockSuccessModalAtom);
+	const [isOpenBlockFailModal, setIsOpenBlockFailModal] = useRecoilState(IsOpenBlockFailModalAtom);
+	const isOpenBlockConfirmationModal = useRecoilValue(IsOpenBlockConfirmationModalAtom);
+	const postBlock = useRecoilValue(PostBlockAtom);
+
+	const requestSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenRequestSuccessModal(false);
+		},
+		content: `${postRequest?.targetName} 님에게 대표 OOTD와\n한줄 메시지를 보냈어요!`,
+	};
+
+	const requestFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenRequestFailModal(false);
+		},
+		content: `요청에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
+	};
+
+	const blockSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenBlockSuccessModal(false);
+		},
+		content: `${postBlock?.friendName} 님을 차단했어요`,
+	};
+
+	const blockFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenBlockFailModal(false);
+		},
+		content: `차단에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
+	};
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -129,21 +180,6 @@ const Home: React.FC = () => {
 		},
 	};
 
-	const confirmationModalProps = {
-		content: `${userName}님을 정말로 차단하시겠습니까?`,
-		isCancelButtonVisible: true,
-		confirm: {
-			text: '차단하기',
-			action: () => {
-				setIsConfirmationModalOpen(false);
-				setIsBlockedModalOpen(true); // 차단 완료 모달 열기
-			},
-		},
-		onCloseModal: () => {
-			setIsConfirmationModalOpen(false);
-		},
-	};
-
 	// 로그인 여부에 따라 navigate
 
 	useEffect(() => {
@@ -173,6 +209,12 @@ const Home: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			<HeartBottomSheet />
+			{isOpenRequestSuccessModal && <Modal {...requestSuccessModalProps} />}
+			{isOpenRequestFailModal && <Modal {...requestFailModalProps} />}
+			{isOpenBlockConfirmationModal && <BlockConfirmationModal />}
+			{isOpenBlockSuccessModal && <Modal {...blockSuccessModalProps} />}
+			{isOpenBlockFailModal && <Modal {...blockFailModalProps} />}
 			<HomeContainer>
 				<HomeTopBar />
 				<HomeTabBar
@@ -206,10 +248,6 @@ const Home: React.FC = () => {
 			/>
 			<BottomSheet {...commentSheetProps} />
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
-			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
-			{isBlockedModalOpen && (
-				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
-			)}
 		</OODDFrame>
 	);
 };

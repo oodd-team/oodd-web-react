@@ -27,6 +27,9 @@ import clickedStar from '../../../../assets/Home/clicked_bigstar.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../../apis/core'; // request 인스턴스 임포트
+import { useRecoilState } from 'recoil';
+import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/HeartBottomSheetAtom';
+import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/BlockBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;
@@ -38,9 +41,35 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
+	const [, setPostRequest] = useRecoilState(PostRequestAtom);
+	const [, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
+	const [, setPostBlock] = useRecoilState(PostBlockAtom);
+	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
+	const storedValue = localStorage.getItem('id');
+	const userId = Number(storedValue);
 
 	const handleHeartClick = () => {
-		setIsHeartClicked((prev) => !prev);
+		if (isHeartClicked === true) {
+			alert('요청을 취소할 수 없습니다.');
+		} else {
+			setPostRequest({
+				requesterId: userId,
+				targetId: feed.userId,
+				targetName: feed.userName,
+			});
+			setIsOpenHeartBottomSheet(true);
+			setIsHeartClicked(true);
+		}
+	};
+
+	const handleBlockClick = () => {
+		setPostBlock({
+			userId: userId,
+			friendId: feed.userId,
+			friendName: feed.userName,
+			action: 'toggle',
+		});
+		setIsOpenBlockConfirmationModal(true);
 	};
 
 	const handleStarClick = async () => {
@@ -124,7 +153,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<Btn onClick={handleBlockUser}>
+						<Btn onClick={handleBlockClick}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
 						{!isHeartClicked && (
