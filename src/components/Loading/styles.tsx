@@ -32,6 +32,6 @@ export const Dot = styled.hr<{ $index: number; $dotIndex: number }>`
 	// 점이 활성화되었을 때의 스타일
 	${({ $index, $dotIndex }) => css`
 		opacity: ${$dotIndex % 3 === $index ? 1 : 0.5};
-		transform: translateY(${$dotIndex % 3 === $index ? -3 : 0}px);
+		transform: translateY(${$dotIndex % 3 === $index ? -1 : 0}px);
 	`}
 `;

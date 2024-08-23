@@ -27,20 +27,50 @@ import clickedStar from '../../../../assets/Home/clicked_bigstar.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../../apis/core'; // request 인스턴스 임포트
+import { useRecoilState } from 'recoil';
+import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/HeartBottomSheetAtom';
+import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/BlockBottomSheetAtom';
+import { PostCommentAtom } from '../../../../recoil/PostCommentBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;
-	onRemove: () => void;
 	onMoreClick: () => void;
 }
 
-const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
+const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
+	const [, setPostRequest] = useRecoilState(PostRequestAtom);
+	const [, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
+	const [, setPostBlock] = useRecoilState(PostBlockAtom);
+	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
+	const [, setPostComment] = useRecoilState(PostCommentAtom);
+	const storedValue = localStorage.getItem('id');
+	const userId = Number(storedValue);
 
 	const handleHeartClick = () => {
-		setIsHeartClicked((prev) => !prev);
+		if (isHeartClicked === true) {
+			alert('요청을 취소할 수 없습니다.');
+		} else {
+			setPostRequest({
+				requesterId: userId,
+				targetId: feed.userId,
+				targetName: feed.userName,
+			});
+			setIsOpenHeartBottomSheet(true);
+			setIsHeartClicked(true);
+		}
+	};
+
+	const handleBlockClick = () => {
+		setPostBlock({
+			userId: userId,
+			friendId: feed.userId,
+			friendName: feed.userName,
+			action: 'toggle',
+		});
+		setIsOpenBlockConfirmationModal(true);
 	};
 
 	const handleStarClick = async () => {
@@ -65,24 +95,11 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 	};
 
 	const handleCommentClick = () => {
+		setPostComment({
+			userName: feed.userName,
+			postId: feed.postId,
+		});
 		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
-	};
-
-	const handleBlockUser = async () => {
-		try {
-			const response = await request.post<{ message: string }>('/block', {
-				userId: localStorage.getItem('id'),
-				friendId: feed.userId,
-				action: 'toggle',
-			});
-			if (response.message === 'OK') {
-				onRemove();
-			} else {
-				console.error('Failed to block user:', response.message);
-			}
-		} catch (error) {
-			console.error('Error blocking user:', error);
-		}
 	};
 
 	return (
@@ -124,7 +141,7 @@ const Feed: React.FC<Props> = ({ feed, onRemove, onMoreClick }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<Btn onClick={handleBlockUser}>
+						<Btn onClick={handleBlockClick}>
 							<img src={xBtn} style={{ width: '1.5rem', height: '1.5rem' }} />
 						</Btn>
 						{!isHeartClicked && (

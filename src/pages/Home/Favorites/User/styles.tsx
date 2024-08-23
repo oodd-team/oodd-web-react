@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const UserWrapper = styled.div<{ isSelected: boolean }>`
+export const UserWrapper = styled.div<{ $isSelected: boolean }>`
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
@@ -9,7 +9,7 @@ export const UserWrapper = styled.div<{ isSelected: boolean }>`
 	cursor: pointer;
 `;
 
-export const UserImgBorder = styled.div<{ isSelected: boolean }>`
+export const UserImgBorder = styled.div<{ $isSelected: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -20,8 +20,8 @@ export const UserImgBorder = styled.div<{ isSelected: boolean }>`
 	background-origin: border-box;
 	background-clip: content-box, border-box;
 	background-image: linear-gradient(#fff, #fff),
-		${({ isSelected }) =>
-			isSelected ? 'linear-gradient(200deg, black 0%, gray 50%, #eaeaea 80%, white 90%, white 100%)' : 'none'};
+		${({ $isSelected }) =>
+			$isSelected ? 'linear-gradient(200deg, black 0%, gray 50%, #eaeaea 80%, white 90%, white 100%)' : 'none'};
 `;
 
 export const UserImgWrapper = styled.div`

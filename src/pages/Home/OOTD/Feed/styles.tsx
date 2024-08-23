@@ -120,7 +120,7 @@ export const Btn = styled.div`
 	cursor: pointer;
 	width: 3.75rem;
 	height: 3.75rem;
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.1);
 	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
 	border-radius: 50%;
 	backdrop-filter: blur(0.3125rem);
@@ -146,7 +146,7 @@ export const CommentBtn = styled.div`
 	cursor: pointer;
 	width: 12.75rem;
 	height: 2.5rem;
-	background-color: rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.1);
 	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
 	border-radius: 1.25rem;
 	backdrop-filter: blur(0.3125rem);
