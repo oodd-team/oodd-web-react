@@ -1,7 +1,7 @@
 export interface KakaoLoginDto {
-    status: number;
-    data: {
-        message: string;
-        accessToken: string;
-    }
+	status: number;
+	data: {
+		message: string;
+		accessToken: string;
+	};
 }
