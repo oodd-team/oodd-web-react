@@ -1,3 +1,3 @@
 export interface BlockDto {
-    message: string;
+	message: string;
 }
