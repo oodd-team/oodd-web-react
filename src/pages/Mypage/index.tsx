@@ -64,7 +64,7 @@ const MyPage: React.FC = () => {
 		marginBottom: '50px',
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
+	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,

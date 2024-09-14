@@ -35,7 +35,7 @@ const MeatballBottomSheet: React.FC = () => {
 		marginBottom: '3.125rem',
 	};
 
-	const meatballBottomSheet: BottomSheetProps = {
+	const meatballBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isOpenMeatballBottomSheet,
 		Component: BottomSheetMenu,
 		componentProps: meatballBottomSheetMenuProps,

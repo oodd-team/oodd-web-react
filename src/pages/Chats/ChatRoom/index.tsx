@@ -211,7 +211,7 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
-	const kebabMenuBottomSheet: BottomSheetProps = {
+	const kebabMenuBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isOpenMenu,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
