@@ -3,9 +3,10 @@ import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
 
-const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) => {
-	const handleRemoveMatching = () => {};
-
+const Request: React.FC<{ matchingRequests: number; handleRemoveMatching: () => void }> = ({
+	matchingRequests,
+	handleRemoveMatching,
+}) => {
 	return (
 		<>
 			<ReqeustInfo>

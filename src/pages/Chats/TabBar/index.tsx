@@ -34,14 +34,19 @@ const TabBar: React.FC = () => {
 		if (!hasMatchingRequests && swiper.activeIndex < swiper.previousIndex) {
 			swiper.allowSlidePrev = false;
 		}
-		// 매칭 요청이 없고 0번 index에 있을 때 1번 탭으로 이동
-		else if (!hasMatchingRequests && swiper.activeIndex > swiper.previousIndex) {
-			swiper.slideNext();
-		}
 		// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
 		else {
 			swiper.allowSlidePrev = true;
 			setActiveIndex(swiper.activeIndex);
+		}
+	};
+
+	const handleRemoveMatching = () => {
+		if (matchingRequests !== 1) {
+			setMatchingRequests((prev) => Math.max(0, prev - 1));
+		} else {
+			setHasMatchingRequests(false);
+			swiperRef.current?.slideNext();
 		}
 	};
 
@@ -104,7 +109,7 @@ const TabBar: React.FC = () => {
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 				>
 					<SwiperSlide className="swiper-slider">
-						<Request matchingRequests={matchingRequests} />
+						<Request matchingRequests={matchingRequests} handleRemoveMatching={handleRemoveMatching} />
 					</SwiperSlide>
 					<SwiperSlide className="swiper-slider">
 						<RecentChat swiperRef={swiperRef} />
