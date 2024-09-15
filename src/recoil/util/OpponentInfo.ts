@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { Opponent } from '../pages/Chats/RecentChat/dto';
+import { Opponent } from '../../pages/Chats/RecentChat/dto';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();

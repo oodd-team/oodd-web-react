@@ -11,7 +11,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
-import { userDetailsState } from '../../recoil/atoms'; // Recoil atom 임포트
+import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
 import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg';
 import BackSvg from '../../assets/ProfileViewer/backIcon.svg';
 import imageBasic from '../../assets/imageBasic.svg';
@@ -26,7 +26,7 @@ import Loading from '../../components/Loading';
 
 const ProfileViewer: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
-	const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
+	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
