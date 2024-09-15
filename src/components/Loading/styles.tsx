@@ -1,4 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+// 점이 활성화될 때의 애니메이션 (Y축으로 움직임)
+const bounce = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+`;
 
 export const LoadingWrapper = styled.div`
 	position: fixed;
@@ -18,20 +30,15 @@ export const DotBox = styled.div`
 	margin: auto;
 `;
 
-export const Dot = styled.hr<{ $index: number; $dotIndex: number }>`
-	width: 7px;
-	height: 7px;
+export const Dot = styled.hr<{ $index: number }>`
+	width: 8px;
+	height: 8px;
 	z-index: 200;
 	border-radius: 50%;
 	border: none;
 	background-color: ${({ theme }) => theme.colors.gray2};
-	transition:
-		opacity 0.3s,
-		transform 0.3s;
 
-	// 점이 활성화되었을 때의 스타일
-	${({ $index, $dotIndex }) => css`
-		opacity: ${$dotIndex % 3 === $index ? 1 : 0.5};
-		transform: translateY(${$dotIndex % 3 === $index ? -1 : 0}px);
-	`}
+	// 각 점에 대해 딜레이를 적용하여 순차적으로 애니메이션을 시작
+	animation: ${bounce} 0.6s ease-in-out infinite;
+	animation-delay: ${({ $index }) => $index * 0.2}s;
 `;
