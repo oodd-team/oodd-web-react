@@ -5,6 +5,7 @@ export const FavoritesContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	align-items: flex-start;
+	margin-bottom: 4.625rem;
 `;
 
 export const FavoritesMent = styled.div`
@@ -21,6 +22,7 @@ export const UserContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	height: 6.1875rem;
 	gap: 0.5rem;
 	margin-left: 1.25rem;
 	padding-right: 1.25rem;
@@ -28,6 +30,7 @@ export const UserContainer = styled.div`
 
 export const UserRow = styled.div`
 	display: flex;
+	width: 100%;
 	gap: 0.5rem;
 	overflow-x: auto;
 	white-space: nowrap;
@@ -43,9 +46,20 @@ export const UserRow = styled.div`
 
 export const FeedContainer = styled.div`
 	width: calc(100% - 2.5rem);
+	min-height: 12.5rem;
 	margin: 1rem 1.25rem 1.625rem 1.25rem;
 	box-sizing: border-box;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 0.25rem;
+`;
+
+//
+export const NoFavoriteContainer = styled.div`
+	width: 100%;
+	height: 20rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `;

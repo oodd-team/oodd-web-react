@@ -12,12 +12,13 @@ export const FeedImgBox = styled.div`
 	width: 100%;
 	border-radius: 0.75rem;
 	background-color: ${({ theme }) => theme.colors.gray1};
-	height: auto;
 	overflow: hidden;
+	aspect-ratio: 173 / 230;
 
 	img {
 		width: 100%;
 		height: 100%;
+
 		object-fit: cover;
 	}
 `;
@@ -34,6 +35,7 @@ export const Info = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	padding-right: 0.75rem;
 `;
 
 export const FeedProfileImgWrapper = styled.div`
@@ -43,6 +45,13 @@ export const FeedProfileImgWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
 
 export const FeedText = styled.div`

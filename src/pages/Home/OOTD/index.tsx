@@ -1,58 +1,127 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
-import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer } from './styles';
+import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer, OOTDLoading } from './styles';
 import Tag from './Tag';
-import { FeedProps, TagProps } from './dto';
+import { TagProps, OOTDAPIResponse, UserResponse, Post } from './dto';
 import Feed from './Feed';
+import request from '../../../apis/core';
+import noProfileImg from '../../../assets/Home/no_profileImg.svg';
+import classic from '../../../assets/Home/classic.svg';
+import street from '../../../assets/Home/street.svg';
+import hip from '../../../assets/Home/hip.svg';
+import casual from '../../../assets/Home/casual.svg';
+import sporty from '../../../assets/Home/sporty.svg';
+import feminine from '../../../assets/Home/feminine.svg';
+import minimal from '../../../assets/Home/minimal.svg';
+import formal from '../../../assets/Home/formal.svg';
+import outdoor from '../../../assets/Home/outdoor.svg';
+import luxury from '../../../assets/Home/luxury.svg';
+import Loading from '../../../components/Loading'; // Loading 컴포넌트
+import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/BlockBottomSheetAtom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { FeedsAtom } from '../../../recoil/FeedsAtom';
+import { SelectedTagsAtom } from '../../../recoil/SelectedTagsAtom';
 
-// 추후 변경
 const tagData: TagProps[] = [
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#hip' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#classic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#vintage' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#casual' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#chic' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#bohemian' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#sporty' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#formal' },
-	{ tagImgUrl: './../../../../assets/Home/tag.svg', tagName: '#street' },
+	{ tagImgUrl: classic, tagName: 'classic' },
+	{ tagImgUrl: street, tagName: 'street' },
+	{ tagImgUrl: hip, tagName: 'hip' },
+	{ tagImgUrl: casual, tagName: 'casual' },
+	{ tagImgUrl: sporty, tagName: 'sporty' },
+	{ tagImgUrl: feminine, tagName: 'feminine' },
+	{ tagImgUrl: minimal, tagName: 'minimal' },
+	{ tagImgUrl: formal, tagName: 'formal' },
+	{ tagImgUrl: outdoor, tagName: 'outdoor' },
+	{ tagImgUrl: luxury, tagName: 'luxury' },
 ];
 
-// 추후 변경
-const feedData: FeedProps[] = [
-	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
-		userName: 'IDID',
-		text: 'Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...Text~~~~~~~~~~~~~~~~~~~~~~~...',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
-	},
-	{
-		profileUrl: './../../../../assets/Home/profileImg2.svg',
-		userName: 'IDID2',
-		text: '굳굳',
-		feedImgUrl: './../../../../assets/Home/feedImg.svg',
-	},
-];
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onMoreClick: () => void }> = ({
+	tooltipRef,
+	onMoreClick,
+}) => {
+	const selectedTags = useRecoilValue(SelectedTagsAtom);
+	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
+	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
+	const [loading, setLoading] = useState<boolean>(false); // 로딩 상태 관리
+	const isOpenBlockSuccessModal = useRecoilValue(IsOpenBlockSuccessModalAtom);
+	const postBlock = useRecoilValue(PostBlockAtom);
 
-// OOTD 탭입니다.
-const OOTD: React.FC = () => {
-	const [selectedTags, setSelectedTags] = useState<number[]>([0]);
+	// 여러 태그를 기반으로 피드를 가져오는 함수
+	const fetchFeedsByTags = async (tagNames: string[]) => {
+		try {
+			setLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+			// 태그를 무작위로 선택하는 함수
+			const getRandomTags = (tags: TagProps[], count: number) => {
+				const shuffled = tags.sort(() => 0.5 - Math.random()); // 배열 무작위로 섞기
+				return shuffled.slice(0, count).map((tag) => tag.tagName);
+			};
+
+			const query =
+				tagNames.length === 0
+					? getRandomTags(tagData, Math.ceil(tagData.length / 3))
+							.map((tagName) => `styletag=${tagName}`)
+							.join('&')
+					: tagNames.map((tagName) => `styletag=${tagName}`).join('&');
+
+			const response = await request.get<OOTDAPIResponse>(`/ootd?${query}`);
+			if (response.isSuccess) {
+				const fetchedFeeds = await Promise.all(
+					response.result.posts.map(async (post: Post) => {
+						const userResponse = await request.get<UserResponse>(`/users/${post.userId}`);
+						return {
+							userId: post.userId,
+							postId: post.postId,
+							profileUrl: userResponse.result.profilePictureUrl || noProfileImg,
+							userName: userResponse.result.nickname || `User${post.userId}`,
+							text: post.content,
+							feedImgUrls: post.photoUrls,
+						};
+					}),
+				);
+				setFeeds(fetchedFeeds);
+			} else {
+				console.error('Failed to fetch feeds:', response.message);
+			}
+		} catch (error) {
+			console.error('Error fetching feeds:', error);
+		} finally {
+			setLoading(false); // API 호출 후 로딩 상태를 false로 설정
+		}
+	};
 
 	const handleTagClick = (index: number) => {
-		setSelectedTags((prevSelectedTags) => {
+		setSelectedTags((prevSelectedTags: number[]) => {
 			if (prevSelectedTags.includes(index)) {
-				return prevSelectedTags.filter((tagIndex) => tagIndex !== index);
+				const newSelectedTags = prevSelectedTags.filter((tagIndex) => tagIndex !== index);
+				fetchFeedsByTags(newSelectedTags.map((i) => tagData[i].tagName)); // 선택된 모든 태그에 대해 필터링
+				return newSelectedTags;
 			} else {
-				return [...prevSelectedTags, index];
+				const newSelectedTags = [...prevSelectedTags, index];
+				fetchFeedsByTags(newSelectedTags.map((i) => tagData[i].tagName)); // 선택된 모든 태그에 대해 필터링
+				return newSelectedTags;
 			}
 		});
 	};
 
-	// tag 데이터를 반으로 나누기, 홀수일 경우 위에 줄이 하나 더 많게
+	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
+	useEffect(() => {
+		if (isOpenBlockSuccessModal === true) {
+			setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== postBlock?.friendName));
+		}
+	}, [isOpenBlockSuccessModal]);
+
+	// 태그 데이터를 반으로 나눠서 UI에 표시
 	const middleIndex = Math.ceil(tagData.length / 2);
 	const firstHalf = tagData.slice(0, middleIndex);
 	const secondHalf = tagData.slice(middleIndex);
+
+	useEffect(() => {
+		if (feeds.length !== 0) {
+			return;
+		}
+		fetchFeedsByTags(selectedTags.map((i) => tagData[i].tagName));
+	}, [feeds]);
 
 	return (
 		<OOTDContainer>
@@ -83,9 +152,16 @@ const OOTD: React.FC = () => {
 					))}
 				</TagRow>
 			</TagContainer>
-			<FeedContainer>
-				{feedData.map((feed) => (
-					<Feed feed={feed} />
+			{loading && (
+				<OOTDLoading>
+					<Loading />
+				</OOTDLoading>
+			)}
+			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
+				{feeds.map((feed, index) => (
+					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
+						<Feed key={feed.userName} feed={feed} onMoreClick={onMoreClick} />
+					</div>
 				))}
 			</FeedContainer>
 		</OOTDContainer>

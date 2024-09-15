@@ -23,18 +23,16 @@ export const HomeTopBarContainer = styled.div`
 `;
 
 export const HomeLogo = styled.img`
-	width: 7.375rem;
-	height: 2.25rem;
-	background-color: #d9d9d9;
+	width: 6.6875rem;
+	height: 1.6875rem;
 	margin-left: 1.25rem;
 	cursor: pointer;
-`;
+	overflow: hidden;
 
-export const NotiIcon = styled.img`
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 1.125rem;
-	cursor: pointer;
+	img {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 // HomeTabBar
@@ -65,13 +63,13 @@ export const HomeTabBarList = styled.ul`
 	margin: 0 1.25rem;
 `;
 
-export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean }>`
+export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
 	margin-top: 1rem;
 	border-bottom: 0.125rem solid ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')};
 	text-align: center;
 	flex-grow: 1;
 	flex-basis: 0;
-	cursor: pointer;
+	cursor: ${({ $isPointer }) => ($isPointer ? 'pointer' : '')};
 `;
 
 export const Tabs = styled.div`

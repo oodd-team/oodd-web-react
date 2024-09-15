@@ -7,13 +7,13 @@ export const SwiperContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 
-	.swiper-wrapper {
+	.review-swiper .swiper-wrapper {
 		height: 29.1875rem;
 		width: 100%;
 		max-height: 70%;
 	}
 
-	.swiper-slide {
+	.review-swiper .swiper-slide {
 		width: 21.875rem;
 		max-width: calc(100% - 2.5rem);
 		aspect-ratio: 3 / 4;
@@ -23,16 +23,16 @@ export const SwiperContainer = styled.div`
 		transform: scale(0.95);
 	}
 
-	.swiper-slide.swiper-slide-active {
+	.review-swiper .swiper-slide-active {
 		transform: scale(1);
 	}
 
-	.swiper-slide.swiper-slide-next,
-	.parentSwiper.swiper-slide-prev {
+	.review-swiper .swiper-slide-next,
+	.review-swiper .swiper-slide-prev {
 		transform: scale(0.95);
 	}
 
-	.add-btn-box {
+	.review-swiper .add-btn-box {
 		display: flex;
 		width: 21.875rem;
 		max-width: calc(100% - 2.5rem);

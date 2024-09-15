@@ -14,6 +14,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	return (
 		<SwiperContainer>
 			<Swiper
+				className="upload-swiper"
 				ref={swiperRef}
 				spaceBetween={5}
 				slidesPerView="auto"

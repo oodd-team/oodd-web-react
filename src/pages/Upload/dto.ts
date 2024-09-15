@@ -38,6 +38,7 @@ export interface PostUploadModalProps {
 	initialContent?: string;
 	initialClothingInfos?: ClothingInfo[];
 	initialStyletag?: Styletag | null;
+	initialRepresentative?: boolean;
 	postId?: number | null;
 }
 
@@ -47,7 +48,7 @@ export interface Styletag {
 }
 
 export interface ClothingInfo {
-	image_url: string;
+	imageUrl: string;
 	brand: string;
 	model: string;
 	modelNumber: number;
@@ -67,5 +68,6 @@ export interface PostResponse {
 		content: string;
 		styletags: string[];
 		clothingInfo: ClothingInfo[];
+		isRepresentative: boolean;
 	};
 }
