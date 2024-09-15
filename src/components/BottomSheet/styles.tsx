@@ -16,9 +16,13 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
 		visibility 0.3s ease-out;
 `;
 
-export const BottomSheetLayout = styled.div<{
-	$isOpenBottomSheet: boolean;
-	$currentTranslateY: number;
+export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; $isOpenBottomSheet: boolean }>(
+	({ $currentTranslateY, $isOpenBottomSheet }) => ({
+		style: {
+			transform: `translate(-50%, ${$isOpenBottomSheet ? `${$currentTranslateY}px` : '100%'})`,
+		},
+	}),
+)<{
 	$isHandlerVisible: boolean;
 }>`
 	position: fixed;
@@ -33,10 +37,6 @@ export const BottomSheetLayout = styled.div<{
 	z-index: 200;
 	user-select: none;
 	touch-action: none;
-	transform: translate(
-		-50%,
-		${({ $currentTranslateY, $isOpenBottomSheet }) => ($isOpenBottomSheet ? `${$currentTranslateY}px` : '100%')}
-	);
 	transition: transform 0.3s;
 `;
 
