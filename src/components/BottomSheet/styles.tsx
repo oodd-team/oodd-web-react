@@ -12,7 +12,7 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
 	visibility: ${({ $isOpenBottomSheet }) => ($isOpenBottomSheet ? 'visible' : 'hidden')};
 	transition:
 		opacity 0.2s ease-out,
-		visibility 0.2s ease-out;
+		visibility 0.3s ease-out;
 `;
 
 export const BottomSheetLayout = styled.div<{
@@ -36,7 +36,7 @@ export const BottomSheetLayout = styled.div<{
 		-50%,
 		${({ $currentTranslateY, $isOpenBottomSheet }) => ($isOpenBottomSheet ? `${$currentTranslateY}px` : '100%')}
 	);
-	transition: transform 0.3s ease-in-out;
+	transition: transform 0.3s;
 `;
 
 export const Handler = styled.hr`
