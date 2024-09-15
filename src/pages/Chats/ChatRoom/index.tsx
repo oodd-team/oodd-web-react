@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { MessagesContainer } from './styles';
@@ -222,14 +222,14 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// 프로필 사진 클릭 시 프로필 페이지로 이동
-	const onClickProfile = () => {
+	const onClickProfile = useCallback(() => {
 		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
 		if (opponentId === -1) {
 			setIsOpenCannotCheck(true);
 		} else {
 			nav(`/users/${opponentId}`);
 		}
-	};
+	}, [opponentInfo, nav]);
 
 	return (
 		<OODDFrame>
