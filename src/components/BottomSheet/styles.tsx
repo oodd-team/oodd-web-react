@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
@@ -39,7 +40,7 @@ export const BottomSheetLayout = styled.div<{
 	transition: transform 0.3s;
 `;
 
-export const Handler = styled.hr`
+export const Handler = React.memo(styled.hr`
 	width: 3rem;
 	margin: 0 auto;
 	height: 0.25rem;
@@ -48,4 +49,4 @@ export const Handler = styled.hr`
 	border-radius: 0.125rem;
 	z-index: 300;
 	cursor: pointer;
-`;
+`);
