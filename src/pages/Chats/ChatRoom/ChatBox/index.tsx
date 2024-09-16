@@ -37,6 +37,7 @@ const ChatBox: React.FC = () => {
 	const onChangeMessage = (e: any): void => {
 		setNewMessage(e.target.value);
 	};
+
 	const sendNewMessage = (): void => {
 		if (newMessage === '') {
 			return;

@@ -17,6 +17,7 @@ const SentMessage: React.FC<SentMessageProps> = React.memo(
 						</StyledText>
 					</Message>
 				</MessageLayout>
+				{isPrintTime && <div style={{ margin: '0', padding: '0', height: '0.5rem' }}></div>}
 			</>
 		);
 	},

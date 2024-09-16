@@ -6,8 +6,8 @@ export const MessagesContainer = styled.div`
 	display: flex;
 	flex: 1;
 	flex-direction: column;
-	padding: 1rem 0.875rem 0 1.25rem;
-	margin: 0 auto 5.2rem auto;
+	padding: 1rem 0.875rem 0 0.875rem;
+	margin: 0 auto 5.1rem auto;
 	scroll-behavior: smooth;
 
 	&::-webkit-scrollbar {
