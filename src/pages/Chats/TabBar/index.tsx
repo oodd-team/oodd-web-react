@@ -112,7 +112,7 @@ const TabBar: React.FC = () => {
 						<Request matchingRequests={matchingRequests} handleRemoveMatching={handleRemoveMatching} />
 					</SwiperSlide>
 					<SwiperSlide className="swiper-slider">
-						<RecentChat swiperRef={swiperRef} />
+						<RecentChat matchingRequests={matchingRequests} swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>
 			</Tabs>

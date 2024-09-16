@@ -10,7 +10,12 @@ import { AllMesagesAtom } from '../../../recoil/AllMessages';
 import SwiperCore from 'swiper';
 import Loading from '../../../components/Loading';
 
-const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({ swiperRef }) => {
+interface RecentChatProps {
+	matchingRequests: number;
+	swiperRef: React.MutableRefObject<SwiperCore | null>;
+}
+
+const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const storageValue = localStorage.getItem('id');
 	const userId = storageValue ? Number(storageValue) : -1;
@@ -48,7 +53,7 @@ const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null
 		};
 
 		getChatRoomList();
-	}, [allMessages]);
+	}, [allMessages, matchingRequests]);
 
 	return (
 		<>
