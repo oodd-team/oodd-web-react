@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const UploadContainer = styled.div`
+	flex-grow: 1;
+	height: 100vh;
+	width: 100%;
+	position: relative;
+`;
+
 export const Content = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -7,6 +14,7 @@ export const Content = styled.div`
 	top: 2.75rem;
 	left: 0;
 	width: 100%;
+	//max-width: 512px;
 	height: calc(100% - 10rem);
 	overflow-y: auto;
 
