@@ -1,5 +1,9 @@
 export interface PostUploadModalProps {
-	postId?: number | null;
+	onPrev: () => void;
+	selectedImages: string[];
+	initialContent?: string;
+	initialClothingInfos?: ClothingInfo[];
+	initialStyletag?: Styletag | null;
 }
 
 export interface Styletag {
@@ -7,13 +11,7 @@ export interface Styletag {
 	color: string;
 }
 
-export interface ClothingInfo {
-	imageUrl: string;
-	brand: string;
-	model: string;
-	modelNumber: number;
-	url: string;
-}
+import { ClothingInfo } from '../dto';
 
 export interface ClothingInfoItemProps {
 	clothingObj: ClothingInfo;
@@ -41,21 +39,4 @@ export interface Post {
 	styletags?: string[];
 	clothingInfo?: ClothingInfo[];
 	isRepresentive: boolean;
-}
-
-export interface PostResponse {
-	isSuccess: boolean;
-	code: number;
-	message: string;
-	result: {
-		postId: number;
-		userId: number;
-		likes: any;
-		comments: any;
-		photoUrls: string[];
-		content: string;
-		styletags: string[];
-		clothingInfo: ClothingInfo[];
-		isRepresentative: boolean;
-	};
 }

@@ -48,7 +48,7 @@ const MyPage: React.FC = () => {
 				text: '인스타 피드 가져오기',
 				action: () => {
 					setIsBottomSheetOpen(false);
-					navigate('/insta-connect');
+					handleInstagramSelect();
 				},
 				icon: Insta,
 			},
@@ -56,7 +56,7 @@ const MyPage: React.FC = () => {
 				text: '사진 올리기',
 				action: () => {
 					setIsBottomSheetOpen(false);
-					navigate('/image-select');
+					handlePhotoUploadSelect();
 				},
 				icon: Picture,
 			},
@@ -76,6 +76,14 @@ const MyPage: React.FC = () => {
 
 	const handleOpenSheet = () => {
 		setIsBottomSheetOpen(true);
+	};
+
+	const handleInstagramSelect = () => {
+		navigate('/upload', { state: { mode: 'instagram' } });
+	};
+
+	const handlePhotoUploadSelect = () => {
+		navigate('/upload', { state: { mode: 'image' } });
 	};
 
 	const handlePostClick = (postId: string) => {

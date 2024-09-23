@@ -13,10 +13,7 @@ import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
-import PostImageSelect from './pages/PostImageSelect';
-import PostInstaConnect from './pages/PostInstaConnect';
-import PostInstaFeedSelect from './pages/PostInstaFeedSelect';
-import PostUpload from './pages/PostUpload';
+import Upload from './pages/Upload';
 import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
@@ -37,12 +34,7 @@ const App: React.FC = () => {
 				<Route path="/Verification" element={<Verification />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
-
-				<Route path="/image-select" element={<PostImageSelect />} />
-				<Route path="/insta-connect" element={<PostInstaConnect />} />
-				<Route path="/insta-feed-select" element={<PostInstaFeedSelect />} />
-				<Route path="/upload" element={<PostUpload />} />
-
+				<Route path="/upload" element={<Upload />} />
 				<Route path="/post/:postId" element={<Post />} />
 				<Route path="/users/:userId" element={<ProfileViewer />} />
 				<Route path="signup" element={<SignUp />} />
