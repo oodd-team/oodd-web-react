@@ -149,7 +149,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 		setIsStyletagListOpen(false);
 	};
 
-	const handleToggleOOTD = () => {
+	const handleToggleIsRepresentative = () => {
 		setIsRepresentative(!isRepresentative);
 	};
 
@@ -288,7 +288,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 						<img src={pin} />
 						<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 						<div>
-							<ToggleSwitch checked={isRepresentative} onChange={handleToggleOOTD} />
+							<ToggleSwitch checked={isRepresentative} onChange={handleToggleIsRepresentative} />
 						</div>
 					</PinnedPostToggleContainer>
 				</Content>
