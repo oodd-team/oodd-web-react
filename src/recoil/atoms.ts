@@ -5,12 +5,10 @@ export const userDetailsState = atom<UserInfoProps | null>({
 	key: 'userDetailsState',
 	default: null,
 });
-
 export const isBottomSheetOpenState = atom<boolean>({
 	key: 'isBottomSheetOpenState',
 	default: false,
 });
-
 export const friendState = atom<boolean>({
 	key: 'friendState',
 	default: false,
