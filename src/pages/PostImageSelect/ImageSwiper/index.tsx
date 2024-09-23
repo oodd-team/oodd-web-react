@@ -10,30 +10,11 @@ import plus from '../../../assets/Upload/plus.svg';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
 
-const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages }) => {
+const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemoveImage }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [currentSlide, setCurrentSlide] = useState(0);
 
-	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files) {
-			const filesArray = Array.from(event.target.files);
-			const newImages: string[] = [];
-			filesArray.forEach((file) => {
-				const reader = new FileReader();
-				reader.onloadend = () => {
-					if (reader.result) {
-						newImages.push(reader.result.toString());
-						if (newImages.length === filesArray.length) {
-							onAddImages(newImages);
-						}
-					}
-				};
-				reader.readAsDataURL(file);
-			});
-		}
-	};
-
-	const handleAddImageClick = () => {
+	const handleSelectImage = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
@@ -59,7 +40,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 						<ImageWrapper>
 							<img src={image} alt={`Selected ${index}`} />
 							{images.length > 1 && (
-								<RemoveButton onClick={() => onRemove(image)}>
+								<RemoveButton onClick={() => onRemoveImage(image)}>
 									<img src={remove} alt="Remove" />
 								</RemoveButton>
 							)}
@@ -67,10 +48,20 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onRemove, onAddImages
 					</SwiperSlide>
 				))}
 				<SwiperSlide className="add-btn-box">
-					<AddButton onClick={handleAddImageClick}>
+					<AddButton onClick={handleSelectImage}>
 						<img src={plus} />
 					</AddButton>
-					<HiddenFileInput type="file" onChange={handleFileUpload} ref={fileInputRef} multiple />
+					<HiddenFileInput
+						type="file"
+						onChange={(event) => {
+							if (event.target.files) {
+								onProcessFile(event.target.files);
+							}
+						}}
+						ref={fileInputRef}
+						multiple
+						accept="image/*"
+					/>
 				</SwiperSlide>
 				<StyledNavigation className="swiper-button-prev" />
 				<StyledNavigation className="swiper-button-next" />

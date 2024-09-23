@@ -14,6 +14,7 @@ export const Content = styled.div`
 	top: 2.75rem;
 	left: 0;
 	width: 100%;
+	//max-width: 512px;
 	height: calc(100% - 10rem);
 	overflow-y: auto;
 

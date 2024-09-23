@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
-	postImagesState,
-	postContentState,
-	postClothingInfosState,
-	postStyletagState,
-	postIsRepresentativeState,
-} from '../../recoil/atoms';
+	postImagesAtom,
+	postContentAtom,
+	postClothingInfosAtom,
+	postStyletagAtom,
+	postIsRepresentativeAtom,
+} from '../../recoil/PostAtom';
 import {
+	UploadContainer,
 	Content,
 	StyledInput,
 	TagContainer,
@@ -40,11 +41,11 @@ import request, { BaseResponse } from '../../apis/core';
 import { PostUploadModalProps, ClothingInfo, Styletag, Post, PostResponse } from './dto';
 
 const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
-	const [selectedImages, setSelectedImages] = useRecoilState(postImagesState);
-	const [content, setContent] = useRecoilState(postContentState);
-	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosState);
-	const [selectedStyletag, setSelectedStyletag] = useRecoilState(postStyletagState);
-	const [isRepresentative, setIsRepresentative] = useRecoilState(postIsRepresentativeState);
+	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
+	const [content, setContent] = useRecoilState(postContentAtom);
+	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosAtom);
+	const [selectedStyletag, setSelectedStyletag] = useRecoilState(postStyletagAtom);
+	const [isRepresentative, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -217,79 +218,85 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 
 	return (
 		<OODDFrame>
-			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={handlePrev} />
-			<Content>
-				<ImageSwiper images={selectedImages} />
-				<StyledInput value={content} onChange={(e) => setContent(e.target.value)} placeholder="문구를 작성하세요..." />
-				<TagContainer className="clothingTag">
-					<div onClick={handleToggleSearchSheet}>
-						<img src={clothingTag} />
-						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-							옷 정보 태그
-						</StyledText>
-						{clothingInfos.length > 0 && (
-							<StyledText className="count" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-								{clothingInfos.length}
+			<UploadContainer>
+				<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={handlePrev} />
+				<Content>
+					<ImageSwiper images={selectedImages} />
+					<StyledInput
+						value={content}
+						onChange={(e) => setContent(e.target.value)}
+						placeholder="문구를 작성하세요..."
+					/>
+					<TagContainer className="clothingTag">
+						<div onClick={handleToggleSearchSheet}>
+							<img src={clothingTag} />
+							<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+								옷 정보 태그
 							</StyledText>
-						)}
-						<img src={next} />
-					</div>
-					{clothingInfos.length > 0 && (
-						<ClothingInfoList>
-							{clothingInfos.map((clothingObj, index) => (
-								<ClothingInfoItem key={index} clothingObj={clothingObj} onDelete={handleDeleteClothingInfo} />
-							))}
-						</ClothingInfoList>
-					)}
-				</TagContainer>
-				<TagContainer>
-					<div onClick={handleToggleStyleTagList}>
-						<img src={styleTag} />
-						<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-							스타일 태그
-						</StyledText>
-						{isStyletagListOpen ? (
-							<img src={next_up} />
-						) : !selectedStyletag ? (
-							<>
-								<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
-									미지정
+							{clothingInfos.length > 0 && (
+								<StyledText className="count" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+									{clothingInfos.length}
 								</StyledText>
-								<img src={next} />
-							</>
-						) : (
-							<StyletagItem selected={false} color={selectedStyletag?.color}>
-								<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
-							</StyletagItem>
+							)}
+							<img src={next} />
+						</div>
+						{clothingInfos.length > 0 && (
+							<ClothingInfoList>
+								{clothingInfos.map((clothingObj, index) => (
+									<ClothingInfoItem key={index} clothingObj={clothingObj} onDelete={handleDeleteClothingInfo} />
+								))}
+							</ClothingInfoList>
 						)}
-					</div>
-					{isStyletagListOpen && (
-						<StyletagList>
-							{styletags.map((tagObj, index) => (
-								<StyletagItem
-									key={index}
-									onClick={() => handleSelectStyletag(tagObj)}
-									selected={selectedStyletag?.tag === tagObj.tag}
-									color={tagObj.color}
-								>
-									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{tagObj.tag}</StyledText>
+					</TagContainer>
+					<TagContainer>
+						<div onClick={handleToggleStyleTagList}>
+							<img src={styleTag} />
+							<StyledText className="label" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+								스타일 태그
+							</StyledText>
+							{isStyletagListOpen ? (
+								<img src={next_up} />
+							) : !selectedStyletag ? (
+								<>
+									<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+										미지정
+									</StyledText>
+									<img src={next} />
+								</>
+							) : (
+								<StyletagItem selected={false} color={selectedStyletag?.color}>
+									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
 								</StyletagItem>
-							))}
-						</StyletagList>
-					)}
-				</TagContainer>
-				<PinnedPostToggleContainer>
-					<img src={pin} />
-					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
-					<div>
-						<ToggleSwitch checked={isRepresentative} onChange={handleToggleOOTD} />
-					</div>
-				</PinnedPostToggleContainer>
-			</Content>
+							)}
+						</div>
+						{isStyletagListOpen && (
+							<StyletagList>
+								{styletags.map((tagObj, index) => (
+									<StyletagItem
+										key={index}
+										onClick={() => handleSelectStyletag(tagObj)}
+										selected={selectedStyletag?.tag === tagObj.tag}
+										color={tagObj.color}
+									>
+										<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{tagObj.tag}</StyledText>
+									</StyletagItem>
+								))}
+							</StyletagList>
+						)}
+					</TagContainer>
+					<PinnedPostToggleContainer>
+						<img src={pin} />
+						<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
+						<div>
+							<ToggleSwitch checked={isRepresentative} onChange={handleToggleOOTD} />
+						</div>
+					</PinnedPostToggleContainer>
+				</Content>
 
-			<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
+				<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
 
-			<BottomSheet {...bottomSheetProps} />
+				<BottomSheet {...bottomSheetProps} />
+			</UploadContainer>
 		</OODDFrame>
 	);
 };

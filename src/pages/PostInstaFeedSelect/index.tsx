@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { postImagesState } from '../../recoil/atoms';
+import { postImagesAtom } from '../../recoil/PostAtom';
 import { Content, PostContainer, ImageWrapper } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';
@@ -18,7 +18,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
-	const [images, setImages] = useRecoilState(postImagesState);
+	const [images, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
 
 	// 인스타그램 데이터 가져오는 함수

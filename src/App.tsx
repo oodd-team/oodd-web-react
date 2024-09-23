@@ -14,7 +14,6 @@ import ProfileViewer from './pages/ProfileViewer';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
 import PostImageSelect from './pages/PostImageSelect';
-import PostImageReview from './pages/PostImageReview';
 import PostInstaConnect from './pages/PostInstaConnect';
 import PostInstaFeedSelect from './pages/PostInstaFeedSelect';
 import PostUpload from './pages/PostUpload';
@@ -40,7 +39,6 @@ const App: React.FC = () => {
 				<Route path="/chats" element={<Chats />} />
 
 				<Route path="/image-select" element={<PostImageSelect />} />
-				<Route path="/image-review" element={<PostImageReview />} />
 				<Route path="/insta-connect" element={<PostInstaConnect />} />
 				<Route path="/insta-feed-select" element={<PostInstaFeedSelect />} />
 				<Route path="/upload" element={<PostUpload />} />
