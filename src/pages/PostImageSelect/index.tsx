@@ -1,21 +1,36 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { postImagesState, postContentState, postClothingInfosState, postStyletagState } from '../../recoil/atoms';
 import { ImageDragDropContainer } from './styles';
-import TopBar from '../../../components/TopBar';
-import BottomButton from '../../../components/BottomButton';
-import { StyledText } from '../../../components/Text/StyledText';
-import close from '../../../assets/Upload/close.svg';
-import picture from '../../../assets/Upload/picture.svg';
-import { ImageSelectModalProps } from '../dto';
+import { OODDFrame } from '../../components/Frame/Frame';
+import TopBar from '../../components/TopBar';
+import BottomButton from '../../components/BottomButton';
+import { StyledText } from '../../components/Text/StyledText';
+import close from '../../assets/Upload/close.svg';
+import picture from '../../assets/Upload/picture.svg';
+import { ImageSelectModalProps } from './dto';
 
-const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onClose, onSelect }) => {
-	const [images, setImages] = useState<string[]>(selectedImages);
+const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
+	const [images, setImages] = useRecoilState(postImagesState);
+	const [content, setContent] = useRecoilState(postContentState); // Recoil 상태로 관리
+	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosState); // Recoil 상태로 관리
+	const [styletag, setStyletag] = useRecoilState(postStyletagState); // Recoil 상태로 관리
 	const [isActive, setActive] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const navigate = useNavigate();
+
+	const handleClose = () => {
+		setImages([]);
+		setContent('');
+		setClothingInfos([]);
+		setStyletag(null);
+		navigate('/mypage');
+	};
 
 	const handleAddImage = (image: string) => {
 		const newImages = [...images, image];
 		setImages(newImages);
-		onSelect(newImages);
 	};
 
 	const handleProcessFiles = (files: FileList) => {
@@ -68,8 +83,8 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 	};
 
 	return (
-		<>
-			<TopBar text="OOTD 업로드" LeftButtonSrc={close} onLeftClick={onClose} />
+		<OODDFrame>
+			<TopBar text="OOTD 업로드" LeftButtonSrc={close} onLeftClick={handleClose} />
 			<ImageDragDropContainer
 				className={`${isActive ? ' active' : ''}`}
 				onDragEnter={handleDragEnter}
@@ -82,8 +97,8 @@ const ImageSelectModal: React.FC<ImageSelectModalProps> = ({ selectedImages, onC
 				<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*" />
 			</ImageDragDropContainer>
 			<BottomButton content="컴퓨터에서 사진 선택" onClick={handleFileSelectClick} />
-		</>
+		</OODDFrame>
 	);
 };
 
-export default ImageSelectModal;
+export default PostImageSelect;

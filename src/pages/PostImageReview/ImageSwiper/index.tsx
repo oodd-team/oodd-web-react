@@ -5,8 +5,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButton, HiddenFileInput } from './styles';
-import remove from '../../../../assets/Upload/remove.svg';
-import plus from '../../../../assets/Upload/plus.svg';
+import remove from '../../../assets/Upload/remove.svg';
+import plus from '../../../assets/Upload/plus.svg';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ImageSwiperProps } from '../dto';
 

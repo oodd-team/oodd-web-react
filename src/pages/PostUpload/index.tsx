@@ -1,6 +1,14 @@
 //PostUploadModal/index.tsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import {
+	postImagesState,
+	postContentState,
+	postClothingInfosState,
+	postStyletagState,
+	postIsRepresentativeState,
+} from '../../recoil/atoms';
 import {
 	Content,
 	StyledInput,
@@ -10,44 +18,37 @@ import {
 	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-import TopBar from '../../../components/TopBar';
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
-import BottomButton from '../../../components/BottomButton';
-import { StyledText } from '../../../components/Text/StyledText';
+import { OODDFrame } from '../../components/Frame/Frame';
+import TopBar from '../../components/TopBar';
+import BottomSheet from '../../components/BottomSheet';
+import { BottomSheetProps } from '../../components/BottomSheet/dto';
+import BottomButton from '../../components/BottomButton';
+import { StyledText } from '../../components/Text/StyledText';
 import ImageSwiper from './ImageSwiper';
 import ClothingInfoItem from './ClothingInfoItem';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
-import back from '../../../assets/Upload/back.svg';
-import clothingTag from '../../../assets/Upload/clothingTag.svg';
-import styleTag from '../../../assets/Upload/styleTag.svg';
-import pin from '../../../assets/Upload/pin.svg';
-import next from '../../../assets/Upload/next.svg';
-import next_up from '../../../assets/Upload/next_up.svg';
-import { PostUploadModalProps, ClothingInfo } from '../dto';
-import { Styletag, Post } from './dto';
+import back from '../../assets/Upload/back.svg';
+import clothingTag from '../../assets/Upload/clothingTag.svg';
+import styleTag from '../../assets/Upload/styleTag.svg';
+import pin from '../../assets/Upload/pin.svg';
+import next from '../../assets/Upload/next.svg';
+import next_up from '../../assets/Upload/next_up.svg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebaseConfig';
-import request, { BaseResponse } from '../../../apis/core';
+import { storage } from '../../config/firebaseConfig';
+import request, { BaseResponse } from '../../apis/core';
+import { PostUploadModalProps, ClothingInfo, Styletag, Post, PostResponse } from './dto';
 
-const PostUploadModal: React.FC<PostUploadModalProps> = ({
-	onPrev,
-	selectedImages,
-	initialContent = '',
-	initialClothingInfos = [],
-	initialStyletag = null,
-	initialRepresentative = false,
-	postId = null,
-}) => {
-	const [content, setContent] = useState<string>(initialContent);
-	const [clothingInfos, setClothingInfos] = useState<ClothingInfo[]>(initialClothingInfos);
-	const [selectedStyletag, setSelectedStyletag] = useState<Styletag | null>(initialStyletag);
-	const [isRepresentative, setIsRepresentative] = useState(initialRepresentative);
+const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
+	const [selectedImages, setSelectedImages] = useRecoilState(postImagesState);
+	const [content, setContent] = useRecoilState(postContentState);
+	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosState);
+	const [selectedStyletag, setSelectedStyletag] = useRecoilState(postStyletagState);
+	const [isRepresentative, setIsRepresentative] = useRecoilState(postIsRepresentativeState);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const styletags: Styletag[] = [
@@ -63,6 +64,41 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
 	];
 
+	useEffect(() => {
+		handleInitialModalState();
+	}, []);
+
+	const handleInitialModalState = async () => {
+		const state = location.state as { mode?: string; postId?: number };
+
+		if (state?.mode === 'edit' && state?.postId) {
+			await fetchPostDetails(state.postId);
+		}
+	};
+
+	const fetchPostDetails = async (postId: number) => {
+		setIsLoading(true);
+
+		try {
+			const response = await request.get<PostResponse>(`/posts/${postId}`);
+			if (response.isSuccess && response.result) {
+				const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
+
+				setSelectedImages(photoUrls);
+				setContent(content || '');
+				setClothingInfos(clothingInfo);
+				setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
+				setIsRepresentative(isRepresentative);
+
+				console.log('Initial Post: ', response.result);
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	// intialStyletag에 color 추가
 	useEffect(() => {
 		if (selectedStyletag && !selectedStyletag.color) {
@@ -72,6 +108,10 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 			}
 		}
 	}, [selectedStyletag]);
+
+	const handlePrev = () => {
+		navigate(-1);
+	};
 
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
@@ -124,11 +164,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		console.log(2);
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
 		console.log(3);
-		await uploadBytes(storageRef, blob).then(()=>{
-			console.log("success")
-		}).catch((error)=>{
-			console.log(JSON.stringify(error))
-		});
+		await uploadBytes(storageRef, blob)
+			.then(() => {
+				console.log('success');
+			})
+			.catch((error) => {
+				console.log(JSON.stringify(error));
+			});
 		console.log(4);
 		return getDownloadURL(storageRef);
 	};
@@ -174,8 +216,8 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 	};
 
 	return (
-		<>
-			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={onPrev} />
+		<OODDFrame>
+			<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={handlePrev} />
 			<Content>
 				<ImageSwiper images={selectedImages} />
 				<StyledInput value={content} onChange={(e) => setContent(e.target.value)} placeholder="문구를 작성하세요..." />
@@ -248,8 +290,8 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 			<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
 
 			<BottomSheet {...bottomSheetProps} />
-		</>
+		</OODDFrame>
 	);
 };
 
-export default PostUploadModal;
+export default PostUpload;
