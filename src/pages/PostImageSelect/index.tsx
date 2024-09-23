@@ -21,10 +21,10 @@ import { ImageSelectModalProps } from './dto';
 
 const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const [images, setImages] = useRecoilState(postImagesAtom);
-	const [content, setContent] = useRecoilState(postContentAtom);
-	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosAtom);
-	const [styletag, setStyletag] = useRecoilState(postStyletagAtom);
-	const [isRepresentative, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
+	const [, setContent] = useRecoilState(postContentAtom);
+	const [, setClothingInfos] = useRecoilState(postClothingInfosAtom);
+	const [, setStyletag] = useRecoilState(postStyletagAtom);
+	const [, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
 	const [isActive, setActive] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const navigate = useNavigate();

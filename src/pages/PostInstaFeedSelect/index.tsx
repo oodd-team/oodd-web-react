@@ -15,10 +15,10 @@ import { InstaFeedSelectModalProps, Post } from './dto';
 
 const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
-	const [isLoading, setIsLoading] = useState(false);
+	const [, setIsLoading] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
-	const [images, setImages] = useRecoilState(postImagesAtom);
+	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
 
 	// 인스타그램 데이터 가져오는 함수

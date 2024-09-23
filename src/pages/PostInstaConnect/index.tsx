@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import theme from '../../styles/theme';
 import { Content, StyledInput } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -10,7 +9,7 @@ import ConfirmationModal from '../../components/ConfirmationModal';
 import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
 import { StyledText } from '../../components/Text/StyledText';
 import close from '../../assets/Upload/close.svg';
-import { InstaConnectModalProps, Post } from './dto';
+import { InstaConnectModalProps } from './dto';
 
 const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 	const [instagramID, setInstagramID] = useState('');
