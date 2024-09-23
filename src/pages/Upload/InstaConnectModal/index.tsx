@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import theme from '../../styles/theme';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import theme from '../../../styles/theme';
 import { Content, StyledInput } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import TopBar from '../../components/TopBar';
-import BottomButton from '../../components/BottomButton';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
-import { StyledText } from '../../components/Text/StyledText';
-import close from '../../assets/Upload/close.svg';
-import { InstaConnectModalProps } from './dto';
+import TopBar from '../../../components/TopBar';
+import BottomButton from '../../../components/BottomButton';
+import ConfirmationModal from '../../../components/ConfirmationModal';
+import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
+import { StyledText } from '../../../components/Text/StyledText';
+import close from '../../../assets/Upload/close.svg';
+import { InstaConnectModalProps, Post } from '../dto';
 
-const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
+const InstaConnectModal: React.FC<InstaConnectModalProps> = ({ onClose, onNext, accessToken }) => {
 	const [instagramID, setInstagramID] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const navigate = useNavigate();
-
-	const handleClose = () => {
-		navigate(-1);
-	};
 
 	const handleConnect = async () => {
 		try {
@@ -47,17 +41,31 @@ const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 		},
 	};
 
-	/*
 	useEffect(() => {
 		if (accessToken) {
 			fetchInstagramData(accessToken);
 		}
 	}, [accessToken]);
-	*/
+
+	const fetchInstagramData = async (accessToken: string) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.get('https://localhost:3001/instagram-import', {
+				params: { access_token: accessToken },
+			});
+			const fetchedPosts = response.data as Post[];
+			onNext(fetchedPosts);
+		} catch (error) {
+			console.error('Failed to fetch Instagram media:', error);
+			setIsModalOpen(true);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
-		<OODDFrame>
-			<TopBar text="인스타 계정 연동" LeftButtonSrc={close} onLeftClick={handleClose} />
+		<>
+			<TopBar text="인스타 계정 연동" LeftButtonSrc={close} onLeftClick={onClose} />
 			<Content>
 				{isLoading ? (
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>
@@ -89,8 +97,8 @@ const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 			<BottomButton content="연동하기" onClick={handleConnect} />
 
 			{isModalOpen && <ConfirmationModal {...failedModalProps} />}
-		</OODDFrame>
+		</>
 	);
 };
 
-export default PostInstaConnect;
+export default InstaConnectModal;

@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const UploadContainer = styled.div`
-	flex-grow: 1;
-	height: 100vh;
-	width: 100%;
-	position: relative;
-`;
-
 export const Content = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
