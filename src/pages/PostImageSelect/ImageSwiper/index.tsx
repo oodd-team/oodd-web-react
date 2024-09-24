@@ -60,7 +60,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 						}}
 						ref={fileInputRef}
 						multiple
-						accept="image/*"
+						accept="image/*,.heic"
 					/>
 				</SwiperSlide>
 				<StyledNavigation className="swiper-button-prev" />
