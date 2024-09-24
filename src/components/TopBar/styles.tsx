@@ -23,8 +23,8 @@ export const TextLayout = styled.div`
 `;
 
 export const BackButton = styled.img`
-	width: 1.4rem;
-	height: 1.4rem;
+	width: 1rem;
+	height: 1rem;
 	cursor: pointer;
 	background-size: cover;
 	background-position: center;
