@@ -62,8 +62,8 @@ export interface PostResponse {
 	result: {
 		postId: number;
 		userId: number;
-		likes: any;
-		comments: any;
+		likes: null; // 게시글 업로드 시 좋아요 값 없음
+		comments: null; // 게시글 업로드 시 댓글 값 없음
 		photoUrls: string[];
 		content: string;
 		styletags: string[];

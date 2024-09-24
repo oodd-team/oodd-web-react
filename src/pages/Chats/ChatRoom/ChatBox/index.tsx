@@ -34,7 +34,7 @@ const ChatBox: React.FC = () => {
 		}
 	}, []);
 
-	const onChangeMessage = (e: any): void => {
+	const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
 		setNewMessage(e.target.value);
 	};
 	const sendNewMessage = (): void => {
@@ -49,7 +49,7 @@ const ChatBox: React.FC = () => {
 		}
 	};
 
-	const onKeyDown = (e: any): void => {
+	const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
 			sendNewMessage();

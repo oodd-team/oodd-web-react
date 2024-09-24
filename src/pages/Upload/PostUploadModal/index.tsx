@@ -26,7 +26,7 @@ import pin from '../../../assets/Upload/pin.svg';
 import next from '../../../assets/Upload/next.svg';
 import next_up from '../../../assets/Upload/next_up.svg';
 import { PostUploadModalProps, ClothingInfo } from '../dto';
-import { Styletag, Post } from './dto';
+import { Styletag, Post, SearchBottomSheetProps } from './dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import request, { BaseResponse } from '../../../apis/core';
@@ -90,7 +90,7 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		setClothingInfos(deletedClothingInfo);
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
+	const bottomSheetProps: BottomSheetProps<SearchBottomSheetProps> = {
 		isOpenBottomSheet: isSearchBottomSheetOpen,
 		isHandlerVisible: false,
 		Component: SearchBottomSheetContent,
@@ -124,11 +124,13 @@ const PostUploadModal: React.FC<PostUploadModalProps> = ({
 		console.log(2);
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
 		console.log(3);
-		await uploadBytes(storageRef, blob).then(()=>{
-			console.log("success")
-		}).catch((error)=>{
-			console.log(JSON.stringify(error))
-		});
+		await uploadBytes(storageRef, blob)
+			.then(() => {
+				console.log('success');
+			})
+			.catch((error) => {
+				console.log(JSON.stringify(error));
+			});
 		console.log(4);
 		return getDownloadURL(storageRef);
 	};
