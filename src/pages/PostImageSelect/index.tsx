@@ -74,49 +74,43 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 		event.preventDefault();
 		if (event.target.files) {
 			handleProcessFile(event.target.files);
+			// 파일 선택 후 input 값 초기화
+			if (fileInputRef.current) {
+				fileInputRef.current.value = ''; // input 값을 초기화하여 동일한 파일을 다시 추가할 수 있도록 함
+			}
 		}
 	};
 
-	const handleProcessFile = (files: FileList) => {
+	const handleProcessFile = async (files: FileList) => {
 		const filesArray = Array.from(files);
-		filesArray.forEach((file) => {
-			if (file.type.startsWith('image/') || file.name.endsWith('.heic')) {
-				if (file.name.endsWith('.heic')) {
-					// HEIC 파일인 경우 jpeg로 변환
-					heic2any({ blob: file, toType: 'image/jpeg' })
-						.then((convertedBlob: Blob | Blob[]) => {
-							const blobsToProcess = Array.isArray(convertedBlob) ? convertedBlob : [convertedBlob]; // Blob 또는 Blob[]를 모두 배열로 처리
+		for (const file of filesArray) {
+			try {
+				let fileBlob = file;
 
-							blobsToProcess.forEach((blob) => {
-								const reader = new FileReader();
-								reader.onloadend = () => {
-									if (reader.result) {
-										// Base64 데이터에 MIME 타입 추가
-										const base64Image = `data:image/jpeg;base64,${reader.result.toString().split(',')[1]}`;
-										handleAddImage(base64Image);
-									}
-								};
-								reader.readAsDataURL(blob); // Blob 데이터를 DataURL로 변환하여 이미지 추가
-							});
-						})
-						.catch((error) => {
-							alert('HEIC 파일 변환에 실패했습니다.');
-							console.error(error);
-						});
-				} else {
-					// 일반 이미지 파일 처리
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						if (reader.result) {
-							handleAddImage(reader.result.toString());
-						}
-					};
-					reader.readAsDataURL(file);
+				// HEIC 파일인 경우 변환
+				if (/\.(heic)$/i.test(fileBlob.name)) {
+					const convertedBlob = await heic2any({ blob: fileBlob, toType: 'image/jpeg' });
+
+					// Blob을 File로 변환
+					const newFile = new File([convertedBlob as Blob], fileBlob.name.replace(/\.heic$/i, '.jpeg'), {
+						type: 'image/jpeg',
+						lastModified: new Date().getTime(),
+					});
+					fileBlob = newFile; // 변환된 파일을 다시 fileBlob으로 할당
 				}
-			} else {
-				alert('이미지 파일만 업로드할 수 있습니다.');
+
+				const reader = new FileReader();
+				reader.readAsDataURL(fileBlob);
+				reader.onload = () => {
+					if (reader.result) {
+						handleAddImage(reader.result.toString());
+					}
+				};
+			} catch (error) {
+				alert('이미지 처리 중 오류가 발생했습니다.');
+				console.error(error);
 			}
-		});
+		}
 	};
 
 	const handleAddImage = (newImage: string) => {
