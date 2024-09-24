@@ -70,4 +70,4 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 	);
 };
 
-export default ImageSwiper;
+export default React.memo(ImageSwiper);

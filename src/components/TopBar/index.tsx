@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { TopbarLayout, TextLayout, BackButton, KebabMenuButton } from './styles';
@@ -49,4 +50,4 @@ const TopBar: React.FC<TopBarProps> = ({
 	);
 };
 
-export default TopBar;
+export default React.memo(TopBar);

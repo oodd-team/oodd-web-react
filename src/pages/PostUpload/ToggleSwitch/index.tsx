@@ -6,4 +6,4 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, disabled
 	return <HiddenCheckbox checked={checked} onChange={onChange} disabled={disabled} role="switch" />;
 };
 
-export default ToggleSwitch;
+export default React.memo(ToggleSwitch);

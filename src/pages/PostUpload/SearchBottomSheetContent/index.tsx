@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Content, Input, SearchResultList, SearchResultItem, Loader } from './styles';
 import { StyledText } from '../../../components/Text/StyledText';
@@ -14,13 +14,12 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-	const handleInputChange = (query: string) => {
+	const handleInputChange = useCallback((query: string) => {
 		setSearchQuery(query);
-	};
+	}, []);
 
-	const fetchSearchResult = async (searchQuery: string, start: number) => {
+	const fetchSearchResult = useCallback(async (searchQuery: string, start: number) => {
 		try {
-			//네이버 쇼핑 api 프록시 서버 사용
 			const response = await axios.get(
 				'https://0dd3w25c7c.execute-api.ap-northeast-2.amazonaws.com/default/getNaverShopping',
 				{
@@ -41,7 +40,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 			console.error('Fetch error:', error);
 			return null;
 		}
-	};
+	}, []);
 
 	//입력된 검색어에 대한 디바운스
 	useEffect(() => {
@@ -63,7 +62,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 		}, 300); // 300ms 동안 입력이 없을 경우 타이머가 실행됨
 
 		return () => clearTimeout(timer);
-	}, [searchQuery]);
+	}, [searchQuery, fetchSearchResult]);
 
 	//무한 스크롤 기능 구현
 	useEffect(() => {
@@ -112,35 +111,38 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 		};
 	}, [reachedEnd, searchQuery, isLoading, searchResult]);
 
-	const handleAddClothingInfo = (item: any) => {
-		onSelectClothingInfo({
-			imageUrl: item.image,
-			brand: item.brand,
-			model: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
-			modelNumber: 1,
-			url: item.link,
-		});
-		onClose();
-	};
+	const handleAddClothingInfo = useCallback(
+		(item: any) => {
+			onSelectClothingInfo({
+				imageUrl: item.image,
+				brand: item.brand,
+				model: removeBrandFromTitle(item.title, item.brand),
+				modelNumber: 1,
+				url: item.link,
+			});
+			onClose();
+		},
+		[onSelectClothingInfo, onClose],
+	);
 
-	const removeBrandFromTitle = (title: string, brand: string) => {
-		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
+	const removeBrandFromTitle = useCallback((title: string, brand: string) => {
 		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		// 브랜드 이름을 감싸고 있는 [ ]를 제거
-		const bracketRegex = new RegExp(`[\\[\\]()<>]*${escapedBrand}[\\[\\]()<>]*`, 'gi'); //gi: 대소문자 구분 없이(g) 모든 위치에서(i)
-		// 변환된 브랜드 이름을 제거
+		const bracketRegex = new RegExp(
+			`[\$begin:math:display$\\$end:math:display$()<>]*${escapedBrand}[\$begin:math:display$\\$end:math:display$()<>]*`,
+			'gi',
+		);
 		const brandRegex = new RegExp(escapedBrand, 'gi');
-		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거
+
 		return title
 			.replace(/<[^>]+>/g, '')
 			.replace(bracketRegex, '')
 			.replace(brandRegex, '')
 			.trim();
-	};
+	}, []);
 
-	const handleCloseSheet = () => {
+	const handleCloseSheet = useCallback(() => {
 		onClose();
-	};
+	}, [onClose]);
 
 	return (
 		<Content>
@@ -188,4 +190,4 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 	);
 };
 
-export default SearchBottomSheetContent;
+export default React.memo(SearchBottomSheetContent);

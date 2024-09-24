@@ -1,5 +1,5 @@
 //PostUploadModal/index.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
@@ -52,53 +52,58 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const styletags: Styletag[] = [
-		{ tag: 'classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
-		{ tag: 'street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
-		{ tag: 'hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
-		{ tag: 'casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
-		{ tag: 'sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
-		{ tag: 'feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
-		{ tag: 'minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
-		{ tag: 'formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
-		{ tag: 'outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
-		{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
-	];
+	const styletags: Styletag[] = useMemo(
+		() => [
+			{ tag: 'classic', color: 'rgba(255, 0, 0, 0.15)' }, // 레드
+			{ tag: 'street', color: 'rgba(255, 100, 0, 0.15)' }, // 오렌지
+			{ tag: 'hip', color: 'rgba(255, 255, 0, 0.15)' }, // 옐로우
+			{ tag: 'casual', color: 'rgba(0, 255, 0, 0.15)' }, // 그린
+			{ tag: 'sporty', color: 'rgba(30, 144, 255, 0.15)' }, // 블루
+			{ tag: 'feminine', color: 'rgba(255, 20, 147, 0.15)' }, // 핑크
+			{ tag: 'minimal', color: 'rgba(128, 128, 128, 0.15)' }, // 그레이
+			{ tag: 'formal', color: 'rgba(148, 0, 211, 0.15)' }, // 바이올렛
+			{ tag: 'outdoor', color: 'rgba(34, 139, 34, 0.15)' }, // 그린
+			{ tag: 'luxury', color: 'rgba(255, 215, 0, 0.15)' }, // 골드
+		],
+		[],
+	);
 
 	useEffect(() => {
 		handleInitialModalState();
 	}, []);
 
-	const handleInitialModalState = async () => {
+	const handleInitialModalState = useCallback(async () => {
 		const state = location.state as { mode?: string; postId?: number };
 
 		if (state?.mode === 'edit' && state?.postId) {
 			await fetchPostDetails(state.postId);
 		}
-	};
+	}, [location.state]);
 
-	const fetchPostDetails = async (postId: number) => {
-		setIsLoading(true);
+	// 게시물 상세 정보 가져오기
+	const fetchPostDetails = useCallback(
+		async (postId: number) => {
+			setIsLoading(true);
 
-		try {
-			const response = await request.get<PostResponse>(`/posts/${postId}`);
-			if (response.isSuccess && response.result) {
-				const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
+			try {
+				const response = await request.get<PostResponse>(`/posts/${postId}`);
+				if (response.isSuccess && response.result) {
+					const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
 
-				setSelectedImages(photoUrls);
-				setContent(content || '');
-				setClothingInfos(clothingInfo);
-				setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
-				setIsRepresentative(isRepresentative);
-
-				console.log('Initial Post: ', response.result);
+					setSelectedImages(photoUrls);
+					setContent(content || '');
+					setClothingInfos(clothingInfo);
+					setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
+					setIsRepresentative(isRepresentative);
+				}
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setIsLoading(false);
 			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+		},
+		[setSelectedImages, setContent, setClothingInfos, setSelectedStyletag, setIsRepresentative],
+	);
 
 	// intialStyletag에 color 추가
 	useEffect(() => {
@@ -108,75 +113,56 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 				setSelectedStyletag({ ...selectedStyletag, color: foundTag.color });
 			}
 		}
-	}, [selectedStyletag]);
+	}, [selectedStyletag, styletags]);
 
-	const handlePrev = () => {
+	const handlePrev = useCallback(() => {
 		navigate(-1);
-	};
+	}, [navigate]);
 
-	const handleToggleSearchSheet = () => {
+	const handleToggleSearchSheet = useCallback(() => {
 		setIsSearchBottomSheetOpen((open) => !open);
-	};
+	}, []);
 
-	const handleToggleStyleTagList = () => {
+	const handleToggleStyleTagList = useCallback(() => {
 		setIsStyletagListOpen((open) => !open);
-	};
+	}, []);
 
-	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
+	const handleAddClothingInfo = useCallback((newClothingInfo: ClothingInfo) => {
 		setClothingInfos((clothingInfos) => [...clothingInfos, newClothingInfo]);
-	};
+	}, []);
 
-	const handleDeleteClothingInfo = (deleteClothingInfo: ClothingInfo) => {
-		const deletedClothingInfo = clothingInfos.filter((clothing) => clothing !== deleteClothingInfo);
-		setClothingInfos(deletedClothingInfo);
-	};
-
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isSearchBottomSheetOpen,
-		isHandlerVisible: false,
-		Component: SearchBottomSheetContent,
-		onCloseBottomSheet: () => {
-			setIsSearchBottomSheetOpen(false);
+	const handleDeleteClothingInfo = useCallback(
+		(deleteClothingInfo: ClothingInfo) => {
+			const deletedClothingInfo = clothingInfos.filter((clothing) => clothing !== deleteClothingInfo);
+			setClothingInfos(deletedClothingInfo);
 		},
-		componentProps: {
-			onClose: () => setIsSearchBottomSheetOpen(false),
-			onSelectClothingInfo: handleAddClothingInfo,
-		},
-	};
+		[clothingInfos],
+	);
 
-	const handleSelectStyletag = (tag: Styletag) => {
+	const handleSelectStyletag = useCallback((tag: Styletag) => {
 		setSelectedStyletag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
 		setIsStyletagListOpen(false);
-	};
+	}, []);
 
-	const handleToggleIsRepresentative = () => {
+	const handleToggleIsRepresentative = useCallback(() => {
 		setIsRepresentative(!isRepresentative);
-	};
+	}, [isRepresentative]);
 
-	const uploadImageToFirebase = async (image: string) => {
+	// Firebase에 이미지 업로드
+	const uploadImageToFirebase = useCallback(async (image: string) => {
 		// Firebase URL 형식인지 확인
 		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
 			return image; // 이미 업로드된 경우, URL을 그대로 반환
 		}
-		console.log(1);
 		// 새로 업로드해야 하는 경우
 		const response = await fetch(image);
 		const blob = await response.blob();
-		console.log(2);
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
-		console.log(3);
-		await uploadBytes(storageRef, blob)
-			.then(() => {
-				console.log('success');
-			})
-			.catch((error) => {
-				console.log(JSON.stringify(error));
-			});
-		console.log(4);
+		await uploadBytes(storageRef, blob);
 		return getDownloadURL(storageRef);
-	};
+	}, []);
 
-	const handleSubmit = async () => {
+	const handleSubmit: () => Promise<void> = useCallback(async () => {
 		if (!selectedStyletag) {
 			alert('스타일 태그를 지정해주세요.');
 			return;
@@ -197,10 +183,8 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 
 			let response;
 			if (postId) {
-				// 게시물 수정 (PATCH)
 				response = await request.patch<BaseResponse>(`/posts/${postId}`, postData);
 			} else {
-				// 새 게시물 업로드 (POST)
 				response = await request.post<BaseResponse>(`/posts`, postData);
 			}
 
@@ -214,7 +198,23 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 		} finally {
 			setIsLoading(false);
 		}
-	};
+	}, [selectedStyletag, selectedImages, content, clothingInfos, isRepresentative, postId, uploadImageToFirebase]);
+
+	const bottomSheetProps: BottomSheetProps = useMemo(
+		() => ({
+			isOpenBottomSheet: isSearchBottomSheetOpen,
+			isHandlerVisible: false,
+			Component: SearchBottomSheetContent,
+			onCloseBottomSheet: () => {
+				setIsSearchBottomSheetOpen(false);
+			},
+			componentProps: {
+				onClose: () => setIsSearchBottomSheetOpen(false),
+				onSelectClothingInfo: handleAddClothingInfo,
+			},
+		}),
+		[isSearchBottomSheetOpen, handleAddClothingInfo],
+	);
 
 	return (
 		<OODDFrame>
@@ -301,4 +301,4 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	);
 };
 
-export default PostUpload;
+export default React.memo(PostUpload);

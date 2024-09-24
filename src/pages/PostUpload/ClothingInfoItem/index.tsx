@@ -23,4 +23,4 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 	);
 };
 
-export default ClothingInfoItem;
+export default React.memo(ClothingInfoItem);
