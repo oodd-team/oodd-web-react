@@ -228,7 +228,7 @@ const ProfileViewer: React.FC = () => {
 							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
 						))}
 				</PostListContainer>
-				{isBottomSheetOpen && activeBottomSheet === 'main' && (
+				{activeBottomSheet === 'main' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
 						onCloseBottomSheet={handleCloseBottomSheet}
@@ -240,7 +240,7 @@ const ProfileViewer: React.FC = () => {
 						)}
 					/>
 				)}
-				{isBottomSheetOpen && activeBottomSheet === 'report' && (
+				{activeBottomSheet === 'report' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
 						onCloseBottomSheet={handleCloseBottomSheet}
