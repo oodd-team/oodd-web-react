@@ -45,7 +45,18 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 	};
 
 	const handleSwiperChange = (swiper: SwiperCore) => {
-		setActiveIndex(swiper.activeIndex);
+		// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
+		if (!hasMatchingRequests && swiper.activeIndex === 1) {
+			console.log(1);
+			swiper.allowSlidePrev = false;
+			setActiveIndex(swiper.activeIndex);
+		}
+		// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
+		else {
+			console.log(3);
+			swiper.allowSlidePrev = true;
+			setActiveIndex(swiper.activeIndex);
+		}
 	};
 
 	const fetchMatchingRequests = async () => {
@@ -100,6 +111,7 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 						swiperRef.current = swiper;
 					}}
 					onSlideChange={handleSwiperChange}
+					allowSlidePrev={hasMatchingRequests}
 					spaceBetween={0}
 					slidesPerView={1}
 					autoHeight={true}
@@ -109,7 +121,13 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 					<SwiperSlide
 						style={{ height: 'auto', visibility: hasMatchingRequests && isMatchingReady ? 'visible' : 'hidden' }}
 					>
-						<Matching tooltipRef={cardRef} />
+						<Matching
+							tooltipRef={cardRef}
+							swipeToOOTD={() => {
+								setHasMatchingRequests(false);
+								swiperRef.current?.slideNext();
+							}}
+						/>
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
 						<OOTD tooltipRef={ootdTooltipRef} onMoreClick={onOpenBottomSheet} />

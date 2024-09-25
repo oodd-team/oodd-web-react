@@ -10,7 +10,12 @@ interface Relationship {
 	requestStatus: string; // 추가된 필드
 }
 
-const Matching: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement | null> }> = ({ tooltipRef }) => {
+interface MatchingProps {
+	tooltipRef: React.MutableRefObject<HTMLDivElement | null>;
+	swipeToOOTD: () => void;
+}
+
+const Matching: React.FC<MatchingProps> = ({ tooltipRef, swipeToOOTD }) => {
 	const [matchingCount, setMatchingCount] = useState<number>(0);
 
 	useEffect(() => {
@@ -33,7 +38,11 @@ const Matching: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement | n
 
 	// 매칭 요청이 제거되었을 때 호출되는 함수
 	const handleRemoveMatching = () => {
-		setMatchingCount((prevCount) => Math.max(0, prevCount - 1));
+		if (matchingCount !== 1) {
+			setMatchingCount((prevCount) => Math.max(0, prevCount - 1));
+		} else {
+			swipeToOOTD();
+		}
 	};
 
 	return (
