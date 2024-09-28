@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { postImagesAtom } from '../../recoil/PostAtom';
+import { postImagesAtom } from '../../recoil/PostUpload/PostAtom';
 import { Content, PostContainer, ImageWrapper } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';
