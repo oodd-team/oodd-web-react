@@ -26,15 +26,12 @@ import BlockConfirmationModal from './BottomSheets/BlockBottomSheet.tsx';
 import MeatballBottomSheet from './BottomSheets/MeatballBottomSheet.tsx';
 import ReportBottomSheet from './BottomSheets/ReportBottomSheet.tsx';
 import {
-	IsOpenMeatballBottomSheetAtom,
-	IsOpenReportBottomSheetAtom,
 	IsOpenReportFailModalAtom,
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
 } from '../../recoil/MeatballBottomSheetAtom.ts';
 import PostCommentBottomSheet from './BottomSheets/PostCommentBottomSheet.tsx';
 import {
-	IsOpenPostCommentBottomSheetAtom,
 	IsOpenPostCommentFailModalAtom,
 	IsOpenPostCommentSuccessModalAtom,
 } from '../../recoil/PostCommentBottomSheetAtom.ts';
@@ -64,12 +61,9 @@ const Home: React.FC = () => {
 	const [isOpenBlockFailModal, setIsOpenBlockFailModal] = useRecoilState(IsOpenBlockFailModalAtom);
 	const isOpenBlockConfirmationModal = useRecoilValue(IsOpenBlockConfirmationModalAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
-	const [, setIsOpenMeatballBottomSheet] = useRecoilState(IsOpenMeatballBottomSheetAtom);
-	const [, setIsOpenReportBottomSheet] = useRecoilState(IsOpenReportBottomSheetAtom);
 	const [isOpenReportSuccessModal, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
 	const [isOpenReportFailModal, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
 	const postReport = useRecoilValue(PostReportAtom);
-	const [, setIsOpenPostCommentBottomSheet] = useRecoilState(IsOpenPostCommentBottomSheetAtom);
 	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
 		IsOpenPostCommentSuccessModalAtom,
 	);
@@ -183,11 +177,7 @@ const Home: React.FC = () => {
 
 			<HomeContainer>
 				<HomeTopBar />
-				<HomeTabBar
-					onOpenBottomSheet={() => setIsOpenMeatballBottomSheet(true)}
-					onOpenReportSheet={() => setIsOpenReportBottomSheet(true)}
-					onOpenCommentModal={() => setIsOpenPostCommentBottomSheet(true)}
-				/>
+				<HomeTabBar />
 			</HomeContainer>
 			<NavBar />
 		</OODDFrame>
