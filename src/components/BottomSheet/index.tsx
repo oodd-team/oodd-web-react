@@ -11,13 +11,17 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 }) => {
 	const startY = useRef<number | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
+	const [isRendered, setIsRendered] = useState(false);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (isOpenBottomSheet) {
 			setInitialRender(false);
+			setIsRendered(true);
 			setCurrentTranslateY(0); // 초기화
+		} else {
+			setIsRendered(false);
 		}
 	}, [isOpenBottomSheet]);
 
@@ -105,7 +109,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
 	return (
 		<BottomSheetWrapper
-			$isOpenBottomSheet={isOpenBottomSheet}
+			$isOpenBottomSheet={isRendered}
 			onClick={(e: React.MouseEvent) => {
 				// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
 				if (!isDragging && e.target === e.currentTarget) {
@@ -117,7 +121,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				onPointerDown={onPointerDown}
 				onTouchStart={onPointerDown}
 				$currentTranslateY={currentTranslateY}
-				$isOpenBottomSheet={isOpenBottomSheet}
+				$isOpenBottomSheet={isRendered}
 				$isHandlerVisible={isHandlerVisible}
 			>
 				{isHandlerVisible && <Handler />}

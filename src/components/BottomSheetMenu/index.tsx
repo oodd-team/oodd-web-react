@@ -2,8 +2,9 @@ import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { BottomSheetMenuLayout, SheetItem, Icon } from './styles';
 import { BottomSheetMenuProps, SheetItemDto } from './dto';
+import React from 'react';
 
-const BottomSheetMenu: React.FC<BottomSheetMenuProps> = ({ items, marginBottom }) => {
+const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items, marginBottom }) => {
 	return (
 		<BottomSheetMenuLayout $marginBottom={marginBottom}>
 			{items.map((item: SheetItemDto, index) => (
@@ -19,6 +20,6 @@ const BottomSheetMenu: React.FC<BottomSheetMenuProps> = ({ items, marginBottom }
 			))}
 		</BottomSheetMenuLayout>
 	);
-};
+});
 
 export default BottomSheetMenu;
