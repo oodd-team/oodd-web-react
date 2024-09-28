@@ -162,45 +162,6 @@ const Home: React.FC = () => {
 		content: `신고에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
-	// 코멘트 남기기 버튼 클릭 시
-	// const commentProps: CommentProps = {
-	// 	content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
-	// 	sendComment: (message: string) => {
-	// 		const postNewRequest = async () => {
-	// 			if (postRequest) {
-	// 				const response = await request.post<ApiDto>('/user-relationships', {
-	// 					requesterId: postRequest.requesterId,
-	// 					targetId: postRequest.targetId,
-	// 					message: message,
-	// 				});
-
-	// 				if (response.isSuccess) {
-	// 					setIsOpenHeartBottomSheet(false);
-	// 					setTimeout(() => {
-	// 						setIsOpenRequestSuccessModal(true);
-	// 					}, 100);
-	// 				} else {
-	// 					setIsOpenRequestFailModal(true);
-	// 				}
-	// 			} else {
-	// 				alert('잘못된 요청입니다.');
-	// 			}
-	// 		};
-
-	// 		postNewRequest();
-	// 	},
-	// };
-
-	// const commentSheetProps: BottomSheetProps = {
-	// 	isOpenBottomSheet: isCommentModalOpen,
-	// 	isHandlerVisible: true,
-	// 	Component: Comment,
-	// 	componentProps: commentProps,
-	// 	onCloseBottomSheet: () => {
-	// 		setIsCommentModalOpen(false);
-	// 	},
-	// };
-
 	return (
 		<OODDFrame>
 			{isOpenBlockConfirmationModal && <BlockConfirmationModal />}
