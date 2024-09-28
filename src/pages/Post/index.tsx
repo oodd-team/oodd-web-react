@@ -22,7 +22,6 @@ import ClothingInfoCard from './ClothingInfoCard';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import Modal from '../../components/Modal';
-import Comment from '../../components/Comment';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../styles/theme';
@@ -31,17 +30,13 @@ import more from './../../assets/Post/more.svg';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
-import { CommentProps } from '../../components/Comment/dto.ts';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
 import { PostResponse, UserResponse, ClothingInfo } from './dto';
 import request from '../../apis/core';
-
-interface CommentResponse {
-	isSuccess: boolean;
-	message: string;
-	result?: any; // 성공 시 반환되는 데이터가 있다면 여기에 정의할 수 있습니다.
-}
+import { useRecoilState } from 'recoil';
+import { IsOpenPostCommentBottomSheetAtom } from '../../recoil/PostCommentBottomSheetAtom.ts';
+import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
@@ -54,13 +49,13 @@ const Post: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
-	const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+	const [, setIsOpenPostCommentBottomSheet] = useRecoilState(IsOpenPostCommentBottomSheetAtom);
 	const nav = useNavigate();
 	const location = useLocation();
 
 	useEffect(() => {
 		if (location.state && location.state.isCommentModalOpen) {
-			setIsCommentModalOpen(true);
+			setIsOpenPostCommentBottomSheet(true);
 		}
 	}, [location.state]);
 
@@ -95,24 +90,6 @@ const Post: React.FC = () => {
 
 		fetchPostData();
 	}, [postId]);
-
-	// 코멘트를 보내는 함수
-	const sendComment = async (comment: string) => {
-		try {
-			setIsCommentModalOpen(false);
-			const response = await request.post<CommentResponse>(`/posts/${postId}/comment`, {
-				content: comment,
-			});
-
-			if (response.isSuccess) {
-				console.log('Comment sent successfully');
-			} else {
-				console.error('Failed to send comment:', response.message);
-			}
-		} catch (error) {
-			console.error('Error sending comment:', error);
-		}
-	};
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -180,21 +157,6 @@ const Post: React.FC = () => {
 		},
 	};
 
-	const commentProps: CommentProps = {
-		content: `${userName}님의 게시물에 대한 코멘트를 남겨주세요.\n코멘트는 ${userName}님에게만 전달됩니다.`,
-		sendComment: sendComment, // API 함수 전달
-	};
-
-	const commentSheetProps: BottomSheetProps<CommentProps> = {
-		isOpenBottomSheet: isCommentModalOpen,
-		isHandlerVisible: true,
-		Component: Comment,
-		componentProps: commentProps,
-		onCloseBottomSheet: () => {
-			setIsCommentModalOpen(false);
-		},
-	};
-
 	const confirmationModalProps = {
 		content: `${userName}님을 정말로 차단하시겠습니까?`,
 		isCancelButtonVisible: true,
@@ -236,7 +198,7 @@ const Post: React.FC = () => {
 					setShowInput(false);
 				}}
 			/>
-			<BottomSheet {...commentSheetProps} />
+			<PostCommentBottomSheet />
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
