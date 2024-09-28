@@ -11,7 +11,6 @@ export interface StyledTextProps {
 
 export const StyledText = styled.div<StyledTextProps>`
 	${(props) => props.theme.fontStyles[props.$textTheme.style]};
-	line-height: ${(props) => props.$textTheme.lineHeight}rem;
 	color: ${(props) => (props.color ? props.color : theme.colors.black)};
 	white-space: pre-line;
 `;
