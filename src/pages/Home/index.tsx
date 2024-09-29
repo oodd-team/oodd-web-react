@@ -30,11 +30,6 @@ import {
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
 } from '../../recoil/MeatballBottomSheetAtom.ts';
-import PostCommentBottomSheet from './BottomSheets/PostCommentBottomSheet.tsx';
-import {
-	IsOpenPostCommentFailModalAtom,
-	IsOpenPostCommentSuccessModalAtom,
-} from '../../recoil/PostCommentBottomSheetAtom.ts';
 
 interface UserResponseType {
 	id: number;
@@ -64,11 +59,6 @@ const Home: React.FC = () => {
 	const [isOpenReportSuccessModal, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
 	const [isOpenReportFailModal, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
 	const postReport = useRecoilValue(PostReportAtom);
-	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
-		IsOpenPostCommentSuccessModalAtom,
-	);
-	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
-
 	// 로그인 여부에 따라 navigate
 	useEffect(() => {
 		const checkAuth = async () => {
@@ -126,21 +116,6 @@ const Home: React.FC = () => {
 		content: `요청에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
-	// 코멘트 남기기 버튼
-	const postCommentSuccessModalProps: ModalProps = {
-		onClose: () => {
-			setIsOpenPostCommentSuccessModal(false);
-		},
-		content: '코멘트가 전달되었어요',
-	};
-
-	const postCommentFailModalProps: ModalProps = {
-		onClose: () => {
-			setIsOpenPostCommentFailModal(false);
-		},
-		content: '일시적인 오류입니다다',
-	};
-
 	// 신고하기 메뉴
 	const reportSuccessModalProps: ModalProps = {
 		onClose: () => {
@@ -165,10 +140,6 @@ const Home: React.FC = () => {
 			<HeartBottomSheet />
 			{isOpenRequestSuccessModal && <Modal {...requestSuccessModalProps} />}
 			{isOpenRequestFailModal && <Modal {...requestFailModalProps} />}
-
-			<PostCommentBottomSheet />
-			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
-			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
 
 			<MeatballBottomSheet />
 			<ReportBottomSheet />

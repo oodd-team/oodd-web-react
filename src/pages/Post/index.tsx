@@ -35,8 +35,13 @@ import ReportTextarea from '../Home/ReportTextarea.tsx';
 import { PostResponse, UserResponse, ClothingInfo } from './dto';
 import request from '../../apis/core';
 import { useRecoilState } from 'recoil';
-import { IsOpenPostCommentBottomSheetAtom } from '../../recoil/PostCommentBottomSheetAtom.ts';
+import {
+	IsOpenPostCommentBottomSheetAtom,
+	IsOpenPostCommentFailModalAtom,
+	IsOpenPostCommentSuccessModalAtom,
+} from '../../recoil/PostCommentBottomSheetAtom.ts';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
+import { ModalProps } from '../../components/Modal/dto.ts';
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
@@ -50,6 +55,11 @@ const Post: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
 	const [, setIsOpenPostCommentBottomSheet] = useRecoilState(IsOpenPostCommentBottomSheetAtom);
+	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
+		IsOpenPostCommentSuccessModalAtom,
+	);
+	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
+
 	const nav = useNavigate();
 	const location = useLocation();
 
@@ -172,6 +182,21 @@ const Post: React.FC = () => {
 		},
 	};
 
+	// 코멘트 남기기 버튼
+	const postCommentSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenPostCommentSuccessModal(false);
+		},
+		content: '코멘트가 전달되었어요',
+	};
+
+	const postCommentFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsOpenPostCommentFailModal(false);
+		},
+		content: '일시적인 오류입니다',
+	};
+
 	if (!postData) {
 		return <Loading />; // 로딩 중 표시
 	}
@@ -179,6 +204,7 @@ const Post: React.FC = () => {
 	return (
 		<OODDFrame>
 			<BottomSheet {...bottomSheetProps} />
+			{/* TODO: 신고하기 바텀시트 공통 컴포넌트로 분리하면서 수정 필요 */}
 			<BottomSheet
 				isOpenBottomSheet={isOpenReportSheet}
 				isHandlerVisible={true}
@@ -198,12 +224,15 @@ const Post: React.FC = () => {
 					setShowInput(false);
 				}}
 			/>
-			<PostCommentBottomSheet />
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
 				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
+
+			<PostCommentBottomSheet />
+			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
+			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
 
 			<PostTopBar userName={userName} />
 			<PostWrapper>
