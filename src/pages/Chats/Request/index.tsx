@@ -1,3 +1,4 @@
+import React from 'react';
 import Cards from '../../../components/Cards';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
@@ -19,4 +20,4 @@ const Request: React.FC<{ matchingRequests: number; handleRemoveMatching: () => 
 	);
 };
 
-export default Request;
+export default React.memo(Request);

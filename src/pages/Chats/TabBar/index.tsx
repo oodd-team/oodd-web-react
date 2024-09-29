@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyledText } from '../../../components/Text/StyledText';
 import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
 import Request from '../Request';
@@ -15,40 +15,47 @@ const tabs = ['요청', '최근 채팅'];
 const TabBar: React.FC = () => {
 	const [matchingRequests, setMatchingRequests] = useState(0);
 	const [hasMatchingRequests, setHasMatchingRequests] = useState(false);
+	console.log('rendering');
 
 	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
 
-	const handleTabClick = (index: number) => {
-		// 매칭 요청이 있는 경우에만 '매칭' 탭을 활성화
-		if (index !== 0 || hasMatchingRequests) {
-			setActiveIndex(index);
-			if (swiperRef.current) {
-				swiperRef.current.slideTo(index);
+	const handleTabClick = useCallback(
+		(index: number) => {
+			// 매칭 요청이 있는 경우에만 '매칭' 탭을 활성화
+			if (index !== 0 || hasMatchingRequests) {
+				setActiveIndex(index);
+				if (swiperRef.current) {
+					swiperRef.current.slideTo(index);
+				}
 			}
-		}
-	};
+		},
+		[hasMatchingRequests],
+	);
 
-	const handleSwiperChange = (swiper: SwiperCore) => {
-		// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
-		if (!hasMatchingRequests && swiper.activeIndex < swiper.previousIndex) {
-			swiper.allowSlidePrev = false;
-		}
-		// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
-		else {
-			swiper.allowSlidePrev = true;
-			setActiveIndex(swiper.activeIndex);
-		}
-	};
+	const handleSwiperChange = useCallback(
+		(swiper: SwiperCore) => {
+			// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
+			if (!hasMatchingRequests && swiper.activeIndex < swiper.previousIndex) {
+				swiper.allowSlidePrev = false;
+			}
+			// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
+			else {
+				swiper.allowSlidePrev = true;
+				setActiveIndex(swiper.activeIndex);
+			}
+		},
+		[hasMatchingRequests],
+	);
 
-	const handleRemoveMatching = () => {
+	const handleRemoveMatching = useCallback(() => {
 		if (matchingRequests !== 1) {
 			setMatchingRequests((prev) => Math.max(0, prev - 1));
 		} else {
 			setHasMatchingRequests(false);
 			swiperRef.current?.slideNext();
 		}
-	};
+	}, [matchingRequests]);
 
 	useEffect(() => {
 		// 첫 탭을 최근 채팅으로 설정
@@ -120,4 +127,4 @@ const TabBar: React.FC = () => {
 	);
 };
 
-export default TabBar;
+export default React.memo(TabBar);
