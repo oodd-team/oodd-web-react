@@ -69,4 +69,4 @@ const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) 
 	);
 };
 
-export default React.memo(RecentChat);
+export default RecentChat;
