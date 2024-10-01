@@ -6,7 +6,7 @@ import request from '../../../apis/core';
 import { ChatRoomDto, ChatRoomListDto } from './dto';
 import ChatRoomList from '../ChatRoomList';
 import { useRecoilValue } from 'recoil';
-import { AllMesagesAtom } from '../../../recoil/Chat/AllMessages';
+import { AllMesagesAtom } from '../../../recoil/Chats/AllMessages';
 import SwiperCore from 'swiper';
 import Loading from '../../../components/Loading';
 

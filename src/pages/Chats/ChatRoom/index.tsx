@@ -19,7 +19,7 @@ import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import { ModalProps } from '../../../components/Modal/dto';
 import { createExtendedMessages } from './createExtendedMessages';
-import { AllMesagesAtom } from '../../../recoil/Chat/AllMessages';
+import { AllMesagesAtom } from '../../../recoil/Chats/AllMessages';
 import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../context/SocketProvider';
 import { ApiDto } from './dto';
