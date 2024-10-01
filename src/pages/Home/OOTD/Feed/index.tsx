@@ -31,16 +31,17 @@ import { useRecoilState } from 'recoil';
 import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/HeartBottomSheetAtom';
 import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/BlockBottomSheetAtom';
 import { PostCommentAtom } from '../../../../recoil/PostCommentBottomSheetAtom';
+import { IsOpenMeatballBottomSheetAtom } from '../../../../recoil/MeatballBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;
-	onMoreClick: () => void;
 }
 
-const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
+const Feed: React.FC<Props> = ({ feed }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [isStarClicked, setIsStarClicked] = useState(false);
+	const [, setIsOpenMeatballBottomSheet] = useRecoilState(IsOpenMeatballBottomSheetAtom);
 	const [, setPostRequest] = useRecoilState(PostRequestAtom);
 	const [, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
 	const [, setPostBlock] = useRecoilState(PostBlockAtom);
@@ -113,7 +114,7 @@ const Feed: React.FC<Props> = ({ feed, onMoreClick }) => {
 						{feed.userName}
 					</StyledText>
 				</Info>
-				<img src={more} style={{ cursor: 'pointer' }} onClick={onMoreClick} />
+				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsOpenMeatballBottomSheet(true)} />
 			</FeedTop>
 			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
 				<StyledText
