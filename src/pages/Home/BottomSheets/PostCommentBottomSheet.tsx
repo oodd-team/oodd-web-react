@@ -46,7 +46,7 @@ const PostCommentBottomSheet: React.FC = () => {
 		},
 	};
 
-	const postCommentBottomSheet: BottomSheetProps = {
+	const postCommentBottomSheet: BottomSheetProps<CommentProps> = {
 		isOpenBottomSheet: isOpenPostCommentBottomSheet,
 		Component: Comment,
 		componentProps: postCommentProps,

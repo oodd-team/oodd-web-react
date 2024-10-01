@@ -10,7 +10,15 @@ import {
 	NoFavoriteContainer,
 } from './styles';
 import Feed from './Feed';
-import { FavoritesProps, FeedProps, UserProps, UserInterestsResponse, UserPostsResponse } from './dto';
+import {
+	FavoritesProps,
+	FeedProps,
+	UserProps,
+	UserInterestsResponse,
+	UserPostsResponse,
+	UserInterest,
+	Post,
+} from './dto';
 import User from './User';
 import Loading from '../../../components/Loading';
 import request, { BaseResponse } from '../../../apis/core';
@@ -27,6 +35,7 @@ const Favorites: React.FC<FavoritesProps> = () => {
 		setIsUserLoading(true);
 		try {
 			// 매칭 요청한 친구 목록 요청
+			// 즐겨찾기 부분이라 수정 안 함
 			const requestedResponse: BaseResponse = await request.get('/user-relationships/requested');
 			let requestedUserData: UserProps[] = [];
 
@@ -48,10 +57,10 @@ const Favorites: React.FC<FavoritesProps> = () => {
 			let interestedUserData: UserProps[] = [];
 
 			if (interestsResponse.isSuccess) {
-				interestedUserData = interestsResponse.result.map((user: any) => ({
+				interestedUserData = interestsResponse.result.map((user: UserInterest) => ({
 					userId: user.friendId,
 					userImgUrl: user.profilePictureUrl,
-					userName: user.nickname || user.name,
+					userName: user.nickname || '알수없음',
 				}));
 			} else {
 				console.error('Failed to fetch interested users');
@@ -75,7 +84,7 @@ const Favorites: React.FC<FavoritesProps> = () => {
 		try {
 			const response: UserPostsResponse = await request.get(`/posts?userId=${userId}`);
 			if (response.isSuccess) {
-				const feedData = response.result.posts.map((post: any) => ({
+				const feedData = response.result.posts.map((post: Post) => ({
 					postId: post.postId, // postId 추가
 					userId: userId,
 					profileUrl: users.find((user) => user.userId === userId)?.userImgUrl || '',

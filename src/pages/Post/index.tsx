@@ -169,7 +169,7 @@ const Post: React.FC = () => {
 		marginBottom: '3.125rem',
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
+	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isOpenBottomSheet,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
@@ -185,7 +185,7 @@ const Post: React.FC = () => {
 		sendComment: sendComment, // API 함수 전달
 	};
 
-	const commentSheetProps: BottomSheetProps = {
+	const commentSheetProps: BottomSheetProps<CommentProps> = {
 		isOpenBottomSheet: isCommentModalOpen,
 		isHandlerVisible: true,
 		Component: Comment,

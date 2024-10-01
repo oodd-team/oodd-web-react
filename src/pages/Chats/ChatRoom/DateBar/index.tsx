@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { DatebarLayout, DateWrapper, Divider } from './styles';
@@ -6,7 +7,7 @@ interface DateBarProps {
 	formattedDate: string; // yyyy년 MM월 dd일 EEEE
 }
 
-const DateBar: React.FC<DateBarProps> = ({ formattedDate }) => {
+const DateBar: React.FC<DateBarProps> = React.memo(({ formattedDate }) => {
 	return (
 		<DatebarLayout>
 			<Divider />
@@ -22,6 +23,6 @@ const DateBar: React.FC<DateBarProps> = ({ formattedDate }) => {
 			<Divider />
 		</DatebarLayout>
 	);
-};
+});
 
 export default DateBar;

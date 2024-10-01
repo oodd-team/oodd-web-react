@@ -9,11 +9,18 @@ export interface PostResponse {
 	result: PostData;
 }
 
+interface Comments {
+	commentId: number | null;
+	userId: number | null;
+	text: string | null;
+	timestamp: string | null;
+}
+
 export interface PostData {
 	postId: number;
 	userId: number;
 	likes: number | null;
-	comments: any[] | null; // comments의 구조가 확실하지 않으면 any로 둡니다.
+	comments: Comments[] | null;
 	photoUrls: string[];
 	content: string;
 	styletags: string[];

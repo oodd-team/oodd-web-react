@@ -46,7 +46,7 @@ const HeartBottomSheet: React.FC = () => {
 		},
 	};
 
-	const heartBottomSheet: BottomSheetProps = {
+	const heartBottomSheet: BottomSheetProps<CommentProps> = {
 		isOpenBottomSheet: isOpenHeartBottomSheet,
 		Component: Comment,
 		componentProps: requestCommentProps,
