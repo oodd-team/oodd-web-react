@@ -28,10 +28,10 @@ import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../../apis/core'; // request 인스턴스 임포트
 import { useRecoilState } from 'recoil';
-import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/HeartBottomSheetAtom';
-import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/BlockBottomSheetAtom';
-import { PostCommentAtom } from '../../../../recoil/PostCommentBottomSheetAtom';
-import { IsOpenMeatballBottomSheetAtom } from '../../../../recoil/MeatballBottomSheetAtom';
+import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
+import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
+import { PostCommentAtom } from '../../../../recoil/Home/PostCommentBottomSheetAtom';
+import { IsOpenMeatballBottomSheetAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;

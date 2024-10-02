@@ -10,7 +10,7 @@ import {
 	IsOpenPostCommentFailModalAtom,
 	IsOpenPostCommentSuccessModalAtom,
 	PostCommentAtom,
-} from '../../../recoil/PostCommentBottomSheetAtom';
+} from '../../../recoil/Home/PostCommentBottomSheetAtom';
 
 const PostCommentBottomSheet: React.FC = () => {
 	const [isOpenPostCommentBottomSheet, setIsOpenPostCommentBottomSheet] = useRecoilState(

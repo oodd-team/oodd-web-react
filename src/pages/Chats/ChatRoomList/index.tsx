@@ -4,7 +4,7 @@ import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
+import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
 import ProfileImg from '/ProfileImg.svg';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

@@ -13,7 +13,7 @@ import {
 	IsOpenRequestFailModalAtom,
 	IsOpenRequestSuccessModalAtom,
 	PostRequestAtom,
-} from '../../recoil/HeartBottomSheetAtom.ts';
+} from '../../recoil/Home/HeartBottomSheetAtom.ts';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ModalProps } from '../../components/Modal/dto.ts';
 import {
@@ -21,7 +21,7 @@ import {
 	IsOpenBlockFailModalAtom,
 	IsOpenBlockSuccessModalAtom,
 	PostBlockAtom,
-} from '../../recoil/BlockBottomSheetAtom.ts';
+} from '../../recoil/Home/BlockBottomSheetAtom.ts';
 import BlockConfirmationModal from './BottomSheets/BlockBottomSheet.tsx';
 import MeatballBottomSheet from './BottomSheets/MeatballBottomSheet.tsx';
 import ReportBottomSheet from './BottomSheets/ReportBottomSheet.tsx';
@@ -29,7 +29,7 @@ import {
 	IsOpenReportFailModalAtom,
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
-} from '../../recoil/MeatballBottomSheetAtom.ts';
+} from '../../recoil/Home/MeatballBottomSheetAtom.ts';
 
 interface UserResponseType {
 	id: number;

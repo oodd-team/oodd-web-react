@@ -18,10 +18,10 @@ import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/BlockBottomSheetAtom';
+import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { FeedsAtom } from '../../../recoil/FeedsAtom';
-import { SelectedTagsAtom } from '../../../recoil/SelectedTagsAtom';
+import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
+import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
 
 const tagData: TagProps[] = [
 	{ tagImgUrl: classic, tagName: 'classic' },
