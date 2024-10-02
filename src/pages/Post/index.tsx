@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { OODDFrame } from '../../components/Frame/Frame';
+import { OODDFrame } from '../../components/Frame/Frame.tsx';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';

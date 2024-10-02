@@ -7,7 +7,7 @@ import {
 	postClothingInfosAtom,
 	postStyletagAtom,
 	postIsRepresentativeAtom,
-} from '../../recoil/PostAtom';
+} from '../../recoil/PostUpload/PostAtom';
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';

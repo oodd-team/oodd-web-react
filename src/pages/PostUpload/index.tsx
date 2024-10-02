@@ -8,7 +8,7 @@ import {
 	postClothingInfosAtom,
 	postStyletagAtom,
 	postIsRepresentativeAtom,
-} from '../../recoil/PostAtom';
+} from '../../recoil/PostUpload/PostAtom';
 import {
 	UploadContainer,
 	Content,
