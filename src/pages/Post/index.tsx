@@ -39,7 +39,7 @@ import {
 	IsOpenPostCommentBottomSheetAtom,
 	IsOpenPostCommentFailModalAtom,
 	IsOpenPostCommentSuccessModalAtom,
-} from '../../recoil/PostCommentBottomSheetAtom.ts';
+} from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
 import { ModalProps } from '../../components/Modal/dto.ts';
 
