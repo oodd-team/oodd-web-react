@@ -18,10 +18,10 @@ import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/BlockBottomSheetAtom';
+import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { FeedsAtom } from '../../../recoil/FeedsAtom';
-import { SelectedTagsAtom } from '../../../recoil/SelectedTagsAtom';
+import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
+import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
 
 const tagData: TagProps[] = [
 	{ tagImgUrl: classic, tagName: 'classic' },
@@ -36,10 +36,7 @@ const tagData: TagProps[] = [
 	{ tagImgUrl: luxury, tagName: 'luxury' },
 ];
 
-const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onMoreClick: () => void }> = ({
-	tooltipRef,
-	onMoreClick,
-}) => {
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
 	const selectedTags = useRecoilValue(SelectedTagsAtom);
 	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
@@ -160,7 +157,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
-						<Feed key={feed.userName} feed={feed} onMoreClick={onMoreClick} />
+						<Feed key={feed.userName} feed={feed} />
 					</div>
 				))}
 			</FeedContainer>

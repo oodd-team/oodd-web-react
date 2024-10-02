@@ -1,11 +1,13 @@
+import React from 'react';
 import Cards from '../../../components/Cards';
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
 
-const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) => {
-	const handleRemoveMatching = () => {};
-
+const Request: React.FC<{ matchingRequests: number; handleRemoveMatching: () => void }> = ({
+	matchingRequests,
+	handleRemoveMatching,
+}) => {
 	return (
 		<>
 			<ReqeustInfo>
@@ -18,4 +20,4 @@ const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) =
 	);
 };
 
-export default Request;
+export default React.memo(Request);

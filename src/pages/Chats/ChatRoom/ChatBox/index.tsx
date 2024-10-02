@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import Send from '../../../../assets/Chats/Send.svg';
 import { useParams } from 'react-router-dom';
-import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
+import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../../context/SocketProvider';
 
 const ChatBox: React.FC = () => {
