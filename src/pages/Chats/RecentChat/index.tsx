@@ -1,21 +1,23 @@
 import { StyledText } from '../../../components/Text/StyledText';
 import theme from '../../../styles/theme';
 import { RecentChatInfo } from './styles';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import request from '../../../apis/core';
 import { ChatRoomDto, ChatRoomListDto } from './dto';
 import ChatRoomList from '../ChatRoomList';
-import { useRecoilValue } from 'recoil';
-import { AllMesagesAtom } from '../../../recoil/Chats/AllMessages';
 import SwiperCore from 'swiper';
 import Loading from '../../../components/Loading';
 
-const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({ swiperRef }) => {
+interface RecentChatProps {
+	matchingRequests: number;
+	swiperRef: React.MutableRefObject<SwiperCore | null>;
+}
+
+const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const storageValue = localStorage.getItem('id');
 	const userId = storageValue ? Number(storageValue) : -1;
 	const [loading, setLoading] = useState(false);
-	const allMessages = useRecoilValue(AllMesagesAtom);
 
 	useEffect(() => {
 		const getChatRoomList = async () => {
@@ -48,7 +50,7 @@ const RecentChat: React.FC<{ swiperRef: React.MutableRefObject<SwiperCore | null
 		};
 
 		getChatRoomList();
-	}, [allMessages]);
+	}, [matchingRequests]);
 
 	return (
 		<>

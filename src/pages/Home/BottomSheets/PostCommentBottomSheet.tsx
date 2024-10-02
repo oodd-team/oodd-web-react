@@ -25,7 +25,7 @@ const PostCommentBottomSheet: React.FC = () => {
 		sendComment: (message: string) => {
 			const postNewComment = async () => {
 				if (postComment) {
-					const response = await request.post<ApiDto>(`/post/${postComment.postId}/comment`, {
+					const response = await request.post<ApiDto>(`/posts/${postComment.postId}/comment`, {
 						content: message,
 					});
 

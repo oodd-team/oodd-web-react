@@ -36,10 +36,7 @@ const tagData: TagProps[] = [
 	{ tagImgUrl: luxury, tagName: 'luxury' },
 ];
 
-const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onMoreClick: () => void }> = ({
-	tooltipRef,
-	onMoreClick,
-}) => {
+const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
 	const selectedTags = useRecoilValue(SelectedTagsAtom);
 	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
@@ -160,7 +157,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]>; onM
 			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
-						<Feed key={feed.userName} feed={feed} onMoreClick={onMoreClick} />
+						<Feed key={feed.userName} feed={feed} />
 					</div>
 				))}
 			</FeedContainer>
