@@ -2,7 +2,7 @@ import { StyledText } from '../Text/StyledText';
 import theme from '../../styles/theme';
 import { CommentLayout, SendContainer, CommentTextarea, SendImg } from './styles';
 import Send from '/Send.svg';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CommentProps } from './dto';
 
 const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
@@ -17,23 +17,21 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 		}
 	}, [comment]);
 
-	const onChangeComment = (e: any) => {
-		if (e.target.value.length >= 100) {
-			return;
-		} else {
+	const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		if (e.target.value.length <= 100) {
 			setComment(e.target.value);
 		}
 	};
 
 	// textarea에서 enter 입력 시 실행
-	const onKeyDown = (e: any): void => {
+	const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
 		if (comment === '') {
 			e.preventDefault();
 			return;
 		}
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
-			sendComment(e.target.value);
+			sendComment(e.currentTarget.value);
 			setComment('');
 		}
 	};
@@ -59,7 +57,13 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 				{content}
 			</StyledText>
 			<SendContainer>
-				<CommentTextarea ref={textareaRef} value={comment} onChange={onChangeComment} onKeyDown={onKeyDown} />
+				<CommentTextarea
+					ref={textareaRef}
+					value={comment}
+					onChange={onChangeComment}
+					onKeyDown={onKeyDown}
+					maxLength={100}
+				/>
 				<SendImg src={Send} onClick={onClickSend} />
 			</SendContainer>
 		</CommentLayout>

@@ -95,7 +95,6 @@ const ReportBottomSheet: React.FC = () => {
 				)}
 			</div>
 		),
-		componentProps: reportBottomSheetMenuProps,
 		onCloseBottomSheet: () => {
 			setIsOpenReportBottomSheet(false);
 			setShowInput(false);
