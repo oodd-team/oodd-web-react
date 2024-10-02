@@ -21,7 +21,7 @@ import { UserInfoDto } from './ResponseDto/UserInfoDto';
 import request from '../../apis/core';
 import { PostListDto } from './ResponseDto/PostListDto';
 import { BlockDto } from './ResponseDto/BlockDto';
-import Modal from '../../components/Modal'; // Modal 컴포넌트 임포트
+import Modal from '../../components/Modal';
 import Loading from '../../components/Loading';
 
 const ProfileViewer: React.FC = () => {
