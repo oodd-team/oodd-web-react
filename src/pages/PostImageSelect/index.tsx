@@ -18,6 +18,7 @@ import back from '../../assets/Upload/back.svg';
 import picture from '../../assets/Upload/picture.svg';
 import ImageSwiper from '../PostImageSelect/ImageSwiper';
 import { ImageSelectModalProps } from './dto';
+import heic2any from 'heic2any';
 
 const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const [images, setImages] = useRecoilState(postImagesAtom);
@@ -73,29 +74,47 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 		event.preventDefault();
 		if (event.target.files) {
 			handleProcessFile(event.target.files);
+			// 파일 선택 후 input 값 초기화
+			if (fileInputRef.current) {
+				fileInputRef.current.value = ''; // input 값을 초기화하여 동일한 파일을 다시 추가할 수 있도록 함
+			}
 		}
 	};
 
-	const handleProcessFile = (files: FileList) => {
+	const handleProcessFile = async (files: FileList) => {
 		const filesArray = Array.from(files);
-		filesArray.forEach((file) => {
-			if (file.type.startsWith('image/')) {
-				// 이미지 파일인지 확인
+		for (const file of filesArray) {
+			try {
+				let fileBlob = file;
+
+				// HEIC 파일인 경우 변환
+				if (/\.(heic)$/i.test(fileBlob.name)) {
+					const convertedBlob = await heic2any({ blob: fileBlob, toType: 'image/jpeg' });
+
+					// Blob을 File로 변환
+					const newFile = new File([convertedBlob as Blob], fileBlob.name.replace(/\.heic$/i, '.jpeg'), {
+						type: 'image/jpeg',
+						lastModified: new Date().getTime(),
+					});
+					fileBlob = newFile; // 변환된 파일을 다시 fileBlob으로 할당
+				}
+
 				const reader = new FileReader();
-				reader.onloadend = () => {
+				reader.readAsDataURL(fileBlob);
+				reader.onload = () => {
 					if (reader.result) {
-						handleAddImage([reader.result.toString()]);
+						handleAddImage(reader.result.toString());
 					}
 				};
-				reader.readAsDataURL(file);
-			} else {
-				alert('이미지 파일만 업로드할 수 있습니다.');
+			} catch (error) {
+				alert('이미지 처리 중 오류가 발생했습니다.');
+				console.error(error);
 			}
-		});
+		}
 	};
 
-	const handleAddImage = (newImages: string[]) => {
-		setImages([...images, ...newImages]);
+	const handleAddImage = (newImage: string) => {
+		setImages((prevImages) => [...prevImages, newImage]); // 함수형 업데이트로 상태 추가
 	};
 
 	const handleRemoveImage = (image: string) => {
@@ -126,7 +145,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 								사진을 여기에 끌어다 놓으세요
 							</StyledText>
 							<img src={picture} />
-							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*" />
+							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>
 					) : (
 						<ImageSwiper images={images} onRemoveImage={handleRemoveImage} onProcessFile={handleProcessFile} />
