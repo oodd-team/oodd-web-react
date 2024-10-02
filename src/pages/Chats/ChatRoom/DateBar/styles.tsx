@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DatebarLayout = styled.div`
 	display: flex;
 	width: 100%;
-	margin: 1.25rem auto 1rem auto;
+	margin: 1.2rem auto 1rem auto;
 	gap: 0.5rem;
 `;
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -13,9 +13,9 @@ interface CardsProps {
 }
 
 const Cards: React.FC<CardsProps> = ({ onRemoveMatching }) => {
-  const swiperRef = useRef<any>(null); // Swiper 인스턴스 참조
-  const [relationships, setRelationships] = useState<Relationship[]>([]); // 매칭 요청 데이터를 상태로 관리
-  const [slidesVisibility, setSlidesVisibility] = useState<boolean[]>([]); // 각 슬라이드의 가시성을 관리
+	const swiperRef = useRef<SwiperRef | null>(null); // Swiper 인스턴스 참조
+	const [relationships, setRelationships] = useState<Relationship[]>([]); // 매칭 요청 데이터를 상태로 관리
+	const [slidesVisibility, setSlidesVisibility] = useState<boolean[]>([]); // 각 슬라이드의 가시성을 관리
 
   const fetchData = async () => {
     try {

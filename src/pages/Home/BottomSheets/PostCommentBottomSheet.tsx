@@ -10,7 +10,7 @@ import {
 	IsOpenPostCommentFailModalAtom,
 	IsOpenPostCommentSuccessModalAtom,
 	PostCommentAtom,
-} from '../../../recoil/PostCommentBottomSheetAtom';
+} from '../../../recoil/Home/PostCommentBottomSheetAtom';
 
 const PostCommentBottomSheet: React.FC = () => {
 	const [isOpenPostCommentBottomSheet, setIsOpenPostCommentBottomSheet] = useRecoilState(
@@ -25,7 +25,7 @@ const PostCommentBottomSheet: React.FC = () => {
 		sendComment: (message: string) => {
 			const postNewComment = async () => {
 				if (postComment) {
-					const response = await request.post<ApiDto>(`/post/${postComment.postId}/comment`, {
+					const response = await request.post<ApiDto>(`/posts/${postComment.postId}/comment`, {
 						content: message,
 					});
 
@@ -46,7 +46,7 @@ const PostCommentBottomSheet: React.FC = () => {
 		},
 	};
 
-	const postCommentBottomSheet: BottomSheetProps = {
+	const postCommentBottomSheet: BottomSheetProps<CommentProps> = {
 		isOpenBottomSheet: isOpenPostCommentBottomSheet,
 		Component: Comment,
 		componentProps: postCommentProps,

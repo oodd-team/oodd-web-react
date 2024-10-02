@@ -19,13 +19,7 @@ interface Relationship {
 
 const tabs = ['매칭', 'OOTD', '즐겨찾기'];
 
-interface HomeTabBarProps {
-	onOpenBottomSheet: () => void;
-	onOpenReportSheet: () => void;
-	onOpenCommentModal: () => void;
-}
-
-const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
+const HomeTabBar: React.FC = () => {
 	const [activeIndex, setActiveIndex] = useState<number>(1); // 초기화 시 OOTD 탭이 기본 활성화
 	const [hasMatchingRequests, setHasMatchingRequests] = useState<boolean>(false); // 매칭 요청 존재 여부
 	const [isMatchingReady, setIsMatchingReady] = useState<boolean>(false); // Matching 탭이 준비된 상태인지 확인
@@ -45,7 +39,18 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 	};
 
 	const handleSwiperChange = (swiper: SwiperCore) => {
-		setActiveIndex(swiper.activeIndex);
+		// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
+		if (!hasMatchingRequests && swiper.activeIndex === 1) {
+			console.log(1);
+			swiper.allowSlidePrev = false;
+			setActiveIndex(swiper.activeIndex);
+		}
+		// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
+		else {
+			console.log(3);
+			swiper.allowSlidePrev = true;
+			setActiveIndex(swiper.activeIndex);
+		}
 	};
 
 	const fetchMatchingRequests = async () => {
@@ -100,6 +105,7 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 						swiperRef.current = swiper;
 					}}
 					onSlideChange={handleSwiperChange}
+					allowSlidePrev={hasMatchingRequests}
 					spaceBetween={0}
 					slidesPerView={1}
 					autoHeight={true}
@@ -109,10 +115,16 @@ const HomeTabBar: React.FC<HomeTabBarProps> = ({ onOpenBottomSheet }) => {
 					<SwiperSlide
 						style={{ height: 'auto', visibility: hasMatchingRequests && isMatchingReady ? 'visible' : 'hidden' }}
 					>
-						<Matching tooltipRef={cardRef} />
+						<Matching
+							tooltipRef={cardRef}
+							swipeToOOTD={() => {
+								setHasMatchingRequests(false);
+								swiperRef.current?.slideNext();
+							}}
+						/>
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
-						<OOTD tooltipRef={ootdTooltipRef} onMoreClick={onOpenBottomSheet} />
+						<OOTD tooltipRef={ootdTooltipRef} />
 					</SwiperSlide>
 					<SwiperSlide style={{ height: 'auto' }}>
 						<Favorites />

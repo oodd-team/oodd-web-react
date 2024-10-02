@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { MessagesContainer } from './styles';
@@ -19,8 +19,8 @@ import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import { ModalProps } from '../../../components/Modal/dto';
 import { createExtendedMessages } from './createExtendedMessages';
-import { AllMesagesAtom } from '../../../recoil/AllMessages';
-import { OpponentInfoAtom } from '../../../recoil/OpponentInfo';
+import { AllMesagesAtom } from '../../../recoil/Chats/AllMessages';
+import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../context/SocketProvider';
 import { ApiDto } from './dto';
 import request from '../../../apis/core';
@@ -211,7 +211,7 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
-	const kebabMenuBottomSheet: BottomSheetProps = {
+	const kebabMenuBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isOpenMenu,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
@@ -222,14 +222,14 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// 프로필 사진 클릭 시 프로필 페이지로 이동
-	const onClickProfile = () => {
+	const onClickProfile = useCallback(() => {
 		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
 		if (opponentId === -1) {
 			setIsOpenCannotCheck(true);
 		} else {
 			nav(`/users/${opponentId}`);
 		}
-	};
+	}, [opponentInfo, nav]);
 
 	return (
 		<OODDFrame>

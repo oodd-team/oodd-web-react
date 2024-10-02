@@ -6,7 +6,7 @@ import {
 	IsOpenBlockFailModalAtom,
 	IsOpenBlockSuccessModalAtom,
 	PostBlockAtom,
-} from '../../../recoil/BlockBottomSheetAtom';
+} from '../../../recoil/Home/BlockBottomSheetAtom';
 import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 

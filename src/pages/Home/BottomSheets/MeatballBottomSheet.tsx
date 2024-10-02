@@ -1,10 +1,13 @@
 import BottomSheet from '../../../components/BottomSheet';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import { useRecoilState } from 'recoil';
-import { IsOpenMeatballBottomSheetAtom, IsOpenReportBottomSheetAtom } from '../../../recoil/MeatballBottomSheetAtom';
+import {
+	IsOpenMeatballBottomSheetAtom,
+	IsOpenReportBottomSheetAtom,
+} from '../../../recoil/Home/MeatballBottomSheetAtom';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
-import { IsOpenBlockConfirmationModalAtom } from '../../../recoil/BlockBottomSheetAtom';
+import { IsOpenBlockConfirmationModalAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import declaration from '../../../assets/Post/declaration.svg';
 import block from '../../../assets/Post/block.svg';
 
@@ -35,7 +38,7 @@ const MeatballBottomSheet: React.FC = () => {
 		marginBottom: '3.125rem',
 	};
 
-	const meatballBottomSheet: BottomSheetProps = {
+	const meatballBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isOpenMeatballBottomSheet,
 		Component: BottomSheetMenu,
 		componentProps: meatballBottomSheetMenuProps,

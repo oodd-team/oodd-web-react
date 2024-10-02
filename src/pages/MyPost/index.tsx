@@ -145,6 +145,7 @@ const MyPost: React.FC = () => {
 	const bottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
+		// TODO: 컴포넌트 분리에 따라 BottomSheetProps 제너릭 타입 추후 수정
 		Component: () => {
 			if (activeTab === 'menu') {
 				return <BottomSheetMenu {...bottomSheetMenuProps} />;

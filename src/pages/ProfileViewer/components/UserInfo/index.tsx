@@ -11,7 +11,7 @@ import {
 	Icon,
 } from './styles';
 import { useRecoilState } from 'recoil';
-import { userDetailsState, isBottomSheetOpenState, friendState } from '../../../../recoil/atoms';
+import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
@@ -23,16 +23,16 @@ import request from '../../../../apis/core';
 import { InterestDto } from './InterestDto';
 import { UserInfoProps } from '../../dto';
 import Modal from '../../../../components/Modal';
-import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
+import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
 import { UserInfoDto } from '../../ResponseDto/UserInfoDto';
 import { ChatRoomDto, Opponent } from '../../../Chats/RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
 
 const UserInfo: React.FC = React.memo(() => {
-	const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useRecoilState(isBottomSheetOpenState);
+	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [interested, setInterested] = useState<boolean | undefined>(undefined);
-	const [friend, setFriend] = useRecoilState(friendState);
+	const [friend, setFriend] = useRecoilState(isFriendAtom);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);

@@ -10,7 +10,7 @@ import {
 	IsOpenRequestFailModalAtom,
 	IsOpenRequestSuccessModalAtom,
 	PostRequestAtom,
-} from '../../../recoil/HeartBottomSheetAtom';
+} from '../../../recoil/Home/HeartBottomSheetAtom';
 
 const HeartBottomSheet: React.FC = () => {
 	const [isOpenHeartBottomSheet, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
@@ -46,7 +46,7 @@ const HeartBottomSheet: React.FC = () => {
 		},
 	};
 
-	const heartBottomSheet: BottomSheetProps = {
+	const heartBottomSheet: BottomSheetProps<CommentProps> = {
 		isOpenBottomSheet: isOpenHeartBottomSheet,
 		Component: Comment,
 		componentProps: requestCommentProps,

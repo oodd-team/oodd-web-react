@@ -8,7 +8,7 @@ import {
 	IsOpenReportFailModalAtom,
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
-} from '../../../recoil/MeatballBottomSheetAtom';
+} from '../../../recoil/Home/MeatballBottomSheetAtom';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import { ApiDto } from '../dto';
@@ -95,7 +95,6 @@ const ReportBottomSheet: React.FC = () => {
 				)}
 			</div>
 		),
-		componentProps: reportBottomSheetMenuProps,
 		onCloseBottomSheet: () => {
 			setIsOpenReportBottomSheet(false);
 			setShowInput(false);
