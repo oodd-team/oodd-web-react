@@ -2,6 +2,7 @@ import { DefaultTheme, css } from 'styled-components';
 
 const theme: DefaultTheme = {
 	colors: {
+		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
 		black: '#000000',
 		gray4: '#434343',
 		gray3: '#7B7B7B',
