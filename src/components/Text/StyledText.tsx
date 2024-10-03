@@ -4,7 +4,7 @@ import theme from '../../styles/theme';
 export interface StyledTextProps {
 	$textTheme: {
 		style: keyof typeof theme.fontStyles;
-		lineHeight: number;
+		lineHeight?: number;
 	};
 	color?: string;
 }
