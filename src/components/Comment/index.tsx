@@ -18,9 +18,7 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 	}, [comment]);
 
 	const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		if (e.target.value.length >= 100) {
-			return;
-		} else {
+		if (e.target.value.length <= 100) {
 			setComment(e.target.value);
 		}
 	};
@@ -59,7 +57,13 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 				{content}
 			</StyledText>
 			<SendContainer>
-				<CommentTextarea ref={textareaRef} value={comment} onChange={onChangeComment} onKeyDown={onKeyDown} />
+				<CommentTextarea
+					ref={textareaRef}
+					value={comment}
+					onChange={onChangeComment}
+					onKeyDown={onKeyDown}
+					maxLength={100}
+				/>
 				<SendImg src={Send} onClick={onClickSend} />
 			</SendContainer>
 		</CommentLayout>
