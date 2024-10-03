@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OODDFrame } from '../../components/Frame/Frame';
-import HomeTabBar from './HomeTabBar';
 import HomeTopBar from './HomeTopBar';
 import NavBar from '../../components/NavBar';
 import { HomeContainer } from './styles';
@@ -30,6 +29,7 @@ import {
 	IsOpenReportSuccessModalAtom,
 	PostReportAtom,
 } from '../../recoil/Home/MeatballBottomSheetAtom.ts';
+import OOTD from './OOTD/index.tsx';
 
 interface UserResponseType {
 	id: number;
@@ -59,6 +59,9 @@ const Home: React.FC = () => {
 	const [isOpenReportSuccessModal, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
 	const [isOpenReportFailModal, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
 	const postReport = useRecoilValue(PostReportAtom);
+
+	const ootdTooltipRef = useRef<HTMLDivElement[]>([]);
+
 	// 로그인 여부에 따라 navigate
 	useEffect(() => {
 		const checkAuth = async () => {
@@ -148,7 +151,7 @@ const Home: React.FC = () => {
 
 			<HomeContainer>
 				<HomeTopBar />
-				<HomeTabBar />
+				<OOTD tooltipRef={ootdTooltipRef} />
 			</HomeContainer>
 			<NavBar />
 		</OODDFrame>
