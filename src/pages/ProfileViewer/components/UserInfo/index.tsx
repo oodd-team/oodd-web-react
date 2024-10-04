@@ -132,7 +132,7 @@ const UserInfo: React.FC = React.memo(() => {
 					</LongButton>
 				)}
 				{!friend && (
-					<LongButton onClick={handleOpenBottomSheet}>
+					<LongButton onClick={handleOpenBottomSheet} disabled={nickname == '알 수 없음'}>
 						<Icon src={HeartSvg} alt="heart icon" />
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.white}>
 							친구 신청
