@@ -88,7 +88,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 	return (
 		<RequestContainer>
 			<RequestMessage>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+				<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
 					{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
 				</StyledText>
 			</RequestMessage>

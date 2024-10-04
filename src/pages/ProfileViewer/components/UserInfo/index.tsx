@@ -114,9 +114,9 @@ const UserInfo: React.FC = React.memo(() => {
 			<UserProfile>
 				<UserImg $imgUrl={userImg} />
 				<UserDetails>
-					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }}>{nickname}</StyledText>
+					<StyledText $textTheme={{ style: 'body1-medium' }}>{nickname}</StyledText>
 					<Bio>
-						<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray4}>
 							{truncatedBio}
 						</StyledText>
 					</Bio>
@@ -126,7 +126,7 @@ const UserInfo: React.FC = React.memo(() => {
 				{friend && (
 					<LongButton onClick={handleMessageClick}>
 						<Icon src={MsgSvg} alt="message icon" />
-						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.white}>
 							메세지 보내기
 						</StyledText>
 					</LongButton>
@@ -134,7 +134,7 @@ const UserInfo: React.FC = React.memo(() => {
 				{!friend && (
 					<LongButton onClick={handleOpenBottomSheet}>
 						<Icon src={HeartSvg} alt="heart icon" />
-						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.white}>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.white}>
 							친구 신청
 						</StyledText>
 					</LongButton>

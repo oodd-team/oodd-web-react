@@ -202,18 +202,18 @@ const ProfileViewer: React.FC = () => {
 				<Vector />
 				<CounterContainer>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
 							OODD
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
 							{userDetails.postsCount || 0}
 						</StyledText>
 					</Count>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
 							좋아요
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
 							{userDetails.likesCount || 0}
 						</StyledText>
 					</Count>
