@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PostItemContainer = styled.div`
+export const PostItemContainer = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
 	max-width: 16rem; /* 최대 너비 설정 */
 	height: 19.4375rem;
@@ -17,7 +17,7 @@ export const PostItemContainer = styled.div`
 	}
 `;
 
-export const PostImageContainer = styled.div`
+export const PostImageContainer = styled.figure`
 	width: 100%;
 	height: 100%;
 	position: relative;

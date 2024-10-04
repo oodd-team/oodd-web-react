@@ -11,7 +11,7 @@ export const LoginContainer = styled.div`
 	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.section`
 	display: flex;
 	justify-content: center; /* 수평 중앙 정렬 */
 	width: 100%;
@@ -23,7 +23,7 @@ export const LogoImg = styled.img`
 	display: flex;
 `;
 
-export const WelcomeWrapper = styled.div`
+export const WelcomeWrapper = styled.section`
 	display: flex;
 	flex-direction: column;
 	max-width: 11.75rem;

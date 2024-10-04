@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { TopbarLayoutProps } from './dto';
 
-export const TopbarLayout = styled.div<TopbarLayoutProps>`
+export const TopbarLayout = styled.nav<TopbarLayoutProps>`
 	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
 	width: 100%;

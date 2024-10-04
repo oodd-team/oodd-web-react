@@ -14,7 +14,7 @@ export const SocialLogin = styled.button<{ $bgColor: string; $border?: boolean }
 	box-sizing: border-box;
 `;
 
-export const LogoImgWrapper = styled.div<{ $logowidth: string; $logoheight: string }>`
+export const LogoImgWrapper = styled.section<{ $logowidth: string; $logoheight: string }>`
 	display: flex;
 	align-items: center;
 	width: ${({ $logowidth }) => $logowidth};
