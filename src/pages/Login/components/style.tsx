@@ -4,21 +4,21 @@ export const SocialLogin = styled.button<{ $bgColor: string; $border?: boolean }
 	display: flex;
 	align-items: center;
 	width: 100%;
-	max-width: 21.375rem; /* 342px / 16 */
+	max-width: 20rem;
 	height: 3.5rem; /* 56px / 16 */
 	background-color: ${({ $bgColor }) => $bgColor};
-	border-radius: 0.1875rem; /* 3px / 16 */
+	border-radius: 0.5rem;
 	border: ${({ $border }) => ($border ? '1px solid #000' : 'none')};
 	cursor: pointer;
-	margin-bottom: 0.75rem;
+	margin-bottom: 0.5rem;
 	box-sizing: border-box;
 `;
 
-export const LogoImgWrapper = styled.section<{ $logowidth: string; $logoheight: string }>`
+export const LogoImgWrapper = styled.section`
 	display: flex;
 	align-items: center;
-	width: ${({ $logowidth }) => $logowidth};
-	height: ${({ $logoheight }) => $logoheight};
+	width: 2.25rem;
+	height: 2.25rem;
 	margin-left: 1rem;
 `;
 

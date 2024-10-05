@@ -11,32 +11,21 @@ export const LoginContainer = styled.div`
 	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
-export const LogoWrapper = styled.section`
-	display: flex;
-	justify-content: center; /* 수평 중앙 정렬 */
-	width: 100%;
-	max-width: 7.25rem; /* 116px / 16 */
-	margin-top: 10.8rem; /* 195px */
-`;
-
-export const LogoImg = styled.img`
-	display: flex;
-`;
-
 export const WelcomeWrapper = styled.section`
 	display: flex;
 	flex-direction: column;
-	max-width: 11.75rem;
+	max-width: 14rem;
 	width: 100%;
-	height: 4rem; /* 64px / 16 */
+	height: 5rem;
 	text-align: center;
-	margin: 1.5637rem 0 2.25rem 0; /* 36px / 16 */
+	margin: 14rem 0 1.5rem 0;
 `;
 
 export const Service = styled.button`
 	display: flex;
 	border: none;
-	width: fit-content; /* 버튼 너비가 내용에 맞도록 설정 */
-	padding: 0 1rem; /* 16px / 16 */
-	margin: 0.75rem 0 16rem 0;
+	width: 100%;
+	justify-content: center;
+	padding: 20px;
+	margin: 6.875rem 0 12.625rem 0;
 `;
