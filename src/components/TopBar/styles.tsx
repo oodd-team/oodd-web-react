@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { TopbarLayoutProps } from './dto';
 
-export const TopbarLayout = styled.nav<TopbarLayoutProps>`
+export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	background-color: ${({ theme }) => theme.colors.white};
 	display: flex;
 	width: 100%;
@@ -16,13 +16,13 @@ export const TopbarLayout = styled.nav<TopbarLayoutProps>`
 	`}
 `;
 
-export const TextLayout = styled.div`
+export const TextLayout = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 `;
 
-export const BackButton = styled.img`
+export const BackButton = styled.button`
 	width: 1rem;
 	height: 1rem;
 	cursor: pointer;
@@ -32,13 +32,15 @@ export const BackButton = styled.img`
 	margin-left: 1.25rem;
 `;
 
-export const KebabMenuButton = styled.img`
+export const KebabMenuButton = styled.button<{ src?: string }>`
 	width: 1.4rem;
 	height: 1.4rem;
 	cursor: pointer;
+	background: ${({ src }) => (src ? `url(${src})` : 'none')};
 	background-size: cover;
 	background-position: center;
+	border: none;
 	margin: auto;
 	margin-right: 1.125rem;
-	visibility: ${(props) => (props.src ? 'visible' : 'hidden')};
+	visibility: ${({ src }) => (src ? 'visible' : 'hidden')}; // src 값에 따라 버튼 visibility 설정
 `;
