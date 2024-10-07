@@ -25,7 +25,7 @@ export const WelcomeWrapper = styled.section`
 	@media (min-width: 23.5rem) and (max-width: 47.875rem) {
 		margin-top: 75%;
 	}
-	/* 768px 이상에서는 margin-bottom이 27rem로 고정 */
+	/* 768px 이상에서는 margin-top이 27rem로 고정 */
 	@media (min-width: 47.9375rem) {
 		margin-top: 27rem;
 	}
