@@ -6,8 +6,6 @@ import {
 	AvatarWrapper,
 	Avatar,
 	UserInfo,
-	Username,
-	Bio,
 	StatsContainer,
 	Stat,
 	PostsContainer,

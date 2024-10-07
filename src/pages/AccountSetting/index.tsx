@@ -51,10 +51,6 @@ const AccountSetting: React.FC = () => {
 		navigate('/login');
 	};
 
-	const handleEditProfileClick = () => {
-		navigate('/account-edit');
-	};
-
 	const handleLogoutClick = () => {
 		setIsLogoutModalOpen(true);
 	};

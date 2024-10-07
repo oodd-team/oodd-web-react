@@ -31,6 +31,17 @@ export const UserID = styled.div`
 	font-weight: 400;
 	line-height: normal;
 	margin-left: 8px; /* 0.5rem */
+
+`;
+export const Body2 = styled.div`
+/* Body1/Medium */
+font-family: 'Gmarket Sans';
+font-size: 16px; /* 1rem */
+color: #000;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-left: 10px; /* 0.5rem */
 `;
 
 export const Pic_exam = styled.div`
@@ -49,6 +60,16 @@ export const Pic_exam = styled.div`
 	}
 `;
 
+
+export const Cation2 = styled.div`
+	color: var(--Color-black50, rgba(0, 0, 0, 0.5));
+	font-family: 'Pretendard Variable';
+	font-size: 12px; /* 0.75rem */
+	font-style: normal;
+	font-weight: 300;
+	line-height: 1.2; /* 120% */
+	margin-top: 4px; /* 0.25rem */
+`;
 export const Text = styled.div`
 	color: var(--Color-black50, rgba(0, 0, 0, 0.5));
 	font-family: 'Pretendard Variable';

@@ -18,6 +18,15 @@ export const StyledText = styled.div<StyledTextProps>`
 `;
 
 //디자인 ver1.0 폰트입니다 적용해주세요
+export const Body2 = styled.div`
+  font-family: 'Pretendard', sans-serif;  
+  font-size: 15px;                        
+  font-weight: 700;                       
+  line-height: 22.01px;                   
+  color: rgba(29, 29, 29, 1);
+
+`;
+
 export const Body2M = styled.div`
   font-family: 'Pretendard', sans-serif;  
   font-size: 15px;                        

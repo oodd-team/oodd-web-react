@@ -7,7 +7,6 @@ import {
 	Pic_exam,
 	UserInfoContainer,
 	UserRow,
-	Text,
 	Menu,
 	ImageWrapper,
 	Image,
@@ -47,6 +46,9 @@ import request from '../../apis/core';
 import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 import Loading from '../../components/Loading';
+
+import {Cation2, Body2M, Body2, Headline1,MyPageBio} from "../../components/Text/StyledText"
+
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
@@ -316,9 +318,9 @@ const MyPost: React.FC = () => {
 								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
 							/>
 						</Pic_exam>
-						<UserID>{user?.nickname || 'Unknown User'}</UserID>
+						<Body2>{user?.nickname || 'Unknown User'}</Body2>
 					</UserRow>
-					<Text>{postDetail?.content || 'Loading...'}</Text>
+					<Cation2>{postDetail?.content || 'Loading...'}</Cation2>
 				</UserInfoContainer>
 				<Menu onClick={() => handleOpenSheet('menu')}>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
