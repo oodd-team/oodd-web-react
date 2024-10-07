@@ -10,7 +10,7 @@ import back from '../../assets/back.svg';
 import BottomButton from '../../components/BottomButton';
 import request, { BaseResponse } from '../../apis/core';
 
-import { Body1MediumText, Body2LightText, Body4LightGrayText } from '../../components/Text/StyledText'
+import { Headline1,Cation1,Cation2} from '../../components/Text/StyledText'
 
 
 const AccountCancel: React.FC = () => {
@@ -77,34 +77,34 @@ const AccountCancel: React.FC = () => {
         <TopBar text="회원 탈퇴" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 
         <SubTitle>
-          <Body1MediumText>
+          <Headline1>
             OOTD 탈퇴 전 확인하세요!
-          </Body1MediumText>
+          </Headline1>
         </SubTitle>
 
         <Text>
-          <Body2LightText>
+          <Cation1>
             탈퇴하시면 이용 중인 서비스가 폐쇄되며,
-          </Body2LightText>
+          </Cation1>
         </Text>
 
         <Text>
-          <Body2LightText>
+          <Cation1>
             모든 데이터는 복구할 수 없습니다.
-          </Body2LightText>
+          </Cation1>
         </Text>
 
         <InfoBox>
-          <Body1MediumText>
+          <Cation1>
             지금까지 OODD를 이용해주셔서 감사합니다!
-          </Body1MediumText>
+          </Cation1>
         </InfoBox>
 
         <CheckboxWrapper>
           <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-          <Body4LightGrayText>
+          <Cation2>
             안내사항을 모두 확인하였으며, 이에 동의합니다.
-          </Body4LightGrayText>
+          </Cation2>
         </CheckboxWrapper>
       </CancelContainer>
 
