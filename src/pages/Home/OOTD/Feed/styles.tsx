@@ -1,16 +1,17 @@
 import styled from 'styled-components';
+import { StyledText } from '../../../../components/Text/StyledText';
 
 export const FeedWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.white};
 	width: 100%;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 	height: auto;
 `;
 
 export const FeedTop = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	margin: 0.5rem 0 1rem 0;
 `;
 
 export const Info = styled.div`
@@ -20,14 +21,21 @@ export const Info = styled.div`
 	cursor: pointer;
 `;
 
-export const FeedProfileImgWrapper = styled.div`
-	width: 2rem;
-	height: 2rem;
+export const FeedProfileImgWrapper = styled.img`
+	width: 1.5rem;
+	height: 1.5rem;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+
+	background: #ffdeed;
+
+	box-shadow:
+		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 
 	img {
 		width: 100%;
@@ -36,9 +44,12 @@ export const FeedProfileImgWrapper = styled.div`
 	}
 `;
 
+export const FeedTimeAgo = styled(StyledText)`
+	margin: 0 0.5rem 0 auto;
+`;
+
 export const FeedText = styled.div`
-	margin-top: 0.75rem;
-	margin-bottom: 0.4875rem;
+	margin-bottom: 0.5rem;
 	display: flex;
 	align-items: center;
 	word-wrap: break-word;

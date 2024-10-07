@@ -11,6 +11,7 @@ import {
 	FeedImgBox,
 	FeedProfileImgWrapper,
 	FeedText,
+	FeedTimeAgo,
 	FeedTop,
 	FeedWrapper,
 	Info,
@@ -107,13 +108,14 @@ const Feed: React.FC<Props> = ({ feed }) => {
 		<FeedWrapper>
 			<FeedTop>
 				<Info onClick={() => nav(`/users/${feed.userId}`)}>
-					<FeedProfileImgWrapper>
-						<img src={feed.profileUrl} alt="profile" />
-					</FeedProfileImgWrapper>
-					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.black}>
+					<FeedProfileImgWrapper src={feed.profileUrl} alt="profile" />
+					<StyledText $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }} color={theme.colors.black}>
 						{feed.userName}
 					</StyledText>
 				</Info>
+				<FeedTimeAgo $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
+					1시간 전
+				</FeedTimeAgo>
 				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsOpenMeatballBottomSheet(true)} />
 			</FeedTop>
 			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
