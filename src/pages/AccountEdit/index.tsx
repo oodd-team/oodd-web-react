@@ -18,8 +18,6 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import BottomButton from '../../components/BottomButton'; // BottomButton 컴포넌트 임포트
 
 import { useNavigate } from 'react-router-dom';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
 
 import naverIcon from './assets/naverIcon.png';
 import googleIcon from './assets/googleIcon.png';
@@ -28,6 +26,8 @@ import facebookIcon from './assets/facebookIcon.png';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
+
+import { HakgyoansimPuzzle } from '../../components/Text/StyledText'
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -44,20 +44,20 @@ const AccountEdit: React.FC = () => {
 
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+						<HakgyoansimPuzzle>
 							로그인 정보
-						</StyledText>
+						</HakgyoansimPuzzle>
 					</SectionTitle>
 					<SNSInfo>
 						<SnsConnection>
-							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<HakgyoansimPuzzle>
 								SNS 연결
-							</StyledText>
+							</HakgyoansimPuzzle>
 						</SnsConnection>
 						<Text>
-							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<HakgyoansimPuzzle>
 								연결된 SNS계정으로 로그인되었습니다.
-							</StyledText>
+							</HakgyoansimPuzzle>
 						</Text>
 						<SNSInfoRow>
 							<SNSIcon src={naverIcon} alt="Naver Icon" />
@@ -69,24 +69,24 @@ const AccountEdit: React.FC = () => {
 				</Section>
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+						<HakgyoansimPuzzle>
 							회원 정보
-						</StyledText>
+						</HakgyoansimPuzzle>
 					</SectionTitle>
 					<MemberInfo>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+								<HakgyoansimPuzzle>
 									이름
-								</StyledText>
+								</HakgyoansimPuzzle>
 							</Label>
 							<Info>-</Info>
 						</MemberInfoRow>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+								<HakgyoansimPuzzle>
 									연락처
-								</StyledText>
+								</HakgyoansimPuzzle>
 							</Label>
 							<Info>-</Info>
 						</MemberInfoRow>
