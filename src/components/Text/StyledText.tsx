@@ -115,6 +115,14 @@ export const Heading1 = styled.div`
   color: rgba(29, 29, 29, 1);
 `;
 
+export const Heading1B = styled.div`
+  font-family: 'Pretendard', sans-serif;  
+  font-size: 22px;                        
+  font-weight: 700;                       
+  line-height: 30.01px;                   
+  color: rgba(29, 29, 29, 1);
+`;
+
 export const AccountText = styled.div`
   font-family: 'Pretendard', sans-serif;  
   font-size: 16px;                        

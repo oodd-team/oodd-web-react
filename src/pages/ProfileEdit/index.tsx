@@ -18,7 +18,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../Upload/firebaseConfig';
 
 
-import {Heading1, Headline2} from "../../components/Text/StyledText"
+import { Headline2} from "../../components/Text/StyledText"
 
 
 const ProfileEdit: React.FC = () => {
