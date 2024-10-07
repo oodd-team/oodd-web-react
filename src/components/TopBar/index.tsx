@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
 const TopBar: React.FC<TopBarProps> = ({
-	ID = '',
 	text = '',
 	RightButtonSrc,
 	LeftButtonSrc,
@@ -31,19 +30,19 @@ const TopBar: React.FC<TopBarProps> = ({
 				<img src={LeftButtonSrc || ''} alt="back" />
 			</BackButton>
 			<TextLayout>
-				<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray3}>
-					{ID}
+				<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.black}>
+					{text}
 				</StyledText>
-				<StyledText $textTheme={{ style: 'body2-light' }}>{text}</StyledText>
 			</TextLayout>
 			<KebabMenuButton
-				src={RightButtonSrc || ''} // 버튼에 src 직접 전달
 				onClick={() => {
 					if (onRightClick) {
 						onRightClick();
 					}
 				}}
-			/>
+			>
+				<img src={RightButtonSrc || ''} alt="menu" />
+			</KebabMenuButton>
 		</TopbarLayout>
 	);
 };

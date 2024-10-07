@@ -22,7 +22,7 @@ export const LogoImg = styled.img`
 	display: flex;
 `;
 
-export const IntroWrapper = styled.p`
+export const IntroWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	max-width: 13rem;
@@ -63,7 +63,7 @@ export const NickName = styled.input`
 	}
 `;
 
-export const Tap = styled.p`
+export const Tap = styled.div`
 	display: flex;
 	width: 100%;
 	max-width: 9.5625rem; /* 153px */
