@@ -59,12 +59,17 @@ export const FeedText = styled.div`
 export const FeedImgBox = styled.div`
 	position: relative;
 	width: 100%;
-	border-radius: 0.75rem;
+	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.gray1};
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	box-shadow:
+		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 
 	.ootd-image-small {
 		width: 100%;

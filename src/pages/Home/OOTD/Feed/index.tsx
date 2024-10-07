@@ -109,11 +109,11 @@ const Feed: React.FC<Props> = ({ feed }) => {
 			<FeedTop>
 				<Info onClick={() => nav(`/users/${feed.userId}`)}>
 					<FeedProfileImgWrapper src={feed.profileUrl} alt="profile" />
-					<StyledText $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1.2 }} color={theme.colors.black}>
 						{feed.userName}
 					</StyledText>
 				</Info>
-				<FeedTimeAgo $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
+				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
 				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsOpenMeatballBottomSheet(true)} />
