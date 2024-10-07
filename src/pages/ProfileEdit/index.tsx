@@ -85,7 +85,7 @@ const ProfileEdit: React.FC = () => {
 				bio,
 			});
 			if (response.isSuccess) {
-				navigate(`/mypage`); // 마이페이지로 이동
+				navigate(`/mypage`); 
 			} else {
 				alert('프로필 수정에 실패했습니다.');
 			}
@@ -94,7 +94,7 @@ const ProfileEdit: React.FC = () => {
 			alert('프로필 수정 중 오류가 발생했습니다.');
 		}{
 			uploading ? (
-				<Loading /> // 업로드 중일 때 로딩 스피너 표시
+				<Loading /> 
 			) : (
 				<Button onClick={handleSave}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
