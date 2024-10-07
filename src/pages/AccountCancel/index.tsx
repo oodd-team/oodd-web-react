@@ -10,7 +10,7 @@ import back from '../../assets/back.svg';
 import BottomButton from '../../components/BottomButton';
 import request, { BaseResponse } from '../../apis/core';
 
-import { Body1MediumText, Body2LightText, Body4LightGrayText } from './styles'
+import { Body1MediumText, Body2LightText, Body4LightGrayText } from '../../components/Text/StyledText'
 
 
 const AccountCancel: React.FC = () => {
