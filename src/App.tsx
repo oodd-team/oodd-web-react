@@ -7,7 +7,7 @@ import ProfileEdit from './pages/ProfileEdit';
 import AccountSetting from './pages/AccountSetting';
 import AccountEdit from './pages/AccountEdit';
 import AccountCancel from './pages/AccountCancel';
-import Verification from './pages/verification';
+// import Verification from './pages/verification';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ProfileViewer from './pages/ProfileViewer';
@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />
-				<Route path="/Verification" element={<Verification />} />
+				{/* <Route path="/Verification" element={<Verification />} /> */}
 				<Route path="/login" element={<Login />} />
 				<Route path="/chats" element={<Chats />} />
 				<Route path="/upload" element={<Upload />} />
