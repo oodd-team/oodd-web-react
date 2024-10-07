@@ -17,6 +17,10 @@ import Loading from '../../components/Loading';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../Upload/firebaseConfig';
 
+
+import {Heading1, Headline2} from "../../components/Text/StyledText"
+
+
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
@@ -127,15 +131,15 @@ const ProfileEdit: React.FC = () => {
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<Headline2>
 						닉네임
-					</StyledText>
+					</Headline2>
 					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<Headline2>
 						소개글
-					</StyledText>
+					</Headline2>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<BottomButton

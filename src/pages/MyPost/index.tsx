@@ -47,7 +47,7 @@ import { UserResponse } from './dto';
 import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
 import Loading from '../../components/Loading';
 
-import {Cation2, Body2M, Body2, Headline1,MyPageBio} from "../../components/Text/StyledText"
+import {Cation2, Body2} from "../../components/Text/StyledText"
 
 
 const MyPost: React.FC = () => {
