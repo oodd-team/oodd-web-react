@@ -18,12 +18,12 @@ export const StyledText = styled.div<StyledTextProps>`
 `;
 
 //디자인 ver1.0 폰트입니다 적용해주세요
-export const Body2 = styled.div`
+export const Body2M = styled.div`
   font-family: 'Pretendard', sans-serif;  
   font-size: 15px;                        
-  font-weight: 700;                       
+  font-weight: 500;                       
   line-height: 22.01px;                   
-  color: ${({ theme }) => theme.colors.black};  
+  color: rgba(142, 142, 142, 1);
 `;
 
 export const Headline2 = styled.div`
@@ -82,6 +82,14 @@ export const Cation1 = styled.div`
   color: rgba(0, 0, 0, 1);
 `;
 
+export const Cation1M = styled.div`
+  font-family: 'Pretendard', sans-serif;  
+  font-size: 12px;                        
+  font-weight: 500;                       
+  line-height: 16.01px;                   
+  color: rgba(142, 142, 142, 1);
+
+`;
 export const Title1 = styled.div`
   font-family: 'Pretendard', sans-serif;  
   font-size: 36px;                        
@@ -98,5 +106,18 @@ export const Heading1 = styled.div`
   color: rgba(29, 29, 29, 1);
 `;
 
+export const AccountText = styled.div`
+  font-family: 'Pretendard', sans-serif;  
+  font-size: 16px;                        
+  font-weight: 500;                       
+  color: rgba(77, 77, 77, 1);
 
+`;
+
+export const MyPageBio = styled.div`
+  font-family: 'Pretendard', sans-serif;  
+  font-size: 14px;                        
+  font-weight: 400;                       
+  color: rgba(136, 136, 136, 1);
+`;
 

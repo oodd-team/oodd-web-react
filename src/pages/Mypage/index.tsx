@@ -10,8 +10,6 @@ import {
 	Bio,
 	StatsContainer,
 	Stat,
-	StatNumber,
-	StatLabel,
 	PostsContainer,
 	AddButton,
 } from './styles';
@@ -31,6 +29,8 @@ import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
+
+import {Cation1M, Body2M, Headline1,MyPageBio} from "../../components/Text/StyledText"
 
 const MyPage: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
@@ -156,23 +156,23 @@ const MyPage: React.FC = () => {
 						<Avatar src={user?.profilePictureUrl || imageBasic} alt="User Avatar" />
 					</AvatarWrapper>
 					<UserInfo>
-						<Username>{user?.nickname || '김아무개...'}</Username>
-						<Bio>{user?.bio || '소개글이 없습니다.'}</Bio>
+						<Headline1>{user?.nickname || '김아무개...'}</Headline1>
+						<MyPageBio>{user?.bio || '소개글이 없습니다.'}</MyPageBio>
 					</UserInfo>
 				</Header>
 				<ButtonSecondary />
 				<StatsContainer>
 					<Stat>
-						<StatLabel>OOTD</StatLabel>
-						<StatNumber>{totalPosts}</StatNumber>
+						<Cation1M>OOTD</Cation1M>
+						<Body2M>{totalPosts}</Body2M>
 					</Stat>
 					<Stat>
-						<StatLabel>코멘트</StatLabel>
-						<StatNumber>{totalComments}</StatNumber>
+						<Cation1M>코멘트</Cation1M>
+						<Body2M>{totalComments}</Body2M>
 					</Stat>
 					<Stat>
-						<StatLabel>좋아요</StatLabel>
-						<StatNumber>{totalLikes}</StatNumber>
+						<Cation1M>좋아요</Cation1M>
+						<Body2M>{totalLikes}</Body2M>
 					</Stat>
 				</StatsContainer>
 				<PostsContainer>
