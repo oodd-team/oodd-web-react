@@ -14,7 +14,7 @@ export const SocialLogin = styled.button<{ $bgColor: string; $border?: boolean }
 	box-sizing: border-box;
 `;
 
-export const LogoImgWrapper = styled.section`
+export const LogoImgWrapper = styled.figure`
 	display: flex;
 	align-items: center;
 	width: 2.25rem;
@@ -27,7 +27,7 @@ export const LogoImage = styled.img`
 	max-height: 100%;
 `;
 
-export const TextWrapper = styled.p<{ $left?: string }>`
+export const TextWrapper = styled.section<{ $left?: string }>`
 	display: flex;
 	width: 12.5rem;
 	padding-left: ${({ $left }) => $left || '1.2rem'};
