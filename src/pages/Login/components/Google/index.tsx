@@ -22,7 +22,7 @@ const Google: React.FC = () => {
 				<LogoImage src={google} alt="Google logo" />
 			</LogoImgWrapper>
 			<TextWrapper $left="1.5rem">
-				<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
+				<StyledText $textTheme={{ style: 'body3-light' }} color={theme.colors.gray4}>
 					구글로 시작하기
 				</StyledText>
 			</TextWrapper>

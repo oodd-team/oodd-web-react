@@ -47,16 +47,14 @@ const SignUp: React.FC = () => {
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
 				<IntroWrapper>
-					<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>이름 대신 사용할</StyledText>
-					<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>닉네임을 작성해주세요</StyledText>
+					<StyledText $textTheme={{ style: 'heading2-light' }}>이름 대신 사용할</StyledText>
+					<StyledText $textTheme={{ style: 'heading2-light' }}>닉네임을 작성해주세요</StyledText>
 				</IntroWrapper>
 				<NickNameContainer>
 					<NickName type="text" value={nickname} onChange={handleChange} placeholder="차분한 거북이" />
 					{nickname === '' && (
 						<Tap>
-							<StyledText $textTheme={{ style: 'button2-light', lineHeight: 1.5 }}>
-								탭하여 닉네임을 수정하세요
-							</StyledText>
+							<StyledText $textTheme={{ style: 'button2-light' }}>탭하여 닉네임을 수정하세요</StyledText>
 						</Tap>
 					)}
 				</NickNameContainer>
