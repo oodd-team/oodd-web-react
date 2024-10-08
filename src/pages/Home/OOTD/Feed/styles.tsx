@@ -115,10 +115,8 @@ export const FeedImgBox = styled.div`
 
 export const ReactionWrapper = styled.div`
 	position: absolute;
-	width: 12.75rem;
-	height: 6.75rem;
-	bottom: 1.125rem;
-	gap: 0.5rem;
+	bottom: 1rem;
+	gap: 1rem;
 	display: flex;
 	flex-direction: column;
 	z-index: 10;
@@ -126,51 +124,21 @@ export const ReactionWrapper = styled.div`
 
 export const Reaction = styled.div`
 	display: flex;
-	justify-content: space-between;
-	width: 12.75rem;
-	height: 5rem;
-	gap: 0.75rem;
-`;
-
-export const Btn = styled.div`
-	cursor: pointer;
-	width: 3.75rem;
-	height: 3.75rem;
-	background-color: rgba(0, 0, 0, 0.1);
-	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
-	border-radius: 50%;
-	backdrop-filter: blur(0.3125rem);
-	display: flex;
 	justify-content: center;
-	align-items: center;
-
-	img {
-		width: 2rem;
-		height: 2rem;
-	}
-`;
-
-export const Comment = styled.div`
-	display: flex;
-	justify-content: space-between;
-	width: 12.75rem;
-	height: 5rem;
-	gap: 0.75rem;
+	gap: 0.5rem;
 `;
 
 export const CommentBtn = styled.div`
 	cursor: pointer;
-	width: 12.75rem;
-	height: 2.5rem;
-	background-color: rgba(0, 0, 0, 0.1);
-	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
-	border-radius: 1.25rem;
+	background: ${({ theme }) => theme.colors.gradient};
+	border-radius: 3.19rem;
 	backdrop-filter: blur(0.3125rem);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.5rem;
-	gap: 0.5rem;
+	padding: 0.85rem 1.25rem;
+	gap: 0.25rem;
+	width: 11.5rem;
 
 	img {
 		width: 1.5rem;

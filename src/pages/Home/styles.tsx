@@ -17,7 +17,7 @@ export const HomeTopBarContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	background-color: white;
-	z-index: 10;
+	z-index: 20;
 	align-items: center;
 	position: fixed;
 `;
