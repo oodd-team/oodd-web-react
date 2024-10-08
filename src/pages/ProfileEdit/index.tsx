@@ -15,7 +15,7 @@ import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from '../Upload/firebaseConfig';
+import { storage } from '../../config/firebaseConfig';
 
 const ProfileEdit: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
