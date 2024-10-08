@@ -1,5 +1,11 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="button_star">
-<path id="Star 1" d="M16 5L19.0682 12.7769L27.4127 13.2918L20.9645 18.6131L23.0534 26.7082L16 22.22L8.94658 26.7082L11.0355 18.6131L4.58732 13.2918L12.9318 12.7769L16 5Z" stroke="white" stroke-width="1.6" stroke-linejoin="bevel"/>
-</g>
+<svg width="57" height="56" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="0.5" width="55" height="55" rx="27.5" fill="white"/>
+<rect x="1" y="0.5" width="55" height="55" rx="27.5" stroke="url(#paint0_linear_3024_9550)"/>
+<path d="M26.6773 24.7055L28.5 20.7806L30.3227 24.7055C30.4611 25.0035 30.7438 25.2089 31.07 25.2484L35.366 25.7691L32.1965 28.7154C32.1965 28.7154 32.1965 28.7154 32.1965 28.7154C31.9558 28.9392 31.8479 29.2715 31.9111 29.594L32.7434 33.8406L28.9619 31.7367C28.6747 31.5769 28.3253 31.5769 28.0381 31.7367L24.2566 33.8406L25.0889 29.594C25.1521 29.2715 25.0442 28.9392 24.8035 28.7154L21.634 25.7691L25.93 25.2484C26.2562 25.2089 26.5389 25.0035 26.6773 24.7055C26.6773 24.7055 26.6773 24.7055 26.6773 24.7055Z" stroke="#8E8E8E" stroke-width="1.5"/>
+<defs>
+<linearGradient id="paint0_linear_3024_9550" x1="1.06" y1="2.7451" x2="59.288" y2="6.19466" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF2389"/>
+<stop offset="1" stop-color="#F27575"/>
+</linearGradient>
+</defs>
 </svg>
