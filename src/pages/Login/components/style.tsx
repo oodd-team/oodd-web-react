@@ -27,7 +27,7 @@ export const LogoImage = styled.img`
 	max-height: 100%;
 `;
 
-export const TextWrapper = styled.div<{ $left?: string }>`
+export const TextWrapper = styled.p<{ $left?: string }>`
 	display: flex;
 	width: 12.5rem;
 	padding-left: ${({ $left }) => $left || '1.2rem'};

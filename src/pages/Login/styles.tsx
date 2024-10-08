@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { StyledText } from '../../components/Text/StyledText';
 
-export const LoginContainer = styled.div`
+export const LoginContainer = styled.main`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
