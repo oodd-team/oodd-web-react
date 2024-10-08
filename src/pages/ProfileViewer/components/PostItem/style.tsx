@@ -9,7 +9,6 @@ export const PostItemContainer = styled.div`
 	flex-direction: column;
 	position: relative; /* LikesOverlay 위치 조정을 위한 설정 */
 	box-sizing: border-box;
-
 	@media (max-width: 33.125rem) {
 		flex: 1 1 calc(50% - 0.5rem); /* 작은 화면에서도 두 개씩 배치되도록 설정 */
 		max-width: 50%; /* 화면 크기에 따라 너비를 조정하여 두 개씩 배치 */
@@ -23,6 +22,7 @@ export const PostImageContainer = styled.div`
 	height: 100%;
 	position: relative;
 	overflow: hidden; /* 이미지 잘리지 않도록 */
+	cursor: pointer;
 `;
 
 export const PostImage = styled.img`

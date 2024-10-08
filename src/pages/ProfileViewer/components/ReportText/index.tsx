@@ -50,7 +50,7 @@ const ReportText: React.FC<ReportTextProps> = ({ onCloseBottomSheet, setIsInputV
 				disabled={inputValue.trim().length === 0} // inputValue에 따라 버튼 활성화 여부 결정
 				$isActive={inputValue.trim().length > 0} // inputValue에 따라 버튼 색상 변경
 			>
-				<StyledText $textTheme={{ style: 'button1-medium', lineHeight: 1 }} color={theme.colors.white}>
+				<StyledText $textTheme={{ style: 'button1-medium' }} color={theme.colors.white}>
 					신고하기
 				</StyledText>
 			</ReportButton>

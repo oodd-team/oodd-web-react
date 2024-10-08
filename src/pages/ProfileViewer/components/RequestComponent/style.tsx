@@ -12,7 +12,7 @@ export const RequestMessage = styled.div`
 	display: flex;
 	text-align: center;
 	height: 100%;
-	width: 15rem;
+	width: 16rem;
 `;
 export const ComentContainer = styled.div`
 	align-items: center;

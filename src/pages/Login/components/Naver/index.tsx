@@ -23,7 +23,7 @@ const Naver: React.FC = () => {
 				<LogoImage src={naver} alt="Naver logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
+				<StyledText $textTheme={{ style: 'body3-light' }} color={theme.colors.gray4}>
 					네이버로 시작하기
 				</StyledText>
 			</TextWrapper>
