@@ -37,8 +37,9 @@ import next from '../../assets/Upload/next.svg';
 import next_up from '../../assets/Upload/next_up.svg';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
-import request, { BaseResponse } from '../../apis/core';
-import { PostUploadModalProps, ClothingInfo, Styletag, Post, PostResponse } from './dto';
+import request from '../../apis/core';
+import { PostUploadModalProps, ClothingInfo, Styletag, Post } from './dto';
+import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/PostDto';
 
 const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -81,13 +82,13 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 		setIsLoading(true);
 
 		try {
-			const response = await request.get<PostResponse>(`/posts/${postId}`);
+			const response = await request.get<GetPostDetailResponse>(`/posts/${postId}`);
 			if (response.isSuccess && response.result) {
 				const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
 
 				setSelectedImages(photoUrls);
 				setContent(content || '');
-				setClothingInfos(clothingInfo);
+				setClothingInfos(clothingInfo ?? []);
 				setSelectedStyletag(styletags?.length ? { tag: styletags[0], color: '' } : null);
 				setIsRepresentative(isRepresentative);
 
@@ -198,10 +199,10 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 			let response;
 			if (postId) {
 				// 게시물 수정 (PATCH)
-				response = await request.patch<BaseResponse>(`/posts/${postId}`, postData);
+				response = await request.patch<UpdatePostResponse>(`/posts/${postId}`, postData);
 			} else {
 				// 새 게시물 업로드 (POST)
-				response = await request.post<BaseResponse>(`/posts`, postData);
+				response = await request.post<CreatePostResponse>(`/posts`, postData);
 			}
 
 			if (!response.isSuccess) {

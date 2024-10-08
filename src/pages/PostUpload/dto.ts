@@ -42,20 +42,3 @@ export interface Post {
 	clothingInfo?: ClothingInfo[];
 	isRepresentive: boolean;
 }
-
-export interface PostResponse {
-	isSuccess: boolean;
-	code: number;
-	message: string;
-	result: {
-		postId: number;
-		userId: number;
-		likes: any;
-		comments: any;
-		photoUrls: string[];
-		content: string;
-		styletags: string[];
-		clothingInfo: ClothingInfo[];
-		isRepresentative: boolean;
-	};
-}
