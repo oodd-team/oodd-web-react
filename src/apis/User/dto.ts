@@ -14,18 +14,18 @@ export type DeleteUserResponse = BaseApiResponse<DeleteUserResult>;
 // 휴대폰 번호 본인인증 코드 확인 응답
 
 // 사용자 신고 요청 맟 응답
-export type ReportUserRequest = ReportRequest;
-export type ReportUserResponse = BaseApiResponse<ReportUserResult>;
+export type UpdateUserReportRequest = ReportRequest;
+export type UpdateUserReportResponse = BaseApiResponse<ReportUserResult>;
 
 // 사용자 정보 조회
-export type GetUserInfoResponse = BaseApiResponse<User>;
+export type GetUserResponse = BaseApiResponse<User>;
 
 // 사용자 정보 수정
-export type UpdateUserInfoResponse = BaseApiResponse<User>;
+export type UpdateUserResponse = BaseApiResponse<User>;
 
 // 사용자 차단/해제 요청 및 응답
-export type BlockUserRequest = BlockRequest;
-export type BlockUserResponse = BaseApiResponse<BlockResult>;
+export type CreateUserBlockRequest = BlockRequest;
+export type CreateUserBlockResponse = BaseApiResponse<BlockResult>;
 
 // 로그인 공통 응답 인터페이스
 export interface LoginResponse {
