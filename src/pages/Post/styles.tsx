@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { StyledText } from '../../components/Text/StyledText';
 
 // PostTopBar
 
@@ -214,59 +213,3 @@ export const InputLayout = styled.div`
 // 		color: ${({ theme }) => theme.colors.gray3};
 // 	}
 // `;
-
-// ClothingInfoCard
-
-export const ClothingInfoCardContainer = styled.div`
-	position: relative;
-	width: 15.3125rem;
-	height: 4.5rem;
-	border-radius: 0.1875rem;
-	box-shadow: 0 0 0 0.0625rem ${({ theme }) => theme.colors.gray3} inset;
-	display: flex;
-	align-items: center;
-	flex-shrink: 0;
-	justify-content: space-between;
-	margin-right: 0.75rem;
-	cursor: pointer;
-`;
-
-export const ClothingInfoLeft = styled.div`
-	display: flex;
-	align-items: center;
-`;
-
-export const ClothingInfoImg = styled.img`
-	width: 3.5rem;
-	height: 3.5rem;
-	margin: 0.5rem;
-`;
-
-export const ClothingInfoDetail = styled.div`
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 8rem;
-	display: flex;
-	flex-direction: column;
-`;
-
-export const StyledTextClipped = styled(StyledText)`
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 100%;
-	display: inline-block; /* 텍스트 클리핑을 적용하기 위해 inline-block으로 설정 */
-`;
-
-export const NextBtn = styled.div`
-	position: absolute;
-	right: 0;
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 0.375rem;
-	img {
-		width: 100%;
-		height: 100%;
-	}
-`;
