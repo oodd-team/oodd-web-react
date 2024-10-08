@@ -5,11 +5,14 @@ import { User } from './UserDto';
 export type MatchingRequestApiRequest = MatchingRequest;
 export type MatchingRequestApiResponse = BaseApiResponse<MatchingResponse>;
 
-// 매칭 요청 수락/거부 Request/Response
+// 매칭 요청 수락/거부
+//Request
 export type MatchingReponseApiRequest = MatchingResponseRequest;
+//Response
 export type MatchingReponseApiResponse = BaseApiResponse<MatchingResponse>;
 
-// 매칭 리스트 조회 Response
+// 매칭 리스트 조회
+// Response
 export type MatchingListApiResponse = BaseApiResponse<MatchingListResponse[]>;
 
 // 매칭 요청 데이터

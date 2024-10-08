@@ -1,4 +1,26 @@
-import { BaseApiResponse } from './ApiResponse';
+import { BaseApiResponse } from './util/ApiResponse';
+
+// OOTD 조회
+export type GetOOTDResponse = BaseApiResponse<PostByStyleTagResult>;
+
+// 게시물 업로드 응답
+export type CreatePostResponse = BaseApiResponse<PostResult>;
+
+// 게시물 삭제 응답 (result가 null)
+export type DeletePostResponse = BaseApiResponse<null>;
+
+// 게시물 수정 응답
+export type UpdatePostResponse = BaseApiResponse<PostResult>;
+
+// 게시물 리스트 조회 (내 게시물일 때, 남의 게시물일 때)
+export type GetPostListResponse = BaseApiResponse<PostListResult>;
+
+// 게시물 상세 조회 (내 게시물일 때, 남의 게시물일 때)
+export type GetPostDetailResponse = BaseApiResponse<PostDetailResult>;
+
+// 게시물 신고 응답
+
+// 대표 OOTD 지정 응답
 
 // OOTD 리스트 조회 (스타일 태그에 따른)
 export interface PostByStyleTag {
@@ -10,13 +32,12 @@ export interface PostByStyleTag {
 	styletags: string[];
 }
 
-export interface PostByStyleTagResponse {
+export interface PostByStyleTagResult {
 	posts: PostByStyleTag[];
 }
 
 //게시물
-
-export interface Post {
+export interface PostResult {
 	postId: number;
 	userId: number;
 	photoUrls: string[];
@@ -43,41 +64,27 @@ export interface PostSummary {
 	commentsCount?: number; // 내 게시물(댓글 수 포함) | 남의 게시물(댓글 수 미포함)
 }
 
-export interface PostList {
+export interface PostListResult {
 	totalPosts: number;
 	totalLikes: number;
 	posts: PostSummary[];
 }
 
-export interface PostDetail {
+export interface Comment {
+	id: number;
+	userId: number;
+	text: string;
+	timestamp: string;
+}
+
+export interface PostDetailResult {
 	postId: number;
 	userId: number;
 	likes: number | null;
-	comments: any[] | null; // 내 게시물(댓글 포함) | 남의 게시물(댓글 미포함)
+	comments: Comment[] | null; // 내 게시물(댓글 포함) | 남의 게시물(댓글 미포함)
 	photoUrls: string[];
 	content: string;
 	styletags: string[];
-	clothingInfo?: ClothingInfo[] | null;
+	clothingInfo: ClothingInfo[] | null;
+	isRepresentative: boolean;
 }
-
-// OOTD 조회
-export type GetOOTDResponse = BaseApiResponse<PostByStyleTagResponse>;
-
-// 게시물 업로드 응답
-export type PostPostResponse = BaseApiResponse<Post>;
-
-// 게시물 삭제 응답 (result가 null)
-export type DeletePostResponse = BaseApiResponse<null>;
-
-// 게시물 수정 응답
-export type PatchPostResponse = BaseApiResponse<Post>;
-
-// 게시물 리스트 조회 (내 게시물일 때, 남의 게시물일 때)
-export type PostListResponse = BaseApiResponse<PostListResponse>;
-
-// 게시물 상세 조회 (내 게시물일 때, 남의 게시물일 때)
-export type PostDetailResponse = BaseApiResponse<PostDetail>;
-
-// 게시물 신고 응답
-
-// 대표 OOTD 지정 응답

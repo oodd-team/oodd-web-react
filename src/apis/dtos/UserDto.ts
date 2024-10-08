@@ -18,10 +18,10 @@ export type ReportUserRequest = ReportRequest;
 export type ReportUserResponse = BaseApiResponse<ReportUserResult>;
 
 // 사용자 정보 조회
-export type GetUserInfoResponse = BaseApiResponse<UserInfo>;
+export type GetUserInfoResponse = BaseApiResponse<User>;
 
 // 사용자 정보 수정
-export type UpdateUserInfoResponse = BaseApiResponse<UserInfo>;
+export type UpdateUserInfoResponse = BaseApiResponse<User>;
 
 // 사용자 차단/해제 요청 및 응답
 export type BlockUserRequest = BlockRequest;
@@ -54,7 +54,7 @@ export interface ReportUserResult {
 }
 
 // 사용자 정보 공통 인터페이스
-export interface UserInfo {
+export interface User {
 	id: number;
 	name: string;
 	email: string;
