@@ -1,4 +1,4 @@
-import { BaseApiResponse } from './util/ApiResponse';
+import { BaseApiResponse } from '../util/dto';
 
 // 좋아요 누르기/취소 응답
 export type LikePostResponse = BaseApiResponse<BaseLike>;

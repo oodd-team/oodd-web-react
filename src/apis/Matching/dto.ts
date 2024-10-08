@@ -1,5 +1,5 @@
-import { BaseApiResponse } from './util/ApiResponse';
-import { User } from './UserDto';
+import { BaseApiResponse } from '../util/dto';
+import { User } from '../User/dto';
 
 // 매칭 요청 Request/Response
 export type MatchingRequestApiRequest = MatchingRequest;

@@ -1,5 +1,5 @@
-import { BaseApiResponse } from './util/ApiResponse';
-import { User } from './UserDto';
+import { BaseApiResponse } from '../util/dto';
+import { User } from '../User/dto';
 
 // 메세지 전송
 //request

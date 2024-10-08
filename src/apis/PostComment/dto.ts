@@ -1,4 +1,4 @@
-import { BaseApiResponse } from './util/ApiResponse';
+import { BaseApiResponse } from '../util/dto';
 
 // 댓글 작성 API 응답
 export type CreateCommentApiResponse = BaseApiResponse<CreateCommentResponse>;

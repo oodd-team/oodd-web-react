@@ -1,4 +1,4 @@
-import { BaseApiResponse } from './util/ApiResponse';
+import { BaseApiResponse } from '../util/dto';
 
 // OOTD 조회
 export type GetOOTDResponse = BaseApiResponse<PostByStyleTagResult>;
