@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '../../components/Text/StyledText';
 
 export const LoginContainer = styled.div`
 	display: flex;
@@ -19,24 +20,16 @@ export const WelcomeWrapper = styled.section`
 	height: 5rem;
 	text-align: center;
 	margin-bottom: 1.5rem;
-	//margin-top: 14rem;
-
-	/* 375px ~ 767px 사이에서는 점차적으로 커짐
-	@media (min-width: 23.5rem) and (max-width: 47.875rem) {
-		margin-top: 75%;
-	}
-	 768px 이상에서는 margin-top이 27rem로 고정 
-	@media (min-width: 47.9375rem) {
-		margin-top: 27rem;
-	}
-	*/
 `;
 
-export const Service = styled.button`
+export const StyledTextService = styled(StyledText).attrs({
+	as: 'button', // button 태그로 변환
+})`
 	display: flex;
 	border: none;
 	width: 100%;
 	justify-content: center;
 	padding: 20px;
 	margin-top: 6.875rem;
+	cursor: pointer;
 `;
