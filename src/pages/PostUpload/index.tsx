@@ -39,7 +39,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import request from '../../apis/core';
 import { PostUploadModalProps, ClothingInfo, Styletag, Post } from './dto';
-import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/PostDto';
+import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/dto';
 
 const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
