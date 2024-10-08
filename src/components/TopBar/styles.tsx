@@ -33,13 +33,8 @@ export const KebabMenuButton = styled.button<{ src?: string }>`
 	padding: 10px;
 	cursor: pointer;
 	background: ${({ src }) => (src ? `url(${src})` : 'none')};
-	background-size: cover;
-	background-position: center;
+	background: no-repeat;
 	border: none;
-
-	img {
-		width: 1.125rem; /* 버튼 크기에 맞게 이미지 크기 조정 */
-		height: 1.125rem; /* 버튼 크기에 맞게 이미지 크기 조정 */
-		visibility: ${({ src }) => (src ? 'visible' : 'hidden')}; // src 값에 따라 버튼 visibility 설정
-	}
+	width: 0.2rem;
+	height: 0.2rem;
 `;

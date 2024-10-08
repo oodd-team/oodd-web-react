@@ -35,6 +35,7 @@ const TopBar: React.FC<TopBarProps> = ({
 				</StyledText>
 			</TextLayout>
 			<KebabMenuButton
+				src={RightButtonSrc}
 				onClick={() => {
 					if (onRightClick) {
 						onRightClick();
