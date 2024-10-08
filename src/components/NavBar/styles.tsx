@@ -13,6 +13,7 @@ export const NavBarContainer = styled.nav`
 	margin: 0;
 	border-radius: 1.25rem 1.25rem 0 0;
 	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
+	z-index: 10;
 `;
 
 export const NavBarWrapper = styled.div`
