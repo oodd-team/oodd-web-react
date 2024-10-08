@@ -31,10 +31,10 @@ const TopBar: React.FC<TopBarProps> = ({
 				}}
 			/>
 			<TextLayout>
-				<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+				<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray3}>
 					{ID}
 				</StyledText>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>{text}</StyledText>
+				<StyledText $textTheme={{ style: 'body2-light' }}>{text}</StyledText>
 			</TextLayout>
 			<KebabMenuButton
 				src={RightButtonSrc || ''} // 이미지 사용 || 이미지 사용 X

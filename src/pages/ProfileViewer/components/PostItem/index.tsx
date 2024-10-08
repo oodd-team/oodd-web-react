@@ -21,7 +21,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative, firstPhoto 
 				<LikesOverlay>
 					<HeartIcon src={HeartSvg} alt="heart icon" />
 					<LikesCount>
-						<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1.5 }} color={theme.colors.white}>
+						<StyledText $textTheme={{ style: 'body5-medium' }} color={theme.colors.white}>
 							{post.likes}
 						</StyledText>
 					</LikesCount>

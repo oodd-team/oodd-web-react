@@ -16,10 +16,10 @@ const Login: React.FC = () => {
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
 				<WelcomeWrapper>
-					<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.gray4}>
+					<StyledText $textTheme={{ style: 'heading2-light' }} color={theme.colors.gray4}>
 						반가워요!
 					</StyledText>
-					<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }} color={theme.colors.gray4}>
+					<StyledText $textTheme={{ style: 'heading2-light' }} color={theme.colors.gray4}>
 						계정을 선택해주세요
 					</StyledText>
 				</WelcomeWrapper>
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
 				<Kakao />
 				<Google />
 				<Service>
-					<StyledText $textTheme={{ style: 'body4-regular', lineHeight: 1.2 }} color={theme.colors.gray4}>
+					<StyledText $textTheme={{ style: 'body4-regular' }} color={theme.colors.gray4}>
 						서비스 약관 확인{' >'}
 					</StyledText>
 				</Service>
