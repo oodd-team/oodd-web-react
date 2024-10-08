@@ -17,7 +17,7 @@ export const FeedTop = styled.div`
 export const Info = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.5rem;
 	cursor: pointer;
 `;
 
