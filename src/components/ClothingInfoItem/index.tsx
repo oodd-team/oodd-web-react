@@ -13,8 +13,8 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 	};
 
 	return (
-		<ClothingInfoItemContainer onClick={handleClick} style={{ marginRight: hasRightMargin ? '0.75rem' : '0' }}>
-			<ClothingInfoLeft>
+		<ClothingInfoItemContainer style={{ marginRight: hasRightMargin ? '0.75rem' : '0' }}>
+			<ClothingInfoLeft onClick={handleClick}>
 				<img src={clothingObj.imageUrl} alt="ClothingInfoImg" />
 				<div className="infoDetail">
 					<StyledText className="brand" $textTheme={{ style: 'headline2-bold', lineHeight: 2 }}>

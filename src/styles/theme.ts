@@ -182,7 +182,7 @@ const theme: DefaultTheme = {
 		'headline2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.0625rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 141.2%; /* 1.50025rem */
 		`,
 		'headline2-medium': css`

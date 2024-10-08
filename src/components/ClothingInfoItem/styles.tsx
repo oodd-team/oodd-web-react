@@ -6,13 +6,11 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	//justify-content: space-between;
 	border: 0.0625rem solid #ffbbda;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	min-width: 20.9375rem;
 	margin-bottom: 0.9375rem;
-	//margin-right: 0.75rem;
 	cursor: pointer;
 `;
 
@@ -32,7 +30,7 @@ export const ClothingInfoLeft = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 8rem;
+		width: 12rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -58,13 +56,14 @@ export const StyledTextClipped = styled(StyledText)`
 `;
 
 export const ClothingInfoRight = styled.div`
-	position: absolute;
-	right: 0;
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 0.375rem;
+	display: flex;
+	align-items: center;
+	width: 1.125rem;
+	height: 100%;
+	margin-left: auto;
+
 	img {
-		width: 100%;
-		height: 100%;
+		width: 1.125rem;
+		height: 1.5rem;
 	}
 `;
