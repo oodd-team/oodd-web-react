@@ -23,7 +23,7 @@ const Kakao: React.FC = () => {
 				<LogoImage src={kakao} alt="Kakao logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
+				<StyledText $textTheme={{ style: 'body3-light' }} color={theme.colors.gray4}>
 					카카오로 시작하기
 				</StyledText>
 			</TextWrapper>

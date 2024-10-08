@@ -11,7 +11,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
-import { userDetailsState } from '../../recoil/atoms'; // Recoil atom 임포트
+import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
 import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg';
 import BackSvg from '../../assets/ProfileViewer/backIcon.svg';
 import imageBasic from '../../assets/imageBasic.svg';
@@ -21,12 +21,12 @@ import { UserInfoDto } from './ResponseDto/UserInfoDto';
 import request from '../../apis/core';
 import { PostListDto } from './ResponseDto/PostListDto';
 import { BlockDto } from './ResponseDto/BlockDto';
-import Modal from '../../components/Modal'; // Modal 컴포넌트 임포트
+import Modal from '../../components/Modal';
 import Loading from '../../components/Loading';
 
 const ProfileViewer: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
-	const [userDetails, setUserDetails] = useRecoilState(userDetailsState);
+	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -202,18 +202,18 @@ const ProfileViewer: React.FC = () => {
 				<Vector />
 				<CounterContainer>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
 							OODD
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
 							{userDetails.postsCount || 0}
 						</StyledText>
 					</Count>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
 							좋아요
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
 							{userDetails.likesCount || 0}
 						</StyledText>
 					</Count>
@@ -228,7 +228,7 @@ const ProfileViewer: React.FC = () => {
 							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
 						))}
 				</PostListContainer>
-				{isBottomSheetOpen && activeBottomSheet === 'main' && (
+				{activeBottomSheet === 'main' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
 						onCloseBottomSheet={handleCloseBottomSheet}
@@ -240,7 +240,7 @@ const ProfileViewer: React.FC = () => {
 						)}
 					/>
 				)}
-				{isBottomSheetOpen && activeBottomSheet === 'report' && (
+				{activeBottomSheet === 'report' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
 						onCloseBottomSheet={handleCloseBottomSheet}

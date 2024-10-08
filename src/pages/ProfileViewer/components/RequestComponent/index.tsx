@@ -7,7 +7,7 @@ import theme from '../../../../styles/theme';
 import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
 import { RequestComponentProps } from '../../dto';
 import { useRecoilState } from 'recoil';
-import { friendState } from '../../../../recoil/atoms';
+import { isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 
 const RequestComponent: React.FC<RequestComponentProps> = ({
 	userId,
@@ -17,7 +17,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 }) => {
 	const inputRef = useRef<HTMLTextAreaElement>(null);
 	const [inputValue, setInputValue] = useState('');
-	const [, setFriend] = useRecoilState(friendState);
+	const [, setFriend] = useRecoilState(isFriendAtom);
 
 	useEffect(() => {
 		if (inputRef.current) {
@@ -88,7 +88,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 	return (
 		<RequestContainer>
 			<RequestMessage>
-				<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
+				<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
 					{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
 				</StyledText>
 			</RequestMessage>
