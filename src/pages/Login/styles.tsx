@@ -6,7 +6,6 @@ export const LoginContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	max-width: 32rem; /* 최대 너비 512px */
 	height: 100%;
 	margin: 0 auto; /* 중앙 정렬 */
 	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
