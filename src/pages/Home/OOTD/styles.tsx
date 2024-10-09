@@ -27,8 +27,6 @@ export const TagContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	gap: 0.5rem;
-	margin-left: 1.25rem;
-	padding-right: 1.25rem;
 `;
 
 export const TagRow = styled.div`
