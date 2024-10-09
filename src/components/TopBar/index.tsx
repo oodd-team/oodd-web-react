@@ -1,6 +1,5 @@
-import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import { TopbarLayout, TextLayout, BackButton, KebabMenuButton } from './styles';
+import { TopbarLayout, StyledTextLayout, BackButton, KebabMenuButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
@@ -16,9 +15,8 @@ const TopBar: React.FC<TopBarProps> = ({
 
 	return (
 		<TopbarLayout $withBorder={$withBorder}>
-			{' '}
-			{/*border-bottom 유무*/}
 			<BackButton
+				src={LeftButtonSrc}
 				onClick={() => {
 					if (onLeftClick) {
 						onLeftClick();
@@ -29,11 +27,9 @@ const TopBar: React.FC<TopBarProps> = ({
 			>
 				<img src={LeftButtonSrc || ''} alt="back" />
 			</BackButton>
-			<TextLayout>
-				<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.black}>
-					{text}
-				</StyledText>
-			</TextLayout>
+			<StyledTextLayout $textTheme={{ style: 'heading1-bold' }} color={theme.colors.black}>
+				{text}
+			</StyledTextLayout>
 			<KebabMenuButton
 				src={RightButtonSrc}
 				onClick={() => {
@@ -42,7 +38,7 @@ const TopBar: React.FC<TopBarProps> = ({
 					}
 				}}
 			>
-				<img src={RightButtonSrc || ''} alt="menu" />
+				<img src={RightButtonSrc} alt="menu" />
 			</KebabMenuButton>
 		</TopbarLayout>
 	);
