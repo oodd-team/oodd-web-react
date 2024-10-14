@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '../../../../components/Text/StyledText';
 
 export const RequestContainer = styled.section`
 	display: flex;
@@ -8,7 +9,7 @@ export const RequestContainer = styled.section`
 	gap: 2.0625rem;
 `;
 
-export const RequestMessage = styled.div`
+export const RequestMessage = styled(StyledText)`
 	display: flex;
 	text-align: center;
 	height: 100%;

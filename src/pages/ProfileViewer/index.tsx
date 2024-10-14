@@ -16,7 +16,7 @@ import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg';
 import BackSvg from '../../assets/ProfileViewer/backIcon.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
-import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer } from './style';
+import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
 import { UserInfoDto } from './ResponseDto/UserInfoDto';
 import request from '../../apis/core';
 import { PostListDto } from './ResponseDto/PostListDto';
@@ -192,28 +192,22 @@ const ProfileViewer: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileViewerContainer>
-				<TopBar
-					text={userDetails.nickname}
-					RightButtonSrc={MoreSvg}
-					LeftButtonSrc={BackSvg}
-					onRightClick={() => handleOpenBottomSheet('main')}
-				/>
+				<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleOpenBottomSheet('main')} />
 				<UserInfo />
-				<Vector />
 				<CounterContainer>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
 							OODD
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							{userDetails.postsCount || 0}
 						</StyledText>
 					</Count>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
 							좋아요
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							{userDetails.likesCount || 0}
 						</StyledText>
 					</Count>

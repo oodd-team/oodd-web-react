@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import request from '../../../../apis/core';
 import { ResponseDto } from './ResponseDto';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
-import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
 import { RequestComponentProps } from '../../dto';
@@ -87,10 +86,8 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 
 	return (
 		<RequestContainer>
-			<RequestMessage>
-				<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
-					{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
-				</StyledText>
+			<RequestMessage $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
+				{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
 			</RequestMessage>
 			<ComentContainer>
 				<Coment ref={inputRef} value={inputValue} onChange={handleInputChange} maxLength={100} />
