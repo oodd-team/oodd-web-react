@@ -11,8 +11,12 @@ export const ProfileViewerContainer = styled.main`
 		padding: 0 calc(20px + (44 * ((100vw - 375px) / 393))); /* 375px부터 768px 사이에서 서서히 증가 */
 	}
 
-	@media (min-width: 768px) {
-		padding: 0 64px; /* 768px 이상에서는 64px 고정 */
+	@media (min-width: 768px) and (max-width: 1920px) {
+		padding: 0 calc(64px + (356 * ((100vw - 768px) / 1152))); /* 768px부터 1920px 사이에서 서서히 증가 */
+	}
+
+	@media (min-width: 1920px) {
+		padding: 0 420px; /* 1920px 이상에서는 420px로 고정 */
 	}
 `;
 
