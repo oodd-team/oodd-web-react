@@ -7,7 +7,7 @@ export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	width: 100%;
 	height: 2.75rem;
 	align-items: center;
-	padding: 0.5rem 1.25rem;
+	padding: 0.5rem 0;
 	${({ $withBorder, theme }) =>
 		$withBorder &&
 		`
