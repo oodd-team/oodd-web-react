@@ -4,6 +4,7 @@ export const ProfileViewerContainer = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: 100vh;
 	position: relative;
 	padding: 0 20px; /* 기본 패딩값 */
 
