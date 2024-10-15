@@ -129,6 +129,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 			</TagMent>
 			<TagContainer>
 				<TagRow>
+					<div style={{ width: '1.25rem' }} />
 					{firstHalf.map((tag, index) => (
 						<Tag
 							key={index}
@@ -139,6 +140,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 					))}
 				</TagRow>
 				<TagRow>
+					<div style={{ width: '1.25rem' }} />
 					{secondHalf.map((tag, index) => (
 						<Tag
 							key={index + firstHalf.length}
