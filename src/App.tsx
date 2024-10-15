@@ -20,7 +20,6 @@ import PostUpload from './pages/PostUpload';
 import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
-import GoogleCallback from './pages/Login/components/Google/GoogleCallback';
 const App: React.FC = () => {
 	return (
 		<BrowserRouter>
@@ -49,7 +48,6 @@ const App: React.FC = () => {
 
 				<Route path="/auth/kakao/callback" element={<KakaoCallback />}></Route>
 				<Route path="/auth/naver/callback" element={<NaverCallback />}></Route>
-				<Route path="/auth/google/callback" element={<GoogleCallback />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

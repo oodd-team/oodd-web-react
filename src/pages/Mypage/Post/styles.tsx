@@ -13,9 +13,14 @@ export const PostContainer = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-	width: 100%;
-	padding-top: 150%; /* 3:2 비율을 유지 */
 	position: relative;
+	width: 160px;
+	height: 160px;
+	object-fit: cover;
+	flex-shrink: 0;
+	border-radius: 10px; /* 보더를 둥글게 설정 */
+	overflow: hidden; /* 둥글게 잘리도록 설정 */
+	margin: 15px; /* 위, 아래, 좌, 우 15px 간격을 설정 */
 `;
 
 export const Image = styled.img`

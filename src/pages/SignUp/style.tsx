@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SignUpContainer = styled.div`
+export const SignUpContainer = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -11,7 +11,7 @@ export const SignUpContainer = styled.div`
 	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.figure`
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -31,7 +31,7 @@ export const IntroWrapper = styled.div`
 	text-align: center;
 `;
 
-export const NickNameContainer = styled.div`
+export const NickNameContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;

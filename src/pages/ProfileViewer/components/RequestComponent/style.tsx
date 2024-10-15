@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const RequestContainer = styled.div`
+export const RequestContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,7 +14,7 @@ export const RequestMessage = styled.div`
 	height: 100%;
 	width: 16rem;
 `;
-export const ComentContainer = styled.div`
+export const ComentContainer = styled.figure`
 	align-items: center;
 	width: 100%;
 	max-width: 21.875rem; // 동일하게 맞춤

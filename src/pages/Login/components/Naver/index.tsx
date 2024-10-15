@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { SocialLogin, TextWrapper, LogoImgWrapper, LogoImage } from '../style';
-import naver from '../../../../assets/Login/naver.png';
+import naver from '../../../../assets/Login/NAVER.svg';
 
 const Naver: React.FC = () => {
 	const clientId = import.meta.env.VITE_NAVER_CLIENT_ID; // 네이버 개발자 센터에서 받은 클라이언트 ID
@@ -18,13 +18,13 @@ const Naver: React.FC = () => {
 	};
 
 	return (
-		<SocialLogin $bgColor="#00BF19" onClick={handleLogin}>
-			<LogoImgWrapper $logowidth="2.4rem" $logoheight="2.4rem">
+		<SocialLogin $bgColor="#05B918" onClick={handleLogin}>
+			<LogoImgWrapper>
 				<LogoImage src={naver} alt="Naver logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light' }} color={theme.colors.gray4}>
-					네이버로 시작하기
+				<StyledText $textTheme={{ style: 'body2-bold' }} color={theme.colors.white}>
+					네이버로 계속하기
 				</StyledText>
 			</TextWrapper>
 		</SocialLogin>
