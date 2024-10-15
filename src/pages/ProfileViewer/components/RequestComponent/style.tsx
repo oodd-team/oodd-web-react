@@ -8,7 +8,7 @@ export const RequestContainer = styled.section`
 	gap: 2.0625rem;
 `;
 
-export const RequestMessage = styled.p`
+export const RequestMessage = styled.div`
 	display: flex;
 	text-align: center;
 	height: 100%;

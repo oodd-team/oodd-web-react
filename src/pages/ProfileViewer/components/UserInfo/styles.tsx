@@ -37,7 +37,7 @@ export const UserDetails = styled.div`
 	margin-left: 1rem;
 `;
 
-export const Bio = styled.p`
+export const Bio = styled.div`
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;

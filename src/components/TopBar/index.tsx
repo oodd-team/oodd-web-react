@@ -1,11 +1,9 @@
-import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
-import { TopbarLayout, TextLayout, BackButton, KebabMenuButton } from './styles';
+import { TopbarLayout, StyledTextLayout, BackButton, KebabMenuButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
 const TopBar: React.FC<TopBarProps> = ({
-	ID = '',
 	text = '',
 	RightButtonSrc,
 	LeftButtonSrc,
@@ -17,9 +15,8 @@ const TopBar: React.FC<TopBarProps> = ({
 
 	return (
 		<TopbarLayout $withBorder={$withBorder}>
-			{' '}
-			{/*border-bottom 유무*/}
 			<BackButton
+				src={LeftButtonSrc}
 				onClick={() => {
 					if (onLeftClick) {
 						onLeftClick();
@@ -30,20 +27,19 @@ const TopBar: React.FC<TopBarProps> = ({
 			>
 				<img src={LeftButtonSrc || ''} alt="back" />
 			</BackButton>
-			<TextLayout>
-				<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray3}>
-					{ID}
-				</StyledText>
-				<StyledText $textTheme={{ style: 'body2-light' }}>{text}</StyledText>
-			</TextLayout>
+			<StyledTextLayout $textTheme={{ style: 'heading1-bold' }} color={theme.colors.black}>
+				{text}
+			</StyledTextLayout>
 			<KebabMenuButton
-				src={RightButtonSrc || ''} // 버튼에 src 직접 전달
+				src={RightButtonSrc}
 				onClick={() => {
 					if (onRightClick) {
 						onRightClick();
 					}
 				}}
-			/>
+			>
+				<img src={RightButtonSrc} alt="menu" />
+			</KebabMenuButton>
 		</TopbarLayout>
 	);
 };
