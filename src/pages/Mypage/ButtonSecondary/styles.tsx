@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../../styles/theme';
 
 export const Button = styled.button`
 	width: calc(100% - 30px); /* 양옆에 30px씩 공간을 확보 */
