@@ -14,9 +14,7 @@ export const NavBarContainer = styled.nav`
 	height: 5.5rem;
 	justify-content: center;
 	align-items: center;
-	bottom: 0;
 	background: ${theme.colors.gradient}; // 여기서 그래디언트 색상 사용
-	max-width: 32rem;
 	margin: 0;
 	border-radius: 1.25rem 1.25rem 0 0;
 	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
