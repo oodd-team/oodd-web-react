@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../styles/theme';
 
 export const NavBarContainer = styled.nav`
 	position: fixed;
@@ -8,7 +9,7 @@ export const NavBarContainer = styled.nav`
 	justify-content: center;
 	align-items: center;
 	bottom: 0;
-	background-color: white;
+	background: ${theme.colors.gradient};  // 여기서 그래디언트 색상 사용
 	max-width: 32rem;
 	margin: 0;
 	border-radius: 1.25rem 1.25rem 0 0;
