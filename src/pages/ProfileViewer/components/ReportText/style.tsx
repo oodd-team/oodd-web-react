@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ReportTextLayout = styled.div`
+export const ReportTextLayout = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;

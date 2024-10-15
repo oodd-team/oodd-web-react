@@ -4,7 +4,7 @@ interface UserImgProps {
 	$imgUrl?: string;
 }
 
-export const UserInfoContainer = styled.div`
+export const UserInfoContainer = styled.main`
 	display: flex;
 	width: 100%;
 	max-width: 32rem;
@@ -12,13 +12,13 @@ export const UserInfoContainer = styled.div`
 	padding: 0.625rem; // 10px
 `;
 
-export const UserProfile = styled.div`
+export const UserProfile = styled.section`
 	display: flex;
 	flex-direction: row;
 	padding-left: 1rem;
 `;
 
-export const UserImg = styled.div<UserImgProps>`
+export const UserImg = styled.img<UserImgProps>`
 	width: 4.5rem; // 72px
 	min-height: 4.5rem; // 72px
 	background-color: #d9d9d9;
@@ -37,7 +37,7 @@ export const UserDetails = styled.div`
 	margin-left: 1rem;
 `;
 
-export const Bio = styled.div`
+export const Bio = styled.p`
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -47,26 +47,11 @@ export const Bio = styled.div`
 	text-overflow: ellipsis;
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.section`
 	display: flex;
 	gap: 2.1875rem; // 35px
 	margin-top: 1rem;
 	justify-content: center;
-`;
-
-export const Button = styled.button<{ $color?: string; $backgroundcolor: string }>`
-	display: flex;
-	justify-content: center;
-	gap: 0.5rem;
-	align-items: center;
-	width: 100%;
-	max-width: 10.25rem; // 164px
-	height: 2.45rem; // 44px
-	color: ${({ $color }) => $color};
-	background: ${({ $backgroundcolor }) => $backgroundcolor};
-	border: 0.0625rem solid #000000; // 1px
-	border-radius: 0.3125rem; // 5px
-	overflow: hidden; // 요소가 버튼 밖으로 나가지 않도록 함
 `;
 
 export const Icon = styled.img`

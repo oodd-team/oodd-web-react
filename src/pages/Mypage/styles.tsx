@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { StyledText } from '../../components/Text/StyledText';
 export const ProfileContainer = styled.div`
 	width: 100%;
 	max-width: 32rem;
@@ -28,6 +28,8 @@ export const AvatarWrapper = styled.div`
 	overflow: hidden;
 	margin-right: 1.25rem; /* 20px */
 	margin-left: 30px;
+	flex-shrink: 0; /* Flex 레이아웃에서 크기 고정 */
+  position: relative; /* 필요한 경우 상대적인 위치 고정 */
 `;
 
 export const Avatar = styled.img`
@@ -43,27 +45,35 @@ export const UserInfo = styled.div`
 `;
 
 export const Username = styled.div`
-	color: var(--Color-black, #000);
-
-	/* Body1/Medium */
-	font-family: 'Gmarket Sans';
-	font-size: 1rem; /* 16px */
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+	font-family: Pretendard;
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: 144.5%; /* 26.01px */
+letter-spacing: -0.004px;
 `;
 
 export const Bio = styled.div`
-	color: var(--Color-gray4, #434343);
-
-	/* Body4/Light */
-	font-family: 'Pretendard Variable';
-	font-size: 0.8125rem; /* 13px */
-	font-style: normal;
-	font-weight: 300;
-	line-height: normal;
+overflow: hidden;
+color: #888;
+text-overflow: ellipsis;
+white-space: nowrap;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 22px; /* 157.143% */
+letter-spacing: -0.5px;
 
 	margin-top: 10px;
+`;
+
+export const StyledTextClipped = styled(StyledText)`
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100%;
+	display: inline-block; /* 텍스트 클리핑을 적용하기 위해 inline-block으로 설정 */
 `;
 
 export const StatsContainer = styled.div`
@@ -81,11 +91,10 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: var(--Color-gray4, #434343);
+	color: var(--Color-gray4,#8E8E8E);
 	text-align: center;
 
-	/* Body1/Medium */
-	font-family: 'Gmarket Sans';
+	font-family: 'Pretendard';
 	font-size: 1rem; /* 16px */
 	font-style: normal;
 	font-weight: 400;
@@ -93,11 +102,9 @@ export const StatNumber = styled.div`
 `;
 
 export const StatLabel = styled.div`
-	color: var(--Color-gray4, #434343);
+	color: var(--Color-gray4, #8E8E8E);
 	text-align: center;
-
-	/* Body6/Light */
-	font-family: 'Pretendard Variable';
+	font-family: 'Pretendard';
 	font-size: 0.75rem; /* 12px */
 	font-style: normal;
 	font-weight: 300;

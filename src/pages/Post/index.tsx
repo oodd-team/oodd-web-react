@@ -18,7 +18,7 @@ import {
 } from './styles';
 import Loading from '../../components/Loading/index.tsx';
 import PostTopBar from './PostTopBar';
-import ClothingInfoCard from './ClothingInfoCard';
+import ClothingInfoItem from '../../components/ClothingInfoItem/index.tsx';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import Modal from '../../components/Modal';
@@ -32,7 +32,8 @@ import block from '../../assets/Post/block.svg';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
-import { PostResponse, UserResponse, ClothingInfo } from './dto';
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto.ts';
+import { PostResponse, UserResponse } from './dto';
 import request from '../../apis/core';
 import { useRecoilState } from 'recoil';
 import {
@@ -276,14 +277,8 @@ const Post: React.FC = () => {
 					</Swiper>
 				</PostImg>
 				<ClothingInfos>
-					{postData.clothingInfo?.map((clothingInfo: ClothingInfo, index: number) => (
-						<ClothingInfoCard
-							key={index}
-							imageUrl={clothingInfo.imageUrl}
-							brand={clothingInfo.brand}
-							model={clothingInfo.model}
-							url={clothingInfo.url}
-						/>
+					{postData.clothingInfo?.map((clothingObj: ClothingInfo, index: number) => (
+						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 					))}
 				</ClothingInfos>
 			</PostWrapper>

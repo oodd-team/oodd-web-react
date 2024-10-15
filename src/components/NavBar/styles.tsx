@@ -14,7 +14,9 @@ export const NavBarContainer = styled.nav`
 	height: 5.5rem;
 	justify-content: center;
 	align-items: center;
-	background-color: white;
+	bottom: 0;
+	background: ${theme.colors.gradient}; // 여기서 그래디언트 색상 사용
+	max-width: 32rem;
 	margin: 0;
 	border-radius: 1.25rem 1.25rem 0 0;
 	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
@@ -31,24 +33,26 @@ export const IconWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 2rem;
-	height: 2.688rem;
+	justify-content: center;
+	height: 70px;
 	cursor: pointer;
+	gap: 10px;
+
 
 	p {
 		margin: 0;
 		bottom: 0;
-		color: black;
+		color: white;
 		text-align: center;
-		font-family: 'Pretendard Variable', sans-serif;
-		font-size: 0.563rem;
+		font-family: 'Pretendard'
+		font-size: 15px;
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 500;
 		line-height: normal;
 	}
 `;
 
 export const IconImg = styled.img`
-	width: 2rem;
-	height: 2rem;
+	width: 16px;
+	height: 16px;
 `;

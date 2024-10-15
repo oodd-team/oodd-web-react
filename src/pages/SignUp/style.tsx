@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SignUpContainer = styled.div`
+export const SignUpContainer = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -11,7 +11,7 @@ export const SignUpContainer = styled.div`
 	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled.figure`
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -22,7 +22,7 @@ export const LogoImg = styled.img`
 	display: flex;
 `;
 
-export const IntroWrapper = styled.div`
+export const IntroWrapper = styled.p`
 	display: flex;
 	flex-direction: column;
 	max-width: 13rem;
@@ -31,7 +31,7 @@ export const IntroWrapper = styled.div`
 	text-align: center;
 `;
 
-export const NickNameContainer = styled.div`
+export const NickNameContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -63,7 +63,7 @@ export const NickName = styled.input`
 	}
 `;
 
-export const Tap = styled.div`
+export const Tap = styled.p`
 	display: flex;
 	width: 100%;
 	max-width: 9.5625rem; /* 153px */
