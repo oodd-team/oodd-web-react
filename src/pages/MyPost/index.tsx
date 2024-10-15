@@ -306,7 +306,7 @@ const MyPost: React.FC = () => {
 	return (
 		<OODDFrame>
 			<PostDetailContainer>
-				<TopBar ID={user?.nickname || ''} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 
 				<UserInfoContainer>
 					<UserRow>
