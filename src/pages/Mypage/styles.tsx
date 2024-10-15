@@ -91,11 +91,10 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: var(--Color-gray4, #434343);
+	color: var(--Color-gray4,#8E8E8E);
 	text-align: center;
 
-	/* Body1/Medium */
-	font-family: 'Gmarket Sans';
+	font-family: 'Pretendard';
 	font-size: 1rem; /* 16px */
 	font-style: normal;
 	font-weight: 400;
@@ -103,11 +102,9 @@ export const StatNumber = styled.div`
 `;
 
 export const StatLabel = styled.div`
-	color: var(--Color-gray4, #434343);
+	color: var(--Color-gray4, #8E8E8E);
 	text-align: center;
-
-	/* Body6/Light */
-	font-family: 'Pretendard Variable';
+	font-family: 'Pretendard';
 	font-size: 0.75rem; /* 12px */
 	font-style: normal;
 	font-weight: 300;
