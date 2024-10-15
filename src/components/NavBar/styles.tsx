@@ -27,17 +27,19 @@ export const IconWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 2rem;
-	height: 2.688rem;
+	justify-content: center;
+	height: 70px;
 	cursor: pointer;
+	gap: 10px;
+
 
 	p {
 		margin: 0;
 		bottom: 0;
-		color: black;
+		color: white;
 		text-align: center;
 		font-family: 'Pretendard Variable', sans-serif;
-		font-size: 0.563rem;
+		font-size: 16px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: normal;
@@ -45,6 +47,7 @@ export const IconWrapper = styled.div`
 `;
 
 export const IconImg = styled.img`
-	width: 2rem;
-	height: 2rem;
+	width: 16px;
+	height: 16px;
+
 `;
