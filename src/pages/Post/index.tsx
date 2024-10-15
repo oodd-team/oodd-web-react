@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { OODDFrame } from '../../components/Frame/Frame.tsx';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
-import { StyledText } from '../../components/Text/StyledText';
-import {
-	MoreBtn,
-	PostImg,
-	PostInfo,
-	PostText,
-	PostWrapper,
-	ClothingInfos,
-	UserInfo,
-	UserName,
-	UserProfile,
-} from './styles';
-import Loading from '../../components/Loading/index.tsx';
-import PostTopBar from './PostTopBar';
-import ClothingInfoItem from '../../components/ClothingInfoItem/index.tsx';
-import BottomSheet from '../../components/BottomSheet';
-import BottomSheetMenu from '../../components/BottomSheetMenu';
-import Modal from '../../components/Modal';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import theme from '../../styles/theme';
-import profileImg from './../../assets/Post/profileImg.svg';
-import more from './../../assets/Post/more.svg';
-import declaration from '../../assets/Post/declaration.svg';
-import block from '../../assets/Post/block.svg';
-import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
-import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
-import ReportTextarea from '../Home/ReportTextarea.tsx';
-import { ClothingInfo } from '../../components/ClothingInfoItem/dto.ts';
-import { PostResponse, UserResponse } from './dto';
-import request from '../../apis/core';
+
 import { useRecoilState } from 'recoil';
 import {
 	IsOpenPostCommentBottomSheetAtom,
 	IsOpenPostCommentFailModalAtom,
 	IsOpenPostCommentSuccessModalAtom,
 } from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
+
+import {
+	PostContainer,
+	PostInfoContainer,
+	UserInfo,
+	UserProfile,
+	UserName,
+	MenuBtn,
+	PostImg,
+	Content,
+	IconRow,
+	IconWrapper,
+	ClothingInfoList,
+} from './styles';
+import theme from '../../styles/theme';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import { OODDFrame } from '../../components/Frame/Frame.tsx';
+import TopBar from '../../components/TopBar/index.tsx';
+import BottomSheet from '../../components/BottomSheet';
+import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
+import BottomSheetMenu from '../../components/BottomSheetMenu';
+import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
+import { StyledText } from '../../components/Text/StyledText';
+import Modal from '../../components/Modal';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import Loading from '../../components/Loading/index.tsx';
+import ClothingInfoItem from '../../components/ClothingInfoItem';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
+import ReportTextarea from '../Home/ReportTextarea.tsx';
+
+import back from './../../assets/back.svg';
+import heart from './../../assets/Post/heart.svg';
+import comment from './../../assets/Post/comment.svg';
+import menu from './../../assets/Post/menu.svg';
+import declaration from '../../assets/Post/declaration.svg';
+import block from '../../assets/Post/block.svg';
+
+import request from '../../apis/core';
+
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto.ts';
 import { ModalProps } from '../../components/Modal/dto.ts';
+import { PostResponse, UserResponse } from './dto';
 
 const Post: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
@@ -204,6 +215,71 @@ const Post: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			<PostContainer>
+				<TopBar LeftButtonSrc={back} />
+
+				<PostInfoContainer>
+					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
+						<UserProfile>
+							<img src={user?.profilePictureUrl} alt="profileImg" />
+						</UserProfile>
+						<UserName>
+							<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }} color={theme.colors.black}>
+								{userName}
+							</StyledText>
+						</UserName>
+					</UserInfo>
+					<MenuBtn onClick={() => setIsOpenBottomSheet(true)}>
+						<img src={menu} alt="menu" />
+					</MenuBtn>
+				</PostInfoContainer>
+
+				{postData.content && (
+					<Content>
+						<StyledText
+							$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+							color={theme.colors.black}
+							style={{ opacity: '50%' }}
+						>
+							{postData.content}
+						</StyledText>
+					</Content>
+				)}
+
+				<PostImg>
+					<Swiper
+						modules={[Pagination, Navigation]}
+						slidesPerView={1}
+						pagination={{ clickable: true }}
+						navigation
+						className="postSwiper"
+					>
+						{postData.photoUrls.map((image: string, index: number) => (
+							<SwiperSlide key={index}>
+								<img src={image} alt={`postImg-${index}`} style={{ width: '100%', height: 'auto' }} />
+							</SwiperSlide>
+						))}
+					</Swiper>
+				</PostImg>
+
+				<IconRow>
+					<IconWrapper>
+						<img src={heart} alt="Heart Icon" />
+						<span>{0}</span> {/* 좋아요 수 */}
+					</IconWrapper>
+					<IconWrapper>
+						<img src={comment} alt="Comment Icon" />
+						<span>{0}</span> {/* 댓글 수 */}
+					</IconWrapper>
+				</IconRow>
+
+				<ClothingInfoList>
+					{postData.clothingInfo?.map((clothingObj: ClothingInfo, index: number) => (
+						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
+					))}
+				</ClothingInfoList>
+			</PostContainer>
+
 			<BottomSheet {...bottomSheetProps} />
 			{/* TODO: 신고하기 바텀시트 공통 컴포넌트로 분리하면서 수정 필요 */}
 			<BottomSheet
@@ -225,6 +301,7 @@ const Post: React.FC = () => {
 					setShowInput(false);
 				}}
 			/>
+
 			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
 			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
 			{isBlockedModalOpen && (
@@ -234,54 +311,6 @@ const Post: React.FC = () => {
 			<PostCommentBottomSheet />
 			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
 			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
-
-			<PostTopBar userName={userName} />
-			<PostWrapper>
-				<PostInfo>
-					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
-						<UserProfile>
-							<img src={user?.profilePictureUrl || profileImg} alt="profileImg" />
-						</UserProfile>
-						<UserName>
-							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-								{userName}
-							</StyledText>
-						</UserName>
-					</UserInfo>
-					<MoreBtn onClick={() => setIsOpenBottomSheet(true)}>
-						<img src={more} alt="more" />
-					</MoreBtn>
-				</PostInfo>
-				<PostText>
-					<StyledText
-						$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-						color={theme.colors.black}
-						style={{ opacity: '50%' }}
-					>
-						{postData.content}
-					</StyledText>
-				</PostText>
-				<PostImg>
-					<Swiper
-						modules={[Pagination, Navigation]}
-						slidesPerView={1}
-						pagination={{ clickable: true }}
-						navigation
-						className="postSwiper"
-					>
-						{postData.photoUrls.map((image: string, index: number) => (
-							<SwiperSlide key={index}>
-								<img src={image} alt={`postImg-${index}`} style={{ width: '100%', height: 'auto' }} />
-							</SwiperSlide>
-						))}
-					</Swiper>
-				</PostImg>
-				<ClothingInfos>
-					{postData.clothingInfo?.map((clothingObj: ClothingInfo, index: number) => (
-						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
-					))}
-				</ClothingInfos>
-			</PostWrapper>
 		</OODDFrame>
 	);
 };

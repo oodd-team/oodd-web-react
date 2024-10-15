@@ -47,6 +47,10 @@ export interface UserData {
 	joinedAt: string;
 }
 
+export interface ImageSwiperProps {
+	images: string[];
+}
+
 export interface ClothingInfoCardProps {
 	imageUrl: string;
 	brand: string;

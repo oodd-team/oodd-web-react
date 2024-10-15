@@ -1,59 +1,17 @@
 import styled from 'styled-components';
 
-// PostTopBar
-
-export const PostTopBarContainer = styled.div`
-	width: 100%;
-	max-width: 32rem;
-	height: 2.75rem;
-	display: flex;
-	justify-content: space-between;
-	background-color: #ffffff;
-	z-index: 10;
-	align-items: center;
-	position: fixed;
-`;
-
-export const BackIcon = styled.img`
-	width: 0.5625rem;
-	height: 1.125rem;
-	margin-left: 1.3125rem;
-	cursor: pointer;
-	overflow: hidden;
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-`;
-
-export const MidWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 0.125rem;
-	margin-top: 0.25rem;
-`;
-
-export const RightSpace = styled.div`
-	width: 0.5625rem;
-	height: 1.125rem;
-	margin-right: 1.3125rem;
-`;
-
-// Post
-
-export const PostWrapper = styled.div`
+export const PostContainer = styled.div`
 	width: 100%;
 	height: auto;
 `;
 
-export const PostInfo = styled.div`
+export const PostInfoContainer = styled.div`
 	display: flex;
-	margin-top: 3.375rem;
 	justify-content: space-between;
 	align-items: center;
+	margin-top: 8px;
+	margin-bottom: 16px;
+	padding: 0 20px;
 `;
 
 export const UserInfo = styled.div`
@@ -63,11 +21,11 @@ export const UserInfo = styled.div`
 `;
 
 export const UserProfile = styled.div`
-	width: 2.25rem;
-	height: 2.25rem;
+	width: 32px;
+	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	margin: 0 0.75rem 0 1.25rem;
+	margin-right: 8px;
 
 	img {
 		width: 100%;
@@ -78,19 +36,16 @@ export const UserProfile = styled.div`
 
 export const UserName = styled.div``;
 
-export const MoreBtn = styled.div`
-	width: 1.5rem;
-	height: 1.5rem;
-	margin-right: 1.25rem;
-	cursor: pointer;
+export const MenuBtn = styled.button`
+	width: 18px;
+	height: 18px;
 `;
 
-export const PostText = styled.span`
-	margin: 0 1.25rem 0.5rem;
-	margin-top: 0.75rem;
-	margin-bottom: 0.4875rem;
+export const Content = styled.span`
 	display: flex;
 	align-items: center;
+	padding: 0 20px;
+	margin-bottom: 16px;
 	word-wrap: break-word;
 	word-break: break-all;
 `;
@@ -102,7 +57,7 @@ export const PostImg = styled.div`
 	.postSwiper {
 		position: relative;
 		width: 100%;
-		padding-bottom: 133.33%;
+		padding-bottom: 100%;
 	}
 
 	.postSwiper .swiper-pagination {
@@ -142,14 +97,40 @@ export const PostImg = styled.div`
 		top: 0;
 		left: 0;
 		width: 100%;
-		aspect-ratio: 3 / 4;
+		aspect-ratio: 1;
 		height: auto;
 		object-fit: cover;
 	}
 `;
 
-export const ClothingInfos = styled.div`
-	margin-top: 0.6687rem;
+export const IconRow = styled.div`
+	display: flex;
+	height: 20px;
+	align-items: center;
+	padding: 0 20px;
+	margin: 8px 0 16px 0;
+`;
+
+export const IconWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+
+	img {
+		width: 20px;
+		height: 20px;
+	}
+
+	span {
+		font-size: 15px;
+		color: #000;
+		margin-right: 16px;
+	}
+`;
+
+export const ClothingInfoList = styled.div`
+	margin-top: 5px;
 	margin-left: 1.25rem;
 	margin-bottom: 4rem;
 	display: flex;
@@ -189,27 +170,3 @@ export const InputLayout = styled.div`
 		resize: none;
 	}
 `;
-
-// export const InputWrapper = styled.textarea`
-// 	display: block;
-// 	width: calc(100% - 3rem);
-// 	height: 5.75rem;
-// 	border-radius: 0.125rem;
-// 	border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
-// 	margin-bottom: 5.875rem;
-// 	z-index: 2;
-// 	margin-top: -3.75rem;
-// 	outline: none;
-// 	padding: 0.8125rem 0.9375rem;
-// 	font-family: 'Pretendard Variable';
-// 	font-size: 1rem;
-// 	font-style: normal;
-// 	font-weight: 300;
-// 	line-height: 150%;
-// 	color: ${({ theme }) => theme.colors.black};
-// 	resize: none;
-
-// 	&::placeholder {
-// 		color: ${({ theme }) => theme.colors.gray3};
-// 	}
-// `;
