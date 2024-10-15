@@ -1,6 +1,7 @@
 //PostUploadModal/index.tsx
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useRecoilState } from 'recoil';
 import {
 	postImagesAtom,
@@ -9,6 +10,7 @@ import {
 	postStyletagAtom,
 	postIsRepresentativeAtom,
 } from '../../recoil/PostUpload/PostAtom';
+
 import {
 	UploadContainer,
 	Content,
@@ -19,27 +21,32 @@ import {
 	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
+
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomButton from '../../components/BottomButton';
 import { StyledText } from '../../components/Text/StyledText';
+import ClothingInfoItem from '../../components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
-import ClothingInfoItem from './ClothingInfoItem';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
+
 import back from '../../assets/Upload/back.svg';
 import clothingTag from '../../assets/Upload/clothingTag.svg';
 import styleTag from '../../assets/Upload/styleTag.svg';
 import pin from '../../assets/Upload/pin.svg';
 import next from '../../assets/Upload/next.svg';
 import next_up from '../../assets/Upload/next_up.svg';
+
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import request from '../../apis/core';
-import { PostUploadModalProps, ClothingInfo, Styletag, Post } from './dto';
-import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/PostDto';
+
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { PostUploadModalProps, Styletag, Post } from './dto';
+import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/dto';
 
 const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);

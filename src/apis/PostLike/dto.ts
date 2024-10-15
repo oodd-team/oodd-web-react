@@ -1,13 +1,13 @@
 import { BaseApiResponse } from '../util/dto';
 
 // 좋아요 누르기/취소 응답
-export type LikePostResponse = BaseApiResponse<BaseLike>;
+export type UpdatePostLikeResponse = BaseApiResponse<BaseLike>;
 
 // 본인 게시물의 좋아요 조회 응답 (유저 정보 포함)
-export type PostLikesMyResponse = BaseApiResponse<PostLikesResponseData<LikeWithUser>>;
+export type GetMyPostLikesResponse = BaseApiResponse<PostLikesResponseData<LikeWithUser>>;
 
 // 타인 게시물의 좋아요 조회 응답 (유저 정보 미포함)
-export type PostLikesOtherResponse = BaseApiResponse<PostLikesResponseData<BaseLike>>;
+export type GetOtherPostLikesResponse = BaseApiResponse<PostLikesResponseData<BaseLike>>;
 
 // 공통 좋아요 인터페이스
 interface BaseLike {

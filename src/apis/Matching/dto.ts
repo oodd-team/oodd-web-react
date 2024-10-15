@@ -1,19 +1,21 @@
 import { BaseApiResponse } from '../util/dto';
 import { User } from '../User/dto';
 
-// 매칭 요청 Request/Response
-export type MatchingRequestApiRequest = MatchingRequest;
-export type MatchingRequestApiResponse = BaseApiResponse<MatchingResponse>;
+// 매칭 요청
+//Request
+export type CreateMatchingRequest = MatchingRequest;
+//Response
+export type CreateMatchingResponse = BaseApiResponse<MatchingResult>;
 
 // 매칭 요청 수락/거부
 //Request
-export type MatchingReponseApiRequest = MatchingResponseRequest;
+export type UpdateMatchingAcceptRequest = MatchingAcceptRequest;
 //Response
-export type MatchingReponseApiResponse = BaseApiResponse<MatchingResponse>;
+export type UpdateMatchingAcceptResponse = BaseApiResponse<MatchingResult>;
 
 // 매칭 리스트 조회
 // Response
-export type MatchingListApiResponse = BaseApiResponse<MatchingListResponse[]>;
+export type GetMatchingListResponse = BaseApiResponse<MatchingListResult[]>;
 
 // 매칭 요청 데이터
 export interface MatchingRequest {
@@ -23,13 +25,13 @@ export interface MatchingRequest {
 }
 
 // 매칭 상태 업데이트 (수락/거부) 데이터
-export interface MatchingResponseRequest {
+export interface MatchingAcceptRequest {
 	id: number;
 	requestStatus: 'rejected' | 'accepted';
 }
 
 // 매칭 응답 데이터 (요청 수락/거부 포함)
-export interface MatchingResponse {
+export interface MatchingResult {
 	id: number;
 	requester: User;
 	target: User;
@@ -41,7 +43,7 @@ export interface MatchingResponse {
 }
 
 // 매칭 리스트 조회 시 응답 데이터
-export interface MatchingListResponse {
+export interface MatchingListResult {
 	id: number;
 	status: string; // 요청의 현재 상태
 	createdAt: string;

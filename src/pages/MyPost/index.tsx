@@ -31,17 +31,17 @@ import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
-import ClothingInfoCard from '../Post/ClothingInfoCard';
+import ClothingInfoItem from '../../components/ClothingInfoItem';
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
 
 import imageBasic from '../../assets/imageBasic.svg';
 import back from '../../assets/back.svg';
-import nextIcon from '../../assets/Upload/next.svg';
-import DeleteIcon from './assets/DeleteIcon.png';
-import EditIcon from './assets/EditIcon.svg';
-import PinIcon from './assets/PinIcon.svg';
-import mockImage from './assets/mockImage.png';
-import heartIcon from './assets/heartIcon.svg';
-import commentIcon from './assets/commentIcon.svg';
+import next from '../../assets/MyPost/next.svg';
+import edit from '../../assets/MyPost/edit.svg';
+//import delete from '../../assets/MyPost/delete.svg';
+import pin from '../../assets/MyPost/pin.svg';
+import heart from '../../assets/MyPost/heart.svg';
+import comment from '../../assets/MyPost/comment.svg';
 
 import request from '../../apis/core';
 import { UserResponse } from './dto';
@@ -120,7 +120,7 @@ const MyPost: React.FC = () => {
 					setIsBottomSheetOpen(false);
 					handlePinPost();
 				},
-				icon: PinIcon,
+				icon: pin,
 			},
 			{
 				text: 'OODD 수정하기',
@@ -128,7 +128,7 @@ const MyPost: React.FC = () => {
 					setIsBottomSheetOpen(false);
 					handleEditPost();
 				},
-				icon: EditIcon,
+				icon: edit,
 			},
 			{
 				text: 'OOTD 삭제하기',
@@ -136,7 +136,7 @@ const MyPost: React.FC = () => {
 					setIsBottomSheetOpen(false);
 					handleDeletePost();
 				},
-				icon: DeleteIcon,
+				icon: edit,
 			},
 		],
 		marginBottom: '50px',
@@ -167,7 +167,7 @@ const MyPost: React.FC = () => {
 										<UserItem key={like.user.id}>
 											<CircleIcon>
 												<img
-													src={like.user.profilePictureUrl || mockImage}
+													src={like.user.profilePictureUrl}
 													alt="user avatar"
 													style={{ borderRadius: '50%', width: '100%', height: '100%' }}
 												/>
@@ -183,7 +183,7 @@ const MyPost: React.FC = () => {
 										<UserItem key={comment.id}>
 											<CircleIcon>
 												<img
-													src={comment.user.profilePictureUrl || mockImage}
+													src={comment.user.profilePictureUrl}
 													alt="user avatar"
 													style={{ borderRadius: '50%', width: '100%', height: '100%' }}
 												/>
@@ -336,21 +336,21 @@ const MyPost: React.FC = () => {
 					{postDetail?.photoUrls && postDetail.photoUrls.length > 1 && (
 						<>
 							<Arrow direction="left" onClick={handlePrevImage} disabled={currentImageIndex === 0}>
-								<img src={nextIcon} style={{ transform: 'rotate(180deg)' }} alt="Previous" />
+								<img src={next} style={{ transform: 'rotate(180deg)' }} alt="Previous" />
 							</Arrow>
 							<Arrow
 								direction="right"
 								onClick={handleNextImage}
 								disabled={currentImageIndex === postDetail.photoUrls.length - 1}
 							>
-								<img src={nextIcon} alt="Next" />
+								<img src={next} alt="Next" />
 							</Arrow>
 							<Indicator>
 								{currentImageIndex + 1} / {postDetail.photoUrls.length}
 							</Indicator>
 						</>
 					)}
-					<Image src={postDetail?.photoUrls?.[currentImageIndex] || mockImage} alt="Post" />
+					<Image src={postDetail?.photoUrls?.[currentImageIndex]} alt="Post" />
 				</ImageWrapper>
 
 				{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
@@ -364,23 +364,17 @@ const MyPost: React.FC = () => {
 				)}
 				<IconRow>
 					<IconWrapper onClick={() => handleOpenSheet('likes')}>
-						<img src={heartIcon} alt="Heart Icon" />
+						<img src={heart} alt="Heart Icon" />
 						<span>{postDetail?.likes || 0}</span> {/* 좋아요 수 */}
 					</IconWrapper>
 					<IconWrapper onClick={() => handleOpenSheet('comments')}>
-						<img src={commentIcon} alt="Comment Icon" />
+						<img src={comment} alt="Comment Icon" />
 						<span>{postDetail?.comments?.length || 0}</span> {/* 댓글 수 */}
 					</IconWrapper>
 				</IconRow>
 				<ClothingInfoContainer>
-					{postDetail?.clothingInfo?.map((clothingInfo, index: number) => (
-						<ClothingInfoCard
-							key={index}
-							imageUrl={clothingInfo.imageUrl}
-							brand={clothingInfo.brand}
-							model={clothingInfo.model}
-							url={clothingInfo.url}
-						/>
+					{postDetail?.clothingInfo?.map((clothingObj: ClothingInfo, index: number) => (
+						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 					))}
 				</ClothingInfoContainer>
 			</PostDetailContainer>

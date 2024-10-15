@@ -1,13 +1,13 @@
 import { BaseApiResponse } from '../util/dto';
 
 // 댓글 작성 API 응답
-export type CreateCommentApiResponse = BaseApiResponse<CreateCommentResponse>;
+export type CreateCommentResponse = BaseApiResponse<CreateCommentResult>;
 
 // 댓글 삭제 API 응답
-export type DeleteCommentApiResponse = BaseApiResponse<DeleteCommentResponse>;
+export type DeleteCommentResponse = BaseApiResponse<DeleteCommentResult>;
 
 // 댓글 조회 API 응답
-export type CommentsApiResponse = BaseApiResponse<CommentsResponse>;
+export type GetCommentsResponse = BaseApiResponse<GetCommentsResult>;
 
 // 공통 필드 인터페이스
 interface BaseComment {
@@ -34,15 +34,15 @@ export interface Comment extends BaseComment {
 }
 
 // 댓글 작성 응답
-export interface CreateCommentResponse extends BaseComment {}
+export interface CreateCommentResult extends BaseComment {}
 
 // 댓글 삭제 응답
-export interface DeleteCommentResponse extends BaseComment {
+export interface DeleteCommentResult extends BaseComment {
 	status: 'deactivated';
 	deletedAt: string;
 }
 
 // 댓글 조회 응답
-export interface CommentsResponse {
+export interface GetCommentsResult {
 	comments: Comment[];
 }
