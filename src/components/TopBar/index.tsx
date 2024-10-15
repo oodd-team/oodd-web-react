@@ -20,8 +20,6 @@ const TopBar: React.FC<TopBarProps> = ({
 			{' '}
 			{/*border-bottom 유무*/}
 			<BackButton
-				src={LeftButtonSrc || ''}
-				alt="back"
 				onClick={() => {
 					if (onLeftClick) {
 						onLeftClick();
@@ -29,7 +27,9 @@ const TopBar: React.FC<TopBarProps> = ({
 						nav(-1);
 					}
 				}}
-			/>
+			>
+				<img src={LeftButtonSrc || ''} alt="back" />
+			</BackButton>
 			<TextLayout>
 				<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray3}>
 					{ID}
@@ -37,8 +37,7 @@ const TopBar: React.FC<TopBarProps> = ({
 				<StyledText $textTheme={{ style: 'body2-light' }}>{text}</StyledText>
 			</TextLayout>
 			<KebabMenuButton
-				src={RightButtonSrc || ''} // 이미지 사용 || 이미지 사용 X
-				alt="menu"
+				src={RightButtonSrc || ''} // 버튼에 src 직접 전달
 				onClick={() => {
 					if (onRightClick) {
 						onRightClick();

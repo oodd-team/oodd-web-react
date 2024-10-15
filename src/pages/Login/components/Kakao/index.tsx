@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import kakao from '../../../../assets/Login/kakao.png';
+import kakao from '../../../../assets/Login/Kakao.svg';
 import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from '../style';
 
 const Kakao: React.FC = () => {
@@ -18,13 +18,13 @@ const Kakao: React.FC = () => {
 	};
 
 	return (
-		<SocialLogin $bgColor="#FFE716" onClick={handleLogin}>
-			<LogoImgWrapper $logowidth="2.3rem" $logoheight="2.3rem">
+		<SocialLogin $bgColor="#FEE500" onClick={handleLogin}>
+			<LogoImgWrapper>
 				<LogoImage src={kakao} alt="Kakao logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light' }} color={theme.colors.gray4}>
-					카카오로 시작하기
+				<StyledText $textTheme={{ style: 'body2-bold' }} color={theme.colors.black}>
+					Kakao로 계속하기
 				</StyledText>
 			</TextWrapper>
 		</SocialLogin>
