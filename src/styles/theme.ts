@@ -1,6 +1,24 @@
 import { DefaultTheme, css } from 'styled-components';
 
 const theme: DefaultTheme = {
+	breakPoints: css`
+		@media (max-width: 767px) {
+			min-width: 300px;
+			max-width: 512px;
+		}
+
+		@media (min-width: 768px) and (max-width: 991px) {
+			max-width: 640px;
+		}
+
+		@media (min-width: 992px) and (max-width: 1219px) {
+			max-width: 640px;
+		}
+
+		@media (min-width: 1220px) {
+			max-width: 1080px;
+		}
+	`,
 	colors: {
 		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
 		black: '#000000',
