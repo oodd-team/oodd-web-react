@@ -38,10 +38,10 @@ export const IconWrapper = styled.div`
 		bottom: 0;
 		color: white;
 		text-align: center;
-		font-family: 'Pretendard Variable', sans-serif;
-		font-size: 16px;
+		font-family: 'Pretendard'
+		font-size: 15px;
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 500;
 		line-height: normal;
 	}
 `;
