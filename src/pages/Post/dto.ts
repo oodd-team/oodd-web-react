@@ -1,3 +1,5 @@
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+
 export interface PostTopBarProps {
 	userName: string;
 }
@@ -25,14 +27,6 @@ export interface PostData {
 	content: string;
 	styletags: string[];
 	clothingInfo: ClothingInfo[] | null;
-}
-
-export interface ClothingInfo {
-	brand: string;
-	model: string;
-	modelNumber: number;
-	url: string;
-	imageUrl: string;
 }
 
 export interface UserResponse {

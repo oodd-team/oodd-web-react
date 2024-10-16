@@ -13,7 +13,7 @@ const ButtonSecondary: React.FC = () => {
 
 	return (
 		<Button onClick={handleClick}>
-			<StyledText $textTheme={{ style: 'button1-regular', lineHeight: 2 }} color={theme.colors.black}>
+			<StyledText $textTheme={{ style: 'button1-regular', lineHeight: 2 }} color={theme.colors.gradient}>
 				프로필 수정
 			</StyledText>
 		</Button>

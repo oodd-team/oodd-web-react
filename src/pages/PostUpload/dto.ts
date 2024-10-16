@@ -1,3 +1,5 @@
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+
 export interface PostUploadModalProps {
 	postId?: number | null;
 }
@@ -5,19 +7,6 @@ export interface PostUploadModalProps {
 export interface Styletag {
 	tag: string;
 	color: string;
-}
-
-export interface ClothingInfo {
-	imageUrl: string;
-	brand: string;
-	model: string;
-	modelNumber: number;
-	url: string;
-}
-
-export interface ClothingInfoItemProps {
-	clothingObj: ClothingInfo;
-	onDelete: (clothingObj: ClothingInfo) => void;
 }
 
 export interface ImageSwiperProps {
