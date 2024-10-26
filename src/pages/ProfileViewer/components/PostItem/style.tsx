@@ -11,7 +11,7 @@ export const PostItemContainer = styled.article`
 	position: relative; /* LikesOverlay 위치 조정을 위한 설정 */
 	box-sizing: border-box;
 
-	@media (min-width: 33.125rem) {
+	@media (min-width: 23.4375rem) {
 		&:nth-child(2n + 1):last-child {
 			flex: 0 1 calc(50% - 0.5rem); /* 마지막 게시물이 남을 때 왼쪽에 위치 */
 			margin-right: auto; /* 오른쪽 여백을 자동으로 설정하여 왼쪽 정렬 */

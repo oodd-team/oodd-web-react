@@ -16,6 +16,7 @@ export const RequestMessage = styled(StyledText)`
 	width: 15rem;
 `;
 export const ComentContainer = styled.figure`
+	display: flex;
 	align-items: center;
 	width: 100%;
 	max-width: 21.875rem; // 동일하게 맞춤
@@ -23,7 +24,6 @@ export const ComentContainer = styled.figure`
 `;
 
 export const Coment = styled.textarea`
-	display: flex;
 	font-family: Pretendard;
 	font-size: 1rem;
 	font-style: normal;
@@ -32,7 +32,7 @@ export const Coment = styled.textarea`
 	border: 0.0625rem solid var(--main-color-light-hover, #ffdeed);
 	width: 100%;
 	min-height: 3rem; // 최소 높이 설정
-	padding: 1rem 2rem 0 0.5rem;
+	padding: 1rem 3rem 0 0.5rem;
 	box-sizing: border-box;
 	overflow: hidden; // 스크롤을 숨김
 	resize: none; // 사용자가 크기를 조절할 수 없도록 함
