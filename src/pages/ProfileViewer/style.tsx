@@ -8,7 +8,7 @@ export const ProfileViewerContainer = styled.main`
 	position: relative;
 
 	@media (min-width: 23.4375rem) and (max-width: 32rem) {
-		padding: 0 1.25rem;
+		padding: 0 1.25rem; // 모바일 환경에서만 기본 패딩 유지
 	}
 `;
 
@@ -17,7 +17,7 @@ export const Vector = styled.div`
 	max-width: 32rem;
 	width: 100%;
 	height: 0;
-	border: 0.0625rem solid #c4c4c4; // 1px
+	border: 0.0625rem solid #c4c4c4;
 `;
 
 export const CounterContainer = styled.section`
@@ -29,7 +29,7 @@ export const CounterContainer = styled.section`
 
 export const Count = styled.div`
 	display: flex;
-	flex-direction: column; // 세로 정렬
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 0.3125rem;

@@ -10,7 +10,7 @@ import {
 	LikesOverlay,
 	PinSvg,
 } from './style';
-import HeartSvg from '../../../../assets/ProfileViewer/white-heart.svg';
+import HeartSvg from '../../../../assets/default/white-heart.svg';
 import PinIcon from '../../../../assets/default/pin.svg';
 import { PostItemProps } from '../../dto';
 

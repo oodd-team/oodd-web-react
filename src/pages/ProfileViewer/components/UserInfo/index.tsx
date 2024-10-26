@@ -12,8 +12,7 @@ import { useRecoilState } from 'recoil';
 import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import HeartSvg from '../../../../assets/ProfileViewer/white-heart.svg';
-import MsgSvg from '../../../../assets/default/message.svg';
+import HeartSvg from '../../../../assets/default/white-heart.svg';
 import RequestComponent from '../RequestComponent';
 import BottomSheet from '../../../../components/BottomSheet';
 import request from '../../../../apis/core';
@@ -131,7 +130,6 @@ const UserInfo: React.FC = React.memo(() => {
 			<ButtonContainer>
 				{friend && (
 					<LongButton onClick={handleMessageClick}>
-						<img src={MsgSvg} alt="message icon" />
 						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
 							메세지 보내기
 						</StyledText>

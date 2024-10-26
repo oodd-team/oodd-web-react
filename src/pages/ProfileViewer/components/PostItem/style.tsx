@@ -4,7 +4,7 @@ import { StyledText } from '../../../../components/Text/StyledText';
 export const PostItemContainer = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
 	width: 100%;
-	max-width: 1080px; /* 최대 너비 설정 */
+	max-width: 67.5rem; /* 최대 너비 설정 */
 	aspect-ratio: 1 / 1; /* 정사각형 유지 */
 	display: flex;
 	flex-direction: column;
