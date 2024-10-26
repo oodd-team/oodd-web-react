@@ -10,8 +10,8 @@ import {
 	LikesOverlay,
 	PinSvg,
 } from './style';
-import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
-import PinIcon from '../../../../assets/ProfileViewer/PinIcon.svg';
+import HeartSvg from '../../../../assets/ProfileViewer/white-heart.svg';
+import PinIcon from '../../../../assets/default/pin.svg';
 import { PostItemProps } from '../../dto';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative, firstPhoto }) => {

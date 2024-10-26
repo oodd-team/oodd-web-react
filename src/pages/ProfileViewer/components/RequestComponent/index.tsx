@@ -3,7 +3,7 @@ import request from '../../../../apis/core';
 import { ResponseDto } from './ResponseDto';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
 import theme from '../../../../styles/theme';
-import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
+import MsgSvg_g from '../../../../assets/ProfileViewer/message.svg';
 import { RequestComponentProps } from '../../dto';
 import { useRecoilState } from 'recoil';
 import { isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
@@ -86,11 +86,11 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 
 	return (
 		<RequestContainer>
-			<RequestMessage $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
+			<RequestMessage $textTheme={{ style: 'body1-regular' }} color={theme.colors.black}>
 				{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
 			</RequestMessage>
 			<ComentContainer>
-				<Coment ref={inputRef} value={inputValue} onChange={handleInputChange} maxLength={100} />
+				<Coment ref={inputRef} placeholder="value" value={inputValue} onChange={handleInputChange} maxLength={100} />
 				<MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
 			</ComentContainer>
 		</RequestContainer>

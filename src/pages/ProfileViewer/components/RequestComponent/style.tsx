@@ -5,7 +5,7 @@ export const RequestContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 7rem 0 2.5rem 0;
+	margin: 1.5625rem 0 2.5rem 0;
 	gap: 2.0625rem;
 `;
 
@@ -13,7 +13,7 @@ export const RequestMessage = styled(StyledText)`
 	display: flex;
 	text-align: center;
 	height: 100%;
-	width: 16rem;
+	width: 15rem;
 `;
 export const ComentContainer = styled.figure`
 	align-items: center;
@@ -24,14 +24,13 @@ export const ComentContainer = styled.figure`
 
 export const Coment = styled.textarea`
 	display: flex;
-	font-family: 'Pretendard Variable';
+	font-family: Pretendard;
+	font-size: 1rem;
 	font-style: normal;
-	font-weight: 300;
-	font-size: 0.85rem;
-	background-color: #f5f5f5;
-	border: 1px solid #7b7b7b;
-	border-radius: 0.1875rem;
-	width: 100%; // 21.875rem -> 100%
+	font-weight: 400;
+	border-radius: 0.5rem;
+	border: 0.0625rem solid var(--main-color-light-hover, #ffdeed);
+	width: 100%;
 	min-height: 3rem; // 최소 높이 설정
 	padding: 1rem 2rem 0 0.5rem;
 	box-sizing: border-box;
@@ -43,7 +42,5 @@ export const MsgIcon = styled.img`
 	right: 0.5rem; // 아이콘의 오른쪽 여백
 	top: 50%; // 아이콘을 세로 중앙에 맞추기
 	transform: translateY(-50%); // 아이콘을 정확히 중앙에 위치시키기
-	width: 1.5rem;
-	height: 1.5rem;
 	cursor: pointer;
 `;

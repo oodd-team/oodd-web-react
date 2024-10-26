@@ -6,19 +6,10 @@ export const ProfileViewerContainer = styled.main`
 	align-items: center;
 	height: 100vh;
 	position: relative;
-	padding: 0 20px; /* 기본 패딩값 */
 
-	// @media (min-width: 375px) {
-	// 	padding: 0 calc(20px + (44 * ((100vw - 375px) / 393))); /* 375px부터 768px 사이에서 서서히 증가 */
-	// }
-
-	// @media (min-width: 768px) and (max-width: 1920px) {
-	// 	padding: 0 calc(64px + (356 * ((100vw - 768px) / 1152))); /* 768px부터 1920px 사이에서 서서히 증가 */
-	// }
-
-	// @media (min-width: 1920px) {
-	// 	padding: 0 420px; /* 1920px 이상에서는 420px로 고정 */
-	// }
+	@media (min-width: 23.4375rem) and (max-width: 32rem) {
+		padding: 0 1.25rem;
+	}
 `;
 
 export const Vector = styled.div`
@@ -48,7 +39,7 @@ export const Count = styled.div`
 
 export const PostListContainer = styled.section`
 	display: flex;
-	gap: 15px;
+	gap: 0.9375rem;
 	flex-wrap: wrap;
 	width: 100%;
 	overflow-y: auto;

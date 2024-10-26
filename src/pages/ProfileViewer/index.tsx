@@ -12,7 +12,7 @@ import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
-import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg';
+import MoreSvg from '../../assets/default/more.svg';
 import BackSvg from '../../assets/ProfileViewer/backIcon.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
