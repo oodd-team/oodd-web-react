@@ -1,6 +1,3 @@
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
-import Comment from '../../../components/Comment';
 import { CommentProps } from '../../../components/Comment/dto';
 import request from '../../../apis/core';
 import { ApiDto } from '../dto';
@@ -11,6 +8,7 @@ import {
 	IsOpenPostCommentSuccessModalAtom,
 	PostCommentAtom,
 } from '../../../recoil/Home/PostCommentBottomSheetAtom';
+import CommentBottomSheet, { CommentBottomSheetProps } from '../../../components/CommentBottomSheet';
 
 const PostCommentBottomSheet: React.FC = () => {
 	const [isOpenPostCommentBottomSheet, setIsOpenPostCommentBottomSheet] = useRecoilState(
@@ -46,15 +44,14 @@ const PostCommentBottomSheet: React.FC = () => {
 		},
 	};
 
-	const postCommentBottomSheet: BottomSheetProps<CommentProps> = {
-		isOpenBottomSheet: isOpenPostCommentBottomSheet,
-		Component: Comment,
-		componentProps: postCommentProps,
-		onCloseBottomSheet: () => {
+	const commentBottomSheetProps: CommentBottomSheetProps = {
+		isBottomSheetOpen: isOpenPostCommentBottomSheet,
+		commentProps: postCommentProps,
+		handleCloseBottomSheet: () => {
 			setIsOpenPostCommentBottomSheet(false);
 		},
 	};
-	return <BottomSheet {...postCommentBottomSheet} />;
+	return <CommentBottomSheet {...commentBottomSheetProps} />;
 };
 
 export default PostCommentBottomSheet;
