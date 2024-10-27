@@ -40,9 +40,11 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 
 	return (
 		<>
+			{/* 모바일 & 태블릿 UI */}
 			<CommentBottomSheetLayout>
 				<BottomSheet {...bottomSheetProps}></BottomSheet>
 			</CommentBottomSheetLayout>
+			{/* 데스크탑 UI */}
 			{isBottomSheetOpen && (
 				<CommentModalLayout>
 					<CommentModalWrapper onClick={handleClickBackground}>

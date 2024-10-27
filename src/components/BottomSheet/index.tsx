@@ -128,6 +128,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				}
 			}}
 		>
+			{/* 모바일 & 태블릿 UI */}
 			<BottomSheetLayout
 				onPointerDown={onPointerDown}
 				onTouchStart={onPointerDown}
@@ -137,6 +138,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />
 			</BottomSheetLayout>
+			{/* 데스크탑 UI */}
 			<SideBarLayout $isSideBarOpen={isSideBarOpen}>
 				<SideBarTopBar>
 					<XButton />
