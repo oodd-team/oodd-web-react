@@ -19,7 +19,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 }) => {
 	const startY = useRef<number | null>(null);
 	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-	const [initialRender, setInitialRender] = useState(true);
+	const [isInitialRender, setisInitialRender] = useState(true);
 	const [isRendered, setIsRendered] = useState(false);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -27,11 +27,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	useEffect(() => {
 		if (isOpenBottomSheet) {
 			setIsSideBarOpen(true);
-			setInitialRender(false);
+			setisInitialRender(false);
 			setIsRendered(true);
-			setCurrentTranslateY(0); // 초기화
+			setCurrentTranslateY(0);
 		} else {
-			setIsSideBarOpen(false); // 애니메이션 시간에 맞춰 숨김
+			setIsSideBarOpen(false);
 			setIsRendered(false);
 		}
 	}, [isOpenBottomSheet]);
@@ -95,10 +95,10 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	);
 
 	useEffect(() => {
-		// pc
+		// 데스크탑
 		const handlePointerUp = (event: PointerEvent) => onPointerUp(event);
 		const handlePointerMove = (event: PointerEvent) => onPointerMove(event);
-		// 모바일
+		// 모바일 & 태블릿
 		const handleTouchEnd = (event: TouchEvent) => onPointerUp(event);
 		const handleTouchMove = (event: TouchEvent) => onPointerMove(event);
 
@@ -116,11 +116,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	}, [onPointerMove, onPointerUp]);
 
 	// 초기 렌더링 시 바텀시트 안 보이게 설정
-	if (initialRender && !isOpenBottomSheet) return null;
+	if (isInitialRender && !isOpenBottomSheet) return null;
 
 	return (
 		<BottomSheetWrapper
-			$isOpenBottomSheet={isRendered}
+			$isBottomSheetOpen={isRendered}
 			onClick={(e: React.MouseEvent) => {
 				// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
 				if (!isDragging && e.target === e.currentTarget) {
@@ -133,7 +133,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				onPointerDown={onPointerDown}
 				onTouchStart={onPointerDown}
 				$currentTranslateY={currentTranslateY}
-				$isOpenBottomSheet={isRendered}
+				$isBottomSheetOpen={isRendered}
 			>
 				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />

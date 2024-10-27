@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import XIcon from '../../assets/default/x.svg';
 
-export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
+export const BottomSheetWrapper = styled.div<{ $isBottomSheetOpen: boolean }>`
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -10,17 +10,17 @@ export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
 	height: 100%;
 	z-index: 999;
 	background-color: rgba(0, 0, 0, 0.3);
-	opacity: ${({ $isOpenBottomSheet }) => ($isOpenBottomSheet ? 1 : 0)};
-	visibility: ${({ $isOpenBottomSheet }) => ($isOpenBottomSheet ? 'visible' : 'hidden')};
+	opacity: ${({ $isBottomSheetOpen }) => ($isBottomSheetOpen ? 1 : 0)};
+	visibility: ${({ $isBottomSheetOpen }) => ($isBottomSheetOpen ? 'visible' : 'hidden')};
 	transition:
 		opacity 0.2s ease-out,
 		visibility 0.3s ease-out;
 `;
 
-export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; $isOpenBottomSheet: boolean }>(
-	({ $currentTranslateY, $isOpenBottomSheet }) => ({
+export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; $isBottomSheetOpen: boolean }>(
+	({ $currentTranslateY, $isBottomSheetOpen }) => ({
 		style: {
-			transform: `translate(-50%, ${$isOpenBottomSheet ? `${$currentTranslateY}px` : '100%'})`,
+			transform: `translate(-50%, ${$isBottomSheetOpen ? `${$currentTranslateY}px` : '100%'})`,
 		},
 	}),
 )`

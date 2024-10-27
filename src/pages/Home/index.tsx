@@ -9,24 +9,24 @@ import request, { BaseResponse } from '../../apis/core';
 import Modal from '../../components/Modal/index.tsx';
 import HeartBottomSheet from './BottomSheets/HeartBottomSheet.tsx';
 import {
-	IsOpenRequestFailModalAtom,
-	IsOpenRequestSuccessModalAtom,
+	IsRequestFailModalOpenAtom,
+	IsRequestSuccessModalOpenAtom,
 	PostRequestAtom,
 } from '../../recoil/Home/HeartBottomSheetAtom.ts';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ModalProps } from '../../components/Modal/dto.ts';
 import {
-	IsOpenBlockConfirmationModalAtom,
-	IsOpenBlockFailModalAtom,
-	IsOpenBlockSuccessModalAtom,
+	IsBlockConfirmationModalOpenAtom,
+	IsBlockFailModalOpenAtom,
+	IsBlockSuccessModalOpenAtom,
 	PostBlockAtom,
 } from '../../recoil/Home/BlockBottomSheetAtom.ts';
 import BlockConfirmationModal from './BottomSheets/BlockBottomSheet.tsx';
 import MeatballBottomSheet from './BottomSheets/MeatballBottomSheet.tsx';
 import ReportBottomSheet from './BottomSheets/ReportBottomSheet.tsx';
 import {
-	IsOpenReportFailModalAtom,
-	IsOpenReportSuccessModalAtom,
+	IsReportFailModalOpenAtom,
+	IsReportSuccessModalOpenAtom,
 	PostReportAtom,
 } from '../../recoil/Home/MeatballBottomSheetAtom.ts';
 import OOTD from './OOTD/index.tsx';
@@ -49,15 +49,15 @@ const Home: React.FC = () => {
 	const navigate = useNavigate();
 
 	// 모달과 바텀시트 상태 및 로직
-	const [isOpenRequestSuccessModal, setIsOpenRequestSuccessModal] = useRecoilState(IsOpenRequestSuccessModalAtom);
-	const [isOpenRequestFailModal, setIsOpenRequestFailModal] = useRecoilState(IsOpenRequestFailModalAtom);
+	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] = useRecoilState(IsRequestSuccessModalOpenAtom);
+	const [isRequestFailModalOpen, setIsRequestFailModalOpen] = useRecoilState(IsRequestFailModalOpenAtom);
 	const postRequest = useRecoilValue(PostRequestAtom);
-	const [isOpenBlockSuccessModal, setIsOpenBlockSuccessModal] = useRecoilState(IsOpenBlockSuccessModalAtom);
-	const [isOpenBlockFailModal, setIsOpenBlockFailModal] = useRecoilState(IsOpenBlockFailModalAtom);
-	const isOpenBlockConfirmationModal = useRecoilValue(IsOpenBlockConfirmationModalAtom);
+	const [isBlockSuccessModalOpen, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
+	const [isBlockFailModalOpen, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
+	const isBlockConfirmationModalOpen = useRecoilValue(IsBlockConfirmationModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
-	const [isOpenReportSuccessModal, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
-	const [isOpenReportFailModal, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
+	const [isReportSuccessModalOpen, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
+	const [isReportFailModalOpen, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
 	const postReport = useRecoilValue(PostReportAtom);
 
 	const ootdTooltipRef = useRef<HTMLDivElement[]>([]);
@@ -92,14 +92,14 @@ const Home: React.FC = () => {
 	// x 버튼 클릭 시
 	const blockSuccessModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenBlockSuccessModal(false);
+			setIsBlockSuccessModalOpen(false);
 		},
 		content: `${postBlock?.friendName} 님을 차단했어요`,
 	};
 
 	const blockFailModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenBlockFailModal(false);
+			setIsBlockFailModalOpen(false);
 		},
 		content: `차단에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
@@ -107,14 +107,14 @@ const Home: React.FC = () => {
 	// 하트 버튼 클릭 시
 	const requestSuccessModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenRequestSuccessModal(false);
+			setIsRequestSuccessModalOpen(false);
 		},
 		content: `${postRequest?.targetName} 님에게 대표 OOTD와\n한줄 메시지를 보냈어요!`,
 	};
 
 	const requestFailModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenRequestFailModal(false);
+			setIsRequestFailModalOpen(false);
 		},
 		content: `요청에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
@@ -122,32 +122,32 @@ const Home: React.FC = () => {
 	// 신고하기 메뉴
 	const reportSuccessModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenReportSuccessModal(false);
+			setIsReportSuccessModalOpen(false);
 		},
 		content: `${postReport?.userName} 님의\nOOTD를 신고했어요`,
 	};
 
 	const reportFailModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenReportFailModal(false);
+			setIsReportFailModalOpen(false);
 		},
 		content: `신고에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
 	return (
 		<OODDFrame>
-			{isOpenBlockConfirmationModal && <BlockConfirmationModal />}
-			{isOpenBlockSuccessModal && <Modal {...blockSuccessModalProps} />}
-			{isOpenBlockFailModal && <Modal {...blockFailModalProps} />}
+			{isBlockConfirmationModalOpen && <BlockConfirmationModal />}
+			{isBlockSuccessModalOpen && <Modal {...blockSuccessModalProps} />}
+			{isBlockFailModalOpen && <Modal {...blockFailModalProps} />}
 
 			<HeartBottomSheet />
-			{isOpenRequestSuccessModal && <Modal {...requestSuccessModalProps} />}
-			{isOpenRequestFailModal && <Modal {...requestFailModalProps} />}
+			{isRequestSuccessModalOpen && <Modal {...requestSuccessModalProps} />}
+			{isRequestFailModalOpen && <Modal {...requestFailModalProps} />}
 
 			<MeatballBottomSheet />
 			<ReportBottomSheet />
-			{isOpenReportSuccessModal && <Modal {...reportSuccessModalProps} />}
-			{isOpenReportFailModal && <Modal {...reportFailModalProps} />}
+			{isReportSuccessModalOpen && <Modal {...reportSuccessModalProps} />}
+			{isReportFailModalOpen && <Modal {...reportFailModalProps} />}
 
 			<HomeContainer>
 				<HomeTopBar />

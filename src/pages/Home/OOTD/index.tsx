@@ -17,8 +17,8 @@ import minimal from '../../../assets/Home/minimal.svg';
 import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
-import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
+import Loading from '../../../components/Loading'; // isLoading 컴포넌트
+import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
@@ -40,14 +40,14 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 	const selectedTags = useRecoilValue(SelectedTagsAtom);
 	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
-	const [loading, setLoading] = useState<boolean>(false); // 로딩 상태 관리
-	const isOpenBlockSuccessModal = useRecoilValue(IsOpenBlockSuccessModalAtom);
+	const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 관리
+	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
 
 	// 여러 태그를 기반으로 피드를 가져오는 함수
 	const fetchFeedsByTags = async (tagNames: string[]) => {
 		try {
-			setLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+			setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
 			// 태그를 무작위로 선택하는 함수
 			const getRandomTags = (tags: TagProps[], count: number) => {
 				const shuffled = tags.sort(() => 0.5 - Math.random()); // 배열 무작위로 섞기
@@ -83,7 +83,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 		} catch (error) {
 			console.error('Error fetching feeds:', error);
 		} finally {
-			setLoading(false); // API 호출 후 로딩 상태를 false로 설정
+			setIsLoading(false); // API 호출 후 로딩 상태를 false로 설정
 		}
 	};
 
@@ -103,10 +103,10 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 
 	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
 	useEffect(() => {
-		if (isOpenBlockSuccessModal === true) {
+		if (isBlockSuccessModalOpen === true) {
 			setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== postBlock?.friendName));
 		}
-	}, [isOpenBlockSuccessModal]);
+	}, [isBlockSuccessModalOpen]);
 
 	// 태그 데이터를 반으로 나눠서 UI에 표시
 	const middleIndex = Math.ceil(tagData.length / 2);
@@ -151,12 +151,12 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 					))}
 				</TagRow>
 			</TagContainer>
-			{loading && (
+			{isLoading && (
 				<OOTDLoading>
 					<Loading />
 				</OOTDLoading>
 			)}
-			<FeedContainer style={{ display: loading ? 'none' : 'block' }}>
+			<FeedContainer style={{ display: isLoading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
 					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
 						<Feed key={feed.userName} feed={feed} />

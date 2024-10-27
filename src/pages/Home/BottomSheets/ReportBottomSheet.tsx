@@ -3,10 +3,10 @@ import BottomSheet from '../../../components/BottomSheet';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import { useState } from 'react';
 import {
-	IsOpenMeatballBottomSheetAtom,
-	IsOpenReportBottomSheetAtom,
-	IsOpenReportFailModalAtom,
-	IsOpenReportSuccessModalAtom,
+	IsMeatballBottomSheetOpenAtom,
+	IsReportBottomSheetOpenAtom,
+	IsReportFailModalOpenAtom,
+	IsReportSuccessModalOpenAtom,
 	PostReportAtom,
 } from '../../../recoil/Home/MeatballBottomSheetAtom';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
@@ -16,10 +16,10 @@ import request from '../../../apis/core';
 import ReportTextarea from '../ReportTextarea';
 
 const ReportBottomSheet: React.FC = () => {
-	const [, setIsOpenMeatballBottomSheet] = useRecoilState(IsOpenMeatballBottomSheetAtom);
-	const [isOpenReportBottomSheet, setIsOpenReportBottomSheet] = useRecoilState(IsOpenReportBottomSheetAtom);
-	const [, setIsOpenReportSuccessModal] = useRecoilState(IsOpenReportSuccessModalAtom);
-	const [, setIsOpenReportFailModal] = useRecoilState(IsOpenReportFailModalAtom);
+	const [, setIsMeatballBottomSheet] = useRecoilState(IsMeatballBottomSheetOpenAtom);
+	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useRecoilState(IsReportBottomSheetOpenAtom);
+	const [, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
+	const [, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
 	const postReport = useRecoilValue(PostReportAtom);
 
 	const [showInput, setShowInput] = useState(false);
@@ -33,12 +33,12 @@ const ReportBottomSheet: React.FC = () => {
 			});
 
 			if (response.isSuccess) {
-				setIsOpenMeatballBottomSheet(false);
+				setIsMeatballBottomSheet(false);
 				setTimeout(() => {
-					setIsOpenReportSuccessModal(true);
+					setIsReportSuccessModalOpen(true);
 				}, 100);
 			} else {
-				setIsOpenReportFailModal(true);
+				setIsReportFailModalOpen(true);
 			}
 		} else {
 			alert('잘못된 접근의 게시물입니다.');
@@ -51,24 +51,24 @@ const ReportBottomSheet: React.FC = () => {
 				text: '스팸',
 				action: () => {
 					postNewReport('스팸');
-					setIsOpenReportBottomSheet(false);
-					setIsOpenReportSuccessModal(true);
+					setIsReportBottomSheetOpen(false);
+					setIsReportSuccessModalOpen(true);
 				},
 			},
 			{
 				text: '부적절한 콘텐츠',
 				action: () => {
 					postNewReport('부적절한 콘텐츠');
-					setIsOpenReportBottomSheet(false);
-					setIsOpenReportSuccessModal(true);
+					setIsReportBottomSheetOpen(false);
+					setIsReportSuccessModalOpen(true);
 				},
 			},
 			{
 				text: '선정적',
 				action: () => {
 					postNewReport('선정적');
-					setIsOpenReportBottomSheet(false);
-					setIsOpenReportSuccessModal(true);
+					setIsReportBottomSheetOpen(false);
+					setIsReportSuccessModalOpen(true);
 				},
 			},
 			{
@@ -82,21 +82,21 @@ const ReportBottomSheet: React.FC = () => {
 	};
 
 	const reportBottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isOpenReportBottomSheet,
+		isOpenBottomSheet: isReportBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: () => (
 			<div style={{ overflow: 'auto' }}>
 				<BottomSheetMenu {...reportBottomSheetMenuProps} />
 				{showInput && (
 					<ReportTextarea
-						onCloseReportSheet={() => setIsOpenReportBottomSheet(false)}
-						onOpenModal={() => setIsOpenReportSuccessModal(true)}
+						onCloseReportSheet={() => setIsReportBottomSheetOpen(false)}
+						onOpenModal={() => setIsReportSuccessModalOpen(true)}
 					/>
 				)}
 			</div>
 		),
 		onCloseBottomSheet: () => {
-			setIsOpenReportBottomSheet(false);
+			setIsReportBottomSheetOpen(false);
 			setShowInput(false);
 		},
 	};
