@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import XIcon from '../../assets/default/x.svg';
 
 export const BottomSheetWrapper = styled.div<{ $isOpenBottomSheet: boolean }>`
 	position: fixed;
@@ -25,6 +26,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 )<{
 	$isHandlerVisible: boolean;
 }>`
+	${({ theme }) => theme.visibleOnMobileTablet};
 	position: fixed;
 	bottom: 0;
 	flex-direction: column;
@@ -50,3 +52,35 @@ export const Handler = React.memo(styled.hr`
 	z-index: 300;
 	cursor: pointer;
 `);
+
+export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
+	${({ theme }) => theme.visibleOnDesktop};
+	width: 21.25rem;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	background: white;
+	transform: translateX(${({ $isSideBarOpen }) => ($isSideBarOpen ? 0 : '-100%')});
+	transition: transform 0.3s;
+`;
+
+export const SideBarTopBar = styled.div`
+	display: flex;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	margin-top: 0;
+`;
+
+export const XButton = styled.button`
+	width: 2.25rem;
+	height: 2.25rem;
+	margin: auto 0 auto auto;
+	background-image: url(${XIcon});
+	background-repeat: no-repeat;
+	background-size: 17px;
+	background-position: center;
+`;
+
+export const ComponentBox = styled.div`
+	padding: 1rem 1.25rem;
+`;

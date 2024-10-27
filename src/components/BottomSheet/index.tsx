@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BottomSheetProps } from './dto';
-import { BottomSheetWrapper, BottomSheetLayout, Handler } from './styles';
+import {
+	BottomSheetWrapper,
+	BottomSheetLayout,
+	Handler,
+	SideBarLayout,
+	XButton,
+	SideBarTopBar,
+	ComponentBox,
+} from './styles';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
@@ -10,6 +18,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	onCloseBottomSheet,
 }) => {
 	const startY = useRef<number | null>(null);
+	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 	const [initialRender, setInitialRender] = useState(true);
 	const [isRendered, setIsRendered] = useState(false);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
@@ -17,10 +26,12 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
 	useEffect(() => {
 		if (isOpenBottomSheet) {
+			setIsSideBarOpen(true);
 			setInitialRender(false);
 			setIsRendered(true);
 			setCurrentTranslateY(0); // 초기화
 		} else {
+			setIsSideBarOpen(false); // 애니메이션 시간에 맞춰 숨김
 			setIsRendered(false);
 		}
 	}, [isOpenBottomSheet]);
@@ -127,6 +138,14 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />
 			</BottomSheetLayout>
+			<SideBarLayout $isSideBarOpen={isSideBarOpen}>
+				<SideBarTopBar>
+					<XButton />
+				</SideBarTopBar>
+				<ComponentBox>
+					<Component {...componentProps} />
+				</ComponentBox>
+			</SideBarLayout>
 		</BottomSheetWrapper>
 	);
 };
