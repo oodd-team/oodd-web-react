@@ -18,7 +18,7 @@ import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsOpenBlockSuccessModalAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
+import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
@@ -41,7 +41,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
 	const [loading, setLoading] = useState<boolean>(false); // 로딩 상태 관리
-	const isOpenBlockSuccessModal = useRecoilValue(IsOpenBlockSuccessModalAtom);
+	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
 
 	// 여러 태그를 기반으로 피드를 가져오는 함수
@@ -103,10 +103,10 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 
 	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
 	useEffect(() => {
-		if (isOpenBlockSuccessModal === true) {
+		if (isBlockSuccessModalOpen === true) {
 			setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.userName !== postBlock?.friendName));
 		}
-	}, [isOpenBlockSuccessModal]);
+	}, [isBlockSuccessModalOpen]);
 
 	// 태그 데이터를 반으로 나눠서 UI에 표시
 	const middleIndex = Math.ceil(tagData.length / 2);

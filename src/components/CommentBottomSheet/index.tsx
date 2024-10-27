@@ -1,9 +1,11 @@
-import theme from '../../styles/theme';
-import BottomSheet from '../BottomSheet';
-import { BottomSheetProps } from '../BottomSheet/dto';
-import Comment from '../Comment';
-import { CommentProps } from '../Comment/dto';
 import { StyledText } from '../Text/StyledText';
+import theme from '../../styles/theme';
+
+import BottomSheet from '../BottomSheet';
+import Comment from '../Comment';
+import { BottomSheetProps } from '../BottomSheet/dto';
+import { CommentBottomSheetProps } from './dto';
+
 import {
 	CommentBottomSheetLayout,
 	CommentModalBox,
@@ -13,12 +15,6 @@ import {
 	CommentModalWrapper,
 	XButton,
 } from './styles';
-
-export interface CommentBottomSheetProps {
-	isBottomSheetOpen: boolean;
-	commentProps: CommentProps;
-	handleCloseBottomSheet: () => void;
-}
 
 const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 	isBottomSheetOpen,
