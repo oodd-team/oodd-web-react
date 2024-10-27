@@ -23,9 +23,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 			transform: `translate(-50%, ${$isOpenBottomSheet ? `${$currentTranslateY}px` : '100%'})`,
 		},
 	}),
-)<{
-	$isHandlerVisible: boolean;
-}>`
+)`
 	${({ theme }) => theme.visibleOnMobileTablet};
 	position: fixed;
 	bottom: 0;
@@ -35,7 +33,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 	left: 50%;
 	border-radius: 0.938rem 0.938rem 0 0;
 	background-color: ${({ theme }) => theme.colors.white};
-	padding-top: ${({ $isHandlerVisible }) => ($isHandlerVisible ? '1.3rem' : '0.9375rem')};
+	padding: 0 1.25rem;
 	z-index: 200;
 	user-select: none;
 	touch-action: none;
@@ -43,10 +41,10 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 `;
 
 export const Handler = React.memo(styled.hr`
-	width: 3rem;
-	margin: 0 auto;
-	height: 0.25rem;
-	background-color: ${({ theme }) => theme.colors.gray3};
+	width: 2.88rem;
+	margin: 0.6rem auto 0 auto;
+	height: 0.125rem;
+	background-color: #d9d9d9;
 	border: none;
 	border-radius: 0.125rem;
 	z-index: 300;

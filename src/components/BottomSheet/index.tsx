@@ -133,7 +133,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				onTouchStart={onPointerDown}
 				$currentTranslateY={currentTranslateY}
 				$isOpenBottomSheet={isRendered}
-				$isHandlerVisible={isHandlerVisible}
 			>
 				{isHandlerVisible && <Handler />}
 				<Component {...componentProps} />

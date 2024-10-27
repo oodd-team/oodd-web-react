@@ -15,7 +15,7 @@ const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items, mar
 						</StyledText>
 						{item.icon && <Icon src={item.icon} />}
 					</SheetItem>
-					{index < items.length - 1 && <div style={{ borderBottom: '1px solid rgba(0,0,0,0.2)', margin: '0' }} />}
+					{<div style={{ borderBottom: '1px solid rgba(0,0,0,0.2)', margin: '0' }} />}
 				</div>
 			))}
 		</BottomSheetMenuLayout>
