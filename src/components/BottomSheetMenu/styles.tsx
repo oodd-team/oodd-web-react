@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const BottomSheetMenuLayout = styled.div<{ $marginBottom: string }>`
+export const BottomSheetMenuLayout = styled.ul`
 	margin-bottom: 0.62rem;
 	display: flex;
 	flex-direction: column;
 `;
 
-export const SheetItem = styled.div`
+export const SheetItem = styled.li`
 	padding: 0.75rem 1.25rem;
 	width: 100%;
 	display: flex;

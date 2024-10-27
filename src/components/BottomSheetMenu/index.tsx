@@ -4,9 +4,9 @@ import { BottomSheetMenuLayout, SheetItem, Icon } from './styles';
 import { BottomSheetMenuProps, SheetItemDto } from './dto';
 import React from 'react';
 
-const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items, marginBottom }) => {
+const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items }) => {
 	return (
-		<BottomSheetMenuLayout $marginBottom={marginBottom}>
+		<BottomSheetMenuLayout>
 			{items.map((item: SheetItemDto, index) => (
 				<div key={index}>
 					<SheetItem onClick={item.action}>
@@ -15,7 +15,7 @@ const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items, mar
 						</StyledText>
 						{item.icon && <Icon src={item.icon} />}
 					</SheetItem>
-					{<div style={{ borderBottom: '1px solid rgba(0,0,0,0.2)', margin: '0' }} />}
+					<div style={{ borderBottom: '1px solid rgba(0,0,0,0.2)', margin: '0' }} />
 				</div>
 			))}
 		</BottomSheetMenuLayout>

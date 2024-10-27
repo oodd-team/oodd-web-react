@@ -62,7 +62,7 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 	transition: transform 0.3s;
 `;
 
-export const SideBarTopBar = styled.div`
+export const SideBarTopBar = styled.header`
 	display: flex;
 	width: 100%;
 	padding: 0.5rem 1rem;
@@ -79,6 +79,6 @@ export const XButton = styled.button`
 	background-position: center;
 `;
 
-export const ComponentBox = styled.div`
+export const ComponentBox = styled.section`
 	padding: 1rem 1.25rem;
 `;
