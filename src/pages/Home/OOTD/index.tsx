@@ -17,7 +17,7 @@ import minimal from '../../../assets/Home/minimal.svg';
 import formal from '../../../assets/Home/formal.svg';
 import outdoor from '../../../assets/Home/outdoor.svg';
 import luxury from '../../../assets/Home/luxury.svg';
-import Loading from '../../../components/Loading'; // isLoading 컴포넌트
+import Loading from '../../../components/Loading'; // Loading 컴포넌트
 import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
