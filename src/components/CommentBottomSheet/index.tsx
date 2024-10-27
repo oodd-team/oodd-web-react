@@ -28,10 +28,14 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 		onCloseBottomSheet: handleCloseBottomSheet,
 	};
 
-	const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (e.target === e.currentTarget) {
 			handleCloseBottomSheet();
 		}
+	};
+
+	const handleButtonClick = () => {
+		handleCloseBottomSheet();
 	};
 
 	return (
@@ -43,13 +47,13 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 			{/* 데스크탑 UI */}
 			{isBottomSheetOpen && (
 				<CommentModalLayout>
-					<CommentModalWrapper onClick={handleClickBackground}>
+					<CommentModalWrapper onClick={handleBackgroundClick}>
 						<CommentModalContainer>
 							<CommentModalHeader>
 								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
 									메시지 보내기
 								</StyledText>
-								<XButton />
+								<XButton onClick={handleButtonClick} />
 							</CommentModalHeader>
 							<CommentModalBox>
 								<Comment {...commentProps} isModal={true} />
