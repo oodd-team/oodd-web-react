@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserInfo from './components/UserInfo';
-import PostItem from './components/PostItem';
+import PostItem from '../../components/PostItem';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import ConfirmationModal from '../../components/ConfirmationModal';
@@ -215,7 +215,7 @@ const ProfileViewer: React.FC = () => {
 				<PostListContainer>
 					{representativePosts.length > 0 &&
 						representativePosts.map((post) => (
-							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={true} />
+							<PostItem firstPhoto={post.firstPhoto} post={post} key={post.postId} isRepresentative={true} />
 						))}
 					{otherPosts.length > 0 &&
 						otherPosts.map((post) => (
