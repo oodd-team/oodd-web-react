@@ -9,10 +9,9 @@ export const UserProfileContainer = styled.section`
 	display: flex;
 	flex-direction: row;
 `;
-export const UserImg = styled.img<UserImgProps>`
+export const UserImg = styled.div<UserImgProps>`
 	width: 4.5rem;
-	min-height: 4.5rem;
-	background-color: #d9d9d9;
+	height: 4.5rem;
 	background-image: url(${(props) => props.$imgUrl});
 	background-size: cover;
 	background-position: center;
