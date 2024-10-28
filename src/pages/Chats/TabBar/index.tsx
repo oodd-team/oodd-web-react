@@ -8,14 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import 'swiper/css';
 import request from '../../../apis/core';
-import theme from '../../../styles/theme';
 
 const tabs = ['요청', '최근 채팅'];
 
 const TabBar: React.FC = () => {
 	const [matchingRequests, setMatchingRequests] = useState(0);
 	const [hasMatchingRequests, setHasMatchingRequests] = useState(false);
-	console.log('rendering');
 
 	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
@@ -93,10 +91,10 @@ const TabBar: React.FC = () => {
 						>
 							<StyledText
 								$textTheme={{
-									style: activeIndex === index && (index !== 0 || hasMatchingRequests) ? 'body2-medium' : 'body2-light',
+									style: activeIndex === index && (index !== 0 || hasMatchingRequests) ? 'body2-bold' : 'body2-medium',
 									lineHeight: 1.5,
 								}}
-								color={index === 0 && !hasMatchingRequests ? theme.colors.gray3 : undefined} // 비활성화된 경우 글자 색을 변경
+								color={activeIndex === index && (index !== 0 || hasMatchingRequests) ? '#FF2389' : '#888888'}
 							>
 								{tab}
 							</StyledText>

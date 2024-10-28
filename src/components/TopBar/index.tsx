@@ -1,5 +1,5 @@
 import theme from '../../styles/theme';
-import { TopbarLayout, StyledTextLayout, BackButton, KebabMenuButton } from './styles';
+import { TopbarLayout, StyledTextLayout, LeftButton, RightButton } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { TopBarProps } from './dto';
 
@@ -15,7 +15,7 @@ const TopBar: React.FC<TopBarProps> = ({
 
 	return (
 		<TopbarLayout $withBorder={$withBorder}>
-			<BackButton
+			<LeftButton
 				src={LeftButtonSrc}
 				onClick={() => {
 					if (onLeftClick) {
@@ -25,12 +25,12 @@ const TopBar: React.FC<TopBarProps> = ({
 					}
 				}}
 			>
-				<img src={LeftButtonSrc || ''} alt="back" />
-			</BackButton>
-			<StyledTextLayout $textTheme={{ style: 'heading1-bold' }} color={theme.colors.black}>
+				<img src={LeftButtonSrc || ''} alt="뒤로가기" />
+			</LeftButton>
+			<StyledTextLayout $textTheme={{ style: 'heading2-bold' }} color={theme.colors.black}>
 				{text}
 			</StyledTextLayout>
-			<KebabMenuButton
+			<RightButton
 				src={RightButtonSrc}
 				onClick={() => {
 					if (onRightClick) {
@@ -38,8 +38,8 @@ const TopBar: React.FC<TopBarProps> = ({
 					}
 				}}
 			>
-				<img src={RightButtonSrc} alt="menu" />
-			</KebabMenuButton>
+				<img src={RightButtonSrc} alt="메뉴" />
+			</RightButton>
 		</TopbarLayout>
 	);
 };

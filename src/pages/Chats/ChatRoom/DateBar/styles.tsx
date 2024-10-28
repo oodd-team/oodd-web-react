@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '../../../../components/Text/StyledText';
 
 export const DatebarLayout = styled.div`
 	display: flex;
@@ -7,13 +8,11 @@ export const DatebarLayout = styled.div`
 	gap: 0.5rem;
 `;
 
-export const DateWrapper = styled.div`
+export const Date = styled(StyledText)`
 	height: fit-content;
 	white-space: nowrap;
 `;
 
 export const Divider = styled.hr`
 	width: 100%;
-	height: 1px;
-	color: ${({ theme }) => theme.colors.gray2};
 `;

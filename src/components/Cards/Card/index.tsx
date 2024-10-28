@@ -5,7 +5,17 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import theme from '../../../styles/theme';
-import { Btn, CardLayout, OOTDImgBox, ProfileBox, ProfileImgBox, ProfileInfo, Reaction, SeeMore } from './styles';
+import {
+	ArrowButton,
+	Btn,
+	CardLayout,
+	OOTDImgBox,
+	ProfileContainer,
+	ProfileImgBox,
+	ProfileInfo,
+	Reaction,
+	SeeMore,
+} from './styles';
 import xBtn from '../../../assets/Home/button_reject.svg';
 import checkBtn from '../../../assets/Home/button_check.svg';
 import noProfileImg from '../../../assets/Home/no_profileImg.svg';
@@ -48,26 +58,27 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 
 	return (
 		<CardLayout>
-			<ProfileBox>
+			<ProfileContainer>
 				<ProfileImgBox>
 					<img src={requester.profilePictureUrl || noProfileImg} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
-					<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1.2 }} color={theme.colors.white}>
+					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black}>
 						{requester.nickname || requester.name}
 					</StyledText>
-					<StyledText $textTheme={{ style: 'body5-medium', lineHeight: 1.2 }} color={theme.colors.gray1}>
+					<StyledText $textTheme={{ style: 'body5-medium' }} color={theme.colors.gray1}>
 						{requester.representativePost?.postStyletags.length
 							? `#${requester.representativePost.postStyletags[0].styletag?.tag ?? 'unknown'}`
 							: ''}
 					</StyledText>
 				</ProfileInfo>
 				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
-					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1.2 }} color={theme.colors.white}>
-						OOTD 더 보기 &gt;
+					<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+						OOTD 더 보기
 					</StyledText>
+					<ArrowButton />
 				</SeeMore>
-			</ProfileBox>
+			</ProfileContainer>
 			<OOTDImgBox>
 				<Swiper
 					direction="vertical"
