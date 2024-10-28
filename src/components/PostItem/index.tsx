@@ -15,11 +15,10 @@ import MessageSvg from '../../assets/default/message.svg';
 import PinIcon from '../../assets/default/pin.svg';
 import { PostItemProps } from './dto';
 
-const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative, firstPhoto }) => {
+const PostItem: React.FC<PostItemProps> = ({ post }) => {
 	const navigate = useNavigate();
-	console.log(post.likes, post.commentsCount);
-	const commentsCount = post.commentsCount ?? 0;
-	const imageUrl = firstPhoto || 'https://via.placeholder.com/72';
+	const commentsCount = post.commentsCount ?? 0; // 현재 api 응답에 commentsCount가 없어 undefine 오류 해결 위해 설정, 추후 api 수정되면 삭제 해도 되는 행
+	const imageUrl = post.firstPhoto || 'https://via.placeholder.com/72';
 	const handleClick = () => {
 		navigate(`/post/${post.postId}`);
 	};
@@ -27,7 +26,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, isRepresentative, firstPhoto 
 		<PostItemContainer onClick={handleClick}>
 			<PostImageContainer>
 				<PostImage src={imageUrl} alt={`post-${post.postId}`} />
-				{isRepresentative && <PinSvg src={PinIcon} />}
+				{post.isRepresentative && <PinSvg src={PinIcon} />}
 				<LikesOverlay>
 					<Icon src={HeartSvg} alt="heart icon" />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
