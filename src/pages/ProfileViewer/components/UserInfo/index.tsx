@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import {
-	UserDetails,
-	UserInfoContainer,
-	UserProfile,
-	BioStyledText,
-	UserImg,
-	ButtonContainer,
-	LongButton,
-} from './styles';
+import { UserInfoContainer, ButtonContainer, LongButton } from './styles';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import HeartSvg from '../../../../assets/default/like-white.svg';
+import imageBasic from '../../../../assets/imageBasic.svg';
 import RequestComponent from '../RequestComponent';
 import BottomSheet from '../../../../components/BottomSheet';
 import request from '../../../../apis/core';
 import Modal from '../../../../components/Modal';
+import UserProfile from '../../../../components/UserProfile';
 import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
 import { UserInfoDto } from '../../ResponseDto/UserInfoDto';
 import { ChatRoomDto, Opponent } from '../../../Chats/RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
 
-const UserInfo: React.FC = React.memo(() => {
+interface UserInfoProps {
+	isFriend: boolean;
+}
+
+const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	const [userDetails] = useRecoilState(UserInfoAtom);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [friend, setFriend] = useRecoilState(isFriendAtom);
@@ -34,21 +32,12 @@ const UserInfo: React.FC = React.memo(() => {
 	if (!userDetails) return null;
 
 	const { id, nickname, bio, userImg } = userDetails;
-	const truncatedBio = bio && bio.length > 50 ? bio.substring(0, 50) + '...' : bio;
 	const userId = localStorage.getItem('id');
-
-	const fetchUserInfo = async () => {
-		try {
-			const response = await request.get<UserInfoDto>(`/users/${id}`);
-			setFriend(response.result.isFriend);
-		} catch (error) {
-			console.error('사용자 정보 조회 오류:', error);
-		}
-	};
+	const user_img = userImg || imageBasic;
 
 	useEffect(() => {
-		fetchUserInfo();
-	}, [id]);
+		setFriend(isFriend);
+	}, [isFriend, setFriend]);
 
 	useEffect(() => {
 		if (userDetails) {
@@ -118,15 +107,7 @@ const UserInfo: React.FC = React.memo(() => {
 
 	return (
 		<UserInfoContainer>
-			<UserProfile>
-				<UserImg $imgUrl={userImg} />
-				<UserDetails>
-					<StyledText $textTheme={{ style: 'headline2-bold' }}>{nickname}</StyledText>
-					<BioStyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.gray3}>
-						{truncatedBio}
-					</BioStyledText>
-				</UserDetails>
-			</UserProfile>
+			<UserProfile userImg={user_img} bio={bio} nickname={nickname} />
 			<ButtonContainer>
 				{friend && (
 					<LongButton onClick={handleMessageClick}>
