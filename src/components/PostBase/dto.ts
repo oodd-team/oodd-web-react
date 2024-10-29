@@ -6,6 +6,10 @@ export interface PostTopBarProps {
 	userName: string;
 }
 
+export interface ImageSwiperProps {
+	images: string[];
+}
+
 export interface LikeCommentBottomSheetProps {
 	tab: 'likes' | 'comments';
 }

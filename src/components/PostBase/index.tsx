@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
 	PostContainer,
@@ -18,9 +18,12 @@ import theme from '../../styles/theme';
 import { OODDFrame } from '../Frame/Frame';
 import { StyledText } from '../Text/StyledText';
 import TopBar from '../TopBar';
+import NavBar from '../NavBar';
+import BottomSheet from '../BottomSheet';
+import { BottomSheetProps } from '../BottomSheet/dto';
 import ImageSwiper from './ImageSwiper';
 import ClothingInfoItem from '../ClothingInfoItem';
-import LikeCommentBottomSheet from './LikeCommentBottomSheet';
+import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 import Loading from '../Loading';
 
 import back from '../../assets/back.svg';
@@ -33,7 +36,7 @@ import { GetPostDetailResponse } from '../../apis/Post/dto';
 import { GetUserResponse } from '../../apis/User/dto';
 import request from '../../apis/core';
 
-const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
+const PostBase: React.FC<PostBaseProps> = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postData, setPostData] = useState<GetPostDetailResponse['result']>();
 	const [user, setUser] = useState<GetUserResponse['result']>();
@@ -43,13 +46,6 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // 추가: activeTab state
 
 	const nav = useNavigate();
-	const location = useLocation();
-
-	useEffect(() => {
-		if (location.state && location.state.isCommentModalOpen) {
-			// Logic for comment modal
-		}
-	}, [location.state]);
 
 	useEffect(() => {
 		const fetchPostData = async () => {
@@ -69,7 +65,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			}
 		};
 
-		// 유저 정보 가져오기_상대방
+		// 유저 정보 가져오기
 		const fetchUser = async (userId: number) => {
 			setIsLoading(true);
 			try {
@@ -90,20 +86,47 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		fetchPostData();
 	}, [postId]);
 
+	const handleUserClick = () => {
+		// 로컬 스토리지에서 사용자 ID 가져오기
+		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+
+		if (String(myUserId) === String(postData?.userId)) {
+			// 내 게시물인 경우
+			nav('/mypage');
+		} else {
+			// 다른 유저의 게시물인 경우
+			nav(`/users/${postData?.userId}`);
+		}
+	};
+
+	const handleMenuClick = () => {};
+
 	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
 		setActiveTab(tab); // 클릭한 버튼에 따라 activeTab 설정
 		setIsLikeCommentBottomSheetOpen(true);
 	};
 
+	const likeCommentbottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isLikeCommentBottomSheetOpen,
+		isHandlerVisible: true,
+		Component: LikeCommentBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsLikeCommentBottomSheetOpen(false);
+		},
+		componentProps: {
+			tab: activeTab,
+		},
+	};
+
 	return (
 		<OODDFrame>
+			<TopBar LeftButtonSrc={back} />
 			{!postData || isLoading ? (
 				<Loading />
 			) : (
 				<PostContainer>
-					<TopBar LeftButtonSrc={back} />
 					<PostInfoContainer>
-						<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
+						<UserInfo onClick={handleUserClick}>
 							<UserProfile>
 								<img src={user?.profilePictureUrl} alt="profileImg" />
 							</UserProfile>
@@ -113,7 +136,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 								</StyledText>
 							</UserName>
 						</UserInfo>
-						<MenuBtn onClick={() => onClickMenu}>
+						<MenuBtn onClick={() => handleMenuClick}>
 							<img src={menu} alt="menu" />
 						</MenuBtn>
 					</PostInfoContainer>
@@ -135,11 +158,11 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					<IconRow>
 						<IconWrapper onClick={() => handleLikeCommentOpen('likes')}>
 							<img src={heart} alt="Heart Icon" />
-							<span>{0}</span>
+							<span>{postData.likes ?? 0}</span>
 						</IconWrapper>
 						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
 							<img src={comment} alt="Comment Icon" />
-							<span>{0}</span>
+							<span>{postData.comments?.length ?? 0}</span>
 						</IconWrapper>
 					</IconRow>
 
@@ -150,7 +173,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					</ClothingInfoList>
 				</PostContainer>
 			)}
-			{isLikeCommentBottomSheetOpen && <LikeCommentBottomSheet tab={activeTab} />}
+			<NavBar />
+			<BottomSheet {...likeCommentbottomSheetProps} />
 		</OODDFrame>
 	);
 };

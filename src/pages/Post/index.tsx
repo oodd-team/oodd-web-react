@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -13,10 +12,8 @@ import BottomSheet from '../../components/BottomSheet/index.tsx';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
 import BottomSheetMenu from '../../components/BottomSheetMenu/index.tsx';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
-import { StyledText } from '../../components/Text/StyledText.tsx';
 import Modal from '../../components/Modal/index.tsx';
 import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
-import Loading from '../../components/Loading/index.tsx';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
 

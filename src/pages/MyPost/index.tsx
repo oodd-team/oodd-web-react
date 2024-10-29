@@ -22,7 +22,6 @@ const MyPost: React.FC = () => {
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const navigate = useNavigate();
-	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [

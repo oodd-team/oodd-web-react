@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostContainer = styled.div`
 	width: 100%;
-	height: auto;
+	height: calc(100vh - 2.75rem);
 `;
 
 export const PostInfoContainer = styled.div`
@@ -49,8 +49,6 @@ export const Content = styled.span`
 	word-wrap: break-word;
 	word-break: break-all;
 `;
-
-
 
 export const IconRow = styled.div`
 	display: flex;

@@ -3,14 +3,14 @@ import styled from 'styled-components';
 export const SwiperContainer = styled.div`
 	display: flex;
 
-	.upload-swiper {
+	.post-swiper {
 		width: 100%;
 		aspect-ratio: 1;
 		object-fit: cover;
 		position: relative;
 	}
 
-	.upload-swiper .swiper-slide {
+	.post-swiper .post-slide {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

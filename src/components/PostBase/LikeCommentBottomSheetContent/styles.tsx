@@ -4,31 +4,38 @@ import theme from '../../../styles/theme';
 export const TabContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
-	border-bottom: 1px solid ${theme.colors.gray3};
+	padding: 0 20px;
 `;
 export const Tab = styled.div<{ active: boolean }>`
 	flex: 1;
 	text-align: center;
 	padding: 16px 0;
 	cursor: pointer;
-	font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
-	border-bottom: ${(props) => (props.active ? '2px solid black' : 'none')};
-	color: var(--Color-black, #000);
-	text-align: center;
-	font-family: 'Pretendard Variable';
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 150%; /* 24px */
+	position: relative; /* ::after를 위해 필요한 설정 */
+
+	/* 활성화된 탭의 경우 */
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 2px; /* 하단 경계선 두께 */
+		background: ${(props) => (props.active ? theme.colors.gradient : 'none')};
+	}
 `;
 
 export const ContentContainer = styled.div`
 	padding: 16px;
 `;
 
+export const Content = styled.div`
+	min-height: 350px;
+	height: auto;
+`;
+
 export const UserItem = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 8px 0;
-	border-bottom: 1px solid #eee;
 `;

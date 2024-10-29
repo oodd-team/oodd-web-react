@@ -6,7 +6,7 @@ import 'swiper/css/pagination';
 import { SwiperContainer, ImageWrapper, StyledNavigation } from './styles';
 import picture2 from '../../../assets/Upload/picture2.svg';
 import { Navigation, Pagination } from 'swiper/modules';
-import { ImageSwiperProps } from '../../../pages/Post/dto';
+import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	const swiperRef = useRef<SwiperRef | null>(null);
@@ -14,7 +14,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	return (
 		<SwiperContainer>
 			<Swiper
-				className="upload-swiper"
+				className="post-swiper"
 				ref={swiperRef}
 				spaceBetween={5}
 				slidesPerView="auto"
