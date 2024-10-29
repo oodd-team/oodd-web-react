@@ -17,10 +17,10 @@ import BackSvg from '../../assets/default/backIcon.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
-import { UserInfoDto } from './ResponseDto/UserInfoDto';
+import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
 import request from '../../apis/core';
-import { PostListDto } from './ResponseDto/PostListDto';
-import { BlockDto } from './ResponseDto/BlockDto';
+import { GetPostListResult } from './ResponseDto/GetPostListResult';
+import { PostUserBlock } from './ResponseDto/PostUserBlockResult';
 import Modal from '../../components/Modal';
 import Loading from '../../components/Loading';
 
@@ -41,10 +41,10 @@ const ProfileViewer: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const response = await request.get<UserInfoDto>(`/users/${userId}`);
+				const response = await request.get<GetUserInfoResult>(`/users/${userId}`);
 				console.log('사용자 정보 조회: ', response);
 
-				const postsResponse = await request.get<PostListDto>(`posts?userId=${userId}`, {});
+				const postsResponse = await request.get<GetPostListResult>(`posts?userId=${userId}`, {});
 				console.log('게시물 리스트 조회:', postsResponse);
 				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
 				const combinedData: UserInfoProps = {
@@ -127,7 +127,7 @@ const ProfileViewer: React.FC = () => {
 		setConfirmAction(() => async () => {
 			try {
 				console.log(localGetId, userId);
-				const response = await request.post<BlockDto>(`/block`, {
+				const response = await request.post<PostUserBlock>(`/block`, {
 					userId: Number(localGetId),
 					friendId: Number(userId),
 					action: 'toggle',
@@ -237,7 +237,7 @@ const ProfileViewer: React.FC = () => {
 									<ReportText
 										onCloseBottomSheet={handleBottomSheetClose}
 										setIsInputVisible={setIsInputVisible}
-										handleOpenModal={handleModalOpen}
+										handleModalOpen={handleModalOpen}
 									/>
 								)}
 							</>

@@ -18,7 +18,7 @@ import BottomSheet from '../../../../components/BottomSheet';
 import request from '../../../../apis/core';
 import Modal from '../../../../components/Modal';
 import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
-import { UserInfoDto } from '../../ResponseDto/UserInfoDto';
+import { GetUserInfoResult } from '../../ResponseDto/GetUserInfoResult';
 import { ChatRoomDto, Opponent } from '../../../Chats/RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ const UserInfo: React.FC = React.memo(() => {
 
 	const fetchUserInfo = async () => {
 		try {
-			const response = await request.get<UserInfoDto>(`/users/${id}`);
+			const response = await request.get<GetUserInfoResult>(`/users/${id}`);
 			setFriend(response.result.isFriend);
 		} catch (error) {
 			console.error('사용자 정보 조회 오류:', error);
@@ -57,26 +57,26 @@ const UserInfo: React.FC = React.memo(() => {
 		}
 	}, [userDetails]);
 
-	const handleOpenBottomSheet = () => {
+	const handleBottomSheetOpen = () => {
 		setIsBottomSheetOpen(true);
 	};
 
-	const handleCloseBottomSheet = () => {
+	const handleBottomSheetClose = () => {
 		setIsBottomSheetOpen(false);
 	};
 
-	const handleOpenModal = (message: string) => {
+	const handleModalOpen = (message: string) => {
 		setModalContent(message);
 		setIsModalOpen(true);
 	};
 
-	const handleCloseModal = () => {
+	const handleModalClose = () => {
 		setIsModalOpen(false);
 	};
 
 	const handleMessageClick = async () => {
 		try {
-			const response = await request.get<UserInfoDto>(`/users/${id}`);
+			const response = await request.get<GetUserInfoResult>(`/users/${id}`);
 			const User: Opponent = {
 				id: response.result.id,
 				nickname: response.result.nickname,
@@ -136,7 +136,7 @@ const UserInfo: React.FC = React.memo(() => {
 					</LongButton>
 				)}
 				{!friend && (
-					<LongButton onClick={handleOpenBottomSheet} disabled={nickname == '알 수 없음'}>
+					<LongButton onClick={handleBottomSheetOpen} disabled={nickname == '알 수 없음'}>
 						<img src={HeartSvg} alt="heart icon" />
 						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
 							친구 신청
@@ -146,18 +146,18 @@ const UserInfo: React.FC = React.memo(() => {
 			</ButtonContainer>
 			<BottomSheet
 				isOpenBottomSheet={isBottomSheetOpen}
-				onCloseBottomSheet={handleCloseBottomSheet}
+				onCloseBottomSheet={handleBottomSheetClose}
 				Component={() => (
 					<RequestComponent
 						userId={id}
 						nickname={nickname}
 						setFriend={setFriend}
 						setIsBottomSheetOpen={setIsBottomSheetOpen}
-						handleOpenModal={handleOpenModal}
+						handleModalOpen={handleModalOpen}
 					/>
 				)}
 			/>
-			{isModalOpen && <Modal content={modalContent} onClose={handleCloseModal} />}
+			{isModalOpen && <Modal content={modalContent} onClose={handleModalClose} />}
 		</UserInfoContainer>
 	);
 });

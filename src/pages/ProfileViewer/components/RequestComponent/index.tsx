@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import request from '../../../../apis/core';
-import { ResponseDto } from './ResponseDto';
+import { PostFriendRequestResult } from './PostFriendRequestResult';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
 import theme from '../../../../styles/theme';
 import MsgSvg_g from '../../../../assets/default/message-send.svg';
@@ -12,7 +12,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 	userId,
 	nickname,
 	setIsBottomSheetOpen,
-	handleOpenModal,
+	handleModalOpen,
 }) => {
 	const inputRef = useRef<HTMLTextAreaElement>(null);
 	const [inputValue, setInputValue] = useState('');
@@ -51,12 +51,12 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 		if (postsCount === 0) {
 			setIsBottomSheetOpen(false);
 			// 포스트가 없는 경우 모달 띄우기
-			handleOpenModal('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
+			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
 			return;
 		}
 
 		try {
-			const response = await request.post<ResponseDto>(`/user-relationships`, {
+			const response = await request.post<PostFriendRequestResult>(`/user-relationships`, {
 				requesterId: Number.parseInt(localStorage.getItem('id') as string),
 				targetId: userId,
 				message: inputValue,
@@ -72,16 +72,16 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 			setInputValue('');
 
 			// 친구 신청 성공 시 모달 띄우기
-			handleOpenModal(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
+			handleModalOpen(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
 		} catch (error: any) {
 			console.error('친구 신청 오류:', error);
 
 			if (error.response?.data?.message === '이미 요청한 관계입니다.') {
 				setFriend(false);
 				setIsBottomSheetOpen(false);
-				handleOpenModal('이미 친구 신청을 보냈습니다!');
+				handleModalOpen('이미 친구 신청을 보냈습니다!');
 			} else {
-				handleOpenModal('친구 신청에 실패했습니다.\n다시 시도해 주세요.');
+				handleModalOpen('친구 신청에 실패했습니다.\n다시 시도해 주세요.');
 			}
 		}
 	};
