@@ -1,6 +1,42 @@
 import { DefaultTheme, css } from 'styled-components';
 
 const theme: DefaultTheme = {
+	colors: {
+		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
+		black: '#000000',
+		gray4: '#434343',
+		gray3: '#7B7B7B',
+		gray2: '#C4C4C4',
+		gray1: '#E9E9E9',
+		white: '#FFFFFF',
+	},
+	visibleOnMobileTablet: css`
+		@media (max-width: 767px) {
+			min-width: 300px;
+			max-width: 512px;
+		}
+
+		@media (min-width: 768px) and (max-width: 991px) {
+			max-width: 640px;
+		}
+
+		@media (min-width: 992px) and (max-width: 1219px) {
+			max-width: 640px;
+		}
+
+		@media (min-width: 1220px) {
+			display: none;
+		}
+	`,
+	visibleOnDesktop: css`
+		@media (max-width: 1219px) {
+			display: none;
+		}
+
+		@media (min-width: 1220px) {
+			max-width: 1080px;
+		}
+	`,
 	breakPoints: css`
 		@media (max-width: 767px) {
 			min-width: 300px;
@@ -19,15 +55,6 @@ const theme: DefaultTheme = {
 			max-width: 1080px;
 		}
 	`,
-	colors: {
-		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
-		black: '#000000',
-		gray4: '#434343',
-		gray3: '#7B7B7B',
-		gray2: '#C4C4C4',
-		gray1: '#E9E9E9',
-		white: '#FFFFFF',
-	},
 	fontStyles: {
 		'display1-bold': css`
 			font-family: 'Pretendard Variable';

@@ -11,8 +11,8 @@ interface TooltipDto {
 }
 
 const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex }) => {
-	const [isOpenMatchingTooltip, setIsOpenMatchingTooltip] = useState(false);
-	const [isOpenOotdTooltip, setIsOpenOotdTooltip] = useState(false);
+	const [isMatchingTooltipOpen, setIsMatchingTooltipOpen] = useState(false);
+	const [isOotdTooltipOpen, setIsOotdTooltipOpen] = useState(false);
 	const [matchingTooltipIndex, setMatchingTooltipIndex] = useState(0);
 	const [ootdTooltipIndex, setOotdTooltipIndex] = useState(0);
 	const [matchingTooltipBottom, setMatchingTooltipBottom] = useState<number>(0);
@@ -21,7 +21,7 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 		if (matchingTooltipIndex < 1) {
 			setMatchingTooltipIndex((prev) => prev + 1);
 		} else {
-			setIsOpenMatchingTooltip(false);
+			setIsMatchingTooltipOpen(false);
 			Cookies.set('hasSeenMatchingTooltip', 'true');
 		}
 	};
@@ -30,7 +30,7 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 		if (ootdTooltipIndex < 2) {
 			setOotdTooltipIndex((prev) => prev + 1);
 		} else {
-			setIsOpenOotdTooltip(false);
+			setIsOotdTooltipOpen(false);
 			Cookies.set('hasSeenOotdTooltip', 'true');
 		}
 	};
@@ -43,7 +43,7 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 		if (!seenMatching && activeIndex === 0) {
 			const element = cardRef.current;
 			if (element) {
-				setIsOpenMatchingTooltip(true);
+				setIsMatchingTooltipOpen(true);
 
 				setTimeout(() => {
 					// 선택된 요소의 위치 계산
@@ -70,13 +70,13 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 				}, 500); // 스크롤이 완료된 후 위치 계산
 			}
 		} else {
-			setIsOpenMatchingTooltip(false);
+			setIsMatchingTooltipOpen(false);
 		}
 
 		// ootd 탭에서 툴팁이 표시된 적이 없으면
 		if (!seenOotd && activeIndex === 1) {
 			if (ootdTooltipRef) {
-				setIsOpenOotdTooltip(true);
+				setIsOotdTooltipOpen(true);
 
 				const element = ootdTooltipRef.current[1];
 
@@ -96,16 +96,16 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 						});
 					}, 100); // 페이지가 다 렌더링 된 후 스크롤
 				}
-				setIsOpenOotdTooltip(true);
+				setIsOotdTooltipOpen(true);
 			}
 		} else {
-			setIsOpenOotdTooltip(false);
+			setIsOotdTooltipOpen(false);
 		}
 	}, [activeIndex, ootdTooltipRef]);
 
 	return (
 		<>
-			{isOpenMatchingTooltip && (
+			{isMatchingTooltipOpen && (
 				<TooltipWrapper onClick={onClickMatchingTooltip}>
 					{matchingTooltipIndex === 0 ? (
 						<TooltipBubble
@@ -123,7 +123,7 @@ const Tooltip: React.FC<TooltipDto> = ({ cardRef, ootdTooltipRef, activeIndex })
 					) : null}
 				</TooltipWrapper>
 			)}
-			{isOpenOotdTooltip && (
+			{isOotdTooltipOpen && (
 				<TooltipWrapper onClick={onClickOotdTooltip}>
 					{ootdTooltipIndex === 0 ? (
 						<TooltipBubble content={'내 스타일이 아닌 사용자를\n더 이상 조회하지 않아요'} arrow={'15.5%'} />

@@ -1,27 +1,26 @@
 import styled from 'styled-components';
 
-export const CommentLayout = styled.div`
-	margin: 5.9rem auto 2.5rem auto;
-	padding: 0 1.25rem;
+export const CommentLayout = styled.div<{ $isModal: boolean | undefined }>`
+	margin: 1.38rem auto 1.25rem auto;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: ${({ $isModal }) => ($isModal ? '2.63rem' : '1.37rem')};
 	text-align: center;
 `;
 
 export const SendContainer = styled.div`
-	padding: 0.75rem;
 	width: 100%;
-	min-height: 3rem;
+	min-height: 2.5rem;
 	display: flex;
-	border: 1px solid ${({ theme }) => theme.colors.gray3};
-	border-radius: 0.19rem;
-	background-color: #f5f5f5;
+	border: 1px solid #ffdeed;
+	border-radius: 0.5rem;
 `;
 
 export const CommentTextarea = styled.textarea`
 	width: 100%;
-	margin: auto;
+	padding: 0.62rem;
+	padding-right: 0;
 	border: none;
 	outline: none;
 	background-color: transparent;
@@ -36,8 +35,8 @@ export const CommentTextarea = styled.textarea`
 
 export const SendImg = styled.img`
 	margin: 0 auto;
-	width: 1.5rem;
-	height: 1.5rem;
-	opacity: 0.5;
+	width: 2.5rem;
+	height: 2.5rem;
 	cursor: pointer;
+	margin-right: 0.62rem;
 `;

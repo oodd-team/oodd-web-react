@@ -1,23 +1,22 @@
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
-import Comment from '../../../components/Comment';
 import { CommentProps } from '../../../components/Comment/dto';
 import request from '../../../apis/core';
 import { ApiDto } from '../dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-	IsOpenPostCommentBottomSheetAtom,
-	IsOpenPostCommentFailModalAtom,
-	IsOpenPostCommentSuccessModalAtom,
+	IsPostCommentBottomSheetOpenAtom,
+	IsPostCommentFailModalOpenAtom,
+	IsPostCommentSuccessModalOpenAtom,
 	PostCommentAtom,
 } from '../../../recoil/Home/PostCommentBottomSheetAtom';
+import CommentBottomSheet from '../../../components/CommentBottomSheet';
+import { CommentBottomSheetProps } from '../../../components/CommentBottomSheet/dto';
 
 const PostCommentBottomSheet: React.FC = () => {
-	const [isOpenPostCommentBottomSheet, setIsOpenPostCommentBottomSheet] = useRecoilState(
-		IsOpenPostCommentBottomSheetAtom,
+	const [isPostCommentBottomSheetOpen, setIsPostCommentBottomSheetOpen] = useRecoilState(
+		IsPostCommentBottomSheetOpenAtom,
 	);
-	const [, setIsOpenPostCommentSuccessModal] = useRecoilState(IsOpenPostCommentSuccessModalAtom);
-	const [, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
+	const [, setIsPostCommentSuccessModal] = useRecoilState(IsPostCommentSuccessModalOpenAtom);
+	const [, setIsPostCommentFailModal] = useRecoilState(IsPostCommentFailModalOpenAtom);
 	const postComment = useRecoilValue(PostCommentAtom);
 
 	const postCommentProps: CommentProps = {
@@ -30,12 +29,12 @@ const PostCommentBottomSheet: React.FC = () => {
 					});
 
 					if (response.isSuccess) {
-						setIsOpenPostCommentBottomSheet(false);
+						setIsPostCommentBottomSheetOpen(false);
 						setTimeout(() => {
-							setIsOpenPostCommentSuccessModal(true);
+							setIsPostCommentSuccessModal(true);
 						}, 100);
 					} else {
-						setIsOpenPostCommentFailModal(true);
+						setIsPostCommentFailModal(true);
 					}
 				} else {
 					alert('잘못된 요청입니다.');
@@ -46,15 +45,14 @@ const PostCommentBottomSheet: React.FC = () => {
 		},
 	};
 
-	const postCommentBottomSheet: BottomSheetProps<CommentProps> = {
-		isOpenBottomSheet: isOpenPostCommentBottomSheet,
-		Component: Comment,
-		componentProps: postCommentProps,
-		onCloseBottomSheet: () => {
-			setIsOpenPostCommentBottomSheet(false);
+	const commentBottomSheetProps: CommentBottomSheetProps = {
+		isBottomSheetOpen: isPostCommentBottomSheetOpen,
+		commentProps: postCommentProps,
+		handleCloseBottomSheet: () => {
+			setIsPostCommentBottomSheetOpen(false);
 		},
 	};
-	return <BottomSheet {...postCommentBottomSheet} />;
+	return <CommentBottomSheet {...commentBottomSheetProps} />;
 };
 
 export default PostCommentBottomSheet;
