@@ -249,7 +249,7 @@ const ChatRoom: React.FC = () => {
 				}}
 				$withBorder={true}
 			/>
-			<MessagesContainer style={{ visibility: !isLoading ? 'visible' : 'hidden' }}>
+			<MessagesContainer $isLoading={isLoading}>
 				{extendedMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>

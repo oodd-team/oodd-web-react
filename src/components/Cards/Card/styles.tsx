@@ -106,7 +106,7 @@ export const Reaction = styled.div`
 	gap: 0.9375rem;
 `;
 
-export const Btn = styled.div`
+export const Btn = styled.button`
 	cursor: pointer;
 	width: 3.5rem;
 	height: 3.5rem;

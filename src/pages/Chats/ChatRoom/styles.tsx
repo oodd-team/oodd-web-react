@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const MessagesContainer = styled.div`
+export const MessagesContainer = styled.div<{ $isLoading: boolean }>`
+	visibility: ${({ $isLoading }) => ($isLoading ? 'hidden' : 'visible')};
 	width: 100%;
 	overflow-y: scroll;
 	display: flex;

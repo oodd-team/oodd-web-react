@@ -90,16 +90,14 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
-				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsMeatballBottomSheetOpen(true)} />
+				<img src={more} className="pointer" onClick={() => setIsMeatballBottomSheetOpen(true)} />
 			</FeedTop>
-			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
-				<StyledText
-					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-					color={theme.colors.black}
-					style={{ opacity: '50%' }}
-				>
-					{feed.text}
-				</StyledText>
+			<FeedText
+				onClick={() => nav(`/post/${feed.postId}`)}
+				$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+				color={theme.colors.black}
+			>
+				{feed.text}
 			</FeedText>
 			<FeedImgBox>
 				<Swiper
@@ -118,11 +116,11 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<img onClick={handleBlockClick} src={xBtn} />
+						<img className="button" onClick={handleBlockClick} src={xBtn} />
 						{isHeartClicked ? (
-							<img src={clickedHeart} onClick={handleHeartClick} />
+							<img className="button" src={clickedHeart} onClick={handleHeartClick} />
 						) : (
-							<img onClick={handleHeartClick} src={heartBtn} />
+							<img className="button" onClick={handleHeartClick} src={heartBtn} />
 						)}
 					</Reaction>
 

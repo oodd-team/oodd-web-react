@@ -22,7 +22,7 @@ export const TagMent = styled.div`
 	height: 1rem;
 `;
 
-export const TagContainer = styled.div`
+export const TagContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	width: 100%;

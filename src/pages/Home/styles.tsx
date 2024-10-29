@@ -10,7 +10,7 @@ export const HomeContainer = styled.div`
 
 // HomeTopBar
 
-export const HomeTopBarContainer = styled.div`
+export const HomeTopBarContainer = styled.header`
 	width: 100%;
 	padding: 0.5rem 1.25rem;
 	display: flex;

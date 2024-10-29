@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { StyledText } from '../../../../components/Text/StyledText';
 
-export const MessageLayout = styled.div`
+export const MessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 	display: flex;
 	margin: 0 0 0.5rem auto;
+	margin-top: ${({ $isSenderChanged }) => ($isSenderChanged ? '1rem' : 0)};
 	justify-content: flex-end;
 `;
 
