@@ -13,7 +13,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
 import MoreSvg from '../../assets/default/more.svg';
-import BackSvg from '../../assets/default/backIcon.svg';
+import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
