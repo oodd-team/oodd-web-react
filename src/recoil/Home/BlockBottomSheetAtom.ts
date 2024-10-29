@@ -1,18 +1,18 @@
 import { atom } from 'recoil';
 import { PostBlockDto } from '../../pages/Home/BottomSheets/dto';
 
-export const IsOpenBlockConfirmationModalAtom = atom<boolean>({
-	key: 'isOpenBlockConfirmationModalAtom',
+export const IsBlockConfirmationModalOpenAtom = atom<boolean>({
+	key: 'isBlockConfirmationModalOpenAtom',
 	default: false,
 });
 
-export const IsOpenBlockSuccessModalAtom = atom<boolean>({
-	key: 'IsOpenBlockSuccessModalAtom',
+export const IsBlockSuccessModalOpenAtom = atom<boolean>({
+	key: 'IsBlockSuccessModalOpenAtom',
 	default: false,
 });
 
-export const IsOpenBlockFailModalAtom = atom<boolean>({
-	key: 'IsOpenBlockFailModalAtom',
+export const IsBlockFailModalOpenAtom = atom<boolean>({
+	key: 'IsBlockFailModalOpenAtom',
 	default: false,
 });
 

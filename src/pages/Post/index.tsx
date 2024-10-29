@@ -34,7 +34,7 @@ const Post: React.FC = () => {
 	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
 		IsOpenPostCommentSuccessModalAtom,
 	);
-	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
+	const [isPostCommentFailModalOpen, setIsPostCommentFailModalOpen] = useRecoilState(IsPostCommentFailModalOpenAtom);
 
 	useEffect(() => {}, []);
 	// 메뉴 바텀시트 아이템 설정
@@ -83,6 +83,7 @@ const Post: React.FC = () => {
 
 	// BottomSheet props 설정
 	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
+		isOpenBottomSheet: isBottomSheetOpen,
 		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,

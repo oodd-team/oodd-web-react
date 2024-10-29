@@ -1,23 +1,23 @@
 import { atom } from 'recoil';
 import { PostReportDto } from '../../pages/Home/BottomSheets/dto';
 
-export const IsOpenMeatballBottomSheetAtom = atom<boolean>({
-	key: 'IsOpenMeatballBottomSheetAtom',
+export const IsMeatballBottomSheetOpenAtom = atom<boolean>({
+	key: 'IsMeatballBottomSheetOpenAtom',
 	default: false,
 });
 
-export const IsOpenReportBottomSheetAtom = atom<boolean>({
-	key: 'IsOpenReportBottomSheetAtom',
+export const IsReportBottomSheetOpenAtom = atom<boolean>({
+	key: 'IsReportBottomSheetOpenAtom',
 	default: false,
 });
 
-export const IsOpenReportSuccessModalAtom = atom<boolean>({
-	key: 'IsOpenReportSuccessModalAtom',
+export const IsReportSuccessModalOpenAtom = atom<boolean>({
+	key: 'IsReportSuccessModalOpenAtom',
 	default: false,
 });
 
-export const IsOpenReportFailModalAtom = atom<boolean>({
-	key: 'IsOpenReportFailModalAtom',
+export const IsReportFailModalOpenAtom = atom<boolean>({
+	key: 'IsReportFailModalOpenAtom',
 	default: false,
 });
 

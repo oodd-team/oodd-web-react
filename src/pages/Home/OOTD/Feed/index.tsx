@@ -25,10 +25,10 @@ import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { IsOpenHeartBottomSheetAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
-import { IsOpenBlockConfirmationModalAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
+import { IsHeartBottomSheetOpenAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
+import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
 import { PostCommentAtom } from '../../../../recoil/Home/PostCommentBottomSheetAtom';
-import { IsOpenMeatballBottomSheetAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
+import { IsMeatballBottomSheetOpenAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
 
 interface Props {
 	feed: FeedProps;
@@ -37,11 +37,11 @@ interface Props {
 const Feed: React.FC<Props> = ({ feed }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
-	const [, setIsOpenMeatballBottomSheet] = useRecoilState(IsOpenMeatballBottomSheetAtom);
+	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
 	const [, setPostRequest] = useRecoilState(PostRequestAtom);
-	const [, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
+	const [, setIsHeartBottomSheetOpen] = useRecoilState(IsHeartBottomSheetOpenAtom);
 	const [, setPostBlock] = useRecoilState(PostBlockAtom);
-	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
+	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
 	const [, setPostComment] = useRecoilState(PostCommentAtom);
 	const storedValue = localStorage.getItem('id');
 	const userId = Number(storedValue);
@@ -55,7 +55,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				targetId: feed.userId,
 				targetName: feed.userName,
 			});
-			setIsOpenHeartBottomSheet(true);
+			setIsHeartBottomSheetOpen(true);
 			setIsHeartClicked(true);
 		}
 	};
@@ -67,7 +67,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 			friendName: feed.userName,
 			action: 'toggle',
 		});
-		setIsOpenBlockConfirmationModal(true);
+		setIsBlockConfirmationModalOpen(true);
 	};
 
 	const handleCommentClick = () => {
@@ -90,7 +90,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
-				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsOpenMeatballBottomSheet(true)} />
+				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsMeatballBottomSheetOpen(true)} />
 			</FeedTop>
 			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
 				<StyledText
