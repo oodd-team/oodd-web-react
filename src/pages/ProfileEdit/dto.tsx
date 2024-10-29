@@ -27,3 +27,13 @@ export interface UserResponse {
 	joinedAt: string;
 }
 
+export interface UserResponse {
+	id: number;
+	name: string;
+	email: string;
+	nickname: string | null;
+	phoneNumber: string | null;
+	profilePictureUrl: string;
+	bio: string | null;
+	joinedAt: string;
+}
