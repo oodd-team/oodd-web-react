@@ -1,24 +1,18 @@
 import styled from 'styled-components';
 import { StyledText } from '../Text/StyledText';
 
-interface UserImgProps {
-	$imgUrl?: string;
-}
-
 export const UserProfileContainer = styled.section`
 	display: flex;
 	flex-direction: row;
 `;
-export const UserImg = styled.div<UserImgProps>`
+export const UserImg = styled.img`
 	width: 4.5rem;
 	height: 4.5rem;
-	background-image: url(${(props) => props.$imgUrl});
-	background-size: cover;
-	background-position: center;
+	object-fit: cover;
 	border-radius: 50%;
 `;
 
-export const UserDetails = styled.div`
+export const UserDetails = styled.section`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
