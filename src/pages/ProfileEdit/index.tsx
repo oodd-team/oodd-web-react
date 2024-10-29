@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput } from './styles';
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput} from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -113,7 +113,7 @@ const ProfileEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="프로필 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 
 				<ProfilePicWrapper>
 					<ProfilePic>
@@ -139,7 +139,7 @@ const ProfileEdit: React.FC = () => {
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<BottomButton
-					content="저장하기" // 버튼에 표시할 텍스트
+					content="완료" // 버튼에 표시할 텍스트
 					onClick={handleSave} // 버튼 클릭 시 호출할 함수
 				/>
 			</ProfileEditContainer>

@@ -39,14 +39,17 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-	width: calc(100% - 6.25rem - 10px); /* 라벨과 간격을 제외한 너비 */
-	padding: 0.5rem; /* 8px */
-	margin-left: 10px;
-	border: 1px solid #ccc;
-	border: 0px;
-	box-sizing: border-box;
-	padding: 10px;
+  width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
+  padding: 25px; /* 10px padding */
+  margin: 10px 0; /* 위아래 간격 조정 */
+  border: 0px;
+  box-sizing: border-box;
+	border-radius: 10px;
+  background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	text-align: left;
+
 `;
+
 
 export const Button = styled.button`
 	text-decoration: underline;
@@ -57,17 +60,24 @@ export const Button = styled.button`
 `;
 
 export const Row = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
-	margin-top: 10px; /* Row 간격 10px */
-	padding: 0px 20px;
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  align-items: stretch;
+  width: 100%;
+  margin-top: 0px; /* Row 간격 10px */
+  padding: 0px 20px; /* 좌우 여백 20px */
 
-	${Label} {
-		width: 6.25rem; /* 100px */
-	}
+  ${Label} {
+    width: 6.25rem; /* 100px */
+  }
 `;
+
 
 export const FileInput = styled.input`
 	display: none;
+`;
+
+export const BottomButton = styled.button`
+		color: #FF2389;
+
 `;
