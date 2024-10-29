@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { StyledText } from '../../../../components/Text/StyledText';
 
-export const FirstMessageLayout = styled.div`
+export const FirstMessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 	display: flex;
-	margin: 0 auto 0.25rem 0;
+	margin: 0 auto 0.5rem 0;
+	margin-top: ${({ $isSenderChanged }) => ($isSenderChanged ? '1rem' : 0)};
 `;
 
 export const MessageLayout = styled.div`
@@ -11,37 +13,34 @@ export const MessageLayout = styled.div`
 `;
 
 export const UserImage = styled.img`
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	object-fit: cover;
 	border-radius: 1.25rem;
-	margin-right: 0.438rem;
+	margin-right: 0.5rem;
 	cursor: pointer;
 `;
 
-export const UsernameText = styled.div`
-	font-family: 'Gmarket Sans';
-	font-size: 11px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+export const UsernameText = styled(StyledText)`
+	cursor: pointer;
 `;
 
 export const MessageBox = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 0.1rem;
-`;
-
-export const Message = styled.div`
-	padding: 0.45rem 0.75rem;
-	border-radius: 0 0.625rem 0.625rem 0.625rem;
-	background-color: ${({ theme }) => theme.colors.gray1};
-	max-width: 16rem;
+	gap: 0.2rem;
+	max-width: 75%;
 	margin-right: 0.5rem;
 `;
 
-export const TimeWrapper = styled.div`
+export const Message = styled(StyledText)`
+	padding: 0.4rem 0.8rem;
+	background-color: #f2f2f2;
+	border-radius: 0 0.8rem 0.8rem 0.8rem;
+	overflow-wrap: break-word;
+`;
+
+export const TimeWrapper = styled.time`
 	display: flex;
 	align-items: flex-end;
 	color: ${({ theme }) => theme.colors.gray3};

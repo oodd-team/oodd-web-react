@@ -10,27 +10,32 @@ export const HomeContainer = styled.div`
 
 // HomeTopBar
 
-export const HomeTopBarContainer = styled.div`
+export const HomeTopBarContainer = styled.header`
 	width: 100%;
-	max-width: 32rem;
-	height: 2.75rem;
+	padding: 0.5rem 1.25rem;
 	display: flex;
 	justify-content: space-between;
 	background-color: white;
 	z-index: 20;
 	align-items: center;
 	position: fixed;
+	${({ theme }) => theme.breakPoints};
 `;
 
 export const HomeLogo = styled.img`
-	width: 6.6875rem;
-	height: 1.6875rem;
-	margin-left: 1.25rem;
-	cursor: pointer;
-	overflow: hidden;
+	padding: 0.0938rem 0;
+`;
 
-	img {
-		width: 100%;
-		height: 100%;
-	}
+export const ButtonContainer = styled.div`
+	display: flex;
+	gap: 1rem;
+`;
+
+export const Button = styled.button`
+	width: 1.125rem;
+	height: 1.125rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 0.03rem;
 `;

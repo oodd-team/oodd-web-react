@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
-import { TagMent, OOTDContainer, TagContainer, TagRow, FeedContainer, OOTDLoading } from './styles';
+import { OOTDContainer, TagContainer, TagRow, FeedContainer, OOTDLoading } from './styles';
 import Tag from './Tag';
 import { TagProps, OOTDAPIResponse, UserResponse, Post } from './dto';
 import Feed from './Feed';
@@ -122,11 +120,6 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 
 	return (
 		<OOTDContainer>
-			<TagMent>
-				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-					Find your style
-				</StyledText>
-			</TagMent>
 			<TagContainer>
 				<TagRow>
 					<div style={{ width: '1.25rem' }} />

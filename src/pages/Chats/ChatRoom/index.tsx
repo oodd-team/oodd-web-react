@@ -24,25 +24,24 @@ import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../context/SocketProvider';
 import { ApiDto } from './dto';
 import request from '../../../apis/core';
-import Back from '../../../assets/Chats/Back.svg';
-import KebabMenu from '../../../assets/Chats/KebabMenu.svg';
-import Exit from '../../../assets/BottomSheetMenu/Exit.svg';
-import Block from '../../../assets/BottomSheetMenu/Block.svg';
+import Back from '../../../assets/arrow/left.svg';
+import KebabMenu from '../../../assets/default/more.svg';
+import Exit from '../../../assets/default/leave.svg';
+import Block from '../../../assets/default/block.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
 	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
-	const [isOpenMenu, setIsOpenMenu] = useState(false);
-	const [isOpenLeave, setIsOpenLeave] = useState(false);
-	const [isOpenBlock, setIsOpenBlock] = useState(false);
-	const [isOpenCannotBlock, setIsOpenCannotBlock] = useState(false);
-	const [isOpenCannotCheck, setIsOpenCannotCheck] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isLeaveOpen, setIsLeaveOpen] = useState(false);
+	const [isBlockOpen, setIsBlockOpen] = useState(false);
+	const [isCannotBlockOpen, setIsCannotBlockOpen] = useState(false);
+	const [isCannotCheckOpen, setIsCannotCheckOpen] = useState(false);
 
-	const [loading, setLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 	const [isScroll, setIsScroll] = useState(false);
-	const [isLoaded, setIsLoaded] = useState(false);
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const messageLengthRef = useRef(0);
 
@@ -64,9 +63,8 @@ const ChatRoom: React.FC = () => {
 			setAllMessages(messages.reverse());
 			if (messages.length > messageLengthRef.current) {
 				setIsScroll((prev) => !prev);
-				setIsLoaded(true);
 			}
-			setLoading(false);
+			setIsLoading(false);
 		});
 
 		// 최근 메시지 조회
@@ -116,8 +114,8 @@ const ChatRoom: React.FC = () => {
 			{
 				text: '채팅방 나가기',
 				action: () => {
-					setIsOpenLeave(true);
-					setIsOpenMenu(false);
+					setIsLeaveOpen(true);
+					setIsMenuOpen(false);
 				},
 				icon: Exit,
 			},
@@ -125,11 +123,11 @@ const ChatRoom: React.FC = () => {
 				text: '차단하기',
 				action: () => {
 					if (isOpponentValid) {
-						setIsOpenBlock(true);
-						setIsOpenMenu(false);
+						setIsBlockOpen(true);
+						setIsMenuOpen(false);
 					} else {
-						setIsOpenCannotBlock(true);
-						setIsOpenMenu(false);
+						setIsCannotBlockOpen(true);
+						setIsMenuOpen(false);
 					}
 				},
 				icon: Block,
@@ -158,11 +156,11 @@ const ChatRoom: React.FC = () => {
 					}
 				};
 				leaveChatRoom();
-				setIsOpenLeave(false);
+				setIsLeaveOpen(false);
 			},
 		},
 		onCloseModal: () => {
-			setIsOpenLeave(false);
+			setIsLeaveOpen(false);
 		},
 	};
 
@@ -189,35 +187,35 @@ const ChatRoom: React.FC = () => {
 					} catch {}
 				};
 				blockUser();
-				setIsOpenBlock(false);
+				setIsBlockOpen(false);
 			},
 		},
 		onCloseModal: () => {
-			setIsOpenBlock(false);
+			setIsBlockOpen(false);
 		},
 	};
 
 	const cannotBlockModal: ModalProps = {
 		content: '차단할 수 없는 사용자입니다',
 		onClose: () => {
-			setIsOpenCannotBlock(false);
+			setIsCannotBlockOpen(false);
 		},
 	};
 
 	const cannotCheckModal: ModalProps = {
 		content: '사용자 정보가 없습니다',
 		onClose: () => {
-			setIsOpenCannotCheck(false);
+			setIsCannotCheckOpen(false);
 		},
 	};
 
 	const kebabMenuBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
-		isOpenBottomSheet: isOpenMenu,
+		isOpenBottomSheet: isMenuOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {
-			setIsOpenMenu(false);
+			setIsMenuOpen(false);
 		},
 	};
 
@@ -225,7 +223,7 @@ const ChatRoom: React.FC = () => {
 	const onClickProfile = useCallback(() => {
 		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
 		if (opponentId === -1) {
-			setIsOpenCannotCheck(true);
+			setIsCannotCheckOpen(true);
 		} else {
 			nav(`/users/${opponentId}`);
 		}
@@ -233,11 +231,11 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{loading && <Loading />}
-			{isOpenLeave && <ConfirmationModal {...leaveModal} />}
-			{isOpenBlock && <ConfirmationModal {...blockModal} />}
-			{isOpenCannotBlock && <Modal {...cannotBlockModal} />}
-			{isOpenCannotCheck && <Modal {...cannotCheckModal} />}
+			{isLoading && <Loading />}
+			{isLeaveOpen && <ConfirmationModal {...leaveModal} />}
+			{isBlockOpen && <ConfirmationModal {...blockModal} />}
+			{isCannotBlockOpen && <Modal {...cannotBlockModal} />}
+			{isCannotCheckOpen && <Modal {...cannotCheckModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
 				text={opponentInfo?.nickname || opponentInfo?.name || '알수없음'}
@@ -247,11 +245,11 @@ const ChatRoom: React.FC = () => {
 					nav(-1);
 				}}
 				onRightClick={() => {
-					setIsOpenMenu(true);
+					setIsMenuOpen(true);
 				}}
 				$withBorder={true}
 			/>
-			<MessagesContainer style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
+			<MessagesContainer $isLoading={isLoading}>
 				{extendedMessages.map((message: ExtendedMessageDto) => {
 					return (
 						<div key={message.id}>

@@ -13,6 +13,7 @@ export const SheetItem = styled.li`
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
+	border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 `;
 
 export const Icon = styled.img`

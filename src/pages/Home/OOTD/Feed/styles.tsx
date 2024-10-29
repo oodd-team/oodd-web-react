@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { StyledText } from '../../../../components/Text/StyledText';
 
-export const FeedWrapper = styled.div`
+export const FeedWrapper = styled.article`
 	background-color: ${({ theme }) => theme.colors.white};
 	width: 100%;
 	margin-bottom: 1rem;
 	height: auto;
+
+	.pointer {
+		cursor: pointer;
+	}
 `;
 
 export const FeedTop = styled.div`
@@ -48,12 +52,13 @@ export const FeedTimeAgo = styled(StyledText)`
 	margin: 0 0.5rem 0 auto;
 `;
 
-export const FeedText = styled.div`
+export const FeedText = styled(StyledText)`
 	margin-bottom: 0.5rem;
 	display: flex;
 	align-items: center;
 	word-wrap: break-word;
 	word-break: break-all;
+	opacity: 50%;
 `;
 
 export const FeedImgBox = styled.div`
@@ -126,10 +131,13 @@ export const Reaction = styled.div`
 	display: flex;
 	justify-content: center;
 	gap: 0.5rem;
+
+	.button {
+		cursor: pointer;
+	}
 `;
 
-export const CommentBtn = styled.div`
-	cursor: pointer;
+export const CommentBtn = styled.button`
 	background: ${({ theme }) => theme.colors.gradient};
 	border-radius: 3.19rem;
 	backdrop-filter: blur(0.3125rem);

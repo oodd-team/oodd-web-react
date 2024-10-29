@@ -15,7 +15,6 @@ import {
 	PostsContainer,
 	AddButton,
 } from './styles';
-import { StyledTextClipped } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
 import NavBar from '../../components/NavBar';
@@ -150,9 +149,7 @@ const MyPage: React.FC = () => {
 					</AvatarWrapper>
 					<UserInfo>
 						<Username>{user?.nickname || '김아무개...'}</Username>
-				<StyledTextClipped $textTheme={{ style: 'button1-regular', lineHeight: 2 }}>
  					 <Bio>{user?.bio || '소개글이 없습니다.'}</Bio>
-				</StyledTextClipped>
 
 					</UserInfo>
 				</Header>

@@ -1,12 +1,11 @@
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
-import { RecentChatInfo } from './styles';
+import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 import React, { useEffect, useState } from 'react';
 import request from '../../../apis/core';
 import { ChatRoomDto, ChatRoomListDto } from './dto';
-import ChatRoomList from '../ChatRoomList';
 import SwiperCore from 'swiper';
 import Loading from '../../../components/Loading';
+import ChatRoomItem from '../ChatRoomItem';
+import { StyledText } from '../../../components/Text/StyledText';
 
 interface RecentChatProps {
 	matchingRequests: number;
@@ -17,12 +16,12 @@ const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) 
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
 	const storageValue = localStorage.getItem('id');
 	const userId = storageValue ? Number(storageValue) : -1;
-	const [loading, setLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		const getChatRoomList = async () => {
 			try {
-				setLoading(true);
+				setIsLoading(true);
 				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
 
 				if (response.isSuccess) {
@@ -45,7 +44,7 @@ const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) 
 			} catch (error) {
 				console.error(error);
 			} finally {
-				setLoading(false);
+				setIsLoading(false);
 			}
 		};
 
@@ -54,17 +53,26 @@ const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) 
 
 	return (
 		<>
-			<RecentChatInfo>
-				{loading && <Loading />}
-				<StyledText $textTheme={{ style: 'body4-light', lineHeight: 1.5 }} color={theme.colors.gray3}>
-					최근 채팅방
-				</StyledText>
-			</RecentChatInfo>
-			{chatRoomList
-				? chatRoomList.map((room) => {
-						return <ChatRoomList key={room.id} swiperRef={swiperRef} {...room} />;
-					})
-				: null}
+			{isLoading ? (
+				<Loading />
+			) : chatRoomList ? (
+				<>
+					<RecentChatInfo $textTheme={{ style: 'body2-regular' }} color="#1d1d1d">
+						최근 채팅방
+					</RecentChatInfo>
+					<ChatRoomList>
+						{chatRoomList.map((room) => (
+							<ChatRoomItem key={room.id} swiperRef={swiperRef} {...room} />
+						))}
+					</ChatRoomList>
+				</>
+			) : (
+				<NoChatRoomWrapper>
+					<StyledText $textTheme={{ style: 'headline1-bold' }} color="#8e8e93">
+						개설된 채팅방이 없어요
+					</StyledText>
+				</NoChatRoomWrapper>
+			)}
 		</>
 	);
 };
