@@ -75,7 +75,7 @@ const ChatRoomItem: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 				<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
 					{timeAgo}
 				</StyledText>
-				// TODO: pending 상태 채팅방 목록에서 없애나?
+				{/* TODO: pending 상태 채팅방 목록에서 없애나? */}
 				{!!timeAgo && isUnread && (
 					<StyledText $textTheme={{ style: 'body6-regular' }} color={theme.colors.gray3}>
 						응답 대기중

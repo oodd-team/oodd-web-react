@@ -19,8 +19,8 @@ import {
 } from './styles';
 import { FeedProps } from '../dto';
 import more from '../../../../assets/Home/grommet-icons_more.svg';
-import xBtn from '../../../../assets/Home/button_reject.svg';
-import heartBtn from '../../../../assets/Home/button_heart.svg';
+import xBtn from '../../../../assets/default/reject.svg';
+import heartBtn from '../../../../assets/default/heart.svg';
 import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
 import commentBtn from '../../../../assets/Home/comment.svg';
 import { useNavigate } from 'react-router-dom';
@@ -119,8 +119,11 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<ReactionWrapper>
 					<Reaction>
 						<img onClick={handleBlockClick} src={xBtn} />
-						{!isHeartClicked && <img onClick={handleHeartClick} src={heartBtn} />}
-						{isHeartClicked && <img src={clickedHeart} onClick={handleHeartClick} />}
+						{isHeartClicked ? (
+							<img src={clickedHeart} onClick={handleHeartClick} />
+						) : (
+							<img onClick={handleHeartClick} src={heartBtn} />
+						)}
 					</Reaction>
 
 					<CommentBtn onClick={handleCommentClick}>

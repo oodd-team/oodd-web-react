@@ -110,7 +110,7 @@ export const Btn = styled.div`
 	cursor: pointer;
 	width: 3.5rem;
 	height: 3.5rem;
-	background-color: white;
+	background-color: transparent;
 
 	display: flex;
 	justify-content: center;

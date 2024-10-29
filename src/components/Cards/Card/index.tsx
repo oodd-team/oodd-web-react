@@ -16,8 +16,8 @@ import {
 	Reaction,
 	SeeMore,
 } from './styles';
-import xBtn from '../../../assets/Home/button_reject.svg';
-import checkBtn from '../../../assets/Home/button_check.svg';
+import xBtn from '../../../assets/default/reject.svg';
+import checkBtn from '../../../assets/default/accept.svg';
 import noProfileImg from '../../../assets/Home/no_profileImg.svg';
 
 import { useNavigate } from 'react-router-dom';
