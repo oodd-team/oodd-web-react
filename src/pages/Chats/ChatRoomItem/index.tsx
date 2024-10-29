@@ -1,5 +1,5 @@
 import { StyledText } from '../../../components/Text/StyledText';
-import { UserImage, ChatRoomListLayout, LeftBox, RightBox, ChatRoomUsername } from './styles';
+import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 import theme from '../../../styles/theme';
 import { ChatRoomDto } from '../RecentChat/dto';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import SwiperCore from 'swiper';
 dayjs.extend(relativeTime);
 
-const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({
+const ChatRoomItem: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<SwiperCore | null> }> = ({
 	swiperRef,
 	id,
 	fromUserId,
@@ -61,43 +61,29 @@ const ChatRoomList: React.FC<ChatRoomDto & { swiperRef: React.MutableRefObject<S
 	};
 
 	return (
-		<ChatRoomListLayout onClick={onClickChatRoom}>
+		<ChatRoomItemLayout onClick={onClickChatRoom}>
 			<UserImage src={opponent.profilePictureUrl || ProfileImg} alt="user" />
 			<LeftBox>
-				<ChatRoomUsername color={theme.colors.black}>
+				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">
 					{opponent.nickname || opponent.name || '알수없음'}
-				</ChatRoomUsername>
-				<StyledText
-					style={{
-						width: 'auto',
-						display: '-webkit-box',
-						WebkitLineClamp: 1,
-						WebkitBoxOrient: 'vertical',
-						overflow: 'hidden',
-						textOverflow: 'ellipsis',
-					}}
-					$textTheme={{ style: 'body6-light', lineHeight: 1 }}
-					color={theme.colors.gray3}
-				>
-					{latestMessage.content}
 				</StyledText>
+				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color="#1D1D1D">
+					{latestMessage.content}
+				</LatestMessage>
 			</LeftBox>
 			<RightBox $isUnread={isUnread}>
-				<StyledText
-					style={{ whiteSpace: 'nowrap' }}
-					$textTheme={{ style: 'body6-regular', lineHeight: 1.193 }}
-					color={theme.colors.gray3}
-				>
+				<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
 					{timeAgo}
 				</StyledText>
+				{/* TODO: pending 상태 채팅방 목록에서 없애나? */}
 				{!!timeAgo && isUnread && (
-					<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 1.193 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body6-regular' }} color={theme.colors.gray3}>
 						응답 대기중
 					</StyledText>
 				)}
 			</RightBox>
-		</ChatRoomListLayout>
+		</ChatRoomItemLayout>
 	);
 };
 
-export default ChatRoomList;
+export default ChatRoomItem;
