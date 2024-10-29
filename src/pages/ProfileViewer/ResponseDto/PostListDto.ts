@@ -5,6 +5,7 @@ export interface PostListDto {
 	result: {
 		totalPosts: number;
 		totalLikes: number;
+		commentsCount: number;
 		posts: [
 			{
 				postId: number;

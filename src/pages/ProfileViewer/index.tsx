@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserInfo from './components/UserInfo';
-import PostItem from './components/PostItem';
+import PostItem from '../../components/PostItem';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import ConfirmationModal from '../../components/ConfirmationModal';
@@ -12,11 +12,11 @@ import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
-import MoreSvg from '../../assets/ProfileViewer/moreIcon.svg';
-import BackSvg from '../../assets/ProfileViewer/backIcon.svg';
+import MoreSvg from '../../assets/default/more.svg';
+import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
-import { ProfileViewerContainer, Vector, CounterContainer, Count, PostListContainer } from './style';
+import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
 import { UserInfoDto } from './ResponseDto/UserInfoDto';
 import request from '../../apis/core';
 import { PostListDto } from './ResponseDto/PostListDto';
@@ -192,41 +192,30 @@ const ProfileViewer: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileViewerContainer>
-				<TopBar
-					text={userDetails.nickname}
-					RightButtonSrc={MoreSvg}
-					LeftButtonSrc={BackSvg}
-					onRightClick={() => handleOpenBottomSheet('main')}
-				/>
+				<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleOpenBottomSheet('main')} />
 				<UserInfo />
-				<Vector />
 				<CounterContainer>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
 							OODD
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							{userDetails.postsCount || 0}
 						</StyledText>
 					</Count>
 					<Count>
-						<StyledText $textTheme={{ style: 'body6-light' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
 							좋아요
 						</StyledText>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.gray4}>
+						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							{userDetails.likesCount || 0}
 						</StyledText>
 					</Count>
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.length > 0 &&
-						representativePosts.map((post) => (
-							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={true} />
-						))}
-					{otherPosts.length > 0 &&
-						otherPosts.map((post) => (
-							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
-						))}
+						representativePosts.map((post) => <PostItem post={post} key={post.postId} />)}
+					{otherPosts.length > 0 && otherPosts.map((post) => <PostItem key={post.postId} post={post} />)}
 				</PostListContainer>
 				{activeBottomSheet === 'main' && (
 					<BottomSheet

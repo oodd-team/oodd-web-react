@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import request from '../../../../apis/core';
 import { ResponseDto } from './ResponseDto';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
-import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import MsgSvg_g from '../../../../assets/ProfileViewer/message_send _gray.svg';
+import MsgSvg_g from '../../../../assets/default/send-message.svg';
 import { RequestComponentProps } from '../../dto';
 import { useRecoilState } from 'recoil';
 import { isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
@@ -34,6 +33,7 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 	};
 
 	const checkPostCount = (): number => {
+		const userId = localStorage.getItem('id');
 		const userDetails = localStorage.getItem(`userDetails_${userId}`);
 		if (userDetails) {
 			const parsedDetails = JSON.parse(userDetails);
@@ -47,10 +47,11 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 			return;
 		}
 		const postsCount = checkPostCount();
-
+		console.log(postsCount);
 		if (postsCount === 0) {
+			setIsBottomSheetOpen(false);
 			// 포스트가 없는 경우 모달 띄우기
-			handleOpenModal('게시물을 등록 후 \n친구 요청을 보낼 수 있어요!');
+			handleOpenModal('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
 			return;
 		}
 
@@ -87,13 +88,11 @@ const RequestComponent: React.FC<RequestComponentProps> = ({
 
 	return (
 		<RequestContainer>
-			<RequestMessage>
-				<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.gray3}>
-					{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
-				</StyledText>
+			<RequestMessage $textTheme={{ style: 'body1-regular' }} color={theme.colors.black}>
+				{nickname}님에게 대표 OOTD와 함께 전달될 한 줄 메세지를 보내보세요!
 			</RequestMessage>
 			<ComentContainer>
-				<Coment ref={inputRef} value={inputValue} onChange={handleInputChange} maxLength={100} />
+				<Coment ref={inputRef} placeholder="value" value={inputValue} onChange={handleInputChange} maxLength={100} />
 				<MsgIcon src={MsgSvg_g} alt="message icon" onClick={handleMsgIconClick} />
 			</ComentContainer>
 		</RequestContainer>

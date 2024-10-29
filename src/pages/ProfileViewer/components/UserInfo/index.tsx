@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { UserDetails, UserInfoContainer, UserProfile, Bio, UserImg, ButtonContainer, LongButton, Icon } from './styles';
+import {
+	UserDetails,
+	UserInfoContainer,
+	UserProfile,
+	BioStyledText,
+	UserImg,
+	ButtonContainer,
+	LongButton,
+} from './styles';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import HeartSvg from '../../../../assets/ProfileViewer/heart.svg';
-import MsgSvg from '../../../../assets/ProfileViewer/message_send.svg';
+import HeartSvg from '../../../../assets/default/like-white.svg';
 import RequestComponent from '../RequestComponent';
 import BottomSheet from '../../../../components/BottomSheet';
 import request from '../../../../apis/core';
@@ -114,27 +121,24 @@ const UserInfo: React.FC = React.memo(() => {
 			<UserProfile>
 				<UserImg $imgUrl={userImg} />
 				<UserDetails>
-					<StyledText $textTheme={{ style: 'body1-medium' }}>{nickname}</StyledText>
-					<Bio>
-						<StyledText $textTheme={{ style: 'body4-light' }} color={theme.colors.gray4}>
-							{truncatedBio}
-						</StyledText>
-					</Bio>
+					<StyledText $textTheme={{ style: 'headline2-bold' }}>{nickname}</StyledText>
+					<BioStyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.gray3}>
+						{truncatedBio}
+					</BioStyledText>
 				</UserDetails>
 			</UserProfile>
 			<ButtonContainer>
 				{friend && (
 					<LongButton onClick={handleMessageClick}>
-						<Icon src={MsgSvg} alt="message icon" />
-						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.white}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
 							메세지 보내기
 						</StyledText>
 					</LongButton>
 				)}
 				{!friend && (
 					<LongButton onClick={handleOpenBottomSheet} disabled={nickname == '알 수 없음'}>
-						<Icon src={HeartSvg} alt="heart icon" />
-						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.white}>
+						<img src={HeartSvg} alt="heart icon" />
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
 							친구 신청
 						</StyledText>
 					</LongButton>
