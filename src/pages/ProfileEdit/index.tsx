@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput} from './styles';
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput, CameraIcon} from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -13,6 +13,7 @@ import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
+import camera from "../../assets/default/camera.svg"
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../../config/firebaseConfig';
@@ -120,9 +121,7 @@ const ProfileEdit: React.FC = () => {
 						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
 					</ProfilePic>
 					<Button onClick={handleButtonClick}>
-						<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
-							프로필 사진 변경
-						</StyledText>
+						<CameraIcon src={camera} alt="카메라 아이콘" onClick={handleButtonClick} />
 					</Button>
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>

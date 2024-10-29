@@ -15,3 +15,15 @@ export interface ApiResponse<T> {
 	message: string;
 	result: T;
 }
+
+export interface UserResponse {
+	id: number;
+	name: string;
+	email: string;
+	nickname: string | null;
+	phoneNumber: string | null;
+	profilePictureUrl: string;
+	bio: string | null;
+	joinedAt: string;
+}
+

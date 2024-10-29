@@ -15,22 +15,7 @@ export const ProfilePicWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 50px; /* 20px */
-`;
-
-export const ProfilePic = styled.div`
-	width: 7.25rem; /* 116px */
-	height: 7.25rem; /* 116px */
-	flex-shrink: 0;
-	border-radius: 50%;
-	overflow: hidden;
-	margin-top: 2.125rem; /* 34px */
-	margin-bottom: 15px; /* 20px */
-
-	img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
+	position: relative;
 `;
 
 export const Label = styled.label`
@@ -50,14 +35,40 @@ export const Input = styled.input`
 
 `;
 
-
 export const Button = styled.button`
-	text-decoration: underline;
-	margin-top: 0.8rem;
-	background: none;
-	border: none;
-	cursor: pointer;
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		z-index: 1;
+		width: 1.7rem;
+		height: 1.7rem;
+		padding: 0.3rem;
+		border-radius: 50%;
+		background-color: white;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+		border: 1px solid #ddd; /* 아이콘 테두리 */
+		cursor: pointer;
+	`;
+
+export const ProfilePic = styled.div`
+	width: 7.25rem; /* 116px */
+	height: 7.25rem; /* 116px */
+	flex-shrink: 0;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-top: 2.125rem; /* 34px */
+	margin-bottom: 15px; /* 20px */
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 `;
+
+export const CameraIcon = styled.img`
+`;
+
 
 export const Row = styled.div`
   display: flex;
@@ -81,3 +92,5 @@ export const BottomButton = styled.button`
 		color: #FF2389;
 
 `;
+
+ 
