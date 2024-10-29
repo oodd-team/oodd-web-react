@@ -10,13 +10,14 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = React.memo(({ userImg, bio, nickname }) => {
+	const truncatedBio = bio.length > 50 ? bio.substring(0, 50) + '...' : bio;
 	return (
 		<UserProfileContainer>
 			<UserImg src={userImg} alt={`${nickname}'s profile`} />
 			<UserDetails>
 				<StyledText $textTheme={{ style: 'headline2-bold' }}>{nickname}</StyledText>
 				<BioStyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.gray3}>
-					{bio}
+					{truncatedBio}
 				</BioStyledText>
 			</UserDetails>
 		</UserProfileContainer>

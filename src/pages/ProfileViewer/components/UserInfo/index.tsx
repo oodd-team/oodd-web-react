@@ -32,7 +32,6 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	if (!userDetails) return null;
 
 	const { id, nickname, bio, userImg } = userDetails;
-	const truncatedBio = bio && bio.length > 50 ? bio.substring(0, 50) + '...' : bio;
 	const userId = localStorage.getItem('id');
 	const user_img = userImg || imageBasic;
 
@@ -108,7 +107,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 
 	return (
 		<UserInfoContainer>
-			<UserProfile userImg={user_img} bio={truncatedBio} nickname={nickname} />
+			<UserProfile userImg={user_img} bio={bio} nickname={nickname} />
 			<ButtonContainer>
 				{friend && (
 					<LongButton onClick={handleMessageClick}>
