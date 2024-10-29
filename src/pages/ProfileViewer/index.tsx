@@ -32,14 +32,14 @@ const ProfileViewer: React.FC = () => {
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [confirmAction, setConfirmAction] = useState<() => void>(() => () => {});
 	const [isInputVisible, setIsInputVisible] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false); // Modal 상태 추가
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState<string>('');
 
+	const localGetId = localStorage.getItem('id');
 	const token = localStorage.getItem('jwt_token');
-	const myid = localStorage.getItem('id');
 
 	useEffect(() => {
-		const fetchUserDetails = async () => {
+		const getUserInfo = async () => {
 			try {
 				const response = await request.get<UserInfoDto>(`/users/${userId}`);
 				console.log('사용자 정보 조회: ', response);
@@ -78,7 +78,7 @@ const ProfileViewer: React.FC = () => {
 			}
 		};
 
-		fetchUserDetails();
+		getUserInfo();
 	}, [userId, token, setUserDetails]);
 
 	useEffect(() => {
@@ -96,31 +96,29 @@ const ProfileViewer: React.FC = () => {
 
 	if (!userDetails) {
 		return <Loading />;
-	}
+	} // 로딩 화면
 
 	const posts = userDetails.posts || [];
 
-	const representativePosts = posts.filter((post) => post.isRepresentative);
+	const representativePosts = posts.filter((post) => post.isRepresentative); // 대표 게시물인 것만 필터링
 	const otherPosts = posts.filter((post) => !post.isRepresentative);
 
-	const isBlockingAllowed = myid !== userId;
-
-	const handleOpenBottomSheet = (type: string) => {
+	const handleBottomSheetOpen = (type: string) => {
 		setActiveBottomSheet(type);
 		setIsBottomSheetOpen(true);
 	};
 
-	const handleCloseBottomSheet = () => {
+	const handleBottomSheetClose = () => {
 		setIsBottomSheetOpen(false);
 		setActiveBottomSheet(null);
 	};
-	const handleOpenModal = (message: string) => {
+	const handleModalOpen = (message: string) => {
 		setModalContent(message);
 		setIsModalOpen(true);
 	};
 
-	const handleOpenConfirmationModal = () => {
-		if (!isBlockingAllowed) {
+	const handleConfirmationModalOpen = () => {
+		if (localGetId == userId) {
 			alert('자신을 차단할 수 없습니다.');
 			return;
 		}
@@ -128,9 +126,9 @@ const ProfileViewer: React.FC = () => {
 		setIsConfirmationModalOpen(true);
 		setConfirmAction(() => async () => {
 			try {
-				console.log(myid, userId);
+				console.log(localGetId, userId);
 				const response = await request.post<BlockDto>(`/block`, {
-					userId: Number(myid),
+					userId: Number(localGetId),
 					friendId: Number(userId),
 					action: 'toggle',
 				});
@@ -145,7 +143,7 @@ const ProfileViewer: React.FC = () => {
 			} catch (error) {
 				console.error('Failed to toggle block status', error);
 			}
-			handleCloseConfirmationModal();
+			handleConfirmationModalClose();
 			setIsModalOpen(true); // 차단/해제 후 모달 열기
 			setModalContent(
 				userDetails.status === 'blocked'
@@ -156,13 +154,7 @@ const ProfileViewer: React.FC = () => {
 		setIsBottomSheetOpen(false);
 	};
 
-	const buttonText = userDetails.status === 'blocked' ? '차단 해제하기' : '차단하기';
-	const confirmationMessage =
-		userDetails.status === 'blocked'
-			? `${userDetails.nickname}님을 차단 해제하시겠습니까?`
-			: `${userDetails.nickname}님을 정말로 차단하시겠습니까?`;
-
-	const handleCloseConfirmationModal = () => {
+	const handleConfirmationModalClose = () => {
 		setIsConfirmationModalOpen(false);
 	};
 
@@ -170,14 +162,14 @@ const ProfileViewer: React.FC = () => {
 		setIsInputVisible(true);
 	};
 
-	const handleCloseModal = () => {
+	const handleModalClose = () => {
 		setIsModalOpen(false); // Modal 닫기
 	};
 
-	const Report = async (text: string) => {
+	const postUserReport = async (text: string) => {
 		try {
 			await request.patch(`/user-report`, {
-				fromUserId: Number.parseInt(myid as string),
+				fromUserId: Number.parseInt(localGetId as string),
 				toUserId: Number.parseInt(userId as string),
 				reason: text,
 			});
@@ -192,7 +184,7 @@ const ProfileViewer: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileViewerContainer>
-				<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleOpenBottomSheet('main')} />
+				<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleBottomSheetOpen('main')} />
 				<UserInfo />
 				<CounterContainer>
 					<Count>
@@ -225,10 +217,10 @@ const ProfileViewer: React.FC = () => {
 				{activeBottomSheet === 'main' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
-						onCloseBottomSheet={handleCloseBottomSheet}
+						onCloseBottomSheet={handleBottomSheetClose}
 						Component={() => (
 							<BottomSheetMenu
-								items={mainMenuItems(userDetails, handleOpenBottomSheet, handleOpenConfirmationModal)}
+								items={mainMenuItems(userDetails, handleBottomSheetOpen, handleConfirmationModalOpen)}
 								marginBottom="4rem"
 							/>
 						)}
@@ -237,15 +229,15 @@ const ProfileViewer: React.FC = () => {
 				{activeBottomSheet === 'report' && (
 					<BottomSheet
 						isOpenBottomSheet={isBottomSheetOpen}
-						onCloseBottomSheet={handleCloseBottomSheet}
+						onCloseBottomSheet={handleBottomSheetClose}
 						Component={() => (
 							<>
-								<BottomSheetMenu items={reportMenuItems(handleDirectInput, Report)} marginBottom="1rem" />
+								<BottomSheetMenu items={reportMenuItems(handleDirectInput, postUserReport)} marginBottom="1rem" />
 								{isInputVisible && (
 									<ReportText
-										onCloseBottomSheet={handleCloseBottomSheet}
+										onCloseBottomSheet={handleBottomSheetClose}
 										setIsInputVisible={setIsInputVisible}
-										handleOpenModal={handleOpenModal}
+										handleOpenModal={handleModalOpen}
 									/>
 								)}
 							</>
@@ -254,13 +246,17 @@ const ProfileViewer: React.FC = () => {
 				)}
 				{isConfirmationModalOpen && (
 					<ConfirmationModal
-						content={confirmationMessage}
+						content={
+							userDetails.status === 'blocked'
+								? `${userDetails.nickname}님을 차단 해제하시겠습니까?`
+								: `${userDetails.nickname}님을 정말로 차단하시겠습니까?`
+						}
 						isCancelButtonVisible={true}
-						confirm={{ text: buttonText, action: confirmAction }}
-						onCloseModal={handleCloseConfirmationModal}
+						confirm={{ text: userDetails.status === 'blocked' ? '차단 해제하기' : '차단하기', action: confirmAction }}
+						onCloseModal={handleConfirmationModalClose}
 					/>
 				)}
-				{isModalOpen && <Modal content={modalContent} onClose={handleCloseModal} />}
+				{isModalOpen && <Modal content={modalContent} onClose={handleModalClose} />}
 			</ProfileViewerContainer>
 		</OODDFrame>
 	);
