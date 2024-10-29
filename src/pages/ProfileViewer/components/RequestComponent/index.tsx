@@ -4,7 +4,7 @@ import { PostFriendRequestResult } from './PostFriendRequestResult';
 import { RequestContainer, RequestMessage, Coment, MsgIcon, ComentContainer } from './style';
 import theme from '../../../../styles/theme';
 import MsgSvg_g from '../../../../assets/default/send-message.svg';
-import { RequestComponentProps } from '../../dto';
+import { RequestComponentProps } from './RequestComponentProps';
 import { useRecoilState } from 'recoil';
 import { isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 

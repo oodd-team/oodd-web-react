@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Textarea, ReportButton, ReportTextLayout } from './style';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import { ReportTextProps } from '../../dto';
+import { ReportTextProps } from './ReportTextProps';
 import request from '../../../../apis/core';
 import { useParams } from 'react-router-dom';
 

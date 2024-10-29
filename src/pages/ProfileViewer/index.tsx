@@ -15,7 +15,8 @@ import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Re
 import MoreSvg from '../../assets/default/more.svg';
 import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/imageBasic.svg';
-import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
+import { UserInfoProps } from './UserInfoProps';
+import { mainMenuItems, reportMenuItems } from './MenuItemDto';
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
 import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
 import request from '../../apis/core';

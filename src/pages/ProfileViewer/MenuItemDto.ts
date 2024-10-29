@@ -1,34 +1,6 @@
-import ReportIcon from '../../assets/ProfileViewer/carbon_warning.svg';
 import BlockIcon from '../../assets/ProfileViewer/block.svg';
-import { Post } from '../../components/PostItem/dto';
-
-export interface UserInfoProps {
-	id: number;
-	nickname: string;
-	bio: string;
-	userImg?: string;
-	isFriend?: boolean;
-	isInterested?: boolean;
-	commentsCount?: number;
-	postsCount?: number;
-	likesCount?: number;
-	posts?: Post[];
-	status: 'blank' | 'unblocked' | 'blocked';
-}
-
-export interface RequestComponentProps {
-	userId: number;
-	nickname: string;
-	setFriend: (visible: boolean) => void;
-	setIsBottomSheetOpen: (visible: boolean) => void;
-	handleModalOpen: (message: string) => void;
-}
-
-export interface ReportTextProps {
-	onCloseBottomSheet: () => void;
-	setIsInputVisible: (visible: boolean) => void;
-	handleModalOpen: (message: string) => void;
-}
+import ReportIcon from '../../assets/ProfileViewer/carbon_warning.svg';
+import { UserInfoProps } from './UserInfoProps';
 
 export const mainMenuItems = (
 	userDetails: UserInfoProps,
