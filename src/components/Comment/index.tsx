@@ -1,6 +1,6 @@
 import { StyledText } from '../Text/StyledText';
 import { CommentLayout, SendContainer, CommentTextarea, SendImg } from './styles';
-import Send from '../../assets/default/send.svg';
+import Send from '../../assets/default/send-comment.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { CommentProps } from './dto';
 

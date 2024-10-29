@@ -9,27 +9,25 @@ export const TabBarLayout = styled.div`
 
 export const TabBarContainer = styled.div`
 	width: 100%;
-	height: 2.5rem;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-around;
 	align-items: flex-end;
-	border-bottom: 0.063rem solid ${({ theme }) => theme.colors.gray2};
 `;
 
 export const TabBarList = styled.ul`
-	height: 2.5rem;
 	display: flex;
 	flex: 1;
 	justify-content: space-between;
-	margin: 0 1.25rem;
 `;
 
 export const TabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
-	margin-top: 1rem;
-	border-bottom: 0.125rem solid ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')};
+	border-bottom: 0.13rem solid #e9e9e9;
+	border-image: ${({ $isSelected, theme }) => ($isSelected ? `${theme.colors.gradient} 0 0 1 0` : 'transparent')};
 	text-align: center;
 	flex-grow: 1;
+	padding: 0.62rem;
+	padding-bottom: 0.4rem;
 	cursor: ${({ $isPointer }) => ($isPointer ? 'pointer' : '')};
 `;
 

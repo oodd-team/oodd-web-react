@@ -1,7 +1,6 @@
-import { ChatBoxContainer, Textarea, SendIcon } from './styles';
+import { ChatBoxContainer, Textarea, SendButton } from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import Send from '../../../../assets/Chats/Send.svg';
 import { useParams } from 'react-router-dom';
 import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../../context/SocketProvider';
@@ -61,13 +60,14 @@ const ChatBox: React.FC = () => {
 		<ChatBoxContainer>
 			<Textarea
 				$isOpponentValid={isOpponentValid}
+				placeholder="메시지 보내기"
 				ref={textareaRef}
 				value={newMessage}
 				onKeyDown={onKeyDown}
 				onChange={onChangeMessage}
 				onSubmit={sendNewMessage}
 			/>
-			<SendIcon $isOpponentValid={isOpponentValid} src={Send} alt="send" onClick={sendNewMessage} />
+			<SendButton $isOpponentValid={isOpponentValid} onClick={sendNewMessage} />
 		</ChatBoxContainer>
 	);
 };
