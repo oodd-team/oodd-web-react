@@ -14,7 +14,7 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 50px; /* 20px */
+	margin-bottom: 10px; /* 20px */
 	position: relative;
 `;
 
@@ -90,7 +90,17 @@ export const FileInput = styled.input`
 
 export const BottomButton = styled.button`
 		color: #FF2389;
-
 `;
 
- 
+export const UserInfo = styled.button`
+`;
+
+export const Username = styled.button`
+	color: #000;
+	font-family: Pretendard;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 136.4%; /* 30.008px */
+	letter-spacing: -0.427px;
+`;

@@ -1,24 +1,25 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput, CameraIcon} from './styles';
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput, CameraIcon,UserInfo, Username} from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
-import request from '../../apis/core';
 import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
-import { BaseResponse } from '../MyPost/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 import camera from "../../assets/default/camera.svg"
-
+import request, { BaseResponse } from '../../apis/core';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../../config/firebaseConfig';
+import { UserResponse } from './dto';
+
 
 const ProfileEdit: React.FC = () => {
+	const [user, setUser] = useState<UserResponse | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
 	const [nickname, setNickname] = useState<string>('');
@@ -53,6 +54,29 @@ const ProfileEdit: React.FC = () => {
 	const handleButtonClick = () => {
 		fileInputRef.current?.click();
 	};
+
+	// 사용자 정보 가져오기 함수
+	useEffect(() => {
+		const fetchUserData = async () => {
+			try {
+				const storedUserId = localStorage.getItem('id');
+	
+				if (!storedUserId) {
+					console.error('User is not logged in');
+					return;
+				}
+	
+				const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
+				setUser(response.result); // user 상태에 사용자 정보 설정 (닉네임 포함)
+			} catch (error) {
+				console.error('Error fetching user data:', error);
+			}
+		};
+	
+		fetchUserData(); // user 데이터를 가져오는 함수 호출
+	}, []);
+	
+	
 
 	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -125,6 +149,11 @@ const ProfileEdit: React.FC = () => {
 					</Button>
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>
+				<UserInfo>
+					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray3}>
+						<Username>{user?.nickname || '김아무개...'}</Username>
+					</StyledText>
+				</UserInfo>
 				<Row>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						닉네임
