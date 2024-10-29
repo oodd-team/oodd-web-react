@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import {
-	IsOpenPostCommentFailModalAtom,
-	IsOpenPostCommentSuccessModalAtom,
+	IsPostCommentBottomSheetOpenAtom,
+	IsPostCommentFailModalOpenAtom,
+	IsPostCommentSuccessModalOpenAtom,
 } from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
 
 import PostBase from '../../components/PostBase/index.tsx';
@@ -31,12 +32,19 @@ const Post: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
-	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
-		IsOpenPostCommentSuccessModalAtom,
+	const [, setIsPostCommentBottomSheetOpen] = useRecoilState(IsPostCommentBottomSheetOpenAtom);
+	const [isPostCommentSuccessModalOpen, setIsPostCommentSuccessModalOpen] = useRecoilState(
+		IsPostCommentSuccessModalOpenAtom,
 	);
 	const [isPostCommentFailModalOpen, setIsPostCommentFailModalOpen] = useRecoilState(IsPostCommentFailModalOpenAtom);
 
-	useEffect(() => {}, []);
+	const location = useLocation();
+	useEffect(() => {
+		if (location.state && location.state.isCommentModalOpen) {
+			setIsPostCommentBottomSheetOpen(true);
+		}
+	}, [location.state]);
+
 	// 메뉴 바텀시트 아이템 설정
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -84,7 +92,6 @@ const Post: React.FC = () => {
 	// BottomSheet props 설정
 	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isBottomSheetOpen,
-		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
 		componentProps: activeSheet === 'menu' ? bottomSheetMenuProps : reportBottomSheetMenuProps,
@@ -114,14 +121,19 @@ const Post: React.FC = () => {
 		setIsBottomSheetOpen(true);
 	};
 
+	// 코멘트 남기기 버튼
 	const postCommentSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsPostCommentSuccessModalOpen(false);
+		},
 		content: '코멘트가 전달되었어요',
-		onClose: () => setIsOpenPostCommentSuccessModal(false),
 	};
 
 	const postCommentFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsPostCommentFailModalOpen(false);
+		},
 		content: '일시적인 오류입니다',
-		onClose: () => setIsOpenPostCommentFailModal(false),
 	};
 
 	return (
@@ -135,10 +147,9 @@ const Post: React.FC = () => {
 			{isBlockedModalOpen && (
 				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
 			)}
-
 			<PostCommentBottomSheet />
-			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
-			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
+			{isPostCommentSuccessModalOpen && <Modal {...postCommentSuccessModalProps} />}
+			{isPostCommentFailModalOpen && <Modal {...postCommentFailModalProps} />}
 		</>
 	);
 };
