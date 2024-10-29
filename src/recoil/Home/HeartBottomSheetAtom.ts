@@ -1,18 +1,18 @@
 import { atom } from 'recoil';
 import { PostRequestDto } from '../../pages/Home/BottomSheets/dto';
 
-export const IsOpenHeartBottomSheetAtom = atom<boolean>({
-	key: 'isOpenHeartBottomSheetAtom',
+export const IsHeartBottomSheetOpenAtom = atom<boolean>({
+	key: 'isHeartBottomSheetOpenAtom',
 	default: false,
 });
 
-export const IsOpenRequestSuccessModalAtom = atom<boolean>({
-	key: 'IsOpenRequestSuccessModalAtom',
+export const IsRequestSuccessModalOpenAtom = atom<boolean>({
+	key: 'IsRequestSuccessModalOpenAtom',
 	default: false,
 });
 
-export const IsOpenRequestFailModalAtom = atom<boolean>({
-	key: 'IsOpenRequestFailModalAtom',
+export const IsRequestFailModalOpenAtom = atom<boolean>({
+	key: 'IsRequestFailModalOpenAtom',
 	default: false,
 });
 

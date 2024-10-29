@@ -2,18 +2,18 @@ import block from '../../../apis/core';
 import { ApiDto } from '../dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-	IsOpenBlockConfirmationModalAtom,
-	IsOpenBlockFailModalAtom,
-	IsOpenBlockSuccessModalAtom,
+	IsBlockConfirmationModalOpenAtom,
+	IsBlockFailModalOpenAtom,
+	IsBlockSuccessModalOpenAtom,
 	PostBlockAtom,
 } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 
 const BlockConfirmationModal: React.FC = () => {
-	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
-	const [, setIsOpenBlockSuccessModal] = useRecoilState(IsOpenBlockSuccessModalAtom);
-	const [, setIsOpenBlockFailModal] = useRecoilState(IsOpenBlockFailModalAtom);
+	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
+	const [, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
+	const [, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
 
 	const blockConfirmationModalProps: ConfirmationModalProps = {
@@ -31,11 +31,11 @@ const BlockConfirmationModal: React.FC = () => {
 						});
 
 						if (response.message === 'OK') {
-							setIsOpenBlockConfirmationModal(false);
-							setIsOpenBlockSuccessModal(true);
+							setIsBlockConfirmationModalOpen(false);
+							setIsBlockSuccessModalOpen(true);
 						} else {
-							setIsOpenBlockConfirmationModal(false);
-							setIsOpenBlockFailModal(true);
+							setIsBlockConfirmationModalOpen(false);
+							setIsBlockFailModalOpen(true);
 						}
 					} else {
 						alert('잘못된 요청입니다.');
@@ -45,7 +45,7 @@ const BlockConfirmationModal: React.FC = () => {
 			},
 		},
 		onCloseModal: () => {
-			setIsOpenBlockConfirmationModal(false);
+			setIsBlockConfirmationModalOpen(false);
 		},
 	};
 
