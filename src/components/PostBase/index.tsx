@@ -36,7 +36,7 @@ import { GetPostDetailResponse } from '../../apis/Post/dto';
 import { GetUserResponse } from '../../apis/User/dto';
 import request from '../../apis/core';
 
-const PostBase: React.FC<PostBaseProps> = () => {
+const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [postData, setPostData] = useState<GetPostDetailResponse['result']>();
 	const [user, setUser] = useState<GetUserResponse['result']>();
@@ -99,8 +99,6 @@ const PostBase: React.FC<PostBaseProps> = () => {
 		}
 	};
 
-	const handleMenuClick = () => {};
-
 	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
 		setActiveTab(tab); // 클릭한 버튼에 따라 activeTab 설정
 		setIsLikeCommentBottomSheetOpen(true);
@@ -136,7 +134,7 @@ const PostBase: React.FC<PostBaseProps> = () => {
 								</StyledText>
 							</UserName>
 						</UserInfo>
-						<MenuBtn onClick={() => handleMenuClick}>
+						<MenuBtn onClick={onClickMenu}>
 							<img src={menu} alt="menu" />
 						</MenuBtn>
 					</PostInfoContainer>
