@@ -1,11 +1,10 @@
 import { StyledText } from '../Text/StyledText';
-import theme from '../../styles/theme';
 import { CommentLayout, SendContainer, CommentTextarea, SendImg } from './styles';
-import Send from '/Send.svg';
+import Send from '../../assets/default/send.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { CommentProps } from './dto';
 
-const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
+const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 	const [comment, setComment] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -17,14 +16,15 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 		}
 	}, [comment]);
 
-	const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		console.log(e.target.value);
 		if (e.target.value.length <= 100) {
 			setComment(e.target.value);
 		}
 	};
 
 	// textarea에서 enter 입력 시 실행
-	const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (comment === '') {
 			e.preventDefault();
 			return;
@@ -37,34 +37,28 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 	};
 
 	// send 이미지 클릭 시 실행
-	const onClickSend = (): void => {
+	const handleClickSend = () => {
 		if (comment === '') {
 			return;
 		}
 		if (textareaRef.current) {
 			sendComment(textareaRef.current.value);
+			setComment('');
 		}
-		setComment('');
 	};
 
 	return (
-		<CommentLayout>
-			<StyledText
-				style={{ whiteSpace: 'pre-line' }}
-				$textTheme={{ style: 'body2-light', lineHeight: 1.5 }}
-				color={theme.colors.gray3}
-			>
-				{content}
-			</StyledText>
+		<CommentLayout $isModal={isModal}>
+			<StyledText $textTheme={{ style: 'body1-regular', lineHeight: 1.5 }}>{content}</StyledText>
 			<SendContainer>
 				<CommentTextarea
 					ref={textareaRef}
 					value={comment}
-					onChange={onChangeComment}
-					onKeyDown={onKeyDown}
+					onChange={handleChangeComment}
+					onKeyDown={handleKeyDown}
 					maxLength={100}
 				/>
-				<SendImg src={Send} onClick={onClickSend} />
+				<SendImg src={Send} onClick={handleClickSend} />
 			</SendContainer>
 		</CommentLayout>
 	);
