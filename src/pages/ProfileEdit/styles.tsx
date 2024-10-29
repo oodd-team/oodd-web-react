@@ -14,8 +14,41 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 50px; /* 20px */
+	margin-bottom: 10px; /* 20px */
+	position: relative;
 `;
+
+export const Label = styled.label`
+	font-size: 0.875rem; /* 14px */
+	color: #333;
+`;
+
+export const Input = styled.input`
+  width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
+  padding: 25px; /* 10px padding */
+  margin: 10px 0; /* 위아래 간격 조정 */
+  border: 0px;
+  box-sizing: border-box;
+	border-radius: 10px;
+  background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	text-align: left;
+
+`;
+
+export const Button = styled.button`
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		z-index: 1;
+		width: 1.7rem;
+		height: 1.7rem;
+		padding: 0.3rem;
+		border-radius: 50%;
+		background-color: white;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+		border: 1px solid #ddd; /* 아이콘 테두리 */
+		cursor: pointer;
+	`;
 
 export const ProfilePic = styled.div`
 	width: 7.25rem; /* 116px */
@@ -33,41 +66,41 @@ export const ProfilePic = styled.div`
 	}
 `;
 
-export const Label = styled.label`
-	font-size: 0.875rem; /* 14px */
-	color: #333;
+export const CameraIcon = styled.img`
 `;
 
-export const Input = styled.input`
-	width: calc(100% - 6.25rem - 10px); /* 라벨과 간격을 제외한 너비 */
-	padding: 0.5rem; /* 8px */
-	margin-left: 10px;
-	border: 1px solid #ccc;
-	border: 0px;
-	box-sizing: border-box;
-	padding: 10px;
-`;
-
-export const Button = styled.button`
-	text-decoration: underline;
-	margin-top: 0.8rem;
-	background: none;
-	border: none;
-	cursor: pointer;
-`;
 
 export const Row = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
-	margin-top: 10px; /* Row 간격 10px */
-	padding: 0px 20px;
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  align-items: stretch;
+  width: 100%;
+  margin-top: 0px; /* Row 간격 10px */
+  padding: 0px 20px; /* 좌우 여백 20px */
 
-	${Label} {
-		width: 6.25rem; /* 100px */
-	}
+  ${Label} {
+    width: 6.25rem; /* 100px */
+  }
 `;
+
 
 export const FileInput = styled.input`
 	display: none;
+`;
+
+export const BottomButton = styled.button`
+		color: #FF2389;
+`;
+
+export const UserInfo = styled.button`
+`;
+
+export const Username = styled.button`
+	color: #000;
+	font-family: Pretendard;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 136.4%; /* 30.008px */
+	letter-spacing: -0.427px;
 `;

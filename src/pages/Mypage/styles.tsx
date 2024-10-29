@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledText } from '../../components/Text/StyledText';
+
 export const ProfileContainer = styled.div`
 	width: 100%;
 	max-width: 32rem;
@@ -66,14 +66,6 @@ line-height: 22px; /* 157.143% */
 letter-spacing: -0.5px;
 
 	margin-top: 10px;
-`;
-
-export const StyledTextClipped = styled(StyledText)`
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 100%;
-	display: inline-block; /* 텍스트 클리핑을 적용하기 위해 inline-block으로 설정 */
 `;
 
 export const StatsContainer = styled.div`
