@@ -50,58 +50,7 @@ export const Content = styled.span`
 	word-break: break-all;
 `;
 
-export const PostImg = styled.div`
-	width: 100%;
-	position: relative;
 
-	.postSwiper {
-		position: relative;
-		width: 100%;
-		padding-bottom: 100%;
-	}
-
-	.postSwiper .swiper-pagination {
-		position: absolute;
-		top: 0.75rem;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 10;
-		pointer-events: none;
-	}
-
-	.postSwiper .swiper-pagination-bullet {
-		width: 0.375rem;
-		height: 0.375rem;
-		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
-		background: rgba(255, 255, 255, 0.5);
-		opacity: 1;
-		pointer-events: auto;
-	}
-
-	.postSwiper .swiper-pagination-bullet-active {
-		width: 0.375rem;
-		height: 0.375rem;
-		background-color: ${({ theme }) => theme.colors.white};
-		opacity: 1;
-	}
-
-	.postSwiper .swiper-button-prev:after,
-	.postSwiper .swiper-button-next:after {
-		text-shadow: 0rem 0rem 0.25rem rgba(0, 0, 0, 0.25);
-		color: ${({ theme }) => theme.colors.white} !important;
-		font-size: 1.5rem !important;
-	}
-
-	img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		aspect-ratio: 1;
-		height: auto;
-		object-fit: cover;
-	}
-`;
 
 export const IconRow = styled.div`
 	display: flex;

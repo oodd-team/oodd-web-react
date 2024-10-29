@@ -43,7 +43,7 @@ export interface PostResult {
 	photoUrls: string[];
 	content: string;
 	styletags: string[];
-	clothingInfo?: ClothingInfo[] | null;
+	clothingInfo: ClothingInfo[] | null;
 	isRepresentative: boolean;
 }
 
@@ -51,7 +51,7 @@ export interface ClothingInfo {
 	imageUrl: string;
 	brand: string;
 	model: string;
-	modelNumber: number;
+	modelNumber: string;
 	url: string;
 }
 
@@ -61,7 +61,7 @@ export interface PostSummary {
 	likes: number | null;
 	firstPhoto: string;
 	isRepresentative: boolean;
-	commentsCount?: number; // 내 게시물(댓글 수 포함) | 남의 게시물(댓글 수 미포함)
+	commentsCount: number; // 내 게시물(댓글 수 포함) | 남의 게시물(댓글 수 미포함)
 }
 
 export interface PostListResult {

@@ -29,7 +29,6 @@ import comment from '../../assets/Post/comment.svg';
 import menu from '../../assets/Post/menu.svg';
 
 import { PostBaseProps } from './dto';
-import { ClothingInfo } from '../ClothingInfoItem/dto';
 import { GetPostDetailResponse } from '../../apis/Post/dto';
 import { GetUserResponse } from '../../apis/User/dto';
 import request from '../../apis/core';
@@ -145,7 +144,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					</IconRow>
 
 					<ClothingInfoList>
-						{postData.clothingInfo?.map((clothingObj: ClothingInfo, index) => (
+						{postData.clothingInfo?.map((clothingObj, index) => (
 							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 						))}
 					</ClothingInfoList>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -8,60 +8,27 @@ import {
 	IsOpenPostCommentSuccessModalAtom,
 } from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
 
-import {
-	PostContainer,
-	PostInfoContainer,
-	UserInfo,
-	UserProfile,
-	UserName,
-	MenuBtn,
-	PostImg,
-	Content,
-	IconRow,
-	IconWrapper,
-	ClothingInfoList,
-} from './styles';
-import theme from '../../styles/theme';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-
-import { OODDFrame } from '../../components/Frame/Frame.tsx';
-import TopBar from '../../components/TopBar/index.tsx';
-import BottomSheet from '../../components/BottomSheet';
+import PostBase from '../../components/PostBase/index.tsx';
+import BottomSheet from '../../components/BottomSheet/index.tsx';
 import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
-import BottomSheetMenu from '../../components/BottomSheetMenu';
+import BottomSheetMenu from '../../components/BottomSheetMenu/index.tsx';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
-import { StyledText } from '../../components/Text/StyledText';
-import Modal from '../../components/Modal';
-import ConfirmationModal from '../../components/ConfirmationModal';
+import { StyledText } from '../../components/Text/StyledText.tsx';
+import Modal from '../../components/Modal/index.tsx';
+import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
 import Loading from '../../components/Loading/index.tsx';
-import ClothingInfoItem from '../../components/ClothingInfoItem';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
 import ReportTextarea from '../Home/ReportTextarea.tsx';
 
-import back from './../../assets/back.svg';
-import heart from './../../assets/Post/heart.svg';
-import comment from './../../assets/Post/comment.svg';
-import menu from './../../assets/Post/menu.svg';
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 
-import request from '../../apis/core';
-
-import { ClothingInfo } from '../../components/ClothingInfoItem/dto.ts';
 import { ModalProps } from '../../components/Modal/dto.ts';
-import { PostResponse, UserResponse } from './dto';
 
 const Post: React.FC = () => {
-	const { postId } = useParams<{ postId: string }>();
-	const [postData, setPostData] = useState<PostResponse['result']>();
-	const [user, setUser] = useState<UserResponse['result']>();
-	const [userName, setUserName] = useState<string>('');
-	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
+	const [userName, _] = useState('밍');
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+	const [isReportSheetOpen, setIsReportSheetOpen] = useState(false);
 	const [showInput, setShowInput] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -72,61 +39,20 @@ const Post: React.FC = () => {
 	);
 	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
 
-	const nav = useNavigate();
-	const location = useLocation();
-
-	useEffect(() => {
-		if (location.state && location.state.isCommentModalOpen) {
-			setIsOpenPostCommentBottomSheet(true);
-		}
-	}, [location.state]);
-
-	useEffect(() => {
-		const fetchPostData = async () => {
-			try {
-				const response = await request.get<PostResponse>(`/posts/${postId}`);
-				if (response.isSuccess) {
-					setPostData(response.result);
-					fetchUser(response.result.userId);
-				} else {
-					console.error('Failed to fetch post data');
-				}
-			} catch (error) {
-				console.error('Error fetching post data:', error);
-			}
-		};
-
-		const fetchUser = async (userId: number) => {
-			try {
-				const response = await request.get<UserResponse>(`/users/${userId}`);
-				if (response.isSuccess) {
-					setUser(response.result);
-					setUserName(response.result.nickname || response.result.name);
-				} else {
-					console.error('Failed to fetch user data');
-				}
-			} catch (error) {
-				console.error('Error fetching user data:', error);
-			}
-		};
-
-		fetchPostData();
-	}, [postId]);
-
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
 			{
 				text: '신고하기',
 				action: () => {
-					setIsOpenBottomSheet(false);
-					setIsOpenReportSheet(true);
+					setIsBottomSheetOpen(false);
+					setIsReportSheetOpen(true);
 				},
 				icon: declaration,
 			},
 			{
 				text: '차단하기',
 				action: () => {
-					setIsOpenBottomSheet(false);
+					setIsBottomSheetOpen(false);
 					setIsConfirmationModalOpen(true);
 				},
 				icon: block,
@@ -140,21 +66,21 @@ const Post: React.FC = () => {
 			{
 				text: '스팸',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '부적절한 콘텐츠',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '선정적',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
@@ -169,14 +95,18 @@ const Post: React.FC = () => {
 	};
 
 	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
-		isOpenBottomSheet: isOpenBottomSheet,
+		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {
-			setIsOpenBottomSheet(false);
+			setIsBottomSheetOpen(false);
 			setShowInput(false);
 		},
+	};
+
+	const handleBottomSheetOpen = () => {
+		setIsBottomSheetOpen(true);
 	};
 
 	const confirmationModalProps = {
@@ -209,95 +139,28 @@ const Post: React.FC = () => {
 		content: '일시적인 오류입니다',
 	};
 
-	if (!postData) {
-		return <Loading />; // 로딩 중 표시
-	}
-
 	return (
-		<OODDFrame>
-			<PostContainer>
-				<TopBar LeftButtonSrc={back} />
-
-				<PostInfoContainer>
-					<UserInfo onClick={() => nav(`/users/${postData.userId}`)}>
-						<UserProfile>
-							<img src={user?.profilePictureUrl} alt="profileImg" />
-						</UserProfile>
-						<UserName>
-							<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }} color={theme.colors.black}>
-								{userName}
-							</StyledText>
-						</UserName>
-					</UserInfo>
-					<MenuBtn onClick={() => setIsOpenBottomSheet(true)}>
-						<img src={menu} alt="menu" />
-					</MenuBtn>
-				</PostInfoContainer>
-
-				{postData.content && (
-					<Content>
-						<StyledText
-							$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-							color={theme.colors.black}
-							style={{ opacity: '50%' }}
-						>
-							{postData.content}
-						</StyledText>
-					</Content>
-				)}
-
-				<PostImg>
-					<Swiper
-						modules={[Pagination, Navigation]}
-						slidesPerView={1}
-						pagination={{ clickable: true }}
-						navigation
-						className="postSwiper"
-					>
-						{postData.photoUrls.map((image: string, index: number) => (
-							<SwiperSlide key={index}>
-								<img src={image} alt={`postImg-${index}`} style={{ width: '100%', height: 'auto' }} />
-							</SwiperSlide>
-						))}
-					</Swiper>
-				</PostImg>
-
-				<IconRow>
-					<IconWrapper>
-						<img src={heart} alt="Heart Icon" />
-						<span>{0}</span> {/* 좋아요 수 */}
-					</IconWrapper>
-					<IconWrapper>
-						<img src={comment} alt="Comment Icon" />
-						<span>{0}</span> {/* 댓글 수 */}
-					</IconWrapper>
-				</IconRow>
-
-				<ClothingInfoList>
-					{postData.clothingInfo?.map((clothingObj: ClothingInfo, index: number) => (
-						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
-					))}
-				</ClothingInfoList>
-			</PostContainer>
+		<>
+			<PostBase onClickMenu={handleBottomSheetOpen} />
 
 			<BottomSheet {...bottomSheetProps} />
 			{/* TODO: 신고하기 바텀시트 공통 컴포넌트로 분리하면서 수정 필요 */}
 			<BottomSheet
-				isOpenBottomSheet={isOpenReportSheet}
+				isOpenBottomSheet={isReportSheetOpen}
 				isHandlerVisible={true}
 				Component={() => (
 					<div style={{ overflow: 'auto' }}>
 						<BottomSheetMenu {...reportSheetMenuProps} />
 						{showInput && (
 							<ReportTextarea
-								onCloseReportSheet={() => setIsOpenReportSheet(false)}
+								onCloseReportSheet={() => setIsReportSheetOpen(false)}
 								onOpenModal={() => setIsModalOpen(true)}
 							/>
 						)}
 					</div>
 				)}
 				onCloseBottomSheet={() => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setShowInput(false);
 				}}
 			/>
@@ -311,7 +174,7 @@ const Post: React.FC = () => {
 			<PostCommentBottomSheet />
 			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
 			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
-		</OODDFrame>
+		</>
 	);
 };
 
