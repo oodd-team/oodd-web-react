@@ -1,12 +1,6 @@
 import ReportIcon from '../../assets/ProfileViewer/carbon_warning.svg';
 import BlockIcon from '../../assets/ProfileViewer/block.svg';
-
-export interface Post {
-	postId: number;
-	likes: number;
-	isRepresentative: boolean;
-	firstPhoto: string;
-}
+import { Post } from '../../components/PostItem/dto';
 
 export interface UserInfoProps {
 	id: number;
@@ -15,16 +9,11 @@ export interface UserInfoProps {
 	userImg?: string;
 	isFriend?: boolean;
 	isInterested?: boolean;
+	commentsCount?: number;
 	postsCount?: number;
 	likesCount?: number;
 	posts?: Post[];
 	status: 'blank' | 'unblocked' | 'blocked';
-}
-
-export interface PostItemProps {
-	post: Post;
-	isRepresentative: boolean;
-	firstPhoto: string;
 }
 
 export interface RequestComponentProps {
