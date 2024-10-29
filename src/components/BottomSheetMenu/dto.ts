@@ -5,7 +5,8 @@ export interface SheetItemDto {
 	icon?: string; // svg를 import하여 값으로 사용
 }
 
+//TODO: marginBottom prop 제거
 export interface BottomSheetMenuProps {
 	items: SheetItemDto[];
-	marginBottom: string;
+	marginBottom?: string;
 }

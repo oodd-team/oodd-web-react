@@ -11,7 +11,7 @@ interface FontStylesByPlatform {
 	desktop: FontStyleKey;
 }
 
-interface StyledTextProps {
+export interface StyledTextProps {
 	$textTheme: {
 		style: FontStyleKey | FontStylesByPlatform;
 		lineHeight?: number;

@@ -6,16 +6,16 @@ import request from '../../../apis/core';
 import { ApiDto } from '../dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-	IsOpenHeartBottomSheetAtom,
-	IsOpenRequestFailModalAtom,
-	IsOpenRequestSuccessModalAtom,
+	IsHeartBottomSheetOpenAtom,
+	IsRequestFailModalOpenAtom,
+	IsRequestSuccessModalOpenAtom,
 	PostRequestAtom,
 } from '../../../recoil/Home/HeartBottomSheetAtom';
 
 const HeartBottomSheet: React.FC = () => {
-	const [isOpenHeartBottomSheet, setIsOpenHeartBottomSheet] = useRecoilState(IsOpenHeartBottomSheetAtom);
-	const [, setIsOpenRequestSuccessModal] = useRecoilState(IsOpenRequestSuccessModalAtom);
-	const [, setIsOpenRequestFailModal] = useRecoilState(IsOpenRequestFailModalAtom);
+	const [isHeartBottomSheetOpen, setIsHeartBottomSheetOpen] = useRecoilState(IsHeartBottomSheetOpenAtom);
+	const [, setIsRequestSuccessModalOpen] = useRecoilState(IsRequestSuccessModalOpenAtom);
+	const [, setIsRequestFailModalOpen] = useRecoilState(IsRequestFailModalOpenAtom);
 	const postRequest = useRecoilValue(PostRequestAtom);
 
 	const requestCommentProps: CommentProps = {
@@ -30,12 +30,12 @@ const HeartBottomSheet: React.FC = () => {
 					});
 
 					if (response.isSuccess) {
-						setIsOpenHeartBottomSheet(false);
+						setIsHeartBottomSheetOpen(false);
 						setTimeout(() => {
-							setIsOpenRequestSuccessModal(true);
+							setIsRequestSuccessModalOpen(true);
 						}, 100);
 					} else {
-						setIsOpenRequestFailModal(true);
+						setIsRequestFailModalOpen(true);
 					}
 				} else {
 					alert('잘못된 요청입니다.');
@@ -46,15 +46,15 @@ const HeartBottomSheet: React.FC = () => {
 		},
 	};
 
-	const heartBottomSheet: BottomSheetProps<CommentProps> = {
-		isOpenBottomSheet: isOpenHeartBottomSheet,
+	const heartBottomSheetProps: BottomSheetProps<CommentProps> = {
+		isOpenBottomSheet: isHeartBottomSheetOpen,
 		Component: Comment,
 		componentProps: requestCommentProps,
 		onCloseBottomSheet: () => {
-			setIsOpenHeartBottomSheet(false);
+			setIsHeartBottomSheetOpen(false);
 		},
 	};
-	return <BottomSheet {...heartBottomSheet} />;
+	return <BottomSheet {...heartBottomSheetProps} />;
 };
 
 export default HeartBottomSheet;

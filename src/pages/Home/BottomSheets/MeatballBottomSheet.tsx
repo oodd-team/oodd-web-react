@@ -2,35 +2,35 @@ import BottomSheet from '../../../components/BottomSheet';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import { useRecoilState } from 'recoil';
 import {
-	IsOpenMeatballBottomSheetAtom,
-	IsOpenReportBottomSheetAtom,
+	IsMeatballBottomSheetOpenAtom,
+	IsReportBottomSheetOpenAtom,
 } from '../../../recoil/Home/MeatballBottomSheetAtom';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
-import { IsOpenBlockConfirmationModalAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
+import { IsBlockConfirmationModalOpenAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import declaration from '../../../assets/Post/declaration.svg';
 import block from '../../../assets/Post/block.svg';
 
 const MeatballBottomSheet: React.FC = () => {
-	const [isOpenMeatballBottomSheet, setIsOpenMeatballBottomSheet] = useRecoilState(IsOpenMeatballBottomSheetAtom);
-	const [, setIsOpenReportBottomSheet] = useRecoilState(IsOpenReportBottomSheetAtom);
-	const [, setIsOpenBlockConfirmationModal] = useRecoilState(IsOpenBlockConfirmationModalAtom);
+	const [isMeatballBottomSheetOpen, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
+	const [, setIsReportBottomSheetOpen] = useRecoilState(IsReportBottomSheetOpenAtom);
+	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
 
 	const meatballBottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
 			{
 				text: '신고하기',
 				action: () => {
-					setIsOpenMeatballBottomSheet(false);
-					setIsOpenReportBottomSheet(true);
+					setIsMeatballBottomSheetOpen(false);
+					setIsReportBottomSheetOpen(true);
 				},
 				icon: declaration,
 			},
 			{
 				text: '차단하기',
 				action: () => {
-					setIsOpenMeatballBottomSheet(false);
-					setIsOpenBlockConfirmationModal(true);
+					setIsMeatballBottomSheetOpen(false);
+					setIsBlockConfirmationModalOpen(true);
 				},
 				icon: block,
 			},
@@ -38,16 +38,16 @@ const MeatballBottomSheet: React.FC = () => {
 		marginBottom: '3.125rem',
 	};
 
-	const meatballBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
-		isOpenBottomSheet: isOpenMeatballBottomSheet,
+	const meatballBottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
+		isOpenBottomSheet: isMeatballBottomSheetOpen,
 		Component: BottomSheetMenu,
 		componentProps: meatballBottomSheetMenuProps,
 		onCloseBottomSheet: () => {
-			setIsOpenMeatballBottomSheet(false);
+			setIsMeatballBottomSheetOpen(false);
 		},
 	};
 
-	return <BottomSheet {...meatballBottomSheet} />;
+	return <BottomSheet {...meatballBottomSheetProps} />;
 };
 
 export default MeatballBottomSheet;
