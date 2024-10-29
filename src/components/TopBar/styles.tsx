@@ -4,7 +4,11 @@ import { StyledText } from '../Text/StyledText';
 
 export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	display: flex;
-	width: 100%;
+	position: sticky;
+	top: 0; /* 부모 요소의 상단에 붙도록 설정 */
+	z-index: 1;
+	background-color: white;
+	width: 100%; /* 부모 너비에 맞춤 */
 	height: 2.75rem;
 	align-items: center;
 	padding: 0.5rem 1.25rem;

@@ -185,8 +185,8 @@ const ProfileViewer: React.FC = () => {
 
 	return (
 		<OODDFrame>
+			<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleBottomSheetOpen('main')} />
 			<ProfileViewerContainer>
-				<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={() => handleBottomSheetOpen('main')} />
 				<UserInfo isFriend={userDetails.isFriend ?? false} />
 				<CounterContainer>
 					<Count>
