@@ -37,9 +37,9 @@ import { PostResponse, UserResponse } from './dto';
 import request from '../../apis/core';
 import { useRecoilState } from 'recoil';
 import {
-	IsOpenPostCommentBottomSheetAtom,
-	IsOpenPostCommentFailModalAtom,
-	IsOpenPostCommentSuccessModalAtom,
+	IsPostCommentBottomSheetOpenAtom,
+	IsPostCommentFailModalOpenAtom,
+	IsPostCommentSuccessModalOpenAtom,
 } from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
 import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
 import { ModalProps } from '../../components/Modal/dto.ts';
@@ -49,24 +49,24 @@ const Post: React.FC = () => {
 	const [postData, setPostData] = useState<PostResponse['result']>();
 	const [user, setUser] = useState<UserResponse['result']>();
 	const [userName, setUserName] = useState<string>('');
-	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-	const [isOpenReportSheet, setIsOpenReportSheet] = useState(false);
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+	const [isReportSheetOpen, setIsReportSheetOpen] = useState(false);
 	const [showInput, setShowInput] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
-	const [, setIsOpenPostCommentBottomSheet] = useRecoilState(IsOpenPostCommentBottomSheetAtom);
-	const [isOpenPostCommentSuccessModal, setIsOpenPostCommentSuccessModal] = useRecoilState(
-		IsOpenPostCommentSuccessModalAtom,
+	const [, setIsPostCommentBottomSheetOpen] = useRecoilState(IsPostCommentBottomSheetOpenAtom);
+	const [isPostCommentSuccessModalOpen, setIsPostCommentSuccessModalOpen] = useRecoilState(
+		IsPostCommentSuccessModalOpenAtom,
 	);
-	const [isOpenPostCommentFailModal, setIsOpenPostCommentFailModal] = useRecoilState(IsOpenPostCommentFailModalAtom);
+	const [isPostCommentFailModalOpen, setIsPostCommentFailModalOpen] = useRecoilState(IsPostCommentFailModalOpenAtom);
 
 	const nav = useNavigate();
 	const location = useLocation();
 
 	useEffect(() => {
 		if (location.state && location.state.isCommentModalOpen) {
-			setIsOpenPostCommentBottomSheet(true);
+			setIsPostCommentBottomSheetOpen(true);
 		}
 	}, [location.state]);
 
@@ -107,15 +107,15 @@ const Post: React.FC = () => {
 			{
 				text: '신고하기',
 				action: () => {
-					setIsOpenBottomSheet(false);
-					setIsOpenReportSheet(true);
+					setIsBottomSheetOpen(false);
+					setIsReportSheetOpen(true);
 				},
 				icon: declaration,
 			},
 			{
 				text: '차단하기',
 				action: () => {
-					setIsOpenBottomSheet(false);
+					setIsBottomSheetOpen(false);
 					setIsConfirmationModalOpen(true);
 				},
 				icon: block,
@@ -129,21 +129,21 @@ const Post: React.FC = () => {
 			{
 				text: '스팸',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '부적절한 콘텐츠',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
 			{
 				text: '선정적',
 				action: () => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setIsModalOpen(true);
 				},
 			},
@@ -158,12 +158,12 @@ const Post: React.FC = () => {
 	};
 
 	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
-		isOpenBottomSheet: isOpenBottomSheet,
+		isOpenBottomSheet: isBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
 		onCloseBottomSheet: () => {
-			setIsOpenBottomSheet(false);
+			setIsBottomSheetOpen(false);
 			setShowInput(false);
 		},
 	};
@@ -186,14 +186,14 @@ const Post: React.FC = () => {
 	// 코멘트 남기기 버튼
 	const postCommentSuccessModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenPostCommentSuccessModal(false);
+			setIsPostCommentSuccessModalOpen(false);
 		},
 		content: '코멘트가 전달되었어요',
 	};
 
 	const postCommentFailModalProps: ModalProps = {
 		onClose: () => {
-			setIsOpenPostCommentFailModal(false);
+			setIsPostCommentFailModalOpen(false);
 		},
 		content: '일시적인 오류입니다',
 	};
@@ -207,21 +207,21 @@ const Post: React.FC = () => {
 			<BottomSheet {...bottomSheetProps} />
 			{/* TODO: 신고하기 바텀시트 공통 컴포넌트로 분리하면서 수정 필요 */}
 			<BottomSheet
-				isOpenBottomSheet={isOpenReportSheet}
+				isOpenBottomSheet={isReportSheetOpen}
 				isHandlerVisible={true}
 				Component={() => (
 					<div style={{ overflow: 'auto' }}>
 						<BottomSheetMenu {...reportSheetMenuProps} />
 						{showInput && (
 							<ReportTextarea
-								onCloseReportSheet={() => setIsOpenReportSheet(false)}
+								onCloseReportSheet={() => setIsReportSheetOpen(false)}
 								onOpenModal={() => setIsModalOpen(true)}
 							/>
 						)}
 					</div>
 				)}
 				onCloseBottomSheet={() => {
-					setIsOpenReportSheet(false);
+					setIsReportSheetOpen(false);
 					setShowInput(false);
 				}}
 			/>
@@ -232,8 +232,8 @@ const Post: React.FC = () => {
 			)}
 
 			<PostCommentBottomSheet />
-			{isOpenPostCommentSuccessModal && <Modal {...postCommentSuccessModalProps} />}
-			{isOpenPostCommentFailModal && <Modal {...postCommentFailModalProps} />}
+			{isPostCommentSuccessModalOpen && <Modal {...postCommentSuccessModalProps} />}
+			{isPostCommentFailModalOpen && <Modal {...postCommentFailModalProps} />}
 
 			<PostTopBar userName={userName} />
 			<PostWrapper>
@@ -248,7 +248,7 @@ const Post: React.FC = () => {
 							</StyledText>
 						</UserName>
 					</UserInfo>
-					<MoreBtn onClick={() => setIsOpenBottomSheet(true)}>
+					<MoreBtn onClick={() => setIsBottomSheetOpen(true)}>
 						<img src={more} alt="more" />
 					</MoreBtn>
 				</PostInfo>

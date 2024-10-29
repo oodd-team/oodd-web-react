@@ -1,18 +1,18 @@
 import { atom } from 'recoil';
 import { PostCommentDto } from '../../pages/Home/BottomSheets/dto';
 
-export const IsOpenPostCommentBottomSheetAtom = atom<boolean>({
-	key: 'isOpenPostCommentBottomSheetAtom',
+export const IsPostCommentBottomSheetOpenAtom = atom<boolean>({
+	key: 'isPostCommentBottomSheetOpenAtom',
 	default: false,
 });
 
-export const IsOpenPostCommentSuccessModalAtom = atom<boolean>({
-	key: 'IsOpenPostCommentSuccessModalAtom',
+export const IsPostCommentSuccessModalOpenAtom = atom<boolean>({
+	key: 'IsPostCommentSuccessModalOpenAtom',
 	default: false,
 });
 
-export const IsOpenPostCommentFailModalAtom = atom<boolean>({
-	key: 'IsOpenPostCommentFailModalAtom',
+export const IsPostCommentFailModalOpenAtom = atom<boolean>({
+	key: 'IsPostCommentFailModalOpenAtom',
 	default: false,
 });
 
