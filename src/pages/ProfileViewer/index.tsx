@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserInfo from './components/UserInfo';
-import PostItem from './components/PostItem';
+import PostItem from '../../components/PostItem';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import ConfirmationModal from '../../components/ConfirmationModal';
@@ -13,7 +13,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { useRecoilState } from 'recoil';
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
 import MoreSvg from '../../assets/default/more.svg';
-import BackSvg from '../../assets/default/backIcon.svg';
+import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/imageBasic.svg';
 import { mainMenuItems, reportMenuItems, UserInfoProps } from './dto';
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
@@ -215,13 +215,8 @@ const ProfileViewer: React.FC = () => {
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.length > 0 &&
-						representativePosts.map((post) => (
-							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={true} />
-						))}
-					{otherPosts.length > 0 &&
-						otherPosts.map((post) => (
-							<PostItem firstPhoto={post.firstPhoto} key={post.postId} post={post} isRepresentative={false} />
-						))}
+						representativePosts.map((post) => <PostItem post={post} key={post.postId} />)}
+					{otherPosts.length > 0 && otherPosts.map((post) => <PostItem key={post.postId} post={post} />)}
 				</PostListContainer>
 				{activeBottomSheet === 'main' && (
 					<BottomSheet

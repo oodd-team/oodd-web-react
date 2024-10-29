@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import HeartSvg from '../../../../assets/default/white-heart.svg';
+import HeartSvg from '../../../../assets/default/like-white.svg';
 import imageBasic from '../../../../assets/imageBasic.svg';
 import RequestComponent from '../RequestComponent';
 import BottomSheet from '../../../../components/BottomSheet';
