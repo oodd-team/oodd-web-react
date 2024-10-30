@@ -90,8 +90,8 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
-				<MoreBtn>
-					<img src={more} onClick={() => setIsMeatballBottomSheetOpen(true)} />
+				<MoreBtn onClick={() => setIsMeatballBottomSheetOpen(true)}>
+					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
 			<FeedText
