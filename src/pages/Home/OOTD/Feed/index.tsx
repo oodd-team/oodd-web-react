@@ -99,7 +99,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 			>
 				{feed.text}
 			</FeedText>
-			<FeedImgBox>
+			<FeedImgBox $src={feed.feedImgUrls[0]}>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -131,6 +131,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 						</StyledText>
 					</CommentBtn>
 				</ReactionWrapper>
+				<div className="blur"></div>
 			</FeedImgBox>
 		</FeedWrapper>
 	);
