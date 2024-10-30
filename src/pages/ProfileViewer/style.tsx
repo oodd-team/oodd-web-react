@@ -6,10 +6,8 @@ export const ProfileViewerContainer = styled.main`
 	align-items: center;
 	height: 100vh;
 	position: relative;
-
-	@media (min-width: 23.4375rem) and (max-width: 32rem) {
-		padding: 0 1.25rem; // 모바일 환경에서만 기본 패딩 유지
-	}
+	padding: 0 1.25rem;
+	overflow: hidden;
 `;
 
 export const Vector = styled.div`

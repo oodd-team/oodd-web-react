@@ -1,4 +1,4 @@
-export interface UserInfoDto {
+export interface GetUserInfoResult {
 	isSuccess: boolean;
 	code: number;
 	message: string;

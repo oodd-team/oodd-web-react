@@ -1,4 +1,4 @@
-export interface PostListDto {
+export interface GetPostListResult {
 	isSuccess: boolean;
 	code: number;
 	message: string;

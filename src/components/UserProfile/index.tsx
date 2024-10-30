@@ -5,12 +5,12 @@ import { UserProfileContainer, UserImg, UserDetails, BioStyledText } from './sty
 
 interface UserProfileProps {
 	userImg?: string; // string | undefined
-	bio: string;
+	bio?: string;
 	nickname: string;
 }
 
-const UserProfile: React.FC<UserProfileProps> = React.memo(({ userImg, bio, nickname }) => {
-	const truncatedBio = bio.length > 50 ? bio.substring(0, 50) + '...' : bio;
+const UserProfile: React.FC<UserProfileProps> = React.memo(({ userImg, bio = '', nickname }) => {
+	const truncatedBio = bio ? (bio.length > 50 ? bio.substring(0, 50) + '...' : bio) : '';
 	return (
 		<UserProfileContainer>
 			<UserImg src={userImg} alt={`${nickname}'s profile`} />

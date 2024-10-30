@@ -8,22 +8,24 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 	const [comment, setComment] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	// textarea 내용에 따라 높이 조정
-	useEffect(() => {
+	// textarea 높이 조정 함수
+	const adjustTextareaHeight = () => {
 		if (textareaRef.current) {
-			textareaRef.current.style.height = '1.2rem';
-			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+			textareaRef.current.style.height = '1.2rem'; // 초기 높이 설정
+			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // 스크롤 높이에 맞춰 재조정
 		}
-	}, [comment]);
+	};
+
+	useEffect(() => {
+		adjustTextareaHeight();
+	}, [comment]); // comment가 변경될 때만 높이 재조정
 
 	const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		console.log(e.target.value);
 		if (e.target.value.length <= 100) {
 			setComment(e.target.value);
 		}
 	};
 
-	// textarea에서 enter 입력 시 실행
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (comment === '') {
 			e.preventDefault();
@@ -36,7 +38,6 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 		}
 	};
 
-	// send 이미지 클릭 시 실행
 	const handleClickSend = () => {
 		if (comment === '') {
 			return;
