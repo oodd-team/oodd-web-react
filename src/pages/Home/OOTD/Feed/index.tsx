@@ -14,15 +14,15 @@ import {
 	FeedTop,
 	FeedWrapper,
 	Info,
+	MoreBtn,
 	Reaction,
 	ReactionWrapper,
 } from './styles';
 import { FeedProps } from '../dto';
-import more from '../../../../assets/Home/grommet-icons_more.svg';
+import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
 import heartBtn from '../../../../assets/default/heart.svg';
-import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
-import commentBtn from '../../../../assets/Home/comment.svg';
+import commentBtn from '../../../../assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { IsHeartBottomSheetOpenAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
@@ -90,7 +90,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
-				<img src={more} className="pointer" onClick={() => setIsMeatballBottomSheetOpen(true)} />
+				<MoreBtn onClick={() => setIsMeatballBottomSheetOpen(true)}>
+					<img src={more} />
+				</MoreBtn>
 			</FeedTop>
 			<FeedText
 				onClick={() => nav(`/post/${feed.postId}`)}
@@ -118,7 +120,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 					<Reaction>
 						<img className="button" onClick={handleBlockClick} src={xBtn} />
 						{isHeartClicked ? (
-							<img className="button" src={clickedHeart} onClick={handleHeartClick} />
+							<img className="button" src={heartBtn} onClick={handleHeartClick} />
 						) : (
 							<img className="button" onClick={handleHeartClick} src={heartBtn} />
 						)}

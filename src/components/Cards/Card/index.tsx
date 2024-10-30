@@ -18,7 +18,7 @@ import {
 } from './styles';
 import xBtn from '../../../assets/default/reject.svg';
 import checkBtn from '../../../assets/default/accept.svg';
-import noProfileImg from '../../../assets/Home/no_profileImg.svg';
+import defaultProfile from '../../../assets/default/defaultProfile.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { Relationship } from './dto';
@@ -60,7 +60,7 @@ const Card: React.FC<CardProps> = ({ onReject, relationship }) => {
 		<CardLayout>
 			<ProfileContainer>
 				<ProfileImgBox>
-					<img src={requester.profilePictureUrl || noProfileImg} alt="profile" />
+					<img src={requester.profilePictureUrl || defaultProfile} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
 					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black}>
