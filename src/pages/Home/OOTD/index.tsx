@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { OOTDContainer, TagContainer, TagRow, FeedContainer, OOTDLoading } from './styles';
-import Tag from './Tag';
+import { OOTDContainer, FeedContainer, OOTDLoading } from './styles';
 import { TagProps, OOTDAPIResponse, UserResponse, Post } from './dto';
 import Feed from './Feed';
 import request from '../../../apis/core';
 import defaultProfile from '../../../assets/default/defaultProfile.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
 import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
-import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
 
 const tagData: TagProps[] = [
 	{ tagImgUrl: '', tagName: 'classic' },
@@ -25,15 +23,13 @@ const tagData: TagProps[] = [
 ];
 
 const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
-	const selectedTags = useRecoilValue(SelectedTagsAtom);
-	const setSelectedTags = useSetRecoilState(SelectedTagsAtom);
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
 	const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 관리
 	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
 
 	// 여러 태그를 기반으로 피드를 가져오는 함수
-	const fetchFeedsByTags = async (tagNames: string[]) => {
+	const fetchFeedsByTags = async () => {
 		try {
 			setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
 			// 태그를 무작위로 선택하는 함수
@@ -42,12 +38,9 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 				return shuffled.slice(0, count).map((tag) => tag.tagName);
 			};
 
-			const query =
-				tagNames.length === 0
-					? getRandomTags(tagData, Math.ceil(tagData.length / 3))
-							.map((tagName) => `styletag=${tagName}`)
-							.join('&')
-					: tagNames.map((tagName) => `styletag=${tagName}`).join('&');
+			const query = getRandomTags(tagData, Math.ceil(tagData.length / 3))
+				.map((tagName) => `styletag=${tagName}`)
+				.join('&');
 
 			const response = await request.get<OOTDAPIResponse>(`/ootd?${query}`);
 			if (response.isSuccess) {
@@ -75,20 +68,6 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 		}
 	};
 
-	const handleTagClick = (index: number) => {
-		setSelectedTags((prevSelectedTags: number[]) => {
-			if (prevSelectedTags.includes(index)) {
-				const newSelectedTags = prevSelectedTags.filter((tagIndex) => tagIndex !== index);
-				fetchFeedsByTags(newSelectedTags.map((i) => tagData[i].tagName)); // 선택된 모든 태그에 대해 필터링
-				return newSelectedTags;
-			} else {
-				const newSelectedTags = [...prevSelectedTags, index];
-				fetchFeedsByTags(newSelectedTags.map((i) => tagData[i].tagName)); // 선택된 모든 태그에 대해 필터링
-				return newSelectedTags;
-			}
-		});
-	};
-
 	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
 	useEffect(() => {
 		if (isBlockSuccessModalOpen === true) {
@@ -96,44 +75,15 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 		}
 	}, [isBlockSuccessModalOpen]);
 
-	// 태그 데이터를 반으로 나눠서 UI에 표시
-	const middleIndex = Math.ceil(tagData.length / 2);
-	const firstHalf = tagData.slice(0, middleIndex);
-	const secondHalf = tagData.slice(middleIndex);
-
 	useEffect(() => {
 		if (feeds.length !== 0) {
 			return;
 		}
-		fetchFeedsByTags(selectedTags.map((i) => tagData[i].tagName));
+		fetchFeedsByTags();
 	}, [feeds]);
 
 	return (
 		<OOTDContainer>
-			<TagContainer>
-				<TagRow>
-					<div style={{ width: '1.25rem' }} />
-					{firstHalf.map((tag, index) => (
-						<Tag
-							key={index}
-							tag={tag}
-							isSelected={selectedTags.includes(index)}
-							onClick={() => handleTagClick(index)}
-						/>
-					))}
-				</TagRow>
-				<TagRow>
-					<div style={{ width: '1.25rem' }} />
-					{secondHalf.map((tag, index) => (
-						<Tag
-							key={index + firstHalf.length}
-							tag={tag}
-							isSelected={selectedTags.includes(index + firstHalf.length)}
-							onClick={() => handleTagClick(index + firstHalf.length)}
-						/>
-					))}
-				</TagRow>
-			</TagContainer>
 			{isLoading && (
 				<OOTDLoading>
 					<Loading />

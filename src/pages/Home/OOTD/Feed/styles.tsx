@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { StyledText } from '../../../../components/Text/StyledText';
 
 export const FeedWrapper = styled.article`
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: rgba(255, 255, 255, 0.5);
 	width: 100%;
 	margin-bottom: 1rem;
 	height: auto;
@@ -33,6 +33,7 @@ export const FeedProfileImgWrapper = styled.img`
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	object-fit: cover;
 
 	background: #ffdeed;
 
@@ -61,23 +62,37 @@ export const FeedText = styled(StyledText)`
 	opacity: 50%;
 `;
 
-export const FeedImgBox = styled.div`
+export const FeedImgBox = styled.div<{ $src: string }>`
 	position: relative;
 	width: 100%;
+	height: 100%;
 	border-radius: 0.5rem;
-	background-color: ${({ theme }) => theme.colors.gray1};
+	background-color: rgba(255, 255, 255, 0.5);
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	background-image: url(${({ $src }) => $src});
+	background-repeat: no-repeat;
+	background-size: cover;
 
 	box-shadow:
 		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
 		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
 		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 
+	@media (max-width: 767px) {
+		max-height: 450px;
+	}
+
+	@media (min-width: 768px) {
+		max-height: 640px;
+	}
+
 	.ootd-image-small {
 		width: 100%;
+		max-width: 640px;
 		height: 100%;
 		object-fit: cover;
 	}
@@ -86,6 +101,11 @@ export const FeedImgBox = styled.div`
 	.swiper-wrapper {
 		z-index: 10;
 		align-items: stretch;
+	}
+
+	.ootdSwiper .swiper-slide {
+		display: flex;
+		justify-content: center;
 	}
 
 	.ootdSwiper .swiper-pagination {
@@ -115,6 +135,14 @@ export const FeedImgBox = styled.div`
 
 	.ootdSwiper .ootd-slide-small {
 		transition: none !important;
+	}
+
+	.blur {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: rgba(177, 177, 177, 0.5);
+		backdrop-filter: blur(100px);
 	}
 `;
 
