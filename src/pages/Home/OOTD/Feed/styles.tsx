@@ -145,11 +145,16 @@ export const CommentBtn = styled.button`
 	justify-content: center;
 	align-items: center;
 	padding: 0.85rem 1.25rem;
-	gap: 0.25rem;
+	gap: 0.58rem;
 	width: 11.5rem;
+	color: white;
+`;
 
-	img {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
+export const MoreBtn = styled.button`
+	width: 1.13rem;
+	height: 1.13rem;
+	border-radius: 0.03rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;

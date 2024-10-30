@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NavBarContainer, NavBarWrapper, IconImg, IconWrapper } from './styles';
-import Chat_s from './../../assets/NavBar/Chat_s.svg';
-import Chat_f from './../../assets/NavBar/Chat_f.svg';
-import Home_s from './../../assets/NavBar/Home_s.svg';
-import Home_f from './../../assets/NavBar/Home_f.svg';
-import Profile_s from './../../assets/NavBar/Profile_s.svg';
-import Profile_f from './../../assets/NavBar/Profile_f.svg';
+import Chat_s from './../../assets/default/message-white.svg';
+import Chat_f from './../../assets/default/message-fill.svg';
+import Home_s from './../../assets/default/home.svg';
+import Home_f from './../../assets/default/home-fill.svg';
+import Profile_s from './../../assets/default/my-page-white.svg';
+import Profile_f from './../../assets/default/my-page-fill.svg';
 
 const tabs = [
 	{ name: 'Chats', iconSelected: Chat_f, iconUnselected: Chat_s, route: '/chats' },

@@ -4,17 +4,7 @@ import Tag from './Tag';
 import { TagProps, OOTDAPIResponse, UserResponse, Post } from './dto';
 import Feed from './Feed';
 import request from '../../../apis/core';
-import noProfileImg from '../../../assets/Home/no_profileImg.svg';
-import classic from '../../../assets/Home/classic.svg';
-import street from '../../../assets/Home/street.svg';
-import hip from '../../../assets/Home/hip.svg';
-import casual from '../../../assets/Home/casual.svg';
-import sporty from '../../../assets/Home/sporty.svg';
-import feminine from '../../../assets/Home/feminine.svg';
-import minimal from '../../../assets/Home/minimal.svg';
-import formal from '../../../assets/Home/formal.svg';
-import outdoor from '../../../assets/Home/outdoor.svg';
-import luxury from '../../../assets/Home/luxury.svg';
+import defaultProfile from '../../../assets/default/defaultProfile.svg';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
 import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -22,16 +12,16 @@ import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { SelectedTagsAtom } from '../../../recoil/Home/SelectedTagsAtom';
 
 const tagData: TagProps[] = [
-	{ tagImgUrl: classic, tagName: 'classic' },
-	{ tagImgUrl: street, tagName: 'street' },
-	{ tagImgUrl: hip, tagName: 'hip' },
-	{ tagImgUrl: casual, tagName: 'casual' },
-	{ tagImgUrl: sporty, tagName: 'sporty' },
-	{ tagImgUrl: feminine, tagName: 'feminine' },
-	{ tagImgUrl: minimal, tagName: 'minimal' },
-	{ tagImgUrl: formal, tagName: 'formal' },
-	{ tagImgUrl: outdoor, tagName: 'outdoor' },
-	{ tagImgUrl: luxury, tagName: 'luxury' },
+	{ tagImgUrl: '', tagName: 'classic' },
+	{ tagImgUrl: '', tagName: 'street' },
+	{ tagImgUrl: '', tagName: 'hip' },
+	{ tagImgUrl: '', tagName: 'casual' },
+	{ tagImgUrl: '', tagName: 'sporty' },
+	{ tagImgUrl: '', tagName: 'feminine' },
+	{ tagImgUrl: '', tagName: 'minimal' },
+	{ tagImgUrl: '', tagName: 'formal' },
+	{ tagImgUrl: '', tagName: 'outdoor' },
+	{ tagImgUrl: '', tagName: 'luxury' },
 ];
 
 const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
@@ -67,7 +57,7 @@ const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> =
 						return {
 							userId: post.userId,
 							postId: post.postId,
-							profileUrl: userResponse.result.profilePictureUrl || noProfileImg,
+							profileUrl: userResponse.result.profilePictureUrl || defaultProfile,
 							userName: userResponse.result.nickname || `User${post.userId}`,
 							text: post.content,
 							feedImgUrls: post.photoUrls,
