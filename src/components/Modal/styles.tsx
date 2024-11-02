@@ -45,7 +45,7 @@ export const CloseButton = styled.button`
 
 export const ConfirmButton = styled.button`
 	display: flex;
-	width: 7.125rem;
+	min-width: 7.125rem;
 	padding: 0.625rem 0.875rem;
 	justify-content: center;
 	align-items: center;
