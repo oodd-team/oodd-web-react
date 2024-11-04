@@ -1,4 +1,4 @@
-export interface ResponseDto {
+export interface PostFriendRequestResult {
 	isSuccess: boolean;
 	code: number;
 	message: string;
