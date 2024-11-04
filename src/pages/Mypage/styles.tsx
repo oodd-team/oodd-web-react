@@ -107,7 +107,7 @@ export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between; /* 두 개씩 나란히 배치 */
-  gap: 16px;	
+  gap: 15px;	
   cursor: pointer;
 	margin-bottom: 100px;
 	padding: 20px;
