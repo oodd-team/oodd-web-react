@@ -15,7 +15,7 @@ export const ProfilePicWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 1.25rem; /* 20px */
-	margin-top: 50px;
+	margin-top: 24px;
 `;
 
 export const ProfilePic = styled.div`
@@ -35,7 +35,6 @@ export const ProfilePic = styled.div`
 `;
 
 export const Label = styled.div`
-	margin-top: 600px; /* 60px */
 	text-align: center;
 `;
 
@@ -44,13 +43,14 @@ export const Row = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 1.875rem; /* 14px */
+	margin-bottom: 10px; 
 
 	${Label} {
 		width: auto;
 		margin: 0;
 	}
 `;
+
 
 export const FileInput = styled.input`
 	display: none;
@@ -59,16 +59,16 @@ export const FileInput = styled.input`
 export const List = styled.ul`
 	width: 100%;
 	padding: 0;
-	margin-top: 300px; /* 200px */
+	margin-top: 210px; 
 	list-style: none;
-	border-top: 1px solid #eee;
+	border-top: 0px solid #eee;
 `;
 
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
 	padding: 15px 1.25rem; /* 15px 20px */
-	border-bottom: 1px solid #eee;
+	border-bottom: 0px solid #eee;
 	cursor: pointer;
 
 	& img:first-child {

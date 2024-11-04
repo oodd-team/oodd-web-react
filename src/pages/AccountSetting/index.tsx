@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import useredit from './assets/useredit.svg';
 import exit from './assets/exit.svg';
 import cancleaccount from './assets/cancleaccount.svg';
 import next from './assets/next.svg';
@@ -51,10 +50,6 @@ const AccountSetting: React.FC = () => {
 		navigate('/login');
 	};
 
-	const handleEditProfileClick = () => {
-		navigate('/account-edit');
-	};
-
 	const handleLogoutClick = () => {
 		setIsLogoutModalOpen(true);
 	};
@@ -84,7 +79,7 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
-								{userProfile.name}
+								{userProfile.nickname}
 							</StyledText>
 						</Label>
 					</Row>
@@ -96,14 +91,8 @@ const AccountSetting: React.FC = () => {
 						</Label>
 					</Row>
 				</ProfilePicWrapper>
+				
 				<List>
-					<ListItem onClick={handleEditProfileClick}>
-						<img src={useredit} alt="회원 정보 수정 아이콘" />
-						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
-							회원 정보 수정
-						</StyledText>
-						<img src={next} alt="다음 아이콘" />
-					</ListItem>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={exit} alt="로그아웃 아이콘" />
 						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
