@@ -58,7 +58,7 @@ const Post: React.FC = () => {
 		onClose: () => {
 			setIsReportSuccessModalOpen(false);
 		},
-		content: `${postReport?.userName} 님의\nOOTD를 신고했어요\n사유 : ${postReport?.reason}`,
+		content: `${postReport?.userName}님의 OOTD를 신고했어요\n사유 : ${postReport?.reason}`,
 	};
 
 	const reportFailModalProps: ModalProps = {
