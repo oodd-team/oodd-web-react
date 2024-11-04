@@ -1,5 +1,5 @@
 import { BaseApiResponse } from '../util/dto';
-import { User } from '../User/dto';
+import { User } from '../user/dto';
 
 // 매칭 요청
 //Request

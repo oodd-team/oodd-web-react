@@ -14,15 +14,15 @@ import {
 	FeedTop,
 	FeedWrapper,
 	Info,
+	MoreBtn,
 	Reaction,
 	ReactionWrapper,
 } from './styles';
 import { FeedProps } from '../dto';
-import more from '../../../../assets/Home/grommet-icons_more.svg';
-import xBtn from '../../../../assets/Home/button_reject.svg';
-import heartBtn from '../../../../assets/Home/button_heart.svg';
-import clickedHeart from '../../../../assets/Home/clicked_bigheart.svg';
-import commentBtn from '../../../../assets/Home/comment.svg';
+import more from '../../../../assets/default/more.svg';
+import xBtn from '../../../../assets/default/reject.svg';
+import heartBtn from '../../../../assets/default/heart.svg';
+import commentBtn from '../../../../assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { IsHeartBottomSheetOpenAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
@@ -90,18 +90,18 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
 					1시간 전
 				</FeedTimeAgo>
-				<img src={more} style={{ cursor: 'pointer' }} onClick={() => setIsMeatballBottomSheetOpen(true)} />
+				<MoreBtn onClick={() => setIsMeatballBottomSheetOpen(true)}>
+					<img src={more} />
+				</MoreBtn>
 			</FeedTop>
-			<FeedText onClick={() => nav(`/post/${feed.postId}`)}>
-				<StyledText
-					$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
-					color={theme.colors.black}
-					style={{ opacity: '50%' }}
-				>
-					{feed.text}
-				</StyledText>
+			<FeedText
+				onClick={() => nav(`/post/${feed.postId}`)}
+				$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+				color={theme.colors.black}
+			>
+				{feed.text}
 			</FeedText>
-			<FeedImgBox>
+			<FeedImgBox $src={feed.feedImgUrls[0]}>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -118,9 +118,12 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<img onClick={handleBlockClick} src={xBtn} />
-						{!isHeartClicked && <img onClick={handleHeartClick} src={heartBtn} />}
-						{isHeartClicked && <img src={clickedHeart} onClick={handleHeartClick} />}
+						<img className="button" onClick={handleBlockClick} src={xBtn} />
+						{isHeartClicked ? (
+							<img className="button" src={heartBtn} onClick={handleHeartClick} />
+						) : (
+							<img className="button" onClick={handleHeartClick} src={heartBtn} />
+						)}
 					</Reaction>
 
 					<CommentBtn onClick={handleCommentClick}>
@@ -130,6 +133,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 						</StyledText>
 					</CommentBtn>
 				</ReactionWrapper>
+				<div className="blur"></div>
 			</FeedImgBox>
 		</FeedWrapper>
 	);

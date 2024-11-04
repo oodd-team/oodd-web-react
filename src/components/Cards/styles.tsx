@@ -4,6 +4,10 @@ export const CardsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
+	.parentSwiper {
+		width: 100%;
+	}
+
 	.parentSwiper .swiper-slide {
 		transition: transform 0.3s;
 		transform: scale(0.95);

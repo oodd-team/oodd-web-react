@@ -38,7 +38,7 @@ import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/Post/dto';
 import { GetUserResponse } from '../../apis/User/dto';
-import { UpdatePostLikeResponse } from '../../apis/PostLike/dto';
+import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 import request from '../../apis/core';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {

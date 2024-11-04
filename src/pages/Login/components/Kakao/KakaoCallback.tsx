@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserInfoDto } from '../../../ProfileViewer/ResponseDto/UserInfoDto';
+import { GetUserInfoResult } from '../../../ProfileViewer/ResponseDto/GetUserInfoResult';
 import request from '../../../../apis/core';
 import Loading from '../../../../components/Loading';
 
@@ -32,7 +32,7 @@ const KakaoCallback: React.FC = () => {
 						const userid = localStorage.getItem('id');
 
 						request
-							.get<UserInfoDto>(`/users/${userid}`)
+							.get<GetUserInfoResult>(`/users/${userid}`)
 							.then((response) => {
 								console.log(response);
 								if (response.result.nickname) {

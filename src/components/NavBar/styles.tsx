@@ -50,6 +50,7 @@ export const IconWrapper = styled.div`
 `;
 
 export const IconImg = styled.img`
-	width: 16px;
-	height: 16px;
+	width: 1.13rem;
+	height: 1.13rem;
+	object-fit: cover;
 `;

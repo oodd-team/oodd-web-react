@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { UserInfoProps } from '../../pages/ProfileViewer/dto';
+import { UserInfoProps } from '../../pages/ProfileViewer/UserInfoProps';
 
 export const UserInfoAtom = atom<UserInfoProps | null>({
 	key: 'UserInfoAtom',

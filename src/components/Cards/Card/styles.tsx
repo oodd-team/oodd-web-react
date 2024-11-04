@@ -1,25 +1,31 @@
 import styled from 'styled-components';
+import ArrowIcon from '../../../assets/arrow/min-right.svg';
 
 export const CardLayout = styled.div`
-	margin: 0.625rem 0 0;
-	background-color: black;
-	border-radius: 0.75rem;
+	background-color: #ececec;
+	border-radius: 0.5rem;
 	position: relative;
 `;
 
-export const ProfileBox = styled.div`
-	height: 4.438rem;
-	display: flex;
+export const ProfileContainer = styled.div`
+	display: grid;
+	grid-template-columns: auto 1fr auto;
 	align-items: center;
+	padding: 1rem 0.5rem;
 `;
 
 export const ProfileImgBox = styled.div`
-	width: 2.625rem;
-	height: 2.625rem;
+	width: 3.25rem;
+	height: 3.25rem;
+	margin-right: 0.5rem;
 	border-radius: 50%;
-	margin-left: 1rem;
 	cursor: pointer;
 	overflow: hidden;
+
+	box-shadow:
+		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 
 	img {
 		width: 100%;
@@ -30,13 +36,22 @@ export const ProfileImgBox = styled.div`
 
 export const ProfileInfo = styled.div`
 	gap: 0.463rem;
-	margin-left: 1rem;
 	cursor: pointer;
 `;
 
 export const SeeMore = styled.div`
-	margin: 0 1.281rem 0 auto;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	margin-bottom: 2.13rem;
+`;
+
+export const ArrowButton = styled.button`
+	width: 1.125rem;
+	height: 1.125rem;
+	background-image: url(${ArrowIcon});
+	background-repeat: no-repeat;
+	background-position: center;
 `;
 
 export const OOTDImgBox = styled.div`
@@ -45,8 +60,8 @@ export const OOTDImgBox = styled.div`
 	min-height: 30rem;
 	max-height: 33.438rem;
 	bottom: 0;
-	border-radius: 0 0 0.75rem 0.75rem;
-	background-color: ${({ theme }) => theme.colors.gray1};
+	border-radius: 0 0 0.5rem 0.5rem;
+	background-color: #d9d9d9;
 	overflow: hidden;
 	margin: 0 auto;
 	display: flex;
@@ -84,28 +99,20 @@ export const OOTDImgBox = styled.div`
 
 export const Reaction = styled.div`
 	position: absolute;
-	width: 11.75rem;
-	height: 5rem;
-	bottom: 2rem;
-	gap: 1.75rem;
+	bottom: 0;
+	padding: 1rem 0rem;
 	display: flex;
-	z-index: 100;
+	align-items: center;
+	gap: 0.9375rem;
 `;
 
-export const Btn = styled.div`
+export const Btn = styled.button`
 	cursor: pointer;
-	width: 5rem;
-	height: 5rem;
-	background-color: rgba(255, 255, 255, 0.3);
-	border: 0.0875rem solid ${({ theme }) => theme.colors.white};
-	border-radius: 50%;
-	backdrop-filter: blur(0.3125rem);
+	width: 3.5rem;
+	height: 3.5rem;
+	background-color: transparent;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	img {
-		width: 2rem;
-		height: 2rem;
-	}
 `;
