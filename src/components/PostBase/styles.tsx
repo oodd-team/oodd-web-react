@@ -26,6 +26,7 @@ export const UserProfile = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-right: 8px;
+	background-color: #feeefb;
 
 	img {
 		width: 100%;
@@ -78,8 +79,7 @@ export const IconWrapper = styled.div`
 
 export const ClothingInfoList = styled.div`
 	margin-top: 5px;
-	margin-left: 1.25rem;
-	margin-bottom: 4rem;
+	margin-bottom: 88px;
 	display: flex;
 	overflow-x: auto;
 	white-space: nowrap;

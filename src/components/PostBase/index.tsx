@@ -34,6 +34,7 @@ import menu from '../../assets/Post/menu.svg';
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/Post/dto';
 import { GetUserResponse } from '../../apis/User/dto';
+import { UpdatePostLikeResponse } from '../../apis/PostLike/dto';
 import request from '../../apis/core';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
@@ -113,7 +114,22 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 		componentProps: {
 			tab: activeTab,
+			likeCount: postData?.likes,
+			commentCount: postData?.comments?.length,
 		},
+	};
+
+	const handleLikeClick = async () => {
+		try {
+			const response = await request.patch<UpdatePostLikeResponse>(`/posts/${postId}/like`);
+			if (response.isSuccess) {
+				console.log('Successed updating like');
+			} else {
+				console.error('Failed updating like');
+			}
+		} catch (error) {
+			console.error('Error updating like:', error);
+		}
 	};
 
 	return (
@@ -125,9 +141,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				<PostContainer>
 					<PostInfoContainer>
 						<UserInfo onClick={handleUserClick}>
-							<UserProfile>
-								<img src={user?.profilePictureUrl} alt="profileImg" />
-							</UserProfile>
+							<UserProfile>{user && <img src={user?.profilePictureUrl} alt="profileImg" />}</UserProfile>
 							<UserName>
 								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }} color={theme.colors.black}>
 									{userName}
@@ -154,9 +168,9 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					<ImageSwiper images={postData.photoUrls} />
 
 					<IconRow>
-						<IconWrapper onClick={() => handleLikeCommentOpen('likes')}>
+						<IconWrapper onClick={handleLikeClick}>
 							<img src={heart} alt="Heart Icon" />
-							<span>{postData.likes ?? 0}</span>
+							<span onClick={() => handleLikeCommentOpen('likes')}>{postData.likes ?? 0}</span>
 						</IconWrapper>
 						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
 							<img src={comment} alt="Comment Icon" />
@@ -164,7 +178,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</IconWrapper>
 					</IconRow>
 
-					<ClothingInfoList>
+					<ClothingInfoList className="post-mode">
 						{postData.clothingInfo?.map((clothingObj, index) => (
 							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 						))}

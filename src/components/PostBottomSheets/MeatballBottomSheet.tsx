@@ -1,15 +1,12 @@
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
+import BottomSheet from '../BottomSheet';
+import { BottomSheetProps } from '../BottomSheet/dto';
 import { useRecoilState } from 'recoil';
-import {
-	IsMeatballBottomSheetOpenAtom,
-	IsReportBottomSheetOpenAtom,
-} from '../../../recoil/Home/MeatballBottomSheetAtom';
-import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
-import BottomSheetMenu from '../../../components/BottomSheetMenu';
-import { IsBlockConfirmationModalOpenAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
-import declaration from '../../../assets/Post/declaration.svg';
-import block from '../../../assets/Post/block.svg';
+import { IsMeatballBottomSheetOpenAtom, IsReportBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
+import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
+import BottomSheetMenu from '../BottomSheetMenu';
+import { IsBlockConfirmationModalOpenAtom } from '../../recoil/Home/BlockBottomSheetAtom';
+import declaration from '../../assets/Post/declaration.svg';
+import block from '../../assets/Post/block.svg';
 
 const MeatballBottomSheet: React.FC = () => {
 	const [isMeatballBottomSheetOpen, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);

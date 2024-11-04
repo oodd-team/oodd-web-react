@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
+import BottomSheet from '../BottomSheet';
+import { BottomSheetProps } from '../BottomSheet/dto';
 import { useState } from 'react';
 import {
 	IsMeatballBottomSheetOpenAtom,
@@ -8,12 +8,12 @@ import {
 	IsReportFailModalOpenAtom,
 	IsReportSuccessModalOpenAtom,
 	PostReportAtom,
-} from '../../../recoil/Home/MeatballBottomSheetAtom';
-import BottomSheetMenu from '../../../components/BottomSheetMenu';
-import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
-import { ApiDto } from '../dto';
-import request from '../../../apis/core';
-import ReportTextarea from '../ReportTextarea';
+} from '../../recoil/Home/MeatballBottomSheetAtom';
+import BottomSheetMenu from '../BottomSheetMenu';
+import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
+import { ApiDto } from './dto';
+import request from '../../apis/core';
+import ReportTextarea from './ReportTextArea';
 
 const ReportBottomSheet: React.FC = () => {
 	const [, setIsMeatballBottomSheet] = useRecoilState(IsMeatballBottomSheetOpenAtom);

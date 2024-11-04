@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { useRecoilState } from 'recoil';
+import PostBase from '../../components/PostBase/index.tsx';
+import Modal from '../../components/Modal/index.tsx';
+import PostCommentBottomSheet from '../../components/PostBottomSheets/PostCommentBottomSheet.tsx';
+import MeatballBottomSheet from '../../components/PostBottomSheets/MeatballBottomSheet.tsx';
+import ReportBottomSheet from '../../components/PostBottomSheets/ReportBottomSheet.tsx';
+
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	IsPostCommentBottomSheetOpenAtom,
 	IsPostCommentFailModalOpenAtom,
 	IsPostCommentSuccessModalOpenAtom,
 } from '../../recoil/Home/PostCommentBottomSheetAtom.ts';
+import { IsMeatballBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
+import {
+	IsBlockFailModalOpenAtom,
+	IsBlockSuccessModalOpenAtom,
+	PostBlockAtom,
+} from '../../recoil/Home/BlockBottomSheetAtom.ts';
+import BlockConfirmationModal from '../../components/PostBottomSheets/BlockConfirmationModal.tsx';
+import {
+	IsReportFailModalOpenAtom,
+	IsReportSuccessModalOpenAtom,
+	PostReportAtom,
+} from '../../recoil/Home/MeatballBottomSheetAtom.ts';
 
-import PostBase from '../../components/PostBase/index.tsx';
-import BottomSheet from '../../components/BottomSheet/index.tsx';
-import BottomSheetMenu from '../../components/BottomSheetMenu/index.tsx';
-import Modal from '../../components/Modal/index.tsx';
-import ConfirmationModal from '../../components/ConfirmationModal/index.tsx';
-import PostCommentBottomSheet from '../Home/BottomSheets/PostCommentBottomSheet.tsx';
-import ReportTextarea from '../Home/ReportTextarea.tsx';
-
-import declaration from '../../assets/Post/declaration.svg';
-import block from '../../assets/Post/block.svg';
-
-import { BottomSheetProps } from '../../components/BottomSheet/dto.ts';
-import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto.ts';
 import { ModalProps } from '../../components/Modal/dto.ts';
 
 const Post: React.FC = () => {
-	const { postId } = useParams<{ postId: string }>();
-	const [userName, setUserName] = useState('');
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-	const [activeSheet, setActiveSheet] = useState<'menu' | 'report' | null>(null); // 활성화된 바텀시트 관리
-	const [showInput, setShowInput] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-	const [isBlockedModalOpen, setIsBlockedModalOpen] = useState(false);
+	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
+	const [isBlockSuccessModalOpen, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
+	const [isBlockFailModalOpen, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
+	const postBlock = useRecoilValue(PostBlockAtom);
+	const [isReportSuccessModalOpen, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
+	const [isReportFailModalOpen, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
+	const postReport = useRecoilValue(PostReportAtom);
 	const [, setIsPostCommentBottomSheetOpen] = useRecoilState(IsPostCommentBottomSheetOpenAtom);
 	const [isPostCommentSuccessModalOpen, setIsPostCommentSuccessModalOpen] = useRecoilState(
 		IsPostCommentSuccessModalOpenAtom,
@@ -45,83 +49,41 @@ const Post: React.FC = () => {
 		}
 	}, [location.state]);
 
-	// 메뉴 바텀시트 아이템 설정
-	const bottomSheetMenuProps: BottomSheetMenuProps = {
-		items: [
-			{
-				text: '신고하기',
-				action: () => {
-					setActiveSheet('report'); // 신고 바텀시트 열기
-				},
-				icon: declaration,
-			},
-			{
-				text: '차단하기',
-				action: () => {
-					setIsConfirmationModalOpen(true); // 차단 모달 열기
-				},
-				icon: block,
-			},
-		],
-		marginBottom: '3.125rem',
+	const handleMenuOpen = () => {
+		setIsMeatballBottomSheetOpen(true);
 	};
 
-	// 신고 바텀시트 아이템 설정
-	const reportBottomSheetMenuProps: BottomSheetMenuProps = {
-		items: [
-			{
-				text: '스팸',
-				action: () => setIsModalOpen(true),
-			},
-			{
-				text: '부적절한 콘텐츠',
-				action: () => setIsModalOpen(true),
-			},
-			{
-				text: '선정적',
-				action: () => setIsModalOpen(true),
-			},
-			{
-				text: '직접 입력',
-				action: () => setShowInput((prev) => !prev),
-			},
-		],
-		marginBottom: '3.125rem',
-	};
-
-	// BottomSheet props 설정
-	const bottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
-		isOpenBottomSheet: isBottomSheetOpen,
-		isHandlerVisible: true,
-		Component: BottomSheetMenu,
-		componentProps: activeSheet === 'menu' ? bottomSheetMenuProps : reportBottomSheetMenuProps,
-		onCloseBottomSheet: () => {
-			setIsBottomSheetOpen(false);
-			setActiveSheet(null);
-			setShowInput(false);
+	// 신고하기 메뉴
+	const reportSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsReportSuccessModalOpen(false);
 		},
+		content: `${postReport?.userName} 님의\nOOTD를 신고했어요\n사유 : ${postReport?.reason}`,
 	};
 
-	// 차단 모달 설정
-	const confirmationModalProps = {
-		content: `${userName}님을 정말로 차단하시겠습니까?`,
-		isCancelButtonVisible: true,
-		confirm: {
-			text: '차단하기',
-			action: () => {
-				setIsConfirmationModalOpen(false);
-				setIsBlockedModalOpen(true);
-			},
+	const reportFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsReportFailModalOpen(false);
 		},
-		onCloseModal: () => setIsConfirmationModalOpen(false),
+		content: `신고에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
-	const handleBottomSheetOpen = (sheet: 'menu' | 'report') => {
-		setActiveSheet(sheet);
-		setIsBottomSheetOpen(true);
+	// 차단하기
+	const blockSuccessModalProps: ModalProps = {
+		onClose: () => {
+			setIsBlockSuccessModalOpen(false);
+		},
+		content: `${postBlock?.friendName} 님을 차단했어요`,
 	};
 
-	// 코멘트 남기기 버튼
+	const blockFailModalProps: ModalProps = {
+		onClose: () => {
+			setIsBlockFailModalOpen(false);
+		},
+		content: `차단에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
+	};
+
+	// 코멘트 남기기
 	const postCommentSuccessModalProps: ModalProps = {
 		onClose: () => {
 			setIsPostCommentSuccessModalOpen(false);
@@ -138,15 +100,18 @@ const Post: React.FC = () => {
 
 	return (
 		<>
-			<PostBase onClickMenu={() => handleBottomSheetOpen('menu')} />
+			<PostBase onClickMenu={() => handleMenuOpen()} />
 
-			<BottomSheet {...bottomSheetProps} />
+			<MeatballBottomSheet />
 
-			{isModalOpen && <Modal content={`${userName}님의 OOTD를 신고했어요.`} onClose={() => setIsModalOpen(false)} />}
-			{isConfirmationModalOpen && <ConfirmationModal {...confirmationModalProps} />}
-			{isBlockedModalOpen && (
-				<Modal content={`${userName}님을 차단했어요.`} onClose={() => setIsBlockedModalOpen(false)} />
-			)}
+			<ReportBottomSheet />
+			{isReportSuccessModalOpen && <Modal {...reportSuccessModalProps} />}
+			{isReportFailModalOpen && <Modal {...reportFailModalProps} />}
+
+			<BlockConfirmationModal />
+			{isBlockSuccessModalOpen && <Modal {...blockSuccessModalProps} />}
+			{isBlockFailModalOpen && <Modal {...blockFailModalProps} />}
+
 			<PostCommentBottomSheet />
 			{isPostCommentSuccessModalOpen && <Modal {...postCommentSuccessModalProps} />}
 			{isPostCommentFailModalOpen && <Modal {...postCommentFailModalProps} />}

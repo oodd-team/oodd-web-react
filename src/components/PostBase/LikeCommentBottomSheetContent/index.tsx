@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+
+import { TabContainer, Tab, ContentContainer, Content, UserItem, CommentItem, CommentContent, MenuBtn } from './styles';
+
 import { StyledText } from '../../Text/StyledText';
 import theme from '../../../styles/theme';
+import Loading from '../../Loading';
+
+import menu from '../../../assets/Post/menu.svg';
+
 import request from '../../../apis/core';
 import { LikeCommentBottomSheetProps, LikesResponse, CommentsResponse } from '../dto';
-import { TabContainer, Tab, ContentContainer, Content, UserItem } from './styles';
 
-const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab }) => {
+const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
 	const { postId } = useParams<{ postId: string }>();
 	const [likes, setLikes] = useState<LikesResponse['result']['likes']>([]);
 	const [comments, setComments] = useState<CommentsResponse['result']['comments']>([]);
+	const [isLoading, setIsLoading] = useState(false);
 	const nav = useNavigate();
 
 	useEffect(() => {
@@ -25,6 +32,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 좋아요 리스트 불러오기
 	const fetchLikes = async () => {
+		setIsLoading(true);
 		try {
 			const response = await request.get<LikesResponse>(`/posts/${postId}/like`);
 			if (response.isSuccess) {
@@ -34,11 +42,14 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			}
 		} catch (error) {
 			console.error('Error fetching likes:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	// 코멘트 리스트 불러오기
 	const fetchComments = async () => {
+		setIsLoading(true);
 		try {
 			const response = await request.get<CommentsResponse>(`/posts/${postId}/comments`);
 			if (response.isSuccess) {
@@ -48,6 +59,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			}
 		} catch (error) {
 			console.error('Error fetching comments:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -64,6 +77,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
+	const handleCommentMenuClick = () => {};
+
 	return (
 		<>
 			<TabContainer>
@@ -72,7 +87,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						$textTheme={{ style: 'body2-bold' }}
 						color={activeTab === 'likes' ? theme.colors.pink : theme.colors.gray3}
 					>
-						좋아요 {likes.length}
+						좋아요 {likeCount || 0}
 					</StyledText>
 				</Tab>
 				<Tab active={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>
@@ -80,14 +95,16 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						$textTheme={{ style: 'body2-bold' }}
 						color={activeTab === 'comments' ? theme.colors.pink : theme.colors.gray3}
 					>
-						코멘트 {comments.length}
+						코멘트 {commentCount || 0}
 					</StyledText>
 				</Tab>
 			</TabContainer>
 
 			<ContentContainer>
 				{activeTab === 'likes' &&
-					(likes.length === 0 ? (
+					(isLoading ? (
+						<Loading />
+					) : likes.length === 0 ? (
 						<Content>
 							<StyledText
 								$textTheme={{ style: 'body2-medium' }}
@@ -101,7 +118,9 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						likes.map((like) => (
 							<UserItem key={like.user.id} onClick={() => handleUserClick(like.user.id)}>
 								<img src={like.user.profilePictureUrl} alt="user avatar" />
-								<span>{like.user.nickname}</span>
+								<StyledText className="name" $textTheme={{ style: 'body2-medium' }}>
+									{like.user.nickname}
+								</StyledText>
 							</UserItem>
 						))
 					))}
@@ -119,13 +138,22 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						</Content>
 					) : (
 						comments.map((comment) => (
-							<UserItem key={comment.id} onClick={() => handleUserClick(comment.user.id)}>
-								<img src={comment.user.profilePictureUrl} alt="user avatar" />
-								<div>
-									<span>{comment.user.nickname}</span>
-									<p>{comment.content}</p>
-								</div>
-							</UserItem>
+							<CommentItem key={comment.id}>
+								<img
+									src={comment.user.profilePictureUrl}
+									onClick={() => handleUserClick(comment.user.id)}
+									alt="user avatar"
+								/>
+								<CommentContent>
+									<StyledText onClick={() => handleUserClick(comment.user.id)} $textTheme={{ style: 'body2-medium' }}>
+										{comment.user.nickname}
+									</StyledText>
+									<StyledText $textTheme={{ style: 'caption2-medium' }}>{comment.content}</StyledText>
+								</CommentContent>
+								<MenuBtn onClick={handleCommentMenuClick}>
+									<img src={menu} alt="menu" />
+								</MenuBtn>
+							</CommentItem>
 						))
 					))}
 			</ContentContainer>

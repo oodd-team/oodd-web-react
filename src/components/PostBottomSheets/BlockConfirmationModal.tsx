@@ -1,14 +1,14 @@
-import block from '../../../apis/core';
-import { ApiDto } from '../dto';
+import block from '../../apis/core';
+import { ApiDto } from './dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	IsBlockConfirmationModalOpenAtom,
 	IsBlockFailModalOpenAtom,
 	IsBlockSuccessModalOpenAtom,
 	PostBlockAtom,
-} from '../../../recoil/Home/BlockBottomSheetAtom';
-import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
-import ConfirmationModal from '../../../components/ConfirmationModal';
+} from '../../recoil/Home/BlockBottomSheetAtom';
+import { ConfirmationModalProps } from '../ConfirmationModal/dto';
+import ConfirmationModal from '../ConfirmationModal';
 
 const BlockConfirmationModal: React.FC = () => {
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);

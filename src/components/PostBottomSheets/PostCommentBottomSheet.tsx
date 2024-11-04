@@ -1,15 +1,15 @@
-import { CommentProps } from '../../../components/Comment/dto';
-import request from '../../../apis/core';
-import { ApiDto } from '../dto';
+import { CommentProps } from '../Comment/dto';
+import request from '../../apis/core';
+import { ApiDto } from './dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	IsPostCommentBottomSheetOpenAtom,
 	IsPostCommentFailModalOpenAtom,
 	IsPostCommentSuccessModalOpenAtom,
 	PostCommentAtom,
-} from '../../../recoil/Home/PostCommentBottomSheetAtom';
-import CommentBottomSheet from '../../../components/CommentBottomSheet';
-import { CommentBottomSheetProps } from '../../../components/CommentBottomSheet/dto';
+} from '../../recoil/Home/PostCommentBottomSheetAtom';
+import CommentBottomSheet from '../CommentBottomSheet';
+import { CommentBottomSheetProps } from '../CommentBottomSheet/dto';
 
 const PostCommentBottomSheet: React.FC = () => {
 	const [isPostCommentBottomSheetOpen, setIsPostCommentBottomSheetOpen] = useRecoilState(

@@ -12,6 +12,8 @@ export interface ImageSwiperProps {
 
 export interface LikeCommentBottomSheetProps {
 	tab: 'likes' | 'comments';
+	likeCount: number;
+	commentCount: number;
 }
 
 export interface LikesResponse {

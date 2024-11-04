@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../components/Frame/Frame';
 import PostBase from '../../components/PostBase';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import BottomSheet from '../../components/BottomSheet';
@@ -45,7 +44,7 @@ const MyPost: React.FC = () => {
 				text: 'OOTD 삭제하기',
 				action: () => {
 					setIsBottomSheetOpen(false);
-					handleDeletePost();
+					setIsConfirmationModalOpen(true);
 				},
 				icon: edit,
 			},
@@ -97,10 +96,6 @@ const MyPost: React.FC = () => {
 		}
 	};
 
-	const handleDeletePost = () => {
-		setIsConfirmationModalOpen(true);
-	};
-
 	const handleConfirmDelete = async () => {
 		try {
 			const response = await request.delete<BaseApiResponse>(`/posts/${postId}`);
@@ -117,12 +112,8 @@ const MyPost: React.FC = () => {
 		}
 	};
 
-	const handleCancelDelete = () => {
-		setIsConfirmationModalOpen(false);
-	};
-
 	return (
-		<OODDFrame>
+		<>
 			<PostBase onClickMenu={handleBottomSheetOpen} />
 
 			<BottomSheet {...bottomSheetProps} />
@@ -132,10 +123,10 @@ const MyPost: React.FC = () => {
 					content="해당 OOTD를 삭제하시겠습니까?"
 					isCancelButtonVisible={true}
 					confirm={{ text: '삭제하기', action: handleConfirmDelete }}
-					onCloseModal={handleCancelDelete}
+					onCloseModal={() => setIsConfirmationModalOpen(false)}
 				/>
 			)}
-		</OODDFrame>
+		</>
 	);
 };
 
