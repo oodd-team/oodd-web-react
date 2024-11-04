@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
 	ProfileContainer,
 	Header,
-	AvatarWrapper,
-	Avatar,
-	UserInfo,
-	Username,
-	Bio,
 	StatsContainer,
 	Stat,
 	StatNumber,
