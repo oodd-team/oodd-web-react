@@ -29,7 +29,11 @@ import Loading from '../Loading';
 import back from '../../assets/back.svg';
 import heart from '../../assets/Post/heart.svg';
 import comment from '../../assets/Post/comment.svg';
+//import filledHeart from '../../assets/Post/filledHeart.svg';
 import menu from '../../assets/Post/menu.svg';
+
+import { useRecoilState } from 'recoil';
+import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/Post/dto';
@@ -38,10 +42,12 @@ import { UpdatePostLikeResponse } from '../../apis/PostLike/dto';
 import request from '../../apis/core';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
+	const [, setPostId] = useRecoilState(postIdAtom);
 	const { postId } = useParams<{ postId: string }>();
 	const [postData, setPostData] = useState<GetPostDetailResponse['result']>();
 	const [user, setUser] = useState<GetUserResponse['result']>();
-	const [userName, setUserName] = useState<string>('');
+	const [, setUserId] = useRecoilState<number>(userIdAtom);
+	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // 추가: activeTab state
@@ -55,6 +61,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				const response = await request.get<GetPostDetailResponse>(`/posts/${postId}`);
 				if (response.isSuccess && response.result) {
 					setPostData(response.result);
+					setPostId(response.result.postId);
 					fetchUser(response.result.userId);
 				} else {
 					console.error('Failed to fetch post data');
@@ -73,6 +80,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				const response = await request.get<GetUserResponse>(`/users/${userId}`);
 				if (response.isSuccess && response.result) {
 					setUser(response.result);
+					setUserId(response.result.id);
 					setUserName(response.result.nickname || response.result.name);
 				} else {
 					console.error('Failed to fetch user data');

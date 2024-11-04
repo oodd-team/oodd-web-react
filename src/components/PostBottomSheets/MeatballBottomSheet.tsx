@@ -1,14 +1,20 @@
 import BottomSheet from '../BottomSheet';
-import { BottomSheetProps } from '../BottomSheet/dto';
-import { useRecoilState } from 'recoil';
-import { IsMeatballBottomSheetOpenAtom, IsReportBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
-import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
 import BottomSheetMenu from '../BottomSheetMenu';
-import { IsBlockConfirmationModalOpenAtom } from '../../recoil/Home/BlockBottomSheetAtom';
+import { BottomSheetProps } from '../BottomSheet/dto';
+import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
+
+import { useRecoilState } from 'recoil';
+import { userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
+import { IsMeatballBottomSheetOpenAtom, IsReportBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
+import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../recoil/Home/BlockBottomSheetAtom';
+
 import declaration from '../../assets/Post/declaration.svg';
 import block from '../../assets/Post/block.svg';
 
 const MeatballBottomSheet: React.FC = () => {
+	const [userId] = useRecoilState(userIdAtom);
+	const [userName] = useRecoilState(userNameAtom);
+	const [, setPostBlockAtom] = useRecoilState(PostBlockAtom);
 	const [isMeatballBottomSheetOpen, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
 	const [, setIsReportBottomSheetOpen] = useRecoilState(IsReportBottomSheetOpenAtom);
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
@@ -26,8 +32,18 @@ const MeatballBottomSheet: React.FC = () => {
 			{
 				text: '차단하기',
 				action: () => {
-					setIsMeatballBottomSheetOpen(false);
-					setIsBlockConfirmationModalOpen(true);
+					const storedUserId = localStorage.getItem('id');
+					if (storedUserId) {
+						setPostBlockAtom({
+							userId: Number(storedUserId),
+							friendId: userId,
+							friendName: userName,
+							action: 'toggle',
+						});
+						setIsBlockConfirmationModalOpen(true);
+					} else {
+						console.error('User ID not found in localStorage');
+					}
 				},
 				icon: block,
 			},

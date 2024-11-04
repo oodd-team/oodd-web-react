@@ -1,7 +1,14 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import BottomSheet from '../BottomSheet';
-import { BottomSheetProps } from '../BottomSheet/dto';
 import { useState } from 'react';
+
+import BottomSheet from '../BottomSheet';
+import BottomSheetMenu from '../BottomSheetMenu';
+import ReportTextarea from './ReportTextArea';
+
+import { BottomSheetProps } from '../BottomSheet/dto';
+import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
+import { ApiDto } from './dto';
+
+import { useRecoilState } from 'recoil';
 import {
 	IsMeatballBottomSheetOpenAtom,
 	IsReportBottomSheetOpenAtom,
@@ -9,41 +16,21 @@ import {
 	IsReportSuccessModalOpenAtom,
 	PostReportAtom,
 } from '../../recoil/Home/MeatballBottomSheetAtom';
-import BottomSheetMenu from '../BottomSheetMenu';
-import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
-import { ApiDto } from './dto';
+import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
+
 import request from '../../apis/core';
-import ReportTextarea from './ReportTextArea';
 
 const ReportBottomSheet: React.FC = () => {
+	const [postId] = useRecoilState(postIdAtom);
+	const [userId] = useRecoilState(userIdAtom);
+	const [userName] = useRecoilState(userNameAtom);
 	const [, setIsMeatballBottomSheet] = useRecoilState(IsMeatballBottomSheetOpenAtom);
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useRecoilState(IsReportBottomSheetOpenAtom);
 	const [, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
 	const [, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
-	const postReport = useRecoilValue(PostReportAtom);
+	const [postReport, setPostReport] = useRecoilState(PostReportAtom);
 
 	const [showInput, setShowInput] = useState(false);
-
-	const postNewReport = async (message: string) => {
-		if (postReport) {
-			const response = await request.post<ApiDto>('/report', {
-				userId: postReport.userId,
-				postId: postReport.postId,
-				reason: message,
-			});
-
-			if (response.isSuccess) {
-				setIsMeatballBottomSheet(false);
-				setTimeout(() => {
-					setIsReportSuccessModalOpen(true);
-				}, 100);
-			} else {
-				setIsReportFailModalOpen(true);
-			}
-		} else {
-			alert('잘못된 접근의 게시물입니다.');
-		}
-	};
 
 	const reportBottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -79,6 +66,29 @@ const ReportBottomSheet: React.FC = () => {
 			},
 		],
 		marginBottom: '3.125rem',
+	};
+
+	const postNewReport = async (message: string) => {
+		setPostReport({ postId: postId, userId: userId, userName: userName, reason: message });
+
+		if (postReport) {
+			const response = await request.post<ApiDto>('/report', {
+				userId: postReport.userId,
+				postId: postReport.postId,
+				reason: message,
+			});
+
+			if (response.isSuccess) {
+				setIsMeatballBottomSheet(false);
+				setTimeout(() => {
+					setIsReportSuccessModalOpen(true);
+				}, 100);
+			} else {
+				setIsReportFailModalOpen(true);
+			}
+		} else {
+			alert('잘못된 접근의 게시물입니다.');
+		}
 	};
 
 	const reportBottomSheetProps: BottomSheetProps = {

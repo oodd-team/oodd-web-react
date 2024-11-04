@@ -1,5 +1,7 @@
 import block from '../../apis/core';
-import { ApiDto } from './dto';
+
+import ConfirmationModal from '../ConfirmationModal';
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	IsBlockConfirmationModalOpenAtom,
@@ -7,11 +9,16 @@ import {
 	IsBlockSuccessModalOpenAtom,
 	PostBlockAtom,
 } from '../../recoil/Home/BlockBottomSheetAtom';
+import { IsMeatballBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
+
+import { ApiDto } from './dto';
 import { ConfirmationModalProps } from '../ConfirmationModal/dto';
-import ConfirmationModal from '../ConfirmationModal';
 
 const BlockConfirmationModal: React.FC = () => {
-	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
+	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
+	const [isBlockConfirmationModalOpen, setIsBlockConfirmationModalOpen] = useRecoilState(
+		IsBlockConfirmationModalOpenAtom,
+	);
 	const [, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
 	const [, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
@@ -31,14 +38,17 @@ const BlockConfirmationModal: React.FC = () => {
 						});
 
 						if (response.message === 'OK') {
+							setIsMeatballBottomSheetOpen(false);
 							setIsBlockConfirmationModalOpen(false);
 							setIsBlockSuccessModalOpen(true);
 						} else {
+							setIsMeatballBottomSheetOpen(false);
 							setIsBlockConfirmationModalOpen(false);
 							setIsBlockFailModalOpen(true);
 						}
 					} else {
 						alert('잘못된 요청입니다.');
+						setIsBlockConfirmationModalOpen(false);
 					}
 				};
 				postNewBlock();
@@ -49,7 +59,7 @@ const BlockConfirmationModal: React.FC = () => {
 		},
 	};
 
-	return <ConfirmationModal {...blockConfirmationModalProps} />;
+	return <>{isBlockConfirmationModalOpen && <ConfirmationModal {...blockConfirmationModalProps} />}</>;
 };
 
 export default BlockConfirmationModal;

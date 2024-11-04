@@ -3,6 +3,13 @@ import styled from 'styled-components';
 export const PostContainer = styled.div`
 	width: 100%;
 	height: calc(100vh - 2.75rem);
+	overflow-y: scroll;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
 `;
 
 export const PostInfoContainer = styled.div`

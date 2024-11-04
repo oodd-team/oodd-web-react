@@ -9,17 +9,17 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 
-import edit from '../../assets/MyPost/edit.svg';
-//import delete from '../../assets/MyPost/delete.svg';
-import pin from '../../assets/MyPost/pin.svg';
+import Edit from '../../assets/BottomSheetMenu/Edit.svg';
+import Pin from '../../assets/BottomSheetMenu/Pin.svg';
+import Delete from '../../assets/BottomSheetMenu/Delete.svg';
 
 import request from '../../apis/core';
 import { BaseApiResponse } from '../../apis/util/dto';
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
+	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -27,40 +27,40 @@ const MyPost: React.FC = () => {
 			{
 				text: '대표 OOTD로 지정하기',
 				action: () => {
-					setIsBottomSheetOpen(false);
+					setIsMenuBottomSheetOpen(false);
 					handlePinPost();
 				},
-				icon: pin,
+				icon: Pin,
 			},
 			{
 				text: 'OODD 수정하기',
 				action: () => {
-					setIsBottomSheetOpen(false);
+					setIsMenuBottomSheetOpen(false);
 					handleEditPost();
 				},
-				icon: edit,
+				icon: Edit,
 			},
 			{
 				text: 'OOTD 삭제하기',
 				action: () => {
-					setIsBottomSheetOpen(false);
-					setIsConfirmationModalOpen(true);
+					setIsMenuBottomSheetOpen(false);
+					setIsDeleteConfirmationModalOpen(true);
 				},
-				icon: edit,
+				icon: Delete,
 			},
 		],
 		marginBottom: '50px',
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isBottomSheetOpen,
+	const menuBottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isMenuBottomSheetOpen,
 		Component: BottomSheetMenu,
 		componentProps: bottomSheetMenuProps,
-		onCloseBottomSheet: () => setIsBottomSheetOpen(false),
+		onCloseBottomSheet: () => setIsMenuBottomSheetOpen(false),
 	};
 
-	const handleBottomSheetOpen = () => {
-		setIsBottomSheetOpen(true);
+	const handleMenuOpen = () => {
+		setIsMenuBottomSheetOpen(true);
 	};
 
 	const handleEditPost = () => {
@@ -92,7 +92,7 @@ const MyPost: React.FC = () => {
 		} catch (error) {
 			console.error('Error pinning post:', error);
 		} finally {
-			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
+			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
@@ -108,22 +108,22 @@ const MyPost: React.FC = () => {
 		} catch (error) {
 			console.error('Error deleting post:', error);
 		} finally {
-			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
+			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
 	return (
 		<>
-			<PostBase onClickMenu={handleBottomSheetOpen} />
+			<PostBase onClickMenu={handleMenuOpen} />
 
-			<BottomSheet {...bottomSheetProps} />
+			<BottomSheet {...menuBottomSheetProps} />
 
-			{isConfirmationModalOpen && (
+			{isDeleteConfirmationModalOpen && (
 				<ConfirmationModal
 					content="해당 OOTD를 삭제하시겠습니까?"
 					isCancelButtonVisible={true}
 					confirm={{ text: '삭제하기', action: handleConfirmDelete }}
-					onCloseModal={() => setIsConfirmationModalOpen(false)}
+					onCloseModal={() => setIsDeleteConfirmationModalOpen(false)}
 				/>
 			)}
 		</>

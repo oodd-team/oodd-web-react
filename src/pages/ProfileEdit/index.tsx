@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
-import { BaseResponse } from '../MyPost/dto';
+import { BaseApiResponse } from '../../apis/util/dto';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 
 const ProfileEdit: React.FC = () => {
@@ -24,7 +24,7 @@ const ProfileEdit: React.FC = () => {
 	const [bio, setBio] = useState<string>('');
 	const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
 	const navigate = useNavigate();
-  const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
+	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -36,7 +36,7 @@ const ProfileEdit: React.FC = () => {
 					return;
 				}
 
-				const response = await request.get<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`);
+				const response = await request.get<BaseApiResponse<UserProfileResponse>>(`/users/${storedUserId}`);
 				setUserProfile(response.result as UserProfileResponse);
 				setNickname((response.result?.nickname as string) || (response.result?.name as string));
 				setBio(response.result?.bio || '');
@@ -54,22 +54,22 @@ const ProfileEdit: React.FC = () => {
 	};
 
 	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUploading(true);
-      try {
-        const storageRef = ref(storage, `profilePictures/${file.name}`);
-        await uploadBytes(storageRef, file); // Firebase에 파일 업로드
-        const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
-        setProfilePictureUrl(imageUrl);
-        console.log('File uploaded and URL retrieved:', imageUrl);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      } finally {
-        setUploading(false);
-      }
-    }
-  };
+		const file = event.target.files?.[0];
+		if (file) {
+			setUploading(true);
+			try {
+				const storageRef = ref(storage, `profilePictures/${file.name}`);
+				await uploadBytes(storageRef, file); // Firebase에 파일 업로드
+				const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
+				setProfilePictureUrl(imageUrl);
+				console.log('File uploaded and URL retrieved:', imageUrl);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			} finally {
+				setUploading(false);
+			}
+		}
+	};
 
 	const handleSave = async () => {
 		try {
@@ -79,22 +79,23 @@ const ProfileEdit: React.FC = () => {
 				console.error('User is not logged in');
 				return;
 			}
-			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
+			const response = await request.patch<BaseApiResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
 				nickname,
 				profilePictureUrl,
 				bio,
 			});
 			if (response.isSuccess) {
-				navigate(`/mypage`); 
+				navigate(`/mypage`);
 			} else {
 				alert('프로필 수정에 실패했습니다.');
 			}
 		} catch (error) {
 			console.error('Error updating profile:', error);
 			alert('프로필 수정 중 오류가 발생했습니다.');
-		}{
+		}
+		{
 			uploading ? (
-				<Loading /> 
+				<Loading />
 			) : (
 				<Button onClick={handleSave}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
@@ -103,11 +104,10 @@ const ProfileEdit: React.FC = () => {
 				</Button>
 			);
 		}
-		
 	};
 
 	if (!userProfile) {
-		return <Loading/>; // 또는 로딩 스피너 등을 사용할 수 있습니다.
+		return <Loading />; // 또는 로딩 스피너 등을 사용할 수 있습니다.
 	}
 
 	return (

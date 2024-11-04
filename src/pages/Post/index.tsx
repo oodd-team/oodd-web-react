@@ -100,7 +100,7 @@ const Post: React.FC = () => {
 
 	return (
 		<>
-			<PostBase onClickMenu={() => handleMenuOpen()} />
+			<PostBase onClickMenu={handleMenuOpen} />
 
 			<MeatballBottomSheet />
 
