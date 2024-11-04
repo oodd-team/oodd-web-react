@@ -9,4 +9,5 @@ export const OODDFrame = styled.div`
 	margin: auto;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 `;
