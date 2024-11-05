@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ProfileEditContainer = styled.div`
 	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
 	width: 100%;
-	max-width: 600px;
+	//max-width: 600px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -24,31 +24,30 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
-  padding: 25px; /* 10px padding */
-  margin: 10px 0; /* 위아래 간격 조정 */
-  border: 0px;
-  box-sizing: border-box;
+	width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
+	padding: 25px; /* 10px padding */
+	margin: 10px 0; /* 위아래 간격 조정 */
+	border: 0px;
+	box-sizing: border-box;
 	border-radius: 10px;
-  background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	background-color: #f0f0f0; /* 박스 내부 회색 배경 */
 	text-align: left;
-
 `;
 
 export const Button = styled.button`
-		position: absolute;
-		bottom: 10px;
-		right: 10px;
-		z-index: 1;
-		width: 1.7rem;
-		height: 1.7rem;
-		padding: 0.3rem;
-		border-radius: 50%;
-		background-color: white;
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-		border: 1px solid #ddd; /* 아이콘 테두리 */
-		cursor: pointer;
-	`;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 1;
+	width: 1.7rem;
+	height: 1.7rem;
+	padding: 0.3rem;
+	border-radius: 50%;
+	background-color: white;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+	border: 1px solid #ddd; /* 아이콘 테두리 */
+	cursor: pointer;
+`;
 
 export const ProfilePic = styled.div`
 	width: 7.25rem; /* 116px */
@@ -66,34 +65,30 @@ export const ProfilePic = styled.div`
 	}
 `;
 
-export const CameraIcon = styled.img`
-`;
-
+export const CameraIcon = styled.img``;
 
 export const Row = styled.div`
-  display: flex;
-  flex-direction: column; /* 세로 배치 */
-  align-items: stretch;
-  width: 100%;
-  margin-top: 0px; /* Row 간격 10px */
-  padding: 0px 20px; /* 좌우 여백 20px */
+	display: flex;
+	flex-direction: column; /* 세로 배치 */
+	align-items: stretch;
+	width: 100%;
+	margin-top: 0px; /* Row 간격 10px */
+	padding: 0px 20px; /* 좌우 여백 20px */
 
-  ${Label} {
-    width: 6.25rem; /* 100px */
-  }
+	${Label} {
+		width: 6.25rem; /* 100px */
+	}
 `;
-
 
 export const FileInput = styled.input`
 	display: none;
 `;
 
 export const BottomButton = styled.button`
-		color: #FF2389;
+	color: #ff2389;
 `;
 
-export const UserInfo = styled.button`
-`;
+export const UserInfo = styled.button``;
 
 export const Username = styled.button`
 	color: #000;

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { InputLayout } from '../Post/styles.tsx';
-import BottomButton from '../../components/BottomButton/index.tsx';
+import { InputLayout } from './styles.tsx';
+import BottomButton from '../../BottomButton/index.tsx';
 
 interface ReportTextareaProps {
 	onCloseReportSheet: () => void;
@@ -35,7 +35,7 @@ const ReportTextarea: React.FC<ReportTextareaProps> = React.memo(({ onCloseRepor
 				onChange={handleInputChange}
 			></textarea>
 			<BottomButton
-				content="신고하기"
+				content="완료"
 				onClick={handleSubmit}
 				disabled={inputValue.trim().length === 0} // 값이 없을 때 비활성화
 			/>
