@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 export const PostTopBarContainer = styled.div`
 	width: 100%;
-	max-width: 32rem;
 	height: 2.75rem;
 	display: flex;
 	justify-content: space-between;

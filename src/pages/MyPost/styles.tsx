@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 
 export const PostDetailContainer = styled.div`
-	max-width: 512px; /* 32rem */
 	display: flex;
 	flex-direction: column;
 	position: relative;

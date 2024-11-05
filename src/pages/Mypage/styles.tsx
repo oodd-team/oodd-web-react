@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
 	width: 100%;
-	max-width: 32rem;
 	flex-grow: 1;
 	margin: 0 auto; /* 중앙 정렬 */
 	display: flex;
@@ -53,7 +52,6 @@ export const StatLabel = styled.div`
 	font-size: 0.75rem; /* 12px */
 	font-style: normal;
 	font-weight: 300;
-	line-height: normal;
 `;
 
 export const PostsContainer = styled.div`
