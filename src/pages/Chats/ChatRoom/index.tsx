@@ -10,13 +10,11 @@ import DateBar from './DateBar';
 import ChatBox from './ChatBox';
 import BottomSheet from '../../../components/BottomSheet';
 import BottomSheetMenu from '../../../components/BottomSheetMenu';
-import ConfirmationModal from '../../../components/ConfirmationModal';
 import Modal from '../../../components/Modal';
 import Loading from '../../../components/Loading';
 import { ExtendedMessageDto } from '../dto';
 import { BottomSheetProps } from '../../../components/BottomSheet/dto';
 import { BottomSheetMenuProps } from '../../../components/BottomSheetMenu/dto';
-import { ConfirmationModalProps } from '../../../components/ConfirmationModal/dto';
 import { ModalProps } from '../../../components/Modal/dto';
 import { createExtendedMessages } from './createExtendedMessages';
 import { AllMesagesAtom } from '../../../recoil/Chats/AllMessages';
@@ -136,12 +134,12 @@ const ChatRoom: React.FC = () => {
 		marginBottom: '4.38rem',
 	};
 
-	const leaveModal: ConfirmationModalProps = {
-		content: '채팅방을 나가면\n지난 대화 내용을 볼 수 없어요',
-		isCancelButtonVisible: true,
-		confirm: {
-			text: '채팅방 나가기',
-			action: () => {
+	const leaveModal: ModalProps = {
+		content: '채팅방을 나가면\n지난 대화 내용을 볼 수 없어요.',
+		isCloseButtonVisible: true,
+		button: {
+			content: '나가기',
+			onClick: () => {
 				const leaveChatRoom = async () => {
 					try {
 						const response = await request.patch<ApiDto>(`/chat-rooms/${roomId}/leave/${userId}`);
@@ -159,17 +157,17 @@ const ChatRoom: React.FC = () => {
 				setIsLeaveOpen(false);
 			},
 		},
-		onCloseModal: () => {
+		onClose: () => {
 			setIsLeaveOpen(false);
 		},
 	};
 
-	const blockModal: ConfirmationModalProps = {
+	const blockModal: ModalProps = {
 		content: 'IDID님을 정말로 차단하시겠어요?',
-		isCancelButtonVisible: true,
-		confirm: {
-			text: '차단하기',
-			action: () => {
+		isCloseButtonVisible: true,
+		button: {
+			content: '차단하기',
+			onClick: () => {
 				const blockUser = async () => {
 					try {
 						const requestBody = {
@@ -190,7 +188,7 @@ const ChatRoom: React.FC = () => {
 				setIsBlockOpen(false);
 			},
 		},
-		onCloseModal: () => {
+		onClose: () => {
 			setIsBlockOpen(false);
 		},
 	};
@@ -232,8 +230,8 @@ const ChatRoom: React.FC = () => {
 	return (
 		<OODDFrame>
 			{isLoading && <Loading />}
-			{isLeaveOpen && <ConfirmationModal {...leaveModal} />}
-			{isBlockOpen && <ConfirmationModal {...blockModal} />}
+			{isLeaveOpen && <Modal {...leaveModal} />}
+			{isBlockOpen && <Modal {...blockModal} />}
 			{isCannotBlockOpen && <Modal {...cannotBlockModal} />}
 			{isCannotCheckOpen && <Modal {...cannotCheckModal} />}
 			<BottomSheet {...kebabMenuBottomSheet} />
