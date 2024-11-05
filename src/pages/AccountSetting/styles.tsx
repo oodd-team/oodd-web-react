@@ -59,9 +59,11 @@ export const FileInput = styled.input`
 export const List = styled.ul`
 	width: 100%;
 	padding: 0;
-	margin-top: 210px; 
+	margin: 0; 
 	list-style: none;
 	border-top: 0px solid #eee;
+	position: absolute;
+	bottom: 20px; 
 `;
 
 export const ListItem = styled.li`
