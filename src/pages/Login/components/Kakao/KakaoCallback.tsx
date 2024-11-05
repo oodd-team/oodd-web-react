@@ -1,11 +1,10 @@
-//카카오 인증 완료 후 인증 코드는 승인된 리디렉트 URL로
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { GetUserInfoResult } from '../../../ProfileViewer/ResponseDto/GetUserInfoResult';
 import request from '../../../../apis/core';
 import Loading from '../../../../components/Loading';
+//import { getKakaoLoginApi } from '../../../../apis/Auth';
 
 const KakaoCallback: React.FC = () => {
 	const navigate = useNavigate();
@@ -15,6 +14,20 @@ const KakaoCallback: React.FC = () => {
 		console.log(code); // 인증 코드 출력
 
 		if (code) {
+			// const getKakaoLogin = async () => {
+			// 	try{
+			// 		const response = await getKakaoLoginApi(code);
+			// 		const statusCode = response.status;
+			// 		if (statusCode === 200) {
+			// 			const token = response.data.accessToken;
+			// 			localStorage.removeItem('jwt_token');
+			// 			localStorage.setItem('NEW_JWT_TOKEN', token);
+			// 	}
+			// }
+			// 	catch (error) {
+
+			// 	}
+			// }
 			// 인증 코드를 쿼리스트링으로 백엔드 서버에 전송
 			axios
 				.get(`https://api-dev.oodd.today/auth/login/kakao?code=${code}`)
@@ -51,7 +64,7 @@ const KakaoCallback: React.FC = () => {
 						console.error('로그인 실패:', response.data);
 						alert('카카오 계정의 정보를 불러오지 못했습니다.');
 						navigate('/login');
-						// 로그인 실패 시 처리 (예: 오류 페이지로 리디렉션)
+						// 로그인 실패 시 처리
 					}
 				})
 				.catch((error) => {

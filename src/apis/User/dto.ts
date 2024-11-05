@@ -1,11 +1,5 @@
 import { BaseApiResponse } from '../util/dto';
 
-// 네이버 로그인
-export type NaverLoginResponse = LoginResponse;
-
-// 카카오 로그인
-export type KakaoLoginResponse = LoginResponse;
-
 // 회원 탈퇴
 export type DeleteUserResponse = BaseApiResponse<DeleteUserResult>;
 
@@ -26,15 +20,6 @@ export type UpdateUserResponse = BaseApiResponse<User>;
 // 사용자 차단/해제 요청 및 응답
 export type CreateUserBlockRequest = BlockRequest;
 export type CreateUserBlockResponse = BaseApiResponse<BlockResult>;
-
-// 로그인 공통 응답 인터페이스
-export interface LoginResponse {
-	status: number;
-	data: {
-		message: string;
-		accessToken: string;
-	};
-}
 
 // 회원 탈퇴 응답 데이터
 export interface DeleteUserResult {
