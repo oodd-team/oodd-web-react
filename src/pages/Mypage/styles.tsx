@@ -18,7 +18,7 @@ export const Header = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 0rem;
-	margin-left: -0.9375rem;
+	margin-left: 20px;
 `;
 
 export const AvatarWrapper = styled.div`
@@ -107,8 +107,10 @@ export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between; /* 두 개씩 나란히 배치 */
-	gap: 0; /* 간격을 없앰 */
-	cursor: pointer;
+  gap: 15px;	
+  cursor: pointer;
+	margin-bottom: 100px;
+	padding: 20px;
 `;
 
 export const AddButton = styled.button`

@@ -1,16 +1,16 @@
-import BottomSheet from '../../../components/BottomSheet';
-import { BottomSheetProps } from '../../../components/BottomSheet/dto';
-import Comment from '../../../components/Comment';
-import { CommentProps } from '../../../components/Comment/dto';
-import request from '../../../apis/core';
-import { ApiDto } from '../dto';
+import BottomSheet from '../BottomSheet';
+import { BottomSheetProps } from '../BottomSheet/dto';
+import Comment from '../Comment';
+import { CommentProps } from '../Comment/dto';
+import request from '../../apis/core';
+import { ApiDto } from './dto';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	IsHeartBottomSheetOpenAtom,
 	IsRequestFailModalOpenAtom,
 	IsRequestSuccessModalOpenAtom,
 	PostRequestAtom,
-} from '../../../recoil/Home/HeartBottomSheetAtom';
+} from '../../recoil/Home/HeartBottomSheetAtom';
 
 const HeartBottomSheet: React.FC = () => {
 	const [isHeartBottomSheetOpen, setIsHeartBottomSheetOpen] = useRecoilState(IsHeartBottomSheetOpenAtom);

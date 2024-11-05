@@ -1,5 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Input, Button, Row, FileInput, CameraIcon,UserInfo, Username} from './styles';
+import {
+	ProfileEditContainer,
+	ProfilePic,
+	ProfilePicWrapper,
+	Input,
+	Button,
+	Row,
+	FileInput,
+	CameraIcon,
+	UserInfo,
+	Username,
+} from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -11,12 +22,11 @@ import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
-import camera from "../../assets/default/camera.svg"
+import camera from '../../assets/default/camera.svg';
 import request, { BaseResponse } from '../../apis/core';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import { UserResponse } from './dto';
-
 
 const ProfileEdit: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
@@ -26,7 +36,7 @@ const ProfileEdit: React.FC = () => {
 	const [bio, setBio] = useState<string>('');
 	const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
 	const navigate = useNavigate();
-  const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
+	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
@@ -60,41 +70,39 @@ const ProfileEdit: React.FC = () => {
 		const fetchUserData = async () => {
 			try {
 				const storedUserId = localStorage.getItem('id');
-	
+
 				if (!storedUserId) {
 					console.error('User is not logged in');
 					return;
 				}
-	
+
 				const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
 				setUser(response.result); // user 상태에 사용자 정보 설정 (닉네임 포함)
 			} catch (error) {
 				console.error('Error fetching user data:', error);
 			}
 		};
-	
+
 		fetchUserData(); // user 데이터를 가져오는 함수 호출
 	}, []);
-	
-	
 
 	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUploading(true);
-      try {
-        const storageRef = ref(storage, `profilePictures/${file.name}`);
-        await uploadBytes(storageRef, file); // Firebase에 파일 업로드
-        const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
-        setProfilePictureUrl(imageUrl);
-        console.log('File uploaded and URL retrieved:', imageUrl);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      } finally {
-        setUploading(false);
-      }
-    }
-  };
+		const file = event.target.files?.[0];
+		if (file) {
+			setUploading(true);
+			try {
+				const storageRef = ref(storage, `profilePictures/${file.name}`);
+				await uploadBytes(storageRef, file); // Firebase에 파일 업로드
+				const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
+				setProfilePictureUrl(imageUrl);
+				console.log('File uploaded and URL retrieved:', imageUrl);
+			} catch (error) {
+				console.error('Error uploading file:', error);
+			} finally {
+				setUploading(false);
+			}
+		}
+	};
 
 	const handleSave = async () => {
 		try {
@@ -110,16 +118,17 @@ const ProfileEdit: React.FC = () => {
 				bio,
 			});
 			if (response.isSuccess) {
-				navigate(`/mypage`); 
+				navigate(`/mypage`);
 			} else {
 				alert('프로필 수정에 실패했습니다.');
 			}
 		} catch (error) {
 			console.error('Error updating profile:', error);
 			alert('프로필 수정 중 오류가 발생했습니다.');
-		}{
+		}
+		{
 			uploading ? (
-				<Loading /> 
+				<Loading />
 			) : (
 				<Button onClick={handleSave}>
 					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
@@ -128,11 +137,10 @@ const ProfileEdit: React.FC = () => {
 				</Button>
 			);
 		}
-		
 	};
 
 	if (!userProfile) {
-		return <Loading/>; // 또는 로딩 스피너 등을 사용할 수 있습니다.
+		return <Loading />; // 또는 로딩 스피너 등을 사용할 수 있습니다.
 	}
 
 	return (

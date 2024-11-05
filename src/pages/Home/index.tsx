@@ -7,7 +7,7 @@ import { HomeContainer } from './styles';
 import request, { BaseResponse } from '../../apis/core';
 
 import Modal from '../../components/Modal/index.tsx';
-import HeartBottomSheet from './BottomSheets/HeartBottomSheet.tsx';
+import HeartBottomSheet from '../../components/PostBottomSheets/HeartBottomSheet.tsx';
 import {
 	IsRequestFailModalOpenAtom,
 	IsRequestSuccessModalOpenAtom,
@@ -21,9 +21,9 @@ import {
 	IsBlockSuccessModalOpenAtom,
 	PostBlockAtom,
 } from '../../recoil/Home/BlockBottomSheetAtom.ts';
-import BlockConfirmationModal from './BottomSheets/BlockBottomSheet.tsx';
-import MeatballBottomSheet from './BottomSheets/MeatballBottomSheet.tsx';
-import ReportBottomSheet from './BottomSheets/ReportBottomSheet.tsx';
+import BlockConfirmationModal from '../../components/PostBottomSheets/BlockConfirmationModal.tsx';
+import MeatballBottomSheet from '../../components/PostBottomSheets/MeatballBottomSheet.tsx';
+import ReportBottomSheet from '../../components/PostBottomSheets/ReportBottomSheet.tsx';
 import {
 	IsReportFailModalOpenAtom,
 	IsReportSuccessModalOpenAtom,

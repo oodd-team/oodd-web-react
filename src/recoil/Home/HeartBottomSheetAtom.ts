@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PostRequestDto } from '../../pages/Home/BottomSheets/dto';
+import { PostRequestDto } from '../../components/PostBottomSheets/dto';
 
 export const IsHeartBottomSheetOpenAtom = atom<boolean>({
 	key: 'isHeartBottomSheetOpenAtom',
