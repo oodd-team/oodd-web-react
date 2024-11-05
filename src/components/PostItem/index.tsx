@@ -15,7 +15,7 @@ import MessageSvg from '../../assets/default/message.svg';
 import PinIcon from '../../assets/default/pin.svg';
 import { PostItemProps } from './dto';
 
-const PostItem: React.FC<PostItemProps> = ({ post, isMyPost }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();
 	const commentsCount = post.commentsCount ?? 0; // 현재 api 응답에 commentsCount가 없어 undefine 오류 해결 위해 설정, 추후 api 수정되면 삭제 해도 되는 행
 	const imageUrl = post.firstPhoto || 'https://via.placeholder.com/72';

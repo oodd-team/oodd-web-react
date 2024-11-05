@@ -8,5 +8,5 @@ export interface Post {
 
 export interface PostItemProps {
 	post: Post;
-	isMyPost: boolean;
+	isMyPost?: boolean;
 }
