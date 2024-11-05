@@ -12,6 +12,13 @@ export const ClothingInfoItemContainer = styled.li`
 	min-width: 20.9375rem;
 	margin-bottom: 0.9375rem;
 	cursor: pointer;
+
+	/* Post 안에 있을 때 첫 번째 아이템에만 margin-left 적용 */
+	.post-mode > & {
+		&:first-child {
+			margin-left: 1.25rem;
+		}
+	}
 `;
 
 export const ClothingInfoLeft = styled.div`

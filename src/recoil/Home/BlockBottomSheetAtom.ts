@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PostBlockDto } from '../../pages/Home/BottomSheets/dto';
+import { PostBlockDto } from '../../components/PostBottomSheets/dto';
 
 export const IsBlockConfirmationModalOpenAtom = atom<boolean>({
 	key: 'isBlockConfirmationModalOpenAtom',
