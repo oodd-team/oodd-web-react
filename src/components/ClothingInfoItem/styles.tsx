@@ -37,7 +37,7 @@ export const ClothingInfoLeft = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 12rem;
+		width: 80%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

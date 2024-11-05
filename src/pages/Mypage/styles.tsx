@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
 	width: 100%;
-	max-width: 32rem;
+	//max-width: 32rem;
 	flex-grow: 1;
 	margin: 0 auto; /* 중앙 정렬 */
 	display: flex;
@@ -29,7 +29,7 @@ export const AvatarWrapper = styled.div`
 	margin-right: 1.25rem; /* 20px */
 	margin-left: 30px;
 	flex-shrink: 0; /* Flex 레이아웃에서 크기 고정 */
-  position: relative; /* 필요한 경우 상대적인 위치 고정 */
+	position: relative; /* 필요한 경우 상대적인 위치 고정 */
 `;
 
 export const Avatar = styled.img`
@@ -46,24 +46,24 @@ export const UserInfo = styled.div`
 
 export const Username = styled.div`
 	font-family: Pretendard;
-font-size: 18px;
-font-style: normal;
-font-weight: 700;
-line-height: 144.5%; /* 26.01px */
-letter-spacing: -0.004px;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 144.5%; /* 26.01px */
+	letter-spacing: -0.004px;
 `;
 
 export const Bio = styled.div`
-overflow: hidden;
-color: #888;
-text-overflow: ellipsis;
-white-space: nowrap;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 22px; /* 157.143% */
-letter-spacing: -0.5px;
+	overflow: hidden;
+	color: #888;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 22px; /* 157.143% */
+	letter-spacing: -0.5px;
 
 	margin-top: 10px;
 `;
@@ -83,7 +83,7 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: var(--Color-gray4,#8E8E8E);
+	color: var(--Color-gray4, #8e8e8e);
 	text-align: center;
 
 	font-family: 'Pretendard';
@@ -94,7 +94,7 @@ export const StatNumber = styled.div`
 `;
 
 export const StatLabel = styled.div`
-	color: var(--Color-gray4, #8E8E8E);
+	color: var(--Color-gray4, #8e8e8e);
 	text-align: center;
 	font-family: 'Pretendard';
 	font-size: 0.75rem; /* 12px */

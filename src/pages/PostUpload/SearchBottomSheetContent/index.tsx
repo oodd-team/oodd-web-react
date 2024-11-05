@@ -161,12 +161,12 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 						<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
 							<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
 							<div className="infoContainer">
-								<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
+								<StyledText className="detail" $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }}>
 									{searchResultItem.brand}
 								</StyledText>
 								<StyledText
 									className="detail"
-									$textTheme={{ style: 'body2-light', lineHeight: 1 }}
+									$textTheme={{ style: 'caption1-regular', lineHeight: 1 }}
 									color={theme.colors.gray3}
 								>
 									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}

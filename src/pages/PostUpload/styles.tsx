@@ -15,8 +15,9 @@ export const Content = styled.div`
 	left: 0;
 	width: 100%;
 	//max-width: 512px;
-	height: calc(100% - 10rem);
-	overflow-y: auto;
+	height: calc(100% - 44px);
+	padding-bottom: 100px;
+	overflow-y: scroll;
 
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+
@@ -27,9 +28,9 @@ export const Content = styled.div`
 
 export const StyledInput = styled.textarea`
 	width: calc(100% - 2.5rem);
-	min-height: 3.125rem;
+	min-height: 100px;
 	max-height: 5rem;
-	margin: 1.25rem;
+	margin: 0 1.25rem;
 	border: none;
 	resize: none;
 	overflow-y: scroll;
@@ -160,11 +161,10 @@ export const StyletagItem = styled.span<{ selected: boolean }>`
 	padding: 0 0.65rem;
 	height: 2rem;
 	//min-width: 4.375rem;
-	background-color: ${({ color }) => color};
-	color: black;
-	border: ${({ selected }) => (selected ? `solid 0.0625rem black` : 'none')};
-	border-radius: 0.3125rem;
-	//box-shadow: ${({ selected }) => (selected ? `0rem 0rem 0.5rem rgba(0, 0, 0, 0.2)` : 'none')};
+	background: ${({ selected, theme }) => (selected ? theme.colors.gradient : 'none')};
+	color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink)};
+	border: 1px solid ${({ theme }) => theme.colors.pink};
+	border-radius: 8px;
 	cursor: pointer;
 `;
 

@@ -9,7 +9,7 @@ export const Content = styled.div`
 		flex-direction: row;
 		align-items: center;
 		width: 100%;
-		padding: 0 1.25rem 0.825rem 1.25rem;
+		padding: 0.825rem 0;
 
 		border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray1};
 
@@ -27,7 +27,7 @@ export const Input = styled.input`
 	padding: 0 0.9375rem;
 	text-align: left;
 	font-size: 1rem;
-	background-color: ${({ theme }) => theme.colors.gray1};
+	background-color: #f8f8f8;
 	border: 0.0625rem solid ${({ theme }) => theme.colors.gray2};
 	border-radius: 0.3125rem;
 
@@ -80,8 +80,13 @@ export const SearchResultList = styled.div`
 	flex-direction: column;
 	width: 100%;
 	height: calc(100% - 3.75rem);
-	padding: 0.9375rem;
 	overflow-y: auto;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
 
 	.total {
 		color: ${({ theme }) => theme.colors.gray3};

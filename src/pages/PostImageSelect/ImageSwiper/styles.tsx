@@ -50,6 +50,7 @@ export const ImageWrapper = styled.div`
 		width: 100%;
 		aspect-ratio: 3 / 4;
 		object-fit: cover;
+		border-radius: 8px;
 	}
 `;
 

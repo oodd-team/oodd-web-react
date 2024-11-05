@@ -6,7 +6,6 @@ export interface PostUploadModalProps {
 
 export interface Styletag {
 	tag: string;
-	color: string;
 }
 
 export interface ImageSwiperProps {

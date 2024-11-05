@@ -39,6 +39,7 @@ export const ImageWrapper = styled.div`
 	height: 100%;
 
 	img {
+		border-radius: 8px;
 		height: 100%;
 		aspect-ratio: 3 / 4;
 		object-fit: cover;
@@ -79,11 +80,11 @@ export const StyledPagination = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 3.75rem;
-	height: 1.5rem;
+	width: 65px;
+	height: 34px;
 	color: white;
-	background: ${({ theme }) => theme.colors.black};
-	border-radius: 0.75rem;
+	background: ${({ theme }) => theme.colors.gradient};
+	border-radius: 17px;
 
 	.swiper-pagination-custom {
 		display: flex;
