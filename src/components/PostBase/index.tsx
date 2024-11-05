@@ -26,7 +26,7 @@ import ClothingInfoItem from '../ClothingInfoItem';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 import Loading from '../Loading';
 
-import back from '../../assets/back.svg';
+import left from '../../assets/arrow/left.svg';
 import heart from '../../assets/Post/heart.svg';
 import comment from '../../assets/Post/comment.svg';
 //import filledHeart from '../../assets/Post/filledHeart.svg';
@@ -37,7 +37,7 @@ import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom
 
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/Post/dto';
-import { GetUserResponse } from '../../apis/User/dto';
+import { GetUserResponse } from '../../apis/user/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 import request from '../../apis/core';
 
@@ -142,7 +142,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 	return (
 		<OODDFrame>
-			<TopBar LeftButtonSrc={back} />
+			<TopBar LeftButtonSrc={left} />
 			{!postData || isLoading ? (
 				<Loading />
 			) : (

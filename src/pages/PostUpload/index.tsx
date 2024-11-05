@@ -33,12 +33,12 @@ import ImageSwiper from './ImageSwiper';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
 
-import back from '../../assets/Upload/back.svg';
+import left from '../../assets/arrow/left.svg';
 import clothingTag from '../../assets/Upload/clothingTag.svg';
 import styleTag from '../../assets/Upload/styleTag.svg';
 import pin from '../../assets/Upload/pin.svg';
-import right from '../../assets/Upload/right_arrow.svg';
-import up from '../../assets/Upload/up_arrow.svg';
+import right from '../../assets/arrow/right.svg';
+import up from '../../assets/arrow/up.svg';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
@@ -109,20 +109,10 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	};
 
 	/*
-	// intialStyletag에 color 추가
-	useEffect(() => {
-		if (selectedStyletag && !selectedStyletag.color) {
-			const foundTag = styletags.find((tag) => tag.tag === selectedStyletag.tag);
-			if (foundTag) {
-				setSelectedStyletag({ ...selectedStyletag, color: foundTag.color });
-			}
-		}
-	}, [selectedStyletag]);
-	*/
-
 	const handlePrev = () => {
 		navigate(-1);
 	};
+	*/
 
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
@@ -229,7 +219,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				<TopBar text="OOTD 업로드" LeftButtonSrc={back} onLeftClick={handlePrev} />
+				<TopBar text="OOTD 업로드" LeftButtonSrc={left} />
 				<Content>
 					<ImageSwiper images={selectedImages} />
 					<StyledInput

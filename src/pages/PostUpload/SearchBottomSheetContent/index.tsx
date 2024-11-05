@@ -151,7 +151,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					value={searchQuery}
 					onChange={(e) => handleInputChange(e.target.value)}
 				/>
-				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
 					취소
 				</StyledText>
 			</div>

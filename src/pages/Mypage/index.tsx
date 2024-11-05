@@ -26,7 +26,7 @@ import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
-import UserProfile from "../../components/UserProfile"
+import UserProfile from '../../components/UserProfile';
 
 const MyPage: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
@@ -133,7 +133,7 @@ const MyPage: React.FC = () => {
 				<BottomSheet {...bottomSheetProps} />
 				<NavbarProfile />
 				<Header>
-					<UserProfile 
+					<UserProfile
 						userImg={user?.profilePictureUrl || imageBasic}
 						nickname={user?.nickname || '김아무개...'}
 						bio={user?.bio || '소개글이 없습니다.'}

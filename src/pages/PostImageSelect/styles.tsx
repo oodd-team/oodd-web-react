@@ -20,16 +20,15 @@ export const ImageDragDropContainer = styled.div`
 	left: 0;
 
 	div {
-		margin-bottom: 7.5rem;
+		margin-bottom: 4.5rem;
 	}
 
 	svg {
-		font-size: 5rem;
-		color: ${({ theme }) => theme.colors.gray3};
+		z-index: 2;
 	}
 
 	:nth-child(2) {
-		margin-bottom: 5rem;
+		margin-bottom: 9rem;
 	}
 
 	&.active svg {

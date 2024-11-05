@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-	height: calc(100vh - 4rem);
+	height: calc(100vh - 44px);
 
 	.input_container {
 		display: flex;
@@ -81,6 +81,7 @@ export const SearchResultList = styled.div`
 	width: 100%;
 	height: calc(100% - 3.75rem);
 	overflow-y: auto;
+	padding-bottom: 20px;
 
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+

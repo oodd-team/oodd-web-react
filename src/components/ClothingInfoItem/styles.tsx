@@ -70,6 +70,8 @@ export const ClothingInfoRight = styled.div`
 	margin-left: auto;
 
 	img {
+		position: absolute;
+		top: 5px;
 		width: 1.125rem;
 		height: 1.5rem;
 	}
