@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
-import { ClothingInfo, Styletag } from '../../pages/PostUpload/dto';
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { Styletag } from '../../pages/PostUpload/dto';
 
 export const postImagesAtom = atom<string[]>({
 	key: 'imagesAtom',

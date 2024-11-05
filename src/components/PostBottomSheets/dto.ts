@@ -1,3 +1,10 @@
+export interface ApiDto {
+	isSuccess: boolean;
+	code: number;
+	message: string;
+	result: any[];
+}
+
 export interface PostRequestDto {
 	requesterId: number;
 	targetId: number;

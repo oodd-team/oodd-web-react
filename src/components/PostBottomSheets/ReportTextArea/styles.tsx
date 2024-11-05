@@ -8,13 +8,12 @@ export const InputLayout = styled.div`
 
 	textarea {
 		display: block;
-		width: calc(100% - 3rem);
-		height: 5.75rem;
-		border-radius: 0.125rem;
-		border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
-		margin-bottom: 5.875rem;
-		z-index: 2;
-		margin-top: -3.75rem;
+		width: 100%;
+		height: 100px;
+		border-radius: 8px;
+		border: 0.0625rem solid #ededed;
+		margin-bottom: 100px;
+		margin-top: -10px;
 		outline: none;
 		padding: 0.8125rem 0.9375rem;
 		font-family: 'Pretendard Variable';
@@ -22,7 +21,8 @@ export const InputLayout = styled.div`
 		font-style: normal;
 		font-weight: 300;
 		line-height: 150%;
-		color: ${({ theme }) => theme.colors.black};
+		color: #1d1d1d;
+		background-color: #f8f8f8;
 		resize: none;
 	}
 `;

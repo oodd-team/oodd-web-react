@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PostCommentDto } from '../../pages/Home/BottomSheets/dto';
+import { PostCommentDto } from '../../components/PostBottomSheets/dto';
 
 export const IsPostCommentBottomSheetOpenAtom = atom<boolean>({
 	key: 'isPostCommentBottomSheetOpenAtom',
