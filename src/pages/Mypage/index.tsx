@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
 	ProfileContainer,
 	Header,
-	AvatarWrapper,
-	Avatar,
-	UserInfo,
-	Username,
-	Bio,
 	StatsContainer,
 	Stat,
 	StatNumber,
@@ -19,9 +14,9 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
 import NavBar from '../../components/NavBar';
 import ButtonSecondary from './ButtonSecondary';
-import Post from './Post';
+import PostItem from '../../components/PostItem';
 import request, { BaseResponse } from '../../apis/core';
-import { PostItem, PostsResponse, UserResponse } from './dto';
+import { PostItem as PostItemType, PostsResponse, UserResponse } from './dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 import BottomSheet from '../../components/BottomSheet';
@@ -31,14 +26,15 @@ import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import button_plus from '../../assets/Profile/button_plus.svg';
 import Insta from '../../assets/BottomSheetMenu/Insta.svg';
 import Picture from '../../assets/BottomSheetMenu/Picture.svg';
+import UserProfile from "../../components/UserProfile"
 
 const MyPage: React.FC = () => {
 	const [user, setUser] = useState<UserResponse | null>(null);
-	const [posts, setPosts] = useState<PostItem[]>([]);
+	const [posts, setPosts] = useState<PostItemType[]>([]);
 	const [totalPosts, setTotalPosts] = useState(0);
 	const [totalLikes, setTotalLikes] = useState(0);
-	const [totalComments, setTotalComments] = useState(0); // Comments count
-	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+	const [totalComments, setTotalComments] = useState(0);
+	const [isLoading, setIsLoading] = useState(true);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const navigate = useNavigate();
 
@@ -78,20 +74,14 @@ const MyPage: React.FC = () => {
 		setIsBottomSheetOpen(true);
 	};
 
-	const handlePostClick = (postId: string) => {
-		navigate(`/my-post/${postId}`);
-	};
-
 	// 사용자 정보 가져오기 함수
 	const fetchUserData = async () => {
 		try {
 			const storedUserId = localStorage.getItem('id');
-
 			if (!storedUserId) {
 				console.error('User is not logged in');
 				return;
 			}
-
 			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
 			setUser(response.result);
 		} catch (error) {
@@ -107,7 +97,6 @@ const MyPage: React.FC = () => {
 				console.error('User is not logged in');
 				return;
 			}
-
 			const response = await request.get<PostsResponse>(`/posts?userId=${storedUserId}`);
 			if (response.isSuccess) {
 				const { totalPosts, totalLikes, posts } = response.result;
@@ -122,7 +111,7 @@ const MyPage: React.FC = () => {
 		} catch (error) {
 			console.error('Error fetching posts:', error);
 		} finally {
-			setIsLoading(false); // 로딩 완료 후 로딩 상태 false로 설정
+			setIsLoading(false);
 		}
 	};
 
@@ -132,26 +121,23 @@ const MyPage: React.FC = () => {
 	}, []);
 
 	if (isLoading) {
-		return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
+		return <Loading />;
 	}
 
 	return (
 		<OODDFrame>
 			<ProfileContainer>
 				<AddButton onClick={handleOpenSheet}>
-					<img src={button_plus} />
+					<img src={button_plus} alt="Add" />
 				</AddButton>
 				<BottomSheet {...bottomSheetProps} />
 				<NavbarProfile />
 				<Header>
-					<AvatarWrapper>
-						<Avatar src={user?.profilePictureUrl || imageBasic} alt="User Avatar" />
-					</AvatarWrapper>
-					<UserInfo>
-						<Username>{user?.nickname || '김아무개...'}</Username>
- 					 <Bio>{user?.bio || '소개글이 없습니다.'}</Bio>
-
-					</UserInfo>
+					<UserProfile 
+						userImg={user?.profilePictureUrl || imageBasic}
+						nickname={user?.nickname || '김아무개...'}
+						bio={user?.bio || '소개글이 없습니다.'}
+					/>
 				</Header>
 				<ButtonSecondary />
 				<StatsContainer>
@@ -176,14 +162,7 @@ const MyPage: React.FC = () => {
 							return 0;
 						})
 						.map((post) => (
-							<Post
-								key={post.postId}
-								imgUrl={post.firstPhoto}
-								likes={post.likes}
-								comments={post.commentsCount || 0}
-								onClick={() => handlePostClick(post.postId.toString())}
-								isFirst={post.isRepresentative}
-							/>
+							<PostItem key={post.postId} post={post} />
 						))}
 				</PostsContainer>
 				<NavBar />

@@ -33,8 +33,9 @@ export const Text = styled.p`
 
 export const InfoBox = styled.div`
 	background: #f5f5f5;
-	padding: 20px; /* 20px */
+	padding: 70px; /* 20px */
 	margin-top: 10px;
+	border-radius: 10px; 
 	margin: 10px 20px 1.25rem 20px; /* 10px 위 여백, 20px 좌우 여백, 20px 아래 여백 */
 `;
 
@@ -47,16 +48,19 @@ export const InfoItem = styled.p`
 	align-items: center;
 	text-align: center;
 	height: 100%; /* 부모 컨테이너의 높이에 맞추기 */
+
 `;
 
 export const CheckboxWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	margin-bottom: 1.25rem; /* 20px */
-	padding: 0rem 15px; /* 20px */
+	margin-bottom: 1.25rem; 
+	padding: 0rem 15px; 
 
 	input[type='checkbox'] {
 		margin-right: 0.625rem; /* 10px */
+		border-radius: 50%;
+
 	}
 `;
 
