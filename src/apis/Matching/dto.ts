@@ -1,4 +1,4 @@
-import { BaseApiResponse } from '../util/dto';
+import { BaseSuccessResponse } from '../core/dto';
 
 // 매칭 요청
 //request
@@ -9,7 +9,7 @@ export interface CreateMatchingRequest {
 }
 
 // response
-export type CreateMatchingResponse = BaseApiResponse<CreateMatchingData>;
+export type CreateMatchingResponse = BaseSuccessResponse<CreateMatchingData>;
 
 export interface CreateMatchingData {
 	chatRoomId: number;
