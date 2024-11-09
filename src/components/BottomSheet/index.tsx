@@ -119,18 +119,18 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	if (isInitialRender && !isOpenBottomSheet) return null;
 
 	// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
-	const handleClickBackground = (e: React.MouseEvent) => {
+	const handleBackgroundClick = (e: React.MouseEvent) => {
 		if (!isDragging && e.target === e.currentTarget) {
 			onCloseBottomSheet();
 		}
 	};
 
-	const handleClickButton = () => {
+	const handleButtonClick = () => {
 		onCloseBottomSheet();
 	};
 
 	return (
-		<BottomSheetWrapper $isBottomSheetOpen={isRendered} onClick={handleClickBackground}>
+		<BottomSheetWrapper $isBottomSheetOpen={isRendered} onClick={handleBackgroundClick}>
 			{/* 모바일 & 태블릿 UI */}
 			<BottomSheetLayout
 				onPointerDown={onPointerDown}
@@ -144,7 +144,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			{/* 데스크탑 UI */}
 			<SideBarLayout $isSideBarOpen={isSideBarOpen}>
 				<SideBarTopBar>
-					<XButton onClick={handleClickButton} />
+					<XButton onClick={handleButtonClick} />
 				</SideBarTopBar>
 				<ComponentBox>
 					<Component {...componentProps} />

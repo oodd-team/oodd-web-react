@@ -5,7 +5,7 @@ import { ModalProps } from './dto';
 import XIcon from '../../assets/default/x.svg';
 
 const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, button }) => {
-	const handleClickBackground = (e: React.MouseEvent) => {
+	const handleBackgroundClick = (e: React.MouseEvent) => {
 		if (e.target === e.currentTarget) {
 			onClose();
 		}
@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, b
 	};
 
 	return (
-		<ModalWrapper onClick={handleClickBackground}>
+		<ModalWrapper onClick={handleBackgroundClick}>
 			<ModalContainer $isCloseButtonVisible={isCloseButtonVisible || false}>
 				{isCloseButtonVisible && (
 					<CloseButton onClick={onClose}>
