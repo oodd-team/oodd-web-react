@@ -19,6 +19,7 @@ interface PatchUserInfoRequest {
 const SignUp: React.FC = () => {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [formData, setFormData] = useState<PatchUserInfoRequest>({
+		// 이름, 생년월일 등 개별적으로 상태 관리하지 않고 통합
 		name: '',
 		birthdate: '',
 		phonenumber: '',
