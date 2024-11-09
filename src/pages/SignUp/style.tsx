@@ -1,25 +1,25 @@
 import styled from 'styled-components';
+import { StyledText } from '../../components/Text/StyledText';
 
 export const SignUpContainer = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	max-width: 32rem; /* 최대 너비 512px */
 	height: 100vh;
-	margin: 0 auto; /* 중앙 정렬 */
-	//box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 경계 구분용*/
 `;
 
 export const LogoWrapper = styled.figure`
 	display: flex;
+	align-items: center;
 	justify-content: center;
 	width: 100%;
-	max-width: 7.25rem; /* 116px / 16 */
-	margin: 10.8rem 0 1.5637rem 0; /* 195px */
+	max-width: 9.375rem;
+	margin: 10.8rem 0 1.875rem 0; /* 195px */
 `;
 export const LogoImg = styled.img`
 	display: flex;
+	width: 100%;
 `;
 
 export const IntroWrapper = styled.div`
@@ -36,39 +36,41 @@ export const NickNameContainer = styled.section`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	max-width: 12.125rem; /* 194px; */
+	max-width: 12.125rem; /* 194px */
 	height: 2.625rem;
-	margin-top: 7.0625rem;
+	margin: 5rem auto 0; /* 중앙 정렬을 위한 auto */
 `;
 
 export const NickName = styled.input`
-	display: flex;
 	width: 100%;
 	max-width: 12.25rem;
 	height: 2.625rem;
-	font-family: 'Gmarket Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 2rem;
-	line-height: 2.6rem; /* 130% of 2rem */
+	font-family: Pretendard;
+	font-size: 2.5rem;
+	font-weight: 500;
+	line-height: 130%;
 	border: none;
 	outline: none;
+	text-align: center;
 	background-color: transparent;
 	text-align: center;
+	margin: 0 auto; /* 중앙 정렬 */
+
 	@media (max-width: 13.3125rem) {
-		font-size: 1.5625rem; /* 화면 너비가 213px 이상일 때 폰트 사이즈 줄이기 */
+		font-size: 1.5625rem;
 	}
 	@media (max-width: 10.3125rem) {
-		font-size: 1.25rem; /* 화면 너비가 213px 이상일 때 폰트 사이즈 줄이기 */
+		font-size: 1.25rem;
 	}
 `;
 
-export const Tap = styled.div`
+export const TapStyled = styled(StyledText)`
 	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
 	width: 100%;
-	max-width: 9.5625rem; /* 153px */
-	height: 1.3125rem; /* 21px */
-	font-size: 0.875rem; /* 14px */
-	line-height: 1.3125rem; /* 21px */
-	margin-top: 0.3125rem; /* 5px */
+	max-width: 9.5625rem;
+	height: 1.3125rem;
+	font-size: 0.875rem;
+	line-height: 1.3125rem;
+	margin: 1.25rem auto 0; /* 중앙 정렬을 위한 auto */
 `;
