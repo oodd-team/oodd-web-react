@@ -8,7 +8,7 @@ import request from '../../apis/core';
 import { SignUpDto } from './SignUpDto';
 import BottomButton from '../../components/BottomButton';
 
-interface FormData {
+interface PatchUserInfoRequest {
 	name: string;
 	birthdate: string;
 	phonenumber: string;
@@ -18,7 +18,7 @@ interface FormData {
 
 const SignUp: React.FC = () => {
 	const [currentStep, setCurrentStep] = useState(1);
-	const [formData, setFormData] = useState<FormData>({
+	const [formData, setFormData] = useState<PatchUserInfoRequest>({
 		name: '',
 		birthdate: '',
 		phonenumber: '',
@@ -28,7 +28,7 @@ const SignUp: React.FC = () => {
 	const userId = localStorage.getItem('id');
 	const Token = localStorage.getItem('jwt_token');
 
-	const handleInputChange = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
 	};
 
