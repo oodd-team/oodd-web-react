@@ -4,3 +4,10 @@ export interface OptionsBottomSheetProps {
 	targetNickname?: string; // 차단/신고 대상 닉네임
 	onClose: () => void;
 }
+
+export interface BlockInfoDto {
+	userId: number;
+	friendId: number;
+	friendName: string;
+	action: 'toggle';
+}

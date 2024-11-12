@@ -4,3 +4,9 @@ export interface ApiDto {
 	message: string;
 	result: any[];
 }
+
+export interface MatchingInfoDto {
+	requesterId: number;
+	targetId: number;
+	targetName: string;
+}
