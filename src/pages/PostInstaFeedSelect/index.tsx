@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { postImagesAtom } from '../../recoil/PostUpload/PostUploadAtom';
+
 import { Content, PostContainer, ImageWrapper } from './styles';
+
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';
 import Modal from '../../components/Modal';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
 import { ModalProps } from '../../components/Modal/dto';
-import close from '../../assets/Upload/close.svg';
+
+import X from '../../assets/default/x.svg';
+
 import { InstaFeedSelectModalProps, Post } from './dto';
 
 const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
@@ -76,7 +80,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	return (
 		<OODDFrame>
 			{isSuccessModalOpen && <Modal {...modalProps} />}
-			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={close} onLeftClick={handleClose} />{' '}
+			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onLeftClick={handleClose} />{' '}
 			{/* onClose 대신 handleClose 사용 */}
 			<Content>
 				{posts.map((post, index) => (

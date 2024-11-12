@@ -6,7 +6,7 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid #ffbbda;
+	border: 0.0625rem solid ${({ theme }) => theme.colors.pink};
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	min-width: 20.9375rem;
@@ -71,8 +71,7 @@ export const ClothingInfoRight = styled.div`
 
 	img {
 		position: absolute;
-		top: 5px;
-		width: 1.125rem;
-		height: 1.5rem;
+		top: 10px;
+		right: 10px;
 	}
 `;

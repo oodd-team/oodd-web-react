@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import theme from '../../styles/theme';
 import { Content, StyledInput } from './styles';
+
 import { OODDFrame } from '../../components/Frame/Frame';
+import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
 import BottomButton from '../../components/BottomButton';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
-import { StyledText } from '../../components/Text/StyledText';
-import close from '../../assets/Upload/close.svg';
+
+import X from '../../assets/default/x.svg';
+
 import { InstaConnectModalProps } from './dto';
 
 const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
@@ -57,7 +61,7 @@ const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 
 	return (
 		<OODDFrame>
-			<TopBar text="인스타 계정 연동" LeftButtonSrc={close} onLeftClick={handleClose} />
+			<TopBar text="인스타 계정 연동" LeftButtonSrc={X} onLeftClick={handleClose} />
 			<Content>
 				{isLoading ? (
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>
