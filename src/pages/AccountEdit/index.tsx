@@ -22,10 +22,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 
 import NAVER from "../../assets/Login/NAVER.svg"
-import googleIcon from './assets/googleIcon.png';
 import Kakao from "../../assets/Login/Kakao.svg"
-import facebookIcon from './assets/facebookIcon.png';
-
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
 

@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import exit from './assets/exit.svg';
-import cancleaccount from './assets/cancleaccount.svg';
-import next from './assets/next.svg';
+import logout from './assets/logout.svg';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import TopBar from '../../components/TopBar';
@@ -15,6 +13,8 @@ import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
+import Profile_s from './../../assets/default/my-page-white.svg';
+
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -94,18 +94,16 @@ const AccountSetting: React.FC = () => {
 				
 				<List>
 					<ListItem onClick={handleLogoutClick}>
-						<img src={exit} alt="로그아웃 아이콘" />
+						<img src={logout} alt="로그아웃 아이콘" />
 						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
 							Logout
 						</StyledText>
-						<img src={next} alt="다음 아이콘" />
 					</ListItem>
 					<ListItem onClick={handleDeleteAccountClick}>
-						<img src={cancleaccount} alt="회원 탈퇴 아이콘" />
+						<img src={Profile_s} alt="회원 탈퇴 아이콘" />
 						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
 							회원탈퇴
 						</StyledText>
-						<img src={next} alt="다음 아이콘" />
 					</ListItem>
 				</List>
 				{isLogoutModalOpen && (
