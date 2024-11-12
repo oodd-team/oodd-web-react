@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PostBlockDto } from '../../components/PostBottomSheets/dto';
+import { BlockInfoDto } from '../../components/BottomSheet/OptionsBottomSheet/dto';
 
 export const IsBlockConfirmationModalOpenAtom = atom<boolean>({
 	key: 'isBlockConfirmationModalOpenAtom',
@@ -16,7 +16,7 @@ export const IsBlockFailModalOpenAtom = atom<boolean>({
 	default: false,
 });
 
-export const PostBlockAtom = atom<PostBlockDto | null>({
+export const PostBlockAtom = atom<BlockInfoDto | null>({
 	key: 'PostBlockAtom',
 	default: null,
 });

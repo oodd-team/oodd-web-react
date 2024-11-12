@@ -25,7 +25,10 @@ import heartBtn from '../../../../assets/default/heart.svg';
 import commentBtn from '../../../../assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { IsHeartBottomSheetOpenAtom, PostRequestAtom } from '../../../../recoil/Home/HeartBottomSheetAtom';
+import {
+	IsMatchingCommentBottomSheetOpenAtom,
+	MatchingInfoAtom,
+} from '../../../../recoil/Home/MatchingCommentBottomSheetAtom';
 import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
 import { PostCommentAtom } from '../../../../recoil/Home/PostCommentBottomSheetAtom';
 import { IsMeatballBottomSheetOpenAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
@@ -38,9 +41,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	const nav = useNavigate();
 	const [isHeartClicked, setIsHeartClicked] = useState(false);
 	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
-	const [, setPostRequest] = useRecoilState(PostRequestAtom);
-	const [, setIsHeartBottomSheetOpen] = useRecoilState(IsHeartBottomSheetOpenAtom);
-	const [, setPostBlock] = useRecoilState(PostBlockAtom);
+	const [, setMatchingInfo] = useRecoilState(MatchingInfoAtom);
+	const [, setIsHeartBottomSheetOpen] = useRecoilState(IsMatchingCommentBottomSheetOpenAtom);
+	const [, setBlockInfo] = useRecoilState(PostBlockAtom);
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
 	const [, setPostComment] = useRecoilState(PostCommentAtom);
 	const storedValue = localStorage.getItem('id');
@@ -50,7 +53,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 		if (isHeartClicked === true) {
 			alert('요청을 취소할 수 없습니다.');
 		} else {
-			setPostRequest({
+			setMatchingInfo({
 				requesterId: userId,
 				targetId: feed.userId,
 				targetName: feed.userName,
@@ -61,7 +64,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	};
 
 	const handleBlockClick = () => {
-		setPostBlock({
+		setBlockInfo({
 			userId: userId,
 			friendId: feed.userId,
 			friendName: feed.userName,

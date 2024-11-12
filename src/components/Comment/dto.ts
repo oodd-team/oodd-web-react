@@ -1,5 +1,5 @@
 export interface CommentProps {
-	isModal?: boolean; // 데스크탑 UI(modal)에서 컴포넌트 간 간격 조정
+	isModal?: boolean; // 이 속성은 설정하지 말아주세요 (commentBottomSheet에서 사용)
 	content: string;
 	sendComment: (comment: string) => void; // comment를 전달할 api 함수 등
 }

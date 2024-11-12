@@ -14,27 +14,27 @@ export const defaultErrorMessage: Record<number, string> = {
 
 export const userErrorMessage: Record<number, string> = {
 	...commonErrorMessage,
-	404: '존재하지 않는 유저입니다.',
+	404: '유저 정보를 찾을 수 없습니다.',
 };
 
 export const postErrorMessage: Record<number, string> = {
 	...commonErrorMessage,
-	404: '존재하지 않는 게시글입니다.',
+	404: '게시글 정보를 찾을 수 없습니다.',
 };
 
 export const postCommentErrorMessage: Record<number, string> = {
 	...commonErrorMessage,
-	404: '존재하지 않는 댓글입니다.',
+	404: '댓글 정보를 찾을 수 없습니다.',
 };
 
 export const matchingErrorMessage: Record<number, string> = {
 	...commonErrorMessage,
-	404: '존재하지 않는 요청입니다.',
+	404: '요청 정보를 찾을 수 없습니다.',
 };
 
 export const chatErrorMessage: Record<number, string> = {
 	...commonErrorMessage,
-	404: '존재하지 않는 채팅방입니다.',
+	404: '채팅방 정보를 찾을 수 없습니다.',
 };
 
 export type ApiDomain = 'user' | 'post' | 'postComment' | 'matching' | 'chat' | 'default';
