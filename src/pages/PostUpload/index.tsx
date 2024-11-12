@@ -9,6 +9,7 @@ import {
 	postClothingInfosAtom,
 	postStyletagAtom,
 	postIsRepresentativeAtom,
+	modeAtom,
 } from '../../recoil/PostUpload/PostUploadAtom';
 
 import {
@@ -54,6 +55,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosAtom);
 	const [selectedStyletag, setSelectedStyletag] = useRecoilState(postStyletagAtom);
 	const [isRepresentative, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
+	const [mode, setMode] = useRecoilState(modeAtom);
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -74,15 +76,27 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	];
 
 	useEffect(() => {
+		const state = location.state as { mode?: string; postId?: number };
+		if (state?.mode) {
+			setMode(state.mode); // 모드 상태를 설정
+		}
 		handleInitialModalState();
 	}, []);
 
 	const handleInitialModalState = async () => {
 		const state = location.state as { mode?: string; postId?: number };
 
-		if (state?.mode === 'edit' && state?.postId) {
+		if (state.mode === 'edit' && state?.postId) {
 			await fetchPostDetails(state.postId);
 		}
+	};
+
+	const handlePrev = () => {
+		const state = location.state as { mode?: string; postId?: number };
+		if (mode === 'edit') {
+			setMode('edit2');
+		}
+		navigate('/image-select', { state: { mode: mode, postId: state.postId } });
 	};
 
 	const fetchPostDetails = async (postId: number) => {
@@ -107,12 +121,6 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 			setIsLoading(false);
 		}
 	};
-
-	/*
-	const handlePrev = () => {
-		navigate(-1);
-	};
-	*/
 
 	const handleToggleSearchSheet = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
@@ -153,26 +161,63 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 		setIsRepresentative(!isRepresentative);
 	};
 
-	const uploadImageToFirebase = async (image: string) => {
+	const cropImage = (imageUrl: string): Promise<Blob> => {
+		return new Promise((resolve) => {
+			const img = new Image();
+			img.src = imageUrl;
+			img.onload = () => {
+				const aspectRatio = 4 / 5;
+				let width = img.width;
+				let height = img.height;
+				let startX = 0;
+				let startY = 0;
+
+				// 이미지의 비율이 원하는 비율과 다른 경우, 자르기
+				if (width / height > aspectRatio) {
+					// 이미지가 더 넓은 경우, 좌우를 잘라냄
+					width = height * aspectRatio;
+					startX = (img.width - width) / 2; // 좌우 균등하게 자름
+				} else {
+					// 이미지가 더 높은 경우, 상하를 잘라냄
+					height = width / aspectRatio;
+					startY = (img.height - height) / 2; // 상하 균등하게 자름
+				}
+
+				const canvas = document.createElement('canvas');
+				canvas.width = width;
+				canvas.height = height;
+
+				const ctx = canvas.getContext('2d');
+				if (ctx) {
+					ctx.drawImage(img, startX, startY, width, height, 0, 0, width, height);
+				}
+
+				// Blob으로 변환
+				canvas.toBlob((blob) => {
+					if (blob) resolve(blob);
+				}, 'image/jpeg');
+			};
+		});
+	};
+
+	const uploadImageToFirebase = async (imageUrl: string) => {
 		// Firebase URL 형식인지 확인
-		if (image.startsWith('https://firebasestorage.googleapis.com/')) {
-			return image; // 이미 업로드된 경우, URL을 그대로 반환
+		if (imageUrl.startsWith('https://firebasestorage.googleapis.com/')) {
+			return imageUrl; // 이미 업로드된 경우, URL을 그대로 반환
 		}
 
 		// 새로 업로드해야 하는 경우
-		const response = await fetch(image);
-		const blob = await response.blob();
+		const croppedBlob = await cropImage(imageUrl);
 
 		const storageRef = ref(storage, `ootd/images/${Date.now()}`);
-
-		await uploadBytes(storageRef, blob)
+		await uploadBytes(storageRef, croppedBlob)
 			.then(() => {
 				console.log('success');
 			})
 			.catch((error) => {
 				console.log(JSON.stringify(error));
 			});
-		console.log(4);
+
 		return getDownloadURL(storageRef);
 	};
 
@@ -196,9 +241,10 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 			};
 
 			let response;
-			if (postId) {
+			if (mode === ('edit' || 'edit2')) {
 				// 게시물 수정 (PATCH)
-				response = await request.patch<UpdatePostResponse>(`/posts/${postId}`, postData);
+				const state = location.state as { mode?: string; postId?: number };
+				response = await request.patch<UpdatePostResponse>(`/posts/${state.postId}`, postData);
 			} else {
 				// 새 게시물 업로드 (POST)
 				response = await request.post<CreatePostResponse>(`/posts`, postData);
@@ -207,6 +253,14 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 			if (!response.isSuccess) {
 				throw new Error(response.message || 'Failed');
 			}
+
+			//초기화
+			setSelectedImages([]);
+			setClothingInfos([]);
+			setContent('');
+			setIsRepresentative(false);
+			setSelectedStyletag(null);
+			setMode('');
 
 			navigate('/mypage');
 		} catch (error) {
@@ -219,7 +273,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				<TopBar text="OOTD 업로드" LeftButtonSrc={left} />
+				<TopBar text="OOTD 업로드" LeftButtonSrc={left} onLeftClick={handlePrev} />
 				<Content>
 					<ImageSwiper images={selectedImages} />
 					<StyledInput
@@ -264,7 +318,7 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 									<img src={right} />
 								</>
 							) : (
-								<StyletagItem selected={true}>
+								<StyletagItem selected={false}>
 									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
 								</StyletagItem>
 							)}
@@ -292,7 +346,11 @@ const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
 					</PinnedPostToggleContainer>
 				</Content>
 
-				<BottomButton content={postId ? '수정 완료' : '공유'} onClick={handleSubmit} disabled={isLoading} />
+				<BottomButton
+					content={mode === ('edit' || 'edit2') ? '수정 완료' : '공유'}
+					onClick={handleSubmit}
+					disabled={isLoading}
+				/>
 
 				<BottomSheet {...bottomSheetProps} />
 			</UploadContainer>

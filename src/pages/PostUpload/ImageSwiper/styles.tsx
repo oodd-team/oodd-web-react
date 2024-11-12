@@ -18,7 +18,7 @@ export const SwiperContainer = styled.div`
 	}
 
 	.upload-swiper .swiper-slide {
-		width: 15.4375rem;
+		width: 16.45rem;
 		height: 20.5625rem;
 		object-fit: cover;
 		transition: transform 0.3s;
@@ -41,7 +41,7 @@ export const ImageWrapper = styled.div`
 	img {
 		border-radius: 8px;
 		height: 100%;
-		aspect-ratio: 3 / 4;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
 	}
 `;

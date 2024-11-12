@@ -26,3 +26,8 @@ export const postIsRepresentativeAtom = atom<boolean>({
 	key: 'isRepresentativeAtom',
 	default: false,
 });
+
+export const modeAtom = atom({
+	key: 'modeAtom',
+	default: '',
+});

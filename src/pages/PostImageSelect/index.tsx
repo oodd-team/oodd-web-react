@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
 	postImagesAtom,
@@ -28,6 +28,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const [, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
 	const [isActive, setActive] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const handleClose = () => {
@@ -43,7 +44,8 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	};
 
 	const handleNext = () => {
-		navigate('/upload');
+		const state = location.state as { mode?: string; postId?: number };
+		navigate('/upload', { state: { mode: state?.mode, postId: state?.postId } });
 	};
 
 	// 파일 선택기에서 사진 업로드
