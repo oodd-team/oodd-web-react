@@ -27,10 +27,10 @@ import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 import Loading from '../Loading';
 
 import left from '../../assets/arrow/left.svg';
-import heart from '../../assets/Post/heart.svg';
-import comment from '../../assets/Post/comment.svg';
-//import filledHeart from '../../assets/Post/filledHeart.svg';
-import menu from '../../assets/Post/menu.svg';
+import like from '../../assets/default/like.svg';
+//import likeFill from '../../assets/default/like-fill.svg';
+import message from '../../assets/default/message.svg';
+import more from '../../assets/default/more.svg';
 
 import { useRecoilState } from 'recoil';
 import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
@@ -157,7 +157,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 							</UserName>
 						</UserInfo>
 						<MenuBtn onClick={onClickMenu}>
-							<img src={menu} alt="menu" />
+							<img src={more} alt="more" />
 						</MenuBtn>
 					</PostInfoContainer>
 
@@ -177,11 +177,11 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 					<IconRow>
 						<IconWrapper onClick={handleLikeClick}>
-							<img src={heart} alt="Heart Icon" />
+							<img src={like} alt="like" />
 							<span onClick={() => handleLikeCommentOpen('likes')}>{postData.likes ?? 0}</span>
 						</IconWrapper>
 						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
-							<img src={comment} alt="Comment Icon" />
+							<img src={message} alt="message" />
 							<span>{postData.comments?.length ?? 0}</span>
 						</IconWrapper>
 					</IconRow>

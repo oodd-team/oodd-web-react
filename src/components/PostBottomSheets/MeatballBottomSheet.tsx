@@ -8,8 +8,8 @@ import { userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 import { IsMeatballBottomSheetOpenAtom, IsReportBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
 import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../recoil/Home/BlockBottomSheetAtom';
 
-import declaration from '../../assets/Post/declaration.svg';
-import block from '../../assets/Post/block.svg';
+import report from '../../assets/default/report';
+import block from '../../assets/default/block.svg';
 
 const MeatballBottomSheet: React.FC = () => {
 	const [userId] = useRecoilState(userIdAtom);
@@ -27,7 +27,7 @@ const MeatballBottomSheet: React.FC = () => {
 					setIsMeatballBottomSheetOpen(false);
 					setIsReportBottomSheetOpen(true);
 				},
-				icon: declaration,
+				icon: report,
 			},
 			{
 				text: '차단하기',

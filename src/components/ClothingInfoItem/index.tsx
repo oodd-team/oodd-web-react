@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledText } from '../Text/StyledText';
-import close from '../../assets/Upload/close2.svg';
-import next from '../../assets/Post/next.svg';
+import x from '../../assets/default/x.svg';
+import right from '../../assets/arrow/right.svg';
 import { ClothingInfoItemProps } from './dto';
 import { ClothingInfoItemContainer, ClothingInfoLeft, ClothingInfoRight, StyledTextClipped } from './styles';
 
@@ -26,7 +26,7 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 				</div>
 			</ClothingInfoLeft>
 			<ClothingInfoRight>
-				{onDelete ? <img src={close} onClick={() => onDelete(clothingObj)} /> : <img src={next} alt="next" />}
+				{onDelete ? <img src={x} onClick={() => onDelete(clothingObj)} /> : <img src={right} alt="right" />}
 			</ClothingInfoRight>
 		</ClothingInfoItemContainer>
 	);
