@@ -49,7 +49,7 @@ import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
 import { PostUploadModalProps, Styletag, Post } from './dto';
 import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/dto';
 
-const PostUpload: React.FC<PostUploadModalProps> = ({ postId = null }) => {
+const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
 	const [content, setContent] = useRecoilState(postContentAtom);
 	const [clothingInfos, setClothingInfos] = useRecoilState(postClothingInfosAtom);
