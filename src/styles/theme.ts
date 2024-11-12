@@ -35,7 +35,7 @@ const theme: DefaultTheme = {
 		}
 
 		@media (min-width: 1220px) {
-			max-width: 1080px;
+			max-width: 640px;
 		}
 	`,
 	breakPoints: css`
@@ -53,7 +53,7 @@ const theme: DefaultTheme = {
 		}
 
 		@media (min-width: 1220px) {
-			max-width: 1080px;
+			max-width: 640px;
 		}
 	`,
 	fontStyles: {
