@@ -151,7 +151,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					value={searchQuery}
 					onChange={(e) => handleInputChange(e.target.value)}
 				/>
-				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
 					취소
 				</StyledText>
 			</div>
@@ -161,12 +161,12 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 						<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
 							<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
 							<div className="infoContainer">
-								<StyledText className="detail" $textTheme={{ style: 'body2-regular', lineHeight: 1.2 }}>
+								<StyledText className="detail" $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }}>
 									{searchResultItem.brand}
 								</StyledText>
 								<StyledText
 									className="detail"
-									$textTheme={{ style: 'body2-light', lineHeight: 1 }}
+									$textTheme={{ style: 'caption1-regular', lineHeight: 1 }}
 									color={theme.colors.gray3}
 								>
 									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}

@@ -16,7 +16,7 @@ export const SwiperContainer = styled.div`
 	.review-swiper .swiper-slide {
 		width: 21.875rem;
 		max-width: calc(100% - 2.5rem);
-		aspect-ratio: 3 / 4;
+		aspect-ratio: 4 / 5;
 		height: auto;
 		object-fit: cover;
 		transition: transform 0.3s;
@@ -48,8 +48,9 @@ export const ImageWrapper = styled.div`
 		height: 100%;
 		width: auto;
 		width: 100%;
-		aspect-ratio: 3 / 4;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
+		border-radius: 8px;
 	}
 `;
 
