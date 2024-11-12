@@ -1,14 +1,12 @@
+import { BaseSuccessResponse } from '../core';
+
 // 네이버 로그인
-export type NaverLoginResponse = LoginResponse;
+export type NaverLoginResponse = BaseSuccessResponse<LoginResponse>;
 
 // 카카오 로그인
-export type KakaoLoginResponse = LoginResponse;
+export type KakaoLoginResponse = BaseSuccessResponse<LoginResponse>;
 
 // 로그인 공통 응답 인터페이스
 export interface LoginResponse {
-	status: number;
-	data: {
-		message: string;
-		accessToken: string;
-	};
+	jwt: string;
 }
