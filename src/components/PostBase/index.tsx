@@ -26,11 +26,11 @@ import ClothingInfoItem from '../ClothingInfoItem';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 import Loading from '../Loading';
 
-import left from '../../assets/arrow/left.svg';
-import like from '../../assets/default/like.svg';
-//import likeFill from '../../assets/default/like-fill.svg';
-import message from '../../assets/default/message.svg';
-import more from '../../assets/default/more.svg';
+import Left from '../../assets/arrow/left.svg';
+import Like from '../../assets/default/like.svg';
+//import LikeFill from '../../assets/default/like-fill.svg';
+import Message from '../../assets/default/message.svg';
+import More from '../../assets/default/more.svg';
 
 import { useRecoilState } from 'recoil';
 import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
@@ -44,7 +44,7 @@ import request from '../../apis/core';
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const { postId } = useParams<{ postId: string }>();
-	const [postData, setPostData] = useState<GetPostDetailResponse['result']>();
+	const [post, setPost] = useState<GetPostDetailResponse['result']>();
 	const [user, setUser] = useState<GetUserResponse['result']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
@@ -55,12 +55,13 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const nav = useNavigate();
 
 	useEffect(() => {
-		const fetchPostData = async () => {
+		// 게시글 정보 가져오기
+		const fetchPost = async () => {
 			setIsLoading(true);
 			try {
 				const response = await request.get<GetPostDetailResponse>(`/posts/${postId}`);
 				if (response.isSuccess && response.result) {
-					setPostData(response.result);
+					setPost(response.result);
 					setPostId(response.result.postId);
 					fetchUser(response.result.userId);
 				} else {
@@ -92,19 +93,19 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			}
 		};
 
-		fetchPostData();
+		fetchPost();
 	}, [postId]);
 
 	const handleUserClick = () => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
 		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
 
-		if (String(myUserId) === String(postData?.userId)) {
+		if (String(myUserId) === String(post?.userId)) {
 			// 내 게시물인 경우
 			nav('/mypage');
 		} else {
 			// 다른 유저의 게시물인 경우
-			nav(`/users/${postData?.userId}`);
+			nav(`/users/${post?.userId}`);
 		}
 	};
 
@@ -122,8 +123,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 		componentProps: {
 			tab: activeTab,
-			likeCount: postData?.likes,
-			commentCount: postData?.comments?.length,
+			likeCount: post?.likes,
+			commentCount: post?.comments?.length,
 		},
 	};
 
@@ -142,8 +143,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 	return (
 		<OODDFrame>
-			<TopBar LeftButtonSrc={left} />
-			{!postData || isLoading ? (
+			<TopBar LeftButtonSrc={Left} />
+			{!post || isLoading ? (
 				<Loading />
 			) : (
 				<PostContainer>
@@ -157,37 +158,37 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 							</UserName>
 						</UserInfo>
 						<MenuBtn onClick={onClickMenu}>
-							<img src={more} alt="more" />
+							<img src={More} alt="more" />
 						</MenuBtn>
 					</PostInfoContainer>
 
-					{postData.content && (
+					{post.content && (
 						<Content>
 							<StyledText
 								$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
 								color={theme.colors.black}
 								style={{ opacity: '50%' }}
 							>
-								{postData.content}
+								{post.content}
 							</StyledText>
 						</Content>
 					)}
 
-					<ImageSwiper images={postData.photoUrls} />
+					<ImageSwiper images={post.photoUrls} />
 
 					<IconRow>
 						<IconWrapper onClick={handleLikeClick}>
-							<img src={like} alt="like" />
-							<span onClick={() => handleLikeCommentOpen('likes')}>{postData.likes ?? 0}</span>
+							<img src={Like} alt="like" />
+							<span onClick={() => handleLikeCommentOpen('likes')}>{post.likes ?? 0}</span>
 						</IconWrapper>
 						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
-							<img src={message} alt="message" />
-							<span>{postData.comments?.length ?? 0}</span>
+							<img src={Message} alt="message" />
+							<span>{post.comments?.length ?? 0}</span>
 						</IconWrapper>
 					</IconRow>
 
 					<ClothingInfoList className="post-mode">
-						{postData.clothingInfo?.map((clothingObj, index) => (
+						{post.clothingInfo?.map((clothingObj, index) => (
 							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 						))}
 					</ClothingInfoList>
