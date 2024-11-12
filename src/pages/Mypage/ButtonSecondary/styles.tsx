@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
-	width: calc(100% - 30px); /* 양옆에 30px씩 공간을 확보 */
+	width: 100%;
 	padding: 6px;
 	margin: 1.25rem auto;
 	height: 3.1rem; /* 44px */
