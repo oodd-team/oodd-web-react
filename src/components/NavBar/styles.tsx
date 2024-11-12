@@ -54,3 +54,101 @@ export const IconImg = styled.img`
 	height: 1.13rem;
 	object-fit: cover;
 `;
+
+export const SideNavBarContainer = styled.nav`
+	${({ theme }) => theme.visibleOnDesktop};
+	height: 90%;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+	padding: 2.5rem 1.5rem;
+	border-radius: 0 3rem 3rem 0;
+	position: fixed;
+	background: white;
+	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
+`;
+
+export const SideNavBarHeader = styled.header`
+	display: flex;
+	justify-content: space-between;
+
+	.logo {
+		width: 6.25rem;
+	}
+
+	button {
+		width: 2rem;
+		height: 2rem;
+		padding: 0.25rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+		transition: background 0.2s;
+	}
+
+	button:hover {
+		background: rgba(0, 0, 0, 0.1);
+	}
+`;
+
+export const SideNavBarButton = styled.label`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.8rem;
+	cursor: pointer;
+	padding: 0.5rem 0;
+
+	button {
+		width: 2.5rem;
+		height: 2.5rem;
+		display: flex;
+		justify-content: center;
+		align-item: center;
+		border-radius: 50%;
+		padding: 0.6rem;
+		background: white;
+		transition: background 0.2s;
+
+		box-shadow:
+			0px 2px 4px 0px rgba(0, 0, 0, 0.2),
+			0px 0px 2px 0px rgba(0, 0, 0, 0.12),
+			0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+	}
+
+	button:hover {
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.styled-text {
+		padding-right: 6rem;
+		border-bottom: 1.5px solid #f2f2f2;
+	}
+`;
+
+export const SideNavBarItem = styled.li`
+	width: 100%;
+	display: flex;
+`;
+
+export const SideNavBarList = styled.ul`
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+`;
+
+export const SideNavBarFooter = styled.footer`
+	display: flex;
+	justify-content: flex-start;
+	position: absolute;
+	bottom: 2rem;
+`;
