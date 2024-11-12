@@ -37,7 +37,7 @@ export const ClothingInfoLeft = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 12rem;
+		width: 80%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -70,6 +70,8 @@ export const ClothingInfoRight = styled.div`
 	margin-left: auto;
 
 	img {
+		position: absolute;
+		top: 5px;
 		width: 1.125rem;
 		height: 1.5rem;
 	}
