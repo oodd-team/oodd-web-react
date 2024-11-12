@@ -1,153 +1,98 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { OODDFrame } from '../../components/Frame/Frame';
-import HomeTopBar from './HomeTopBar';
 import NavBar from '../../components/NavBar';
-import { HomeContainer } from './styles';
-import request, { BaseResponse } from '../../apis/core';
+import ApiModal from '../../components/Modal/ApiModal/index.tsx';
+import CommentBottomSheet from '../../components/CommentBottomSheet/index.tsx';
 
-import Modal from '../../components/Modal/index.tsx';
-import HeartBottomSheet from '../../components/PostBottomSheets/HeartBottomSheet.tsx';
+import { ApiModalProps } from '../../components/Modal/ApiModal/dto.ts';
+import { CommentBottomSheetProps } from '../../components/CommentBottomSheet/dto.ts';
+import { createMatchingApi } from '../../apis/matching/index.ts';
+import { CreateMatchingRequest, CreateMatchingResponse } from '../../apis/matching/dto.ts';
+
 import {
-	IsRequestFailModalOpenAtom,
-	IsRequestSuccessModalOpenAtom,
-	PostRequestAtom,
-} from '../../recoil/Home/HeartBottomSheetAtom.ts';
+	MatchingInfoAtom,
+	IsMatchingCommentBottomSheetOpenAtom,
+} from '../../recoil/Home/MatchingCommentBottomSheetAtom.ts';
+import { PostBlockAtom } from '../../recoil/Home/BlockBottomSheetAtom.ts';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { ModalProps } from '../../components/Modal/dto.ts';
-import {
-	IsBlockConfirmationModalOpenAtom,
-	IsBlockFailModalOpenAtom,
-	IsBlockSuccessModalOpenAtom,
-	PostBlockAtom,
-} from '../../recoil/Home/BlockBottomSheetAtom.ts';
-import BlockConfirmationModal from '../../components/PostBottomSheets/BlockConfirmationModal.tsx';
-import MeatballBottomSheet from '../../components/PostBottomSheets/MeatballBottomSheet.tsx';
-import ReportBottomSheet from '../../components/PostBottomSheets/ReportBottomSheet.tsx';
-import {
-	IsReportFailModalOpenAtom,
-	IsReportSuccessModalOpenAtom,
-	PostReportAtom,
-} from '../../recoil/Home/MeatballBottomSheetAtom.ts';
+
+import HomeTopBar from './HomeTopBar';
 import OOTD from './OOTD/index.tsx';
-
-interface UserResponseType {
-	id: number;
-	name: string;
-	email: string;
-	nickname: string | null;
-	phoneNumber: string | null;
-	profilePictureUrl: string;
-	bio: string | null;
-	joinedAt: string;
-}
-
-interface UserResponse extends BaseResponse<UserResponseType> {}
+import { HomeContainer } from './styles';
+import { handleError } from '../../apis/util/handleError.ts';
+import Modal from '../../components/Modal/index.tsx';
+import { ModalProps } from '../../components/Modal/dto.ts';
 
 // Home 페이지입니다.
 const Home: React.FC = () => {
-	const navigate = useNavigate();
-
-	// 모달과 바텀시트 상태 및 로직
-	const [isRequestSuccessModalOpen, setIsRequestSuccessModalOpen] = useRecoilState(IsRequestSuccessModalOpenAtom);
-	const [isRequestFailModalOpen, setIsRequestFailModalOpen] = useRecoilState(IsRequestFailModalOpenAtom);
-	const postRequest = useRecoilValue(PostRequestAtom);
-	const [isBlockSuccessModalOpen, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
-	const [isBlockFailModalOpen, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
-	const isBlockConfirmationModalOpen = useRecoilValue(IsBlockConfirmationModalOpenAtom);
-	const postBlock = useRecoilValue(PostBlockAtom);
-	const [isReportSuccessModalOpen, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
-	const [isReportFailModalOpen, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
-	const postReport = useRecoilValue(PostReportAtom);
-
+	const blockInfo = useRecoilValue(PostBlockAtom);
+	const matchingInfo = useRecoilValue(MatchingInfoAtom);
+	const [isBlockApiModalOpen, setIsBlockApiModalOpen] = useState(false);
+	const [isMatchingCommentBottomSheetOpen, setIsMatchingCommentBottomSheetOpen] = useRecoilState(
+		IsMatchingCommentBottomSheetOpenAtom,
+	);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('');
 	const ootdTooltipRef = useRef<HTMLDivElement[]>([]);
 
-	// 로그인 여부에 따라 navigate
-	useEffect(() => {
-		const checkAuth = async () => {
-			const userId = localStorage.getItem('id');
-			const token = localStorage.getItem('jwt_token');
+	// 매칭 생성 api
+	const createMatching = async (comment: string) => {
+		try {
+			const matchingRequest: CreateMatchingRequest = {
+				requesterId: matchingInfo!.requesterId,
+				targetId: matchingInfo!.targetId,
+				message: comment,
+			};
+			const response = await createMatchingApi(matchingRequest);
 
-			if (!userId || !token) {
-				navigate('/login');
-				return;
+			if (response.isSuccess) {
+				setModalContent(`${matchingInfo?.targetName} 님에게 대표 OOTD와\n한 줄 메세지를 보냈어요!`);
 			}
+		} catch (error) {
+			const errorMessage = handleError(error);
+			setModalContent(errorMessage);
+		} finally {
+			setIsMatchingCommentBottomSheetOpen(false);
+			setIsStatusModalOpen(true);
+		}
+	};
 
-			try {
-				const response = await request.get<UserResponse>(`/users/${userId}`);
-				if (!response || !response.result.id) {
-					console.log(response);
-					navigate('/login');
-				}
-			} catch (error) {
-				console.error('Failed to authenticate user:', error);
-				navigate('/login');
-			}
-		};
-
-		checkAuth();
-	}, [navigate]);
-
-	// feed
 	// x 버튼 클릭 시
-	const blockSuccessModalProps: ModalProps = {
-		onClose: () => {
-			setIsBlockSuccessModalOpen(false);
+	// TODO: 차단하기 api 생성되면 호출하는 api 함수 수정
+	const blockApiModalProps: ApiModalProps<CreateMatchingResponse> = {
+		response: createMatchingApi({ requesterId: 0, targetId: 0, message: '' }),
+		content: `${blockInfo?.friendName || '알수없음'}님을 정말로 차단하시겠어요?`,
+		buttonContent: '차단하기',
+		successContent: '정상적으로 처리되었습니다.',
+		handleCloseModal: () => {
+			setIsBlockApiModalOpen(true);
 		},
-		content: `${postBlock?.friendName} 님을 차단했어요`,
 	};
 
-	const blockFailModalProps: ModalProps = {
-		onClose: () => {
-			setIsBlockFailModalOpen(false);
+	const matchingCommentBottomSheetProps: CommentBottomSheetProps = {
+		isBottomSheetOpen: isMatchingCommentBottomSheetOpen,
+		commentProps: {
+			content: `${matchingInfo?.targetName} 님에게 대표 OOTD와 함께 전달될\n한줄 메시지를 보내보세요!`,
+			sendComment: createMatching,
 		},
-		content: `차단에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
+		handleCloseBottomSheet: () => {
+			setIsMatchingCommentBottomSheetOpen(false);
+		},
 	};
 
-	// 하트 버튼 클릭 시
-	const requestSuccessModalProps: ModalProps = {
+	// api 응답 상태에 따른 메시지를 출력하는 모달
+	const statusModalProps: ModalProps = {
+		content: modalContent,
 		onClose: () => {
-			setIsRequestSuccessModalOpen(false);
+			setIsStatusModalOpen(false);
 		},
-		content: `${postRequest?.targetName} 님에게 대표 OOTD와\n한줄 메시지를 보냈어요!`,
-	};
-
-	const requestFailModalProps: ModalProps = {
-		onClose: () => {
-			setIsRequestFailModalOpen(false);
-		},
-		content: `요청에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
-	};
-
-	// 신고하기 메뉴
-	const reportSuccessModalProps: ModalProps = {
-		onClose: () => {
-			setIsReportSuccessModalOpen(false);
-		},
-		content: `${postReport?.userName} 님의\nOOTD를 신고했어요`,
-	};
-
-	const reportFailModalProps: ModalProps = {
-		onClose: () => {
-			setIsReportFailModalOpen(false);
-		},
-		content: `신고에 실패했어요\n잠시 뒤 다시 시도해 보세요`,
 	};
 
 	return (
 		<OODDFrame>
-			{isBlockConfirmationModalOpen && <BlockConfirmationModal />}
-			{isBlockSuccessModalOpen && <Modal {...blockSuccessModalProps} />}
-			{isBlockFailModalOpen && <Modal {...blockFailModalProps} />}
-
-			<HeartBottomSheet />
-			{isRequestSuccessModalOpen && <Modal {...requestSuccessModalProps} />}
-			{isRequestFailModalOpen && <Modal {...requestFailModalProps} />}
-
-			<MeatballBottomSheet />
-			<ReportBottomSheet />
-			{isReportSuccessModalOpen && <Modal {...reportSuccessModalProps} />}
-			{isReportFailModalOpen && <Modal {...reportFailModalProps} />}
+			{isBlockApiModalOpen && <ApiModal {...blockApiModalProps} />}
+			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 
 			<HomeContainer>
 				<HomeTopBar />
