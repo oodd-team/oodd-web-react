@@ -56,9 +56,9 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 	width: 21.25rem;
 	height: 100%;
 	position: fixed;
-	left: 0;
+	right: 0;
 	background: white;
-	transform: translateX(${({ $isSideBarOpen }) => ($isSideBarOpen ? 0 : '-100%')});
+	transform: translateX(${({ $isSideBarOpen }) => ($isSideBarOpen ? 0 : '100%')});
 	transition: transform 0.3s;
 `;
 
