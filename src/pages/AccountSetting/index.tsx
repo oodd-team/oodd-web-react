@@ -12,7 +12,7 @@ import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
-import Profile_s from './../../assets/default/my-page-white.svg';
+import Profile_s from './../../assets/default/my-page.svg';
 import leave from "../../assets/default/leave.svg"
 
 
