@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import PostBase from '../../components/PostBase';
-import ConfirmationModal from '../../components/ConfirmationModal';
+import Modal from '../../components/Modal';
+import { ModalProps } from '../../components/Modal/dto';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
@@ -112,20 +113,23 @@ const MyPost: React.FC = () => {
 		}
 	};
 
+	const deleteConfirmationModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => setIsDeleteConfirmationModalOpen(false),
+		content: '해당 OOTD를 삭제하시겠습니까?',
+		button: {
+			content: '삭제하기',
+			onClick: handleConfirmDelete,
+		},
+	};
+
 	return (
 		<>
 			<PostBase onClickMenu={handleMenuOpen} />
 
 			<BottomSheet {...menuBottomSheetProps} />
 
-			{isDeleteConfirmationModalOpen && (
-				<ConfirmationModal
-					content="해당 OOTD를 삭제하시겠습니까?"
-					isCancelButtonVisible={true}
-					confirm={{ text: '삭제하기', action: handleConfirmDelete }}
-					onCloseModal={() => setIsDeleteConfirmationModalOpen(false)}
-				/>
-			)}
+			{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
 		</>
 	);
 };
