@@ -1,4 +1,6 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 4L16 28" stroke="black" stroke-width="2" stroke-linejoin="bevel"/>
-<path d="M28 16H4" stroke="black" stroke-width="2" stroke-linejoin="bevel"/>
+<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 동그라미 배경 -->
+  <circle cx="35" cy="35" r="33" fill="#E9E9E9"/>
+  <!-- + 모양, 선을 얇게 처리 -->
+  <path d="M46 36.5H36.5V46C36.5 46.414 36.086 46.5 35.5 46.5H34.5C33.914 46.5 33.5 46.086 33.5 45.5V36.5H24C23.414 36.5 23 36.086 23 35.5V34.5C23 33.914 23.414 33.5 24 33.5H33.5V24C33.5 23.414 33.914 23 34.5 23H35.5C36.086 23 36.5 23.414 36.5 24V33.5H46C46.586 33.5 47 33.914 47 34.5V35.5C47 36.086 46.586 36.5 46 36.5Z" fill="white"/>
 </svg>

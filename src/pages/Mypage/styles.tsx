@@ -35,7 +35,7 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: var(--Color-gray4,#8E8E8E);
+	color: var(--Color-gray4, #8e8e8e);
 	text-align: center;
 
 	font-family: 'Pretendard';
@@ -46,7 +46,7 @@ export const StatNumber = styled.div`
 `;
 
 export const StatLabel = styled.div`
-	color: var(--Color-gray4, #8E8E8E);
+	color: var(--Color-gray4, #8e8e8e);
 	text-align: center;
 	font-family: 'Pretendard';
 	font-size: 0.75rem; /* 12px */
@@ -58,8 +58,8 @@ export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between; /* 두 개씩 나란히 배치 */
-  gap: 15px;	
-  cursor: pointer;
+	gap: 15px;
+	cursor: pointer;
 	margin-bottom: 100px;
 	padding: 20px;
 `;

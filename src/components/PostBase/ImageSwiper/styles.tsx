@@ -5,7 +5,7 @@ export const SwiperContainer = styled.div`
 
 	.post-swiper {
 		width: 100%;
-		aspect-ratio: 1;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
 		position: relative;
 	}
@@ -22,7 +22,7 @@ export const ImageWrapper = styled.div`
 
 	img {
 		width: 100%;
-		aspect-ratio: 1;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
 	}
 `;

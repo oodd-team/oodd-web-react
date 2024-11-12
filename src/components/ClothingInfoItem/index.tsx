@@ -17,10 +17,10 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 			<ClothingInfoLeft onClick={handleClick}>
 				<img src={clothingObj.imageUrl} alt="ClothingInfoImg" />
 				<div className="infoDetail">
-					<StyledText className="brand" $textTheme={{ style: 'headline2-bold', lineHeight: 2 }}>
+					<StyledText className="brand" $textTheme={{ style: 'body2-bold', lineHeight: 2 }}>
 						{clothingObj.brand}
 					</StyledText>
-					<StyledTextClipped className="model" $textTheme={{ style: 'caption2-regular', lineHeight: 1 }}>
+					<StyledTextClipped className="model" $textTheme={{ style: 'caption1-regular', lineHeight: 1 }}>
 						{clothingObj.model}
 					</StyledTextClipped>
 				</div>
