@@ -19,7 +19,7 @@ export const HomeTopBarContainer = styled.header`
 	z-index: 20;
 	align-items: center;
 	position: fixed;
-	${({ theme }) => theme.breakPoints};
+	${({ theme }) => theme.visibleOnMobileTablet};
 `;
 
 export const HomeLogo = styled.img`

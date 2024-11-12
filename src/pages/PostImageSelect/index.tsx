@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
 	postImagesAtom,
@@ -14,8 +14,8 @@ import TopBar from '../../components/TopBar';
 import BottomButton from '../../components/BottomButton';
 import { StyledText } from '../../components/Text/StyledText';
 import close from '../../assets/Upload/close.svg';
-import back from '../../assets/Upload/back.svg';
-import picture from '../../assets/Upload/picture.svg';
+import left from '../../assets/arrow/left.svg';
+import big_picture from '../../assets/Upload/big_picture.svg';
 import ImageSwiper from '../PostImageSelect/ImageSwiper';
 import { ImageSelectModalProps } from './dto';
 import heic2any from 'heic2any';
@@ -28,6 +28,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const [, setIsRepresentative] = useRecoilState(postIsRepresentativeAtom);
 	const [isActive, setActive] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const handleClose = () => {
@@ -43,7 +44,8 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	};
 
 	const handleNext = () => {
-		navigate('/upload');
+		const state = location.state as { mode?: string; postId?: number };
+		navigate('/upload', { state: { mode: state?.mode, postId: state?.postId } });
 	};
 
 	// 파일 선택기에서 사진 업로드
@@ -129,7 +131,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 			<UploadContainer>
 				<TopBar
 					text="OOTD 업로드"
-					LeftButtonSrc={images.length === 0 ? close : back}
+					LeftButtonSrc={images.length === 0 ? close : left}
 					onLeftClick={images.length === 0 ? handleClose : handlePrev}
 				/>
 				<Content>
@@ -144,7 +146,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 							<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>
 								사진을 여기에 끌어다 놓으세요
 							</StyledText>
-							<img src={picture} />
+							<img src={big_picture} />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>
 					) : (

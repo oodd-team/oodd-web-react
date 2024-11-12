@@ -5,8 +5,7 @@ export const InputLayout = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
-	textarea {
+	ba textarea {
 		display: block;
 		width: 100%;
 		height: 100px;

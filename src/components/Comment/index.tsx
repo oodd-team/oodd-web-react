@@ -38,7 +38,7 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 		}
 	};
 
-	const handleClickSend = () => {
+	const handleSendButtonClick = () => {
 		if (comment === '') {
 			return;
 		}
@@ -59,7 +59,7 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 					onKeyDown={handleKeyDown}
 					maxLength={100}
 				/>
-				<SendImg src={Send} onClick={handleClickSend} />
+				<SendImg src={Send} onClick={handleSendButtonClick} />
 			</SendContainer>
 		</CommentLayout>
 	);
