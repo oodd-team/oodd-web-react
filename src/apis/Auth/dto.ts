@@ -1,4 +1,4 @@
-import { BaseSuccessResponse } from '../core';
+import { BaseSuccessResponse } from '../core/dto';
 
 // 네이버 로그인
 export type NaverLoginResponse = BaseSuccessResponse<LoginResponse>;
