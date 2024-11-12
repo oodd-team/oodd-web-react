@@ -4,7 +4,6 @@ import UserInfo from './components/UserInfo';
 import PostItem from '../../components/PostItem';
 import BottomSheet from '../../components/BottomSheet';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
-import ConfirmationModal from '../../components/ConfirmationModal';
 import ReportText from './components/ReportText';
 import TopBar from '../../components/TopBar';
 import { StyledText } from '../../components/Text/StyledText';
@@ -208,8 +207,9 @@ const ProfileViewer: React.FC = () => {
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.length > 0 &&
-						representativePosts.map((post) => <PostItem post={post} key={post.postId} />)}
-					{otherPosts.length > 0 && otherPosts.map((post) => <PostItem key={post.postId} post={post} />)}
+						representativePosts.map((post) => <PostItem post={post} key={post.postId} isMyPost={false} />)}
+					{otherPosts.length > 0 &&
+						otherPosts.map((post) => <PostItem key={post.postId} post={post} isMyPost={false} />)}
 				</PostListContainer>
 				{activeBottomSheet === 'main' && (
 					<BottomSheet
@@ -242,17 +242,21 @@ const ProfileViewer: React.FC = () => {
 					/>
 				)}
 				{isConfirmationModalOpen && (
-					<ConfirmationModal
+					<Modal
 						content={
 							userDetails.status === 'blocked'
 								? `${userDetails.nickname}님을 차단 해제하시겠습니까?`
 								: `${userDetails.nickname}님을 정말로 차단하시겠습니까?`
 						}
-						isCancelButtonVisible={true}
-						confirm={{ text: userDetails.status === 'blocked' ? '차단 해제하기' : '차단하기', action: confirmAction }}
-						onCloseModal={handleConfirmationModalClose}
+						isCloseButtonVisible={true} // 오른쪽 상단 X 버튼 표시 여부
+						onClose={handleConfirmationModalClose}
+						button={{
+							content: userDetails.status === 'blocked' ? '차단 해제하기' : '차단하기',
+							onClick: confirmAction,
+						}}
 					/>
 				)}
+
 				{isModalOpen && <Modal content={modalContent} onClose={handleModalClose} />}
 			</ProfileViewerContainer>
 		</OODDFrame>

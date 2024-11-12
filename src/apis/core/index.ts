@@ -7,13 +7,6 @@ import axios, {
 } from 'axios';
 import { JWT_KEY, NEW_JWT_KEY } from '../../config/constant';
 
-// 새로운 서버 응답 타입
-export type BaseSuccessResponse<T = any> = {
-	isSuccess: boolean;
-	code: string;
-	data: T;
-};
-
 // 기존 서버 응답 타입
 export type BaseResponse<T = any> = {
 	isSuccess: boolean;

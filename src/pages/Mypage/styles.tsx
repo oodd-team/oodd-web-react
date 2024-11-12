@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
 	width: 100%;
-	//max-width: 32rem;
 	flex-grow: 1;
 	margin: 0 auto; /* 중앙 정렬 */
 	display: flex;
@@ -19,53 +18,6 @@ export const Header = styled.div`
 	align-items: center;
 	padding: 0rem;
 	margin-left: 20px;
-`;
-
-export const AvatarWrapper = styled.div`
-	width: 4.5rem; /* 72px */
-	height: 4.5rem; /* 72px */
-	border-radius: 50%;
-	overflow: hidden;
-	margin-right: 1.25rem; /* 20px */
-	margin-left: 30px;
-	flex-shrink: 0; /* Flex 레이아웃에서 크기 고정 */
-	position: relative; /* 필요한 경우 상대적인 위치 고정 */
-`;
-
-export const Avatar = styled.img`
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-`;
-
-export const UserInfo = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-`;
-
-export const Username = styled.div`
-	font-family: Pretendard;
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: 144.5%; /* 26.01px */
-	letter-spacing: -0.004px;
-`;
-
-export const Bio = styled.div`
-	overflow: hidden;
-	color: #888;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	font-family: Pretendard;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 22px; /* 157.143% */
-	letter-spacing: -0.5px;
-
-	margin-top: 10px;
 `;
 
 export const StatsContainer = styled.div`
@@ -100,15 +52,14 @@ export const StatLabel = styled.div`
 	font-size: 0.75rem; /* 12px */
 	font-style: normal;
 	font-weight: 300;
-	line-height: normal;
 `;
 
 export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between; /* 두 개씩 나란히 배치 */
-  gap: 15px;	
-  cursor: pointer;
+	gap: 15px;
+	cursor: pointer;
 	margin-bottom: 100px;
 	padding: 20px;
 `;
