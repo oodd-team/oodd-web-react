@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import ConfirmationModal from '../../components/ConfirmationModal';
-import logout from './assets/logout.svg';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import TopBar from '../../components/TopBar';
@@ -14,6 +13,7 @@ import { UserProfileResponse } from '../ProfileEdit/dto';
 import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 import Profile_s from './../../assets/default/my-page-white.svg';
+import leave from "../../assets/default/leave.svg"
 
 
 const AccountSetting: React.FC = () => {
@@ -94,7 +94,7 @@ const AccountSetting: React.FC = () => {
 				
 				<List>
 					<ListItem onClick={handleLogoutClick}>
-						<img src={logout} alt="로그아웃 아이콘" />
+						<img src={leave} alt="로그아웃 아이콘" />
 						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
 							Logout
 						</StyledText>
