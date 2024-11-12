@@ -24,6 +24,7 @@ export const ClothingInfoItemContainer = styled.li`
 export const ClothingInfoLeft = styled.div`
 	display: flex;
 	align-items: center;
+	width: calc(100% - 40px);
 
 	> img {
 		width: 4.625rem;
@@ -37,7 +38,7 @@ export const ClothingInfoLeft = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 80%;
+		width: 70%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
