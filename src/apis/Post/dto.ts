@@ -14,9 +14,15 @@ export type GetPostDetailResponse = BaseSuccessResponse<GetPostDetailData>;
 
 // 게시글 수정
 //request
-export type UpdatePostResquest = PostBase;
+export type ModifyPostRequest = PostBase;
 //response
-export type UpdatePostResponse = BaseSuccessResponse<UpdatePostData>;
+export type ModifyPostResponse = BaseSuccessResponse<ModifyPostData>;
+
+// 게시글 삭제
+// response : empty
+
+// 대표 게시글 지정
+// response : empty
 
 // OOTD 조회
 //export type GetOOTDResponse = BaseSuccessResponse<PostByStyleTagResult>;
@@ -47,7 +53,7 @@ export interface GetPostListData {
 
 export interface GetPostDetailData extends PostDetailData {}
 
-export interface UpdatePostData extends PostData {}
+export interface ModifyPostData extends PostData {}
 
 export interface PostSummary extends PostBase {
 	postId: number;
