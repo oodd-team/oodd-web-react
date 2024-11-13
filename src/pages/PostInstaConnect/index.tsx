@@ -10,7 +10,7 @@ import BottomButton from '../../components/BottomButton';
 import Modal from '../../components/Modal';
 import { ModalProps } from '../../components/Modal/dto';
 
-import close from '../../assets/Upload/close.svg';
+import X from '../../assets/default/x.svg';
 
 import { InstaConnectModalProps } from './dto';
 
@@ -53,7 +53,8 @@ const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 
 	return (
 		<OODDFrame>
-			<TopBar text="인스타 계정 연동" LeftButtonSrc={close} />
+			<TopBar text="인스타 계정 연동" LeftButtonSrc={X} />
+
 			<Content>
 				{isLoading ? (
 					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>

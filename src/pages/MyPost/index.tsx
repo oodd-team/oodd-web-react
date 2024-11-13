@@ -10,9 +10,9 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 
-import Edit from '../../assets/BottomSheetMenu/Edit.svg';
-import Pin from '../../assets/BottomSheetMenu/Pin.svg';
-import Delete from '../../assets/BottomSheetMenu/Delete.svg';
+import Edit from '../../assets/default/edit.svg';
+import Pin from '../../assets/default/pin.svg';
+import Delete from '../../assets/default/delete.svg';
 
 import request from '../../apis/core';
 import { BaseApiResponse } from '../../apis/util/dto';
@@ -29,7 +29,7 @@ const MyPost: React.FC = () => {
 				text: '대표 OOTD로 지정하기',
 				action: () => {
 					setIsMenuBottomSheetOpen(false);
-					handlePinPost();
+					handlePostPin();
 				},
 				icon: Pin,
 			},
@@ -37,7 +37,7 @@ const MyPost: React.FC = () => {
 				text: 'OODD 수정하기',
 				action: () => {
 					setIsMenuBottomSheetOpen(false);
-					handleEditPost();
+					handlePostEdit();
 				},
 				icon: Edit,
 			},
@@ -64,11 +64,11 @@ const MyPost: React.FC = () => {
 		setIsMenuBottomSheetOpen(true);
 	};
 
-	const handleEditPost = () => {
+	const handlePostEdit = () => {
 		navigate('/upload', { state: { mode: 'edit', postId: postId } });
 	};
 
-	const handlePinPost = async () => {
+	const handlePostPin = async () => {
 		// localStorage에서 storedUserId를 가져옴
 		const storedUserId = localStorage.getItem('id');
 
@@ -97,7 +97,7 @@ const MyPost: React.FC = () => {
 		}
 	};
 
-	const handleConfirmDelete = async () => {
+	const handlePostDelete = async () => {
 		try {
 			const response = await request.delete<BaseApiResponse>(`/posts/${postId}`);
 			if (response.message === 'Post deleted successfully') {
@@ -119,7 +119,7 @@ const MyPost: React.FC = () => {
 		content: '해당 OOTD를 삭제하시겠습니까?',
 		button: {
 			content: '삭제하기',
-			onClick: handleConfirmDelete,
+			onClick: handlePostDelete,
 		},
 	};
 

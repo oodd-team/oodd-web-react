@@ -21,8 +21,8 @@ import { useNavigate } from 'react-router-dom';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 
-import NAVER from "../../assets/Login/NAVER.svg"
-import Kakao from "../../assets/Login/Kakao.svg"
+import NAVER from '../../assets/default/snsIcon/NAVER.svg';
+import Kakao from '../../assets/default/snsIcon/Kakao.svg';
 import TopBar from '../../components/TopBar';
 import back from '../../assets/back.svg';
 

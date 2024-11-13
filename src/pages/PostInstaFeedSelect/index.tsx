@@ -11,7 +11,7 @@ import TopBar from '../../components/TopBar';
 import Modal from '../../components/Modal';
 import { ModalProps } from '../../components/Modal/dto';
 
-import close from '../../assets/Upload/close.svg';
+import X from '../../assets/default/x.svg';
 
 import { InstaFeedSelectModalProps, Post } from './dto';
 
@@ -77,7 +77,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 		<OODDFrame>
 			{isSuccessModalOpen && <Modal {...connectSuccessModalProps} />}
 			{isFailModalOpen && <Modal {...connectFailModalProps} />}
-			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={close} onLeftClick={handleClose} />{' '}
+			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onLeftClick={handleClose} />{' '}
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>

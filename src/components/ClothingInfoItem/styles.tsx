@@ -6,7 +6,7 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid #ffbbda;
+	border: 0.0625rem solid ${({ theme }) => theme.colors.pink};
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	min-width: 20.9375rem;
@@ -24,6 +24,7 @@ export const ClothingInfoItemContainer = styled.li`
 export const ClothingInfoLeft = styled.div`
 	display: flex;
 	align-items: center;
+	width: calc(100% - 40px);
 
 	> img {
 		width: 4.625rem;
@@ -37,7 +38,7 @@ export const ClothingInfoLeft = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		width: 80%;
+		width: 70%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -71,8 +72,7 @@ export const ClothingInfoRight = styled.div`
 
 	img {
 		position: absolute;
-		top: 5px;
-		width: 1.125rem;
-		height: 1.5rem;
+		top: 10px;
+		right: 10px;
 	}
 `;
