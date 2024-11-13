@@ -4,19 +4,19 @@ import { BaseSuccessResponse } from '../core/dto';
 //request
 export type CreatePostRequest = PostBase;
 //response
-export type CreatePostResponse = BaseSuccessResponse<PostBase>;
+export type CreatePostResponse = BaseSuccessResponse<CreatePostData>;
 
 // 게시글 리스트 조회
-export type GetPostListResponse = BaseSuccessResponse<{ post: PostSummary[]; meta: PaginationMeta }>;
+export type GetPostListResponse = BaseSuccessResponse<GetPostListData>;
 
 // 게시글 상세 조회
-export type GetPostDetailResponse = BaseSuccessResponse<PostDetail>;
+export type GetPostDetailResponse = BaseSuccessResponse<GetPostDetailData>;
 
 // 게시글 수정
 //request
 export type UpdatePostResquest = PostBase;
 //response
-export type UpdatePostResponse = BaseSuccessResponse<PostData>;
+export type UpdatePostResponse = BaseSuccessResponse<UpdatePostData>;
 
 // OOTD 조회
 //export type GetOOTDResponse = BaseSuccessResponse<PostByStyleTagResult>;
@@ -38,6 +38,17 @@ export interface PostBase {
 	isRepresentative?: boolean;
 }
 
+export interface CreatePostData extends PostBase {}
+
+export interface GetPostListData {
+	post: PostSummary[];
+	meta: PaginationMeta;
+}
+
+export interface GetPostDetailData extends PostDetailData {}
+
+export interface UpdatePostData extends PostData {}
+
 export interface PostSummary extends PostBase {
 	postId: number;
 	createdAt: Date;
@@ -53,7 +64,7 @@ export interface PostData extends PostBase {
 	userId: number;
 }
 
-export interface PostDetail {
+export interface PostDetailData {
 	content: string;
 	createdAt: string;
 	postImages: PostImage[];
