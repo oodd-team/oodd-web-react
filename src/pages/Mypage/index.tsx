@@ -24,8 +24,8 @@ import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
 import button_plus from '../../assets/Profile/button_plus.svg';
-import Insta from '../../assets/BottomSheetMenu/Insta.svg';
-import Picture from '../../assets/BottomSheetMenu/Picture.svg';
+import insta from '../../assets/default/insta.svg';
+import photo from '../../assets/default/photo.svg';
 import UserProfile from '../../components/UserProfile';
 
 const MyPage: React.FC = () => {
@@ -46,7 +46,7 @@ const MyPage: React.FC = () => {
 					setIsBottomSheetOpen(false);
 					navigate('/insta-connect');
 				},
-				icon: Insta,
+				icon: insta,
 			},
 			{
 				text: '사진 올리기',
@@ -54,7 +54,7 @@ const MyPage: React.FC = () => {
 					setIsBottomSheetOpen(false);
 					navigate('/image-select');
 				},
-				icon: Picture,
+				icon: photo,
 			},
 		],
 		marginBottom: '50px',

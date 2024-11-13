@@ -7,7 +7,7 @@ import { StyledText } from '../../Text/StyledText';
 import theme from '../../../styles/theme';
 import Loading from '../../Loading';
 
-import menu from '../../../assets/Post/menu.svg';
+import More from '../../../assets/default/more.svg';
 
 import request from '../../../apis/core';
 import { LikeCommentBottomSheetProps, LikesResponse, CommentsResponse } from '../dto';
@@ -77,6 +77,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
+	//댓글 메뉴 클릭한 경우 ***** 추후 수정 *****
 	const handleCommentMenuClick = () => {};
 
 	return (
@@ -151,7 +152,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 									<StyledText $textTheme={{ style: 'caption2-medium' }}>{comment.content}</StyledText>
 								</CommentContent>
 								<MenuBtn onClick={handleCommentMenuClick}>
-									<img src={menu} alt="menu" />
+									<img src={More} alt="more" />
 								</MenuBtn>
 							</CommentItem>
 						))

@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 import { SwiperContainer, ImageWrapper, StyledNavigation, StyledPagination } from './styles';
-import picture from '../../../assets/Upload/picture.svg';
-import { Navigation, Pagination } from 'swiper/modules';
+
+import PhotoWhite from '../../../assets/default/photo-white.svg';
+
 import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
@@ -29,7 +32,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 					renderCustom: (_, current, total) => {
 						return `
 							<div class="swiper-pagination-custom">
-								<img src="${picture}" alt="Pagination Icon" />
+								<img src="${PhotoWhite}" alt="Pagination Icon" />
 								<span>${current}/${total}</span>
 							</div>`;
 					},

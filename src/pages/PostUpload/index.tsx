@@ -24,22 +24,22 @@ import {
 } from './styles';
 
 import { OODDFrame } from '../../components/Frame/Frame';
+import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomButton from '../../components/BottomButton';
-import { StyledText } from '../../components/Text/StyledText';
 import ClothingInfoItem from '../../components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
 
-import left from '../../assets/arrow/left.svg';
-import clothingTag from '../../assets/Upload/clothingTag.svg';
-import styleTag from '../../assets/Upload/styleTag.svg';
-import pin from '../../assets/Upload/pin.svg';
-import right from '../../assets/arrow/right.svg';
-import up from '../../assets/arrow/up.svg';
+import Left from '../../assets/arrow/left.svg';
+import Right from '../../assets/arrow/right.svg';
+import Up from '../../assets/arrow/up.svg';
+import ClothingTag from '../../assets/default/clothes-tag.svg';
+import StyleTag from '../../assets/default/style-tag.svg';
+import Pin from '../../assets/default/pin.svg';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
@@ -273,7 +273,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				<TopBar text="OOTD 업로드" LeftButtonSrc={left} onLeftClick={handlePrev} />
+				<TopBar text="OOTD 업로드" LeftButtonSrc={Left} onLeftClick={handlePrev} />
 				<Content>
 					<ImageSwiper images={selectedImages} />
 					<StyledInput
@@ -283,7 +283,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					/>
 					<TagContainer className="clothingTag">
 						<div onClick={handleToggleSearchSheet}>
-							<img src={clothingTag} />
+							<img src={ClothingTag} />
 							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
 								옷 정보 태그
 							</StyledText>
@@ -292,7 +292,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 									{clothingInfos.length}
 								</StyledText>
 							)}
-							<img src={right} />
+							<img src={Right} />
 						</div>
 						{clothingInfos.length > 0 && (
 							<ClothingInfoList>
@@ -304,18 +304,18 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					</TagContainer>
 					<TagContainer>
 						<div onClick={handleToggleStyleTagList}>
-							<img src={styleTag} />
+							<img src={StyleTag} />
 							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
 								스타일 태그
 							</StyledText>
 							{isStyletagListOpen ? (
-								<img src={up} />
+								<img src={Up} />
 							) : !selectedStyletag ? (
 								<>
 									<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 										미지정
 									</StyledText>
-									<img src={right} />
+									<img src={Right} />
 								</>
 							) : (
 								<StyletagItem selected={false}>
@@ -338,7 +338,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 						)}
 					</TagContainer>
 					<PinnedPostToggleContainer>
-						<img src={pin} />
+						<img src={Pin} />
 						<StyledText $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 						<div>
 							<ToggleSwitch checked={isRepresentative} onChange={handleToggleIsRepresentative} />
