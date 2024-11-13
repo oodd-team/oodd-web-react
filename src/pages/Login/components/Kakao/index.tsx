@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
-import kakao from '../../../../assets/Login/Kakao.svg';
+import kakao from '../../../../assets/default/snsIcon/Kakao.svg';
 import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from '../style';
 
 const Kakao: React.FC = () => {
