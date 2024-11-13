@@ -1,25 +1,22 @@
+import { BaseSuccessResponse } from '../core/dto';
 import { BaseApiResponse } from '../util/dto';
 
 // 회원 탈퇴
 export type DeleteUserResponse = BaseApiResponse<DeleteUserResult>;
 
-// 휴대폰 번호 본인인증 코드 전송 응답
-
-// 휴대폰 번호 본인인증 코드 확인 응답
-
 // 사용자 신고 요청 맟 응답
 export type UpdateUserReportRequest = ReportRequest;
-export type UpdateUserReportResponse = BaseApiResponse<ReportUserResult>;
+export type UpdateUserReportResponse = BaseSuccessResponse<ReportUserResult>;
 
 // 사용자 정보 조회
 export type GetUserResponse = BaseApiResponse<User>;
 
 // 사용자 정보 수정
-export type UpdateUserResponse = BaseApiResponse<User>;
+export type UpdateUserResponse = BaseSuccessResponse<User>;
 
 // 사용자 차단/해제 요청 및 응답
 export type CreateUserBlockRequest = BlockRequest;
-export type CreateUserBlockResponse = BaseApiResponse<BlockResult>;
+export type CreateUserBlockResponse = BaseSuccessResponse<BlockResult>;
 
 // 회원 탈퇴 응답 데이터
 export interface DeleteUserResult {
@@ -62,7 +59,3 @@ export interface BlockRequest {
 export interface BlockResult {
 	message: string;
 }
-
-// 휴대폰 본인인증 코드 결과
-
-// 휴대폰 본인인증 코드 확인 결과
