@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import { useRecoilState } from 'recoil';
 import {
 	postImagesAtom,
@@ -8,15 +9,19 @@ import {
 	postStyletagAtom,
 	postIsRepresentativeAtom,
 } from '../../recoil/PostUpload/PostUploadAtom';
+
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
+
 import { OODDFrame } from '../../components/Frame/Frame';
+import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
 import BottomButton from '../../components/BottomButton';
-import { StyledText } from '../../components/Text/StyledText';
-import close from '../../assets/Upload/close.svg';
-import left from '../../assets/arrow/left.svg';
-import big_picture from '../../assets/Upload/big_picture.svg';
-import ImageSwiper from '../PostImageSelect/ImageSwiper';
+import ImageSwiper from './ImageSwiper';
+
+import X from '../../assets/default/x.svg';
+import Left from '../../assets/arrow/left.svg';
+import PhotoBig from '../../assets/default/photo-big.svg';
+
 import { ImageSelectModalProps } from './dto';
 import heic2any from 'heic2any';
 
@@ -131,7 +136,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 			<UploadContainer>
 				<TopBar
 					text="OOTD 업로드"
-					LeftButtonSrc={images.length === 0 ? close : left}
+					LeftButtonSrc={images.length === 0 ? X : Left}
 					onLeftClick={images.length === 0 ? handleClose : handlePrev}
 				/>
 				<Content>
@@ -146,7 +151,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 							<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>
 								사진을 여기에 끌어다 놓으세요
 							</StyledText>
-							<img src={big_picture} />
+							<img src={PhotoBig} />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>
 					) : (

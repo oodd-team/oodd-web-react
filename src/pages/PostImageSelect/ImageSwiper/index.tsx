@@ -1,13 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButton, HiddenFileInput } from './styles';
-import remove from '../../../assets/Upload/remove.svg';
-import plus from '../../../assets/Upload/plus.svg';
-import { Navigation, Pagination } from 'swiper/modules';
+
+import Reject from '../../../assets/default/reject.svg';
+import Plus from '../../../assets/default/plus.svg';
+
 import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemoveImage }) => {
@@ -41,7 +43,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 							<img src={image} alt={`Selected ${index}`} />
 							{images.length > 1 && (
 								<RemoveButton onClick={() => onRemoveImage(image)}>
-									<img src={remove} alt="Remove" />
+									<img src={Reject} alt="remove" />
 								</RemoveButton>
 							)}
 						</ImageWrapper>
@@ -49,7 +51,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 				))}
 				<SwiperSlide className="add-btn-box">
 					<AddButton onClick={handleSelectImage}>
-						<img src={plus} />
+						<img src={Plus} />
 					</AddButton>
 					<HiddenFileInput
 						type="file"
