@@ -1,28 +1,91 @@
-import { BaseApiResponse } from '../util/dto';
+import { BaseSuccessResponse } from '../core/dto';
+
+// 게시글 생성
+//request
+export type CreatePostRequest = PostBase;
+//response
+export type CreatePostResponse = BaseSuccessResponse<PostBase>;
+
+// 게시글 리스트 조회
+export type GetPostListResponse = BaseSuccessResponse<{ post: PostSummary[]; meta: PaginationMeta }>;
+
+// 게시글 상세 조회
+export type GetPostDetailResponse = BaseSuccessResponse<PostDetail>;
+
+// 게시글 수정
+//request
+export type UpdatePostResquest = PostBase;
+//response
+export type UpdatePostResponse = BaseSuccessResponse<PostData>;
 
 // OOTD 조회
-export type GetOOTDResponse = BaseApiResponse<PostByStyleTagResult>;
+//export type GetOOTDResponse = BaseSuccessResponse<PostByStyleTagResult>;
 
-// 게시물 업로드 응답
-export type CreatePostResponse = BaseApiResponse<PostResult>;
+interface PaginationMeta {
+	total: number;
+	page: number;
+	take: number;
+	last_page: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
 
-// 게시물 삭제 응답 (result가 null)
-export type DeletePostResponse = BaseApiResponse<null>;
+export interface PostBase {
+	content: string;
+	postImages: PostImage[];
+	postStyletags?: string[];
+	postClothings?: PostClothing[] | null;
+	isRepresentative?: boolean;
+}
 
-// 게시물 수정 응답
-export type UpdatePostResponse = BaseApiResponse<PostResult>;
+export interface PostSummary extends PostBase {
+	postId: number;
+	createdAt: Date;
+	isPostLike: boolean;
+	user: User;
+	//likeCount: number;
+	//commentCount: number;
+	//isRepresentative: boolean;
+}
 
-// 게시물 리스트 조회 (내 게시물일 때, 남의 게시물일 때)
-export type GetPostListResponse = BaseApiResponse<PostListResult>;
+export interface PostData extends PostBase {
+	postId: number;
+	userId: number;
+}
 
-// 게시물 상세 조회 (내 게시물일 때, 남의 게시물일 때)
-export type GetPostDetailResponse = BaseApiResponse<PostDetailResult>;
+export interface PostDetail {
+	content: string;
+	createdAt: string;
+	postImages: PostImage[];
+	postClothings: PostClothing[] | null;
+	user: User;
+	commentCount: number;
+	likeCount: number;
+	isPostLike: boolean;
+	isPostWriter: boolean;
+}
 
-// 게시물 신고 응답
+export interface User {
+	userId: number;
+	nickname: string;
+	profilePictureUrl: string;
+}
 
-// 대표 OOTD 지정 응답
+export interface PostImage {
+	imageurl: string;
+	orderNum: number;
+}
+
+export interface PostClothing {
+	imageUrl: string;
+	brandName: string;
+	modelName: string;
+	modelNumber: string;
+	url: string;
+}
 
 // OOTD 리스트 조회 (스타일 태그에 따른)
+/*
 export interface PostByStyleTag {
 	postId: number;
 	userId: number;
@@ -35,56 +98,4 @@ export interface PostByStyleTag {
 export interface PostByStyleTagResult {
 	posts: PostByStyleTag[];
 }
-
-//게시물
-export interface PostResult {
-	postId: number;
-	userId: number;
-	photoUrls: string[];
-	content: string;
-	styletags: string[];
-	clothingInfo: ClothingInfo[] | null;
-	isRepresentative: boolean;
-}
-
-export interface ClothingInfo {
-	imageUrl: string;
-	brand: string;
-	model: string;
-	modelNumber: string;
-	url: string;
-}
-
-export interface PostSummary {
-	postId: number;
-	userId: number;
-	likes: number | null;
-	firstPhoto: string;
-	isRepresentative: boolean;
-	commentsCount: number; // 내 게시물(댓글 수 포함) | 남의 게시물(댓글 수 미포함)
-}
-
-export interface PostListResult {
-	totalPosts: number;
-	totalLikes: number;
-	posts: PostSummary[];
-}
-
-export interface Comment {
-	id: number;
-	userId: number;
-	text: string;
-	timestamp: string;
-}
-
-export interface PostDetailResult {
-	postId: number;
-	userId: number;
-	likes: number | null;
-	comments: Comment[] | null; // 내 게시물(댓글 포함) | 남의 게시물(댓글 미포함)
-	photoUrls: string[];
-	content: string;
-	styletags: string[];
-	clothingInfo: ClothingInfo[] | null;
-	isRepresentative: boolean;
-}
+*/
