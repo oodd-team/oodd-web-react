@@ -1,5 +1,5 @@
-import BlockIcon from '../../assets/ProfileViewer/block.svg';
-import ReportIcon from '../../assets/ProfileViewer/carbon_warning.svg';
+import BlockIcon from '../../assets/default/block.svg';
+import ReportIcon from '../../assets/default/report.svg';
 import { UserInfoProps } from './UserInfoProps';
 
 export const mainMenuItems = (
