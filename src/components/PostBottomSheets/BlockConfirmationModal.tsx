@@ -1,6 +1,6 @@
 import block from '../../apis/core';
 
-import ConfirmationModal from '../ConfirmationModal';
+import Modal from '../Modal';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -12,7 +12,7 @@ import {
 import { IsMeatballBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
 
 import { ApiDto } from './dto';
-import { ConfirmationModalProps } from '../ConfirmationModal/dto';
+import { ModalProps } from '../Modal/dto';
 
 const BlockConfirmationModal: React.FC = () => {
 	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
@@ -23,12 +23,13 @@ const BlockConfirmationModal: React.FC = () => {
 	const [, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
 	const postBlock = useRecoilValue(PostBlockAtom);
 
-	const blockConfirmationModalProps: ConfirmationModalProps = {
+	const blockConfirmationModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => setIsBlockConfirmationModalOpen(false),
 		content: `${postBlock?.friendName} 님을\n정말로 차단하시겠습니까?`,
-		isCancelButtonVisible: true,
-		confirm: {
-			text: '차단하기',
-			action: () => {
+		button: {
+			content: '차단하기',
+			onClick: () => {
 				const postNewBlock = async () => {
 					if (postBlock) {
 						const response = await block.post<ApiDto>('/block', {
@@ -54,12 +55,9 @@ const BlockConfirmationModal: React.FC = () => {
 				postNewBlock();
 			},
 		},
-		onCloseModal: () => {
-			setIsBlockConfirmationModalOpen(false);
-		},
 	};
 
-	return <>{isBlockConfirmationModalOpen && <ConfirmationModal {...blockConfirmationModalProps} />}</>;
+	return <>{isBlockConfirmationModalOpen && <Modal {...blockConfirmationModalProps} />}</>;
 };
 
 export default BlockConfirmationModal;

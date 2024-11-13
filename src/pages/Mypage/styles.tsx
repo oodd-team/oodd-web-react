@@ -68,7 +68,7 @@ export const AddButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: fixed; /* absolute에서 fixed로 변경 */
+	position: absolute;
 	bottom: 6.75rem;
 	right: 1.25rem;
 	width: 5rem;

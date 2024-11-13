@@ -9,8 +9,6 @@ import { Content, PostContainer, ImageWrapper } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import TopBar from '../../components/TopBar';
 import Modal from '../../components/Modal';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { ConfirmationModalProps } from '../../components/ConfirmationModal/dto';
 import { ModalProps } from '../../components/Modal/dto';
 
 import X from '../../assets/default/x.svg';
@@ -20,7 +18,7 @@ import { InstaFeedSelectModalProps, Post } from './dto';
 const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
 	const [, setIsLoading] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
 	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
@@ -35,30 +33,28 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 			setPosts(response.data as Post[]); // Post 타입으로 받아옴
 		} catch (error) {
 			console.error('Failed to fetch Instagram media:', error);
-			setIsModalOpen(true); // 실패 모달 열기
+			setIsFailModalOpen(true); // 실패 모달 열기
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
 	// 연동 실패 모달 속성
-	const failedModalProps: ConfirmationModalProps = {
+	const connectFailModalProps: ModalProps = {
+		isCloseButtonVisible: false,
 		content: `계정 연동에 실패했어요`,
-		isCancelButtonVisible: false,
-		confirm: {
-			text: '다시 시도하기',
-			action: () => {
-				setIsModalOpen(false);
+		onClose: () => setIsFailModalOpen(false),
+		button: {
+			content: '다시 시도하기',
+			onClick: () => {
+				setIsFailModalOpen(false);
 				fetchInstagramData('accessToken'); // 함수 호출 시 실행되도록 수정
 			},
-		},
-		onCloseModal: () => {
-			setIsModalOpen(false);
 		},
 	};
 
 	// 연동 성공 모달 속성
-	const modalProps: ModalProps = {
+	const connectSuccessModalProps: ModalProps = {
 		content: `계정 연동에 성공했어요!\n가져올 OOTD를 선택해 보세요`,
 		onClose: () => {
 			setIsSuccessModalOpen(false);
@@ -79,9 +75,9 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 
 	return (
 		<OODDFrame>
-			{isSuccessModalOpen && <Modal {...modalProps} />}
+			{isSuccessModalOpen && <Modal {...connectSuccessModalProps} />}
+			{isFailModalOpen && <Modal {...connectFailModalProps} />}
 			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onLeftClick={handleClose} />{' '}
-			{/* onClose 대신 handleClose 사용 */}
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>
@@ -91,7 +87,6 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 					</PostContainer>
 				))}
 			</Content>
-			{isModalOpen && <ConfirmationModal {...failedModalProps} />} {/* 오류 모달 표시 */}
 		</OODDFrame>
 	);
 };
