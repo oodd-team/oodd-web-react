@@ -3,7 +3,7 @@ import {
 	CreatePostRequest,
 	CreatePostResponse,
 	GetPostListResponse,
-	GetPostDetailResponse,
+	GetPostResponse,
 	ModifyPostRequest,
 	ModifyPostResponse,
 } from './dto';
@@ -17,7 +17,7 @@ export const getPostListApi = (page: number, take: number, userId?: number) =>
 	newRequest.get<GetPostListResponse>(`/post`, { params: { page, take, ...(userId && { userId }) } });
 
 // 게시글 상세 조회
-export const getPostDetailApi = (postId: number) => newRequest.get<GetPostDetailResponse>(`/post/${postId}`);
+export const getPostApi = (postId: number) => newRequest.get<GetPostResponse>(`/post/${postId}`);
 
 // 게시글 수정
 export const modifyPostApi = (postId: number, data: ModifyPostRequest) =>

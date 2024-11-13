@@ -10,7 +10,7 @@ export type CreatePostResponse = BaseSuccessResponse<CreatePostData>;
 export type GetPostListResponse = BaseSuccessResponse<GetPostListData>;
 
 // 게시글 상세 조회
-export type GetPostDetailResponse = BaseSuccessResponse<GetPostDetailData>;
+export type GetPostResponse = BaseSuccessResponse<GetPostData>;
 
 // 게시글 수정
 //request
@@ -51,7 +51,7 @@ export interface GetPostListData {
 	meta: PaginationMeta;
 }
 
-export interface GetPostDetailData extends PostDetailData {}
+export interface GetPostData extends PostDetailData {}
 
 export interface ModifyPostData extends PostData {}
 
@@ -89,7 +89,7 @@ export interface User {
 }
 
 export interface PostImage {
-	imageurl: string;
+	url: string;
 	orderNum: number;
 }
 

@@ -1,6 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useRecoilState } from 'recoil';
+
+import theme from '../../styles/theme';
+
+import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
+
+import { OODDFrame } from '../Frame/Frame';
+import { StyledText } from '../Text/StyledText';
+import TopBar from '../TopBar';
+import NavBar from '../NavBar';
+import BottomSheet from '../BottomSheet';
+import ClothingInfoItem from '../ClothingInfoItem';
+import Loading from '../Loading';
+import ImageSwiper from './ImageSwiper';
+import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
+
 import {
 	PostContainer,
 	PostInfoContainer,
@@ -14,98 +30,60 @@ import {
 	ClothingInfoList,
 } from './styles';
 
-import theme from '../../styles/theme';
-import { OODDFrame } from '../Frame/Frame';
-import { StyledText } from '../Text/StyledText';
-import TopBar from '../TopBar';
-import NavBar from '../NavBar';
-import BottomSheet from '../BottomSheet';
-import { BottomSheetProps } from '../BottomSheet/dto';
-import ImageSwiper from './ImageSwiper';
-import ClothingInfoItem from '../ClothingInfoItem';
-import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
-import Loading from '../Loading';
-
 import Left from '../../assets/arrow/left.svg';
 import Like from '../../assets/default/like.svg';
 //import LikeFill from '../../assets/default/like-fill.svg';
 import Message from '../../assets/default/message.svg';
 import More from '../../assets/default/more.svg';
 
-import { useRecoilState } from 'recoil';
-import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
-
+import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
-import { GetPostDetailResponse } from '../../apis/Post/dto';
-import { GetUserResponse } from '../../apis/user/dto';
+import { GetPostResponse } from '../../apis/Post/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
+
 import request from '../../apis/core';
+import { getPostApi } from '../../apis/Post';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
-	const [, setPostId] = useRecoilState(postIdAtom);
 	const { postId } = useParams<{ postId: string }>();
-	const [post, setPost] = useState<GetPostDetailResponse['result']>();
-	const [user, setUser] = useState<GetUserResponse['result']>();
+	const [, setPostId] = useRecoilState(postIdAtom);
+	const [post, setPost] = useState<GetPostResponse['data']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
-	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // 추가: activeTab state
+	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const nav = useNavigate();
 
 	useEffect(() => {
+		setPostId(Number(postId));
 		// 게시글 정보 가져오기
-		const fetchPost = async () => {
-			setIsLoading(true);
+		const getPost = async () => {
 			try {
-				const response = await request.get<GetPostDetailResponse>(`/posts/${postId}`);
-				if (response.isSuccess && response.result) {
-					setPost(response.result);
-					setPostId(response.result.postId);
-					fetchUser(response.result.userId);
-				} else {
-					console.error('Failed to fetch post data');
-				}
+				const response = await getPostApi(Number(postId));
+				const data = response.data;
+				setPost(data);
+				setUserId(data.user.userId);
+				setUserName(data.user.nickname);
 			} catch (error) {
 				console.error('Error fetching post data:', error);
-			} finally {
-				setIsLoading(false);
 			}
 		};
 
-		// 유저 정보 가져오기
-		const fetchUser = async (userId: number) => {
-			setIsLoading(true);
-			try {
-				const response = await request.get<GetUserResponse>(`/users/${userId}`);
-				if (response.isSuccess && response.result) {
-					setUser(response.result);
-					setUserId(response.result.id);
-					setUserName(response.result.nickname || response.result.name);
-				} else {
-					console.error('Failed to fetch user data');
-				}
-			} catch (error) {
-				console.error('Error fetching user data:', error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchPost();
+		getPost();
 	}, [postId]);
 
 	const handleUserClick = () => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
 		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
 
-		if (String(myUserId) === String(post?.userId)) {
+		if (String(myUserId) === String(post?.user.userId)) {
 			// 내 게시물인 경우
 			nav('/mypage');
 		} else {
 			// 다른 유저의 게시물인 경우
-			nav(`/users/${post?.userId}`);
+			nav(`/users/${post?.user.userId}`);
 		}
 	};
 
@@ -123,8 +101,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 		componentProps: {
 			tab: activeTab,
-			likeCount: post?.likes,
-			commentCount: post?.comments?.length,
+			likeCount: post?.likeCount,
+			commentCount: post?.commentCount,
 		},
 	};
 
@@ -150,7 +128,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				<PostContainer>
 					<PostInfoContainer>
 						<UserInfo onClick={handleUserClick}>
-							<UserProfile>{user && <img src={user?.profilePictureUrl} alt="profileImg" />}</UserProfile>
+							<UserProfile>{post.user && <img src={post.user?.profilePictureUrl} alt="profileImg" />}</UserProfile>
 							<UserName>
 								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }} color={theme.colors.black}>
 									{userName}
@@ -174,21 +152,21 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</Content>
 					)}
 
-					<ImageSwiper images={post.photoUrls} />
+					{post.postImages && <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
 					<IconRow>
 						<IconWrapper onClick={handleLikeClick}>
 							<img src={Like} alt="like" />
-							<span onClick={() => handleLikeCommentOpen('likes')}>{post.likes ?? 0}</span>
+							<span onClick={() => handleLikeCommentOpen('likes')}>{post.likeCount ?? 0}</span>
 						</IconWrapper>
 						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
 							<img src={Message} alt="message" />
-							<span>{post.comments?.length ?? 0}</span>
+							<span>{post.commentCount ?? 0}</span>
 						</IconWrapper>
 					</IconRow>
 
 					<ClothingInfoList className="post-mode">
-						{post.clothingInfo?.map((clothingObj, index) => (
+						{post.postClothings?.map((clothingObj, index) => (
 							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
 						))}
 					</ClothingInfoList>
