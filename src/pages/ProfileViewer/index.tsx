@@ -13,7 +13,7 @@ import { useRecoilState } from 'recoil';
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
 import MoreSvg from '../../assets/default/more.svg';
 import BackSvg from '../../assets/arrow/left.svg';
-import imageBasic from '../../assets/imageBasic.svg';
+import imageBasic from '../../assets/defaultProfile.svg';
 import { UserInfoProps } from './UserInfoProps';
 import { mainMenuItems, reportMenuItems } from './MenuItemDto';
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
