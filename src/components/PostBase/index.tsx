@@ -8,7 +8,6 @@ import theme from '../../styles/theme';
 import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 
 import { OODDFrame } from '../Frame/Frame';
-import { StyledText } from '../Text/StyledText';
 import TopBar from '../TopBar';
 import NavBar from '../NavBar';
 import BottomSheet from '../BottomSheet';
@@ -35,7 +34,7 @@ import {
 
 import Left from '../../assets/arrow/left.svg';
 import Like from '../../assets/default/like.svg';
-//import LikeFill from '../../assets/default/like-fill.svg';
+import LikeFill from '../../assets/default/like-fill.svg';
 import Message from '../../assets/default/message.svg';
 import More from '../../assets/default/more.svg';
 
@@ -204,7 +203,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 				<IconRow>
 					<IconWrapper onClick={handleLikeClick}>
-						<img src={Like} alt="like" />
+						{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
 						<span onClick={() => handleLikeCommentOpen('likes')}>{post?.likeCount ?? 0}</span>
 					</IconWrapper>
 					<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>

@@ -1,5 +1,28 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { StyledText } from '../Text/StyledText';
+
+// 그라데이션 애니메이션 정의
+const shimmer = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+// 공통된 로딩 스타일
+const LoadingSkeleton = styled.div`
+	background: linear-gradient(
+		90deg,
+		${({ theme }) => theme.colors.gray1} 25%,
+		${({ theme }) => theme.colors.gray2} 50%,
+		${({ theme }) => theme.colors.gray1} 75%
+	);
+	background-size: 200% 100%;
+	animation: ${shimmer} 2s infinite;
+	border-radius: 4px;
+`;
 
 export const PostContainer = styled.div`
 	width: 100%;
@@ -56,11 +79,10 @@ export const PostContentContainer = styled.div`
 	margin-bottom: 16px;
 `;
 
-export const BaseContent = styled.div`
+export const BaseContent = styled(LoadingSkeleton)`
 	width: 100%;
 	height: 16px;
-	background-color: ${({ theme }) => theme.colors.gray1};
-	border-radius: 8px;
+	border-radius: 4px;
 `;
 
 export const Content = styled(StyledText)<{ showFullText: boolean }>`
@@ -77,10 +99,9 @@ export const Content = styled(StyledText)<{ showFullText: boolean }>`
 
 export const ShowMoreButton = styled(StyledText)``;
 
-export const BaseImage = styled.div`
+export const BaseImage = styled(LoadingSkeleton)`
 	width: 100%;
 	aspect-ratio: 4 / 5;
-	background-color: ${({ theme }) => theme.colors.gray1};
 `;
 
 export const IconRow = styled.div`
@@ -88,7 +109,7 @@ export const IconRow = styled.div`
 	height: 20px;
 	align-items: center;
 	padding: 0 20px;
-	margin: 8px 0 16px 0;
+	margin: 16px 0;
 `;
 
 export const IconWrapper = styled.div`
