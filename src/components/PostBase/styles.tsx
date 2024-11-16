@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '../Text/StyledText';
 
 export const PostContainer = styled.div`
 	width: 100%;
@@ -33,7 +34,7 @@ export const UserProfile = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-right: 8px;
-	background-color: #feeefb;
+	background-color: ${({ theme }) => theme.colors.lightPink};
 
 	img {
 		width: 100%;
@@ -42,20 +43,44 @@ export const UserProfile = styled.div`
 	}
 `;
 
-export const UserName = styled.div``;
+export const UserName = styled(StyledText)``;
 
 export const MenuBtn = styled.button`
 	width: 18px;
 	height: 18px;
 `;
 
-export const Content = styled.span`
-	display: flex;
-	align-items: center;
+export const PostContentContainer = styled.div`
+	width: 100%;
 	padding: 0 20px;
 	margin-bottom: 16px;
+`;
+
+export const BaseContent = styled.div`
+	width: 100%;
+	height: 16px;
+	background-color: ${({ theme }) => theme.colors.gray1};
+	border-radius: 8px;
+`;
+
+export const Content = styled(StyledText)<{ showFullText: boolean }>`
 	word-wrap: break-word;
 	word-break: break-all;
+	overflow: hidden;
+	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: ${({ showFullText }) => (showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
+	text-overflow: ellipsis;
+	white-space: normal;
+`;
+
+export const ShowMoreButton = styled(StyledText)``;
+
+export const BaseImage = styled.div`
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	background-color: ${({ theme }) => theme.colors.gray1};
 `;
 
 export const IconRow = styled.div`

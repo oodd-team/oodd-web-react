@@ -13,7 +13,6 @@ import TopBar from '../TopBar';
 import NavBar from '../NavBar';
 import BottomSheet from '../BottomSheet';
 import ClothingInfoItem from '../ClothingInfoItem';
-import Loading from '../Loading';
 import ImageSwiper from './ImageSwiper';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 
@@ -24,7 +23,11 @@ import {
 	UserProfile,
 	UserName,
 	MenuBtn,
+	PostContentContainer,
+	BaseContent,
 	Content,
+	ShowMoreButton,
+	BaseImage,
 	IconRow,
 	IconWrapper,
 	ClothingInfoList,
@@ -44,13 +47,41 @@ import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 import request from '../../apis/core';
 import { getPostApi } from '../../apis/Post';
 
+// Post 더미 데이터
+const dummyPost: GetPostResponse['data'] = {
+	content:
+		'이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.',
+	createdAt: '2024-11-13T09:00:00.000Z',
+	postImages: [],
+	postClothings: [
+		{
+			imageUrl:
+				'https://www.google.com/url?sa=i&url=https%3A%2F%2Fkr.pinterest.com%2Fpin%2F574842339944777829%2F&psig=AOvVaw3AsWV91JuHeURHoTRXq4cR&ust=1731657476888000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPDPsv6s24kDFQAAAAAdAAAAABAE',
+			brandName: 'Brand A',
+			modelName: 'Model A',
+			modelNumber: '001',
+			url: 'https://example.com/clothingA',
+		},
+	],
+	user: {
+		userId: 123,
+		nickname: 'JaneDoe',
+		profilePictureUrl:
+			'https://www.google.com/url?sa=i&url=https%3A%2F%2Fkr.pinterest.com%2Fpin%2F574842339944777829%2F&psig=AOvVaw3AsWV91JuHeURHoTRXq4cR&ust=1731657476888000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPDPsv6s24kDFQAAAAAdAAAAABAE',
+	},
+	commentCount: 12,
+	likeCount: 45,
+	isPostLike: true,
+	isPostWriter: true,
+};
+
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const [post, setPost] = useState<GetPostResponse['data']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
-	const [isLoading, setIsLoading] = useState(false);
+	const [showFullText, setShowFullText] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
@@ -58,6 +89,10 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 	useEffect(() => {
 		setPostId(Number(postId));
+		setPost(dummyPost);
+		setUserId(dummyPost.user.userId);
+		setUserName(dummyPost.user.nickname);
+		/*
 		// 게시글 정보 가져오기
 		const getPost = async () => {
 			try {
@@ -72,6 +107,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		};
 
 		getPost();
+		*/
 	}, [postId]);
 
 	const handleUserClick = () => {
@@ -85,6 +121,10 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			// 다른 유저의 게시물인 경우
 			nav(`/users/${post?.user.userId}`);
 		}
+	};
+
+	const toggleTextDisplay = () => {
+		setShowFullText((prev) => !prev);
 	};
 
 	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
@@ -122,56 +162,64 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	return (
 		<OODDFrame>
 			<TopBar LeftButtonSrc={Left} />
-			{!post || isLoading ? (
-				<Loading />
-			) : (
-				<PostContainer>
-					<PostInfoContainer>
-						<UserInfo onClick={handleUserClick}>
-							<UserProfile>{post.user && <img src={post.user?.profilePictureUrl} alt="profileImg" />}</UserProfile>
-							<UserName>
-								<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1 }} color={theme.colors.black}>
-									{userName}
-								</StyledText>
-							</UserName>
-						</UserInfo>
-						<MenuBtn onClick={onClickMenu}>
-							<img src={More} alt="more" />
-						</MenuBtn>
-					</PostInfoContainer>
 
-					{post.content && (
-						<Content>
-							<StyledText
-								$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+			<PostContainer>
+				<PostInfoContainer>
+					<UserInfo onClick={handleUserClick}>
+						<UserProfile>{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}</UserProfile>
+						<UserName $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+							{userName}
+						</UserName>
+					</UserInfo>
+					<MenuBtn onClick={onClickMenu}>
+						<img src={More} alt="more" />
+					</MenuBtn>
+				</PostInfoContainer>
+
+				<PostContentContainer>
+					{!post ? (
+						<BaseContent />
+					) : (
+						<>
+							<Content
+								onClick={toggleTextDisplay}
+								showFullText={showFullText}
+								$textTheme={{ style: 'body4-light' }}
 								color={theme.colors.black}
-								style={{ opacity: '50%' }}
 							>
 								{post.content}
-							</StyledText>
-						</Content>
+							</Content>
+							<ShowMoreButton
+								onClick={toggleTextDisplay}
+								$textTheme={{ style: 'body4-light' }}
+								color={theme.colors.gray3}
+							>
+								{showFullText ? '간략히 보기' : '더 보기'}
+							</ShowMoreButton>
+						</>
 					)}
+				</PostContentContainer>
 
-					{post.postImages && <ImageSwiper images={post.postImages.map((image) => image.url)} />}
+				{!post ? <BaseImage /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
-					<IconRow>
-						<IconWrapper onClick={handleLikeClick}>
-							<img src={Like} alt="like" />
-							<span onClick={() => handleLikeCommentOpen('likes')}>{post.likeCount ?? 0}</span>
-						</IconWrapper>
-						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
-							<img src={Message} alt="message" />
-							<span>{post.commentCount ?? 0}</span>
-						</IconWrapper>
-					</IconRow>
+				<IconRow>
+					<IconWrapper onClick={handleLikeClick}>
+						<img src={Like} alt="like" />
+						<span onClick={() => handleLikeCommentOpen('likes')}>{post?.likeCount ?? 0}</span>
+					</IconWrapper>
+					<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
+						<img src={Message} alt="message" />
+						<span>{post?.commentCount ?? 0}</span>
+					</IconWrapper>
+				</IconRow>
 
-					<ClothingInfoList className="post-mode">
-						{post.postClothings?.map((clothingObj, index) => (
-							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
-						))}
-					</ClothingInfoList>
-				</PostContainer>
-			)}
+				<ClothingInfoList className="post-mode">
+					{post?.postClothings?.map((clothingObj, index) => (
+						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
+					))}
+				</ClothingInfoList>
+			</PostContainer>
+
 			<NavBar />
 			<BottomSheet {...likeCommentbottomSheetProps} />
 		</OODDFrame>

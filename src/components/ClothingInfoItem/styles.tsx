@@ -26,14 +26,6 @@ export const ClothingInfoLeft = styled.div`
 	align-items: center;
 	width: calc(100% - 40px);
 
-	> img {
-		width: 4.625rem;
-		height: 4.625rem;
-		object-fit: cover;
-		border-radius: 0.5rem;
-		margin-right: 0.9375rem;
-	}
-
 	.infoDetail {
 		overflow: hidden;
 		white-space: nowrap;
@@ -55,7 +47,20 @@ export const ClothingInfoLeft = styled.div`
 	}
 `;
 
-export const StyledTextClipped = styled(StyledText)`
+export const ClothingImage = styled.div`
+	width: 4.625rem;
+	height: 4.625rem;
+	border-radius: 0.5rem;
+	margin-right: 0.9375rem;
+	background-color: ${({ theme }) => theme.colors.lightPink};
+
+	> img {
+		object-fit: cover;
+		border-radius: 0.5rem;
+	}
+`;
+
+export const ClothingModel = styled(StyledText)`
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -72,7 +77,7 @@ export const ClothingInfoRight = styled.div`
 
 	img {
 		position: absolute;
-		top: 10px;
+		//top: 10px;
 		right: 10px;
 	}
 `;
