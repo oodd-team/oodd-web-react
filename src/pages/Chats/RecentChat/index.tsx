@@ -8,7 +8,7 @@ import { useSocket } from '../../../context/SocketProvider';
 import { ChatRoomData } from '../../../apis/chatting/dto';
 
 interface RecentChatProps {
-	matchingRequests: number;
+	matchingCount: number;
 	swiperRef: React.MutableRefObject<SwiperCore | null>;
 }
 
