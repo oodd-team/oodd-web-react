@@ -24,26 +24,42 @@ export type GetMatchingListResponse = BaseSuccessResponse<GetMatchingListData>;
 export interface GetMatchingListData {
 	isMatching: boolean; // 매칭 요청 존재 여부
 	matchingCount: number; // 매칭 요청 개수
-	matching: Matching[];
+	matching: MatchingDto[];
 }
 
-export interface Matching {
-	requester: Requester;
-	requesterPost: RequesterPost;
+export interface MatchingDto {
+	requester: RequesterDto;
+	requesterPost: RequesterPostDto;
 }
 
-export interface Requester {
+export interface RequesterDto {
 	requesterId: string;
 	nickname: string;
 	profilePictureUrl: string;
 }
 
-export interface RequesterPost {
-	postImages: PostImage[]; // 대표 게시글 이미지
+export interface RequesterPostDto {
+	postImages: PostImageDto[]; // 대표 게시글 이미지
 	styleTags: string[]; // 게시글 스타일 태그
 }
 
-export interface PostImage {
+export interface PostImageDto {
 	url: string;
 	orderNum: number;
+}
+
+// 매칭 요청 수락 및 거절
+// request
+export interface ModifyMatchingStatusRequest {
+	requestStatus: 'accept' | 'reject';
+}
+
+// response
+export type ModifyMatchingStatusResponse = BaseSuccessResponse<ModifyMatchingStatusData>;
+
+export interface ModifyMatchingStatusData {
+	matchingId: number;
+	requesterId: number;
+	targetId: number;
+	requestStatus: string;
 }

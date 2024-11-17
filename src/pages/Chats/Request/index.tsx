@@ -1,13 +1,11 @@
 import React from 'react';
-import Cards from '../../../components/Cards';
+import Cards from './Cards';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
 import { StyledText } from '../../../components/Text/StyledText';
+import { RequestProps } from './dto';
 
-const Request: React.FC<{ matchingCount: number; handleRemoveMatching: () => void }> = ({
-	matchingCount,
-	handleRemoveMatching,
-}) => {
+const Request: React.FC<RequestProps> = ({ matchingCount, decreaseMatchingCount }) => {
 	return (
 		<>
 			<ReqeustInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
@@ -16,7 +14,7 @@ const Request: React.FC<{ matchingCount: number; handleRemoveMatching: () => voi
 					{matchingCount}
 				</StyledText>
 			</ReqeustInfo>
-			<Cards onRemoveMatching={handleRemoveMatching} />
+			<Cards decreaseMatchingCount={decreaseMatchingCount} />
 		</>
 	);
 };
