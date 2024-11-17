@@ -6,7 +6,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
+import back from '../../assets/back.svg';
 
 import BottomButton from '../../components/BottomButton';
 import request, { BaseResponse } from '../../apis/core';
