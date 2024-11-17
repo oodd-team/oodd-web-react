@@ -37,11 +37,10 @@ export const LatestMessage = styled(StyledText)`
 	text-overflow: ellipsis;
 `;
 
-export const RightBox = styled.div<{ $isUnread: boolean }>`
+export const RightBox = styled.div`
 	margin: 0.1rem 0 0.1rem auto;
 	text-align: right;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	opacity: ${(props) => (props.$isUnread ? '0.5' : '1')};
 `;

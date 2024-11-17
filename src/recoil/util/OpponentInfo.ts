@@ -1,10 +1,10 @@
 import { atom } from 'recoil';
-import { Opponent } from '../../pages/Chats/RecentChat/dto';
 import { recoilPersist } from 'recoil-persist';
+import { OtherUser } from '../../apis/chatting/dto';
 
 const { persistAtom } = recoilPersist();
 
-export const OpponentInfoAtom = atom<Opponent | null>({
+export const OpponentInfoAtom = atom<OtherUser | null>({
 	key: 'OpponentInfoAtom',
 	default: null,
 	effects_UNSTABLE: [persistAtom],
