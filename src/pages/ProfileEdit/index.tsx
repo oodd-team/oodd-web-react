@@ -17,10 +17,10 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 
 import TopBar from '../../components/TopBar';
-import back from '../../assets/back.svg';
+import back from '../../assets/arrow/left.svg';
 import BottomButton from '../../components/BottomButton';
 import { UserProfileResponse } from './dto';
-import imageBasic from '../../assets/imageBasic.svg';
+import imageBasic from '../../assets/defaultProfile.svg';
 import Loading from '../../components/Loading';
 import camera from '../../assets/default/camera.svg';
 import request, { BaseResponse } from '../../apis/core';
