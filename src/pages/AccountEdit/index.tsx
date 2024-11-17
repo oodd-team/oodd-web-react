@@ -24,7 +24,7 @@ import theme from '../../styles/theme';
 import NAVER from '../../assets/default/snsIcon/naver.svg';
 import Kakao from '../../assets/default/snsIcon/kakao.svg';
 import TopBar from '../../components/TopBar';
-import back from '../../assets/back.svg';
+import back from '../../assets/arrow/left.svg';
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
