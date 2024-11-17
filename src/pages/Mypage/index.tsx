@@ -17,7 +17,7 @@ import ButtonSecondary from './ButtonSecondary';
 import PostItem from '../../components/PostItem';
 import request, { BaseResponse } from '../../apis/core';
 import { PostItem as PostItemType, PostsResponse, UserResponse } from './dto';
-import imageBasic from '../../assets/defaultProfile.svg';
+import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
