@@ -16,9 +16,9 @@ import {
 	Reaction,
 	SeeMore,
 } from './styles';
-import rejectButton from '../../../assets/default/reject.svg';
-import acceptButton from '../../../assets/default/accept.svg';
-import defaultProfile from '../../../assets/default/defaultProfile.svg';
+import rejectButton from '../../../../../assets/default/reject.svg';
+import acceptButton from '../../../../../assets/default/accept.svg';
+import defaultProfile from '../../../../../assets/default/defaultProfile.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { MatchingDto } from '../../../../../apis/matching/dto';
