@@ -7,13 +7,14 @@ import ConfirmationModal from '../../components/ConfirmationModal';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
+import back from '../../assets/back.svg';
 import request, { BaseResponse } from '../../apis/core';
 import { UserProfileResponse } from '../ProfileEdit/dto';
-import imageBasic from '../../assets/default/defaultProfile.svg';
+import imageBasic from '../../assets/imageBasic.svg';
 import Loading from '../../components/Loading';
 import Profile_s from './../../assets/default/my-page.svg';
-import leave from '../../assets/default/leave.svg';
+import leave from "../../assets/default/leave.svg"
+
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -63,7 +64,7 @@ const AccountSetting: React.FC = () => {
 	};
 
 	if (!userProfile) {
-		return <Loading />; // 로딩 상태
+		return <Loading/>; // 로딩 상태
 	}
 
 	return (
@@ -85,12 +86,12 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-								이름 | {userProfile.email}
+								이름 | {userProfile.email}							
 							</StyledText>
 						</Label>
 					</Row>
 				</ProfilePicWrapper>
-
+				
 				<List>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={leave} alt="로그아웃 아이콘" />

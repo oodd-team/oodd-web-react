@@ -15,7 +15,7 @@ import { GetUserInfoResult } from '../../ResponseDto/GetUserInfoResult';
 import { ChatRoomDto, Opponent } from '../../../Chats/RecentChat/dto';
 import { PostFriendRequestResult } from '../../ResponseDto/PostFriendRequestResult';
 import HeartSvg from '../../../../assets/default/like-white.svg';
-import imageBasic from '../../../../assets/defaultProfile.svg';
+import imageBasic from '../../../../assets/imageBasic.svg';
 
 interface UserInfoProps {
 	isFriend: boolean;
