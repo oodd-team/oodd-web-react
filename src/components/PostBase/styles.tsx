@@ -21,7 +21,6 @@ const LoadingSkeleton = styled.div`
 	);
 	background-size: 200% 100%;
 	animation: ${shimmer} 2s infinite;
-	border-radius: 4px;
 `;
 
 export const PostContainer = styled.div`
@@ -38,25 +37,24 @@ export const PostContainer = styled.div`
 
 export const PostInfoContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	margin-top: 8px;
 	margin-bottom: 16px;
 	padding: 0 20px;
-`;
+	gap: 8px;
+	align-self: stretch;
 
-export const UserInfo = styled.div`
-	cursor: pointer;
-	display: flex;
-	align-items: center;
+	.timeAgo {
+		margin-left: auto;
+	}
 `;
 
 export const UserProfile = styled.div`
+	cursor: pointer;
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-right: 8px;
 	background-color: ${({ theme }) => theme.colors.lightPink};
 
 	img {
@@ -131,7 +129,6 @@ export const IconWrapper = styled.div`
 `;
 
 export const ClothingInfoList = styled.div`
-	margin-top: 5px;
 	margin-bottom: 88px;
 	display: flex;
 	overflow-x: auto;

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
 
 import theme from '../../styles/theme';
 
 import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 
 import { OODDFrame } from '../Frame/Frame';
+import { StyledText } from '../Text/StyledText';
 import TopBar from '../TopBar';
 import NavBar from '../NavBar';
 import BottomSheet from '../BottomSheet';
@@ -18,7 +22,6 @@ import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 import {
 	PostContainer,
 	PostInfoContainer,
-	UserInfo,
 	UserProfile,
 	UserName,
 	MenuBtn,
@@ -80,6 +83,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [post, setPost] = useState<GetPostResponse['data']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
+	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 	const [showFullText, setShowFullText] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
@@ -88,9 +92,21 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 	useEffect(() => {
 		setPostId(Number(postId));
-		setPost(dummyPost);
+		//setPost(dummyPost);
 		setUserId(dummyPost.user.userId);
 		setUserName(dummyPost.user.nickname);
+
+		// 초기 시간 설정
+		setTimeAgo(dayjs(dummyPost.createdAt).locale('ko').fromNow());
+
+		// 1초마다 `timeAgo`를 업데이트
+		const interval = setInterval(() => {
+			setTimeAgo(dayjs(dummyPost.createdAt).locale('ko').fromNow());
+		}, 1000);
+
+		// 컴포넌트 언마운트 시 타이머 정리
+		return () => clearInterval(interval);
+
 		/*
 		// 게시글 정보 가져오기
 		const getPost = async () => {
@@ -164,12 +180,15 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 			<PostContainer>
 				<PostInfoContainer>
-					<UserInfo onClick={handleUserClick}>
-						<UserProfile>{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}</UserProfile>
-						<UserName $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
-							{userName}
-						</UserName>
-					</UserInfo>
+					<UserProfile onClick={handleUserClick}>
+						{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
+					</UserProfile>
+					<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+						{userName}
+					</UserName>
+					<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+						{timeAgo}
+					</StyledText>
 					<MenuBtn onClick={onClickMenu}>
 						<img src={More} alt="more" />
 					</MenuBtn>
