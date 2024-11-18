@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 
 import theme from '../../styles/theme';
@@ -49,41 +48,13 @@ import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 import request from '../../apis/core';
 import { getPostApi } from '../../apis/Post';
 
-// Post 더미 데이터
-const dummyPost: GetPostResponse['data'] = {
-	content:
-		'이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.이 카페 정말 추천해요! 분위기 최고예요.',
-	createdAt: '2024-11-13T09:00:00.000Z',
-	postImages: [],
-	postClothings: [
-		{
-			imageUrl:
-				'https://www.google.com/url?sa=i&url=https%3A%2F%2Fkr.pinterest.com%2Fpin%2F574842339944777829%2F&psig=AOvVaw3AsWV91JuHeURHoTRXq4cR&ust=1731657476888000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPDPsv6s24kDFQAAAAAdAAAAABAE',
-			brandName: 'Brand A',
-			modelName: 'Model A',
-			modelNumber: '001',
-			url: 'https://example.com/clothingA',
-		},
-	],
-	user: {
-		userId: 123,
-		nickname: 'JaneDoe',
-		profilePictureUrl:
-			'https://www.google.com/url?sa=i&url=https%3A%2F%2Fkr.pinterest.com%2Fpin%2F574842339944777829%2F&psig=AOvVaw3AsWV91JuHeURHoTRXq4cR&ust=1731657476888000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPDPsv6s24kDFQAAAAAdAAAAABAE',
-	},
-	commentCount: 12,
-	likeCount: 45,
-	isPostLike: true,
-	isPostWriter: true,
-};
-
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const [post, setPost] = useState<GetPostResponse['data']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
-	const [timeAgo, setTimeAgo] = useState<string | null>(null);
+	const [timeAgo, setTimeAgo] = useState<string | null>();
 	const [showFullText, setShowFullText] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
@@ -92,22 +63,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 	useEffect(() => {
 		setPostId(Number(postId));
-		//setPost(dummyPost);
-		setUserId(dummyPost.user.userId);
-		setUserName(dummyPost.user.nickname);
 
-		// 초기 시간 설정
-		setTimeAgo(dayjs(dummyPost.createdAt).locale('ko').fromNow());
-
-		// 1초마다 `timeAgo`를 업데이트
-		const interval = setInterval(() => {
-			setTimeAgo(dayjs(dummyPost.createdAt).locale('ko').fromNow());
-		}, 1000);
-
-		// 컴포넌트 언마운트 시 타이머 정리
-		return () => clearInterval(interval);
-
-		/*
 		// 게시글 정보 가져오기
 		const getPost = async () => {
 			try {
@@ -116,20 +72,17 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				setPost(data);
 				setUserId(data.user.userId);
 				setUserName(data.user.nickname);
+				setTimeAgo(dayjs(data.createdAt).locale('ko').fromNow());
 			} catch (error) {
 				console.error('Error fetching post data:', error);
 			}
 		};
 
 		getPost();
-		*/
 	}, [postId]);
 
 	const handleUserClick = () => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
-
-		if (String(myUserId) === String(post?.user.userId)) {
+		if (post?.isPostWriter) {
 			// 내 게시물인 경우
 			nav('/mypage');
 		} else {
@@ -186,7 +139,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
 						{userName}
 					</UserName>
-					<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+					<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
 						{timeAgo}
 					</StyledText>
 					<MenuBtn onClick={onClickMenu}>

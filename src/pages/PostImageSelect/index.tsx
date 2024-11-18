@@ -44,7 +44,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 		setImages([]);
 		setContent('');
 		setClothingInfos([]);
-		setStyletag(null);
+		setStyletag([]);
 		setIsRepresentative(false);
 	};
 

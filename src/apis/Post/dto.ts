@@ -39,9 +39,9 @@ interface PaginationMeta {
 export interface PostBase {
 	content: string;
 	postImages: PostImage[];
-	postStyletags?: string[];
-	postClothings?: PostClothing[] | null;
-	isRepresentative?: boolean;
+	postStyletags: string[];
+	postClothings: PostClothing[] | null;
+	isRepresentative: boolean;
 }
 
 export interface CreatePostData extends PostBase {}
@@ -55,7 +55,9 @@ export interface GetPostData extends PostDetailData {}
 
 export interface ModifyPostData extends PostData {}
 
-export interface PostSummary extends PostBase {
+export interface PostSummary {
+	content: string;
+	postImages: PostImage[];
 	postId: number;
 	createdAt: Date;
 	isPostLike: boolean;
@@ -70,11 +72,8 @@ export interface PostData extends PostBase {
 	userId: number;
 }
 
-export interface PostDetailData {
-	content: string;
+export interface PostDetailData extends PostBase {
 	createdAt: string;
-	postImages: PostImage[];
-	postClothings: PostClothing[] | null;
 	user: User;
 	commentCount: number;
 	likeCount: number;
