@@ -1,6 +1,6 @@
 import { ExtendedMessageDto, MessageDto, RcvdMessageProps, SentMessageProps } from '../dto';
 import { Opponent } from '../RecentChat/dto';
-import ProfileImg from '/ProfileImg.svg';
+import defaultProfile from '../../../assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
@@ -43,7 +43,7 @@ export const createExtendedMessages = (allMessages: MessageDto[], userId: number
 		} else {
 			const rcvdMessage: RcvdMessageProps = {
 				fromUserName: opponentInfo?.nickname || opponentInfo?.name || '알수없음',
-				profilePictureUrl: opponentInfo?.profilePictureUrl || ProfileImg,
+				profilePictureUrl: opponentInfo?.profilePictureUrl || defaultProfile,
 				content: message.content,
 				isFirst,
 				isSenderChanged,
