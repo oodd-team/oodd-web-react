@@ -3,17 +3,17 @@
 // response
 export interface ChatRoomData {
 	chatRoomId: number;
-	otherUser: OtherUser;
-	latestMessage: LatestMessage;
+	otherUser: OtherUserDto;
+	latestMessage: LatestMessageDto;
 }
 
-export interface OtherUser {
+export interface OtherUserDto {
 	id: number;
 	nickname: string;
 	profileUrl: string;
 }
 
-export interface LatestMessage {
+export interface LatestMessageDto {
 	content: string;
 	createdAt: string;
 }
@@ -24,19 +24,19 @@ export interface LatestMessage {
 export interface chatRoomMessagesData {
 	id: number;
 	content: string;
-	fromUser: FromUser;
-	toUser: ToUser;
+	fromUser: FromUserDto;
+	toUser: ToUserDto;
 	createdAt: string;
 	toUserReadAt: any;
 }
 
-export interface FromUser {
+export interface FromUserDto {
 	id: number;
 	nickname: string;
 	profileUrl: string;
 }
 
-export interface ToUser {
+export interface ToUserDto {
 	id: number;
 	nickname: string;
 	profileUrl: string;

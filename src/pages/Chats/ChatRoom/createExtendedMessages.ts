@@ -2,13 +2,13 @@ import { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
 import defaultProfile from '../../../assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { OtherUser } from '../../../apis/chatting/dto';
+import { OtherUserDto } from '../../../apis/chatting/dto';
 import { chatRoomMessagesData } from '../../../apis/chatting/dto';
 
 export const createExtendedMessages = (
 	allMessages: chatRoomMessagesData[],
 	userId: number,
-	opponentInfo: OtherUser | null,
+	opponentInfo: OtherUserDto | null,
 ) => {
 	// DateBar 표시 여부를 결정하는 함수
 	const isNewDay = (curDate: string, lastDate: string) => {
