@@ -1,7 +1,7 @@
 import { BaseSuccessResponse } from '../core/dto';
 
 // 사용자 정보 공통 인터페이스
-export interface User {
+export interface UserInfoData {
 	userId: number;
 	name: string;
 	phoneNumber: string;
@@ -46,11 +46,11 @@ export interface BlockResult {
 }
 
 // 사용자 정보 조회
-export type GetUserResponse = BaseSuccessResponse<User>;
+export type GetUserInfoResponse = BaseSuccessResponse<UserInfoData>;
 
 // 사용자 정보 수정 요청 및 응답
 export type CreateUpdateUserRequest = UpdateUserRequest;
-export type UpdateUserResponse = BaseSuccessResponse<User>;
+export type UpdateUserResponse = BaseSuccessResponse<UserInfoData>;
 
 // 사용자 정보 수정 요청 데이터
 export interface UpdateUserRequest {
