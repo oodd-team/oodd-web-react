@@ -16,7 +16,7 @@ import {
 import { OODDFrame } from '../../components/Frame/Frame';
 import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
-import back from '../../assets/back.svg';
+import back from '../../assets/arrow/left.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Verification: React.FC = () => {

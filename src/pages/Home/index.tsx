@@ -6,8 +6,8 @@ import CommentBottomSheet from '../../components/CommentBottomSheet/index.tsx';
 
 import { ApiModalProps } from '../../components/Modal/ApiModal/dto.ts';
 import { CommentBottomSheetProps } from '../../components/CommentBottomSheet/dto.ts';
-import { createMatchingApi } from '../../apis/Matching/index.ts';
-import { CreateMatchingRequest, CreateMatchingResponse } from '../../apis/Matching/dto.ts';
+import { createMatchingApi } from '../../apis/matching/index.ts';
+import { CreateMatchingRequest, CreateMatchingResponse } from '../../apis/matching/dto.ts';
 
 import {
 	MatchingInfoAtom,
