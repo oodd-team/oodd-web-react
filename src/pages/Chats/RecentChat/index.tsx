@@ -1,55 +1,41 @@
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 import React, { useEffect, useState } from 'react';
-import request from '../../../apis/core';
-import { ChatRoomDto, ChatRoomListDto } from './dto';
 import SwiperCore from 'swiper';
 import Loading from '../../../components/Loading';
 import ChatRoomItem from '../ChatRoomItem';
 import { StyledText } from '../../../components/Text/StyledText';
+import { useSocket } from '../../../context/SocketProvider';
+import { ChatRoomData } from '../../../apis/chatting/dto';
 
 interface RecentChatProps {
-	matchingRequests: number;
+	matchingCount: number;
 	swiperRef: React.MutableRefObject<SwiperCore | null>;
 }
 
-const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) => {
-	const [chatRoomList, setChatRoomList] = useState<ChatRoomDto[]>();
-	const storageValue = localStorage.getItem('id');
-	const userId = storageValue ? Number(storageValue) : -1;
-	const [isLoading, setIsLoading] = useState(false);
+const RecentChat: React.FC<RecentChatProps> = () => {
+	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>();
+	const [isLoading, setIsLoading] = useState(true);
+	const socket = useSocket();
 
 	useEffect(() => {
-		const getChatRoomList = async () => {
-			try {
-				setIsLoading(true);
-				const response = await request.get<ChatRoomListDto>(`/chat-rooms/${userId}`);
-
-				if (response.isSuccess) {
-					const requestsList = response.result.filter((matchingRequest) => matchingRequest.fromUserId !== userId);
-					const sortedList = requestsList.sort((a, b) => {
-						// a와 b의 latestMessage.createdAt 값을 가져오고, 만약 null이면 createdAt 값을 사용
-						const aDate = a.latestMessage?.createdAt
-							? new Date(a.latestMessage.createdAt).getTime()
-							: new Date(a.createdAt).getTime();
-						const bDate = b.latestMessage?.createdAt
-							? new Date(b.latestMessage.createdAt).getTime()
-							: new Date(b.createdAt).getTime();
-						// 가장 최근의 것이 먼저 오도록 내림차순 정렬
-						return bDate - aDate;
-					});
-					setChatRoomList(sortedList);
-				} else {
-					console.error(response.message);
-				}
-			} catch (error) {
-				console.error(error);
-			} finally {
-				setIsLoading(false);
-			}
+		// 채팅방 리스트 조회
+		const getChatRooms = (data: ChatRoomData[]) => {
+			setChatRoomList(data);
+			setIsLoading((prev) => !prev);
 		};
 
-		getChatRoomList();
-	}, [matchingRequests]);
+		if (socket) {
+			socket.on('getChatRooms', getChatRooms);
+		}
+
+		// 이벤트 리스너 정리
+		// 컴포넌트가 언마운트되면 더 이상 이벤트를 수신하지 않음
+		return () => {
+			if (socket) {
+				socket.off('getChatRooms', getChatRooms);
+			}
+		};
+	}, [socket]);
 
 	return (
 		<>
@@ -62,7 +48,7 @@ const RecentChat: React.FC<RecentChatProps> = ({ matchingRequests, swiperRef }) 
 					</RecentChatInfo>
 					<ChatRoomList>
 						{chatRoomList.map((room) => (
-							<ChatRoomItem key={room.id} swiperRef={swiperRef} {...room} />
+							<ChatRoomItem key={room.chatRoomId} {...room} />
 						))}
 					</ChatRoomList>
 				</>
