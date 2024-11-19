@@ -1,16 +1,15 @@
 import { BaseSuccessResponse } from '../core/dto';
-import { BaseApiResponse } from '../util/dto';
 
 // 사용자 정보 공통 인터페이스
 export interface User {
-	id: number;
+	userId: number;
 	name: string;
+	phoneNumber: string;
 	email: string;
-	nickname?: string;
-	phoneNumber?: string;
-	profilePictureUrl?: string;
-	bio?: string;
-	joinedAt: string;
+	nickname: string;
+	profilePictureUrl: string;
+	bio: string;
+	joinedAt?: string;
 	isFriend?: boolean;
 }
 
@@ -47,15 +46,28 @@ export interface BlockResult {
 }
 
 // 사용자 정보 조회
-export type GetUserResponse = BaseApiResponse<User>;
+export type GetUserResponse = BaseSuccessResponse<User>;
 
-// 사용자 정보 수정
+// 사용자 정보 수정 요청 및 응답
+export type CreateUpdateUserRequest = UpdateUserRequest;
 export type UpdateUserResponse = BaseSuccessResponse<User>;
 
+// 사용자 정보 수정 요청 데이터
+export interface UpdateUserRequest {
+	name: string;
+	phoneNumber: string;
+	email: string;
+	nickname: string;
+	profilePictureUrl: string;
+	bio: string;
+}
+
 // 회원 탈퇴
-export type DeleteUserResponse = BaseApiResponse<DeleteUserResult>;
+export type DeleteUserResponse = BaseSuccessResponse<DeleteUserResult>;
 
 // 회원 탈퇴 응답 데이터
 export interface DeleteUserResult {
-	message: string;
+	isSuccess: boolean;
+	code: string;
+	data: Record<string, never>; // 탈퇴 성공 시 항상 빈 객체가 응답으로 온다면 Record<string, never>으로 타입 안정성 높일 수 있답니다
 }
