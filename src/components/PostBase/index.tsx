@@ -36,7 +36,7 @@ import { useRecoilState } from 'recoil';
 import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 
 import { PostBaseProps } from './dto';
-import { GetPostDetailResponse } from '../../apis/Post/dto';
+import { GetPostDetailResponse } from '../../apis/post/dto';
 import { GetUserResponse } from '../../apis/user/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 import request from '../../apis/core';
