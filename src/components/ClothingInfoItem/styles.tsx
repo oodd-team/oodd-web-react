@@ -57,7 +57,6 @@ export const ClothingImage = styled.div`
 	height: 4.625rem;
 	border-radius: 0.5rem;
 	margin-right: 0.9375rem;
-	background-color: ${({ theme }) => theme.colors.pink2};
 
 	> img {
 		width: 4.625rem;

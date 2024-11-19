@@ -45,9 +45,9 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		setComments([]);
 
 		if (activeTab === 'likes') {
-			//getPostLikeList(1);
+			getPostLikeList(1);
 		} else if (activeTab === 'comments') {
-			//getPostCommentList(1);
+			getPostCommentList(1);
 		}
 	}, [activeTab]);
 

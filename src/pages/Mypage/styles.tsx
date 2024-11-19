@@ -73,9 +73,4 @@ export const AddButton = styled.button`
 	border: none;
 	border-radius: 50%;
 	z-index: 2;
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
 `;
