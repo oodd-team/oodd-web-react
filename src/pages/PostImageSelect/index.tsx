@@ -44,7 +44,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 		setImages([]);
 		setContent('');
 		setClothingInfos([]);
-		setStyletag(null);
+		setStyletag([]);
 		setIsRepresentative(false);
 	};
 
@@ -121,13 +121,17 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	};
 
 	const handleAddImage = (newImage: string) => {
-		setImages((prevImages) => [...prevImages, newImage]); // 함수형 업데이트로 상태 추가
+		setImages((prevImages) => {
+			const maxOrderNum = prevImages.reduce((max, img) => (img.orderNum > max ? img.orderNum : max), -1);
+			return [...prevImages, { url: newImage, orderNum: maxOrderNum + 1 }];
+		});
 	};
 
 	const handleRemoveImage = (image: string) => {
+		// 이미지가 1개일 때는 삭제 할 수 없음
 		if (images.length > 1) {
-			const newImages = images.filter((img) => img !== image);
-			setImages(newImages);
+			const newImages = images.filter((img) => img.url !== image);
+			setImages(newImages.map((img, idx) => ({ ...img, orderNum: idx })));
 		}
 	};
 

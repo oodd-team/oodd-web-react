@@ -62,9 +62,11 @@ export const StyledNavigation = styled.button`
 	top: 50%;
 	transform: translateY(-50%);
 	color: white;
-	width: 4.375rem;
-	height: 4.375rem;
-	padding: 1.25rem;
+	background-color: ${({ theme }) => theme.colors.gray2};
+	opacity: 50%;
+	border-radius: 50%;
+	width: 45px;
+	height: 45px;
 
 	&::after {
 		font-size: 1.25rem;
@@ -72,11 +74,11 @@ export const StyledNavigation = styled.button`
 	}
 
 	&.swiper-button-prev {
-		margin: 0 0 0 max(calc((100% - 21.875rem) / 2 - 1.25rem), 0rem);
+		margin: 0 0 0 max(calc((100% - 19.875rem) / 2 - 1.25rem), 0rem);
 	}
 
 	&.swiper-button-next {
-		margin: 0 max(calc((100% - 21.875rem) / 2) - 1.25rem, 0rem) 0 0;
+		margin: 0 max(calc((100% - 19.875rem) / 2) - 1.25rem, 0rem) 0 0;
 	}
 `;
 
@@ -95,16 +97,11 @@ export const AddButton = styled.button`
 	align-items: center;
 	justify-content: center;
 	background: none;
-	color: #999;
+	color: ${({ theme }) => theme.colors.gray2};
 	font-size: 1.875rem;
 	width: 6.25rem;
 	height: 6.25rem;
 	margin: auto;
-
-	&:hover {
-		border-color: #666;
-		color: #666;
-	}
 `;
 
 export const HiddenFileInput = styled.input`

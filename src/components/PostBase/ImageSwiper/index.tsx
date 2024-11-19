@@ -1,10 +1,13 @@
 import React, { useRef } from 'react';
+
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 import { SwiperContainer, ImageWrapper, StyledNavigation } from './styles';
-import { Navigation, Pagination } from 'swiper/modules';
+
 import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {

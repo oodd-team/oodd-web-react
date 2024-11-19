@@ -41,13 +41,13 @@ import ClothingTag from '../../assets/default/clothes-tag.svg';
 import StyleTag from '../../assets/default/style-tag.svg';
 import Pin from '../../assets/default/pin.svg';
 
+import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { PostUploadModalProps } from './dto';
+import { PostBase } from '../../apis/post/dto';
+
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
-import request from '../../apis/core';
-
-import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
-import { PostUploadModalProps, Styletag, Post } from './dto';
-import { CreatePostResponse, UpdatePostResponse, GetPostDetailResponse } from '../../apis/Post/dto';
+import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -62,17 +62,17 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const styletags: Styletag[] = [
-		{ tag: 'classic' },
-		{ tag: 'street' },
-		{ tag: 'hip' },
-		{ tag: 'casual' },
-		{ tag: 'sporty' },
-		{ tag: 'feminine' },
-		{ tag: 'minimal' },
-		{ tag: 'formal' },
-		{ tag: 'outdoor' },
-		{ tag: 'luxury' },
+	const styletags = [
+		'classic',
+		'street',
+		'hip',
+		'casual',
+		'sporty',
+		'feminine',
+		'minimal',
+		'formal',
+		'outdoor',
+		'luxury',
 	];
 
 	useEffect(() => {
@@ -87,7 +87,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		const state = location.state as { mode?: string; postId?: number };
 
 		if (state.mode === 'edit' && state?.postId) {
-			await fetchPostDetails(state.postId);
+			await getPost(state.postId);
 		}
 	};
 
@@ -99,22 +99,19 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		navigate('/image-select', { state: { mode: mode, postId: state.postId } });
 	};
 
-	const fetchPostDetails = async (postId: number) => {
+	const getPost = async (postId: number) => {
 		setIsLoading(true);
 
 		try {
-			const response = await request.get<GetPostDetailResponse>(`/posts/${postId}`);
-			if (response.isSuccess && response.result) {
-				const { photoUrls, content, styletags, clothingInfo, isRepresentative } = response.result;
+			const response = await getPostDetailApi(postId);
 
-				setSelectedImages(photoUrls);
-				setContent(content || '');
-				setClothingInfos(clothingInfo ?? []);
-				setSelectedStyletag(styletags?.length ? { tag: styletags[0] } : null);
-				setIsRepresentative(isRepresentative);
+			const { postImages, content, postStyletags, postClothings, isRepresentative } = response.data;
 
-				console.log('Initial Post: ', response.result);
-			}
+			setSelectedImages(postImages);
+			setContent(content);
+			setClothingInfos(postClothings ?? []);
+			setSelectedStyletag(postStyletags);
+			setIsRepresentative(isRepresentative);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -152,8 +149,15 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		},
 	};
 
-	const handleSelectStyletag = (tag: Styletag) => {
-		setSelectedStyletag((prevSelected) => (prevSelected?.tag === tag.tag ? null : tag));
+	const handleSelectStyletag = (tag: string) => {
+		setSelectedStyletag((prev) => {
+			// 선택된 태그가 이미 존재하면 제거
+			if (prev.includes(tag)) {
+				return prev.filter((t) => t !== tag);
+			}
+			// 선택된 태그 추가
+			return [...prev, tag];
+		});
 		setIsStyletagListOpen(false);
 	};
 
@@ -230,36 +234,39 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		setIsLoading(true);
 
 		try {
-			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
+			// 업로드된 이미지 URL과 함께 orderNum을 추가
+			const uploadedImages = await Promise.all(
+				selectedImages.map(async (image, index) => {
+					const imageUrl = await uploadImageToFirebase(image.url);
+					return { url: imageUrl, orderNum: index }; // orderNum 추가
+				}),
+			);
 
-			const postData: Post = {
-				photoUrls: uploadedImages,
+			const postData: PostBase = {
+				postImages: uploadedImages,
 				content,
-				styletags: selectedStyletag ? [selectedStyletag.tag] : [],
-				clothingInfo: clothingInfos,
-				isRepresentive: isRepresentative,
+				postStyletags: selectedStyletag || [],
+				postClothings: clothingInfos,
+				isRepresentative: isRepresentative,
 			};
 
 			let response;
-			if (mode === ('edit' || 'edit2')) {
+			if (mode === 'edit' || mode === 'edit2') {
 				// 게시물 수정 (PATCH)
-				const state = location.state as { mode?: string; postId?: number };
-				response = await request.patch<UpdatePostResponse>(`/posts/${state.postId}`, postData);
+				const state = location.state as { mode: string; postId: number };
+				response = await modifyPostApi(state.postId, postData);
 			} else {
 				// 새 게시물 업로드 (POST)
-				response = await request.post<CreatePostResponse>(`/posts`, postData);
+				response = await createPostApi(postData);
 			}
-
-			if (!response.isSuccess) {
-				throw new Error(response.message || 'Failed');
-			}
+			console.log(response);
 
 			//초기화
 			setSelectedImages([]);
 			setClothingInfos([]);
 			setContent('');
 			setIsRepresentative(false);
-			setSelectedStyletag(null);
+			setSelectedStyletag([]);
 			setMode('');
 
 			navigate('/mypage');
@@ -310,7 +317,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 							</StyledText>
 							{isStyletagListOpen ? (
 								<img src={Up} />
-							) : !selectedStyletag ? (
+							) : selectedStyletag.length === 0 ? (
 								<>
 									<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 										미지정
@@ -319,19 +326,23 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 								</>
 							) : (
 								<StyletagItem selected={false}>
-									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag?.tag}</StyledText>
+									<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+										#{selectedStyletag[0]}
+									</StyledText>
 								</StyletagItem>
 							)}
 						</div>
 						{isStyletagListOpen && (
 							<StyletagList>
-								{styletags.map((tagObj, index) => (
+								{styletags.map((tag) => (
 									<StyletagItem
-										key={index}
-										onClick={() => handleSelectStyletag(tagObj)}
-										selected={selectedStyletag?.tag === tagObj.tag}
+										key={tag}
+										onClick={() => handleSelectStyletag(tag)}
+										selected={selectedStyletag[0] === tag}
 									>
-										<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{tagObj.tag}</StyledText>
+										<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+											#{tag}
+										</StyledText>
 									</StyletagItem>
 								))}
 							</StyletagList>

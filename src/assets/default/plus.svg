@@ -1,6 +1,15 @@
-<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- 동그라미 배경 -->
-  <circle cx="35" cy="35" r="33" fill="#E9E9E9"/>
-  <!-- + 모양, 선을 얇게 처리 -->
-  <path d="M46 36.5H36.5V46C36.5 46.414 36.086 46.5 35.5 46.5H34.5C33.914 46.5 33.5 46.086 33.5 45.5V36.5H24C23.414 36.5 23 36.086 23 35.5V34.5C23 33.914 23.414 33.5 24 33.5H33.5V24C33.5 23.414 33.914 23 34.5 23H35.5C36.086 23 36.5 23.414 36.5 24V33.5H46C46.586 33.5 47 33.914 47 34.5V35.5C47 36.086 46.586 36.5 46 36.5Z" fill="white"/>
+<svg width="57" height="56" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="0.5" width="55" height="55" rx="27.5" fill="white"/>
+  <rect x="1" y="0.5" width="55" height="55" rx="27.5" stroke="url(#paint0_linear_3269_3098)"/>
+  <path 
+    d="M35.5 22.41L34.09 21L28.5 26.59L22.91 21L21.5 22.41L27.09 28L21.5 33.59L22.91 35L28.5 29.41L34.09 35L35.5 33.59L29.91 28L35.5 22.41Z" 
+    fill="#8E8E8E"
+    transform="rotate(45 28.5 28)" 
+  />
+  <defs>
+    <linearGradient id="paint0_linear_3269_3098" x1="1.06" y1="2.7451" x2="59.288" y2="6.19466" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF2389"/>
+      <stop offset="1" stop-color="#F27575"/>
+    </linearGradient>
+  </defs>
 </svg>

@@ -162,10 +162,13 @@ export const StyletagItem = styled.span<{ selected: boolean }>`
 	height: 2rem;
 	//min-width: 4.375rem;
 	background: ${({ selected, theme }) => (selected ? theme.colors.gradient : 'none')};
-	color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink)};
-	border: 1px solid ${({ theme }) => theme.colors.pink};
+	border: 1px solid ${({ theme }) => theme.colors.lightPink};
 	border-radius: 8px;
 	cursor: pointer;
+
+	.tag {
+		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink)};
+	}
 `;
 
 export const PinnedPostToggleContainer = styled.label`

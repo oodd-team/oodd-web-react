@@ -3,7 +3,7 @@ import { StyledText } from '../Text/StyledText';
 import X from '../../assets/default/x.svg';
 import Right from '../../assets/arrow/right.svg';
 import { ClothingInfoItemProps } from './dto';
-import { ClothingInfoItemContainer, ClothingInfoLeft, ClothingInfoRight, StyledTextClipped } from './styles';
+import { ClothingInfoItemContainer, ClothingInfoLeft, ClothingImage, ClothingInfoRight, ClothingModel } from './styles';
 
 const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete, hasRightMargin = false }) => {
 	const handleClick = () => {
@@ -15,14 +15,16 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 	return (
 		<ClothingInfoItemContainer style={{ marginRight: hasRightMargin ? '0.75rem' : '0' }}>
 			<ClothingInfoLeft onClick={handleClick}>
-				<img src={clothingObj.imageUrl} alt="ClothingInfoImg" />
+				<ClothingImage>
+					<img src={clothingObj.imageUrl} alt="ClothingImg" />
+				</ClothingImage>
 				<div className="infoDetail">
 					<StyledText className="brand" $textTheme={{ style: 'body2-bold', lineHeight: 2 }}>
-						{clothingObj.brand}
+						{clothingObj.brandName}
 					</StyledText>
-					<StyledTextClipped className="model" $textTheme={{ style: 'caption1-regular', lineHeight: 1 }}>
-						{clothingObj.model}
-					</StyledTextClipped>
+					<ClothingModel className="model" $textTheme={{ style: 'body4-light', lineHeight: 1 }}>
+						{clothingObj.modelName}
+					</ClothingModel>
 				</div>
 			</ClothingInfoLeft>
 			<ClothingInfoRight>
