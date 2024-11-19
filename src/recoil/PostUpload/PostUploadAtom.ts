@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
-import { PostImage } from '../../apis/Post/dto';
+import { PostImage } from '../../apis/post/dto';
 
 export const postImagesAtom = atom<PostImage[]>({
 	key: 'imagesAtom',

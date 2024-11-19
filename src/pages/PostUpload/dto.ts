@@ -1,11 +1,12 @@
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { PostImage } from '../../apis/post/dto';
 
 export interface PostUploadModalProps {
 	postId?: number | null;
 }
 
 export interface ImageSwiperProps {
-	images: string[];
+	images: PostImage[];
 }
 
 export interface SearchBottomSheetProps {

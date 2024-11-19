@@ -6,11 +6,15 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.pink};
+	border: 0.0625rem solid ${({ theme }) => theme.colors.lightPink};
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	min-width: 20.9375rem;
 	margin-bottom: 0.9375rem;
+	box-shadow:
+		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 	cursor: pointer;
 
 	/* Post 안에 있을 때 첫 번째 아이템에만 margin-left 적용 */
@@ -25,6 +29,7 @@ export const ClothingInfoLeft = styled.div`
 	display: flex;
 	align-items: center;
 	width: calc(100% - 40px);
+	flex-grow: 1;
 
 	.infoDetail {
 		overflow: hidden;
@@ -55,6 +60,8 @@ export const ClothingImage = styled.div`
 	background-color: ${({ theme }) => theme.colors.lightPink};
 
 	> img {
+		width: 4.625rem;
+		height: 4.625rem;
 		object-fit: cover;
 		border-radius: 0.5rem;
 	}

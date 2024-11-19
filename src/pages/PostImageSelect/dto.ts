@@ -1,7 +1,8 @@
 export interface ImageSelectModalProps {}
+import { PostImage } from '../../apis/post/dto';
 
 export interface ImageSwiperProps {
-	images: string[];
+	images: PostImage[];
 	onProcessFile: (files: FileList) => void;
 	onRemoveImage: (image: string) => void;
 }

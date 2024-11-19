@@ -42,11 +42,11 @@ import More from '../../assets/default/more.svg';
 
 import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
-import { GetPostResponse } from '../../apis/Post/dto';
+import { GetPostResponse } from '../../apis/post/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 
 import request from '../../apis/core';
-import { getPostApi } from '../../apis/Post';
+import { getPostApi } from '../../apis/post';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();

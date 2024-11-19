@@ -43,11 +43,11 @@ import Pin from '../../assets/default/pin.svg';
 
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
 import { PostUploadModalProps } from './dto';
-import { PostBase } from '../../apis/Post/dto';
+import { PostBase } from '../../apis/post/dto';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
-import { getPostApi, createPostApi, modifyPostApi } from '../../apis/Post';
+import { getPostApi, createPostApi, modifyPostApi } from '../../apis/post';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -234,7 +234,13 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		setIsLoading(true);
 
 		try {
-			const uploadedImages = await Promise.all(selectedImages.map(uploadImageToFirebase));
+			// 업로드된 이미지 URL과 함께 orderNum을 추가
+			const uploadedImages = await Promise.all(
+				selectedImages.map(async (image, index) => {
+					const imageUrl = await uploadImageToFirebase(image.url);
+					return { url: imageUrl, orderNum: index }; // orderNum 추가
+				}),
+			);
 
 			const postData: PostBase = {
 				postImages: uploadedImages,
@@ -310,7 +316,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 							</StyledText>
 							{isStyletagListOpen ? (
 								<img src={Up} />
-							) : !selectedStyletag ? (
+							) : selectedStyletag.length === 0 ? (
 								<>
 									<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
 										미지정
@@ -319,7 +325,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 								</>
 							) : (
 								<StyletagItem selected={false}>
-									<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{selectedStyletag[0]}</StyledText>
+									<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+										#{selectedStyletag[0]}
+									</StyledText>
 								</StyletagItem>
 							)}
 						</div>
@@ -331,7 +339,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 										onClick={() => handleSelectStyletag(tag)}
 										selected={selectedStyletag[0] === tag}
 									>
-										<StyledText $textTheme={{ style: 'body2-light', lineHeight: 1 }}>#{tag}</StyledText>
+										<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+											#{tag}
+										</StyledText>
 									</StyletagItem>
 								))}
 							</StyletagList>

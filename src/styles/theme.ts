@@ -10,7 +10,7 @@ const theme: DefaultTheme = {
 		gray1: '#E9E9E9',
 		white: '#FFFFFF',
 		pink: '#FF2389',
-		lightPink: '#FEEEFB',
+		lightPink: '#FFBBDA',
 	},
 	visibleOnMobileTablet: css`
 		@media (max-width: 767px) {

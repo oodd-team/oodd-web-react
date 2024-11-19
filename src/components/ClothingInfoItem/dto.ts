@@ -1,4 +1,4 @@
-import { PostClothing } from '../../apis/Post/dto';
+import { PostClothing } from '../../apis/post/dto';
 
 export interface ClothingInfo extends PostClothing {}
 
