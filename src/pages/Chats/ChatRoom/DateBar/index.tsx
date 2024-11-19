@@ -10,7 +10,7 @@ const DateBar: React.FC<DateBarProps> = React.memo(({ formattedDate }) => {
 	return (
 		<DatebarLayout>
 			<Divider />
-			<Date $textTheme={{ style: 'body6-light', lineHeight: 1 }} color={theme.colors.gray3}>
+			<Date $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
 				{formattedDate}
 			</Date>
 			<Divider />
