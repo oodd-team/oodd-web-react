@@ -47,7 +47,7 @@ import { PostBase } from '../../apis/post/dto';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
-import { getPostApi, createPostApi, modifyPostApi } from '../../apis/post';
+import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -103,7 +103,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		setIsLoading(true);
 
 		try {
-			const response = await getPostApi(postId);
+			const response = await getPostDetailApi(postId);
 
 			const { postImages, content, postStyletags, postClothings, isRepresentative } = response.data;
 

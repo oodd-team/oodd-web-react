@@ -42,16 +42,16 @@ import More from '../../assets/default/more.svg';
 
 import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
-import { GetPostResponse } from '../../apis/post/dto';
+import { GetPostDetailResponse } from '../../apis/post/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 
 import request from '../../apis/core';
-import { getPostApi } from '../../apis/post';
+import { getPostDetailApi } from '../../apis/post';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
-	const [post, setPost] = useState<GetPostResponse['data']>();
+	const [post, setPost] = useState<GetPostDetailResponse['data']>();
 	const [, setUserId] = useRecoilState<number>(userIdAtom);
 	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>();
@@ -67,7 +67,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		// 게시글 정보 가져오기
 		const getPost = async () => {
 			try {
-				const response = await getPostApi(Number(postId));
+				const response = await getPostDetailApi(Number(postId));
 				const data = response.data;
 				setPost(data);
 				setUserId(data.user.userId);

@@ -10,7 +10,7 @@ export type CreatePostResponse = BaseSuccessResponse<CreatePostData>;
 export type GetPostListResponse = BaseSuccessResponse<GetPostListData>;
 
 // 게시글 상세 조회
-export type GetPostResponse = BaseSuccessResponse<GetPostData>;
+export type GetPostDetailResponse = BaseSuccessResponse<GetPostDetailData>;
 
 // 게시글 수정
 //request
@@ -23,9 +23,6 @@ export type ModifyPostResponse = BaseSuccessResponse<ModifyPostData>;
 
 // 대표 게시글 지정
 // response : empty
-
-// OOTD 조회
-//export type GetOOTDResponse = BaseSuccessResponse<PostByStyleTagResult>;
 
 interface PaginationMeta {
 	total: number;
@@ -51,7 +48,7 @@ export interface GetPostListData {
 	meta: PaginationMeta;
 }
 
-export interface GetPostData extends PostDetailData {}
+export interface GetPostDetailData extends PostDetailData {}
 
 export interface ModifyPostData extends PostData {}
 
@@ -99,19 +96,3 @@ export interface PostClothing {
 	modelNumber: string;
 	url: string;
 }
-
-// OOTD 리스트 조회 (스타일 태그에 따른)
-/*
-export interface PostByStyleTag {
-	postId: number;
-	userId: number;
-	likes: number;
-	photoUrls: string[];
-	content: string;
-	styletags: string[];
-}
-
-export interface PostByStyleTagResult {
-	posts: PostByStyleTag[];
-}
-*/
