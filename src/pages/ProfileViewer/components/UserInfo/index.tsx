@@ -12,16 +12,18 @@ import UserProfile from '../../../../components/UserProfile';
 import CommentBottomSheet from '../../../../components/CommentBottomSheet';
 import { CommentProps } from '../../../../components/Comment/dto';
 import { GetUserInfoResult } from '../../ResponseDto/GetUserInfoResult';
-import { ChatRoomDto, Opponent } from '../../../Chats/RecentChat/dto';
 import { PostFriendRequestResult } from '../../ResponseDto/PostFriendRequestResult';
 import HeartSvg from '../../../../assets/default/like-white.svg';
 import imageBasic from '../../../../assets/default/defaultProfile.svg';
+import { ChatRoomData, OtherUserDto } from '../../../../apis/chatting/dto';
+import { useSocket } from '../../../../context/SocketProvider';
 
 interface UserInfoProps {
 	isFriend: boolean;
 }
 
 const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
+	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>();
 	const [userDetails] = useRecoilState(UserInfoAtom);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [friend, setFriend] = useRecoilState(isFriendAtom);
@@ -29,12 +31,14 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	const [modalContent, setModalContent] = useState('');
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const nav = useNavigate();
+	const socket = useSocket();
 
 	if (!userDetails) return null;
 
 	const { id, nickname, bio, userImg } = userDetails;
 	const userId = localStorage.getItem('id');
 	const user_img = userImg || imageBasic;
+	let roomId: number | null = null;
 
 	useEffect(() => {
 		setFriend(isFriend);
@@ -67,30 +71,27 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	const handleMessageClick = async () => {
 		try {
 			const response = await request.get<GetUserInfoResult>(`/users/${id}`);
-			const User: Opponent = {
+			const user: OtherUserDto = {
 				id: response.result.id,
 				nickname: response.result.nickname,
-				profilePictureUrl: response.result.profilePictureUrl,
-				name: response.result.name,
+				profileUrl: response.result.profilePictureUrl,
 			};
 
-			const chatRoomResponse = await request.get<{
-				isSuccess: boolean;
-				code: number;
-				message: string;
-				result: ChatRoomDto[];
-			}>(`/chat-rooms/${userId}`);
+			// 채팅방 리스트 조회
+			const getChatRooms = (data: ChatRoomData[]) => {
+				setChatRoomList(data);
+			};
 
-			let roomId: number | null = null;
+			if (socket) {
+				socket.on('getChatRooms', getChatRooms);
+			}
 
-			if (Array.isArray(chatRoomResponse.result)) {
-				chatRoomResponse.result.forEach((room) => {
-					if (room.opponent.id === User.id) {
-						roomId = room.id;
+			if (Array.isArray(chatRoomList)) {
+				chatRoomList.forEach((chatRoom) => {
+					if (chatRoom.otherUser.id === user.id) {
+						roomId = chatRoom.chatRoomId;
 					}
 				});
-			} else {
-				console.error('chatRoomResponse.result is not an array:', chatRoomResponse.result);
 			}
 
 			if (roomId !== null) {
@@ -99,7 +100,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 				console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
 			}
 
-			setOpponentInfo(User);
+			setOpponentInfo(user);
 		} catch (error) {
 			console.error('메세지 보내기 오류:', error);
 			alert('사용자 정보를 불러오지 못했습니다.');
