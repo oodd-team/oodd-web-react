@@ -1,6 +1,6 @@
 import React from 'react';
 import theme from '../../../../styles/theme';
-import { SentMessageProps } from '../../dto';
+import { SentMessageProps } from '../dto';
 import { Message, TimeWrapper, MessageLayout } from './styles';
 
 const SentMessage: React.FC<SentMessageProps> = React.memo(

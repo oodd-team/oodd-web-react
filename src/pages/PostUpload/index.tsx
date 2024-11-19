@@ -259,6 +259,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 				// 새 게시물 업로드 (POST)
 				response = await createPostApi(postData);
 			}
+			console.log(response);
 
 			//초기화
 			setSelectedImages([]);
