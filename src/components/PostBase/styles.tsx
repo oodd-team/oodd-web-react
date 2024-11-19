@@ -1,4 +1,27 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { StyledText } from '../Text/StyledText';
+
+// 그라데이션 애니메이션 정의
+const shimmer = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+// 공통된 로딩 스타일
+const LoadingSkeleton = styled.div`
+	background: linear-gradient(
+		90deg,
+		${({ theme }) => theme.colors.gray1} 25%,
+		${({ theme }) => theme.colors.gray2} 50%,
+		${({ theme }) => theme.colors.gray1} 75%
+	);
+	background-size: 200% 100%;
+	animation: ${shimmer} 2s infinite;
+`;
 
 export const PostContainer = styled.div`
 	width: 100%;
@@ -14,26 +37,25 @@ export const PostContainer = styled.div`
 
 export const PostInfoContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	margin-top: 8px;
 	margin-bottom: 16px;
 	padding: 0 20px;
-`;
+	gap: 8px;
+	align-self: stretch;
 
-export const UserInfo = styled.div`
-	cursor: pointer;
-	display: flex;
-	align-items: center;
+	.timeAgo {
+		margin-left: auto;
+	}
 `;
 
 export const UserProfile = styled.div`
+	cursor: pointer;
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-right: 8px;
-	background-color: #feeefb;
+	background-color: ${({ theme }) => theme.colors.lightPink};
 
 	img {
 		width: 100%;
@@ -42,20 +64,42 @@ export const UserProfile = styled.div`
 	}
 `;
 
-export const UserName = styled.div``;
+export const UserName = styled(StyledText)``;
 
 export const MenuBtn = styled.button`
 	width: 18px;
 	height: 18px;
 `;
 
-export const Content = styled.span`
-	display: flex;
-	align-items: center;
+export const PostContentContainer = styled.div`
+	width: 100%;
 	padding: 0 20px;
 	margin-bottom: 16px;
+`;
+
+export const BaseContent = styled(LoadingSkeleton)`
+	width: 100%;
+	height: 16px;
+	border-radius: 4px;
+`;
+
+export const Content = styled(StyledText)<{ showFullText: boolean }>`
 	word-wrap: break-word;
 	word-break: break-all;
+	overflow: hidden;
+	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: ${({ showFullText }) => (showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
+	text-overflow: ellipsis;
+	white-space: normal;
+`;
+
+export const ShowMoreButton = styled(StyledText)``;
+
+export const BaseImage = styled(LoadingSkeleton)`
+	width: 100%;
+	aspect-ratio: 4 / 5;
 `;
 
 export const IconRow = styled.div`
@@ -63,7 +107,7 @@ export const IconRow = styled.div`
 	height: 20px;
 	align-items: center;
 	padding: 0 20px;
-	margin: 8px 0 16px 0;
+	margin: 16px 0;
 `;
 
 export const IconWrapper = styled.div`
@@ -85,7 +129,6 @@ export const IconWrapper = styled.div`
 `;
 
 export const ClothingInfoList = styled.div`
-	margin-top: 5px;
 	margin-bottom: 88px;
 	display: flex;
 	overflow-x: auto;

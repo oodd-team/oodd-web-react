@@ -54,7 +54,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 				{images.map((image, index) => (
 					<SwiperSlide key={index}>
 						<ImageWrapper>
-							<img src={image} alt={`Selected ${index}`} />
+							<img src={image.url} alt={`Selected ${index}`} />
 						</ImageWrapper>
 					</SwiperSlide>
 				))}

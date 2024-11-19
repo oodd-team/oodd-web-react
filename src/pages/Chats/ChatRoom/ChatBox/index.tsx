@@ -9,14 +9,13 @@ const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const storageValue = localStorage.getItem('id');
 	const userId = storageValue ? Number(storageValue) : -1;
-	const { roomId } = useParams();
-	const roomIdNumber = Number(roomId);
+	const { chatRoomId } = useParams();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	const [newMessage, setNewMessage] = useState('');
 
 	const socket = useSocket();
-	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
+	const isOpponentValid = !!(opponentInfo && opponentInfo.id);
 
 	// textarea 내용에 따라 높이 조정
 	useEffect(() => {
@@ -44,7 +43,15 @@ const ChatBox: React.FC = () => {
 
 		// 메시지 전송
 		if (socket) {
-			socket.emit('message', roomIdNumber, userId, opponentInfo?.id, newMessage);
+			const sendMessageRequest = {
+				chatRoomId: Number(chatRoomId),
+				toUserId: opponentInfo?.id,
+				message: newMessage,
+				fromUserId: userId,
+				createdAt: new Date().toISOString(),
+			};
+
+			socket.emit('sendMessage', sendMessageRequest);
 			setNewMessage('');
 		}
 	};
