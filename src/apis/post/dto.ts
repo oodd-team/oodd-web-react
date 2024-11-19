@@ -1,4 +1,5 @@
 import { BaseSuccessResponse } from '../core/dto';
+import { PaginationMeta } from '../util/dto';
 
 // 게시글 생성
 //request
@@ -23,15 +24,6 @@ export type ModifyPostResponse = BaseSuccessResponse<ModifyPostData>;
 
 // 대표 게시글 지정
 // response : empty
-
-interface PaginationMeta {
-	total: number;
-	page: number;
-	take: number;
-	last_page: number;
-	hasPreviousPage: boolean;
-	hasNextPage: boolean;
-}
 
 export interface PostBase {
 	content: string;

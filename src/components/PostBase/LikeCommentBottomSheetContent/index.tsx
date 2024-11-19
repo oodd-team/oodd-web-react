@@ -9,13 +9,17 @@ import Loading from '../../Loading';
 
 import More from '../../../assets/default/more.svg';
 
+import { LikeCommentBottomSheetProps } from '../dto';
+import { CommentsResponse } from '../dto';
+import { GetPostLikeListResponse } from '../../../apis/post-like/dto';
+
 import request from '../../../apis/core';
-import { LikeCommentBottomSheetProps, LikesResponse, CommentsResponse } from '../dto';
+import { getPostLikeListApi } from '../../../apis/post-like';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
 	const { postId } = useParams<{ postId: string }>();
-	const [likes, setLikes] = useState<LikesResponse['result']['likes']>([]);
+	const [likes, setLikes] = useState<GetPostLikeListResponse['data']['likes']>([]);
 	const [comments, setComments] = useState<CommentsResponse['result']['comments']>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const nav = useNavigate();
@@ -23,7 +27,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	useEffect(() => {
 		if (activeTab === 'likes') {
 			setActiveTab('likes');
-			fetchLikes();
+			getPostLikeList();
 		} else if (activeTab === 'comments') {
 			setActiveTab('comments');
 			fetchComments();
@@ -31,15 +35,12 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	}, [activeTab]);
 
 	// 좋아요 리스트 불러오기
-	const fetchLikes = async () => {
+	const getPostLikeList = async () => {
 		setIsLoading(true);
 		try {
-			const response = await request.get<LikesResponse>(`/posts/${postId}/like`);
-			if (response.isSuccess) {
-				setLikes(response.result.likes);
-			} else {
-				console.error('Failed to fetch likes:', response.message);
-			}
+			const response = await getPostLikeListApi(Number(postId));
+			const data = response.data;
+			setLikes(data.likes);
 		} catch (error) {
 			console.error('Error fetching likes:', error);
 		} finally {

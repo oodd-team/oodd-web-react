@@ -77,7 +77,7 @@ export const PostContentContainer = styled.div`
 	margin-bottom: 16px;
 `;
 
-export const BaseContent = styled(LoadingSkeleton)`
+export const ContentSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
 	height: 16px;
 	border-radius: 4px;
@@ -97,7 +97,7 @@ export const Content = styled(StyledText)<{ showFullText: boolean }>`
 
 export const ShowMoreButton = styled(StyledText)``;
 
-export const BaseImage = styled(LoadingSkeleton)`
+export const ImageSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
 	aspect-ratio: 4 / 5;
 `;
