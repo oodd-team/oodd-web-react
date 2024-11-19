@@ -13,9 +13,7 @@ export interface UserInfoData {
 	isFriend?: boolean;
 }
 
-// 사용자 신고 요청 맟 응답 -> 스웨거 보니 응답 없는데 삭제 필요할 듯
-export type UpdateUserReportRequest = ReportRequest;
-export type UpdateUserReportResponse = BaseSuccessResponse<ReportUserResult>;
+export type PostUserReportRequest = ReportRequest;
 
 // 사용자 신고 요청
 export interface ReportRequest {
@@ -29,9 +27,7 @@ export interface ReportUserResult {
 	message: string;
 }
 
-// 사용자 차단/해제 요청 및 응답 -> 스웨거 보니 응답 없는데 삭제 필요할 듯
-export type CreateUserBlockRequest = BlockRequest;
-export type CreateUserBlockResponse = BaseSuccessResponse<BlockResult>;
+export type PostUserBlockRequest = BlockRequest;
 
 // 차단/해제 요청 데이터
 export interface BlockRequest {
@@ -45,12 +41,12 @@ export interface BlockResult {
 	message: string;
 }
 
-// 사용자 정보 조회
+// 사용자 정보 조회 응답
 export type GetUserInfoResponse = BaseSuccessResponse<UserInfoData>;
 
 // 사용자 정보 수정 요청 및 응답
-export type CreateUpdateUserRequest = UpdateUserRequest;
-export type UpdateUserResponse = BaseSuccessResponse<UserInfoData>;
+export type PatchUserUpdateRequest = UpdateUserRequest;
+export type PatchUserUpdateResponse = BaseSuccessResponse<UserInfoData>;
 
 // 사용자 정보 수정 요청 데이터
 export interface UpdateUserRequest {
@@ -63,7 +59,7 @@ export interface UpdateUserRequest {
 }
 
 // 회원 탈퇴
-export type DeleteUserResponse = BaseSuccessResponse<DeleteUserResult>;
+export type PatchUserDeleteResponse = BaseSuccessResponse<DeleteUserResult>;
 
 // 회원 탈퇴 응답 데이터
 export interface DeleteUserResult {

@@ -1,27 +1,28 @@
 import {
-	UpdateUserResponse,
-	CreateUserBlockRequest,
-	UpdateUserReportRequest,
-	CreateUpdateUserRequest,
-	DeleteUserResponse,
+	PostUserBlockRequest,
+	PostUserReportRequest,
+	PatchUserUpdateRequest,
+	PatchUserUpdateResponse,
+	PatchUserDeleteResponse,
 } from './dto';
 import { newRequest } from '../core';
 import { EmptySuccessResponse } from '../core/dto';
 
 // 유저 정보 수정 api
-export const patchUserUpdate = (data: CreateUpdateUserRequest, userId: string) =>
-	newRequest.patch<UpdateUserResponse>(`/users/${userId}`, data);
+export const patchUserUpdateApi = (data: PatchUserUpdateRequest, userId: string) =>
+	newRequest.patch<PatchUserUpdateResponse>(`/users/${userId}`, data);
 
 // 유저 탈퇴 api
-export const patchUserWithdraw = (userId: string) => newRequest.patch<DeleteUserResponse>(`/user/${userId}/withdraw`);
+export const patchUserWithdrawApi = (userId: string) =>
+	newRequest.patch<PatchUserDeleteResponse>(`/user/${userId}/withdraw`);
 
 // 유저 차단 api
-export const postUserBlock = (data: CreateUserBlockRequest) =>
+export const postUserBlockApi = (data: PostUserBlockRequest) =>
 	newRequest.post<EmptySuccessResponse>('/user-block', data);
 
 // 유저 신고 api
-export const postUserReport = (data: UpdateUserReportRequest) =>
+export const postUserReportApi = (data: PostUserReportRequest) =>
 	newRequest.post<EmptySuccessResponse>('/user-report', data);
 
 // 이용 약관 동의 api
-export const postAgreementUser = (userId: string) => newRequest.post<EmptySuccessResponse>(`/user/${userId}`);
+export const postAgreementUserApi = (userId: string) => newRequest.post<EmptySuccessResponse>(`/user/${userId}`);
