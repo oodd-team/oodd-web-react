@@ -10,9 +10,21 @@ import { BottomSheetMenuProps } from '../../BottomSheetMenu/dto';
 import { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
 import { ModalProps } from '../../Modal/dto';
 
+import { StyledText } from '../../Text/StyledText';
 import { handleError } from '../../../apis/util/handleError';
 import blockIcon from '../../../assets/default/block.svg';
 import reportIcon from '../../../assets/default/report.svg';
+
+import {
+	ReportBottomSheetLayout,
+	ReportModalLayout,
+	ReportModalWrapper,
+	ReportModalContainer,
+	ReportModalHeader,
+	XButton,
+	ReportModalBox,
+} from './styles';
+import theme from '../../../styles/theme';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetId, targetNickname, onClose }) => {
 	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(true);
@@ -125,11 +137,38 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 		onClose: onClose,
 	};
 
+	const handleBackgroundClick = (e: React.MouseEvent) => {
+		if (e.target === e.currentTarget) {
+			setIsReportBottomSheetOpen(false);
+		}
+	};
+
 	return (
 		<>
 			<BottomSheet {...optionsBottomSheetProps} />
 			{isBlockModalOpen && <Modal {...blockModalProps} />}
-			<BottomSheet {...reportBottomSheetProps} />
+			{/* 신고하기 바텀시트 모바일 & 태블릿 UI */}
+			<ReportBottomSheetLayout>
+				<BottomSheet {...reportBottomSheetProps} />
+			</ReportBottomSheetLayout>
+			{/* 신고하기 바텀시트 데스크탑 UI */}
+			{isReportBottomSheetOpen && (
+				<ReportModalLayout>
+					<ReportModalWrapper onClick={handleBackgroundClick}>
+						<ReportModalContainer>
+							<ReportModalHeader>
+								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
+									신고 사유 선택
+								</StyledText>
+								<XButton onClick={onClose} />
+							</ReportModalHeader>
+							<ReportModalBox>
+								<ReportBottomSheetMenu {...reportBottomSheetMenuProps} />
+							</ReportModalBox>
+						</ReportModalContainer>
+					</ReportModalWrapper>
+				</ReportModalLayout>
+			)}
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</>
 	);
