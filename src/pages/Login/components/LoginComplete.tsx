@@ -1,10 +1,19 @@
-import React from 'react';
-
-// 이곳에서 경로의 jwt 읽어서 로컬에 저장하고, auth/me로 jwt만으로도 회원 정보 가져올 수 있는 api 호출해서
-// 회원 정보의 닉네임 유무에 따라 홈 또는 회원가입 화면으로 리다이렉트
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const LoginComplete: React.FC = () => {
-	return <></>;
+	const { token } = useParams<{ token: string }>(); // URL에서 JWT 토큰 추출
+
+	useEffect(() => {
+		if (token) {
+			// 로컬 스토리지에 JWT 저장
+			localStorage.setItem('new_jwt', token);
+
+			// auth/me API 호출
+		}
+	});
+
+	return <div>로그인 처리 중...</div>;
 };
 
 export default LoginComplete;
