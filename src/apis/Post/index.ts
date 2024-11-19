@@ -27,5 +27,5 @@ export const modifyPostApi = (postId: number, data: ModifyPostRequest) =>
 export const deletePostApi = (postId: number) => newRequest.delete<EmptySuccessResponse>(`/post/${postId}`);
 
 // 대표 게시글 지정
-export const togglePostRepresentativeApi = (postId: number) =>
+export const modifyPostRepresentativeStatusApi = (postId: number) =>
 	newRequest.patch<EmptySuccessResponse>(`/post/${postId}/is-representative`);
