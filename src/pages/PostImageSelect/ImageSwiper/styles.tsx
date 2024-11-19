@@ -62,23 +62,24 @@ export const StyledNavigation = styled.button`
 	top: 50%;
 	transform: translateY(-50%);
 	color: white;
-	background-color: ${({ theme }) => theme.colors.gray2};
-	opacity: 50%;
+	background-color: rgba(192, 192, 192, 0.5);
 	border-radius: 50%;
-	width: 45px;
-	height: 45px;
+	width: 40px;
+	height: 40px;
 
 	&::after {
-		font-size: 1.25rem;
+		font-size: 1rem;
 		color: white;
 	}
 
 	&.swiper-button-prev {
 		margin: 0 0 0 max(calc((100% - 19.875rem) / 2 - 1.25rem), 0rem);
+		padding-right: 3px;
 	}
 
 	&.swiper-button-next {
 		margin: 0 max(calc((100% - 19.875rem) / 2) - 1.25rem, 0rem) 0 0;
+		padding-left: 3px;
 	}
 `;
 
@@ -97,10 +98,8 @@ export const AddButton = styled.button`
 	align-items: center;
 	justify-content: center;
 	background: none;
-	color: ${({ theme }) => theme.colors.gray2};
-	font-size: 1.875rem;
-	width: 6.25rem;
-	height: 6.25rem;
+	width: 80px;
+	height: 80px;
 	margin: auto;
 `;
 

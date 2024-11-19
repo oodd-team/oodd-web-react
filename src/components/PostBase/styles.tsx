@@ -49,13 +49,13 @@ export const PostInfoContainer = styled.div`
 	}
 `;
 
-export const UserProfile = styled.div`
+export const UserProfile = styled(LoadingSkeleton)`
 	cursor: pointer;
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	background-color: ${({ theme }) => theme.colors.lightPink};
+	border: solid 0.5px ${({ theme }) => theme.colors.gray1};
 
 	img {
 		width: 100%;

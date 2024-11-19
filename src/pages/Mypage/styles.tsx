@@ -65,9 +65,6 @@ export const PostsContainer = styled.div`
 `;
 
 export const AddButton = styled.button`
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	position: absolute;
 	bottom: 6.75rem;
 	right: 1.25rem;
@@ -75,14 +72,10 @@ export const AddButton = styled.button`
 	height: 5rem;
 	border: none;
 	border-radius: 50%;
-	background-color: ${({ theme }) => theme.colors.white};
-	color: ${({ theme }) => theme.colors.black};
-	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-	font-size: 1rem;
-	cursor: pointer;
 	z-index: 2;
 
-	&:hover {
-		background-color: ${({ theme }) => theme.colors.gray3};
+	img {
+		width: 100%;
+		height: 100%;
 	}
 `;
