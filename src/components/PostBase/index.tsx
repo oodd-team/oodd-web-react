@@ -42,8 +42,7 @@ import More from '../../assets/default/more.svg';
 
 import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
-import { GetPostDetailResponse } from '../../apis/post/dto';
-import { GetUserResponse } from '../../apis/user/dto';
+import { GetPostResponse } from '../../apis/post/dto';
 import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 
 import request from '../../apis/core';
