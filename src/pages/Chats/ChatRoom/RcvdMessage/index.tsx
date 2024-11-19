@@ -1,27 +1,27 @@
 import React from 'react';
 import theme from '../../../../styles/theme';
-import { RcvdMessageProps } from '../../dto';
+import { RcvdMessageProps } from '../dto';
 import { FirstMessageLayout, UserImage, UsernameText, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
 const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> = React.memo(
 	({
-		fromUserName,
+		fromUserNickname,
 		profilePictureUrl,
 		content,
-		isFirst,
+		isProfileImageVisible,
 		isSenderChanged,
-		isPrintTime,
+		isTimeVisible,
 		formattedTime,
 		onClickProfile,
 	}) => {
-		if (isFirst) {
+		if (isProfileImageVisible) {
 			return (
 				<>
 					<FirstMessageLayout $isSenderChanged={isSenderChanged}>
 						<UserImage onClick={onClickProfile} src={profilePictureUrl} alt="프로필 사진" />
 						<MessageBox>
 							<UsernameText onClick={onClickProfile} $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
-								{fromUserName}
+								{fromUserNickname}
 							</UsernameText>
 							<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 								{content}
@@ -36,7 +36,7 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> =
 					<Message $textTheme={{ style: 'body6-regular' }} color={theme.colors.black}>
 						{content}
 					</Message>
-					{isPrintTime && <TimeWrapper>{formattedTime}</TimeWrapper>}
+					{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}
 				</MessageLayout>
 			);
 		}
