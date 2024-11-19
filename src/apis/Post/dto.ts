@@ -18,8 +18,6 @@ export type GetPostListResponse = BaseApiResponse<PostListResult>;
 // 게시물 상세 조회 (내 게시물일 때, 남의 게시물일 때)
 export type GetPostDetailResponse = BaseApiResponse<PostDetailResult>;
 
-// 게시물 신고 응답
-
 // 대표 OOTD 지정 응답
 
 // OOTD 리스트 조회 (스타일 태그에 따른)
