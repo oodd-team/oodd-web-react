@@ -9,7 +9,7 @@ const LoginComplete: React.FC = () => {
 			// 로컬 스토리지에 JWT 저장
 			localStorage.setItem('new_jwt', token);
 
-			// auth/me API 호출
+			// auth/me API 호출 -> jwt으로 사용자 정보 조회하기
 		}
 	});
 

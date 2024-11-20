@@ -8,10 +8,10 @@ const KakaoCallback: React.FC = () => {
 
 	useEffect(() => {
 		const code = new URL(window.location.href).searchParams.get('code'); // URL에서 인증 코드 추출
-		console.log(code); // 인증 코드 출력
+		console.log(code); // 인증 코드 출력 여기까지는 잘... 되는 듯? ㅜㅜ 근데... 흠.
 
 		if (code) {
-			const redirectUrl = `http://localhost:3000/login/complete`;
+			const redirectUrl = 'http://localhost:3000/login/complete';
 
 			getKakaoLoginApi(redirectUrl)
 				.then((response) => {
