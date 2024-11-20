@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { SocialLogin, TextWrapper, LogoImgWrapper, LogoImage } from '../style';
+
 import naver from '../../../../assets/default/snsIcon/naver.svg';
 
 const Naver: React.FC = () => {

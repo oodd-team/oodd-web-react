@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyledText } from '../../../../components/Text/StyledText';
+
 import theme from '../../../../styles/theme';
-import kakao from '../../../../assets/default/snsIcon/kakao.svg';
 import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from '../style';
+import { StyledText } from '../../../../components/Text/StyledText';
+
+import kakao from '../../../../assets/default/snsIcon/kakao.svg';
 
 const Kakao: React.FC = () => {
 	// 환경 변수에서 값을 읽어옴

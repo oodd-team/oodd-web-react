@@ -1,40 +1,42 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Loading from '../../../../components/Loading';
-import { getKakaoLoginApi } from '../../../../apis/auth';
+
+import { handleError } from '../../../../apis/util/handleError';
 
 const KakaoCallback: React.FC = () => {
 	const navigate = useNavigate();
+	const apiBaseUrl = import.meta.env.VITE_NEW_API_URL;
 
 	useEffect(() => {
-		const code = new URL(window.location.href).searchParams.get('code'); // URL에서 인증 코드 추출
-		console.log(code); // 인증 코드 출력 여기까지는 잘... 되는 듯? ㅜㅜ 근데... 흠.
+		const handleKakaoLogin = async () => {
+			try {
+				// URL에서 인증 코드 추출
+				const code = new URL(window.location.href).searchParams.get('code');
+				console.log('인증 코드:', code);
 
-		if (code) {
-			const redirectUrl = 'http://localhost:3000/login/complete';
+				if (!code) {
+					throw new Error('인증 코드가 없습니다.');
+				}
 
-			getKakaoLoginApi(redirectUrl)
-				.then((response) => {
-					if (response.code === 'SUCCESS') {
-						console.log('로그인 성공:', response);
-					} else {
-						console.error('로그인 실패:', response.data);
-						alert('카카오 계정의 정보를 불러오지 못했습니다.');
-						navigate('/login'); // 로그인 실패 시 처리
-					}
-				})
-				.catch((error) => {
-					console.error('서버 요청 실패:', error);
-					alert('서버 요청에 실패했습니다.');
-					navigate('/login'); // 실패 시 로그인 페이지로 리디렉션
-				});
-		} else {
-			// 인증 코드가 없는 경우 처리
-			console.error('인증 코드가 없습니다.');
-			alert('인증 코드가 누락되었습니다.');
-			navigate('/login'); // 인증 코드가 없으면 로그인 페이지로 이동
-		}
-	}, [navigate]);
+				// 리다이렉트 URL 설정 및 서버 URL 생성
+				const redirectUrl = encodeURIComponent('http://localhost:3000/login/complete');
+				const serverUrl = `${apiBaseUrl}/auth/login/kakao?redirectUrl=${redirectUrl}`;
+
+				// 서버로 리다이렉션
+				window.location.href = serverUrl;
+			} catch (error) {
+				// 에러 처리
+				console.error('카카오 로그인 중 오류 발생:', error);
+				const errorMessage = handleError(error);
+				alert(errorMessage);
+				navigate('/login'); // 에러 발생 시 로그인 페이지로 이동
+			}
+		};
+
+		handleKakaoLogin();
+	}, [navigate, apiBaseUrl]);
 
 	return <Loading />;
 };

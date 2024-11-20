@@ -1,12 +1,11 @@
 import { BaseSuccessResponse } from '../core/dto';
 
-// 네이버 로그인
-export type NaverLoginResponse = BaseSuccessResponse<LoginResponse>;
-
-// 카카오 로그인
-export type KakaoLoginResponse = BaseSuccessResponse<LoginResponse>;
-
-// 로그인 공통 응답 인터페이스
-export interface LoginResponse {
-	jwt: string;
+// jwt를 이용한 사용자 정보 조회 응답
+export type getUserInfoByJwtResponse = BaseSuccessResponse<getUserInfoByJwtData>;
+// jwt를 이용한 사용자 정보 조회 응답 데이터
+export interface getUserInfoByJwtData {
+	name: string;
+	email: string;
+	nickname: string;
+	profilePictureUrl: string;
 }
