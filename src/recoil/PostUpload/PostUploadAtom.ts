@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
-import { Styletag } from '../../pages/PostUpload/dto';
+import { PostImage } from '../../apis/post/dto';
 
-export const postImagesAtom = atom<string[]>({
+export const postImagesAtom = atom<PostImage[]>({
 	key: 'imagesAtom',
 	default: [],
 });
@@ -17,9 +17,9 @@ export const postClothingInfosAtom = atom<ClothingInfo[]>({
 	default: [],
 });
 
-export const postStyletagAtom = atom<Styletag | null>({
+export const postStyletagAtom = atom<string[]>({
 	key: 'selectedStyletagAtom',
-	default: null,
+	default: [],
 });
 
 export const postIsRepresentativeAtom = atom<boolean>({

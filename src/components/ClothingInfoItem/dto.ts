@@ -1,10 +1,6 @@
-export interface ClothingInfo {
-	imageUrl: string;
-	brand: string;
-	model: string;
-	modelNumber: string;
-	url: string;
-}
+import { PostClothing } from '../../apis/post/dto';
+
+export interface ClothingInfo extends PostClothing {}
 
 export interface ClothingInfoItemProps {
 	clothingObj: ClothingInfo;
