@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { OODDFrame } from '../../components/Frame/Frame';
 import BottomButton from '../../components/BottomButton';
@@ -17,11 +17,14 @@ import { handleError } from '../../apis/util/handleError';
 
 const SignUp: React.FC = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
+
 	const { id } = location.state.key;
 	const token = localStorage.getItem('new_jwt_token');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+	const [modalType, setModalType] = useState('');
 
 	const [currentStep, setCurrentStep] = useState(1);
 	const [formData, setFormData] = useState<UpdateUserInfoDto>({
@@ -60,7 +63,7 @@ const SignUp: React.FC = () => {
 		},
 		{
 			label: '이름 대신 사용할 닉네임을 입력해주세요!',
-			placeholder: '패션의 왕',
+			placeholder: '패션의왕',
 			type: 'text',
 			value: formData.nickname,
 			onChange: handleInputChange('nickname'),
@@ -84,6 +87,13 @@ const SignUp: React.FC = () => {
 			setIsModalOpen(true);
 			return;
 		}
+
+		if (currentStep === 4 && formData.nickname.trim().includes(' ')) {
+			setModalMessage('닉네임에 공백을 포함할 수 없습니다!');
+			setIsModalOpen(true);
+			return;
+		}
+
 		if (formData[steps[currentStep - 1].label] === '') {
 			setModalMessage('필수 입력 항목입니다!');
 			setIsModalOpen(true);
@@ -97,7 +107,7 @@ const SignUp: React.FC = () => {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthdate: formData.birthdate,
-				phonenumber: formData.phonenumber,
+				phoneNumber: formData.phonenumber,
 			};
 			await patchUserInfo(requestData, id);
 		}
@@ -106,6 +116,9 @@ const SignUp: React.FC = () => {
 		try {
 			const response = await patchUserInfoApi(requestData, id);
 			console.log('수정 성공:', response.data);
+			setModalMessage('회원가입에 성공했습니다!');
+			setIsModalOpen(true);
+			setModalType('success');
 		} catch (error) {
 			console.error('유저 정보 수정 실패:', error);
 			const errorMessage = handleError(error);
@@ -114,8 +127,16 @@ const SignUp: React.FC = () => {
 		}
 	};
 	const handleModalClose = () => {
-		setIsModalOpen(false); // 에러 나면 login으로 분기처리? 해야 하나...
+		setIsModalOpen(false);
+		if (modalType === 'success') {
+			navigate('/');
+		}
 	};
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		if (event.key === 'Enter') {
+			handleNextClick();
+		}
+	}; // 데스크탑 고려해 엔터 키 활성화
 
 	return (
 		<OODDFrame>
@@ -130,7 +151,13 @@ const SignUp: React.FC = () => {
 						{label}
 					</StyledText>
 					<NickNameContainer>
-						<NickName type={type} value={value} onChange={onChange} placeholder={placeholder} />
+						<NickName
+							type={type}
+							value={value}
+							onChange={onChange}
+							placeholder={placeholder}
+							onKeyDown={handleKeyDown}
+						/>
 						{value === '' && (
 							<TapStyled
 								$textTheme={{
