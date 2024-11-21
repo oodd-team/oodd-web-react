@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Loading from '../../../../components/Loading';
+import Modal from '../../../../components/Modal';
 
 import { handleError } from '../../../../apis/util/handleError';
 
 const KakaoCallback: React.FC = () => {
 	const navigate = useNavigate();
 	const apiBaseUrl = import.meta.env.VITE_NEW_API_URL;
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modalMessage, setModalMessage] = useState('');
 
 	useEffect(() => {
 		const handleKakaoLogin = async () => {
@@ -30,15 +34,25 @@ const KakaoCallback: React.FC = () => {
 				// 에러 처리
 				console.error('카카오 로그인 중 오류 발생:', error);
 				const errorMessage = handleError(error);
-				alert(errorMessage);
-				navigate('/login'); // 에러 발생 시 로그인 페이지로 이동
+				setModalMessage(`카카오 ${errorMessage}`);
+				setIsModalOpen(true);
 			}
 		};
 
 		handleKakaoLogin();
 	}, [navigate, apiBaseUrl]);
 
-	return <Loading />;
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
+	};
+
+	return (
+		<>
+			<Loading />
+			{isModalOpen && <Modal content={modalMessage} onClose={handleModalClose} />}
+		</>
+	);
 };
 
 export default KakaoCallback;

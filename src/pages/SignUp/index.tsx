@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+import { OODDFrame } from '../../components/Frame/Frame';
+import BottomButton from '../../components/BottomButton';
+import Modal from '../../components/Modal';
+
 import { StyledText } from '../../components/Text/StyledText';
 import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName, TapStyled, LogoImg } from './style';
-import { OODDFrame } from '../../components/Frame/Frame';
-import OODDlogo from '../../assets/default/oodd.svg';
-import request from '../../apis/core';
-import { SignUpDto } from './SignUpDto';
-import BottomButton from '../../components/BottomButton';
 
-interface PatchUserInfoRequest {
-	name: string;
-	birthdate: string;
-	phonenumber: string;
-	nickname: string;
-	[key: string]: string; // 문자열 키에 대응하도록 설정
-}
+import OODDlogo from '../../assets/default/oodd.svg';
+
+import { UpdateUserInfoDto } from './SignUpDto';
+
+import { patchUserInfoApi } from '../../apis/user';
+import { handleError } from '../../apis/util/handleError';
 
 const SignUp: React.FC = () => {
+	const location = useLocation();
+	const { id } = location.state.key;
+	const token = localStorage.getItem('new_jwt_token');
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modalMessage, setModalMessage] = useState('');
+
 	const [currentStep, setCurrentStep] = useState(1);
-	const [formData, setFormData] = useState<PatchUserInfoRequest>({
+	const [formData, setFormData] = useState<UpdateUserInfoDto>({
 		// 이름, 생년월일 등 개별적으로 상태 관리하지 않고 통합
 		name: '',
 		birthdate: '',
 		phonenumber: '',
 		nickname: '', //초기 값
 	});
-	const navigate = useNavigate();
-	const userId = localStorage.getItem('id');
-	const Token = localStorage.getItem('jwt_token');
 
-	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (field: keyof UpdateUserInfoDto) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
 	};
 
@@ -64,43 +67,55 @@ const SignUp: React.FC = () => {
 		},
 	];
 
-	const handleNextClick = () => {
+	const { label, placeholder, type, value, onChange } = steps[currentStep - 1];
+
+	const handleNextClick = async () => {
 		// 유효성 검사
 		const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 		const phonePattern = /^(010-\d{4}-\d{4}|\d{3}-\d{4}-\d{4}|\d{11})$/;
 
 		if (currentStep === 2 && !datePattern.test(formData.birthdate)) {
-			alert('생년월일은 YYYY-MM-DD 형식으로 입력해주세요!');
+			setModalMessage('생년월일은 YYYY-MM-DD 형식으로 입력해주세요!');
+			setIsModalOpen(true);
 			return;
 		}
 		if (currentStep === 3 && !phonePattern.test(formData.phonenumber)) {
-			alert('전화번호는 010-1234-1234 형식으로 입력해주세요!');
+			setModalMessage('전화번호는 010-1234-1234 형식으로 입력해주세요!');
+			setIsModalOpen(true);
 			return;
 		}
 		if (formData[steps[currentStep - 1].label] === '') {
-			alert('이 항목을 입력해주세요!');
+			setModalMessage('필수 입력 항목입니다!');
+			setIsModalOpen(true);
 			return;
 		}
 
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
-		} else if (userId && Token) {
-			request
-				.patch<SignUpDto>(`/users/${userId}`, { ...formData })
-				.then((response) => {
-					console.log('사용자 정보 업데이트 성공:', response);
-					navigate('/');
-				})
-				.catch((error) => {
-					console.error('사용자 정보 업데이트 실패:', error);
-					alert('다른 정보를 확인해 주세요!');
-				});
-		} else {
-			console.error('유효하지 않은 사용자 ID 또는 토큰');
+		} else if (id && token) {
+			const requestData = {
+				name: formData.name,
+				nickname: formData.nickname,
+				birthdate: formData.birthdate,
+				phonenumber: formData.phonenumber,
+			};
+			await patchUserInfo(requestData, id);
 		}
 	};
-
-	const { label, placeholder, type, value, onChange } = steps[currentStep - 1];
+	const patchUserInfo = async (requestData: any, id: string) => {
+		try {
+			const response = await patchUserInfoApi(requestData, id);
+			console.log('수정 성공:', response.data);
+		} catch (error) {
+			console.error('유저 정보 수정 실패:', error);
+			const errorMessage = handleError(error);
+			setModalMessage(errorMessage);
+			setIsModalOpen(true);
+		}
+	};
+	const handleModalClose = () => {
+		setIsModalOpen(false); // 에러 나면 login으로 분기처리? 해야 하나...
+	};
 
 	return (
 		<OODDFrame>
@@ -128,6 +143,7 @@ const SignUp: React.FC = () => {
 					</NickNameContainer>
 				</IntroWrapper>
 				<BottomButton content={currentStep < steps.length ? '다음' : '완료'} onClick={handleNextClick} />
+				{isModalOpen && <Modal content={modalMessage} onClose={handleModalClose} />}
 			</SignUpContainer>
 		</OODDFrame>
 	);

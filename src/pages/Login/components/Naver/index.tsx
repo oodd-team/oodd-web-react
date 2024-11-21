@@ -13,7 +13,6 @@ const Naver: React.FC = () => {
 			? import.meta.env.VITE_DEV_DOMAIN + '/auth/naver/callback'
 			: 'http://localhost:3000/auth/naver/callback',
 	);
-	//const state = 'random_state_string'; // CSRF 공격 방지를 위한 랜덤 문자열
 
 	const handleLogin = () => {
 		window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE_TOKEN`;
