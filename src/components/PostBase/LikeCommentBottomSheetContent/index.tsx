@@ -165,11 +165,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			<ContentContainer>
 				{activeTab === 'likes' &&
 					(likes.length === 0 ? (
-						<Content
-							$textTheme={{ style: 'body2-medium' }}
-							color={theme.colors.gray3}
-							style={{ textAlign: 'center', marginTop: '20px' }}
-						>
+						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							아직 좋아요가 없습니다
 						</Content>
 					) : (
@@ -187,11 +183,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 				{activeTab === 'comments' &&
 					(comments.length === 0 ? (
-						<Content
-							$textTheme={{ style: 'body2-medium' }}
-							color={theme.colors.gray3}
-							style={{ textAlign: 'center', marginTop: '20px' }}
-						>
+						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
 							아직 댓글이 없습니다
 						</Content>
 					) : (

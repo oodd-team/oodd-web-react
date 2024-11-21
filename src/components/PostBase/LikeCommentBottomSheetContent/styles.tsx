@@ -35,7 +35,10 @@ export const ContentContainer = styled.div`
 	align-items: start;
 `;
 
-export const Content = styled(StyledText);
+export const Content = styled(StyledText)`
+	text-align: center;
+	margin-top: 20px;
+`;
 
 export const BigUserProfile = styled(UserProfile)`
 	width: 52px;
