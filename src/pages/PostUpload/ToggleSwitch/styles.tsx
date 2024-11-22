@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 	appearance: none;
 	position: relative;
-	border: 1.5px solid ${({ theme }) => theme.colors.pink};
+	border: 1.5px solid ${({ theme }) => theme.colors.pink3};
 	border-radius: 28px;
 	width: 52px;
 	height: 28px;
@@ -19,7 +19,7 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 		height: 25px;
 		border-radius: 50%;
 		background-color: ${({ theme }) => theme.colors.white};
-		border: 1.5px solid ${({ theme }) => theme.colors.pink};
+		border: 1.5px solid ${({ theme }) => theme.colors.pink3};
 		transition: left 250ms linear;
 	}
 
