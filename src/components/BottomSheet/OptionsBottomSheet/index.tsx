@@ -25,10 +25,8 @@ import {
 	ReportModalBox,
 } from './styles';
 import theme from '../../../styles/theme';
-import { postUserBlockApi } from '../../../apis/user';
-import { useRecoilValue } from 'recoil';
-import { PostUserBlockRequest } from '../../../apis/user/dto';
-import { TargetInfoAtom } from '../../../recoil/util/TargetInfo';
+import { postUserBlockApi, postUserReportApi } from '../../../apis/user';
+import { PostUserBlockRequest, PostUserReportRequest } from '../../../apis/user/dto';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
@@ -41,22 +39,19 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
-	const targetInfo = useRecoilValue(TargetInfoAtom);
 	const storageValue = localStorage.getItem('id');
 	const userId = Number(storageValue);
 
 	const sendBlock = async () => {
 		try {
-			// user-block api 호출
 			const blockRequest: PostUserBlockRequest = {
 				fromUserId: userId,
-				toUserId: targetInfo?.id || -1,
+				toUserId: targetId,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(blockRequest);
 
-			// response.isSuccess
-			if (response) {
+			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
 		} catch (error) {
@@ -70,12 +65,15 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 
 	const sendReport = async (reason: string) => {
 		try {
-			// user-report 또는 post-report api 호출
-			const response = domain === 'user' ? `sendUserReportApi(${targetId})` : `sendPostReportApi(${targetId})`;
-			console.log(reason);
+			const reportData: PostUserReportRequest = {
+				fromUserId: userId,
+				toUserId: targetId,
+				reason: reason,
+			};
+			const response = domain === 'user' ? await postUserReportApi(reportData) : await postUserReportApi(reportData);
 
 			// response.isSuccess
-			if (response) {
+			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
 		} catch (error) {
