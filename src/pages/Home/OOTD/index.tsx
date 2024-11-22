@@ -22,7 +22,6 @@ const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
 		const response = await getPostListApi(feedPageRef.current, 20);
 
 		if (response.isSuccess) {
-			console.log(response);
 			setFeeds([...feeds, ...response.data.post]);
 			setIsLoading(false);
 		}

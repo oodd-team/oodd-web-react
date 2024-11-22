@@ -21,6 +21,7 @@ import {
 import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
 import likeBtn from '../../../../assets/default/heart.svg';
+import likeFillBtn from '../../../../assets/default/heart-fill.svg';
 import commentBtn from '../../../../assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
 import { PostSummary } from '../../../../apis/post/dto';
@@ -31,12 +32,15 @@ import OptionsBottomSheet from '../../../../components/BottomSheet/OptionsBottom
 import ApiModal from '../../../../components/Modal/ApiModal';
 import CommentBottomSheet from '../../../../components/CommentBottomSheet';
 import Modal from '../../../../components/Modal';
-import { CreateMatchingRequest, CreateMatchingResponse } from '../../../../apis/matching/dto';
+import { CreateMatchingRequest } from '../../../../apis/matching/dto';
 import { createMatchingApi } from '../../../../apis/matching';
 import { handleError } from '../../../../apis/util/handleError';
 import { ApiModalProps } from '../../../../components/Modal/ApiModal/dto';
 import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
 import { ModalProps } from '../../../../components/Modal/dto';
+import { postUserBlockApi } from '../../../../apis/user';
+import { EmptySuccessResponse } from '../../../../apis/core/dto';
+import { togglePostLikeStatusApi } from '../../../../apis/post-like';
 
 interface FeedProps {
 	feed: PostSummary;
@@ -44,7 +48,7 @@ interface FeedProps {
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const nav = useNavigate();
-	const [isLikeClicked, setIsLikeClicked] = useState(false);
+	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
 	const [isBlockApiModalOpen, setIsBlockApiModalOpen] = useState(false);
 	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(false);
@@ -77,15 +81,23 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 
 	// 게시글 좋아요 & 좋아요 취소 api
 	const togglePostLikeStatus = async () => {
-		const action = isLikeClicked ? 'unlike' : 'like';
-		console.log(action);
-		setIsLikeClicked((prev) => !prev);
+		try {
+			const response = await togglePostLikeStatusApi(feed.postId);
+
+			if (response.isSuccess) {
+				setIsLikeClicked((prev) => !prev);
+			}
+		} catch (error) {
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
+		}
 	};
 
 	// x 버튼 클릭 시
 	// TODO: 차단하기 api 생성되면 호출하는 api 함수 수정
-	const blockApiModalProps: ApiModalProps<CreateMatchingResponse> = {
-		response: createMatchingApi({ requesterId: 0, targetId: 0, message: '' }),
+	const blockApiModalProps: ApiModalProps<EmptySuccessResponse> = {
+		response: postUserBlockApi({ fromUserId: Number(userId), toUserId: feed.user.userId, action: 'block' }),
 		content: `${feed.user.nickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
 		buttonContent: '차단하기',
 		successContent: '정상적으로 처리되었습니다.',
@@ -184,7 +196,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 						{isLikeClicked ? (
 							<img className="button" onClick={togglePostLikeStatus} src={likeBtn} />
 						) : (
-							<img className="button" onClick={togglePostLikeStatus} src={likeBtn} />
+							<img className="button" onClick={togglePostLikeStatus} src={likeFillBtn} />
 						)}
 					</Reaction>
 
