@@ -28,13 +28,13 @@ const LoginComplete: React.FC = () => {
 					const response = await getUserInfoByJwtApi();
 					console.log(response);
 
-					const { nickname, name, myId } = response.data;
-					localStorage.setItem('myId', `${myId}`);
+					const { nickname, name, id } = response.data;
+					localStorage.setItem('myId', `${id}`);
 
 					if (nickname && name) {
 						navigate('/');
 					} else {
-						navigate('/signup', { state: { key: { myId } } }); // id 전달해 회원 정보 수정할 수 있도록
+						navigate('/signup', { state: { key: { id } } }); // id 전달해 회원 정보 수정할 수 있도록
 					}
 				} catch (error) {
 					console.error('사용자 정보 조회 실패:', error);

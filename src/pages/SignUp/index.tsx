@@ -106,7 +106,7 @@ const SignUp: React.FC = () => {
 			const requestData = {
 				name: formData.name,
 				nickname: formData.nickname,
-				birthdate: formData.birthdate,
+				birthDate: formData.birthdate,
 				phoneNumber: formData.phonenumber,
 			};
 			await patchUserInfo(requestData, id);
