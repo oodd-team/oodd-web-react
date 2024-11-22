@@ -7,7 +7,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { getPostListApi } from '../../../apis/post';
 
-const OOTD: React.FC<{ tooltipRef: React.MutableRefObject<HTMLDivElement[]> }> = ({ tooltipRef }) => {
+interface OODDProps {
+	tooltipRef: React.MutableRefObject<HTMLDivElement[]>;
+}
+
+const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 관리
 	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);

@@ -20,87 +20,139 @@ import {
 } from './styles';
 import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
-import heartBtn from '../../../../assets/default/heart.svg';
+import likeBtn from '../../../../assets/default/heart.svg';
 import commentBtn from '../../../../assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import {
-	IsMatchingCommentBottomSheetOpenAtom,
-	MatchingInfoAtom,
-} from '../../../../recoil/Home/MatchingCommentBottomSheetAtom';
-import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
-import { PostCommentAtom } from '../../../../recoil/Home/PostCommentBottomSheetAtom';
-import { IsMeatballBottomSheetOpenAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
 import { PostSummary } from '../../../../apis/post/dto';
 import defaultProfile from '../../../../assets/default/defaultProfile.svg';
+import dayjs from 'dayjs';
+import { OptionsBottomSheetProps } from '../../../../components/BottomSheet/OptionsBottomSheet/dto';
+import OptionsBottomSheet from '../../../../components/BottomSheet/OptionsBottomSheet';
+import ApiModal from '../../../../components/Modal/ApiModal';
+import CommentBottomSheet from '../../../../components/CommentBottomSheet';
+import Modal from '../../../../components/Modal';
+import { CreateMatchingRequest, CreateMatchingResponse } from '../../../../apis/matching/dto';
+import { createMatchingApi } from '../../../../apis/matching';
+import { handleError } from '../../../../apis/util/handleError';
+import { ApiModalProps } from '../../../../components/Modal/ApiModal/dto';
+import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
+import { ModalProps } from '../../../../components/Modal/dto';
 
-interface Props {
+interface FeedProps {
 	feed: PostSummary;
 }
 
-const Feed: React.FC<Props> = ({ feed }) => {
+const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const nav = useNavigate();
-	const [isHeartClicked, setIsHeartClicked] = useState(false);
-	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
-	const [, setMatchingInfo] = useRecoilState(MatchingInfoAtom);
-	const [, setIsHeartBottomSheetOpen] = useRecoilState(IsMatchingCommentBottomSheetOpenAtom);
-	const [, setBlockInfo] = useRecoilState(PostBlockAtom);
-	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
-	const [, setPostComment] = useRecoilState(PostCommentAtom);
-	const storedValue = localStorage.getItem('id');
-	const userId = Number(storedValue);
+	const [isLikeClicked, setIsLikeClicked] = useState(false);
+	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
+	const [isBlockApiModalOpen, setIsBlockApiModalOpen] = useState(false);
+	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(false);
+	const [isMatchingCommentBottomSheetOpen, setIsMatchingCommentBottomSheetOpen] = useState(false);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('');
+	const userId = localStorage.getItem('id');
 
-	const handleHeartClick = () => {
-		if (isHeartClicked === true) {
-			alert('요청을 취소할 수 없습니다.');
-		} else {
-			setMatchingInfo({
-				requesterId: userId,
-				targetId: feed.user.userId,
-				targetName: feed.user.nickname,
-			});
-			setIsHeartBottomSheetOpen(true);
-			setIsHeartClicked(true);
+	// 매칭 생성 api
+	const createMatching = async (comment: string) => {
+		try {
+			const matchingRequest: CreateMatchingRequest = {
+				requesterId: Number(userId) || -1,
+				targetId: feed.user.userId || -1,
+				message: comment,
+			};
+			const response = await createMatchingApi(matchingRequest);
+
+			if (response.isSuccess) {
+				setModalContent(`${feed.user.nickname} 님에게 대표 OOTD와\n한 줄 메세지를 보냈어요!`);
+			}
+		} catch (error) {
+			const errorMessage = handleError(error, 'user');
+			setModalContent(errorMessage);
+		} finally {
+			setIsMatchingCommentBottomSheetOpen(false);
+			setIsStatusModalOpen(true);
 		}
 	};
 
-	const handleBlockClick = () => {
-		setBlockInfo({
-			userId: userId,
-			friendId: feed.user.userId,
-			friendName: feed.user.nickname,
-			action: 'toggle',
-		});
-		setIsBlockConfirmationModalOpen(true);
+	// 게시글 좋아요 & 좋아요 취소 api
+	const togglePostLikeStatus = async () => {
+		const action = isLikeClicked ? 'unlike' : 'like';
+		console.log(action);
+		setIsLikeClicked((prev) => !prev);
 	};
 
-	const handleCommentClick = () => {
-		setPostComment({
-			userName: feed.user.nickname,
-			postId: feed.postId,
-		});
-		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
+	// x 버튼 클릭 시
+	// TODO: 차단하기 api 생성되면 호출하는 api 함수 수정
+	const blockApiModalProps: ApiModalProps<CreateMatchingResponse> = {
+		response: createMatchingApi({ requesterId: 0, targetId: 0, message: '' }),
+		content: `${feed.user.nickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
+		buttonContent: '차단하기',
+		successContent: '정상적으로 처리되었습니다.',
+		handleCloseModal: () => {
+			setIsBlockApiModalOpen(false);
+		},
+	};
+
+	// 매칭 요청 버튼 클릭 시
+	const matchingCommentBottomSheetProps: CommentBottomSheetProps = {
+		isBottomSheetOpen: isMatchingCommentBottomSheetOpen,
+		commentProps: {
+			content: `${feed.user.nickname || '알수없음'} 님에게 대표 OOTD와 함께 전달될\n한줄 메시지를 보내보세요!`,
+			sendComment: createMatching,
+		},
+		handleCloseBottomSheet: () => {
+			setIsMatchingCommentBottomSheetOpen(false);
+		},
+	};
+
+	// 더보기 버튼 클릭 시
+	const optionsBottomSheetProps: OptionsBottomSheetProps = {
+		domain: 'post',
+		targetId: feed.user.userId || -1,
+		targetNickname: feed.user.nickname || '알수없음',
+		isBottomSheetOpen: isOptionsBottomSheetOpen,
+		onClose: () => {
+			setIsOptionsBottomSheetOpen(false);
+		},
+	};
+
+	// api 응답 상태에 따른 메시지를 출력하는 모달
+	const statusModalProps: ModalProps = {
+		content: modalContent,
+		onClose: () => {
+			setIsStatusModalOpen(false);
+		},
 	};
 
 	return (
 		<FeedWrapper>
+			<OptionsBottomSheet {...optionsBottomSheetProps} />
+			{isBlockApiModalOpen && <ApiModal {...blockApiModalProps} />}
+			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
+
 			<FeedTop>
 				<Info onClick={() => nav(`/users/${feed.user.userId}`)}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
-					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1.2 }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
 						{feed.user.nickname}
 					</StyledText>
 				</Info>
-				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
-					1시간 전
+				<FeedTimeAgo $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray2}>
+					{timeAgo}
 				</FeedTimeAgo>
-				<MoreBtn onClick={() => setIsMeatballBottomSheetOpen(true)}>
+				<MoreBtn
+					onClick={() => {
+						setIsOptionsBottomSheetOpen(true);
+					}}
+				>
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
 			<FeedText
 				onClick={() => nav(`/post/${feed.postId}`)}
-				$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
+				$textTheme={{ style: 'body2-regular' }}
 				color={theme.colors.black}
 			>
 				{feed.content}
@@ -116,24 +168,34 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				>
 					{feed.postImages.map((postImage, index) => (
 						<SwiperSlide key={index}>
-							<img src={postImage.url} alt={`feed ${index + 1}`} className="ootd-image-small" />
+							<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<img className="button" onClick={handleBlockClick} src={xBtn} />
-						{isHeartClicked ? (
-							<img className="button" src={heartBtn} onClick={handleHeartClick} />
+						<img
+							className="button"
+							onClick={() => {
+								setIsBlockApiModalOpen(true);
+							}}
+							src={xBtn}
+						/>
+						{isLikeClicked ? (
+							<img className="button" onClick={togglePostLikeStatus} src={likeBtn} />
 						) : (
-							<img className="button" onClick={handleHeartClick} src={heartBtn} />
+							<img className="button" onClick={togglePostLikeStatus} src={likeBtn} />
 						)}
 					</Reaction>
 
-					<CommentBtn onClick={handleCommentClick}>
+					<CommentBtn
+						onClick={() => {
+							setIsMatchingCommentBottomSheetOpen(true);
+						}}
+					>
 						<img src={commentBtn} />
-						<StyledText $textTheme={{ style: 'body1-regular', lineHeight: 1.5 }} color={theme.colors.white}>
-							코멘트 남기기
+						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
+							매칭 요청
 						</StyledText>
 					</CommentBtn>
 				</ReactionWrapper>
