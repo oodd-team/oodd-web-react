@@ -28,6 +28,7 @@ export interface GetMatchingListData {
 }
 
 export interface MatchingDto {
+	matchingId: number;
 	requester: RequesterDto;
 	requesterPost: RequesterPostDto;
 }
