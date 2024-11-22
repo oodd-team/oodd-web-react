@@ -38,10 +38,10 @@ export interface PatchUserInfoRequest {
 	name: string;
 	phoneNumber: string;
 	birthdate: string;
-	email?: string;
+	email: string;
 	nickname: string;
-	profilePictureUrl?: string;
-	bio?: string;
+	profilePictureUrl: string;
+	bio: string;
 }
 
 // 회원 탈퇴 응답
