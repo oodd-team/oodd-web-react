@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CloseIcon from '../../assets/default/modal-close-white.svg';
+import CloseIcon from '../../../assets/default/modal-close-white.svg';
 
 export const ReportBottomSheetLayout = styled.div`
 	${({ theme }) => theme.visibleOnMobileTablet};

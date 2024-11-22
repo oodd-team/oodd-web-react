@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { FeedProps } from '../../pages/Home/OOTD/dto';
+import { PostSummary } from '../../apis/post/dto';
 
-export const FeedsAtom = atom<FeedProps[] | []>({
+export const FeedsAtom = atom<PostSummary[] | []>({
 	key: 'FeedsAtom',
 	default: [],
 });

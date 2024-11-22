@@ -4,6 +4,8 @@ export const ButtonWrapper = styled.div`
 	display: flex;
 	position: absolute;
 	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	width: 100%;
 	height: 6.25rem;
 	background-color: ${({ theme }) => theme.colors.white};
