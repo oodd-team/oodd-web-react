@@ -168,7 +168,7 @@ export const Reaction = styled.div`
 	}
 `;
 
-export const CommentBtn = styled.button`
+export const MatchingBtn = styled.button`
 	background: ${({ theme }) => theme.colors.gradient};
 	border-radius: 3.19rem;
 	backdrop-filter: blur(0.3125rem);

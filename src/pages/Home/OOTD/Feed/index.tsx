@@ -6,7 +6,7 @@ import 'swiper/css/pagination';
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import {
-	CommentBtn,
+	MatchingBtn,
 	FeedImgBox,
 	FeedProfileImgWrapper,
 	FeedText,
@@ -57,6 +57,21 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [modalContent, setModalContent] = useState('');
 	const userId = localStorage.getItem('id');
 
+	// 게시글 좋아요 & 좋아요 취소 api
+	const togglePostLikeStatus = async () => {
+		try {
+			const response = await togglePostLikeStatusApi(feed.postId);
+
+			if (response.isSuccess) {
+				setIsLikeClicked((prev) => !prev);
+			}
+		} catch (error) {
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
+		}
+	};
+
 	// 매칭 생성 api
 	const createMatching = async (comment: string) => {
 		try {
@@ -79,23 +94,34 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		}
 	};
 
-	// 게시글 좋아요 & 좋아요 취소 api
-	const togglePostLikeStatus = async () => {
-		try {
-			const response = await togglePostLikeStatusApi(feed.postId);
-
-			if (response.isSuccess) {
-				setIsLikeClicked((prev) => !prev);
-			}
-		} catch (error) {
-			const errorMessage = handleError(error, 'post');
-			setModalContent(errorMessage);
-			setIsStatusModalOpen(true);
-		}
+	const handleMoreButtonClick = () => {
+		setIsOptionsBottomSheetOpen(true);
 	};
 
-	// x 버튼 클릭 시
-	// TODO: 차단하기 api 생성되면 호출하는 api 함수 수정
+	const handleRejectButtonClick = () => {
+		setIsBlockApiModalOpen(true);
+	};
+
+	const handleLikeButtonClick = () => {
+		togglePostLikeStatus();
+	};
+
+	const handleMatchingButtonClick = () => {
+		setIsMatchingCommentBottomSheetOpen(true);
+	};
+
+	// 게시글 옵션(더보기) 바텀시트
+	const optionsBottomSheetProps: OptionsBottomSheetProps = {
+		domain: 'post',
+		targetId: feed.user.userId || -1,
+		targetNickname: feed.user.nickname || '알수없음',
+		isBottomSheetOpen: isOptionsBottomSheetOpen,
+		onClose: () => {
+			setIsOptionsBottomSheetOpen(false);
+		},
+	};
+
+	// 차단하기 모달
 	const blockApiModalProps: ApiModalProps<EmptySuccessResponse> = {
 		response: postUserBlockApi({ fromUserId: Number(userId), toUserId: feed.user.userId, action: 'block' }),
 		content: `${feed.user.nickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
@@ -106,7 +132,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		},
 	};
 
-	// 매칭 요청 버튼 클릭 시
+	// 매칭 요청 코멘트 바텀시트
 	const matchingCommentBottomSheetProps: CommentBottomSheetProps = {
 		isBottomSheetOpen: isMatchingCommentBottomSheetOpen,
 		commentProps: {
@@ -115,17 +141,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		},
 		handleCloseBottomSheet: () => {
 			setIsMatchingCommentBottomSheetOpen(false);
-		},
-	};
-
-	// 더보기 버튼 클릭 시
-	const optionsBottomSheetProps: OptionsBottomSheetProps = {
-		domain: 'post',
-		targetId: feed.user.userId || -1,
-		targetNickname: feed.user.nickname || '알수없음',
-		isBottomSheetOpen: isOptionsBottomSheetOpen,
-		onClose: () => {
-			setIsOptionsBottomSheetOpen(false);
 		},
 	};
 
@@ -154,11 +169,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray2}>
 					{timeAgo}
 				</FeedTimeAgo>
-				<MoreBtn
-					onClick={() => {
-						setIsOptionsBottomSheetOpen(true);
-					}}
-				>
+				<MoreBtn onClick={handleMoreButtonClick}>
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
@@ -186,30 +197,19 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
-						<img
-							className="button"
-							onClick={() => {
-								setIsBlockApiModalOpen(true);
-							}}
-							src={xBtn}
-						/>
+						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						{isLikeClicked ? (
-							<img className="button" onClick={togglePostLikeStatus} src={likeBtn} />
+							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
 						) : (
-							<img className="button" onClick={togglePostLikeStatus} src={likeFillBtn} />
+							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
 						)}
 					</Reaction>
-
-					<CommentBtn
-						onClick={() => {
-							setIsMatchingCommentBottomSheetOpen(true);
-						}}
-					>
+					<MatchingBtn onClick={handleMatchingButtonClick}>
 						<img src={commentBtn} />
 						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
 							매칭 요청
 						</StyledText>
-					</CommentBtn>
+					</MatchingBtn>
 				</ReactionWrapper>
 				<div className="blur"></div>
 			</FeedImgBox>
