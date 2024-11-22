@@ -27,8 +27,8 @@ import {
 import theme from '../../../styles/theme';
 import { postUserBlockApi } from '../../../apis/user';
 import { useRecoilValue } from 'recoil';
-import { TargetInfoAtom } from '../../../recoil/util/TargetInfo';
 import { PostUserBlockRequest } from '../../../apis/user/dto';
+import { TargetInfoAtom } from '../../../recoil/util/TargetInfo';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
