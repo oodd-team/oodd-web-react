@@ -39,8 +39,8 @@ const Home: React.FC = () => {
 	const createMatching = async (comment: string) => {
 		try {
 			const matchingRequest: CreateMatchingRequest = {
-				requesterId: matchingInfo!.requesterId,
-				targetId: matchingInfo!.targetId,
+				requesterId: matchingInfo?.requesterId || -1,
+				targetId: matchingInfo?.targetId || -1,
 				message: comment,
 			};
 			const response = await createMatchingApi(matchingRequest);

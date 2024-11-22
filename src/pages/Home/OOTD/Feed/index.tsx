@@ -18,7 +18,6 @@ import {
 	Reaction,
 	ReactionWrapper,
 } from './styles';
-import { FeedProps } from '../dto';
 import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
 import heartBtn from '../../../../assets/default/heart.svg';
@@ -32,9 +31,11 @@ import {
 import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
 import { PostCommentAtom } from '../../../../recoil/Home/PostCommentBottomSheetAtom';
 import { IsMeatballBottomSheetOpenAtom } from '../../../../recoil/Home/MeatballBottomSheetAtom';
+import { PostSummary } from '../../../../apis/post/dto';
+import defaultProfile from '../../../../assets/default/defaultProfile.svg';
 
 interface Props {
-	feed: FeedProps;
+	feed: PostSummary;
 }
 
 const Feed: React.FC<Props> = ({ feed }) => {
@@ -55,8 +56,8 @@ const Feed: React.FC<Props> = ({ feed }) => {
 		} else {
 			setMatchingInfo({
 				requesterId: userId,
-				targetId: feed.userId,
-				targetName: feed.userName,
+				targetId: feed.user.userId,
+				targetName: feed.user.nickname,
 			});
 			setIsHeartBottomSheetOpen(true);
 			setIsHeartClicked(true);
@@ -66,8 +67,8 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	const handleBlockClick = () => {
 		setBlockInfo({
 			userId: userId,
-			friendId: feed.userId,
-			friendName: feed.userName,
+			friendId: feed.user.userId,
+			friendName: feed.user.nickname,
 			action: 'toggle',
 		});
 		setIsBlockConfirmationModalOpen(true);
@@ -75,7 +76,7 @@ const Feed: React.FC<Props> = ({ feed }) => {
 
 	const handleCommentClick = () => {
 		setPostComment({
-			userName: feed.userName,
+			userName: feed.user.nickname,
 			postId: feed.postId,
 		});
 		nav(`/post/${feed.postId}`, { state: { isCommentModalOpen: true } });
@@ -84,10 +85,10 @@ const Feed: React.FC<Props> = ({ feed }) => {
 	return (
 		<FeedWrapper>
 			<FeedTop>
-				<Info onClick={() => nav(`/users/${feed.userId}`)}>
-					<FeedProfileImgWrapper src={feed.profileUrl} alt="profile" />
+				<Info onClick={() => nav(`/users/${feed.user.userId}`)}>
+					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
 					<StyledText $textTheme={{ style: 'body2-medium', lineHeight: 1.2 }} color={theme.colors.black}>
-						{feed.userName}
+						{feed.user.nickname}
 					</StyledText>
 				</Info>
 				<FeedTimeAgo $textTheme={{ style: 'caption2-medium', lineHeight: 1.2 }} color={theme.colors.gray2}>
@@ -102,9 +103,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 				$textTheme={{ style: 'body6-light', lineHeight: 1.2 }}
 				color={theme.colors.black}
 			>
-				{feed.text}
+				{feed.content}
 			</FeedText>
-			<FeedImgBox $src={feed.feedImgUrls[0]}>
+			<FeedImgBox $src={feed.postImages[0].url}>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -113,9 +114,9 @@ const Feed: React.FC<Props> = ({ feed }) => {
 					modules={[Pagination]}
 					className="ootdSwiper"
 				>
-					{feed.feedImgUrls.map((url, index) => (
+					{feed.postImages.map((postImage, index) => (
 						<SwiperSlide key={index}>
-							<img src={url} alt={`feed ${index + 1}`} className="ootd-image-small" />
+							<img src={postImage.url} alt={`feed ${index + 1}`} className="ootd-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>

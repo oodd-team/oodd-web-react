@@ -65,7 +65,6 @@ export const FeedText = styled(StyledText)`
 export const FeedImgBox = styled.div<{ $src: string }>`
 	position: relative;
 	width: 100%;
-	height: 100%;
 	border-radius: 0.5rem;
 	background-color: rgba(255, 255, 255, 0.5);
 	overflow: hidden;
@@ -83,24 +82,28 @@ export const FeedImgBox = styled.div<{ $src: string }>`
 		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 
 	@media (max-width: 767px) {
+		aspect-ratio: 4/5;
 		max-height: 450px;
 	}
 
 	@media (min-width: 768px) {
-		max-height: 640px;
+		aspect-ratio: 4/5;
+		max-height: 600px;
 	}
 
 	.ootd-image-small {
 		width: 100%;
 		max-width: 640px;
 		height: 100%;
-		object-fit: cover;
+		object-fit: contain;
 	}
 
 	.ootdSwiper,
 	.swiper-wrapper {
 		z-index: 10;
 		align-items: stretch;
+		width: 100%;
+		height: 100%;
 	}
 
 	.ootdSwiper .swiper-slide {
