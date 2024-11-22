@@ -13,7 +13,9 @@ interface RecentChatProps {
 }
 
 const RecentChat: React.FC<RecentChatProps> = () => {
-	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>();
+	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
+	const storageValue = localStorage.getItem('id');
+	const userId = Number(storageValue);
 	const [isLoading, setIsLoading] = useState(true);
 	const socket = useSocket();
 
@@ -21,11 +23,12 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 		// 채팅방 리스트 조회
 		const getChatRooms = (data: ChatRoomData[]) => {
 			setChatRoomList(data);
-			setIsLoading((prev) => !prev);
+			setIsLoading(false);
 		};
 
 		if (socket) {
-			socket.on('getChatRooms', getChatRooms);
+			socket.emit('getChatRooms', userId);
+			socket.on('chatRoomList', getChatRooms);
 		}
 
 		// 이벤트 리스너 정리
@@ -41,7 +44,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 		<>
 			{isLoading ? (
 				<Loading />
-			) : chatRoomList ? (
+			) : chatRoomList.length !== 0 ? (
 				<>
 					<RecentChatInfo $textTheme={{ style: 'body2-regular' }} color="#1d1d1d">
 						최근 채팅방
@@ -54,7 +57,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 				</>
 			) : (
 				<NoChatRoomWrapper>
-					<StyledText $textTheme={{ style: 'headline1-bold' }} color="#8e8e93">
+					<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
 						개설된 채팅방이 없어요
 					</StyledText>
 				</NoChatRoomWrapper>
