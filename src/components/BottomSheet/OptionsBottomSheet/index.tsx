@@ -25,25 +25,42 @@ import {
 	ReportModalBox,
 } from './styles';
 import theme from '../../../styles/theme';
+import { postUserBlockApi } from '../../../apis/user';
+import { useRecoilValue } from 'recoil';
+import { TargetInfoAtom } from '../../../recoil/util/TargetInfo';
+import { PostUserBlockRequest } from '../../../apis/user/dto';
 
-const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetId, targetNickname, onClose }) => {
-	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(true);
+const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
+	domain,
+	targetId,
+	targetNickname,
+	isBottomSheetOpen,
+	onClose,
+}) => {
 	const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
+	const targetInfo = useRecoilValue(TargetInfoAtom);
+	const storageValue = localStorage.getItem('id');
+	const userId = Number(storageValue);
 
 	const sendBlock = async () => {
 		try {
 			// user-block api 호출
-			const response = true;
+			const blockRequest: PostUserBlockRequest = {
+				fromUserId: userId,
+				toUserId: targetInfo?.id || -1,
+				action: 'block',
+			};
+			const response = await postUserBlockApi(blockRequest);
 
 			// response.isSuccess
 			if (response) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
 		} catch (error) {
-			const errorMessage = handleError(error);
+			const errorMessage = handleError(error, 'user');
 			setModalContent(errorMessage);
 		} finally {
 			setIsBlockModalOpen(false);
@@ -76,7 +93,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 			{
 				text: '차단하기',
 				action: () => {
-					setIsOptionsBottomSheetOpen(false);
+					onClose();
 					setIsBlockModalOpen(true);
 				},
 				icon: blockIcon,
@@ -84,7 +101,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 			{
 				text: '신고하기',
 				action: () => {
-					setIsOptionsBottomSheetOpen(false);
+					onClose();
 					setIsReportBottomSheetOpen(true);
 				},
 				icon: reportIcon,
@@ -94,7 +111,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 
 	// 더보기(kebab) 메뉴 바텀시트
 	const optionsBottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isOptionsBottomSheetOpen,
+		isOpenBottomSheet: isBottomSheetOpen,
 		Component: BottomSheetMenu,
 		componentProps: optionsBottomSheetMenuProps,
 		onCloseBottomSheet: onClose,
@@ -103,7 +120,9 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 	// 차단하기 모달
 	const blockModalProps: ModalProps = {
 		isCloseButtonVisible: true,
-		onClose: onClose,
+		onClose: () => {
+			setIsBlockModalOpen(false);
+		},
 		content: `${targetNickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
 		button: {
 			content: '차단하기',
@@ -128,13 +147,17 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 		isOpenBottomSheet: isReportBottomSheetOpen,
 		Component: ReportBottomSheetMenu,
 		componentProps: reportBottomSheetMenuProps,
-		onCloseBottomSheet: onClose,
+		onCloseBottomSheet: () => {
+			setIsReportBottomSheetOpen(false);
+		},
 	};
 
 	// api 처리 상태 모달 (성공/실패)
 	const statusModalProps: ModalProps = {
 		content: modalContent,
-		onClose: onClose,
+		onClose: () => {
+			setIsStatusModalOpen(false);
+		},
 	};
 
 	const handleBackgroundClick = (e: React.MouseEvent) => {
@@ -160,7 +183,11 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({ domain, targetI
 								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
 									신고 사유 선택
 								</StyledText>
-								<XButton onClick={onClose} />
+								<XButton
+									onClick={() => {
+										setIsReportBottomSheetOpen(false);
+									}}
+								/>
 							</ReportModalHeader>
 							<ReportModalBox>
 								<ReportBottomSheetMenu {...reportBottomSheetMenuProps} />
