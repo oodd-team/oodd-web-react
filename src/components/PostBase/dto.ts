@@ -16,28 +16,6 @@ export interface LikeCommentBottomSheetProps {
 	commentCount: number;
 }
 
-export interface LikesResponse {
-	isSuccess: boolean;
-	code: number;
-	message: string;
-	result: {
-		totalLikes: number;
-		likes: Array<{
-			id: number;
-			userId: number;
-			postId: number;
-			status: string;
-			createdAt: string;
-			updatedAt: string;
-			user: {
-				id: number;
-				nickname: string;
-				profilePictureUrl: string;
-			};
-		}>;
-	};
-}
-
 export interface CommentsResponse {
 	isSuccess: boolean;
 	code: number;
@@ -58,8 +36,4 @@ export interface CommentsResponse {
 			};
 		}>;
 	};
-}
-
-export interface ImageSwiperProps {
-	images: string[];
 }

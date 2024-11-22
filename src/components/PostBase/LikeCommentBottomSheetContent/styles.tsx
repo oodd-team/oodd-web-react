@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { StyledText } from '../../Text/StyledText';
 import theme from '../../../styles/theme';
+import { UserProfile } from '../styles';
 
 export const TabContainer = styled.div`
 	display: flex;
@@ -33,18 +35,19 @@ export const ContentContainer = styled.div`
 	align-items: start;
 `;
 
-export const Content = styled.div``;
+export const Content = styled(StyledText)`
+	text-align: center;
+	margin-top: 20px;
+`;
+
+export const BigUserProfile = styled(UserProfile)`
+	width: 52px;
+	height: 52px;
+`;
 
 export const UserItem = styled.div`
 	display: flex;
 	align-items: center;
-
-	img {
-		width: 52px;
-		height: 52px;
-		border-radius: 50%;
-		object-fit: cover;
-	}
 
 	.name {
 		margin-left: 8px;
@@ -54,13 +57,6 @@ export const UserItem = styled.div`
 export const CommentItem = styled.div`
 	display: flex;
 	align-items: center;
-
-	img {
-		width: 52px;
-		height: 52px;
-		border-radius: 50%;
-		object-fit: cover;
-	}
 `;
 
 export const CommentContent = styled.div`

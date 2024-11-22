@@ -10,3 +10,12 @@ export interface PagingResponseType {
 	totalPages: number;
 	totalItems: number;
 }
+
+export interface PaginationMeta {
+	total: number;
+	page: number;
+	take: number;
+	last_page: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}

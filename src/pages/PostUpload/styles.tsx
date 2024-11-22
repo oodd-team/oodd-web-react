@@ -162,12 +162,12 @@ export const StyletagItem = styled.span<{ selected: boolean }>`
 	height: 2rem;
 	//min-width: 4.375rem;
 	background: ${({ selected, theme }) => (selected ? theme.colors.gradient : 'none')};
-	border: 1px solid ${({ theme }) => theme.colors.lightPink};
+	border: 1px solid ${({ theme }) => theme.colors.pink2};
 	border-radius: 8px;
 	cursor: pointer;
 
 	.tag {
-		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink)};
+		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink3)};
 	}
 `;
 

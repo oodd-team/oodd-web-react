@@ -25,10 +25,10 @@ import {
 	UserName,
 	MenuBtn,
 	PostContentContainer,
-	BaseContent,
+	ContentSkeleton,
 	Content,
 	ShowMoreButton,
-	BaseImage,
+	ImageSkeleton,
 	IconRow,
 	IconWrapper,
 	ClothingInfoList,
@@ -43,10 +43,9 @@ import More from '../../assets/default/more.svg';
 import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/post/dto';
-import { UpdatePostLikeResponse } from '../../apis/post-like/dto';
 
-import request from '../../apis/core';
 import { getPostDetailApi } from '../../apis/post';
+import { togglePostLikeStatusApi } from '../../apis/post-like';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
@@ -114,16 +113,27 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 	};
 
-	const handleLikeClick = async () => {
+	// 게시글 좋아요 누르기/취소하기
+	const togglePostLikeStatus = async () => {
+		if (!post || !postId) return;
+
+		const prevPost = { ...post }; // 현재 상태 저장
+		setPost({
+			...post,
+			isPostLike: !post.isPostLike,
+			likeCount: post.isPostLike ? post.likeCount - 1 : post.likeCount + 1,
+		}); //사용자가 좋아요를 누르면 먼저 클라이언트에서 post 상태를 변경(낙관적 업데이트)
+
 		try {
-			const response = await request.patch<UpdatePostLikeResponse>(`/posts/${postId}/like`);
-			if (response.isSuccess) {
-				console.log('Successed updating like');
-			} else {
-				console.error('Failed updating like');
-			}
+			const response = await togglePostLikeStatusApi(Number(postId));
+			setPost({
+				...post,
+				isPostLike: response.data.post.isPostLike,
+				likeCount: response.data.post.likeCount,
+			}); // 서버로 요청 후 성공하면 그대로 유지
 		} catch (error) {
-			console.error('Error updating like:', error);
+			console.error('Error toggling like status:', error);
+			setPost(prevPost); // 실패하면 원래 상태로 롤백
 		}
 	};
 
@@ -149,7 +159,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 				<PostContentContainer>
 					{!post ? (
-						<BaseContent />
+						<ContentSkeleton />
 					) : (
 						<>
 							<Content
@@ -171,10 +181,10 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					)}
 				</PostContentContainer>
 
-				{!post ? <BaseImage /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
+				{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
 				<IconRow>
-					<IconWrapper onClick={handleLikeClick}>
+					<IconWrapper onClick={togglePostLikeStatus}>
 						{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
 						<span onClick={() => handleLikeCommentOpen('likes')}>{post?.likeCount ?? 0}</span>
 					</IconWrapper>
