@@ -1,38 +1,33 @@
-import { BaseApiResponse } from '../util/dto';
+import { BaseSuccessResponse } from '../core/dto';
+import { PaginationMeta } from '../util/dto';
 
-// 좋아요 누르기/취소 응답
-export type UpdatePostLikeResponse = BaseApiResponse<BaseLike>;
+// 좋아요 누르기/취소
+export type TogglePostLikeStatusResponse = BaseSuccessResponse<TogglePostLikeStatusData>;
 
-// 본인 게시물의 좋아요 조회 응답 (유저 정보 포함)
-export type GetMyPostLikesResponse = BaseApiResponse<PostLikesResponseData<LikeWithUser>>;
+// 게시물 좋아요 리스트 조회
+export type GetPostLikeListResponse = BaseSuccessResponse<GetPostLikeListData>;
 
-// 타인 게시물의 좋아요 조회 응답 (유저 정보 미포함)
-export type GetOtherPostLikesResponse = BaseApiResponse<PostLikesResponseData<BaseLike>>;
-
-// 공통 좋아요 인터페이스
-interface BaseLike {
-	id: number;
-	userId: number;
-	postId: number;
-	status: 'activated' | 'deactivated';
-	createdAt: string;
-	updatedAt: string;
+export interface GetPostLikeListData {
+	likeCount: number;
+	likes: Like[];
+	meta: PaginationMeta;
 }
 
-// 본인 게시물의 좋아요 인터페이스 (유저 정보 포함)
-export interface LikeWithUser extends BaseLike {
-	user: LikeUser;
-}
-
-export interface LikeUser {
+export interface User {
 	id: number;
 	nickname: string;
 	profilePictureUrl: string;
 }
 
-// 본인 및 타인 게시물의 좋아요 조회 응답 데이터
-export interface PostLikesResponseData<T = LikeWithUser | BaseLike> {
-	totalLikes?: number; // 본인 게시물일 때만 존재
-	likes: T[]; // 좋아요 배열 (BaseLike 또는 LikeWithUser)
-	isLiked: boolean; // 본인 또는 타인의 게시물에 대한 좋아요 여부
+export interface Like {
+	user: User;
+	createdAt: string;
+}
+
+export interface TogglePostLikeStatusData {
+	post: {
+		id: number;
+		isPostLike: boolean;
+		likeCount: number;
+	};
 }

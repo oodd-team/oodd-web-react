@@ -49,13 +49,13 @@ export const PostInfoContainer = styled.div`
 	}
 `;
 
-export const UserProfile = styled.div`
+export const UserProfile = styled(LoadingSkeleton)`
 	cursor: pointer;
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	background-color: ${({ theme }) => theme.colors.lightPink};
+	border: solid 0.5px ${({ theme }) => theme.colors.gray1};
 
 	img {
 		width: 100%;
@@ -77,7 +77,7 @@ export const PostContentContainer = styled.div`
 	margin-bottom: 16px;
 `;
 
-export const BaseContent = styled(LoadingSkeleton)`
+export const ContentSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
 	height: 16px;
 	border-radius: 4px;
@@ -97,7 +97,7 @@ export const Content = styled(StyledText)<{ showFullText: boolean }>`
 
 export const ShowMoreButton = styled(StyledText)``;
 
-export const BaseImage = styled(LoadingSkeleton)`
+export const ImageSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
 	aspect-ratio: 4 / 5;
 `;

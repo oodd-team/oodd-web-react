@@ -12,8 +12,8 @@ import { EmptySuccessResponse } from '../core/dto';
 // 게시글 생성
 export const createPostApi = (data: CreatePostRequest) => newRequest.post<CreatePostResponse>('/post', data);
 
-// 게시글 리스트 조회
-export const getPostListApi = (page: number, take: number, userId?: number) =>
+// 게시글 리스트 조회 (페이지네이션 포함)
+export const getPostListApi = (page: number = 1, take: number = 10, userId?: number) =>
 	newRequest.get<GetPostListResponse>(`/post`, { params: { page, take, ...(userId && { userId }) } });
 
 // 게시글 상세 조회

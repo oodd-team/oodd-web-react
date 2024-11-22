@@ -6,7 +6,7 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.lightPink};
+	border: 0.0625rem solid ${({ theme }) => theme.colors.pink2};
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 	min-width: 20.9375rem;
@@ -57,7 +57,6 @@ export const ClothingImage = styled.div`
 	height: 4.625rem;
 	border-radius: 0.5rem;
 	margin-right: 0.9375rem;
-	background-color: ${({ theme }) => theme.colors.lightPink};
 
 	> img {
 		width: 4.625rem;
