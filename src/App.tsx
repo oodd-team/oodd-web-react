@@ -20,6 +20,8 @@ import PostUpload from './pages/PostUpload';
 import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
+import LoginComplete from './pages/Login/components/LoginComplete';
+
 const App: React.FC = () => {
 	return (
 		<BrowserRouter>
@@ -35,6 +37,7 @@ const App: React.FC = () => {
 				<Route path="/account-cancel" element={<AccountCancel />} />
 				<Route path="/Verification" element={<Verification />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/login/complete" element={<LoginComplete />}></Route>
 				<Route path="/chats" element={<Chats />} />
 
 				<Route path="/image-select" element={<PostImageSelect />} />

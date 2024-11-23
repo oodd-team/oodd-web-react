@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
+
 import { OODDFrame } from '../../components/Frame/Frame';
-import { LoginContainer, WelcomeWrapper, StyledTextService } from './styles';
 import Naver from './components/Naver';
 import Kakao from './components/Kakao';
+
+import { LoginContainer, WelcomeWrapper, StyledTextService } from './styles';
+import { StyledText } from '../../components/Text/StyledText';
+import theme from '../../styles/theme';
 
 const Login: React.FC = () => {
 	const handleServiceTermsClick = () => {

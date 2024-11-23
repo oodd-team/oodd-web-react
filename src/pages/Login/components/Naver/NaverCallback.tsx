@@ -1,69 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import request from '../../../../apis/core';
-import { GetUserInfoResult } from '../../../ProfileViewer/ResponseDto/GetUserInfoResult';
+
 import Loading from '../../../../components/Loading';
+import Modal from '../../../../components/Modal';
+
+import { handleError } from '../../../../apis/util/handleError';
 
 const NaverCallback: React.FC = () => {
 	const navigate = useNavigate();
+	const apiBaseUrl = import.meta.env.VITE_NEW_API_URL;
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modalMessage, setModalMessage] = useState('');
 
 	useEffect(() => {
-		const query = new URLSearchParams(window.location.search);
-		const code = query.get('code');
-		console.log(code);
+		const handleNaverLogin = async () => {
+			try {
+				// URL에서 인증 코드 추출
+				const code = new URL(window.location.href).searchParams.get('code');
+				console.log('인증 코드:', code);
 
-		if (code) {
-			// 인증 코드를 쿼리스트링으로 백엔드 서버에 전송
-			axios
-				.get(`https://api-dev.oodd.today/auth/login/naver?code=${code}&state=STATE_TOKEN`)
-				.then((response) => {
-					const statusCode = response.status; // 200 OK
-					console.log(JSON.stringify(response.data));
+				if (!code) {
+					throw new Error('인증 코드가 없습니다.');
+				}
 
-					if (statusCode === 200) {
-						// 추후 Postman에서 api 호출해 보고 응답을 보고 적어야 함
-						// userid를 서버로 보내 해당 유저의 nickname 유무에 따른 리디렉션
-						const token = response.data.accessToken;
+				// 리다이렉트 URL 설정 및 서버 URL 생성 해 서버로 리다이렉션
+				const redirectUrl = encodeURIComponent('http://localhost:3000/login/complete');
+				const serverUrl = `${apiBaseUrl}/auth/login/naver?redirectUrl=${redirectUrl}`;
+				window.location.href = serverUrl;
+			} catch (error) {
+				console.error('네이버 로그인 중 오류 발생:', error);
+				const errorMessage = handleError(error);
+				setModalMessage(`네이버 ${errorMessage}`);
+				setIsModalOpen(true);
+			}
+		};
 
-						localStorage.setItem('id', response.data.id);
-						localStorage.removeItem('jwt_token');
-						localStorage.setItem('jwt_token', token);
-						const userid = localStorage.getItem('id');
+		handleNaverLogin();
+	}, [navigate, apiBaseUrl]);
 
-						request
-							.get<GetUserInfoResult>(`/users/${userid}`)
-							.then((response) => {
-								console.log(response);
-								if (response.result.nickname) {
-									navigate('/');
-								} else {
-									navigate(`/signup`);
-								}
-							})
-							.catch((error) => {
-								// API 요청 실패 시 처리
-								console.error('API 요청 실패:', error);
-								alert('사용자 정보를 불러오지 못했습니다.');
-								navigate('/login'); // 실패 시 로그인 페이지로 리디렉션
-							});
-					} else {
-						console.error('로그인 실패:', response.data);
-						alert('네이버 계정의 정보를 불러오지 못했습니다.');
-						navigate('/login');
-						// 로그인 실패 시 처리 (예: 오류 페이지로 리디렉션)
-					}
-				})
-				.catch((error) => {
-					console.error('서버 요청 실패:', error);
-				});
-		} else {
-			// 인증 코드가 없는 경우 처리
-			console.error('인증 코드가 없습니다.');
-		}
-	}, [navigate]);
-
-	return <Loading />;
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
+	};
+	return (
+		<>
+			<Loading />
+			{isModalOpen && <Modal content={modalMessage} onClose={handleModalClose} />}
+		</>
+	);
 };
 
 export default NaverCallback;
