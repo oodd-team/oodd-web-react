@@ -47,7 +47,7 @@ const ProfileViewer: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState<string>('');
 
-	const myId = localStorage.getItem('myId');
+	const myId = localStorage.getItem('my_id');
 	const token = localStorage.getItem('new_jwt_token');
 
 	useEffect(() => {
@@ -180,24 +180,25 @@ const ProfileViewer: React.FC = () => {
 		setIsModalOpen(false); // Modal 닫기
 	};
 
-	// 유저 신고하기 api 호출 함수
+	// 유저 신고하기 API 호출 함수
 	const postUserReport = async (text: string) => {
-		const reportRequestData = {
-			fromUserId: Number(myId as string),
-			toUserId: Number(userId as string),
-			reason: text,
-		};
 		try {
+			const reportRequestData = {
+				fromUserId: Number(myId as string),
+				toUserId: Number(userId as string),
+				reason: text,
+			};
 			await postUserReportApi(reportRequestData);
 
-			setIsModalOpen(true);
 			setModalContent(`${userDetails.nickname}님을 \n'${text}' 사유로 신고했어요.`);
-			setIsBottomSheetOpen(false);
 		} catch (error) {
 			console.error('Failed to fetch user details', error);
+
 			const errorMessage = handleError(error);
-			setIsModalOpen(true);
 			setModalContent(errorMessage);
+		} finally {
+			// 모달 열기와 BottomSheet 닫기는 항상 실행 -> 코드 중복 제거
+			setIsModalOpen(true);
 			setIsBottomSheetOpen(false);
 		}
 	};

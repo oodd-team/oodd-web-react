@@ -10,10 +10,11 @@ import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName
 
 import OODDlogo from '../../assets/default/oodd.svg';
 
-import { UpdateUserInfoDto } from './SignUpDto';
-
 import { patchUserInfoApi } from '../../apis/user';
 import { handleError } from '../../apis/util/handleError';
+import { PatchUserInfoRequest } from '../../apis/user/dto';
+
+type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 'phoneNumber' | 'nickname'>;
 
 const SignUp: React.FC = () => {
 	const location = useLocation();
@@ -27,20 +28,21 @@ const SignUp: React.FC = () => {
 	const [modalType, setModalType] = useState('');
 
 	const [currentStep, setCurrentStep] = useState(1);
-	const [formData, setFormData] = useState<UpdateUserInfoDto>({
+	const [formData, setFormData] = useState<PartialUserInfoRequest>({
 		// 이름, 생년월일 등 개별적으로 상태 관리하지 않고 통합
 		name: '',
-		birthdate: '',
-		phonenumber: '',
+		birthDate: '',
+		phoneNumber: '',
 		nickname: '', //초기 값
 	});
 
-	const handleInputChange = (field: keyof UpdateUserInfoDto) => (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
 	};
 
 	const steps = [
 		{
+			key: 'name',
 			label: '이름을 입력해주세요!',
 			placeholder: '김오디',
 			type: 'text',
@@ -48,20 +50,23 @@ const SignUp: React.FC = () => {
 			onChange: handleInputChange('name'),
 		},
 		{
+			key: 'birthdDate',
 			label: '생년월일을 입력해주세요!',
 			placeholder: '2024-01-01',
 			type: 'text',
-			value: formData.birthdate,
-			onChange: handleInputChange('birthdate'),
+			value: formData.birthDate,
+			onChange: handleInputChange('birthDate'),
 		},
 		{
+			key: 'phoneNumber',
 			label: '전화번호를 입력해주세요!',
 			placeholder: '010-1234-1234',
 			type: 'text',
-			value: formData.phonenumber,
-			onChange: handleInputChange('phonenumber'),
+			value: formData.phoneNumber,
+			onChange: handleInputChange('phoneNumber'),
 		},
 		{
+			key: 'nickname',
 			label: '이름 대신 사용할 닉네임을 입력해주세요!',
 			placeholder: '패션의왕',
 			type: 'text',
@@ -77,12 +82,12 @@ const SignUp: React.FC = () => {
 		const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 		const phonePattern = /^(010-\d{4}-\d{4}|\d{3}-\d{4}-\d{4}|\d{11})$/;
 
-		if (currentStep === 2 && !datePattern.test(formData.birthdate)) {
+		if (currentStep === 2 && !datePattern.test(formData.birthDate)) {
 			setModalMessage('생년월일은 YYYY-MM-DD 형식으로 입력해주세요!');
 			setIsModalOpen(true);
 			return;
 		}
-		if (currentStep === 3 && !phonePattern.test(formData.phonenumber)) {
+		if (currentStep === 3 && !phonePattern.test(formData.phoneNumber)) {
 			setModalMessage('전화번호는 010-1234-1234 형식으로 입력해주세요!');
 			setIsModalOpen(true);
 			return;
@@ -94,7 +99,7 @@ const SignUp: React.FC = () => {
 			return;
 		}
 
-		if (formData[steps[currentStep - 1].label] === '') {
+		if (formData[steps[currentStep - 1].key as keyof PartialUserInfoRequest] === '') {
 			setModalMessage('필수 입력 항목입니다!');
 			setIsModalOpen(true);
 			return;
@@ -106,8 +111,8 @@ const SignUp: React.FC = () => {
 			const requestData = {
 				name: formData.name,
 				nickname: formData.nickname,
-				birthDate: formData.birthdate,
-				phoneNumber: formData.phonenumber,
+				birthDate: formData.birthDate,
+				phoneNumber: formData.phoneNumber,
 			};
 			await patchUserInfo(requestData, id);
 		}
@@ -130,6 +135,8 @@ const SignUp: React.FC = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {
 			navigate('/');
+		} else {
+			navigate('/login');
 		}
 	};
 	const handleKeyDown = (event: React.KeyboardEvent) => {

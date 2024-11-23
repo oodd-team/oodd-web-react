@@ -27,7 +27,7 @@ export interface PostUserReportRequest {
 export interface PostUserBlockRequest {
 	fromUserId: number;
 	toUserId: number;
-	action: string; // 차단 또는 해제
+	action: 'block' | 'unblock'; // 차단 또는 해제
 }
 
 // 사용자 정보 수정 응답

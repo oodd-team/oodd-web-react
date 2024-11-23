@@ -29,7 +29,7 @@ const LoginComplete: React.FC = () => {
 					console.log(response);
 
 					const { nickname, name, id } = response.data;
-					localStorage.setItem('myId', `${id}`);
+					localStorage.setItem('my_id', `${id}`);
 
 					if (nickname && name) {
 						navigate('/');
