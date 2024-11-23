@@ -1,7 +1,5 @@
-import { KakaoLoginResponse, NaverLoginResponse } from './dto';
+import { getUserInfoByJwtResponse } from './dto';
 import { newRequest } from '../core';
 
-export const getKakaoLoginApi = (code: string) => newRequest.get<KakaoLoginResponse>(`/auth/login/kakao?code=${code}`);
-
-export const getNaverLoginApi = (code: string) =>
-	newRequest.get<NaverLoginResponse>(`/auth/login/naver?code=${code}&state=STATE_TOKEN`);
+// jwt로 사용자 정보 조회 api /auth/me
+export const getUserInfoByJwtApi = () => newRequest.get<getUserInfoByJwtResponse>('/auth/me');

@@ -37,6 +37,7 @@ export type PatchUserInfoResponse = BaseSuccessResponse<UserInfoData>;
 export interface PatchUserInfoRequest {
 	name: string;
 	phoneNumber: string;
+	birthDate: string;
 	email: string;
 	nickname: string;
 	profilePictureUrl: string;
