@@ -41,20 +41,24 @@ const ProfileViewer: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
+				// 여기에서 사용자 정보 조회를 해서 사용자 정보를 빼 와서 어디에서든 쓸 수 있게! 전역으로 사용.
 				const response = await request.get<GetUserInfoResult>(`/users/${userId}`);
 				console.log('사용자 정보 조회: ', response);
 
+				// 어차피... 그 사람의 프로필 들어가면 게시글도 보이고, 사용자 정보도 보이니 이걸 동시에 호출해서 useDetails에 저장해서 여기 저기에서 쓸 수 있게 함
+				// -> promise.all 사용하기
+				//그냥 조합해서 쓰게... 흠. 그 사용자의 게시물이니까... 여기에 포스트 개수, 좋아요 개수 등등... 나오니까. 흠.
 				const postsResponse = await request.get<GetPostListResult>(`posts?userId=${userId}`, {});
 				console.log('게시물 리스트 조회:', postsResponse);
 				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
 				const combinedData: UserInfoProps = {
 					...response.result,
-					status: storedUserDetails.status || 'blank',
+					status: storedUserDetails.status || 'blank', // 차단하기/ 해제하기 토글 때문에
 					isFriend: response.result.isFriend,
 					posts: postsResponse.result.posts,
 					likesCount: postsResponse.result.totalLikes,
 					postsCount: postsResponse.result.totalPosts,
-					isInterested: storedUserDetails.isInterested || false,
+					isInterested: storedUserDetails.isInterested || false, // 삭제 ㄱㄱ
 					userImg: storedUserDetails.profilePictureUrl,
 				};
 
