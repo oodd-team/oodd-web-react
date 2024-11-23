@@ -15,7 +15,7 @@ const TabBar: React.FC = () => {
 
 	const [activeIndex, setActiveIndex] = useState<number>(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
-	const tabs = [`요청 ${matchingCount}`, '최근 채팅'];
+	const tabs = [`요청 ${activeIndex === 1 ? matchingCount : ''}`, '최근 채팅'];
 
 	useEffect(() => {
 		// 첫 탭을 최근 채팅으로 설정

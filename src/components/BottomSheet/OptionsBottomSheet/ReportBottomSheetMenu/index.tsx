@@ -3,7 +3,7 @@ import BottomButton from '../../../BottomButton/index.tsx';
 import BottomSheetMenu from '../../../BottomSheetMenu/index.tsx';
 import { SheetItemDto } from '../../../BottomSheetMenu/dto.ts';
 import { ReportBottomSheetMenuProps } from './dto.ts';
-import { InputLayout } from './styles.tsx';
+import { InputLayout, ReportBottomSheetMenuWrappar } from './styles.tsx';
 
 const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 	({ onCloseReportSheet, onOpenStatusModal, sendReport, isUserReport }) => {
@@ -66,7 +66,7 @@ const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 			{
 				text: '기타',
 				action: () => {
-					setIsTextareaVisible(true);
+					setIsTextareaVisible((prev) => !prev);
 				},
 			},
 		];
@@ -103,10 +103,16 @@ const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 					sendReport('불법 거래 관련 내용');
 				},
 			},
+			{
+				text: '기타',
+				action: () => {
+					setIsTextareaVisible((prev) => !prev);
+				},
+			},
 		];
 
 		return (
-			<>
+			<ReportBottomSheetMenuWrappar>
 				<BottomSheetMenu items={isUserReport ? userReportItems : postReportItems} />
 				{isVisibleTextarea && (
 					<InputLayout>
@@ -123,7 +129,7 @@ const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 						/>
 					</InputLayout>
 				)}
-			</>
+			</ReportBottomSheetMenuWrappar>
 		);
 	},
 );
