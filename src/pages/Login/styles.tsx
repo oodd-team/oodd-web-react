@@ -32,4 +32,8 @@ export const StyledTextService = styled(StyledText).attrs({
 	padding: 20px;
 	margin-top: 6.875rem;
 	cursor: pointer;
+	&:hover {
+		color: #ff2389; /* 호버 시 텍스트 색상 */
+		transform: scale(1.05); /* 버튼 크기 확대 */
+	}
 `;
