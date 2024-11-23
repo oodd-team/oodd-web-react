@@ -1,81 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { GetUserInfoResult } from '../../../ProfileViewer/ResponseDto/GetUserInfoResult';
-import request from '../../../../apis/core';
+
 import Loading from '../../../../components/Loading';
-//import { getKakaoLoginApi } from '../../../../apis/Auth';
+import Modal from '../../../../components/Modal';
+
+import { handleError } from '../../../../apis/util/handleError';
 
 const KakaoCallback: React.FC = () => {
 	const navigate = useNavigate();
+	const apiBaseUrl = import.meta.env.VITE_NEW_API_URL;
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modalMessage, setModalMessage] = useState('');
 
 	useEffect(() => {
-		const code = new URL(window.location.href).searchParams.get('code'); // URL에서 인증 코드 추출
-		console.log(code); // 인증 코드 출력
+		const handleKakaoLogin = async () => {
+			try {
+				// URL에서 인증 코드 추출
+				const code = new URL(window.location.href).searchParams.get('code');
+				console.log('인증 코드:', code);
 
-		if (code) {
-			// const getKakaoLogin = async () => {
-			// 	try{
-			// 		const response = await getKakaoLoginApi(code);
-			// 		const statusCode = response.status;
-			// 		if (statusCode === 200) {
-			// 			const token = response.data.accessToken;
-			// 			localStorage.removeItem('jwt_token');
-			// 			localStorage.setItem('NEW_JWT_TOKEN', token);
-			// 	}
-			// }
-			// 	catch (error) {
+				if (!code) {
+					throw new Error('인증 코드가 없습니다.');
+				}
 
-			// 	}
-			// }
-			// 인증 코드를 쿼리스트링으로 백엔드 서버에 전송
-			axios
-				.get(`https://api-dev.oodd.today/auth/login/kakao?code=${code}`)
-				.then((response) => {
-					const statusCode = response.status; // 200 OK
-					console.log(JSON.stringify(response.data));
-					if (statusCode === 200) {
-						// 추후 Postman에서 api 호출해 보고 응답을 보고 적어야 함
-						// userid를 서버로 보내 해당 유저의 nickname 유무에 따른 리디렉션
-						const token = response.data.accessToken;
+				// 리다이렉트 URL 설정 및 서버 URL 생성
+				const redirectUrl = encodeURIComponent('http://localhost:3000/login/complete');
+				const serverUrl = `${apiBaseUrl}/auth/login/kakao?redirectUrl=${redirectUrl}`;
 
-						localStorage.setItem('id', response.data.id); // 응답으로 id가 오지 않기 때문에 여기서 설정해야 함 수정 필요?
-						localStorage.removeItem('jwt_token');
-						localStorage.setItem('jwt_token', token);
-						const userid = localStorage.getItem('id');
+				// 서버로 리다이렉션
+				window.location.href = serverUrl;
+			} catch (error) {
+				// 에러 처리
+				console.error('카카오 로그인 중 오류 발생:', error);
+				const errorMessage = handleError(error);
+				setModalMessage(`카카오 ${errorMessage}`);
+				setIsModalOpen(true);
+			}
+		};
 
-						request
-							.get<GetUserInfoResult>(`/users/${userid}`)
-							.then((response) => {
-								console.log(response);
-								if (response.result.nickname) {
-									navigate('/');
-								} else {
-									navigate(`/signup`);
-								}
-							})
-							.catch((error) => {
-								// API 요청 실패 시 처리
-								console.error('API 요청 실패:', error);
-								alert('사용자 정보를 불러오지 못했습니다.');
-								navigate('/login'); // 실패 시 로그인 페이지로 리디렉션
-							});
-					} else {
-						console.error('로그인 실패:', response.data);
-						alert('카카오 계정의 정보를 불러오지 못했습니다.');
-						navigate('/login');
-						// 로그인 실패 시 처리
-					}
-				})
-				.catch((error) => {
-					console.error('서버 요청 실패:', error);
-				});
-		} else {
-			// 인증 코드가 없는 경우 처리
-			console.error('인증 코드가 없습니다.');
-		}
-	}, [navigate]);
-	return <Loading />;
+		handleKakaoLogin();
+	}, [navigate, apiBaseUrl]);
+
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
+	};
+
+	return (
+		<>
+			<Loading />
+			{isModalOpen && <Modal content={modalMessage} onClose={handleModalClose} />}
+		</>
+	);
 };
 
 export default KakaoCallback;

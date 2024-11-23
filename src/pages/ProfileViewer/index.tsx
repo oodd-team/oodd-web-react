@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { useRecoilState } from 'recoil';
+
 import UserInfo from './components/UserInfo';
 import PostItem from '../../components/PostItem';
 import BottomSheet from '../../components/BottomSheet';
@@ -7,26 +10,35 @@ import BottomSheetMenu from '../../components/BottomSheetMenu';
 import ReportText from './components/ReportText';
 import TopBar from '../../components/TopBar';
 import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
-import { useRecoilState } from 'recoil';
+import Modal from '../../components/Modal';
+import Loading from '../../components/Loading';
+
+import theme from '../../styles/theme';
+
 import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
+
+import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
+
 import MoreSvg from '../../assets/default/more.svg';
 import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/default/defaultProfile.svg';
+
 import { UserInfoProps } from './UserInfoProps';
 import { mainMenuItems, reportMenuItems } from './MenuItemDto';
-import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
 import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
-import request from '../../apis/core';
+
 import { GetPostListResult } from './ResponseDto/GetPostListResult';
 import { PostUserBlock } from './ResponseDto/PostUserBlockResult';
-import Modal from '../../components/Modal';
-import Loading from '../../components/Loading';
+
+import request from '../../apis/core';
+import { postUserReportApi } from '../../apis/user';
+import { handleError } from '../../apis/util/handleError';
 
 const ProfileViewer: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
+
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [activeBottomSheet, setActiveBottomSheet] = useState<string | null>(null);
 	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -35,8 +47,8 @@ const ProfileViewer: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState<string>('');
 
-	const localGetId = localStorage.getItem('id');
-	const token = localStorage.getItem('jwt_token');
+	const myId = localStorage.getItem('my_id');
+	const token = localStorage.getItem('new_jwt_token');
 
 	useEffect(() => {
 		const getUserInfo = async () => {
@@ -123,17 +135,18 @@ const ProfileViewer: React.FC = () => {
 	};
 
 	const handleConfirmationModalOpen = () => {
-		if (localGetId == userId) {
+		if (myId == userId) {
 			alert('자신을 차단할 수 없습니다.');
 			return;
 		}
 
 		setIsConfirmationModalOpen(true);
+
 		setConfirmAction(() => async () => {
 			try {
-				console.log(localGetId, userId);
+				console.log(myId, userId);
 				const response = await request.post<PostUserBlock>(`/block`, {
-					userId: Number(localGetId),
+					userId: Number(myId),
 					friendId: Number(userId),
 					action: 'toggle',
 				});
@@ -171,18 +184,26 @@ const ProfileViewer: React.FC = () => {
 		setIsModalOpen(false); // Modal 닫기
 	};
 
+	// 유저 신고하기 API 호출 함수
 	const postUserReport = async (text: string) => {
 		try {
-			await request.patch(`/user-report`, {
-				fromUserId: Number.parseInt(localGetId as string),
-				toUserId: Number.parseInt(userId as string),
+			const reportRequestData = {
+				fromUserId: Number(myId as string),
+				toUserId: Number(userId as string),
 				reason: text,
-			});
-			setIsModalOpen(true);
+			};
+			await postUserReportApi(reportRequestData);
+
 			setModalContent(`${userDetails.nickname}님을 \n'${text}' 사유로 신고했어요.`);
-			setIsBottomSheetOpen(false);
 		} catch (error) {
 			console.error('Failed to fetch user details', error);
+
+			const errorMessage = handleError(error);
+			setModalContent(errorMessage);
+		} finally {
+			// 모달 열기와 BottomSheet 닫기는 항상 실행 -> 코드 중복 제거
+			setIsModalOpen(true);
+			setIsBottomSheetOpen(false);
 		}
 	};
 
