@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { StyledText } from '../../components/Text/StyledText';
 
 export const LoginContainer = styled.main`
 	display: flex;
@@ -20,20 +19,4 @@ export const WelcomeWrapper = styled.section`
 	height: 5rem;
 	text-align: center;
 	margin-bottom: 1.5rem;
-`;
-
-export const StyledTextService = styled(StyledText).attrs({
-	as: 'button', // button 태그로 변환
-})`
-	display: flex;
-	border: none;
-	width: 100%;
-	justify-content: center;
-	padding: 20px;
-	margin-top: 6.875rem;
-	cursor: pointer;
-	&:hover {
-		color: #ff2389; /* 호버 시 텍스트 색상 */
-		transform: scale(1.05); /* 버튼 크기 확대 */
-	}
 `;

@@ -34,7 +34,7 @@ const LoginComplete: React.FC = () => {
 					if (nickname && name) {
 						navigate('/');
 					} else {
-						navigate('/signup', { state: { key: { id } } }); // id 전달해 회원 정보 수정할 수 있도록
+						navigate('/signup');
 					}
 				} catch (error) {
 					console.error('사용자 정보 조회 실패:', error);

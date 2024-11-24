@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { OODDFrame } from '../../components/Frame/Frame';
 import BottomButton from '../../components/BottomButton';
@@ -17,10 +17,9 @@ import { PatchUserInfoRequest } from '../../apis/user/dto';
 type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 'phoneNumber' | 'nickname'>;
 
 const SignUp: React.FC = () => {
-	const location = useLocation();
 	const navigate = useNavigate();
 
-	const { id } = location.state.key;
+	const my_id = localStorage.getItem('my_id');
 	const token = localStorage.getItem('new_jwt_token');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,7 +66,7 @@ const SignUp: React.FC = () => {
 		},
 		{
 			key: 'nickname',
-			label: '이름 대신 사용할 닉네임을 입력해주세요!',
+			label: '이름 대신 사용할 \n닉네임을 입력해주세요!',
 			placeholder: '패션의왕',
 			type: 'text',
 			value: formData.nickname,
@@ -83,12 +82,12 @@ const SignUp: React.FC = () => {
 		const phonePattern = /^(010-\d{4}-\d{4}|\d{3}-\d{4}-\d{4}|\d{11})$/;
 
 		if (currentStep === 2 && !datePattern.test(formData.birthDate)) {
-			setModalMessage('생년월일은 YYYY-MM-DD 형식으로 입력해주세요!');
+			setModalMessage('생년월일은 YYYY-MM-DD 형식으로 \n입력해주세요!');
 			setIsModalOpen(true);
 			return;
 		}
 		if (currentStep === 3 && !phonePattern.test(formData.phoneNumber)) {
-			setModalMessage('전화번호는 010-1234-1234 형식으로 입력해주세요!');
+			setModalMessage('전화번호는 010-1234-1234 형식으로 \n입력해주세요!');
 			setIsModalOpen(true);
 			return;
 		}
@@ -107,14 +106,14 @@ const SignUp: React.FC = () => {
 
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
-		} else if (id && token) {
+		} else if (my_id && token) {
 			const requestData = {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthDate: formData.birthDate,
 				phoneNumber: formData.phoneNumber,
 			};
-			await patchUserInfo(requestData, id);
+			await patchUserInfo(requestData, my_id);
 		}
 	};
 	const patchUserInfo = async (requestData: any, id: string) => {
@@ -129,13 +128,14 @@ const SignUp: React.FC = () => {
 			const errorMessage = handleError(error);
 			setModalMessage(errorMessage);
 			setIsModalOpen(true);
+			setModalType('fail');
 		}
 	};
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {
-			navigate('/');
-		} else {
+			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
+		} else if (modalType === 'fail') {
 			navigate('/login');
 		}
 	};
@@ -152,9 +152,7 @@ const SignUp: React.FC = () => {
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
 				<IntroWrapper>
-					<StyledText
-						$textTheme={{ style: { mobile: 'headline1-medium', tablet: 'title1-bold', desktop: 'title1-bold' } }}
-					>
+					<StyledText $textTheme={{ style: { mobile: 'title3-bold', tablet: 'title2-bold', desktop: 'title1-bold' } }}>
 						{label}
 					</StyledText>
 					<NickNameContainer>
