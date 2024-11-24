@@ -21,7 +21,7 @@ import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
 import LoginComplete from './pages/Login/components/LoginComplete';
-import TermsAgreement from './pages/Login/components/TermsAgreement';
+import TermsAgreement from './pages/TermsAgreement';
 
 const App: React.FC = () => {
 	return (

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledText } from '../../../../components/Text/StyledText';
+import { StyledText } from '../../components/Text/StyledText';
 
 export const TermsAgreementContainer = styled.main`
 	display: flex;

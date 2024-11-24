@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../../../components/Frame/Frame';
-import BottomButton from '../../../../components/BottomButton';
-import TopBar from '../../../../components/TopBar';
-import Modal from '../../../../components/Modal';
+import { OODDFrame } from '../../components/Frame/Frame';
+import BottomButton from '../../components/BottomButton';
+import TopBar from '../../components/TopBar';
+import Modal from '../../components/Modal';
 
-import { LogoWrapper, LogoImg } from '../../../SignUp/style';
+import { LogoWrapper, LogoImg } from '../SignUp/style';
 import { TermsAgreementContainer, StyledTitle, CheckboxWrapper, CheckboxItem, CheckboxInput, Divider } from './styles';
-import { StyledText } from '../../../../components/Text/StyledText';
+import { StyledText } from '../../components/Text/StyledText';
 
-import Back from '../../../../assets/arrow/left.svg';
-import OODDlogo from '../../../../assets/default/oodd.svg';
+import Back from '../../assets/arrow/left.svg';
+import OODDlogo from '../../assets/default/oodd.svg';
 
-import { postTermsAgreementApi } from '../../../../apis/user';
-import { handleError } from '../../../../apis/util/handleError';
+import { postTermsAgreementApi } from '../../apis/user';
+import { handleError } from '../../apis/util/handleError';
 
 const TermsAgreement: React.FC = () => {
 	const my_id = localStorage.getItem('my_id');
