@@ -17,7 +17,7 @@ import { postTermsAgreementApi } from '../../apis/user';
 import { handleError } from '../../apis/util/handleError';
 
 const TermsAgreement: React.FC = () => {
-	const my_id = localStorage.getItem('my_id');
+	const my_id = Number(localStorage.getItem('my_id'));
 	const navigate = useNavigate();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
