@@ -57,7 +57,7 @@ const TermsAgreement: React.FC = () => {
 
 	const handleFinalClick = async () => {
 		if (!my_id) {
-			setModalMessage('회원 정보가 없습니다.🥲\n로그인 해 주세요!');
+			setModalMessage('회원 정보가 없습니다.\n로그인 해 주세요!');
 			setIsModalOpen(true);
 			return;
 		}
