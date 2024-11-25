@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserInfoContainer, ButtonContainer, LongButton } from './styles';
-import { StyledText } from '../../../../components/Text/StyledText';
-import theme from '../../../../styles/theme';
+import { StyledText } from '../../../components/Text/StyledText';
+import theme from '../../../styles/theme';
 import { useRecoilState } from 'recoil';
-import { UserInfoAtom, isFriendAtom } from '../../../../recoil/ProfileViewer/userDetailsAtom';
-import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
-import request from '../../../../apis/core';
-import Modal from '../../../../components/Modal';
-import UserProfile from '../../../../components/UserProfile';
-import CommentBottomSheet from '../../../../components/CommentBottomSheet';
-import { CommentProps } from '../../../../components/Comment/dto';
-import { GetUserInfoResult } from '../../ResponseDto/GetUserInfoResult';
-import { PostFriendRequestResult } from '../../ResponseDto/PostFriendRequestResult';
+import { UserInfoAtom, isFriendAtom } from '../../../recoil/ProfileViewer/userDetailsAtom';
+import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
+import request from '../../../apis/core';
+import Modal from '../../../components/Modal';
+import UserProfile from '../../../components/UserProfile';
+import CommentBottomSheet from '../../../components/CommentBottomSheet';
+import { CommentProps } from '../../../components/Comment/dto';
+import { GetUserInfoResult } from '../ResponseDto/GetUserInfoResult';
 import HeartSvg from '../../../../assets/default/like-white.svg';
 import imageBasic from '../../../../assets/default/defaultProfile.svg';
-import { ChatRoomData, OtherUserDto } from '../../../../apis/chatting/dto';
-import { useSocket } from '../../../../context/SocketProvider';
+import { ChatRoomData, OtherUserDto } from '../../../apis/chatting/dto';
+import { useSocket } from '../../../context/SocketProvider';
+import { createMatchingApi } from '../../../apis/matching';
 
 interface UserInfoProps {
 	isFriend: boolean;
@@ -36,7 +36,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	if (!userDetails) return null;
 
 	const { id, nickname, bio, userImg } = userDetails;
-	const userId = localStorage.getItem('id');
+	const my_id = Number(localStorage.getItem('my_id'));
 	const user_img = userImg || imageBasic;
 	let roomId: number | null = null;
 
@@ -109,8 +109,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 
 	const checkPostCount = (): number => {
 		// 자신의 게시물이 있는지 확인하는 함수
-		const userId = localStorage.getItem('id');
-		const userDetails = localStorage.getItem(`userDetails_${userId}`);
+		const userDetails = localStorage.getItem(`userDetails_${my_id}`);
 		if (userDetails) {
 			const parsedDetails = JSON.parse(userDetails);
 			return parsedDetails.postsCount || 0;
@@ -126,13 +125,14 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
 			return;
 		}
+		const matchingRequestData = {
+			requesterId: my_id,
+			targetId: userDetails.id,
+			message: message,
+		};
 
 		try {
-			await request.post<PostFriendRequestResult>(`/user-relationships`, {
-				requesterId: Number.parseInt(localStorage.getItem('id') as string),
-				targetId: userId,
-				message: message,
-			});
+			await createMatchingApi(matchingRequestData);
 
 			handleModalOpen(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
 		} catch (error: any) {
