@@ -57,7 +57,7 @@ const TermsAgreement: React.FC = () => {
 
 	const handleFinalClick = async () => {
 		if (!my_id) {
-			setModalMessage('사용자 id가 존재하지 않습니다. 로그인 상태를 확인하세요.');
+			setModalMessage('회원 정보가 없습니다.🥲\n로그인 해 주세요!');
 			setIsModalOpen(true);
 			return;
 		}
@@ -73,15 +73,13 @@ const TermsAgreement: React.FC = () => {
 			setIsModalOpen(true);
 		}
 	};
+	const navigateToLogin = () => {
+		navigate('/login');
+	};
 
 	return (
 		<OODDFrame>
-			<TopBar
-				LeftButtonSrc={Back}
-				onLeftClick={() => {
-					navigate('/login');
-				}}
-			/>
+			<TopBar LeftButtonSrc={Back} onLeftClick={navigateToLogin} />
 			<TermsAgreementContainer>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />
@@ -111,20 +109,10 @@ const TermsAgreement: React.FC = () => {
 					onClick={handleFinalClick}
 					disabled={!agreements.terms || !agreements.privacy}
 				/>
-				{isModalOpen && (
-					<Modal
-						content={modalMessage}
-						onClose={() => {
-							setIsModalOpen(false);
-						}}
-					/>
-				)}
+				{isModalOpen && <Modal content={modalMessage} onClose={navigateToLogin} />}
 			</TermsAgreementContainer>
 		</OODDFrame>
 	);
 };
 
 export default TermsAgreement;
-
-// 카카오 및 네이버 로그인 버튼 눌렀을 때, jwt 토큰 이용해서 유저 정보 불러왔을 때 유저 정보가 다 있으면 이미 회원가입, 이용약관 동의한 것임 -> 바로 홈으로
-// 로그인 했을 때 회원가입 안 되어있으면 바로 회원가입으로, 마찬가지로 이용약관 동의도 안 했을 테니 이용약관까지 하면 홈으로...
