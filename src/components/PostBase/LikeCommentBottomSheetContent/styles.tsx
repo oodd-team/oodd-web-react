@@ -55,6 +55,7 @@ export const UserItem = styled.div`
 `;
 
 export const CommentItem = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 `;
@@ -74,4 +75,17 @@ export const MenuBtn = styled.button`
 		width: 100%;
 		height: 100%;
 	}
+`;
+
+export const CommentDeleteButton = styled.button`
+	background: red;
+	color: white;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 50px;
+	text-align: center;
+	border: none;
+	cursor: pointer;
 `;

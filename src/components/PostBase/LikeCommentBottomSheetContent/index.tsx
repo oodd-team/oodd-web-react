@@ -11,20 +11,24 @@ import {
 	CommentItem,
 	CommentContent,
 	MenuBtn,
+	CommentDeleteButton,
 } from './styles';
 
 import { StyledText } from '../../Text/StyledText';
 import theme from '../../../styles/theme';
 import Loading from '../../Loading';
+import Modal from '../../Modal';
 
 import More from '../../../assets/default/more.svg';
+import Delete from '../../../assets/default/delete.svg';
 
 import { LikeCommentBottomSheetProps } from '../dto';
+import { ModalProps } from '../../Modal/dto';
 import { GetPostLikeListResponse } from '../../../apis/post-like/dto';
 import { GetCommentListResponse } from '../../../apis/post-comment/dto';
 
 import { getPostLikeListApi } from '../../../apis/post-like';
-import { getCommentListApi } from '../../../apis/post-comment';
+import { createCommentApi, getCommentListApi, deleteCommentApi } from '../../../apis/post-comment';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
@@ -36,6 +40,10 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	const [reachedEnd, setReachedEnd] = useState(false);
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
+	const [showDeleteButtonId, setShowDeleteButtonId] = useState<number | null>(null); // 삭제 버튼 표시 관리
+	const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null); // 모달에서 삭제할 댓글 ID
+	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false); // 모달 표시 관리
+
 	const nav = useNavigate();
 
 	useEffect(() => {
@@ -134,7 +142,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	const handleUserClick = (userId: number) => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+		const myUserId = localStorage.getItem('my_id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
 
 		if (String(myUserId) === String(userId)) {
 			// 나인 경우
@@ -145,8 +153,38 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
-	//댓글 메뉴 클릭한 경우 ***** 추후 수정 *****
-	const handleCommentMenuClick = () => {};
+	//댓글 메뉴 클릭한 경우
+	const handleCommentMenuClick = (commentId: number, isCommentWriter: Boolean) => {
+		if (!commentId) return;
+
+		if (isCommentWriter) {
+			setShowDeleteButtonId((prev) => (prev === commentId ? null : commentId));
+		} else {
+			//댓글 신고 등 *****추후 수정******
+			return;
+		}
+	};
+
+	const deleteConfirmationModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => setIsDeleteConfirmationModalOpen(false),
+		content: '정말 댓글을 삭제하시겠습니까?',
+		button: {
+			content: '삭제',
+			onClick: async () => {
+				if (!deleteCommentId) return;
+				try {
+					await deleteCommentApi(deleteCommentId); // 댓글 삭제 API 호출
+					setComments((prev) => prev.filter((comment) => comment.commentId !== deleteCommentId)); // 댓글 리스트 업데이트
+				} catch (error) {
+					console.error('Error deleting comment:', error);
+				} finally {
+					setIsDeleteConfirmationModalOpen(false);
+					setDeleteCommentId(null);
+				}
+			},
+		},
+	};
 
 	return (
 		<>
@@ -195,7 +233,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						</Content>
 					) : (
 						comments.map((comment) => (
-							<CommentItem key={comment.id}>
+							<CommentItem key={comment.commentId}>
 								<BigUserProfile>
 									<img
 										src={comment.user.profilePictureUrl}
@@ -212,9 +250,21 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 									</StyledText>
 									<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
 								</CommentContent>
-								<MenuBtn onClick={handleCommentMenuClick}>
+								<MenuBtn onClick={() => handleCommentMenuClick(comment.commentId, comment.isCommentWriter)}>
 									<img src={More} alt="more" />
 								</MenuBtn>
+								{/*{showDeleteButtonId === comment.commentId && (*/}
+								<CommentDeleteButton
+									onClick={(e) => {
+										e.stopPropagation();
+										setDeleteCommentId(comment.commentId); // 삭제 대상 ID 설정
+										setIsDeleteConfirmationModalOpen(true); // 모달 열기
+									}}
+								>
+									<img src={Delete} alt="delete" />
+								</CommentDeleteButton>
+								{/*})}*/}
+								{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
 							</CommentItem>
 						))
 					))}

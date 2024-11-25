@@ -20,7 +20,7 @@ interface Content {
 interface CreateCommentData extends Content {}
 
 interface Comment {
-	id: number;
+	commentId: number;
 	user: CommentUser;
 	content: string;
 	createdAt: string;
