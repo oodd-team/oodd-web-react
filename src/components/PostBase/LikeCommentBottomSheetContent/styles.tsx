@@ -63,7 +63,6 @@ export const CommentContent = styled.div`
 	margin-left: 8px;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 `;
 
 export const MenuBtn = styled.button`

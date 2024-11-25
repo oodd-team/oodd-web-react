@@ -21,7 +21,7 @@ interface CreateCommentData extends Content {}
 
 interface Comment {
 	id: number;
-	user?: CommentUser;
+	user: CommentUser;
 	content: string;
 	createdAt: string;
 	isCommentWriter: boolean;

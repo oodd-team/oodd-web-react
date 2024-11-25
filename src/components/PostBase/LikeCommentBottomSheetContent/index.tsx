@@ -20,17 +20,17 @@ import Loading from '../../Loading';
 import More from '../../../assets/default/more.svg';
 
 import { LikeCommentBottomSheetProps } from '../dto';
-import { CommentsResponse } from '../dto';
 import { GetPostLikeListResponse } from '../../../apis/post-like/dto';
+import { GetCommentListResponse } from '../../../apis/post-comment/dto';
 
-import request from '../../../apis/core';
 import { getPostLikeListApi } from '../../../apis/post-like';
+import { getCommentListApi } from '../../../apis/post-comment';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
 	const { postId } = useParams<{ postId: string }>();
 	const [likes, setLikes] = useState<GetPostLikeListResponse['data']['likes']>([]);
-	const [comments, setComments] = useState<CommentsResponse['result']['comments']>([]);
+	const [comments, setComments] = useState<GetCommentListResponse['data']['comments']>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
 	const [reachedEnd, setReachedEnd] = useState(false);
@@ -47,7 +47,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		if (activeTab === 'likes') {
 			getPostLikeList(1);
 		} else if (activeTab === 'comments') {
-			getPostCommentList(1);
+			//getPostCommentList(1);
+			getPostCommentList();
 		}
 	}, [activeTab]);
 
@@ -58,11 +59,14 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
 			const [entry] = entries;
 			if (entry.isIntersecting && !isLoading) {
-				if (activeTab === 'likes') {
-					getPostLikeList(page);
+				//if (activeTab === 'likes') {
+				getPostLikeList(page);
+				/*
 				} else if (activeTab === 'comments') {
-					getPostCommentList(page);
+					
+					getPostCommentList();
 				}
+				*/
 			}
 		};
 
@@ -77,7 +81,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		return () => {
 			if (observerRef.current) observerRef.current.disconnect();
 		};
-	}, [page, isLoading, reachedEnd, loadMoreRef.current, activeTab]);
+	}, [page, reachedEnd, loadMoreRef.current, activeTab]);
 
 	// 좋아요 리스트 불러오기
 	const getPostLikeList = async (currentPage: number) => {
@@ -102,22 +106,25 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	};
 
 	// 코멘트 리스트 불러오기
-	const getPostCommentList = async (currentPage: number) => {
-		if (isLoading || reachedEnd) return;
+	const getPostCommentList = async () => {
+		//페이징 처리 우선 주석
+		//if (isLoading || reachedEnd) return;
 
 		setIsLoading(true);
 		try {
-			const response = await request.get<CommentsResponse>(`/posts/${postId}/comments`, {
-				params: { page: currentPage },
-			});
-			const data = response.result;
+			const response = await getCommentListApi(Number(postId));
+			const data = response.data;
 
+			setComments(data.comments);
+
+			/* //페이징 처리 우선 주석
 			if (data.comments.length === 0) {
 				setReachedEnd(true);
 			} else {
 				setComments((prev) => [...prev, ...data.comments]);
 				setPage((prev) => prev + 1);
 			}
+			*/
 		} catch (error) {
 			console.error('Error fetching comments:', error);
 		} finally {
@@ -192,15 +199,18 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 								<BigUserProfile>
 									<img
 										src={comment.user.profilePictureUrl}
-										onClick={() => handleUserClick(comment.user.id)}
+										onClick={() => handleUserClick(comment.user.userId)}
 										alt="user avatar"
 									/>
 								</BigUserProfile>
 								<CommentContent>
-									<StyledText onClick={() => handleUserClick(comment.user.id)} $textTheme={{ style: 'body2-medium' }}>
+									<StyledText
+										onClick={() => handleUserClick(comment.user.userId)}
+										$textTheme={{ style: 'body2-medium' }}
+									>
 										{comment.user.nickname}
 									</StyledText>
-									<StyledText $textTheme={{ style: 'caption2-medium' }}>{comment.content}</StyledText>
+									<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
 								</CommentContent>
 								<MenuBtn onClick={handleCommentMenuClick}>
 									<img src={More} alt="more" />
