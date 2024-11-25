@@ -206,9 +206,11 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 
 	const uploadImageToFirebase = async (imageUrl: string) => {
 		// Firebase URL 형식인지 확인
+		/*
 		if (imageUrl.startsWith('https://firebasestorage.googleapis.com/')) {
 			return imageUrl; // 이미 업로드된 경우, URL을 그대로 반환
 		}
+		*/
 
 		// 새로 업로드해야 하는 경우
 		const croppedBlob = await cropImage(imageUrl);
@@ -237,8 +239,8 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			// 업로드된 이미지 URL과 함께 orderNum을 추가
 			const uploadedImages = await Promise.all(
 				selectedImages.map(async (image, index) => {
-					const imageUrl = await uploadImageToFirebase(image.url);
-					return { url: imageUrl, orderNum: index }; // orderNum 추가
+					const imageUrl = await uploadImageToFirebase(image.imageUrl);
+					return { imageUrl: imageUrl, orderNum: index }; // orderNum 추가
 				}),
 			);
 

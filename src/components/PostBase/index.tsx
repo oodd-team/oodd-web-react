@@ -164,7 +164,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						<>
 							<Content
 								onClick={toggleTextDisplay}
-								showFullText={showFullText}
+								$showFullText={showFullText}
 								$textTheme={{ style: 'body4-light' }}
 								color={theme.colors.black}
 							>
@@ -181,7 +181,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					)}
 				</PostContentContainer>
 
-				{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
+				{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.imageUrl)} />}
 
 				<IconRow>
 					<IconWrapper onClick={togglePostLikeStatus}>
