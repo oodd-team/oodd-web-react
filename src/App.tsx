@@ -21,6 +21,7 @@ import Post from './pages/Post';
 import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
 import NaverCallback from './pages/Login/components/Naver/NaverCallback';
 import LoginComplete from './pages/Login/components/LoginComplete';
+import TermsAgreement from './pages/TermsAgreement';
 
 const App: React.FC = () => {
 	return (
@@ -36,8 +37,10 @@ const App: React.FC = () => {
 				<Route path="/account-edit" element={<AccountEdit />} />
 				<Route path="/account-cancel" element={<AccountCancel />} />
 				<Route path="/Verification" element={<Verification />} />
+
 				<Route path="/login" element={<Login />} />
 				<Route path="/login/complete" element={<LoginComplete />}></Route>
+				<Route path="/terms-agreement" element={<TermsAgreement />} />
 				<Route path="/chats" element={<Chats />} />
 
 				<Route path="/image-select" element={<PostImageSelect />} />

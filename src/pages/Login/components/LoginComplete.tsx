@@ -6,6 +6,7 @@ import Modal from '../../../components/Modal';
 
 import { getUserInfoByJwtApi } from '../../../apis/auth';
 import { handleError } from '../../../apis/util/handleError';
+import { postTermsAgreementApi } from '../../../apis/user';
 
 const LoginComplete: React.FC = () => {
 	const location = useLocation();
@@ -32,9 +33,12 @@ const LoginComplete: React.FC = () => {
 					localStorage.setItem('my_id', `${id}`);
 
 					if (nickname && name) {
-						navigate('/');
+						if (nickname && name) {
+							const isAgreed = await checkTermsAgreement(id);
+							navigate(isAgreed ? '/' : '/terms-agreement');
+						}
 					} else {
-						navigate('/signup', { state: { key: { id } } }); // id 전달해 회원 정보 수정할 수 있도록
+						navigate('/signup');
 					}
 				} catch (error) {
 					console.error('사용자 정보 조회 실패:', error);
@@ -47,10 +51,20 @@ const LoginComplete: React.FC = () => {
 		}
 	}, [location]);
 
+	const checkTermsAgreement = async (userId: number): Promise<boolean> => {
+		try {
+			await postTermsAgreementApi(userId);
+			return true; // 동의 완료
+		} catch {
+			return false; // 동의 필요
+		}
+	};
+
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
 	};
+
 	return (
 		<>
 			<Loading />
