@@ -16,20 +16,6 @@ export interface UserInfoData {
 // 사용자 정보 조회 응답
 export type GetUserInfoResponse = BaseSuccessResponse<UserInfoData>;
 
-// 사용자 신고 요청 데이터
-export interface PostUserReportRequest {
-	fromUserId: number;
-	toUserId: number;
-	reason: string;
-}
-
-// 차단/해제 요청 데이터
-export interface PostUserBlockRequest {
-	fromUserId: number;
-	toUserId: number;
-	action: 'block' | 'unblock'; // 차단 또는 해제
-}
-
 // 사용자 정보 수정 응답
 export type PatchUserInfoResponse = BaseSuccessResponse<UserInfoData>;
 

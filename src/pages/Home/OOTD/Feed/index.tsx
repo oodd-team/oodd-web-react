@@ -38,7 +38,7 @@ import { handleError } from '../../../../apis/util/handleError';
 import { ApiModalProps } from '../../../../components/Modal/ApiModal/dto';
 import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
 import { ModalProps } from '../../../../components/Modal/dto';
-import { postUserBlockApi } from '../../../../apis/user';
+import { postUserBlockApi } from '../../../../apis/user-block';
 import { EmptySuccessResponse } from '../../../../apis/core/dto';
 import { togglePostLikeStatusApi } from '../../../../apis/post-like';
 

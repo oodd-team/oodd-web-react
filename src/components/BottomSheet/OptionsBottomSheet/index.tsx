@@ -25,8 +25,11 @@ import {
 	ReportModalBox,
 } from './styles';
 import theme from '../../../styles/theme';
-import { postUserBlockApi, postUserReportApi } from '../../../apis/user';
-import { PostUserBlockRequest, PostUserReportRequest } from '../../../apis/user/dto';
+
+import { postUserBlockApi } from '../../../apis/user-block';
+import { postUserReportApi } from '../../../apis/user-report';
+import { PostUserBlockRequest } from '../../../apis/user-block/dto';
+import { PostUserReportRequest } from '../../../apis/user-report/dto';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
