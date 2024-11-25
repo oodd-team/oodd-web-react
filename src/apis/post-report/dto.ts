@@ -1,6 +1,5 @@
 import { BaseSuccessResponse } from '../core/dto';
 
-// 공통 필드 인터페이스
 interface BaseReport {
   id: number;           // 신고 ID
   userId: number;       // 신고 생성 사용자 ID

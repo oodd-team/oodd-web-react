@@ -1,4 +1,3 @@
-
 import { newRequest } from "../core";
 import { SendPostReportRequest, SendPostReportResponse } from "./dto";
 
