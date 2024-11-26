@@ -2,7 +2,7 @@ import { BaseSuccessResponse } from '../core/dto';
 
 // 사용자 정보 공통 인터페이스
 export interface UserInfoData {
-	userId: number;
+	userId: string;
 	name: string;
 	phoneNumber: string;
 	email: string;
