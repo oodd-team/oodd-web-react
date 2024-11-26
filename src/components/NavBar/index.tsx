@@ -29,6 +29,8 @@ import profileDesktopIcon from './../../assets/default/desktopNavBar/my-page.svg
 import profileFillDesktopIcon from './../../assets/default/desktopNavBar/my-page-fill.svg';
 import logout from './../../assets/default/leave.svg';
 import { StyledText } from '../Text/StyledText';
+import Modal from '../Modal';
+import { ModalProps } from '../Modal/dto';
 
 const tabs = [
 	{ name: 'Chats', iconSelected: Chat_f, iconUnselected: Chat_s, route: '/chats' },
@@ -43,7 +45,8 @@ const desktopTabs = [
 ];
 
 const NavBar: React.FC = () => {
-	const [selectedTab, setSelectedTab] = useState<string>('');
+	const [selectedTab, setSelectedTab] = useState('');
+	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -59,8 +62,32 @@ const NavBar: React.FC = () => {
 		navigate(tab.route);
 	};
 
+	const handleConfirmLogout = () => {
+		localStorage.clear();
+		setIsLogoutModalOpen(false);
+
+		navigate('/login');
+	};
+
+	const handleLogoutButtonClick = () => {
+		setIsLogoutModalOpen(true);
+	};
+
+	const logoutModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => {
+			setIsLogoutModalOpen(false);
+		},
+		content: '이 기기에서 정말 로그아웃 할까요?',
+		button: {
+			content: '로그아웃',
+			onClick: handleConfirmLogout,
+		},
+	};
+
 	return (
 		<>
+			{isLogoutModalOpen && <Modal {...logoutModalProps} />}
 			<NavBarContainer>
 				<NavBarWrapper>
 					{tabs.map((tab) => (
@@ -97,7 +124,7 @@ const NavBar: React.FC = () => {
 					))}
 				</SideNavBarList>
 				<SideNavBarFooter>
-					<SideNavBarButton>
+					<SideNavBarButton onClick={handleLogoutButtonClick}>
 						<button>
 							<img src={logout} alt="" />
 						</button>
