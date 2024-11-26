@@ -60,6 +60,7 @@ const TabBar: React.FC = () => {
 			// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
 			else {
 				swiper.allowSlidePrev = true;
+				setActiveIndex(swiper.activeIndex);
 			}
 		},
 		[hasMatchingRequest],
