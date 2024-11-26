@@ -56,7 +56,7 @@ export const createExtendedMessages = (
 			// 받은 메시지일 경우 rcvdMessage 속성 추가
 			const rcvdMessage: RcvdMessageProps = {
 				fromUserNickname: opponentInfo?.nickname || '알수없음',
-				profilePictureUrl: opponentInfo?.profileUrl || defaultProfile,
+				profilePictureUrl: opponentInfo?.profilePictureUrl || defaultProfile,
 				content: message.content,
 				isProfileImageVisible,
 				isSenderChanged,

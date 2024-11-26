@@ -31,7 +31,7 @@ const TabBar: React.FC = () => {
 		const response = await getMatchingListApi();
 
 		if (response.isSuccess) {
-			setMatchingCount(response.data.matchingCount);
+			setMatchingCount(response.data.matchingsCount);
 			setHasMatchingRequest(response.data.isMatching);
 		}
 	};
