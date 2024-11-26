@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import {
@@ -10,6 +10,7 @@ import {
 	UserItem,
 	CommentItem,
 	CommentContent,
+	InputLayout,
 	MenuBtn,
 	CommentDeleteButton,
 } from './styles';
@@ -43,6 +44,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	const [showDeleteButtonId, setShowDeleteButtonId] = useState<number | null>(null); // 삭제 버튼 표시 관리
 	const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null); // 모달에서 삭제할 댓글 ID
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false); // 모달 표시 관리
+	const [inputValue, setInputValue] = useState('');
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const nav = useNavigate();
 
@@ -113,7 +116,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
-	// 코멘트 리스트 불러오기
+	// 댓글 리스트 불러오기
 	const getPostCommentList = async () => {
 		//페이징 처리 우선 주석
 		//if (isLoading || reachedEnd) return;
@@ -140,16 +143,19 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
-	const handleUserClick = (userId: number) => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = localStorage.getItem('my_id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setInputValue(e.target.value);
+	}, []);
 
-		if (String(myUserId) === String(userId)) {
-			// 나인 경우
-			nav('/mypage');
-		} else {
-			// 다른 유저인 경우
-			nav(`/users/${userId}`);
+	// 댓글 작성
+	const createComment = async () => {
+		const content = inputValue.trim();
+		try {
+			const response = await createCommentApi(Number(postId), { content }); // API 호출
+			setInputValue(''); // 입력창 초기화
+			getPostCommentList();
+		} catch (error) {
+			console.error('댓글 작성 중 에러 발생:', error);
 		}
 	};
 
@@ -184,6 +190,19 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				}
 			},
 		},
+	};
+
+	const handleUserClick = (userId: number) => {
+		// 로컬 스토리지에서 사용자 ID 가져오기
+		const myUserId = localStorage.getItem('my_id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+
+		if (String(myUserId) === String(userId)) {
+			// 나인 경우
+			nav('/mypage');
+		} else {
+			// 다른 유저인 경우
+			nav(`/users/${userId}`);
+		}
 	};
 
 	return (
@@ -226,48 +245,65 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 						))
 					))}
 
-				{activeTab === 'comments' &&
-					(comments.length === 0 ? (
-						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
-							아직 댓글이 없습니다
-						</Content>
-					) : (
-						comments.map((comment) => (
-							<CommentItem key={comment.commentId}>
-								<BigUserProfile>
-									<img
-										src={comment.user.profilePictureUrl}
-										onClick={() => handleUserClick(comment.user.userId)}
-										alt="user avatar"
-									/>
-								</BigUserProfile>
-								<CommentContent>
-									<StyledText
-										onClick={() => handleUserClick(comment.user.userId)}
-										$textTheme={{ style: 'body2-medium' }}
+				{activeTab === 'comments' && (
+					<>
+						{comments.length === 0 ? (
+							<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+								아직 댓글이 없습니다
+							</Content>
+						) : (
+							comments.map((comment) => (
+								<CommentItem key={comment.commentId}>
+									<BigUserProfile>
+										<img
+											src={comment.user.profilePictureUrl}
+											onClick={() => handleUserClick(comment.user.userId)}
+											alt="user avatar"
+										/>
+									</BigUserProfile>
+									<CommentContent>
+										<StyledText
+											onClick={() => handleUserClick(comment.user.userId)}
+											$textTheme={{ style: 'body2-medium' }}
+										>
+											{comment.user.nickname}
+										</StyledText>
+										<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
+									</CommentContent>
+									<MenuBtn onClick={() => handleCommentMenuClick(comment.commentId, comment.isCommentWriter)}>
+										<img src={More} alt="more" />
+									</MenuBtn>
+									{/*{showDeleteButtonId === comment.commentId && (*/}
+									<CommentDeleteButton
+										onClick={(e) => {
+											e.stopPropagation();
+											setDeleteCommentId(comment.commentId); // 삭제 대상 ID 설정
+											setIsDeleteConfirmationModalOpen(true); // 모달 열기
+										}}
 									>
-										{comment.user.nickname}
-									</StyledText>
-									<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
-								</CommentContent>
-								<MenuBtn onClick={() => handleCommentMenuClick(comment.commentId, comment.isCommentWriter)}>
-									<img src={More} alt="more" />
-								</MenuBtn>
-								{/*{showDeleteButtonId === comment.commentId && (*/}
-								<CommentDeleteButton
-									onClick={(e) => {
-										e.stopPropagation();
-										setDeleteCommentId(comment.commentId); // 삭제 대상 ID 설정
-										setIsDeleteConfirmationModalOpen(true); // 모달 열기
-									}}
-								>
-									<img src={Delete} alt="delete" />
-								</CommentDeleteButton>
-								{/*})}*/}
-								{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
-							</CommentItem>
-						))
-					))}
+										<img src={Delete} alt="delete" />
+									</CommentDeleteButton>
+									{/*})}*/}
+									{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
+								</CommentItem>
+							))
+						)}
+						<InputLayout>
+							<textarea
+								ref={textareaRef}
+								placeholder="댓글 추가..."
+								value={inputValue}
+								onChange={handleInputChange}
+							></textarea>
+							<button
+								onClick={createComment}
+								disabled={inputValue.trim().length === 0} // 값이 없을 때 비활성화
+							>
+								작성
+							</button>
+						</InputLayout>
+					</>
+				)}
 				{isLoading && <Loading />}
 				<div ref={loadMoreRef} />
 			</ContentContainer>
