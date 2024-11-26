@@ -116,9 +116,9 @@ const SignUp: React.FC = () => {
 			await patchUserInfo(requestData, my_id);
 		}
 	};
-	const patchUserInfo = async (requestData: any, id: string) => {
+	const patchUserInfo = async (requestData: any, my_id: string) => {
 		try {
-			const response = await patchUserInfoApi(requestData, id);
+			const response = await patchUserInfoApi(requestData, my_id);
 			console.log('수정 성공:', response.data);
 			setModalMessage('회원가입에 성공했습니다!');
 			setIsModalOpen(true);
