@@ -2,7 +2,7 @@ export interface MenuButtonProps {
 	text: string;
 	action: () => void;
 	icon: string;
-	backgroundColor?: string;
+	color?: string;
 }
 
 export interface MenuButtonListProps {

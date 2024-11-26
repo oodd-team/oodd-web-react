@@ -30,10 +30,9 @@ export const ContentContainer = styled.div`
 	padding: 16px 0;
 	min-height: 350px;
 	max-height: 750px;
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 16px;
+	display: flex;
 	flex-direction: column;
+	gap: 16px;
 	align-items: start;
 	overflow-y: auto;
 
@@ -62,43 +61,6 @@ export const LikeItem = styled.div`
 	.name {
 		margin-left: 8px;
 	}
-`;
-
-export const CommentItem = styled.div`
-	position: relative;
-	display: flex;
-	align-items: center;
-	width: 100%;
-`;
-
-export const CommentContent = styled.div`
-	margin-left: 8px;
-	display: flex;
-	flex-direction: column;
-`;
-
-export const MenuBtn = styled.button`
-	width: 18px;
-	height: 18px;
-	margin-left: auto;
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-`;
-
-export const CommentDeleteButton = styled.button`
-	background: red;
-	color: white;
-	position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 50px;
-	text-align: center;
-	border: none;
-	cursor: pointer;
 `;
 
 export const InputLayout = styled.div`

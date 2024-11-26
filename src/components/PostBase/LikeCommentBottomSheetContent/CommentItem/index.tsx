@@ -20,6 +20,7 @@ import More from '../../../../assets/default/more.svg';
 import Delete from '../../../../assets/default/delete.svg';
 import Block from '../../../../assets/default/block.svg';
 import Report from '../../../../assets/default/report.svg';
+import X from '../../../../assets/default/x.svg';
 
 import { deleteCommentApi } from '../../../../apis/post-comment';
 
@@ -69,43 +70,50 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 		setShowCommentMenuId((prevId) => (prevId === commentId ? null : commentId));
 	};
 
-	const menuItems = comment.isCommentWriter
-		? [
-				{
-					text: '삭제',
-					action: () => {
-						setDeleteCommentId(comment.id);
-						setIsCommentDeleteConfirmationModalOpen(true);
+	const menuItems = [
+		...(comment.isCommentWriter
+			? [
+					{
+						text: '삭제',
+						action: () => {
+							setDeleteCommentId(comment.id);
+							setIsCommentDeleteConfirmationModalOpen(true);
+						},
+						icon: Delete,
+						color: 'red',
 					},
-					icon: Delete,
-					backgroundColor: 'red',
-				},
-			]
-		: [
-				{
-					text: '신고하기',
-					action: () => {
-						setIsCommentReportModalOpen(true);
+				]
+			: [
+					{
+						text: '신고하기',
+						action: () => {
+							setIsCommentReportModalOpen(true);
+						},
+						icon: Report,
 					},
-					icon: Report,
-				},
-				{
-					text: '차단하기',
-					action: () => {
-						const storedUserId = localStorage.getItem('id');
-						if (storedUserId) {
-							setUserBlockAtom({
-								userId: Number(storedUserId),
-								friendId: comment.user.userId,
-								friendName: comment.user.nickname,
-								action: 'toggle',
-							});
-							setIsBlockConfirmationModalOpen(true);
-						}
+					{
+						text: '차단하기',
+						action: () => {
+							const storedUserId = localStorage.getItem('id');
+							if (storedUserId) {
+								setUserBlockAtom({
+									userId: Number(storedUserId),
+									friendId: comment.user.userId,
+									friendName: comment.user.nickname,
+									action: 'toggle',
+								});
+								setIsBlockConfirmationModalOpen(true);
+							}
+						},
+						icon: Block,
 					},
-					icon: Block,
-				},
-			];
+				]),
+		{
+			text: '취소',
+			action: () => setShowCommentMenuId(null),
+			icon: X,
+		},
+	];
 
 	return (
 		<StyledCommentItem key={comment.id}>

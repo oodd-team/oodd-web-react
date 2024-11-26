@@ -15,34 +15,32 @@ export const MenuListContainer = styled.div<{ isVisible: boolean }>`
 	position: absolute;
 	right: 0;
 	top: 0;
+	height: 100%;
 	display: flex;
-	flex-direction: column;
-	gap: 8px;
+	flex-direction: row;
+	gap: 4px;
 	animation: ${(props) => (props.isVisible ? slideIn : 'none')} 0.3s ease forwards;
 `;
 
-export const MenuButton = styled.button<{ backgroundColor?: string }>`
+export const MenuButtonItem = styled.button<{ color?: string }>`
 	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
-	gap: 8px;
-	background-color: ${(props) => props.backgroundColor || 'white'};
+	gap: 4px;
+	background-color: ${({ theme }) => theme.colors.gray1};
 	border: none;
+	height: 100%;
+	width: 80px;
 	padding: 8px 12px;
 	border-radius: 8px;
 	cursor: pointer;
 	transition: background-color 0.2s ease;
-
-	&:hover {
-		background-color: ${(props) => props.backgroundColor || '#f0f0f0'};
-	}
+	color: ${(props) => props.color || props.theme.colors.white};
 
 	img {
-		width: 16px;
-		height: 16px;
-	}
-
-	span {
-		font-size: 0.875rem;
-		color: #333;
+		width: 20px;
+		height: 20px;
+		padding-top: 4px;
 	}
 `;
