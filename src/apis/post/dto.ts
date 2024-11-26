@@ -1,5 +1,4 @@
 import { BaseSuccessResponse } from '../core/dto';
-import { PaginationMeta } from '../util/dto';
 
 // 게시글 생성
 //request
@@ -30,19 +29,21 @@ export interface PostBase {
 export interface CreatePostData extends PostBase {}
 export interface GetPostListData {
 	post: PostSummary[];
-	meta: PaginationMeta;
+	totalPostsCount?: number;
+	totalPostLikesCount?: number;
+	totalPostCommentsCount?: number;
 }
 export interface GetPostDetailData extends PostDetailData {}
 export interface ModifyPostData extends PostData {}
 export interface PostSummary {
+	postId: number;
 	content: string;
 	postImages: PostImage[];
-	postId: number;
 	createdAt: Date;
 	isPostLike: boolean;
 	user: User;
-	likeCount: number;
-	commentCount: number;
+	postLikesCount: number;
+	postCommentsCount: number;
 	isRepresentative: boolean;
 }
 export interface PostData extends PostBase {
@@ -52,8 +53,8 @@ export interface PostData extends PostBase {
 export interface PostDetailData extends PostBase {
 	createdAt: string;
 	user: User;
-	commentCount: number;
-	likeCount: number;
+	postCommentsCount: number;
+	postLikesCount: number;
 	isPostLike: boolean;
 	isPostWriter: boolean;
 }

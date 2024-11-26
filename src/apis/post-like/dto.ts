@@ -8,7 +8,7 @@ export type TogglePostLikeStatusResponse = BaseSuccessResponse<TogglePostLikeSta
 export type GetPostLikeListResponse = BaseSuccessResponse<GetPostLikeListData>;
 
 export interface GetPostLikeListData {
-	likeCount: number;
+	totalCount: number;
 	likes: Like[];
 	meta: PaginationMeta;
 }
@@ -25,9 +25,7 @@ export interface Like {
 }
 
 export interface TogglePostLikeStatusData {
-	post: {
-		id: number;
-		isPostLike: boolean;
-		likeCount: number;
-	};
+	id: number;
+	isPostLike: boolean;
+	postLikesCount: number;
 }

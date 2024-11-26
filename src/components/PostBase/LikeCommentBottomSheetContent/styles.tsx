@@ -36,6 +36,7 @@ export const ContentContainer = styled.div`
 	flex-direction: column;
 	align-items: start;
 	overflow-y: auto;
+
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+
 	&::-webkit-scrollbar {
@@ -53,7 +54,7 @@ export const BigUserProfile = styled(UserProfile)`
 	height: 52px;
 `;
 
-export const UserItem = styled.div`
+export const LikeItem = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -68,10 +69,6 @@ export const CommentItem = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-
-	&:last-child {
-		margin-bottom: 110px;
-	}
 `;
 
 export const CommentContent = styled.div`
@@ -135,6 +132,12 @@ export const InputLayout = styled.div`
 		background-color: #f8f8f8;
 		resize: none;
 		overflow-y: auto;
+
+		scrollbar-width: none; // Firefox
+		-ms-overflow-style: none; // IE 10+
+		&::-webkit-scrollbar {
+			display: none; // Safari & Chrome
+		}
 	}
 
 	button {
