@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { ModalWrapper, ModalContainer, CloseButton, ConfirmButton } from './styles';
 import { StyledText } from '../Text/StyledText';
 import { ModalProps } from './dto';
@@ -19,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, b
 		}
 	};
 
-	return (
+	return ReactDOM.createPortal(
 		<ModalWrapper onClick={handleBackgroundClick}>
 			<ModalContainer $isCloseButtonVisible={isCloseButtonVisible || false}>
 				{isCloseButtonVisible && (
@@ -30,7 +31,8 @@ const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, b
 				<StyledText $textTheme={{ style: 'body2-regular' }}>{content}</StyledText>
 				<ConfirmButton onClick={handleConfirmButtonClick}>{button?.content || '확인'}</ConfirmButton>
 			</ModalContainer>
-		</ModalWrapper>
+		</ModalWrapper>,
+		document.body,
 	);
 };
 
