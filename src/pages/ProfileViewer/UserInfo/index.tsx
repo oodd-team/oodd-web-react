@@ -63,6 +63,46 @@ const UserInfo: React.FC = React.memo(() => {
 		setIsModalOpen(true);
 	};
 
+	const checkPostCount = (): number => {
+		// 자신의 게시물이 있는지 확인하는 함수
+		const userDetails = localStorage.getItem(`userDetails_${my_id}`);
+		if (userDetails) {
+			const parsedDetails = JSON.parse(userDetails);
+			return parsedDetails.postsCount || 0;
+		}
+		return 0;
+	};
+
+	// 친구 요청 sendComment 함수
+	const createMatching = async (message: string) => {
+		const postsCount = checkPostCount();
+		if (postsCount === 0) {
+			setIsBottomSheetOpen(false);
+			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
+			return;
+		}
+		const matchingRequestData = {
+			requesterId: my_id,
+			targetId: userDetails.userId,
+			message: message,
+		};
+
+		try {
+			const response = await createMatchingApi(matchingRequestData);
+
+			handleModalOpen(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
+			console.log(response);
+		} catch (error: any) {
+			console.error('친구 신청 오류:', error);
+			if (error.response?.data?.message === '이미 요청한 관계입니다.') {
+				setFriend(false);
+				handleModalOpen('이미 친구 신청을 보냈습니다!');
+			} else {
+				handleModalOpen('친구 신청에 실패했습니다.\n다시 시도해 주세요.');
+			}
+		}
+	};
+
 	const handleMessageClick = async () => {
 		const user: OtherUserDto = {
 			id: userId,
@@ -94,45 +134,6 @@ const UserInfo: React.FC = React.memo(() => {
 		}
 
 		setOpponentInfo(user);
-	};
-
-	const checkPostCount = (): number => {
-		// 자신의 게시물이 있는지 확인하는 함수
-		const userDetails = localStorage.getItem(`userDetails_${my_id}`);
-		if (userDetails) {
-			const parsedDetails = JSON.parse(userDetails);
-			return parsedDetails.postsCount || 0;
-		}
-		return 0;
-	};
-
-	// 친구 요청 sendComment 함수
-	const createMatching = async (message: string) => {
-		const postsCount = checkPostCount();
-		if (postsCount === 0) {
-			setIsBottomSheetOpen(false);
-			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
-			return;
-		}
-		const matchingRequestData = {
-			requesterId: my_id,
-			targetId: userDetails.userId,
-			message: message,
-		};
-
-		try {
-			await createMatchingApi(matchingRequestData);
-
-			handleModalOpen(`${nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
-		} catch (error: any) {
-			console.error('친구 신청 오류:', error);
-			if (error.response?.data?.message === '이미 요청한 관계입니다.') {
-				setFriend(false);
-				handleModalOpen('이미 친구 신청을 보냈습니다!');
-			} else {
-				handleModalOpen('친구 신청에 실패했습니다.\n다시 시도해 주세요.');
-			}
-		}
 	};
 
 	// CommentBottomSheet에 전달할 Props

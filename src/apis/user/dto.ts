@@ -10,7 +10,7 @@ export interface UserInfoData {
 	profilePictureUrl: string;
 	bio: string;
 	joinedAt?: string; // user 공통 인터페이스에 이 두 개는 안 나와있어서 일단 이것들만 optional 처리했습니다...
-	isFriend?: boolean;
+	isFriend: boolean;
 }
 
 // 사용자 정보 조회 응답

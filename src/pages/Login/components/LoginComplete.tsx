@@ -29,12 +29,12 @@ const LoginComplete: React.FC = () => {
 					const response = await getUserInfoByJwtApi();
 					console.log(response);
 
-					const { nickname, name, id } = response.data;
-					localStorage.setItem('my_id', `${id}`);
+					const { nickname, name, userId } = response.data;
+					localStorage.setItem('my_id', `${userId}`);
 
 					if (nickname && name) {
 						if (nickname && name) {
-							const isAgreed = await checkTermsAgreement(id);
+							const isAgreed = await checkTermsAgreement(userId);
 							navigate(isAgreed ? '/' : '/terms-agreement');
 						}
 					} else {

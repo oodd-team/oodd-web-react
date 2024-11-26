@@ -57,7 +57,7 @@ const ProfileViewer: React.FC = () => {
 			} catch (error) {
 				console.error('사용자 정보 조회 실패:', error);
 				const defaultUserDetails: CombineDataProps = {
-					userId: Number.parseInt(userId as string),
+					userId: userIdAsNumber,
 					nickname: '알 수 없음',
 					bio: '',
 					isFriend: false,
