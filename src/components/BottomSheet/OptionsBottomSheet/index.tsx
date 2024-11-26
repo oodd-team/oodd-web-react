@@ -27,6 +27,8 @@ import {
 import theme from '../../../styles/theme';
 import { postUserBlockApi, postUserReportApi } from '../../../apis/user';
 import { PostUserBlockRequest, PostUserReportRequest } from '../../../apis/user/dto';
+import { sendPostReportApi } from '../../../apis/post-report';
+import { SendPostReportRequest } from '../../../apis/post-report/dto';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
@@ -65,12 +67,26 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 
 	const sendReport = async (reason: string) => {
 		try {
-			const reportData: PostUserReportRequest = {
-				fromUserId: userId,
-				toUserId: targetId,
-				reason: reason,
-			};
-			const response = domain === 'user' ? await postUserReportApi(reportData) : await postUserReportApi(reportData);
+			let reportData: PostUserReportRequest | SendPostReportRequest;
+
+			if (domain === 'user') {
+				reportData = {
+					fromUserId: userId,
+					toUserId: targetId,
+					reason: reason,
+				};
+			} else {
+				reportData = {
+					requesterId: userId,
+					postId: targetId,
+					reason: reason,
+				};
+			}
+
+			const response =
+				domain === 'user'
+					? await postUserReportApi(reportData as PostUserReportRequest)
+					: await sendPostReportApi(reportData as SendPostReportRequest);
 
 			// response.isSuccess
 			if (response.isSuccess) {
