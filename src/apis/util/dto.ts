@@ -18,4 +18,5 @@ export interface PaginationMeta {
 	last_page: number;
 	hasPreviousPage: boolean;
 	hasNextPage: boolean;
+	totalItems: number; // 추가
 }

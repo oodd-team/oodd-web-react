@@ -45,6 +45,8 @@ export interface PostSummary {
 	postLikesCount: number;
 	postCommentsCount: number;
 	isRepresentative: boolean;
+	likes: number; // 추가
+  firstPhoto: string; // 추가
 }
 export interface PostData extends PostBase {
 	postId: number;
