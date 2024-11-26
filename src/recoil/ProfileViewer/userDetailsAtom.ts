@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { UserInfoProps } from '../../pages/ProfileViewer/UserInfoProps';
+import { CombineDataProps } from '../../pages/ProfileViewer/CombineDataProps';
 
-export const UserInfoAtom = atom<UserInfoProps | null>({
+export const UserInfoAtom = atom<CombineDataProps | null>({
 	key: 'UserInfoAtom',
 	default: null,
 });

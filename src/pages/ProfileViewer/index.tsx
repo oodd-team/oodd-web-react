@@ -13,7 +13,7 @@ import OptionsBottomSheet from '../../components/BottomSheet/OptionsBottomSheet'
 
 import theme from '../../styles/theme';
 
-import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom'; // Recoil atom 임포트
+import { UserInfoAtom } from '../../recoil/ProfileViewer/userDetailsAtom';
 
 import { ProfileViewerContainer, CounterContainer, Count, PostListContainer } from './style';
 
@@ -21,66 +21,58 @@ import MoreSvg from '../../assets/default/more.svg';
 import BackSvg from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/default/defaultProfile.svg';
 
-import { UserInfoProps } from './UserInfoProps';
-import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
+import { CombineDataProps } from './CombineDataProps';
 
-import { GetPostListResult } from './ResponseDto/GetPostListResult';
-
-import request from '../../apis/core';
+import { getUserInfoApi } from '../../apis/user';
+import { getPostListApi } from '../../apis/post';
 
 const ProfileViewer: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
-	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
-
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+	const userIdAsNumber = Number(userId);
 	const token = localStorage.getItem('new_jwt_token');
 
-	useEffect(() => {
-		const getUserInfo = async () => {
-			try {
-				// 여기에서 사용자 정보 조회를 해서 사용자 정보를 빼 와서 어디에서든 쓸 수 있게! 전역으로 사용.
-				const response = await request.get<GetUserInfoResult>(`/users/${userId}`);
-				console.log('사용자 정보 조회: ', response);
+	const [userDetails, setUserDetails] = useRecoilState(UserInfoAtom);
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-				// 어차피... 그 사람의 프로필 들어가면 게시글도 보이고, 사용자 정보도 보이니 이걸 동시에 호출해서 useDetails에 저장해서 여기 저기에서 쓸 수 있게 함
-				// -> promise.all 사용하기
-				//그냥 조합해서 쓰게... 흠. 그 사용자의 게시물이니까... 여기에 포스트 개수, 좋아요 개수 등등... 나오니까. 흠.
-				const postsResponse = await request.get<GetPostListResult>(`posts?userId=${userId}`, {});
-				console.log('게시물 리스트 조회:', postsResponse);
+	useEffect(() => {
+		const getUserInfoAndPostList = async () => {
+			try {
+				const [userInfoResponse, postsResponse] = await Promise.all([
+					getUserInfoApi(userIdAsNumber),
+					getPostListApi(1, 10, userIdAsNumber),
+				]);
 				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
-				const combinedData: UserInfoProps = {
-					...response.result,
-					status: storedUserDetails.status || 'blank', // 차단하기/ 해제하기 토글 때문에
-					isFriend: response.result.isFriend,
-					posts: postsResponse.result.posts,
-					likesCount: postsResponse.result.totalLikes,
-					postsCount: postsResponse.result.totalPosts,
-					isInterested: storedUserDetails.isInterested || false, // 삭제 ㄱㄱ
+				const combinedData: CombineDataProps = {
+					...userInfoResponse.data,
+					status: storedUserDetails.status || 'blank', // 차단하기/ 해제하기 토글
+					isFriend: userInfoResponse.data.isFriend,
 					userImg: storedUserDetails.profilePictureUrl,
+
+					posts: postsResponse.data.post,
+					likesCount: postsResponse.data.post.reduce((totalLikes, post) => totalLikes + post.likeCount, 0), // 게시물들의 좋아요 총합
+					postsCount: postsResponse.data.meta.total, // 게시물 총 수
 				};
 
 				setUserDetails(combinedData);
 			} catch (error) {
-				console.error('Failed to fetch user details', error);
-				// ProfileViewer 페이지 처음 들어왔을 때, 사용자 정보 조회를 함. 이때 응답을 얻어오지 못하면 (탈퇴나 미등록 등으로 사용자 정보가 없으면)
-				const defaultUserDetails: UserInfoProps = {
-					id: Number.parseInt(userId as string),
+				console.error('사용자 정보 조회 실패:', error);
+				const defaultUserDetails: CombineDataProps = {
+					userId: Number.parseInt(userId as string),
 					nickname: '알 수 없음',
 					bio: '',
 					isFriend: false,
-					userImg: imageBasic, // 기본 프로필 이미지 경로
-					isInterested: false,
+					userImg: imageBasic, // 기본 프로필 이미지
 					posts: [],
 					likesCount: 0,
 					postsCount: 0,
 					status: 'blank',
 				};
 
-				setUserDetails(defaultUserDetails); // 그 userId에 대한 userDetail 상태에 기본 정보가 저장 됨.
+				setUserDetails(defaultUserDetails);
 			}
 		};
 
-		getUserInfo();
+		getUserInfoAndPostList();
 	}, [userId, token, setUserDetails]);
 
 	useEffect(() => {
@@ -109,28 +101,35 @@ const ProfileViewer: React.FC = () => {
 		setIsBottomSheetOpen(true);
 	};
 
+	const optionsBottomSheetProps = {
+		domain: 'user' as const, // 리터럴 타입으로 지정
+		targetId: userIdAsNumber,
+		targetNickname: userDetails.nickname || '알 수 없음',
+		isBottomSheetOpen: isBottomSheetOpen,
+		onClose: () => setIsBottomSheetOpen(false),
+	};
+
+	const counts = [
+		{ label: 'OODD', value: userDetails.postsCount || 0 },
+		{ label: '좋아요', value: userDetails.likesCount || 0 },
+	];
+
 	return (
 		<OODDFrame>
 			<TopBar RightButtonSrc={MoreSvg} LeftButtonSrc={BackSvg} onRightClick={handleBottomSheetOpen} />
 			<ProfileViewerContainer>
-				<UserInfo isFriend={userDetails.isFriend ?? false} />
+				<UserInfo />
 				<CounterContainer>
-					<Count>
-						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
-							OODD
-						</StyledText>
-						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
-							{userDetails.postsCount || 0}
-						</StyledText>
-					</Count>
-					<Count>
-						<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
-							좋아요
-						</StyledText>
-						<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
-							{userDetails.likesCount || 0}
-						</StyledText>
-					</Count>
+					{counts.map((count, index) => (
+						<Count key={index}>
+							<StyledText $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray3}>
+								{count.label}
+							</StyledText>
+							<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+								{count.value}
+							</StyledText>
+						</Count>
+					))}
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.length > 0 &&
@@ -138,13 +137,7 @@ const ProfileViewer: React.FC = () => {
 					{otherPosts.length > 0 &&
 						otherPosts.map((post) => <PostItem key={post.postId} post={post} isMyPost={false} />)}
 				</PostListContainer>
-				<OptionsBottomSheet
-					domain="user"
-					targetId={Number(userId)}
-					targetNickname={userDetails.nickname || '알 수 없음'}
-					isBottomSheetOpen={isBottomSheetOpen}
-					onClose={() => setIsBottomSheetOpen(false)}
-				/>
+				<OptionsBottomSheet {...optionsBottomSheetProps} />
 			</ProfileViewerContainer>
 		</OODDFrame>
 	);

@@ -1,4 +1,4 @@
-import { PatchUserInfoRequest, PatchUserInfoResponse, PatchUserWithDrawResponse } from './dto';
+import { GetUserInfoResponse, PatchUserInfoRequest, PatchUserInfoResponse, PatchUserWithDrawResponse } from './dto';
 import { newRequest } from '../core';
 import { EmptySuccessResponse } from '../core/dto';
 
@@ -12,3 +12,6 @@ export const patchUserWithdrawApi = (userId: number) =>
 
 // 이용 약관 동의 api
 export const postTermsAgreementApi = (userId: number) => newRequest.post<EmptySuccessResponse>(`/user/${userId}`);
+
+// 유저 정보 조회 api
+export const getUserInfoApi = (userId: number) => newRequest.get<GetUserInfoResponse>(`/user/${userId}`);

@@ -1,41 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserInfoContainer, ButtonContainer, LongButton } from './styles';
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+
 import { useRecoilState } from 'recoil';
+
+import theme from '../../../styles/theme';
+
 import { UserInfoAtom, isFriendAtom } from '../../../recoil/ProfileViewer/userDetailsAtom';
 import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
-import request from '../../../apis/core';
+
 import Modal from '../../../components/Modal';
 import UserProfile from '../../../components/UserProfile';
 import CommentBottomSheet from '../../../components/CommentBottomSheet';
 import { CommentProps } from '../../../components/Comment/dto';
-import { GetUserInfoResult } from '../ResponseDto/GetUserInfoResult';
-import HeartSvg from '../../../../assets/default/like-white.svg';
-import imageBasic from '../../../../assets/default/defaultProfile.svg';
-import { ChatRoomData, OtherUserDto } from '../../../apis/chatting/dto';
+
+import { UserInfoContainer, ButtonContainer, LongButton } from './styles';
+import { StyledText } from '../../../components/Text/StyledText';
+
+import HeartSvg from '../../../assets/default/like-white.svg';
+import imageBasic from '../../../assets/default/defaultProfile.svg';
+
 import { useSocket } from '../../../context/SocketProvider';
+
+import { ChatRoomData, OtherUserDto } from '../../../apis/chatting/dto';
 import { createMatchingApi } from '../../../apis/matching';
 
-interface UserInfoProps {
-	isFriend: boolean;
-}
-
-const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
+const UserInfo: React.FC = React.memo(() => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>();
+
 	const [userDetails] = useRecoilState(UserInfoAtom);
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [friend, setFriend] = useRecoilState(isFriendAtom);
+
+	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+
 	const nav = useNavigate();
 	const socket = useSocket();
 
 	if (!userDetails) return null;
 
-	const { id, nickname, bio, userImg } = userDetails;
+	const { userId, nickname, bio, userImg, isFriend = false } = userDetails;
+
 	const my_id = Number(localStorage.getItem('my_id'));
 	const user_img = userImg || imageBasic;
 	let roomId: number | null = null;
@@ -47,64 +54,46 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	useEffect(() => {
 		if (userDetails) {
 			const updatedUserDetails = { ...userDetails };
-			localStorage.setItem(`userDetails_${userDetails.id}`, JSON.stringify(updatedUserDetails));
+			localStorage.setItem(`userDetails_${userDetails.userId}`, JSON.stringify(updatedUserDetails));
 		}
 	}, [userDetails]);
-
-	const handleBottomSheetOpen = () => {
-		setIsBottomSheetOpen(true);
-	};
-
-	const handleBottomSheetClose = () => {
-		setIsBottomSheetOpen(false);
-	};
 
 	const handleModalOpen = (message: string) => {
 		setModalContent(message);
 		setIsModalOpen(true);
 	};
 
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-	};
-
 	const handleMessageClick = async () => {
-		try {
-			const response = await request.get<GetUserInfoResult>(`/users/${id}`);
-			const user: OtherUserDto = {
-				id: response.result.id,
-				nickname: response.result.nickname,
-				profileUrl: response.result.profilePictureUrl,
-			};
+		const user: OtherUserDto = {
+			id: userId,
+			nickname: nickname,
+			profileUrl: user_img,
+		};
 
-			// 채팅방 리스트 조회
-			const getChatRooms = (data: ChatRoomData[]) => {
-				setChatRoomList(data);
-			};
+		// 채팅방 리스트 조회
+		const getChatRooms = (data: ChatRoomData[]) => {
+			setChatRoomList(data);
+		};
 
-			if (socket) {
-				socket.on('getChatRooms', getChatRooms);
-			}
-
-			if (Array.isArray(chatRoomList)) {
-				chatRoomList.forEach((chatRoom) => {
-					if (chatRoom.otherUser.id === user.id) {
-						roomId = chatRoom.chatRoomId;
-					}
-				});
-			}
-
-			if (roomId !== null) {
-				nav(`/chats/${roomId}`);
-			} else {
-				console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
-			}
-
-			setOpponentInfo(user);
-		} catch (error) {
-			console.error('메세지 보내기 오류:', error);
-			alert('사용자 정보를 불러오지 못했습니다.');
+		if (socket) {
+			socket.on('getChatRooms', getChatRooms);
 		}
+
+		if (Array.isArray(chatRoomList)) {
+			chatRoomList.forEach((chatRoom) => {
+				if (chatRoom.otherUser.id === userId) {
+					roomId = chatRoom.chatRoomId;
+				}
+			});
+		}
+
+		if (roomId !== null) {
+			nav(`/chats/${roomId}`);
+		} else {
+			console.log('이 상대방과 관련된 채팅방이 존재하지 않습니다.');
+		}
+
+		setOpponentInfo(user);
 	};
 
 	const checkPostCount = (): number => {
@@ -117,8 +106,8 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 		return 0;
 	};
 
-	// 친구 요청 관련 sendComment 함수 정의
-	const sendComment = async (message: string) => {
+	// 친구 요청 sendComment 함수
+	const createMatching = async (message: string) => {
 		const postsCount = checkPostCount();
 		if (postsCount === 0) {
 			setIsBottomSheetOpen(false);
@@ -127,7 +116,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 		}
 		const matchingRequestData = {
 			requesterId: my_id,
-			targetId: userDetails.id,
+			targetId: userDetails.userId,
 			message: message,
 		};
 
@@ -149,35 +138,52 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 	// CommentBottomSheet에 전달할 Props
 	const friendRequestCommentProps: CommentProps = {
 		content: `${nickname}님에게 대표 OOTD와 함께 전달될\n 한 줄 메세지를 보내보세요!`,
-		sendComment: sendComment,
+		sendComment: createMatching,
 	};
 
 	return (
 		<UserInfoContainer>
 			<UserProfile userImg={user_img} bio={bio} nickname={nickname} />
 			<ButtonContainer>
-				{friend && (
-					<LongButton onClick={handleMessageClick}>
+				<LongButton
+					onClick={
+						friend
+							? handleMessageClick
+							: () => {
+									setIsBottomSheetOpen(true);
+								}
+					}
+					disabled={nickname === '알 수 없음'}
+				>
+					{friend ? (
 						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
 							메세지 보내기
 						</StyledText>
-					</LongButton>
-				)}
-				{!friend && (
-					<LongButton onClick={handleBottomSheetOpen} disabled={nickname == '알 수 없음'}>
-						<img src={HeartSvg} alt="heart icon" />
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
-							친구 신청
-						</StyledText>
-					</LongButton>
-				)}
+					) : (
+						<>
+							<img src={HeartSvg} alt="heart icon" />
+							<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.white}>
+								친구 신청
+							</StyledText>
+						</>
+					)}
+				</LongButton>
 			</ButtonContainer>
 			<CommentBottomSheet
 				isBottomSheetOpen={isBottomSheetOpen}
 				commentProps={friendRequestCommentProps}
-				handleCloseBottomSheet={handleBottomSheetClose}
+				handleCloseBottomSheet={() => {
+					setIsBottomSheetOpen(false);
+				}}
 			/>
-			{isModalOpen && <Modal content={modalContent} onClose={handleModalClose} />}
+			{isModalOpen && (
+				<Modal
+					content={modalContent}
+					onClose={() => {
+						setIsModalOpen(false);
+					}}
+				/>
+			)}
 		</UserInfoContainer>
 	);
 });

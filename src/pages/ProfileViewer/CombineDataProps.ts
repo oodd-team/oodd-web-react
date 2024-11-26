@@ -1,15 +1,14 @@
-import { Post } from '../../components/PostItem/dto';
+import { PostSummary } from '../../apis/post/dto';
 
-export interface UserInfoProps {
-	id: number;
+export interface CombineDataProps {
+	userId: number;
 	nickname: string;
 	bio: string;
 	userImg?: string;
 	isFriend?: boolean;
-	isInterested?: boolean;
 	commentsCount?: number;
 	postsCount?: number;
 	likesCount?: number;
-	posts?: Post[];
+	posts?: PostSummary[];
 	status: 'blank' | 'unblocked' | 'blocked';
 }
