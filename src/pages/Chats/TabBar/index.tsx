@@ -30,7 +30,7 @@ const TabBar: React.FC = () => {
 	const getMatchingList = async () => {
 		const response = await getMatchingListApi();
 
-		if (response?.isSuccess) {
+		if (response.isSuccess) {
 			setMatchingCount(response.data.matchingCount);
 			setHasMatchingRequest(response.data.isMatching);
 		}
@@ -53,13 +53,13 @@ const TabBar: React.FC = () => {
 	const handleSlideChange = useCallback(
 		(swiper: SwiperCore) => {
 			// 매칭 요청이 없고 1번 index에 있을 때 0번 탭 비활성화
-			if (!hasMatchingRequest && swiper.activeIndex < swiper.previousIndex) {
+			if (!hasMatchingRequest && swiper.activeIndex > swiper.previousIndex) {
 				swiper.allowSlidePrev = false;
+				setActiveIndex(swiper.activeIndex);
 			}
 			// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
 			else {
 				swiper.allowSlidePrev = true;
-				setActiveIndex(swiper.activeIndex);
 			}
 		},
 		[hasMatchingRequest],
