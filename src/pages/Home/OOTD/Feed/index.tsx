@@ -202,7 +202,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			>
 				{feed.content}
 			</FeedText>
-			<FeedImgBox $src={feed.postImages[0].imageurl}>
+			<FeedImgBox $src={feed.postImages[0].url}>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -213,7 +213,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				>
 					{feed.postImages.map((postImage, index) => (
 						<SwiperSlide key={index}>
-							<img src={postImage.imageurl} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
+							<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
 						</SwiperSlide>
 					))}
 				</Swiper>
