@@ -13,8 +13,9 @@ export const SendContainer = styled.div`
 	width: 100%;
 	min-height: 2.5rem;
 	display: flex;
-	border: 1px solid #ffdeed;
+	border: 1px solid #ff2389;
 	border-radius: 0.5rem;
+	align-items: center;
 `;
 
 export const CommentTextarea = styled.textarea`
@@ -34,7 +35,6 @@ export const CommentTextarea = styled.textarea`
 `;
 
 export const SendImg = styled.img`
-	margin: 0 auto;
 	width: 2.5rem;
 	height: 2.5rem;
 	cursor: pointer;
