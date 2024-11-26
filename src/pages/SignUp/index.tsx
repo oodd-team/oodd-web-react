@@ -19,7 +19,7 @@ type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 
 const SignUp: React.FC = () => {
 	const navigate = useNavigate();
 
-	const my_id = Number(localStorage.getItem('my_id'));
+	const my_id = localStorage.getItem('my_id');
 	const token = localStorage.getItem('new_jwt_token');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -116,7 +116,7 @@ const SignUp: React.FC = () => {
 			await patchUserInfo(requestData, my_id);
 		}
 	};
-	const patchUserInfo = async (requestData: any, id: number) => {
+	const patchUserInfo = async (requestData: any, id: string) => {
 		try {
 			const response = await patchUserInfoApi(requestData, id);
 			console.log('수정 성공:', response.data);
