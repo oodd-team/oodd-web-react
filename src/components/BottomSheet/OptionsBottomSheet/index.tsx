@@ -27,6 +27,8 @@ import {
 import theme from '../../../styles/theme';
 import { postUserBlockApi, postUserReportApi } from '../../../apis/user';
 import { PostUserBlockRequest, PostUserReportRequest } from '../../../apis/user/dto';
+import { sendPostReportApi } from '../../../apis/post-report';
+import { SendPostReportRequest } from '../../../apis/post-report/dto';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
@@ -39,14 +41,14 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = Number(storageValue);
 
 	const sendBlock = async () => {
 		try {
 			const blockRequest: PostUserBlockRequest = {
 				fromUserId: userId,
-				toUserId: targetId,
+				toUserId: targetId.userId || -1,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(blockRequest);
@@ -65,12 +67,26 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 
 	const sendReport = async (reason: string) => {
 		try {
-			const reportData: PostUserReportRequest = {
-				fromUserId: userId,
-				toUserId: targetId,
-				reason: reason,
-			};
-			const response = domain === 'user' ? await postUserReportApi(reportData) : await postUserReportApi(reportData);
+			let reportData: PostUserReportRequest | SendPostReportRequest;
+
+			if (domain === 'user') {
+				reportData = {
+					fromUserId: userId,
+					toUserId: targetId.userId || -1,
+					reason: reason,
+				};
+			} else {
+				reportData = {
+					requesterId: userId,
+					postId: targetId.postId || -1,
+					reason: reason,
+				};
+			}
+
+			const response =
+				domain === 'user'
+					? await postUserReportApi(reportData as PostUserReportRequest)
+					: await sendPostReportApi(reportData as SendPostReportRequest);
 
 			// response.isSuccess
 			if (response.isSuccess) {
