@@ -133,7 +133,10 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	// 게시글 옵션(더보기) 바텀시트
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
-		targetId: feed.user.userId || -1,
+		targetId: {
+			userId: feed.user.userId || -1,
+			postId: feed.postId || -1,
+		},
 		targetNickname: feed.user.nickname || '알수없음',
 		isBottomSheetOpen: isOptionsBottomSheetOpen,
 		onClose: () => {

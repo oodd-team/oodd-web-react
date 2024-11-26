@@ -48,7 +48,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 		try {
 			const blockRequest: PostUserBlockRequest = {
 				fromUserId: userId,
-				toUserId: targetId,
+				toUserId: targetId.userId || -1,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(blockRequest);
@@ -72,13 +72,13 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 			if (domain === 'user') {
 				reportData = {
 					fromUserId: userId,
-					toUserId: targetId,
+					toUserId: targetId.userId || -1,
 					reason: reason,
 				};
 			} else {
 				reportData = {
 					requesterId: userId,
-					postId: targetId,
+					postId: targetId.postId || -1,
 					reason: reason,
 				};
 			}
