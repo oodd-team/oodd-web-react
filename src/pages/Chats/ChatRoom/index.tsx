@@ -42,7 +42,7 @@ const ChatRoom: React.FC = () => {
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const messageLengthRef = useRef(0);
 
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = storageValue ? Number(storageValue) : -1;
 	const { chatRoomId } = useParams();
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);

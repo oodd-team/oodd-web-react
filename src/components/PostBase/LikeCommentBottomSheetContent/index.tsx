@@ -127,7 +127,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	const handleUserClick = (userId: number) => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = localStorage.getItem('id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+		const myUserId = localStorage.getItem('my_id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
 
 		if (String(myUserId) === String(userId)) {
 			// 나인 경우

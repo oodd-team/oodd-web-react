@@ -39,7 +39,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = Number(storageValue);
 
 	const sendBlock = async () => {
