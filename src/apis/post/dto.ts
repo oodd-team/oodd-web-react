@@ -65,7 +65,7 @@ export interface User {
 	profilePictureUrl: string;
 }
 export interface PostImage {
-	url: string;
+	imageUrl: string;
 	orderNum: number;
 }
 export interface PostClothing {

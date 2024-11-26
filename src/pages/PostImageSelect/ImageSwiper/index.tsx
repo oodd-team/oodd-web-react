@@ -40,9 +40,9 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 				{images.map((image, index) => (
 					<SwiperSlide key={index} className={currentSlide === index ? 'main-slide' : ''}>
 						<ImageWrapper>
-							<img src={image.url} alt={`Selected ${index}`} />
+							<img src={image.imageUrl} alt={`Selected ${index}`} />
 							{images.length > 1 && (
-								<RemoveButton onClick={() => onRemoveImage(image.url)}>
+								<RemoveButton onClick={() => onRemoveImage(image.imageUrl)}>
 									<img src={Reject} alt="remove" />
 								</RemoveButton>
 							)}
