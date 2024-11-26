@@ -57,8 +57,6 @@ export const ArrowButton = styled.button`
 export const OOTDImgBox = styled.div`
 	position: relative;
 	width: 100%;
-	min-height: 30rem;
-	max-height: 33.438rem;
 	bottom: 0;
 	border-radius: 0 0 0.5rem 0.5rem;
 	background-color: #d9d9d9;
@@ -66,6 +64,7 @@ export const OOTDImgBox = styled.div`
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
+	aspect-ratio: 4/5;
 
 	.slide-image-small {
 		width: 100%;
@@ -104,6 +103,7 @@ export const Reaction = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.9375rem;
+	z-index: 100;
 `;
 
 export const Btn = styled.button`
