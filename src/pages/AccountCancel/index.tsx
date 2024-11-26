@@ -26,7 +26,7 @@ const AccountCancel: React.FC = () => {
 				return;
 			}
 
-			const storedUserId = localStorage.getItem('my_id');
+			const storedUserId = Number(localStorage.getItem('my_id'));
 			const token = localStorage.getItem('jwt_token');
 
 			if (!storedUserId || !token) {
