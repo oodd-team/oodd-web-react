@@ -8,4 +8,5 @@ export interface MenuButtonProps {
 export interface MenuButtonListProps {
 	items: MenuButtonProps[];
 	isVisible: boolean;
+	onClose: () => void;
 }

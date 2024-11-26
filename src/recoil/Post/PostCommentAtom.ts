@@ -6,6 +6,6 @@ export const IsCommentDeleteConfirmationModalOpenAtom = atom<boolean>({
 });
 
 export const IsCommentReportModalOpenAtom = atom<boolean>({
-	key: 'IsBlockSuccessModalOpenAtom',
+	key: 'IsCommentReportModalOpenAtom',
 	default: false,
 });

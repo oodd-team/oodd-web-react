@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
 import { IsBlockConfirmationModalOpenAtom, UserBlockAtom } from '../../../../recoil/Home/BlockBottomSheetAtom';
 import {
 	IsCommentDeleteConfirmationModalOpenAtom,
 	IsCommentReportModalOpenAtom,
 } from '../../../../recoil/Post/PostCommentAtom';
 
-import { BigUserProfile, CommentItem as StyledCommentItem, CommentContent, MenuBtn } from './styles';
+import theme from '../../../../styles/theme';
+import {
+	StyledBigUserProfile,
+	CommentItem as StyledCommentItem,
+	CommentContent,
+	RightContainer,
+	MenuBtn,
+} from './styles';
 
 import { StyledText } from '../../../Text/StyledText';
-import MenuButtonList from '../MenuButtonList';
+import MenuButtonList from '../../MenuButtonList';
 import Modal from '../../../Modal';
 
 import { ModalProps } from '../../../Modal/dto';
@@ -26,27 +36,38 @@ import { deleteCommentApi } from '../../../../apis/post-comment';
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, getPostCommentList }) => {
 	const [showCommentMenuId, setShowCommentMenuId] = useState<number | null>(null);
-	const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null); // 메뉴 표시할 댓글 ID
 	const [isCommentDeleteConfirmationModalOpen, setIsCommentDeleteConfirmationModalOpen] = useRecoilState(
 		IsCommentDeleteConfirmationModalOpenAtom,
 	);
 	const [, setIsCommentReportModalOpen] = useRecoilState(IsCommentReportModalOpenAtom);
 	const [, setUserBlockAtom] = useRecoilState(UserBlockAtom);
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
+	const [timeAgo, setTimeAgo] = useState<string | null>();
+
+	const [isMenuVisible, setIsMenuVisible] = useState(false);
+	const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
 	useEffect(() => {
-		console.log(comment);
+		// 메뉴 위치 초기화
+		setMenuPosition({ top: 0, left: 0 });
+	}, [isMenuVisible]);
+
+	const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+		const rect = event.currentTarget.getBoundingClientRect();
+		setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
+		setIsMenuVisible((prev) => !prev);
+	};
+
+	useEffect(() => {
+		setTimeAgo(dayjs(comment.createdAt).locale('ko').fromNow());
 	}, [comment]);
 
 	// 댓글 삭제
 	const deleteComment = async () => {
-		if (!deleteCommentId) return;
-
 		try {
-			await deleteCommentApi(deleteCommentId); // 댓글 삭제 API 호출
-			setDeleteCommentId(null); // 삭제 ID 초기화
+			await deleteCommentApi(comment.id); // 댓글 삭제 API 호출
 			setIsCommentDeleteConfirmationModalOpen(false); // 모달 닫기
-			await getPostCommentList(); // 댓글 목록 갱신
+			getPostCommentList(); // 댓글 목록 갱신
 		} catch (error) {
 			console.error('댓글 삭제 중 에러 발생:', error);
 		}
@@ -64,9 +85,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 
 	// 댓글 메뉴 클릭한 경우
 	const handleCommentMenuClick = (commentId: number) => {
-		console.log('메뉴 클릭');
 		if (!commentId) return;
-		console.log('메뉴 클릭!!!');
 		setShowCommentMenuId((prevId) => (prevId === commentId ? null : commentId));
 	};
 
@@ -76,7 +95,6 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 					{
 						text: '삭제',
 						action: () => {
-							setDeleteCommentId(comment.id);
 							setIsCommentDeleteConfirmationModalOpen(true);
 						},
 						icon: Delete,
@@ -117,25 +135,33 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 
 	return (
 		<StyledCommentItem key={comment.id}>
-			<BigUserProfile>
+			<StyledBigUserProfile>
 				<img
 					src={comment.user.profilePictureUrl}
 					onClick={() => handleUserClick(comment.user.userId)}
 					alt="user avatar"
 				/>
-			</BigUserProfile>
+			</StyledBigUserProfile>
 			<CommentContent>
 				<StyledText onClick={() => handleUserClick(comment.user.userId)} $textTheme={{ style: 'body2-medium' }}>
 					{comment.user.nickname}
 				</StyledText>
 				<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
 			</CommentContent>
-			<MenuBtn onClick={() => handleCommentMenuClick(comment.id)}>
-				<img src={More} alt="more" />
-			</MenuBtn>
-
+			<RightContainer>
+				<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
+					{timeAgo}
+				</StyledText>
+				<MenuBtn onClick={() => handleCommentMenuClick(comment.id)}>
+					<img src={More} alt="more" />
+				</MenuBtn>
+			</RightContainer>
 			{showCommentMenuId === comment.id && (
-				<MenuButtonList items={menuItems} isVisible={showCommentMenuId === comment.id} />
+				<MenuButtonList
+					items={menuItems}
+					isVisible={showCommentMenuId === comment.id}
+					onClose={() => setIsMenuVisible(false)}
+				/>
 			)}
 			{isCommentDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
 		</StyledCommentItem>

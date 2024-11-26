@@ -8,18 +8,34 @@ export const CommentItem = styled.div`
 	width: 100%;
 `;
 
-export { BigUserProfile };
+export const StyledBigUserProfile = styled(BigUserProfile)`
+	width: 52px;
+	height: 52px;
+	margin-bottom: auto;
+`;
 
 export const CommentContent = styled.div`
 	margin-left: 8px;
 	display: flex;
 	flex-direction: column;
+	max-width: calc(100% - 60px);
+`;
+
+export const RightContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: auto;
+	flex-direction: row;
+	position: absolute;
+	top: 0;
+	right: 0;
 `;
 
 export const MenuBtn = styled.button`
 	width: 18px;
 	height: 18px;
-	margin-left: auto;
+	margin-left: 8px;
 
 	img {
 		width: 100%;

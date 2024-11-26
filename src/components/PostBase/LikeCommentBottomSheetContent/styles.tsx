@@ -7,7 +7,7 @@ export const TabContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 `;
-export const Tab = styled.div<{ active: boolean }>`
+export const Tab = styled.div<{ $active: boolean }>`
 	flex: 1;
 	text-align: center;
 	padding: 16px 0;
@@ -22,24 +22,27 @@ export const Tab = styled.div<{ active: boolean }>`
 		left: 0;
 		width: 100%;
 		height: 2px; /* 하단 경계선 두께 */
-		background: ${(props) => (props.active ? theme.colors.gradient : 'none')};
+		background: ${(props) => (props.$active ? theme.colors.gradient : 'none')};
 	}
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<{ $isCommentTab: boolean }>`
 	padding: 16px 0;
 	min-height: 350px;
 	max-height: 750px;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: 1fr;
 	gap: 16px;
 	align-items: start;
 	overflow-y: auto;
 
-	scrollbar-width: none; // Firefox
-	-ms-overflow-style: none; // IE 10+
+	/* Comment 탭일 때만 padding-bottom 추가 */
+	padding-bottom: ${(props) => (props.$isCommentTab ? '100px' : '0')};
+
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 	&::-webkit-scrollbar {
-		display: none; // Safari & Chrome
+		display: none;
 	}
 `;
 
@@ -74,6 +77,7 @@ export const InputLayout = styled.div`
 	align-items: center;
 	gap: 10px;
 	background-color: white;
+	border-top: 1px solid ${({ theme }) => theme.colors.gray1};
 
 	textarea {
 		flex: 1;
