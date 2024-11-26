@@ -29,18 +29,17 @@ import defaultProfile from '../../../../assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
 import { OptionsBottomSheetProps } from '../../../../components/BottomSheet/OptionsBottomSheet/dto';
 import OptionsBottomSheet from '../../../../components/BottomSheet/OptionsBottomSheet';
-import ApiModal from '../../../../components/Modal/ApiModal';
 import CommentBottomSheet from '../../../../components/CommentBottomSheet';
 import Modal from '../../../../components/Modal';
 import { CreateMatchingRequest } from '../../../../apis/matching/dto';
 import { createMatchingApi } from '../../../../apis/matching';
 import { handleError } from '../../../../apis/util/handleError';
-import { ApiModalProps } from '../../../../components/Modal/ApiModal/dto';
 import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
 import { ModalProps } from '../../../../components/Modal/dto';
-import { postUserBlockApi } from '../../../../apis/user-block';
-import { EmptySuccessResponse } from '../../../../apis/core/dto';
+
 import { togglePostLikeStatusApi } from '../../../../apis/post-like';
+import { postUserBlockApi } from '../../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
 
 interface FeedProps {
 	feed: PostSummary;
@@ -50,12 +49,12 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const nav = useNavigate();
 	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
-	const [isBlockApiModalOpen, setIsBlockApiModalOpen] = useState(false);
+	const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
 	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(false);
 	const [isMatchingCommentBottomSheetOpen, setIsMatchingCommentBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
-	const userId = localStorage.getItem('id');
+	const userId = localStorage.getItem('my_id');
 
 	// 게시글 좋아요 & 좋아요 취소 api
 	const togglePostLikeStatus = async () => {
@@ -68,6 +67,28 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		} catch (error) {
 			const errorMessage = handleError(error, 'post');
 			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
+		}
+	};
+
+	// 유저 차단 api
+	const postUserBlock = async () => {
+		try {
+			const data: PostUserBlockRequest = {
+				fromUserId: Number(userId) || -1,
+				toUserId: feed.user.userId,
+				action: 'block',
+			};
+			const response = await postUserBlockApi(data);
+
+			if (response.isSuccess) {
+				setModalContent('정상적으로 처리되었습니다.');
+			}
+		} catch (error) {
+			const errorMessage = handleError(error);
+			setModalContent(errorMessage);
+		} finally {
+			setIsBlockModalOpen(false);
 			setIsStatusModalOpen(true);
 		}
 	};
@@ -99,7 +120,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	};
 
 	const handleRejectButtonClick = () => {
-		setIsBlockApiModalOpen(true);
+		setIsBlockModalOpen(true);
 	};
 
 	const handleLikeButtonClick = () => {
@@ -113,7 +134,10 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	// 게시글 옵션(더보기) 바텀시트
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
-		targetId: feed.user.userId || -1,
+		targetId: {
+			userId: feed.user.userId || -1,
+			postId: feed.postId || -1,
+		},
 		targetNickname: feed.user.nickname || '알수없음',
 		isBottomSheetOpen: isOptionsBottomSheetOpen,
 		onClose: () => {
@@ -122,13 +146,15 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	};
 
 	// 차단하기 모달
-	const blockApiModalProps: ApiModalProps<EmptySuccessResponse> = {
-		response: postUserBlockApi({ fromUserId: Number(userId), toUserId: feed.user.userId, action: 'block' }),
+	const blockModalProps: ModalProps = {
+		isCloseButtonVisible: true,
 		content: `${feed.user.nickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
-		buttonContent: '차단하기',
-		successContent: '정상적으로 처리되었습니다.',
-		handleCloseModal: () => {
-			setIsBlockApiModalOpen(false);
+		button: {
+			content: '차단하기',
+			onClick: postUserBlock,
+		},
+		onClose: () => {
+			setIsBlockModalOpen(false);
 		},
 	};
 
@@ -155,7 +181,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	return (
 		<FeedWrapper>
 			<OptionsBottomSheet {...optionsBottomSheetProps} />
-			{isBlockApiModalOpen && <ApiModal {...blockApiModalProps} />}
+			{isBlockModalOpen && <Modal {...blockModalProps} />}
 			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 

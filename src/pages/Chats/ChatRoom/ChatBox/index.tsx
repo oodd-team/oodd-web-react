@@ -7,7 +7,7 @@ import { useSocket } from '../../../../context/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = storageValue ? Number(storageValue) : -1;
 	const { chatRoomId } = useParams();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);

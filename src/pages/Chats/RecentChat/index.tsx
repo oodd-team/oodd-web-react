@@ -14,7 +14,7 @@ interface RecentChatProps {
 
 const RecentChat: React.FC<RecentChatProps> = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = Number(storageValue);
 	const [isLoading, setIsLoading] = useState(true);
 	const socket = useSocket();

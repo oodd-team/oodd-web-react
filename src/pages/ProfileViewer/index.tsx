@@ -25,6 +25,7 @@ import { CombineDataProps } from './CombineDataProps';
 
 import { getUserInfoApi } from '../../apis/user';
 import { getPostListApi } from '../../apis/post';
+import { OptionsBottomSheetProps } from '../../components/BottomSheet/OptionsBottomSheet/dto';
 
 const ProfileViewer: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
@@ -101,9 +102,11 @@ const ProfileViewer: React.FC = () => {
 		setIsBottomSheetOpen(true);
 	};
 
-	const optionsBottomSheetProps = {
+	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'user' as const, // 리터럴 타입으로 지정
-		targetId: userIdAsNumber,
+		targetId: {
+			userId: userIdAsNumber || -1,
+		},
 		targetNickname: userDetails.nickname || '알 수 없음',
 		isBottomSheetOpen: isBottomSheetOpen,
 		onClose: () => setIsBottomSheetOpen(false),
