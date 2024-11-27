@@ -41,9 +41,15 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	// 매칭 거절 및 수락 api
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
 		try {
+			console.log(matching);
 			const response = await modifyMatchingStatusApi(matching.matchingId, { requestStatus: status });
+
 			if (response.isSuccess) {
 				removeRejectedMatching(); // 매칭 리스트에서 해당 매칭을 제거
+
+				if (status === 'accept') {
+					nav(`/chats/${response.data.chatRoomId}`);
+				}
 			}
 		} catch (error) {
 			const errorMessage = handleError(error);
