@@ -16,7 +16,7 @@ export const IsBlockFailModalOpenAtom = atom<boolean>({
 	default: false,
 });
 
-export const PostBlockAtom = atom<BlockInfoDto | null>({
-	key: 'PostBlockAtom',
+export const UserBlockAtom = atom<BlockInfoDto | null>({
+	key: 'UserBlockAtom',
 	default: null,
 });

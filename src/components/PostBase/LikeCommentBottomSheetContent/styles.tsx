@@ -7,7 +7,7 @@ export const TabContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 `;
-export const Tab = styled.div<{ active: boolean }>`
+export const Tab = styled.div<{ $active: boolean }>`
 	flex: 1;
 	text-align: center;
 	padding: 16px 0;
@@ -22,24 +22,27 @@ export const Tab = styled.div<{ active: boolean }>`
 		left: 0;
 		width: 100%;
 		height: 2px; /* 하단 경계선 두께 */
-		background: ${(props) => (props.active ? theme.colors.gradient : 'none')};
+		background: ${(props) => (props.$active ? theme.colors.gradient : 'none')};
 	}
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<{ $isCommentTab: boolean }>`
 	padding: 16px 0;
 	min-height: 350px;
 	max-height: 750px;
-	display: grid;
-	grid-template-columns: 1fr;
+	display: flex;
 	gap: 16px;
 	flex-direction: column;
 	align-items: start;
 	overflow-y: auto;
-	scrollbar-width: none; // Firefox
-	-ms-overflow-style: none; // IE 10+
+
+	/* Comment 탭일 때만 padding-bottom 추가 */
+	padding-bottom: ${(props) => (props.$isCommentTab ? '100px' : '0')};
+
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 	&::-webkit-scrollbar {
-		display: none; // Safari & Chrome
+		display: none;
 	}
 `;
 
@@ -53,7 +56,7 @@ export const BigUserProfile = styled(UserProfile)`
 	height: 52px;
 `;
 
-export const UserItem = styled.div`
+export const LikeItem = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -61,47 +64,6 @@ export const UserItem = styled.div`
 	.name {
 		margin-left: 8px;
 	}
-`;
-
-export const CommentItem = styled.div`
-	position: relative;
-	display: flex;
-	align-items: center;
-	width: 100%;
-
-	&:last-child {
-		margin-bottom: 110px;
-	}
-`;
-
-export const CommentContent = styled.div`
-	margin-left: 8px;
-	display: flex;
-	flex-direction: column;
-`;
-
-export const MenuBtn = styled.button`
-	width: 18px;
-	height: 18px;
-	margin-left: auto;
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-`;
-
-export const CommentDeleteButton = styled.button`
-	background: red;
-	color: white;
-	position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 50px;
-	text-align: center;
-	border: none;
-	cursor: pointer;
 `;
 
 export const InputLayout = styled.div`
@@ -115,6 +77,7 @@ export const InputLayout = styled.div`
 	align-items: center;
 	gap: 10px;
 	background-color: white;
+	border-top: 1px solid ${({ theme }) => theme.colors.gray1};
 
 	textarea {
 		flex: 1;
@@ -135,6 +98,12 @@ export const InputLayout = styled.div`
 		background-color: #f8f8f8;
 		resize: none;
 		overflow-y: auto;
+
+		scrollbar-width: none; // Firefox
+		-ms-overflow-style: none; // IE 10+
+		&::-webkit-scrollbar {
+			display: none; // Safari & Chrome
+		}
 	}
 
 	button {

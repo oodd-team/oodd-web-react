@@ -19,6 +19,7 @@ import ImageSwiper from './ImageSwiper';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 
 import {
+	PostLayout,
 	PostContainer,
 	PostInfoContainer,
 	UserProfile,
@@ -31,6 +32,7 @@ import {
 	ImageSkeleton,
 	IconRow,
 	IconWrapper,
+	Icon,
 	ClothingInfoList,
 } from './styles';
 
@@ -108,8 +110,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 		componentProps: {
 			tab: activeTab,
-			likeCount: post?.likeCount,
-			commentCount: post?.commentCount,
+			likeCount: post?.postLikesCount,
+			commentCount: post?.postCommentsCount,
 		},
 	};
 
@@ -121,15 +123,15 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		setPost({
 			...post,
 			isPostLike: !post.isPostLike,
-			likeCount: post.isPostLike ? post.likeCount - 1 : post.likeCount + 1,
+			postLikesCount: post.isPostLike ? post.postLikesCount - 1 : post.postLikesCount + 1,
 		}); //사용자가 좋아요를 누르면 먼저 클라이언트에서 post 상태를 변경(낙관적 업데이트)
 
 		try {
 			const response = await togglePostLikeStatusApi(Number(postId));
 			setPost({
 				...post,
-				isPostLike: response.data.post.isPostLike,
-				likeCount: response.data.post.likeCount,
+				isPostLike: response.data.isPostLike,
+				postLikesCount: response.data.postLikesCount,
 			}); // 서버로 요청 후 성공하면 그대로 유지
 		} catch (error) {
 			console.error('Error toggling like status:', error);
@@ -141,65 +143,71 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		<OODDFrame>
 			<TopBar LeftButtonSrc={Left} />
 
-			<PostContainer>
-				<PostInfoContainer>
-					<UserProfile onClick={handleUserClick}>
-						{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
-					</UserProfile>
-					<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
-						{userName}
-					</UserName>
-					<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
-						{timeAgo}
-					</StyledText>
-					<MenuBtn onClick={onClickMenu}>
-						<img src={More} alt="more" />
-					</MenuBtn>
-				</PostInfoContainer>
+			<PostLayout>
+				<PostContainer>
+					<PostInfoContainer>
+						<UserProfile onClick={handleUserClick}>
+							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
+						</UserProfile>
+						<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+							{userName}
+						</UserName>
+						<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
+							{timeAgo}
+						</StyledText>
+						<MenuBtn onClick={onClickMenu}>
+							<img src={More} alt="more" />
+						</MenuBtn>
+					</PostInfoContainer>
 
-				<PostContentContainer>
-					{!post ? (
-						<ContentSkeleton />
-					) : (
-						<>
-							<Content
-								onClick={toggleTextDisplay}
-								$showFullText={showFullText}
-								$textTheme={{ style: 'body4-light' }}
-								color={theme.colors.black}
-							>
-								{post.content}
-							</Content>
-							<ShowMoreButton
-								onClick={toggleTextDisplay}
-								$textTheme={{ style: 'body4-light' }}
-								color={theme.colors.gray3}
-							>
-								{showFullText ? '간략히 보기' : '더 보기'}
-							</ShowMoreButton>
-						</>
-					)}
-				</PostContentContainer>
+					<PostContentContainer>
+						{!post ? (
+							<ContentSkeleton />
+						) : (
+							<>
+								<Content
+									onClick={toggleTextDisplay}
+									$showFullText={showFullText}
+									$textTheme={{ style: 'body4-light' }}
+									color={theme.colors.black}
+								>
+									{post.content}
+								</Content>
+								<ShowMoreButton
+									onClick={toggleTextDisplay}
+									$textTheme={{ style: 'body4-light' }}
+									color={theme.colors.gray3}
+								>
+									{showFullText ? '간략히 보기' : '더 보기'}
+								</ShowMoreButton>
+							</>
+						)}
+					</PostContentContainer>
 
-				{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.imageUrl)} />}
+					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.imageUrl)} />}
 
-				<IconRow>
-					<IconWrapper onClick={togglePostLikeStatus}>
-						{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
-						<span onClick={() => handleLikeCommentOpen('likes')}>{post?.likeCount ?? 0}</span>
-					</IconWrapper>
-					<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
-						<img src={Message} alt="message" />
-						<span>{post?.commentCount ?? 0}</span>
-					</IconWrapper>
-				</IconRow>
+					<IconRow>
+						<IconWrapper>
+							<Icon onClick={togglePostLikeStatus}>
+								{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
+							</Icon>
+							<span onClick={() => handleLikeCommentOpen('likes')}>{post?.postLikesCount ?? 0}</span>
+						</IconWrapper>
+						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
+							<Icon>
+								<img src={Message} alt="message" />
+							</Icon>
+							<span>{post?.postCommentsCount ?? 0}</span>
+						</IconWrapper>
+					</IconRow>
 
-				<ClothingInfoList className="post-mode">
-					{post?.postClothings?.map((clothingObj, index) => (
-						<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
-					))}
-				</ClothingInfoList>
-			</PostContainer>
+					<ClothingInfoList className="post-mode">
+						{post?.postClothings?.map((clothingObj, index) => (
+							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
+						))}
+					</ClothingInfoList>
+				</PostContainer>
+			</PostLayout>
 
 			<NavBar />
 			<BottomSheet {...likeCommentbottomSheetProps} />

@@ -8,6 +8,7 @@ export type CreatePostRequest = PostBase;
 export type CreatePostResponse = BaseSuccessResponse<CreatePostData>;
 // 게시글 리스트 조회
 export type GetPostListResponse = BaseSuccessResponse<GetPostListData>;
+export type GetUserPostListResponse = BaseSuccessResponse<GetUserPostListData>;
 // 게시글 상세 조회
 export type GetPostDetailResponse = BaseSuccessResponse<GetPostDetailData>;
 // 게시글 수정
@@ -28,34 +29,45 @@ export interface PostBase {
 	isRepresentative: boolean;
 }
 export interface CreatePostData extends PostBase {}
+export interface PostSummary {
+	postId: number;
+	content: string;
+	postImages: PostImage[];
+	createdAt: Date;
+	isPostLike: boolean;
+	user: User;
+}
 export interface GetPostListData {
 	post: PostSummary[];
 	meta: PaginationMeta;
 }
-export interface GetPostDetailData extends PostDetailData {}
-export interface ModifyPostData extends PostData {}
-export interface PostSummary {
-	content: string;
-	postImages: PostImage[];
+export interface UserPostSummary {
+	userId: number;
 	postId: number;
 	createdAt: Date;
+	imageUrl: string;
+	postLikesCount: number;
+	postCommentsCount?: number;
 	isPostLike: boolean;
-	user: User;
-	likeCount: number;
-	commentCount: number;
+	isPostComment?: boolean;
 	isRepresentative: boolean;
-	likes: number; // 추가
-  firstPhoto: string; // 추가
 }
-export interface PostData extends PostBase {
+export interface GetUserPostListData {
+	post: UserPostSummary[];
+	totalPostsCount: number;
+	totalPostLikesCount: number;
+	totalPostCommentsCount?: number;
+	meta: PaginationMeta;
+}
+export interface ModifyPostData extends PostBase {
 	postId: number;
 	userId: number;
 }
-export interface PostDetailData extends PostBase {
+export interface GetPostDetailData extends PostBase {
 	createdAt: string;
 	user: User;
-	commentCount: number;
-	likeCount: number;
+	postCommentsCount: number;
+	postLikesCount: number;
 	isPostLike: boolean;
 	isPostWriter: boolean;
 }
