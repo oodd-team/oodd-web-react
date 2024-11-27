@@ -30,9 +30,9 @@ export const ContentContainer = styled.div<{ $isCommentTab: boolean }>`
 	padding: 16px 0;
 	min-height: 350px;
 	max-height: 750px;
-	display: grid;
-	grid-template-columns: 1fr;
+	display: flex;
 	gap: 16px;
+	flex-direction: column;
 	align-items: start;
 	overflow-y: auto;
 

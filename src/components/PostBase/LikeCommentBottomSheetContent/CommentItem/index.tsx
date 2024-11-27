@@ -20,7 +20,7 @@ import {
 } from './styles';
 
 import { StyledText } from '../../../Text/StyledText';
-import MenuButtonList from '../../MenuButtonList';
+import MenuButtonList from '../MenuButtonList';
 import Modal from '../../../Modal';
 
 import { ModalProps } from '../../../Modal/dto';

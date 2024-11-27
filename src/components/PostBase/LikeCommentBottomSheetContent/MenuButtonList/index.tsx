@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { MenuButtonListProps } from './dto';
 import { MenuListWrapper, MenuListContainer, MenuButtonItem } from './styles';
-import { StyledText } from '../../Text/StyledText';
+import { StyledText } from '../../../Text/StyledText';
 
 const MenuButtonList: React.FC<MenuButtonListProps> = ({ items, isVisible, onClose }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
