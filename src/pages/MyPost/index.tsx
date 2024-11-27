@@ -16,11 +16,14 @@ import Delete from '../../assets/default/delete.svg';
 
 import request from '../../apis/core';
 import { BaseApiResponse } from '../../apis/util/dto';
+import { modifyPostRepresentativeStatusApi, modifyPostApi, deletePostApi } from '../../apis/post';
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
+	const [isPinPostResultModalOpen, setIsPinPostResultModalOpen] = useState(false);
+	const [pinPostResultlModalContent, setPinPostResultlModalContent] = useState('');
 	const navigate = useNavigate();
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -29,7 +32,7 @@ const MyPost: React.FC = () => {
 				text: '대표 OOTD로 지정하기',
 				action: () => {
 					setIsMenuBottomSheetOpen(false);
-					handlePostPin();
+					modifyPostRepresentativeStatus();
 				},
 				icon: Pin,
 			},
@@ -68,32 +71,20 @@ const MyPost: React.FC = () => {
 		navigate('/upload', { state: { mode: 'edit', postId: postId } });
 	};
 
-	const handlePostPin = async () => {
-		// localStorage에서 storedUserId를 가져옴
-		const storedUserId = localStorage.getItem('id');
-
-		if (!storedUserId) {
-			console.error('User ID not found');
-			return;
-		}
-
+	const modifyPostRepresentativeStatus = async () => {
 		try {
-			const response = await request.patch<BaseApiResponse>(`/posts/${postId}/isRepresentative/${storedUserId}`, {
-				isRepresentative: true,
-			});
+			const response = await modifyPostRepresentativeStatusApi(Number(postId));
 
 			if (response.isSuccess) {
-				console.log('Post pinned successfully:', response.result);
-				// PostDetail 재로드
-				//fetchPostDetail();
-				navigate('/mypage');
+				setPinPostResultlModalContent('대표 게시물 지정에 성공했어요');
+				//navigate('/mypage');
 			} else {
-				console.error('Failed to pin post:', response.message);
+				setPinPostResultlModalContent(`대표 게시물 지정에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error pinning post:', error);
 		} finally {
-			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
+			setIsPinPostResultModalOpen(true);
 		}
 	};
 
@@ -123,6 +114,11 @@ const MyPost: React.FC = () => {
 		},
 	};
 
+	const pinPostResultModalProps: ModalProps = {
+		onClose: () => setIsPinPostResultModalOpen(false),
+		content: pinPostResultlModalContent,
+	};
+
 	return (
 		<>
 			<PostBase onClickMenu={handleMenuOpen} />
@@ -130,6 +126,7 @@ const MyPost: React.FC = () => {
 			<BottomSheet {...menuBottomSheetProps} />
 
 			{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
+			{isPinPostResultModalOpen && <Modal {...pinPostResultModalProps} />}
 		</>
 	);
 };
