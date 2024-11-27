@@ -14,15 +14,13 @@ import Edit from '../../assets/default/edit.svg';
 import Pin from '../../assets/default/pin.svg';
 import Delete from '../../assets/default/delete.svg';
 
-import request from '../../apis/core';
-import { BaseApiResponse } from '../../apis/util/dto';
-import { modifyPostRepresentativeStatusApi, modifyPostApi, deletePostApi } from '../../apis/post';
+import { modifyPostRepresentativeStatusApi, deletePostApi } from '../../apis/post';
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
 	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
-	const [isPinPostResultModalOpen, setIsPinPostResultModalOpen] = useState(false);
+	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
 	const [pinPostResultlModalContent, setPinPostResultlModalContent] = useState('');
 	const navigate = useNavigate();
 
@@ -84,22 +82,27 @@ const MyPost: React.FC = () => {
 		} catch (error) {
 			console.error('Error pinning post:', error);
 		} finally {
-			setIsPinPostResultModalOpen(true);
+			setIsApiResponseModalOpen(true);
 		}
 	};
 
-	const handlePostDelete = async () => {
+	const deletePost = async () => {
 		try {
-			const response = await request.delete<BaseApiResponse>(`/posts/${postId}`);
-			if (response.message === 'Post deleted successfully') {
-				console.log(response.message);
-				navigate('/mypage'); // 성공적으로 삭제 후 다른 페이지로 이동
+			const response = await deletePostApi(Number(postId));
+
+			if (response.isSuccess) {
+				setPinPostResultlModalContent('게시물 삭제에 성공했어요');
+				// 1초 뒤에 mypage로 이동
+				setTimeout(() => {
+					navigate('/mypage');
+				}, 1000);
 			} else {
-				console.error('Unexpected response:', response.message);
+				setPinPostResultlModalContent(`게시물 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error deleting post:', error);
 		} finally {
+			setIsApiResponseModalOpen(true);
 			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
@@ -110,12 +113,12 @@ const MyPost: React.FC = () => {
 		content: '해당 OOTD를 삭제하시겠습니까?',
 		button: {
 			content: '삭제하기',
-			onClick: handlePostDelete,
+			onClick: deletePost,
 		},
 	};
 
-	const pinPostResultModalProps: ModalProps = {
-		onClose: () => setIsPinPostResultModalOpen(false),
+	const apiResponseModalProps: ModalProps = {
+		onClose: () => setIsApiResponseModalOpen(false),
 		content: pinPostResultlModalContent,
 	};
 
@@ -126,7 +129,7 @@ const MyPost: React.FC = () => {
 			<BottomSheet {...menuBottomSheetProps} />
 
 			{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
-			{isPinPostResultModalOpen && <Modal {...pinPostResultModalProps} />}
+			{isApiResponseModalOpen && <Modal {...apiResponseModalProps} />}
 		</>
 	);
 };
