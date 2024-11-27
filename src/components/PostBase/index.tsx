@@ -46,7 +46,7 @@ import { BottomSheetProps } from '../BottomSheet/dto';
 import { PostBaseProps } from './dto';
 import { GetPostDetailResponse } from '../../apis/post/dto';
 
-import { getPostDetailApi, getPostListApi } from '../../apis/post';
+import { getPostDetailApi } from '../../apis/post';
 import { togglePostLikeStatusApi } from '../../apis/post-like';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
