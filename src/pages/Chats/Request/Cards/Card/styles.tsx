@@ -64,12 +64,13 @@ export const OOTDImgBox = styled.div`
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
-	aspect-ratio: 4/5;
+	aspect-ratio: 1/1;
 
 	.slide-image-small {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		aspect-ratio: 4/5;
 	}
 
 	.childSwiper .swiper-pagination {
