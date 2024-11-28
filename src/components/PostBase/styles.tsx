@@ -83,14 +83,14 @@ export const ContentSkeleton = styled(LoadingSkeleton)`
 	border-radius: 4px;
 `;
 
-export const Content = styled(StyledText)<{ showFullText: boolean }>`
+export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 	word-wrap: break-word;
 	word-break: break-all;
 	overflow: hidden;
 	width: 100%;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: ${({ showFullText }) => (showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
+	-webkit-line-clamp: ${({ $showFullText }) => ($showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
 	text-overflow: ellipsis;
 	white-space: normal;
 `;

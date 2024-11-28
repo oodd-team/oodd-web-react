@@ -42,6 +42,8 @@ const ProfileViewer: React.FC = () => {
 					getUserInfoApi(userIdAsNumber),
 					getPostListApi(1, 10, userIdAsNumber),
 				]);
+
+				console.log('게시물 리스트 조회 api 응답', postsResponse.data.post);
 				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
 				const combinedData: CombineDataProps = {
 					...userInfoResponse.data,
@@ -97,7 +99,6 @@ const ProfileViewer: React.FC = () => {
 
 	const representativePosts = posts.filter((post) => post.isRepresentative); // 대표 게시물인 것만 필터링
 	const otherPosts = posts.filter((post) => !post.isRepresentative);
-
 	const handleBottomSheetOpen = () => {
 		setIsBottomSheetOpen(true);
 	};
@@ -136,7 +137,7 @@ const ProfileViewer: React.FC = () => {
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.length > 0 &&
-						representativePosts.map((post) => <PostItem post={post} key={post.postId} isMyPost={false} />)}
+						representativePosts.map((post) => <PostItem key={post.postId} post={post} isMyPost={false} />)}
 					{otherPosts.length > 0 &&
 						otherPosts.map((post) => <PostItem key={post.postId} post={post} isMyPost={false} />)}
 				</PostListContainer>
