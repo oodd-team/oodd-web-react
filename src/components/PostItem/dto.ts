@@ -1,6 +1,6 @@
-import { PostSummary } from '../../apis/post/dto';
+import { UserPostSummary } from '../../apis/post/dto';
 
 export interface PostItemProps {
-	post: PostSummary;
+	post: UserPostSummary;
 	isMyPost?: boolean;
 }

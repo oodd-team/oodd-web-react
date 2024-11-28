@@ -17,9 +17,8 @@ import { PostItemProps } from './dto';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();
-	const imageUrl = post.postImages?.[0]?.imageUrl || 'https://via.placeholder.com/72';
+	const imageUrl = post.imageUrl;
 
-	console.log('postImages', post.postImages);
 	const handleClick = () => {
 		const path = isMyPost ? `/my-post/${post.postId}` : `/post/${post.postId}`;
 		navigate(path);
@@ -33,11 +32,11 @@ const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 				<LikesOverlay>
 					<Icon src={HeartSvg} alt="heart icon" />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
-						{post.likeCount}
+						{post.postLikesCount}
 					</LikesCountStyledText>
 					<Icon src={MessageSvg} alt="message icon" />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
-						{post.commentCount}
+						{post.postCommentsCount}
 					</LikesCountStyledText>
 				</LikesOverlay>
 			</PostImageContainer>

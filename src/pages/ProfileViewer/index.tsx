@@ -24,7 +24,7 @@ import imageBasic from '../../assets/default/defaultProfile.svg';
 import { CombineDataProps } from './CombineDataProps';
 
 import { getUserInfoApi } from '../../apis/user';
-import { getPostListApi } from '../../apis/post';
+import { getUserPostListApi } from '../../apis/post';
 import { OptionsBottomSheetProps } from '../../components/BottomSheet/OptionsBottomSheet/dto';
 
 const ProfileViewer: React.FC = () => {
@@ -40,20 +40,21 @@ const ProfileViewer: React.FC = () => {
 			try {
 				const [userInfoResponse, postsResponse] = await Promise.all([
 					getUserInfoApi(userIdAsNumber),
-					getPostListApi(1, 10, userIdAsNumber),
+					getUserPostListApi(1, 10, userIdAsNumber),
 				]);
 
 				console.log('게시물 리스트 조회 api 응답', postsResponse.data.post);
 				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
 				const combinedData: CombineDataProps = {
 					...userInfoResponse.data,
-					status: storedUserDetails.status || 'blank', // 차단하기/ 해제하기 토글
 					isFriend: userInfoResponse.data.isFriend,
-					userImg: storedUserDetails.profilePictureUrl,
 
+					userImg: storedUserDetails.profilePictureUrl,
+					status: storedUserDetails.status || 'blank', // 차단하기/ 해제하기 토글
+
+					likesCount: postsResponse.data.totalPostLikesCount,
+					postsCount: postsResponse.data.totalPostsCount,
 					posts: postsResponse.data.post,
-					likesCount: postsResponse.data.post.reduce((totalLikes, post) => totalLikes + post.likeCount, 0), // 게시물들의 좋아요 총합
-					postsCount: postsResponse.data.meta.total, // 게시물 총 수
 				};
 
 				setUserDetails(combinedData);

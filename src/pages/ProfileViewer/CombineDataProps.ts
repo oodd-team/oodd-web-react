@@ -1,4 +1,4 @@
-import { PostSummary } from '../../apis/post/dto';
+import { UserPostSummary } from '../../apis/post/dto';
 
 export interface CombineDataProps {
 	userId: number;
@@ -6,9 +6,9 @@ export interface CombineDataProps {
 	bio: string;
 	userImg?: string;
 	isFriend?: boolean;
+	status: 'blank' | 'unblocked' | 'blocked';
 	commentsCount?: number;
 	postsCount?: number;
 	likesCount?: number;
-	posts?: PostSummary[];
-	status: 'blank' | 'unblocked' | 'blocked';
+	posts?: UserPostSummary[];
 }
