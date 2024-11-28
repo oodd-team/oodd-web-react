@@ -33,7 +33,11 @@ const MyPage: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 	const [posts, setPosts] = useState<UserPostSummary[]>([]);
-	const [totalPosts, setTotalPosts] = useState(0);
+	const [totalStats, setTotalStats] = useState<{
+		totalPostsCount: number;
+		totalPostCommentsCount: number;
+		totalPostLikesCount: number;
+	}>();
 	const navigate = useNavigate();
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -87,16 +91,16 @@ const MyPage: React.FC = () => {
 			const response = await getUserPostListApi(1, 10, Number(storedUserId));
 			console.log('API Response:', response); // 디버깅: API 응답 확인
 
-			const { post, meta } = response.data;
+			const { post, totalPostsCount, totalPostCommentsCount, totalPostLikesCount, meta } = response.data;
 
 			console.log('Post List:', post); // 디버깅: 게시물 리스트 확인
 			console.log('Pagination Meta:', meta); // 디버깅: 페이지네이션 정보 확인
 
 			// 상태 업데이트
 			setPosts(post);
-			setTotalPosts(meta.totalItems);
+			setTotalStats({ totalPostsCount, totalPostCommentsCount: totalPostCommentsCount ?? 0, totalPostLikesCount });
 
-			if (post.length === 0) {
+			if (totalPostsCount === 0) {
 				console.log('No posts available for the user.');
 			}
 		} catch (error) {
@@ -129,15 +133,15 @@ const MyPage: React.FC = () => {
 				<StatsContainer>
 					<Stat>
 						<StatLabel>OOTD</StatLabel>
-						<StatNumber>{totalPosts !== undefined ? totalPosts : 0}</StatNumber>
+						<StatNumber>{totalStats?.totalPostsCount}</StatNumber>
 					</Stat>
 					<Stat>
 						<StatLabel>코멘트</StatLabel>
-						<StatNumber>{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}</StatNumber>
+						<StatNumber>{totalStats?.totalPostCommentsCount}</StatNumber>
 					</Stat>
 					<Stat>
 						<StatLabel>좋아요</StatLabel>
-						<StatNumber>{posts.reduce((sum, post) => sum + post.postLikesCount, 0)}</StatNumber>
+						<StatNumber>{totalStats?.totalPostLikesCount}</StatNumber>
 					</Stat>
 				</StatsContainer>
 				<PostsContainer>
@@ -148,18 +152,7 @@ const MyPage: React.FC = () => {
 								if (a.isRepresentative && !b.isRepresentative) return -1;
 								return 0;
 							})
-							.map((post) => (
-								<PostItem
-									key={post.postId}
-									post={{
-										postId: post.postId,
-										likes: post.postLikesCount,
-										commentsCount: post.postCommentsCount,
-										isRepresentative: post.isRepresentative,
-										firstPhoto: post.imageUrl,
-									}}
-								/>
-							))
+							.map((post) => <PostItem key={post.postId} post={post} />)
 					) : (
 						<p>게시물이 없습니다.</p>
 					)}
