@@ -50,20 +50,20 @@ const ChatRoom: React.FC = () => {
 	const nav = useNavigate();
 	const socket = useSocket();
 
-	useEffect(() => {
-		const getChatRoomMessages = (data: chatRoomMessagesData[]) => {
-			setAllMessages(data);
-			if (data.length > messageLengthRef.current) {
-				setIsScroll((prev) => !prev);
-			}
-			setIsLoading(false);
-		};
-
-		const getNewMessage = (data: chatRoomMessagesData) => {
-			setAllMessages((prevMessages) => [...prevMessages, data]);
+	const getChatRoomMessages = (data: chatRoomMessagesData[]) => {
+		setAllMessages(data);
+		if (data.length > messageLengthRef.current) {
 			setIsScroll((prev) => !prev);
-		};
+		}
+		setIsLoading(false);
+	};
 
+	const getNewMessage = (data: chatRoomMessagesData) => {
+		setAllMessages((prevMessages) => [...prevMessages, data]);
+		setIsScroll((prev) => !prev);
+	};
+
+	useEffect(() => {
 		if (socket) {
 			// 채팅방 입장
 			socket.emit('joinChatRoom', chatRoomId);

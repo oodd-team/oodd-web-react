@@ -33,7 +33,7 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> =
 		} else {
 			return (
 				<MessageLayout>
-					<Message $textTheme={{ style: 'body6-regular' }} color={theme.colors.black}>
+					<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 						{content}
 					</Message>
 					{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}

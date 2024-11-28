@@ -34,7 +34,7 @@ export interface MatchingDto {
 }
 
 export interface RequesterDto {
-	requesterId: string;
+	requesterId: number;
 	nickname: string;
 	profilePictureUrl: string;
 }
