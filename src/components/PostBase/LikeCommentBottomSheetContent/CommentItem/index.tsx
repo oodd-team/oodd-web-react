@@ -44,9 +44,11 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>();
 
-	const [isMenuVisible, setIsMenuVisible] = useState(false);
-	const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+	//const [isMenuVisible, setIsMenuVisible] = useState(false);
+	const [, setIsMenuVisible] = useState(false);
+	//const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
+	/*
 	useEffect(() => {
 		// 메뉴 위치 초기화
 		setMenuPosition({ top: 0, left: 0 });
@@ -57,6 +59,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 		setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
 		setIsMenuVisible((prev) => !prev);
 	};
+    */
 
 	useEffect(() => {
 		setTimeAgo(dayjs(comment.createdAt).locale('ko').fromNow());
