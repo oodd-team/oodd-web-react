@@ -5,7 +5,7 @@ export interface PostData {
 	comments: number;
 }
 
-// src/pages/Mypage/dto.ts
+// src/pages/MyPage/dto.ts
 
 export interface UserResponse {
 	id: number;
