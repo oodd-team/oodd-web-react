@@ -29,10 +29,9 @@ export const StyledInput = styled.input`
 	padding: 0;
 	margin: 6.25rem 0 0.9375rem 0;
 	border: none;
-	font-family: 'Gmarket Sans';
-	font-weight: 400;
-	font-size: 2rem;
 	text-align: center;
+
+	${({ theme }) => theme.fontStyles['title1-regular']}
 
 	&:focus {
 		outline: none;
@@ -40,40 +39,30 @@ export const StyledInput = styled.input`
 
 	::placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-family: 'Gmarket Sans';
-		font-weight: 400;
-		font-size: 2rem;
+		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Firefox */
 	&:-moz-placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-family: 'Gmarket Sans';
-		font-weight: 400;
-		font-size: 2rem;
+		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Internet Explorer 10-11 */
 	&:-ms-input-placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-family: 'Gmarket Sans';
-		font-weight: 400;
-		font-size: 2rem;
+		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Edge */
 	&::-ms-input-placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-family: 'Gmarket Sans';
-		font-weight: 400;
-		font-size: 2rem;
+		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Safari */
 	&::placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
-		font-family: 'Gmarket Sans';
-		font-weight: 400;
-		font-size: 2rem;
+		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 `;

@@ -331,20 +331,10 @@ const theme: DefaultTheme = {
 		`,
 		// 여기서부터 기존 fontStyles
 		// TODO: 추후 삭제 필요
-		'heading2-light': css`
-			font-family: 'Gmarket Sans';
-			font-weight: 300; /* light */
-			font-size: 1.313rem;
-		`,
 		'body2-light': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
 			font-size: 1rem;
-		`,
-		'body3-light': css`
-			font-family: 'Gmarket Sans';
-			font-weight: 300; /* light */
-			font-size: 0.875rem;
 		`,
 		'body4-regular': css`
 			font-family: 'Pretendard Variable';
@@ -355,16 +345,6 @@ const theme: DefaultTheme = {
 			font-family: 'Pretendard Variable';
 			font-weight: 300; /* light */
 			font-size: 0.813rem;
-		`,
-		'body5-medium': css`
-			font-family: 'Gmarket Sans';
-			font-weight: 500; /* medium */
-			font-size: 0.75rem;
-		`,
-		'body5-light': css`
-			font-family: 'Gmarket Sans';
-			font-weight: 300; /* light */
-			font-size: 0.75rem;
 		`,
 		'body6-regular': css`
 			font-family: 'Pretendard Variable';

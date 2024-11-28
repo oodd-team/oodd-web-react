@@ -78,7 +78,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black}>
 						{requester.nickname || '알수없음'}
 					</StyledText>
-					<StyledText $textTheme={{ style: 'body5-medium' }} color={theme.colors.gray1}>
+					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 						{matching.requesterPost.styleTags}
 					</StyledText>
 				</ProfileInfo>

@@ -152,7 +152,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
 						>
-							<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>
+							<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
 								사진을 여기에 끌어다 놓으세요
 							</StyledText>
 							<img src={PhotoBig} />

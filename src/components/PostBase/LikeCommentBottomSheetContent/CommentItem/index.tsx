@@ -45,18 +45,18 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 	const [timeAgo, setTimeAgo] = useState<string | null>();
 
 	const [isMenuVisible, setIsMenuVisible] = useState(false);
-	const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+	const [, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
 	useEffect(() => {
 		// 메뉴 위치 초기화
 		setMenuPosition({ top: 0, left: 0 });
 	}, [isMenuVisible]);
 
-	const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-		const rect = event.currentTarget.getBoundingClientRect();
-		setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
-		setIsMenuVisible((prev) => !prev);
-	};
+	// const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+	// 	const rect = event.currentTarget.getBoundingClientRect();
+	// 	setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
+	// 	setIsMenuVisible((prev) => !prev);
+	// };
 
 	useEffect(() => {
 		setTimeAgo(dayjs(comment.createdAt).locale('ko').fromNow());
