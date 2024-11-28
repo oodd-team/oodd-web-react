@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
+
+import { useRecoilState } from 'recoil';
+import { isPostRepresentativeAtom } from '../../recoil/Post/PostAtom';
 
 import PostBase from '../../components/PostBase';
 import Modal from '../../components/Modal';
@@ -18,16 +21,26 @@ import { modifyPostRepresentativeStatusApi, deletePostApi } from '../../apis/pos
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
+	const [isPostRepresentative, setIsPostRepresentative] = useRecoilState(isPostRepresentativeAtom);
+	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
 	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
 	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
 	const [pinPostResultlModalContent, setPinPostResultlModalContent] = useState('');
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		if (isPostRepresentative) {
+			setPostPinStatus('해제');
+		} else {
+			setPostPinStatus('지정');
+		}
+	}, [isPostRepresentative]);
+
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
 			{
-				text: '대표 OOTD로 지정하기',
+				text: `대표 OOTD ${postPinStatus}하기`,
 				action: () => {
 					setIsMenuBottomSheetOpen(false);
 					modifyPostRepresentativeStatus();
@@ -74,10 +87,10 @@ const MyPost: React.FC = () => {
 			const response = await modifyPostRepresentativeStatusApi(Number(postId));
 
 			if (response.isSuccess) {
-				setPinPostResultlModalContent('대표 게시물 지정에 성공했어요');
-				//navigate('/mypage');
+				setPinPostResultlModalContent(`대표 OOTD ${postPinStatus}에 성공했어요`);
+				setIsPostRepresentative((prev) => !prev);
 			} else {
-				setPinPostResultlModalContent(`대표 게시물 지정에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
+				setPinPostResultlModalContent(`대표 OOTD ${postPinStatus}에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error pinning post:', error);
@@ -91,13 +104,13 @@ const MyPost: React.FC = () => {
 			const response = await deletePostApi(Number(postId));
 
 			if (response.isSuccess) {
-				setPinPostResultlModalContent('게시물 삭제에 성공했어요');
+				setPinPostResultlModalContent('OOTD 삭제에 성공했어요');
 				// 1초 뒤에 mypage로 이동
 				setTimeout(() => {
 					navigate('/mypage');
 				}, 1000);
 			} else {
-				setPinPostResultlModalContent(`게시물 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
+				setPinPostResultlModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error deleting post:', error);

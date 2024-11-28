@@ -7,7 +7,7 @@ import 'dayjs/locale/ko';
 
 import theme from '../../styles/theme';
 
-import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
+import { postIdAtom, userAtom, isPostRepresentativeAtom } from '../../recoil/Post/PostAtom';
 
 import { OODDFrame } from '../Frame/Frame';
 import { StyledText } from '../Text/StyledText';
@@ -53,8 +53,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const [post, setPost] = useState<GetPostDetailResponse['data']>();
-	const [, setUserId] = useRecoilState<number>(userIdAtom);
-	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
+	const [user, setUser] = useRecoilState(userAtom);
+	const [, setIsPostRepresentative] = useRecoilState(isPostRepresentativeAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>();
 	const [showFullText, setShowFullText] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
@@ -71,8 +71,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				const response = await getPostDetailApi(Number(postId));
 				const data = response.data;
 				setPost(data);
-				setUserId(data.user.userId);
-				setUserName(data.user.nickname);
+				setUser(data.user);
+				setIsPostRepresentative(data.isRepresentative);
 				setTimeAgo(dayjs(data.createdAt).locale('ko').fromNow());
 			} catch (error) {
 				console.error('Error fetching post data:', error);
@@ -150,7 +150,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
 						</UserProfile>
 						<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
-							{userName}
+							{user.nickname}
 						</UserName>
 						<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
 							{timeAgo}
