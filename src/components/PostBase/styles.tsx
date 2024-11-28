@@ -23,9 +23,25 @@ const LoadingSkeleton = styled.div`
 	animation: ${shimmer} 2s infinite;
 `;
 
-export const PostContainer = styled.div`
+export const PostLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 100%;
 	height: calc(100vh - 2.75rem);
+	overflow-y: scroll;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
+`;
+
+export const PostContainer = styled.div`
+	width: 100%;
+	max-width: 450px;
+	height: 100%;
 	overflow-y: scroll;
 
 	scrollbar-width: none; // Firefox
@@ -116,15 +132,20 @@ export const IconWrapper = styled.div`
 	gap: 8px;
 	cursor: pointer;
 
-	img {
-		width: 20px;
-		height: 20px;
-	}
-
 	span {
 		font-size: 15px;
 		color: #000;
 		margin-right: 16px;
+	}
+`;
+
+export const Icon = styled.div`
+	width: 20px;
+	height: 20px;
+
+	img {
+		width: 20px;
+		height: 20px;
 	}
 `;
 

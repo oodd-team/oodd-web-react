@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { OOTDContainer, FeedContainer, OOTDLoading } from './styles';
 import Feed from './Feed';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsBlockSuccessModalOpenAtom, PostBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
+import { IsBlockSuccessModalOpenAtom, UserBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { getPostListApi } from '../../../apis/post';
@@ -15,7 +15,7 @@ const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
 	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 관리
 	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);
-	const postBlock = useRecoilValue(PostBlockAtom);
+	const postBlock = useRecoilValue(UserBlockAtom);
 	const feedPageRef = useRef(1);
 
 	const getPostList = async () => {

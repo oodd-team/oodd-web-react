@@ -17,7 +17,7 @@ import { IsMeatballBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomS
 import {
 	IsBlockFailModalOpenAtom,
 	IsBlockSuccessModalOpenAtom,
-	PostBlockAtom,
+	UserBlockAtom,
 } from '../../recoil/Home/BlockBottomSheetAtom.ts';
 import BlockConfirmationModal from '../../components/PostBottomSheets/BlockConfirmationModal.tsx';
 import {
@@ -32,7 +32,7 @@ const Post: React.FC = () => {
 	const [, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
 	const [isBlockSuccessModalOpen, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
 	const [isBlockFailModalOpen, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
-	const postBlock = useRecoilValue(PostBlockAtom);
+	const postBlock = useRecoilValue(UserBlockAtom);
 	const [isReportSuccessModalOpen, setIsReportSuccessModalOpen] = useRecoilState(IsReportSuccessModalOpenAtom);
 	const [isReportFailModalOpen, setIsReportFailModalOpen] = useRecoilState(IsReportFailModalOpenAtom);
 	const postReport = useRecoilValue(PostReportAtom);

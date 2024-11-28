@@ -6,7 +6,7 @@ import { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
 import { useRecoilState } from 'recoil';
 import { userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
 import { IsMeatballBottomSheetOpenAtom, IsReportBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
-import { IsBlockConfirmationModalOpenAtom, PostBlockAtom } from '../../recoil/Home/BlockBottomSheetAtom';
+import { IsBlockConfirmationModalOpenAtom, UserBlockAtom } from '../../recoil/Home/BlockBottomSheetAtom';
 
 import Report from '../../assets/default/report.svg';
 import Block from '../../assets/default/block.svg';
@@ -14,7 +14,7 @@ import Block from '../../assets/default/block.svg';
 const MeatballBottomSheet: React.FC = () => {
 	const [userId] = useRecoilState(userIdAtom);
 	const [userName] = useRecoilState(userNameAtom);
-	const [, setPostBlockAtom] = useRecoilState(PostBlockAtom);
+	const [, setPostBlockAtom] = useRecoilState(UserBlockAtom);
 	const [isMeatballBottomSheetOpen, setIsMeatballBottomSheetOpen] = useRecoilState(IsMeatballBottomSheetOpenAtom);
 	const [, setIsReportBottomSheetOpen] = useRecoilState(IsReportBottomSheetOpenAtom);
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);

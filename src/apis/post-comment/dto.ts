@@ -19,8 +19,8 @@ interface Content {
 
 interface CreateCommentData extends Content {}
 
-interface Comment {
-	commentId: number;
+export interface Comment {
+	id: number;
 	user: CommentUser;
 	content: string;
 	createdAt: string;
@@ -37,5 +37,5 @@ export interface CommentUser {
 // 게시글 댓글 리스트 조회 응답
 export interface GetCommentListData {
 	comments: Comment[];
-	totalComments: number;
+	totalCount: number;
 }

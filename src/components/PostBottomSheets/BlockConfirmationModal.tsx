@@ -7,7 +7,7 @@ import {
 	IsBlockConfirmationModalOpenAtom,
 	IsBlockFailModalOpenAtom,
 	IsBlockSuccessModalOpenAtom,
-	PostBlockAtom,
+	UserBlockAtom,
 } from '../../recoil/Home/BlockBottomSheetAtom';
 import { IsMeatballBottomSheetOpenAtom } from '../../recoil/Home/MeatballBottomSheetAtom';
 
@@ -21,7 +21,7 @@ const BlockConfirmationModal: React.FC = () => {
 	);
 	const [, setIsBlockSuccessModalOpen] = useRecoilState(IsBlockSuccessModalOpenAtom);
 	const [, setIsBlockFailModalOpen] = useRecoilState(IsBlockFailModalOpenAtom);
-	const postBlock = useRecoilValue(PostBlockAtom);
+	const postBlock = useRecoilValue(UserBlockAtom);
 
 	const blockConfirmationModalProps: ModalProps = {
 		isCloseButtonVisible: true,

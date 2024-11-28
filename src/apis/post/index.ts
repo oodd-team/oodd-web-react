@@ -3,6 +3,7 @@ import {
 	CreatePostRequest,
 	CreatePostResponse,
 	GetPostListResponse,
+	GetUserPostListResponse,
 	GetPostDetailResponse,
 	ModifyPostRequest,
 	ModifyPostResponse,
@@ -12,9 +13,13 @@ import { EmptySuccessResponse } from '../core/dto';
 // 게시글 생성
 export const createPostApi = (data: CreatePostRequest) => newRequest.post<CreatePostResponse>('/post', data);
 
-// 게시글 리스트 조회 (페이지네이션 포함)
-export const getPostListApi = (page: number = 1, take: number = 10, userId?: number) =>
-	newRequest.get<GetPostListResponse>(`/post`, { params: { page, take, ...(userId && { userId }) } });
+// 게시글 리스트 조회
+// 전체 게시글 리스트
+export const getPostListApi = (page: number = 1, take: number = 10) =>
+	newRequest.get<GetPostListResponse>(`/post`, { params: { page, take } });
+// 유저 게시글 리스트
+export const getUserPostListApi = (page: number = 1, take: number = 10, userId: number) =>
+	newRequest.get<GetUserPostListResponse>(`/post`, { params: { page, take, userId } });
 
 // 게시글 상세 조회
 export const getPostDetailApi = (postId: number) => newRequest.get<GetPostDetailResponse>(`/post/${postId}`);
