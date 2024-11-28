@@ -23,7 +23,7 @@ export type GetMatchingListResponse = BaseSuccessResponse<GetMatchingListData>;
 
 export interface GetMatchingListData {
 	isMatching: boolean; // 매칭 요청 존재 여부
-	matchingCount: number; // 매칭 요청 개수
+	matchingsCount: number; // 매칭 요청 개수
 	matching: MatchingDto[];
 }
 
@@ -63,4 +63,5 @@ export interface ModifyMatchingStatusData {
 	requesterId: number;
 	targetId: number;
 	requestStatus: string;
+	chatRoomId: number;
 }

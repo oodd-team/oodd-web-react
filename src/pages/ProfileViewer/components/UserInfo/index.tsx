@@ -74,7 +74,7 @@ const UserInfo: React.FC<UserInfoProps> = React.memo(({ isFriend }) => {
 			const user: OtherUserDto = {
 				id: response.result.id,
 				nickname: response.result.nickname,
-				profileUrl: response.result.profilePictureUrl,
+				profilePictureUrl: response.result.profilePictureUrl,
 			};
 
 			// 채팅방 리스트 조회
