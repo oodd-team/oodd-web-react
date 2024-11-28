@@ -119,7 +119,7 @@ const Verification: React.FC = () => {
 								placeholder="이름"
 								value={name}
 								onChange={handleNameChange}
-								data-theme-style="heading2-light"
+								data-theme-style="heading1-regular"
 								data-theme-lineheight="1"
 							/>
 						</InputWrapper>

@@ -47,7 +47,7 @@ const Cards: React.FC<CardsProps> = ({ decreaseMatchingCount }) => {
 				className="parentSwiper"
 			>
 				{matchings.map((matching, index) => (
-					<SwiperSlide key={matching.requester.requesterId}>
+					<SwiperSlide key={matching.matchingId}>
 						<Card
 							matching={matching} // 데이터를 Card 컴포넌트에 전달
 							removeRejectedMatching={() => removeRejectedMatching(index)}

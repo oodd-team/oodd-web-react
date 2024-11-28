@@ -1,25 +1,4 @@
 @font-face {
-	font-family: 'Gmarket Sans';
-	font-weight: bold;
-	font-display: swap;
-	src: url('./GmarketSansTTFBold.woff') format('woff2');
-}
-
-@font-face {
-	font-family: 'Gmarket Sans';
-	font-weight: 500; /* medium */
-	font-display: swap;
-	src: url('./GmarketSansTTFMedium.woff') format('woff2');
-}
-
-@font-face {
-	font-family: 'Gmarket Sans';
-	font-weight: 300; /* light */
-	font-display: swap;
-	src: url('./GmarketSansTTFLight.woff') format('woff2');
-}
-
-@font-face {
 	font-family: 'Pretendard Variable';
 	font-weight: 100 900; /* 가변 두께 범위 */
 	font-stretch: 75% 100%; /* 가변 너비 범위 */

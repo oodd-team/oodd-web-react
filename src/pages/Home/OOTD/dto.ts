@@ -4,7 +4,7 @@ export interface TagProps {
 }
 
 export interface FeedProps {
-	profileUrl: string;
+	profilePictureUrl: string;
 	userName: string;
 	text: string;
 	feedImgUrls: string[];

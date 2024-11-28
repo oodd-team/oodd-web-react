@@ -31,7 +31,7 @@ const TabBar: React.FC = () => {
 		const response = await getMatchingListApi();
 
 		if (response.isSuccess) {
-			setMatchingCount(response.data.matchingCount);
+			setMatchingCount(response.data.matchingsCount);
 			setHasMatchingRequest(response.data.isMatching);
 		}
 	};
@@ -60,6 +60,7 @@ const TabBar: React.FC = () => {
 			// 매칭 요청이 있을 때 양쪽 스와이퍼 가능
 			else {
 				swiper.allowSlidePrev = true;
+				setActiveIndex(swiper.activeIndex);
 			}
 		},
 		[hasMatchingRequest],

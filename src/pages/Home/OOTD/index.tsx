@@ -2,20 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { OOTDContainer, FeedContainer, OOTDLoading } from './styles';
 import Feed from './Feed';
 import Loading from '../../../components/Loading'; // Loading 컴포넌트
-import { IsBlockSuccessModalOpenAtom, UserBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { FeedsAtom } from '../../../recoil/Home/FeedsAtom';
 import { getPostListApi } from '../../../apis/post';
+import { PostSummary } from '../../../apis/post/dto';
 
 interface OODDProps {
 	tooltipRef: React.MutableRefObject<HTMLDivElement[]>;
 }
 
 const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
-	const [feeds, setFeeds] = useRecoilState(FeedsAtom);
-	const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 관리
-	const isBlockSuccessModalOpen = useRecoilValue(IsBlockSuccessModalOpenAtom);
-	const postBlock = useRecoilValue(UserBlockAtom);
+	const [feeds, setFeeds] = useState<PostSummary[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const feedPageRef = useRef(1);
 
 	const getPostList = async () => {
@@ -30,13 +26,6 @@ const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
 	useEffect(() => {
 		getPostList();
 	}, [feedPageRef.current]);
-
-	// 사용자 차단에 성공하면 피드에서 해당 사용자의 게시글 제거
-	useEffect(() => {
-		if (isBlockSuccessModalOpen === true) {
-			setFeeds((prevFeeds) => prevFeeds.filter((feed) => feed.user.nickname !== postBlock?.friendName));
-		}
-	}, [isBlockSuccessModalOpen]);
 
 	return (
 		<OOTDContainer>
