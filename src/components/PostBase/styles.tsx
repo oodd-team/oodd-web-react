@@ -111,7 +111,11 @@ export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 	white-space: normal;
 `;
 
-export const ShowMoreButton = styled(StyledText)``;
+export const ShowMoreButton = styled(StyledText)`
+	cursor: pointer;
+	color: ${({ theme }) => theme.colors.gray3};
+	margin-top: 8px;
+`;
 
 export const ImageSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
