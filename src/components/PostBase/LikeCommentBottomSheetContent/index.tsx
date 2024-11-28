@@ -1,20 +1,27 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import { useRecoilState } from 'recoil';
+import { UserBlockAtom } from '../../../recoil/Home/BlockBottomSheetAtom';
+
 import { TabContainer, Tab, ContentContainer, Content, BigUserProfile, LikeItem, InputLayout } from './styles';
 
 import { StyledText } from '../../Text/StyledText';
 import theme from '../../../styles/theme';
 import Loading from '../../Loading';
-import BlockConfirmationModal from '../../PostBottomSheets/BlockConfirmationModal';
+import Modal from '../../Modal';
 import CommentItem from './CommentItem';
 
 import { LikeCommentBottomSheetProps } from '../dto';
+import { ModalProps } from '../../Modal/dto';
 import { GetPostLikeListResponse } from '../../../apis/post-like/dto';
 import { GetCommentListResponse } from '../../../apis/post-comment/dto';
 
 import { getPostLikeListApi } from '../../../apis/post-like';
+import { postUserBlockApi } from '../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../apis/user-block/dto';
 import { createCommentApi, getCommentListApi } from '../../../apis/post-comment';
+import { handleError } from '../../../apis/util/handleError';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
@@ -23,6 +30,10 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	const [postLikeCount, setPostLikeCount] = useState(likeCount);
 	const [comments, setComments] = useState<GetCommentListResponse['data']['comments']>([]);
 	const [postCommentCount, setPostCommentCount] = useState(commentCount);
+	const [userBlock] = useRecoilState(UserBlockAtom);
+	const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
@@ -142,6 +153,48 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
+	const sendBlock = async () => {
+		try {
+			const blockRequest: PostUserBlockRequest = {
+				fromUserId: userBlock?.userId || -1,
+				toUserId: userBlock?.friendId || -1,
+				action: 'block',
+			};
+			const response = await postUserBlockApi(blockRequest);
+
+			if (response.isSuccess) {
+				setModalContent('정상적으로 처리되었습니다.');
+			}
+		} catch (error) {
+			const errorMessage = handleError(error, 'user');
+			setModalContent(errorMessage);
+		} finally {
+			setIsBlockModalOpen(false);
+			setIsStatusModalOpen(true);
+		}
+	};
+
+	// 차단하기 모달
+	const blockModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => {
+			setIsBlockModalOpen(false);
+		},
+		content: `${userBlock?.friendId || '알수없음'} 님을\n정말로 차단하시겠어요?`,
+		button: {
+			content: '차단하기',
+			onClick: sendBlock,
+		},
+	};
+
+	// api 처리 상태 모달 (성공/실패)
+	const statusModalProps: ModalProps = {
+		content: modalContent,
+		onClose: () => {
+			setIsStatusModalOpen(false);
+		},
+	};
+
 	// 유저 클릭한 경우
 	const handleUserClick = (userId: number) => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
@@ -226,12 +279,13 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 								작성
 							</button>
 						</InputLayout>
-						<BlockConfirmationModal />
 					</>
 				)}
 				{isLoading && <Loading />}
 				<div ref={loadMoreRef} />
 			</ContentContainer>
+			{isBlockModalOpen && <Modal {...blockModalProps} />}
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</>
 	);
 };

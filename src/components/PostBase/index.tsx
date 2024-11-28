@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
@@ -7,7 +7,7 @@ import 'dayjs/locale/ko';
 
 import theme from '../../styles/theme';
 
-import { postIdAtom, userIdAtom, userNameAtom } from '../../recoil/Post/PostAtom';
+import { postIdAtom, userAtom, isPostRepresentativeAtom } from '../../recoil/Post/PostAtom';
 
 import { OODDFrame } from '../Frame/Frame';
 import { StyledText } from '../Text/StyledText';
@@ -53,9 +53,10 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const [post, setPost] = useState<GetPostDetailResponse['data']>();
-	const [, setUserId] = useRecoilState<number>(userIdAtom);
-	const [userName, setUserName] = useRecoilState<string>(userNameAtom);
+	const [user, setUser] = useRecoilState(userAtom);
+	const [, setIsPostRepresentative] = useRecoilState(isPostRepresentativeAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>();
+	const [isTextOverflowing, setIsTextOverflowing] = useState(false);
 	const [showFullText, setShowFullText] = useState(false);
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
@@ -71,8 +72,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				const response = await getPostDetailApi(Number(postId));
 				const data = response.data;
 				setPost(data);
-				setUserId(data.user.userId);
-				setUserName(data.user.nickname);
+				setUser(data.user);
+				setIsPostRepresentative(data.isRepresentative);
 				setTimeAgo(dayjs(data.createdAt).locale('ko').fromNow());
 			} catch (error) {
 				console.error('Error fetching post data:', error);
@@ -82,6 +83,20 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		getPost();
 	}, [postId]);
 
+	const contentRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (contentRef.current) {
+			// 실제 높이와 줄 제한 높이 비교
+			const { scrollHeight, clientHeight } = contentRef.current;
+			setIsTextOverflowing(scrollHeight > clientHeight);
+		}
+	}, [post?.content]);
+
+	const toggleTextDisplay = () => {
+		setShowFullText((prev) => !prev);
+	};
+
 	const handleUserClick = () => {
 		if (post?.isPostWriter) {
 			// 내 게시물인 경우
@@ -90,10 +105,6 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			// 다른 유저의 게시물인 경우
 			nav(`/users/${post?.user.userId}`);
 		}
-	};
-
-	const toggleTextDisplay = () => {
-		setShowFullText((prev) => !prev);
 	};
 
 	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
@@ -150,7 +161,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
 						</UserProfile>
 						<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
-							{userName}
+							{user.nickname}
 						</UserName>
 						<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
 							{timeAgo}
@@ -166,6 +177,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						) : (
 							<>
 								<Content
+									ref={contentRef}
 									onClick={toggleTextDisplay}
 									$showFullText={showFullText}
 									$textTheme={{ style: 'body4-light' }}
@@ -173,13 +185,11 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 								>
 									{post.content}
 								</Content>
-								<ShowMoreButton
-									onClick={toggleTextDisplay}
-									$textTheme={{ style: 'body4-light' }}
-									color={theme.colors.gray3}
-								>
-									{showFullText ? '간략히 보기' : '더 보기'}
-								</ShowMoreButton>
+								{isTextOverflowing && (
+									<ShowMoreButton onClick={toggleTextDisplay} $textTheme={{ style: 'body4-light' }}>
+										{showFullText ? '간략히 보기' : '더 보기'}
+									</ShowMoreButton>
+								)}
 							</>
 						)}
 					</PostContentContainer>
