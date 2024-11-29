@@ -78,7 +78,7 @@ const UserInfo: React.FC = React.memo(() => {
 		const postsCount = checkPostCount();
 		if (postsCount === 0) {
 			setIsBottomSheetOpen(false);
-			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!🩷');
+			handleModalOpen('게시물 등록 후 \n친구 요청을 보낼 수 있어요!');
 			return;
 		}
 		const matchingRequestData = {
@@ -126,6 +126,8 @@ const UserInfo: React.FC = React.memo(() => {
 				}
 			});
 		}
+
+		console.log(roomId);
 
 		if (roomId !== null) {
 			nav(`/chats/${roomId}`);

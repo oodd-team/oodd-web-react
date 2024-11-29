@@ -107,7 +107,7 @@ const SignUp: React.FC = () => {
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
 		} else if (my_id && token) {
-			const requestData = {
+			const requestData: PartialUserInfoRequest = {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthDate: formData.birthDate,
@@ -131,6 +131,7 @@ const SignUp: React.FC = () => {
 			setModalType('fail');
 		}
 	};
+
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {
