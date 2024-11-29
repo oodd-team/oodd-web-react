@@ -107,7 +107,7 @@ const UserInfo: React.FC = React.memo(() => {
 		const user: OtherUserDto = {
 			id: userId,
 			nickname: nickname,
-			profileUrl: user_img,
+			profilePictureUrl: user_img,
 		};
 
 		// 채팅방 리스트 조회

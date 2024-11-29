@@ -24,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
   
   body {
     line-height: 1;
-    font-family: 'Pretendard Variable', 'Gmarket Sans', sans-serif;
+    font-family: 'Pretendard Variable', sans-serif;
     background-color: #FFFFFF;
   }
   

@@ -27,12 +27,12 @@ import photo from '../../assets/default/photo.svg';
 import UserProfile from '../../components/UserProfile';
 
 import { getUserPostListApi } from '../../apis/post';
-import { GetUserPostListData } from '../../apis/post/dto';
+import { UserPostSummary } from '../../apis/post/dto';
 
 const MyPage: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-	const [posts, setPosts] = useState<GetUserPostListData['post']>([]);
+	const [posts, setPosts] = useState<UserPostSummary[]>([]);
 	const [totalStats, setTotalStats] = useState<{
 		totalPostsCount: number;
 		totalPostCommentsCount: number;

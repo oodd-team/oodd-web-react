@@ -62,8 +62,8 @@ const PostInstaConnect: React.FC<InstaConnectModalProps> = () => {
 					</StyledText>
 				) : (
 					<>
-						<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>인스타 계정 연동을 위해</StyledText>
-						<StyledText $textTheme={{ style: 'heading2-light', lineHeight: 2 }}>
+						<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>인스타 계정 연동을 위해</StyledText>
+						<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
 							인스타그램 ID를 작성해주세요
 						</StyledText>
 						<StyledInput

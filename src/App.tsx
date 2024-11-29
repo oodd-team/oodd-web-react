@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import MyPage from './pages/Mypage';
+import MyPage from './pages/MyPage';
 import MyPost from './pages/MyPost';
 import ProfileEdit from './pages/ProfileEdit';
 import AccountSetting from './pages/AccountSetting';
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/chats/:roomId" element={<ChatRoom />} />
+				<Route path="/chats/:chatRoomId" element={<ChatRoom />} />
 				<Route path="/mypage" element={<MyPage />} />
 				<Route path="/my-post/:postId" element={<MyPost />} />
 				<Route path="/profile/edit" element={<ProfileEdit />} />

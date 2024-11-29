@@ -65,12 +65,14 @@ export const FeedText = styled(StyledText)`
 export const FeedImgBox = styled.div<{ $src: string }>`
 	position: relative;
 	width: 100%;
+	max-height: 37.5rem;
 	border-radius: 0.5rem;
 	background-color: rgba(255, 255, 255, 0.5);
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	aspect-ratio: 4/5;
 
 	background-image: url(${({ $src }) => $src});
 	background-repeat: no-repeat;
@@ -80,16 +82,6 @@ export const FeedImgBox = styled.div<{ $src: string }>`
 		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
 		0px 0px 1px 0px rgba(0, 0, 0, 0.08),
 		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
-
-	@media (max-width: 767px) {
-		aspect-ratio: 4/5;
-		max-height: 450px;
-	}
-
-	@media (min-width: 768px) {
-		aspect-ratio: 4/5;
-		max-height: 600px;
-	}
 
 	.ootd-image-small {
 		width: 100%;

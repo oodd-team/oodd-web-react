@@ -26,6 +26,8 @@ import { modifyMatchingStatusApi } from '../../../../../apis/matching';
 import { handleError } from '../../../../../apis/util/handleError';
 import { ModalProps } from '../../../../../components/Modal/dto';
 import Modal from '../../../../../components/Modal';
+import { useRecoilState } from 'recoil';
+import { OpponentInfoAtom } from '../../../../../recoil/util/OpponentInfo';
 
 interface CardProps {
 	removeRejectedMatching: () => void;
@@ -37,13 +39,25 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const requester = matching.requester;
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
+	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 
 	// 매칭 거절 및 수락 api
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
 		try {
+			console.log(matching);
 			const response = await modifyMatchingStatusApi(matching.matchingId, { requestStatus: status });
+
 			if (response.isSuccess) {
 				removeRejectedMatching(); // 매칭 리스트에서 해당 매칭을 제거
+
+				if (status === 'accept') {
+					setOpponentInfo({
+						id: requester.requesterId,
+						nickname: requester.nickname,
+						profilePictureUrl: requester.profilePictureUrl,
+					});
+					nav(`/chats/${response.data.chatRoomId}`);
+				}
 			}
 		} catch (error) {
 			const errorMessage = handleError(error);
@@ -78,7 +92,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black}>
 						{requester.nickname || '알수없음'}
 					</StyledText>
-					<StyledText $textTheme={{ style: 'body5-medium' }} color={theme.colors.gray1}>
+					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 						{matching.requesterPost.styleTags}
 					</StyledText>
 				</ProfileInfo>
