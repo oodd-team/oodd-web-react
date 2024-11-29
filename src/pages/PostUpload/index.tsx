@@ -33,6 +33,7 @@ import ClothingInfoItem from '../../components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
+import Modal from '../../components/Modal';
 
 import Left from '../../assets/arrow/left.svg';
 import Right from '../../assets/arrow/right.svg';
@@ -42,6 +43,7 @@ import StyleTag from '../../assets/default/style-tag.svg';
 import Pin from '../../assets/default/pin.svg';
 
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { ModalProps } from '../../components/Modal/dto';
 import { PostUploadModalProps } from './dto';
 import { PostBase } from '../../apis/post/dto';
 
@@ -59,6 +61,8 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -226,8 +230,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	};
 
 	const handleSubmit = async () => {
-		if (!selectedStyletag) {
-			alert('스타일 태그를 지정해주세요.');
+		if (selectedStyletag.length === 0) {
+			setModalContent('*스타일 태그를 지정해주세요*');
+			setIsStatusModalOpen(true);
 			return;
 		}
 
@@ -275,6 +280,14 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	// api 처리 상태 모달 (성공/실패)
+	const statusModalProps: ModalProps = {
+		content: modalContent,
+		onClose: () => {
+			setIsStatusModalOpen(false);
+		},
 	};
 
 	return (
@@ -365,6 +378,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 
 				<BottomSheet {...bottomSheetProps} />
 			</UploadContainer>
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</OODDFrame>
 	);
 };
