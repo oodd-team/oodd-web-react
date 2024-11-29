@@ -232,9 +232,15 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					className="ootdSwiper"
 				>
 					{feed.postImages.map((postImage, index) => (
-						<SwiperSlide key={index}>
-							<img src={postImage.imageUrl} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
-						</SwiperSlide>
+						<>
+							<SwiperSlide key={index}>
+								<img
+									src={postImage.imageUrl}
+									alt={`${feed.user.nickname}의 피드 이미지`}
+									className="ootd-image-small"
+								/>
+							</SwiperSlide>
+						</>
 					))}
 				</Swiper>
 				<ReactionWrapper>

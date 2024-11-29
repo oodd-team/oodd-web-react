@@ -175,6 +175,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	};
 
 	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		if (e.target === e.currentTarget) {
 			setIsReportBottomSheetOpen(false);
 		}
