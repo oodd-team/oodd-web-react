@@ -44,22 +44,8 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 	const [, setIsBlockConfirmationModalOpen] = useRecoilState(IsBlockConfirmationModalOpenAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>();
 
-	//const [isMenuVisible, setIsMenuVisible] = useState(false);
 	const [, setIsMenuVisible] = useState(false);
-	//const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
-
-	/*
-	useEffect(() => {
-		// 메뉴 위치 초기화
-		setMenuPosition({ top: 0, left: 0 });
-	}, [isMenuVisible]);
-
-	const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-		const rect = event.currentTarget.getBoundingClientRect();
-		setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
-		setIsMenuVisible((prev) => !prev);
-	};
-    */
+	const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
 	useEffect(() => {
 		setTimeAgo(dayjs(comment.createdAt).locale('ko').fromNow());
@@ -87,8 +73,10 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 	};
 
 	// 댓글 메뉴 클릭한 경우
-	const handleCommentMenuClick = (commentId: number) => {
+	const handleMenuOpen = (commentId: number, event: React.MouseEvent<HTMLButtonElement>) => {
 		if (!commentId) return;
+		const rect = event.currentTarget.getBoundingClientRect();
+		setMenuPosition({ top: rect.bottom + window.scrollY - 90, left: rect.left + window.scrollX - 100 });
 		setShowCommentMenuId((prevId) => (prevId === commentId ? null : commentId));
 	};
 
@@ -155,16 +143,12 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, get
 				<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
 					{timeAgo}
 				</StyledText>
-				<MenuBtn onClick={() => handleCommentMenuClick(comment.id)}>
+				<MenuBtn onClick={(event) => handleMenuOpen(comment.id, event)}>
 					<img src={More} alt="more" />
 				</MenuBtn>
 			</RightContainer>
 			{showCommentMenuId === comment.id && (
-				<MenuButtonList
-					items={menuItems}
-					isVisible={showCommentMenuId === comment.id}
-					onClose={() => setIsMenuVisible(false)}
-				/>
+				<MenuButtonList items={menuItems} onClose={() => setIsMenuVisible(false)} position={menuPosition} />
 			)}
 			{isCommentDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
 		</StyledCommentItem>
