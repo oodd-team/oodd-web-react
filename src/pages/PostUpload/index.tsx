@@ -50,6 +50,7 @@ import { PostBase } from '../../apis/post/dto';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
+import { handleError } from '../../apis/util/handleError';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -276,7 +277,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 
 			navigate('/mypage');
 		} catch (error) {
-			console.error(error);
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
 		} finally {
 			setIsLoading(false);
 		}
