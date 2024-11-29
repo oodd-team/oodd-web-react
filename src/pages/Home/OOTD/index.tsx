@@ -5,11 +5,7 @@ import Loading from '../../../components/Loading'; // Loading 컴포넌트
 import { getPostListApi } from '../../../apis/post';
 import { PostSummary } from '../../../apis/post/dto';
 
-interface OODDProps {
-	tooltipRef: React.MutableRefObject<HTMLDivElement[]>;
-}
-
-const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
+const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const feedPageRef = useRef(1);
@@ -36,7 +32,7 @@ const OOTD: React.FC<OODDProps> = ({ tooltipRef }) => {
 			)}
 			<FeedContainer style={{ display: isLoading ? 'none' : 'block' }}>
 				{feeds.map((feed, index) => (
-					<div ref={(el) => (tooltipRef.current[index] = el!)} key={index}>
+					<div key={index}>
 						<Feed key={feed.user.userId} feed={feed} />
 					</div>
 				))}
