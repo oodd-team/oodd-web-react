@@ -244,7 +244,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			const uploadedImages = await Promise.all(
 				selectedImages.map(async (image, index) => {
 					const imageUrl = await uploadImageToFirebase(image.imageUrl);
-					return { imageUrl: imageUrl, orderNum: index }; // orderNum 추가
+					return { imageUrl: imageUrl, orderNum: index + 1 }; // orderNum 추가
 				}),
 			);
 
