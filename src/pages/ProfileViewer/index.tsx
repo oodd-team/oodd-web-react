@@ -26,9 +26,9 @@ import imageBasic from '../../assets/default/defaultProfile.svg';
 
 import { UserInfoProps } from './UserInfoProps';
 import { mainMenuItems, reportMenuItems } from './MenuItemDto';
-import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
+// import { GetUserInfoResult } from './ResponseDto/GetUserInfoResult';
 
-import { GetPostListResult } from './ResponseDto/GetPostListResult';
+// import { GetPostListResult } from './ResponseDto/GetPostListResult';
 import { PostUserBlock } from './ResponseDto/PostUserBlockResult';
 
 import request from '../../apis/core';
@@ -53,24 +53,22 @@ const ProfileViewer: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const response = await request.get<GetUserInfoResult>(`/users/${userId}`);
-				console.log('사용자 정보 조회: ', response);
-
-				const postsResponse = await request.get<GetPostListResult>(`posts?userId=${userId}`, {});
-				console.log('게시물 리스트 조회:', postsResponse);
-				const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
-				const combinedData: UserInfoProps = {
-					...response.result,
-					status: storedUserDetails.status || 'blank',
-					isFriend: response.result.isFriend,
-					posts: postsResponse.result.posts,
-					likesCount: postsResponse.result.totalLikes,
-					postsCount: postsResponse.result.totalPosts,
-					isInterested: storedUserDetails.isInterested || false,
-					userImg: storedUserDetails.profilePictureUrl,
-				};
-
-				setUserDetails(combinedData);
+				// const response = await request.get<GetUserInfoResult>(`/users/${userId}`);
+				// console.log('사용자 정보 조회: ', response);
+				// const postsResponse = await request.get<GetPostListResult>(`posts?userId=${userId}`, {});
+				// console.log('게시물 리스트 조회:', postsResponse);
+				// const storedUserDetails = JSON.parse(localStorage.getItem(`userDetails_${userId}`) || '{}');
+				// const combinedData: UserInfoProps = {
+				// 	...response.result,
+				// 	status: storedUserDetails.status || 'blank',
+				// 	isFriend: response.result.isFriend,
+				// 	posts: postsResponse.result.posts,
+				// 	likesCount: postsResponse.result.totalLikes,
+				// 	postsCount: postsResponse.result.totalPosts,
+				// 	isInterested: storedUserDetails.isInterested || false,
+				// 	userImg: storedUserDetails.profilePictureUrl,
+				// };
+				// setUserDetails(combinedData);
 			} catch (error) {
 				console.error('Failed to fetch user details', error);
 				// ProfileViewer 페이지 처음 들어왔을 때, 사용자 정보 조회를 함. 이때 응답을 얻어오지 못하면 (탈퇴나 미등록 등으로 사용자 정보가 없으면)

@@ -23,9 +23,25 @@ const LoadingSkeleton = styled.div`
 	animation: ${shimmer} 2s infinite;
 `;
 
-export const PostContainer = styled.div`
+export const PostLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 100%;
 	height: calc(100vh - 2.75rem);
+	overflow-y: scroll;
+
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE 10+
+	&::-webkit-scrollbar {
+		display: none; // Safari & Chrome
+	}
+`;
+
+export const PostContainer = styled.div`
+	width: 100%;
+	max-width: 450px;
+	height: 100%;
 	overflow-y: scroll;
 
 	scrollbar-width: none; // Firefox
@@ -83,19 +99,23 @@ export const ContentSkeleton = styled(LoadingSkeleton)`
 	border-radius: 4px;
 `;
 
-export const Content = styled(StyledText)<{ showFullText: boolean }>`
+export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 	word-wrap: break-word;
 	word-break: break-all;
 	overflow: hidden;
 	width: 100%;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: ${({ showFullText }) => (showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
+	-webkit-line-clamp: ${({ $showFullText }) => ($showFullText ? 'unset' : '1')}; // 2줄 초과일 때 ...으로 표시
 	text-overflow: ellipsis;
 	white-space: normal;
 `;
 
-export const ShowMoreButton = styled(StyledText)``;
+export const ShowMoreButton = styled(StyledText)`
+	cursor: pointer;
+	color: ${({ theme }) => theme.colors.gray3};
+	margin-top: 8px;
+`;
 
 export const ImageSkeleton = styled(LoadingSkeleton)`
 	width: 100%;
@@ -116,15 +136,20 @@ export const IconWrapper = styled.div`
 	gap: 8px;
 	cursor: pointer;
 
-	img {
-		width: 20px;
-		height: 20px;
-	}
-
 	span {
 		font-size: 15px;
 		color: #000;
 		margin-right: 16px;
+	}
+`;
+
+export const Icon = styled.div`
+	width: 20px;
+	height: 20px;
+
+	img {
+		width: 20px;
+		height: 20px;
 	}
 `;
 

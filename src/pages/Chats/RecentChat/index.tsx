@@ -58,7 +58,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 			) : (
 				<NoChatRoomWrapper>
 					<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
-						개설된 채팅방이 없어요
+						개설된 채팅방이 없어요.
 					</StyledText>
 				</NoChatRoomWrapper>
 			)}
