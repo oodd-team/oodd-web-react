@@ -52,7 +52,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 				action: 'block',
 			};
 			const response = await postUserBlockApi(blockRequest);
-
+			
 			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
