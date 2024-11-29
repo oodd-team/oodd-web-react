@@ -27,6 +27,8 @@ import PostInstaFeedSelect from './pages/PostInstaFeedSelect';
 import Chats from './pages/Chats';
 import ChatRoom from './pages/Chats/ChatRoom';
 
+import NotFound from './pages/NotFound';
+
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 	const isAuthenticated = Boolean(localStorage.getItem('new_jwt_token'));
 	return isAuthenticated ? children : <Navigate to="/login" />;
@@ -84,7 +86,7 @@ const App: React.FC = () => {
 				))}
 
 				{/* 없는 페이지에 대한 처리 */}
-				<Route path="*" element={<Navigate to="/" />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
 	);
