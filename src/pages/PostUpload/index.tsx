@@ -33,6 +33,7 @@ import ClothingInfoItem from '../../components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
+import Modal from '../../components/Modal';
 
 import Left from '../../assets/arrow/left.svg';
 import Right from '../../assets/arrow/right.svg';
@@ -42,12 +43,14 @@ import StyleTag from '../../assets/default/style-tag.svg';
 import Pin from '../../assets/default/pin.svg';
 
 import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
+import { ModalProps } from '../../components/Modal/dto';
 import { PostUploadModalProps } from './dto';
 import { PostBase } from '../../apis/post/dto';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
+import { handleError } from '../../apis/util/handleError';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -59,6 +62,8 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [isSearchBottomSheetOpen, setIsSearchBottomSheetOpen] = useState(false);
 	const [isStyletagListOpen, setIsStyletagListOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -75,21 +80,20 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		'luxury',
 	];
 
+	// 게시물 업로드인지 수정인지 모드 확인
 	useEffect(() => {
-		const state = location.state as { mode?: string; postId?: number };
-		if (state?.mode) {
-			setMode(state.mode); // 모드 상태를 설정
-		}
-		handleInitialModalState();
+		const handleMode = async () => {
+			const state = location.state as { mode?: string; postId?: number };
+			if (state?.mode) {
+				setMode(state.mode); // 모드 상태를 설정
+			}
+			if (state.mode === 'edit' && state?.postId && selectedImages.length === 0) {
+				await getPost(state.postId);
+			}
+		};
+
+		handleMode();
 	}, []);
-
-	const handleInitialModalState = async () => {
-		const state = location.state as { mode?: string; postId?: number };
-
-		if (state.mode === 'edit' && state?.postId) {
-			await getPost(state.postId);
-		}
-	};
 
 	const handlePrev = () => {
 		const state = location.state as { mode?: string; postId?: number };
@@ -113,7 +117,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			setSelectedStyletag(postStyletags);
 			setIsRepresentative(isRepresentative);
 		} catch (error) {
-			console.error(error);
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
 		} finally {
 			setIsLoading(false);
 		}
@@ -128,7 +134,17 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	};
 
 	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
-		setClothingInfos((clothingInfos) => [...clothingInfos, newClothingInfo]);
+		setClothingInfos((clothingInfos) => {
+			// 중복 확인 (새로운 의류 정보가 이미 존재하지 않을 경우 추가)
+			const isDuplicate = clothingInfos.some(
+				(info) => info.modelName === newClothingInfo.modelName && info.brandName === newClothingInfo.brandName,
+			);
+			if (!isDuplicate) {
+				return [...clothingInfos, newClothingInfo];
+			} else {
+				return clothingInfos; // 중복이면 기존 리스트 그대로 반환
+			}
+		});
 	};
 
 	const handleDeleteClothingInfo = (deleteClothingInfo: ClothingInfo) => {
@@ -205,12 +221,10 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	};
 
 	const uploadImageToFirebase = async (imageUrl: string) => {
-		// Firebase URL 형식인지 확인
-		/*
+		//Firebase URL 형식인지 확인
 		if (imageUrl.startsWith('https://firebasestorage.googleapis.com/')) {
 			return imageUrl; // 이미 업로드된 경우, URL을 그대로 반환
 		}
-		*/
 
 		// 새로 업로드해야 하는 경우
 		const croppedBlob = await cropImage(imageUrl);
@@ -228,8 +242,9 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	};
 
 	const handleSubmit = async () => {
-		if (!selectedStyletag) {
-			alert('스타일 태그를 지정해주세요.');
+		if (selectedStyletag.length === 0) {
+			setModalContent('*스타일 태그를 지정해주세요*');
+			setIsStatusModalOpen(true);
 			return;
 		}
 
@@ -240,7 +255,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			const uploadedImages = await Promise.all(
 				selectedImages.map(async (image, index) => {
 					const imageUrl = await uploadImageToFirebase(image.imageUrl);
-					return { imageUrl: imageUrl, orderNum: index }; // orderNum 추가
+					return { imageUrl: imageUrl, orderNum: index + 1 }; // orderNum 추가
 				}),
 			);
 
@@ -273,10 +288,20 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 
 			navigate('/mypage');
 		} catch (error) {
-			console.error(error);
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	// api 처리 상태 모달 (성공/실패)
+	const statusModalProps: ModalProps = {
+		content: modalContent,
+		onClose: () => {
+			setIsStatusModalOpen(false);
+		},
 	};
 
 	return (
@@ -367,6 +392,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 
 				<BottomSheet {...bottomSheetProps} />
 			</UploadContainer>
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</OODDFrame>
 	);
 };
