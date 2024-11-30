@@ -116,6 +116,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		sessionStorage.setItem('scrollPosition', String(window.scrollY));
 		nav(`/users/${feed.user.userId}`);
 	};
 
@@ -137,6 +138,19 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleMatchingButtonClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		setIsMatchingCommentBottomSheetOpen(true);
+	};
+
+	const handleClickFeed = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+
+		// 페이지네이션 bullet 클릭 시 이벤트 차단
+		if (target.classList.contains('swiper-pagination-bullet')) {
+			e.stopPropagation();
+		} else {
+			// 그 외에 게시글 상세 조회 페이지로 이동
+			sessionStorage.setItem('scrollPosition', String(window.scrollY));
+			nav(`/post/${feed.postId}`);
+		}
 	};
 
 	// 게시글 옵션(더보기) 바텀시트
@@ -184,18 +198,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		onClose: () => {
 			setIsStatusModalOpen(false);
 		},
-	};
-
-	const handleClickFeed = (e: React.MouseEvent) => {
-		const target = e.target as HTMLElement;
-
-		// 페이지네이션 bullet 클릭 시 이벤트 차단
-		if (target.classList.contains('swiper-pagination-bullet')) {
-			e.stopPropagation();
-		} else {
-			// 그 외에 게시글 상세 조회 페이지로 이동
-			nav(`/post/${feed.postId}`);
-		}
 	};
 
 	return (

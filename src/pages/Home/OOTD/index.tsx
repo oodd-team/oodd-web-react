@@ -12,8 +12,9 @@ const OOTD: React.FC = () => {
 	const [reachedEnd, setReachedEnd] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const savedScrollPosition = sessionStorage.getItem('scrollPosition');
 	const feedPageRef = useRef(1);
-	const scrollPositionRef = useRef(0);
+	const scrollPositionRef = useRef(Number(savedScrollPosition) || 0);
 	const isFetchingRef = useRef(false);
 
 	const getPostList = async () => {
@@ -45,7 +46,6 @@ const OOTD: React.FC = () => {
 		if (window.innerHeight + document.documentElement.scrollTop >= document.body.scrollHeight - window.innerHeight) {
 			isFetchingRef.current = true;
 			scrollPositionRef.current = window.scrollY;
-			console.log(scrollPositionRef.current);
 			getPostList();
 		}
 	};
