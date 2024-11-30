@@ -120,6 +120,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
 	// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
 	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		if (!isDragging && e.target === e.currentTarget) {
 			onCloseBottomSheet();
 		}

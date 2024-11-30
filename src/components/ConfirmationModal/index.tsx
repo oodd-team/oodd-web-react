@@ -12,6 +12,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 	return (
 		<ConfirmationModalWrapper
 			onClick={(e) => {
+				e.stopPropagation();
 				// Modal 외부를 클릭했을 경우 Modal 닫음
 				if (e.target === e.currentTarget) {
 					onCloseModal();
