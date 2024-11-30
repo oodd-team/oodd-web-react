@@ -149,7 +149,9 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			setInputValue(''); // 입력창 초기화
 			await getPostCommentList(); // 댓글 목록 갱신
 		} catch (error) {
-			console.error('댓글 작성 중 에러 발생:', error);
+			const errorMessage = handleError(error, 'postComment');
+			setModalContent(errorMessage); // 에러 메시지 설정
+			setIsStatusModalOpen(true); // 상태 모달 열기
 		}
 	};
 
