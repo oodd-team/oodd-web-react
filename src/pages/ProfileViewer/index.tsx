@@ -105,7 +105,7 @@ const ProfileViewer: React.FC = () => {
 	};
 
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
-		domain: 'user' as const, // 리터럴 타입으로 지정
+		domain: 'user',
 		targetId: {
 			userId: userIdAsNumber || -1,
 		},
@@ -115,7 +115,7 @@ const ProfileViewer: React.FC = () => {
 	};
 
 	const counts = [
-		{ label: 'OODD', value: userDetails.postsCount || 0 },
+		{ label: 'OOTD', value: userDetails.postsCount || 0 },
 		{ label: '좋아요', value: userDetails.likesCount || 0 },
 	];
 
