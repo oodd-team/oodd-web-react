@@ -7,6 +7,7 @@ import XIcon from '../../assets/default/x.svg';
 
 const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, button }) => {
 	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		if (e.target === e.currentTarget) {
 			onClose();
 		}
