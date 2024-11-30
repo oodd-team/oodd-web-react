@@ -27,12 +27,12 @@ import photo from '../../assets/default/photo.svg';
 import UserProfile from '../../components/UserProfile';
 
 import { getUserPostListApi } from "../../apis/post";
-import { GetUserPostListData } from "../../apis/post/dto";
+import { UserPostSummary } from "../../apis/post/dto";
 
 const MyPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-    const [posts, setPosts] = useState<GetUserPostListData['post']>([]);
+    const [posts, setPosts] = useState<UserPostSummary[]>([]);
     const [totalPosts, setTotalPosts] = useState(0);
     const navigate = useNavigate();
 
@@ -75,19 +75,19 @@ const MyPage: React.FC = () => {
     // 게시물 리스트 조회 API
     const fetchPostList = async () => {
         try {
-            const storedUserId = localStorage.getItem('my_id'); // localStorage에서 userId 가져오기
+            const storedUserId = localStorage.getItem('my_id'); 
             if (!storedUserId) {
                 console.error('User ID not found in localStorage');
                 return;
             }
 
-            const response = await getUserPostListApi(1, 10, Number(storedUserId)); // API 호출
+            const response = await getUserPostListApi(1, 10, Number(storedUserId)); 
             const { post, totalPostsCount } = response.data;
 
-            setPosts(post); // 게시물 목록 상태 업데이트
+            setPosts(post); // 게시물 목록 상태 업데이트 (UserPostSummary 사용!)
             setTotalPosts(totalPostsCount); // 총 게시물 수 상태 업데이트
         } catch (error) {
-            console.error('Error fetching user post list:', error); // 에러 로그 출력
+            console.error('Error fetching user post list:', error); 
         } finally {
             setIsLoading(false); // 로딩 상태 종료
         }
