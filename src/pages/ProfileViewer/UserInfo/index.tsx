@@ -59,6 +59,7 @@ const UserInfo: React.FC = React.memo(() => {
 	}, [userDetails]);
 
 	const handleModalOpen = (message: string) => {
+		setIsBottomSheetOpen(false);
 		setModalContent(message);
 		setIsModalOpen(true);
 	};
