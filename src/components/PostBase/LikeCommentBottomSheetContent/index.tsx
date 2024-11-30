@@ -195,7 +195,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	};
 
 	// 유저 차단 api
-	const sendBlock = async () => {
+	const postUserBlock = async () => {
 		const storedUserId = localStorage.getItem('my_id');
 
 		// 사용자 ID 또는 선택된 댓글이 없으면 함수 종료
@@ -226,37 +226,41 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
-	// 본인 댓글인지, 타 사용자 댓글인지에 따른 조건부 메뉴 항목
-	const MenuItems = [
-		...(selectedComment?.isCommentWriter
-			? [
-					{
-						text: '삭제',
-						action: () => {
-							setIsCommentDeleteConfirmationModalOpen(true);
-							setIsMenuVisible(false);
-						},
-						icon: Delete,
-						color: 'red',
-					},
-				]
-			: [
-					{
-						text: '신고하기',
-						action: () => {
-							setIsCommentReportModalOpen(true);
-						},
-						icon: Report,
-					},
-					{
-						text: '차단하기',
-						action: () => {
-							setIsBlockConfirmationModalOpen(true);
-							setIsMenuVisible(false);
-						},
-						icon: Block,
-					},
-				]),
+	// 본인 댓글 메뉴 항목
+	const MyCommentMenuItems = [
+		{
+			text: '삭제',
+			action: () => {
+				setIsCommentDeleteConfirmationModalOpen(true);
+				setIsMenuVisible(false);
+			},
+			icon: Delete,
+			color: 'red',
+		},
+		{
+			text: '취소',
+			action: () => setIsMenuVisible(false),
+			icon: X,
+		},
+	];
+
+	// 타 사용자 댓글 메뉴 항목
+	const OtherCommentMenuItems = [
+		{
+			text: '신고하기',
+			action: () => {
+				setIsCommentReportModalOpen(true);
+			},
+			icon: Report,
+		},
+		{
+			text: '차단하기',
+			action: () => {
+				setIsBlockConfirmationModalOpen(true);
+				setIsMenuVisible(false);
+			},
+			icon: Block,
+		},
 		{
 			text: '취소',
 			action: () => setIsMenuVisible(false),
@@ -273,7 +277,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		content: `${selectedComment?.user.nickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
 		button: {
 			content: '차단하기',
-			onClick: sendBlock,
+			onClick: postUserBlock,
 		},
 	};
 
@@ -389,7 +393,11 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 							</button>
 						</InputLayout>
 						{isMenuVisible && (
-							<MenuButtonList items={MenuItems} onClose={() => setIsMenuVisible(false)} position={menuPosition} />
+							<MenuButtonList
+								items={selectedComment?.isCommentWriter ? MyCommentMenuItems : OtherCommentMenuItems}
+								onClose={() => setIsMenuVisible(false)}
+								position={menuPosition}
+							/>
 						)}
 						{isCommentDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
 						{isStatusModalOpen && <Modal {...statusModalProps} />}
