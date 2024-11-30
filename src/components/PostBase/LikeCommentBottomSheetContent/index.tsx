@@ -53,6 +53,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	const [inputValue, setInputValue] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [selectedComment, setSelectedComment] = useRecoilState(selectedCommentAtom);
 	const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -161,6 +162,9 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 댓글 작성 api
 	const createComment = async () => {
+		if (isSubmitting) return; // 중복 요청 방지
+		setIsSubmitting(true);
+
 		const content = inputValue.trim();
 		if (!content) return; // 내용이 없으면 함수 종료
 
@@ -172,6 +176,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			const errorMessage = handleError(error, 'postComment');
 			setModalContent(errorMessage); // 에러 메시지 설정
 			setIsStatusModalOpen(true); // 상태 모달 열기
+		} finally {
+			setIsSubmitting(false); // 상태 초기화
 		}
 	};
 
@@ -384,6 +390,13 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 								placeholder="댓글 추가..."
 								value={inputValue}
 								onChange={handleInputChange}
+								onKeyDown={(e) => {
+									// 엔터 키 감지
+									if (e.key === 'Enter' && !e.shiftKey) {
+										e.preventDefault(); // 기본 엔터 동작 방지 (줄바꿈)
+										createComment(); // 댓글 작성 함수 호출
+									}
+								}}
 							></textarea>
 							<button
 								onClick={createComment}

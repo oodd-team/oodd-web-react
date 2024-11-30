@@ -28,6 +28,7 @@ export const PostLayout = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	height: 100%;
 	height: calc(100vh - 2.75rem);
 	overflow-y: scroll;
 
@@ -54,7 +55,7 @@ export const PostContainer = styled.div`
 	}
 
 	&:last-child {
-		margin-bottom: 110px;
+		padding-bottom: 110px;
 	}
 `;
 
