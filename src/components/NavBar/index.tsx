@@ -60,6 +60,10 @@ const NavBar: React.FC = () => {
 	const handleTabClick = (tab: (typeof tabs)[0]) => {
 		setSelectedTab(tab.name);
 		navigate(tab.route);
+		if (tab.name === 'Home') {
+			sessionStorage.setItem('scrollPosition', '0');
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
 	};
 
 	const handleConfirmLogout = () => {
