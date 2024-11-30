@@ -231,9 +231,9 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					modules={[Pagination]}
 					className="ootdSwiper"
 				>
-					{feed.postImages.map((postImage, index) => (
+					{feed.postImages.map((postImage) => (
 						<>
-							<SwiperSlide key={index}>
+							<SwiperSlide key={postImage.imageUrl}>
 								<img
 									src={postImage.imageUrl}
 									alt={`${feed.user.nickname}의 피드 이미지`}

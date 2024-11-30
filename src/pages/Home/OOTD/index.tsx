@@ -3,7 +3,6 @@ import { OOTDContainer, FeedContainer } from './styles';
 import Feed from './Feed';
 import { getPostListApi } from '../../../apis/post';
 import { PostSummary } from '../../../apis/post/dto';
-import { debounce } from 'lodash';
 import { handleError } from '../../../apis/util/handleError';
 import { ModalProps } from '../../../components/Modal/dto';
 import Modal from '../../../components/Modal';
@@ -15,12 +14,13 @@ const OOTD: React.FC = () => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const feedPageRef = useRef(1);
 	const scrollPositionRef = useRef(0);
+	const isFetchingRef = useRef(false);
 
 	const getPostList = async () => {
 		if (reachedEnd) return;
 
 		try {
-			const response = await getPostListApi(feedPageRef.current, 20);
+			const response = await getPostListApi(feedPageRef.current, 10);
 
 			if (response.isSuccess) {
 				if (response.data.post.length === 0) {
@@ -38,15 +38,17 @@ const OOTD: React.FC = () => {
 	};
 
 	// 스크롤 이벤트 핸들러 추가
-	const handleScroll = debounce(() => {
-		if (reachedEnd) return;
+	const handleScroll = () => {
+		// 모든 데이터를 불러왔거나 아직 렌더링이 다 안 된 경우 반환
+		if (reachedEnd || isFetchingRef.current) return;
 
 		if (window.innerHeight + document.documentElement.scrollTop >= document.body.scrollHeight - window.innerHeight) {
+			isFetchingRef.current = true;
 			scrollPositionRef.current = window.scrollY;
 			console.log(scrollPositionRef.current);
 			getPostList();
 		}
-	}, 50);
+	};
 
 	useEffect(() => {
 		getPostList();
@@ -58,7 +60,8 @@ const OOTD: React.FC = () => {
 	}, []);
 
 	useLayoutEffect(() => {
-		window.scrollTo(0, scrollPositionRef.current); // 데이터 로드 후 스크롤 위치 복원
+		window.scrollTo(0, scrollPositionRef.current);
+		isFetchingRef.current = false;
 	}, [feeds]); // feeds가 변경될 때 실행
 
 	const statusModalProps: ModalProps = {
@@ -74,7 +77,7 @@ const OOTD: React.FC = () => {
 			<FeedContainer>
 				{feeds.map((feed, index) => (
 					<div key={index}>
-						<Feed key={feed.user.userId} feed={feed} />
+						<Feed key={feed.postId} feed={feed} />
 					</div>
 				))}
 			</FeedContainer>
