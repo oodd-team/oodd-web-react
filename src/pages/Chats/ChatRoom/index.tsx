@@ -27,6 +27,9 @@ import Block from '../../../assets/default/block.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { chatRoomMessagesData } from '../../../apis/chatting/dto';
+import { postUserBlockApi } from '../../../apis/user';
+import { PostUserBlockRequest } from '../../../apis/user/dto';
+import { handleError } from '../../../apis/util/handleError';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -36,6 +39,7 @@ const ChatRoom: React.FC = () => {
 	const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 	const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState('');
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [isScroll, setIsScroll] = useState(false);
@@ -50,6 +54,52 @@ const ChatRoom: React.FC = () => {
 	const nav = useNavigate();
 	const socket = useSocket();
 
+	// 프로필 사진 클릭 시 프로필 페이지로 이동
+	const handleUserClick = useCallback(() => {
+		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
+		if (opponentId === -1) {
+			setModalContent('유저 정보를 찾을 수 없습니다.');
+			setIsStatusModalOpen(true);
+		} else {
+			nav(`/users/${opponentId}`);
+		}
+	}, [opponentInfo, nav]);
+
+	// 유저 차단 api
+	const postUserBlock = async () => {
+		try {
+			const data: PostUserBlockRequest = {
+				fromUserId: userId,
+				toUserId: opponentInfo?.id || -1,
+				action: 'block',
+			};
+			const response = await postUserBlockApi(data);
+
+			if (response.isSuccess) {
+				setModalContent('정상적으로 처리되었습니다.');
+			}
+		} catch (error) {
+			const errorMessage = handleError(error, 'user');
+			setModalContent(errorMessage);
+		} finally {
+			setIsBlockModalOpen(false);
+			setIsStatusModalOpen(true);
+		}
+	};
+
+	// 채팅방 나가기 api
+	const leaveChatRoom = () => {
+		if (socket) {
+			const data = {
+				chatRoomId: Number(chatRoomId),
+				userId: userId,
+			};
+			socket.emit('leaveChatRoom', data);
+			nav('/chats', { replace: true });
+		}
+	};
+
+	// 전체 메시지 조회
 	const getChatRoomMessages = (data: chatRoomMessagesData[]) => {
 		setAllMessages(data);
 		if (data.length > messageLengthRef.current) {
@@ -58,6 +108,7 @@ const ChatRoom: React.FC = () => {
 		setIsLoading(false);
 	};
 
+	// 새 메시지 수신
 	const getNewMessage = (data: chatRoomMessagesData) => {
 		setAllMessages((prevMessages) => [...prevMessages, data]);
 		setIsScroll((prev) => !prev);
@@ -140,7 +191,7 @@ const ChatRoom: React.FC = () => {
 		isCloseButtonVisible: true,
 		button: {
 			content: '나가기',
-			onClick: () => {},
+			onClick: leaveChatRoom,
 		},
 		onClose: () => {
 			setIsLeaveModalOpen(false);
@@ -152,7 +203,7 @@ const ChatRoom: React.FC = () => {
 		isCloseButtonVisible: true,
 		button: {
 			content: '차단하기',
-			onClick: () => {},
+			onClick: postUserBlock,
 		},
 		onClose: () => {
 			setIsBlockModalOpen(false);
@@ -160,7 +211,7 @@ const ChatRoom: React.FC = () => {
 	};
 
 	const statusModalProps: ModalProps = {
-		content: '사용자 정보가 없습니다',
+		content: modalContent,
 		onClose: () => {
 			setIsStatusModalOpen(false);
 		},
@@ -175,16 +226,6 @@ const ChatRoom: React.FC = () => {
 			setIsMenuBottomSheetOpen(false);
 		},
 	};
-
-	// 프로필 사진 클릭 시 프로필 페이지로 이동
-	const onClickProfile = useCallback(() => {
-		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
-		if (opponentId === -1) {
-			setIsStatusModalOpen(true);
-		} else {
-			nav(`/users/${opponentId}`);
-		}
-	}, [opponentInfo, nav]);
 
 	return (
 		<OODDFrame>
@@ -215,7 +256,7 @@ const ChatRoom: React.FC = () => {
 							{message.sentMessage ? (
 								<SentMessage {...message.sentMessage} />
 							) : message.rcvdMessage ? (
-								<RcvdMessage {...message.rcvdMessage} onClickProfile={onClickProfile} />
+								<RcvdMessage {...message.rcvdMessage} onClickProfile={handleUserClick} />
 							) : null}
 						</div>
 					);
