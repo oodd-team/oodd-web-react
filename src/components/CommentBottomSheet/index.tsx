@@ -29,6 +29,7 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 	};
 
 	const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		if (e.target === e.currentTarget) {
 			handleCloseBottomSheet();
 		}
