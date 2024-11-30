@@ -29,7 +29,7 @@ export interface Comment {
 
 // 댓글 관련 User 정보
 export interface CommentUser {
-	userId: number;
+	id: number;
 	nickname: string;
 	profilePictureUrl: string;
 }
