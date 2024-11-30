@@ -62,21 +62,16 @@ export const FeedText = styled(StyledText)`
 	opacity: 50%;
 `;
 
-export const FeedImgBox = styled.div<{ $src: string }>`
+export const FeedImgBox = styled.div`
 	position: relative;
 	width: 100%;
 	max-height: 37.5rem;
 	border-radius: 0.5rem;
-	background-color: rgba(255, 255, 255, 0.5);
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	aspect-ratio: 4/5;
-
-	background-image: url(${({ $src }) => $src});
-	background-repeat: no-repeat;
-	background-size: cover;
 
 	box-shadow:
 		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
@@ -90,8 +85,7 @@ export const FeedImgBox = styled.div<{ $src: string }>`
 		object-fit: contain;
 	}
 
-	.ootdSwiper,
-	.swiper-wrapper {
+	.ootdSwiper {
 		z-index: 10;
 		align-items: stretch;
 		width: 100%;
@@ -128,17 +122,24 @@ export const FeedImgBox = styled.div<{ $src: string }>`
 		opacity: 1;
 	}
 
-	.ootdSwiper .ootd-slide-small {
-		transition: none !important;
-	}
-
 	.blur {
 		position: absolute;
+		z-index: -10;
 		width: 100%;
 		height: 100%;
 		background: rgba(177, 177, 177, 0.5);
 		backdrop-filter: blur(100px);
 	}
+`;
+
+export const FeedImgBackground = styled.div<{ $src: string }>`
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: -20;
+	background-image: url(${({ $src }) => $src});
+	background-repeat: no-repeat;
+	background-size: cover;
 `;
 
 export const ReactionWrapper = styled.div`
