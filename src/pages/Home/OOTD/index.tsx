@@ -20,7 +20,7 @@ const OOTD: React.FC = () => {
 		if (reachedEnd) return;
 
 		try {
-			const response = await getPostListApi(feedPageRef.current, 10);
+			const response = await getPostListApi(feedPageRef.current, 20);
 
 			if (response.isSuccess) {
 				if (response.data.post.length === 0) {

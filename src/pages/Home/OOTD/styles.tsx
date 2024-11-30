@@ -6,7 +6,7 @@ export const OOTDContainer = styled.div`
 	width: 100%;
 	align-items: flex-start;
 	margin-top: 2.5rem;
-	margin-bottom: 3.25rem;
+	margin-bottom: 4.25rem;
 `;
 
 export const OOTDLoading = styled.div`
