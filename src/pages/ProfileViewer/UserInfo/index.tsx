@@ -25,7 +25,7 @@ import { ChatRoomData, OtherUserDto } from '../../../apis/chatting/dto';
 import { createMatchingApi } from '../../../apis/matching';
 
 const UserInfo: React.FC = React.memo(() => {
-	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>();
+	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
 
 	const [userDetails] = useRecoilState(UserInfoAtom);
 	const [friend, setFriend] = useRecoilState(isFriendAtom);
@@ -103,31 +103,38 @@ const UserInfo: React.FC = React.memo(() => {
 		}
 	};
 
-	const handleMessageClick = async () => {
+	useEffect(() => {
+		const getChatRooms = (data: ChatRoomData[]) => {
+			setChatRoomList(data);
+		};
+
+		if (socket) {
+			socket.emit('getChatRooms', my_id); // 서버에 데이터 요청
+			socket.on('chatRoomList', getChatRooms);
+		}
+
+		// cleanup 함수로 이벤트 리스너 정리
+		return () => {
+			if (socket) {
+				socket.off('chatRoomList', getChatRooms);
+			}
+		};
+	}, [socket, my_id]);
+
+	const handleMessageClick = () => {
 		const user: OtherUserDto = {
 			id: userId,
 			nickname: nickname,
 			profilePictureUrl: user_img,
 		};
 
-		// 채팅방 리스트 조회
-		const getChatRooms = (data: ChatRoomData[]) => {
-			setChatRoomList(data);
-		};
+		chatRoomList.forEach((chatRoom) => {
+			if (chatRoom.otherUser.id === userId) {
+				roomId = chatRoom.chatRoomId;
+			}
+		});
 
-		if (socket) {
-			socket.on('getChatRooms', getChatRooms);
-		}
-
-		if (Array.isArray(chatRoomList)) {
-			chatRoomList.forEach((chatRoom) => {
-				if (chatRoom.otherUser.id === userId) {
-					roomId = chatRoom.chatRoomId;
-				}
-			});
-		}
-
-		console.log(roomId);
+		console.log(roomId); // 왜 null이 뜨냐... 미띠겟다
 
 		if (roomId !== null) {
 			nav(`/chats/${roomId}`);
