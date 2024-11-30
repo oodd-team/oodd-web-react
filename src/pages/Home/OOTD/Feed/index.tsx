@@ -115,20 +115,43 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		}
 	};
 
-	const handleMoreButtonClick = () => {
+	const handleUserClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		sessionStorage.setItem('scrollPosition', String(window.scrollY));
+		nav(`/users/${feed.user.userId}`);
+	};
+
+	const handleMoreButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setIsOptionsBottomSheetOpen(true);
 	};
 
-	const handleRejectButtonClick = () => {
+	const handleRejectButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setIsBlockModalOpen(true);
 	};
 
-	const handleLikeButtonClick = () => {
+	const handleLikeButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		togglePostLikeStatus();
 	};
 
-	const handleMatchingButtonClick = () => {
+	const handleMatchingButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setIsMatchingCommentBottomSheetOpen(true);
+	};
+
+	const handleClickFeed = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+
+		// 페이지네이션 bullet 클릭 시 이벤트 차단
+		if (target.classList.contains('swiper-pagination-bullet')) {
+			e.stopPropagation();
+		} else {
+			// 그 외에 게시글 상세 조회 페이지로 이동
+			sessionStorage.setItem('scrollPosition', String(window.scrollY));
+			nav(`/post/${feed.postId}`);
+		}
 	};
 
 	// 게시글 옵션(더보기) 바텀시트
@@ -179,14 +202,14 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	};
 
 	return (
-		<FeedWrapper>
+		<FeedWrapper onClick={handleClickFeed}>
 			<OptionsBottomSheet {...optionsBottomSheetProps} />
 			{isBlockModalOpen && <Modal {...blockModalProps} />}
 			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 
 			<FeedTop>
-				<Info onClick={() => nav(`/users/${feed.user.userId}`)}>
+				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
 					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
 						{feed.user.nickname}
@@ -199,11 +222,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
-			<FeedText
-				onClick={() => nav(`/post/${feed.postId}`)}
-				$textTheme={{ style: 'body2-regular' }}
-				color={theme.colors.black}
-			>
+			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 				{feed.content}
 			</FeedText>
 			<FeedImgBox $src={feed.postImages[0].imageUrl}>
@@ -215,10 +234,16 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					modules={[Pagination]}
 					className="ootdSwiper"
 				>
-					{feed.postImages.map((postImage, index) => (
-						<SwiperSlide key={index}>
-							<img src={postImage.imageUrl} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
-						</SwiperSlide>
+					{feed.postImages.map((postImage) => (
+						<>
+							<SwiperSlide key={postImage.imageUrl}>
+								<img
+									src={postImage.imageUrl}
+									alt={`${feed.user.nickname}의 피드 이미지`}
+									className="ootd-image-small"
+								/>
+							</SwiperSlide>
+						</>
 					))}
 				</Swiper>
 				<ReactionWrapper>
