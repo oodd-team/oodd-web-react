@@ -28,6 +28,7 @@ export const PostLayout = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	height: 100%;
 	height: calc(100vh - 2.75rem);
 	overflow-y: scroll;
 
@@ -39,15 +40,22 @@ export const PostLayout = styled.div`
 `;
 
 export const PostContainer = styled.div`
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	max-width: 450px;
 	height: 100%;
 	overflow-y: scroll;
+	gap: 16px;
 
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+
 	&::-webkit-scrollbar {
 		display: none; // Safari & Chrome
+	}
+
+	&:last-child {
+		padding-bottom: 110px;
 	}
 `;
 
@@ -55,7 +63,6 @@ export const PostInfoContainer = styled.div`
 	display: flex;
 	align-items: center;
 	margin-top: 8px;
-	margin-bottom: 16px;
 	padding: 0 20px;
 	gap: 8px;
 	align-self: stretch;
@@ -90,7 +97,6 @@ export const MenuBtn = styled.button`
 export const PostContentContainer = styled.div`
 	width: 100%;
 	padding: 0 20px;
-	margin-bottom: 16px;
 `;
 
 export const ContentSkeleton = styled(LoadingSkeleton)`
@@ -126,7 +132,6 @@ export const IconRow = styled.div`
 	height: 20px;
 	align-items: center;
 	padding: 0 20px;
-	margin: 16px 0;
 `;
 
 export const IconWrapper = styled.div`
@@ -153,10 +158,13 @@ export const Icon = styled.div`
 `;
 
 export const ClothingInfoList = styled.div`
-	margin-bottom: 88px;
+	padding: 0 20px;
 	display: flex;
+	flex-shrink: 0;
 	overflow-x: auto;
 	white-space: nowrap;
+	gap: 16px;
+
 	scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
 	-ms-overflow-style: none; /* Internet Explorer에서 스크롤바 숨기기 */
 
