@@ -84,10 +84,6 @@ export const FileInput = styled.input`
 	display: none;
 `;
 
-export const BottomButton = styled.button`
-	color: #ff2389;
-`;
-
 export const UserInfo = styled.button``;
 
 export const Username = styled.button`
@@ -99,3 +95,4 @@ export const Username = styled.button`
 	line-height: 136.4%; /* 30.008px */
 	letter-spacing: -0.427px;
 `;
+
