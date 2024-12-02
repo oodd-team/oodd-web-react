@@ -27,7 +27,7 @@ const AccountCancel: React.FC = () => {
 			}
 
 			const storedUserId = localStorage.getItem('my_id');
-			const token = localStorage.getItem('jwt_token');
+			const token = localStorage.getItem('new_jwt_token');
 
 			if (!storedUserId || !token) {
 				alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
