@@ -152,6 +152,12 @@ const ProfileEdit: React.FC = () => {
 				</UserInfo>
 				<Row>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+						이름
+					</StyledText>
+					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+				</Row>
+				<Row>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						닉네임
 					</StyledText>
 					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
@@ -161,12 +167,6 @@ const ProfileEdit: React.FC = () => {
 						소개글
 					</StyledText>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
-				</Row>
-				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-						이름
-					</StyledText>
-					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 				</Row>
 				<Row>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
