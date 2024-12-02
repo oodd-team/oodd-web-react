@@ -33,7 +33,7 @@ export const ContentContainer = styled.div<{ $isCommentTab: boolean }>`
 	display: flex;
 	gap: 16px;
 	flex-direction: column;
-	align-items: start;
+	justify-content: start;
 	overflow-y: auto;
 
 	/* Comment 탭일 때만 padding-bottom 추가 */

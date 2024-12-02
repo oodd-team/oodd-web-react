@@ -7,17 +7,20 @@ export const MenuListWrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.5);
 `;
 
-export const MenuListContainer = styled.div`
-	z-index: 1000;
+export const MenuListContainer = styled.div<{ $position: { top: number; left: number } }>`
 	position: absolute;
-	right: 0;
-	top: 40;
+	top: ${({ $position }) => `${$position.top}px`};
+	left: ${({ $position }) => `${$position.left}px`};
+	z-index: 1000;
+	width: 120px;
 	display: flex;
 	flex-direction: column;
 	border-radius: 10px;
 	background-color: ${({ theme }) => theme.colors.gray1};
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 `;
 
 export const MenuButtonItem = styled.button<{ $color?: string }>`
@@ -36,5 +39,9 @@ export const MenuButtonItem = styled.button<{ $color?: string }>`
 	img {
 		width: 16px;
 		height: 16px;
+	}
+
+	&:last-child {
+		border-bottom: none;
 	}
 `;
