@@ -45,7 +45,7 @@ const AccountCancel: React.FC = () => {
 
 				// 계정 삭제 시 localStorage에서 사용자 정보 제거
 				localStorage.removeItem('my_id');
-				localStorage.removeItem('jwt_token');
+				localStorage.removeItem('new_jwt_token');
 
 				// 로그인 페이지로 리다이렉트
 				navigate('/login');
