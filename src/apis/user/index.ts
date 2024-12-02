@@ -1,4 +1,5 @@
 import {
+	GetUserInfoResponse,
 	PostUserBlockRequest,
 	PostUserReportRequest,
 	PatchUserInfoRequest,
@@ -26,3 +27,6 @@ export const postUserReportApi = (data: PostUserReportRequest) =>
 
 // 이용 약관 동의 api
 export const postTermsAgreementApi = (userId: string) => newRequest.post<EmptySuccessResponse>(`/user/${userId}`);
+
+// 유저 정보 조회 api
+export const getUserInfoApi = (userId: number) => newRequest.get<GetUserInfoResponse>(`/user/${userId}`);
