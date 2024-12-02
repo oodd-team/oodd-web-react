@@ -15,6 +15,9 @@ import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../config/firebaseConfig';
+import Modal from "../../components/Modal"
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
@@ -40,6 +43,8 @@ const ProfileEdit: React.FC = () => {
 	const [email, setEmail] = useState<string>(''); // 이메일
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
+	const [modalContent, setModalContent] = useState<string | null>(null);
+	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
 
 	// 사용자 정보 불러오기
@@ -83,13 +88,22 @@ const ProfileEdit: React.FC = () => {
 		if (file) {
 			setUploading(true);
 			try {
-				setProfilePictureUrl(URL.createObjectURL(file));
+				const storageRef = ref(storage, `profilePictures/${file.name}`);
+				await uploadBytes(storageRef, file); // Firebase에 파일 업로드
+				const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
+				setProfilePictureUrl(imageUrl);
+				console.log('File uploaded and URL retrieved:', imageUrl);
 			} catch (error) {
-				console.error('Error handling file:', error);
+				console.error('Error uploading file:', error);
 			} finally {
 				setUploading(false);
 			}
 		}
+	};
+
+	const handleModalClose = () => {
+		setIsModalVisible(false);
+		setModalContent(null);
 	};
 
 	const handleSave = async () => {
@@ -117,12 +131,21 @@ const ProfileEdit: React.FC = () => {
 			const response = await patchUserInfoApi(payload, storedUserId);
 	
 			if (response.isSuccess) {
-				alert('프로필이 성공적으로 수정되었습니다.');
-				navigate('/mypage');
+				setModalContent('프로필이 성공적으로 수정되었습니다.');
+				setIsModalVisible(true);
+
+				// 모달 닫힌 후 마이페이지로 이동
+				setTimeout(() => {
+					handleModalClose();
+					navigate('/mypage');
+				}, 2000);
 			} else {
-				alert('프로필 수정에 실패했습니다.');
+				setModalContent('프로필 수정에 실패했습니다.');
+				setIsModalVisible(true);
 			}
 		} catch (error: any) {
+			setModalContent('프로필 수정 중 오류가 발생했습니다.');
+			setIsModalVisible(true);
 			console.error('Error updating user info:', error.response?.data || error.message);
 		}
 	};
@@ -135,7 +158,16 @@ const ProfileEdit: React.FC = () => {
 		<OODDFrame>
 			<ProfileEditContainer>
 				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
-
+				{isModalVisible && (
+				<Modal
+					content={modalContent || ''}
+					onClose={handleModalClose}
+					button={{
+						content: '확인',
+						onClick: handleModalClose,
+					}}
+				/>
+			)}
 				<ProfilePicWrapper>
 					<ProfilePic>
 						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
