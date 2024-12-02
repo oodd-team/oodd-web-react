@@ -117,10 +117,10 @@ const ChatRoom: React.FC = () => {
 	useEffect(() => {
 		if (socket) {
 			// 채팅방 입장
-			socket.emit('joinChatRoom', Number(chatRoomId));
+			socket.emit('joinChatRoom', { chatRoomId: Number(chatRoomId) });
 
 			// 전체 메시지 조회
-			socket.emit('getChatRoomMessages', Number(chatRoomId));
+			socket.emit('getChatRoomMessages', { chatRoomId: Number(chatRoomId) });
 			socket.on('chatRoomMessages', getChatRoomMessages);
 
 			// 최근 메시지 조회

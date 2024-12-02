@@ -245,15 +245,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 								<div className="blur"></div>
 								<FeedImgBackground $src={postImage.imageUrl} />
 							</SwiperSlide>
-							<SwiperSlide key={postImage.imageUrl}>
-								<img
-									src={postImage.imageUrl}
-									alt={`${feed.user.nickname}의 피드 이미지`}
-									className="ootd-image-small"
-								/>
-								<div className="blur"></div>
-								<FeedImgBackground $src={postImage.imageUrl} />
-							</SwiperSlide>
 						</>
 					))}
 				</Swiper>
@@ -261,9 +252,9 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						{isLikeClicked ? (
-							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
-						) : (
 							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
+						) : (
+							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
 						)}
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
