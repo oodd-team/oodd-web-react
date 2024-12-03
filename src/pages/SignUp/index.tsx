@@ -19,7 +19,7 @@ type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 
 const SignUp: React.FC = () => {
 	const navigate = useNavigate();
 
-	const my_id = localStorage.getItem('my_id');
+	const my_id = Number(localStorage.getItem('my_id'));
 	const token = localStorage.getItem('new_jwt_token');
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -107,7 +107,7 @@ const SignUp: React.FC = () => {
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
 		} else if (my_id && token) {
-			const requestData = {
+			const requestData: PartialUserInfoRequest = {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthDate: formData.birthDate,
@@ -116,7 +116,7 @@ const SignUp: React.FC = () => {
 			await patchUserInfo(requestData, my_id);
 		}
 	};
-	const patchUserInfo = async (requestData: any, my_id: string) => {
+	const patchUserInfo = async (requestData: any, my_id: number) => {
 		try {
 			const response = await patchUserInfoApi(requestData, my_id);
 			console.log('수정 성공:', response.data);
@@ -131,6 +131,7 @@ const SignUp: React.FC = () => {
 			setModalType('fail');
 		}
 	};
+
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {

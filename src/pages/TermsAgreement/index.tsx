@@ -17,7 +17,7 @@ import { postTermsAgreementApi } from '../../apis/user';
 import { handleError } from '../../apis/util/handleError';
 
 const TermsAgreement: React.FC = () => {
-	const my_id = localStorage.getItem('my_id');
+	const my_id = Number(localStorage.getItem('my_id'));
 	const navigate = useNavigate();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,14 +93,29 @@ const TermsAgreement: React.FC = () => {
 				</StyledTitle>
 				<CheckboxWrapper>
 					<CheckboxItem>
-						<CheckboxInput type="checkbox" checked={agreements.all} onChange={handleAllAgreementChange} />
-						<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
+						<CheckboxInput
+							type="checkbox"
+							checked={agreements.all}
+							onChange={handleAllAgreementChange}
+							id="all-agreement"
+						/>
+						<label htmlFor="all-agreement">
+							<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
+						</label>
 					</CheckboxItem>
+
 					<Divider />
 					{checkboxData.map(({ key, label }) => (
 						<CheckboxItem key={key}>
-							<CheckboxInput type="checkbox" checked={agreements[key]} onChange={() => handleAgreementChange(key)} />
-							<StyledText $textTheme={{ style: 'body2-regular' }}>{label}</StyledText>
+							<CheckboxInput
+								type="checkbox"
+								checked={agreements[key]}
+								onChange={() => handleAgreementChange(key)}
+								id={key}
+							/>
+							<label htmlFor={key}>
+								<StyledText $textTheme={{ style: 'body2-regular' }}>{label}</StyledText>
+							</label>
 						</CheckboxItem>
 					))}
 				</CheckboxWrapper>

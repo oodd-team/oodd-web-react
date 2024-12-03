@@ -28,9 +28,9 @@ import Report from '../../../assets/default/report.svg';
 import X from '../../../assets/default/x.svg';
 
 import { getPostLikeListApi } from '../../../apis/post-like';
-import { postUserBlockApi } from '../../../apis/user';
-import { PostUserBlockRequest } from '../../../apis/user/dto';
-import { createCommentApi, getCommentListApi, deleteCommentApi } from '../../../apis/post-comment';
+import { postUserBlockApi } from '../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../apis/user-block/dto';
+import { createCommentApi, deleteCommentApi, getCommentListApi } from '../../../apis/post-comment';
 import { handleError } from '../../../apis/util/handleError';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {

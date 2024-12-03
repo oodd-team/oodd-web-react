@@ -10,6 +10,10 @@ import { BottomSheetMenuProps } from '../../BottomSheetMenu/dto';
 import { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
 import { ModalProps } from '../../Modal/dto';
 
+import { SendPostReportRequest } from '../../../apis/post-report/dto';
+import { PostUserReportRequest } from '../../../apis/user-report/dto';
+import { PostUserBlockRequest } from '../../../apis/user-block/dto';
+
 import { StyledText } from '../../Text/StyledText';
 import { handleError } from '../../../apis/util/handleError';
 import blockIcon from '../../../assets/default/block.svg';
@@ -25,10 +29,9 @@ import {
 	ReportModalBox,
 } from './styles';
 import theme from '../../../styles/theme';
-import { postUserBlockApi, postUserReportApi } from '../../../apis/user';
-import { PostUserBlockRequest, PostUserReportRequest } from '../../../apis/user/dto';
+import { postUserBlockApi } from '../../../apis/user-block';
+import { postUserReportApi } from '../../../apis/user-report';
 import { sendPostReportApi } from '../../../apis/post-report';
-import { SendPostReportRequest } from '../../../apis/post-report/dto';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
