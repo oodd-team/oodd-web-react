@@ -9,6 +9,7 @@ import {
 	StatLabel,
 	PostsContainer,
 	AddButton,
+	NoPostWrapper,
 } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavbarProfile from '../../components/NavbarProfile';
@@ -25,6 +26,7 @@ import button_plus from '../../assets/default/plus.svg';
 import insta from '../../assets/default/insta.svg';
 import photo from '../../assets/default/photo.svg';
 import UserProfile from '../../components/UserProfile';
+import { StyledText } from '../../components/Text/StyledText';
 
 import { getUserPostListApi } from '../../apis/post';
 import { UserPostSummary } from '../../apis/post/dto';
@@ -78,7 +80,7 @@ const MyPage: React.FC = () => {
 	// 사용자 정보 조회 API
 	const fetchUserInfo = async () => {
 		try {
-			const storedUserId = localStorage.getItem('my_id');
+			const storedUserId = Number(localStorage.getItem('my_id'));
 			if (!storedUserId) {
 				console.error('User ID not found in localStorage');
 				return;
@@ -94,7 +96,7 @@ const MyPage: React.FC = () => {
 	// 게시물 리스트 조회 API
 	const fetchPostList = async () => {
 		try {
-			const storedUserId = localStorage.getItem('my_id');
+			const storedUserId = Number(localStorage.getItem('my_id'));
 			if (!storedUserId) {
 				console.error('User ID not found in localStorage');
 				return;
@@ -157,7 +159,11 @@ const MyPage: React.FC = () => {
 							.sort((a, b) => Number(b.isRepresentative) - Number(a.isRepresentative))
 							.map((post) => <PostItem key={post.id} post={post} />)
 					) : (
-						<p>게시물이 없습니다.</p>
+						<NoPostWrapper>
+							<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
+								게시물이 없어요.
+							</StyledText>
+						</NoPostWrapper>
 					)}
 				</PostsContainer>
 				<NavBar />
