@@ -11,6 +11,7 @@ import back from '../../assets/arrow/left.svg';
 import BottomButton from '../../components/BottomButton';
 import { patchUserWithdrawApi } from '../../apis/user';
 
+
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
 	const navigate = useNavigate();

@@ -78,7 +78,7 @@ const MyPage: React.FC = () => {
     // 사용자 정보 조회 API
     const fetchUserInfo = async () => {
         try {
-            const storedUserId = localStorage.getItem('my_id');
+            const storedUserId = Number(localStorage.getItem('my_id'));
             if (!storedUserId) {
                 console.error('User ID not found in localStorage');
                 return;
@@ -94,7 +94,7 @@ const MyPage: React.FC = () => {
     // 게시물 리스트 조회 API
     const fetchPostList = async () => {
         try {
-            const storedUserId = localStorage.getItem('my_id'); 
+            const storedUserId = Number(localStorage.getItem('my_id'));
             if (!storedUserId) {
                 console.error('User ID not found in localStorage');
                 return;

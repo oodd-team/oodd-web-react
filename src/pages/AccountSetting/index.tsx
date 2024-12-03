@@ -25,7 +25,7 @@ const AccountSetting: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const storedUserId = localStorage.getItem('my_id');
+				const storedUserId = Number(localStorage.getItem('my_id'));
 				if (!storedUserId) {
 					console.error('User is not logged in');
 					return;
