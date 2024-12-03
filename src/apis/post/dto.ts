@@ -78,10 +78,10 @@ export interface User {
 	profilePictureUrl: string;
 }
 export interface PostImage {
-	id: number;
-	status: string;
-	createdAt: string;
-	updatedAt: string;
+	id?: number;
+	status?: string;
+	createdAt?: string;
+	updatedAt?: string;
 	url: string;
 	orderNum: number;
 }

@@ -103,7 +103,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			nav('/mypage');
 		} else {
 			// 다른 유저의 게시물인 경우
-			nav(`/users/${post?.user.userId}`);
+			nav(`/users/${post?.user.id}`);
 		}
 	};
 
@@ -171,7 +171,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</MenuBtn>
 					</PostInfoContainer>
 
-					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.imageUrl)} />}
+					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
 					<ClothingInfoList className="post-mode">
 						{post?.postClothings?.map((clothingObj, index) => (

@@ -58,7 +58,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	// 게시글 좋아요 & 좋아요 취소 api
 	const togglePostLikeStatus = async () => {
 		try {
-			const response = await togglePostLikeStatusApi(feed.postId);
+			const response = await togglePostLikeStatusApi(feed.id);
 
 			if (response.isSuccess) {
 				setIsLikeClicked((prev) => !prev);
@@ -75,7 +75,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		try {
 			const data: PostUserBlockRequest = {
 				fromUserId: Number(userId) || -1,
-				toUserId: feed.user.userId,
+				toUserId: feed.user.id,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);
@@ -97,7 +97,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		try {
 			const matchingRequest: CreateMatchingRequest = {
 				requesterId: Number(userId) || -1,
-				targetId: feed.user.userId || -1,
+				targetId: feed.user.id || -1,
 				message: comment,
 			};
 			const response = await createMatchingApi(matchingRequest);
@@ -117,7 +117,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.userId}`);
+		nav(`/users/${feed.user.id}`);
 	};
 
 	const handleMoreButtonClick = (e: React.MouseEvent) => {
@@ -149,7 +149,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		} else {
 			// 그 외에 게시글 상세 조회 페이지로 이동
 			sessionStorage.setItem('scrollPosition', String(window.scrollY));
-			nav(`/post/${feed.postId}`);
+			nav(`/post/${feed.id}`);
 		}
 	};
 
@@ -157,8 +157,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
 		targetId: {
-			userId: feed.user.userId || -1,
-			postId: feed.postId || -1,
+			userId: feed.user.id || -1,
+			postId: feed.id || -1,
 		},
 		targetNickname: feed.user.nickname || '알수없음',
 		isBottomSheetOpen: isOptionsBottomSheetOpen,
@@ -224,7 +224,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 				{feed.content}
 			</FeedText>
-			<FeedImgBox $src={feed.postImages[0].imageUrl}>
+			<FeedImgBox $src={feed.postImages[0].url}>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -235,12 +235,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				>
 					{feed.postImages.map((postImage) => (
 						<>
-							<SwiperSlide key={postImage.imageUrl}>
-								<img
-									src={postImage.imageUrl}
-									alt={`${feed.user.nickname}의 피드 이미지`}
-									className="ootd-image-small"
-								/>
+							<SwiperSlide key={postImage.url}>
+								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
 							</SwiperSlide>
 						</>
 					))}
