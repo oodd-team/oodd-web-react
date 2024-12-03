@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { Comment } from '../../apis/post-comment/dto';
 
 export const IsCommentDeleteConfirmationModalOpenAtom = atom<boolean>({
 	key: 'isCommentDeleteConfirmationModalOpenAtom',
@@ -8,4 +9,9 @@ export const IsCommentDeleteConfirmationModalOpenAtom = atom<boolean>({
 export const IsCommentReportModalOpenAtom = atom<boolean>({
 	key: 'IsCommentReportModalOpenAtom',
 	default: false,
+});
+
+export const selectedCommentAtom = atom<Comment | null>({
+	key: 'selectedCommentAtom', // 고유 키
+	default: null, // 초기값
 });
