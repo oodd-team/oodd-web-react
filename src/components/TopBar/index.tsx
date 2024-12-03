@@ -28,7 +28,7 @@ const TopBar: React.FC<TopBarProps> = ({
 				>
 					<img src={LeftButtonSrc || ''} alt="뒤로가기" />
 				</LeftButton>
-				<StyledTextLayout $textTheme={{ style: 'heading2-bold' }} color={theme.colors.black}>
+				<StyledTextLayout $textTheme={{ style: 'body1-bold' }} color={theme.colors.black}>
 					{text}
 				</StyledTextLayout>
 				<RightButton
