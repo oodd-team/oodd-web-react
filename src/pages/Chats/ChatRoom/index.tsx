@@ -77,6 +77,7 @@ const ChatRoom: React.FC = () => {
 
 			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
+				nav('/chats');
 			}
 		} catch (error) {
 			const errorMessage = handleError(error, 'user');
