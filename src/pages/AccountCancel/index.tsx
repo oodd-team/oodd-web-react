@@ -42,8 +42,9 @@ const AccountCancel: React.FC = () => {
 				alert('계정이 성공적으로 삭제되었습니다.');
 
 				// 계정 삭제 시 localStorage에서 사용자 정보 제거
-				localStorage.removeItem('my_id');
-				localStorage.removeItem('new_jwt_token');
+				// localStorage.removeItem('my_id');
+				// localStorage.removeItem('new_jwt_token');
+				localStorage.clear()
 				
 			} else {
 				// 요청 실패 시 오류 메시지 출력
