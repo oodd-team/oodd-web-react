@@ -83,7 +83,7 @@ export const FileInput = styled.input`
 	display: none;
 `;
 
-export const UserInfo = styled.button``;
+export const UserInfo = styled.div``;
 
 export const Username = styled.button`
 	color: #000;
