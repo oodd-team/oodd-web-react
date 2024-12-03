@@ -9,7 +9,7 @@ export const postIdAtom = atom<number>({
 export const userAtom = atom<User>({
 	key: 'userAtom',
 	default: {
-		userId: 0,
+		id: 0,
 		nickname: '알 수 없음',
 		profilePictureUrl: '',
 	},
