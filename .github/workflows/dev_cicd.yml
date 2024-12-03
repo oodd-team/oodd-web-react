@@ -39,6 +39,7 @@ jobs:
       - run: yarn build-dev
 
       - name: deploy to s3
+        if: github.event_name == 'push'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
