@@ -49,7 +49,7 @@ const ProfileEdit: React.FC = () => {
 
 	// 사용자 정보 불러오기
 	useEffect(() => {
-		const fetchUserInfo = async () => {
+		const getUserInfo = async () => {
 			try {
 				const storedUserId = localStorage.getItem('my_id'); // 사용자 ID 가져오기
 				if (!storedUserId) {
@@ -76,7 +76,7 @@ const ProfileEdit: React.FC = () => {
 			}
 		};
 
-		fetchUserInfo();
+		getUserInfo();
 	}, []);
 
 	const handleButtonClick = () => {
