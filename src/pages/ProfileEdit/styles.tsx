@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
+	flex-grow: 1; 
 	width: 100%;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative;
 `;
 
 export const ProfilePicWrapper = styled.div`
