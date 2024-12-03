@@ -23,7 +23,7 @@ const AccountSetting: React.FC = () => {
 
 	// 사용자 정보 가져오기
 	useEffect(() => {
-		const fetchUserInfo = async () => {
+		const getUserInfo = async () => {
 			try {
 				const storedUserId = localStorage.getItem('my_id');
 				if (!storedUserId) {
@@ -41,7 +41,7 @@ const AccountSetting: React.FC = () => {
 			}
 		};
 
-		fetchUserInfo();
+		getUserInfo();
 	}, []);
 
 	const handleConfirmLogout = () => {
@@ -89,7 +89,7 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-								이름 | {userProfile?.email}
+							{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
 					</Row>

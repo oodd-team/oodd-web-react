@@ -41,7 +41,7 @@ export const IconWrapper = styled.div`
 		bottom: 0;
 		color: white;
 		text-align: center;
-		font-family: 'Pretendard'
+		font-family: 'Pretendard';
 		font-size: 15px;
 		font-style: normal;
 		font-weight: 500;
@@ -108,7 +108,7 @@ export const SideNavBarButton = styled.label`
 		height: 2.5rem;
 		display: flex;
 		justify-content: center;
-		align-item: center;
+		align-items: center;
 		border-radius: 50%;
 		padding: 0.6rem;
 		background: white;
