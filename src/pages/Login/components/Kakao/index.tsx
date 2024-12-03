@@ -7,15 +7,15 @@ import { StyledText } from '../../../../components/Text/StyledText';
 import kakao from '../../../../assets/default/snsIcon/kakao.svg';
 
 const Kakao: React.FC = () => {
-	const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-	const REDIRECT_URI = encodeURIComponent(
-		import.meta.env.VITE_DEV_DOMAIN
-			? import.meta.env.VITE_DEV_DOMAIN + '/auth/kakao/callback'
-			: 'http://localhost:3000/auth/kakao/callback',
-	);
+	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 	const handleLogin = () => {
-		window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+		// 리다이렉트 URL 설정 및 서버 URL 생성
+		const redirectUrl = 'http://localhost:3000/login/complete';
+		const serverUrl = `${SERVER_URI}/auth/login/kakao?redirectUrl=${redirectUrl}`;
+
+		// 서버로 리다이렉션
+		window.open(serverUrl, '_self');
 	};
 
 	return (
