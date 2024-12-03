@@ -5,6 +5,7 @@ export const CardLayout = styled.div`
 	background-color: #ececec;
 	border-radius: 0.5rem;
 	position: relative;
+	height: 100%;
 `;
 
 export const ProfileContainer = styled.div`
@@ -37,6 +38,10 @@ export const ProfileImgBox = styled.div`
 export const ProfileInfo = styled.div`
 	gap: 0.463rem;
 	cursor: pointer;
+
+	.row-flex {
+		display: flex;
+	}
 `;
 
 export const SeeMore = styled.div`
@@ -57,24 +62,38 @@ export const ArrowButton = styled.button`
 export const OOTDImgBox = styled.div`
 	position: relative;
 	width: 100%;
-	bottom: 0;
+	height: 100%;
 	border-radius: 0 0 0.5rem 0.5rem;
-	background-color: #d9d9d9;
 	overflow: hidden;
-	margin: 0 auto;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	aspect-ratio: 1/1;
 
 	.slide-image-small {
 		width: 100%;
+		max-width: 640px;
 		height: 100%;
-		object-fit: cover;
-		aspect-ratio: 4/5;
+		object-fit: contain;
+	}
+
+	.childSwiper {
+		z-index: 10;
+		// align-items: stretch;
+		width: 100%;
+		height: 100%;
+	}
+
+	.childSwiper .swiper-slide {
+		display: flex;
+		justify-content: center;
 	}
 
 	.childSwiper .swiper-pagination {
+		position: absolute;
 		right: 1.25rem;
+		z-index: 10;
+		pointer-events: none; /* 마우스 이벤트 무시 */
 	}
 
 	.childSwiper .swiper-pagination-bullet {
@@ -83,6 +102,7 @@ export const OOTDImgBox = styled.div`
 		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
 		background: rgba(255, 255, 255, 0.5);
 		opacity: 1;
+		pointer-events: auto; /* 페이지네이션 클릭 가능 */
 	}
 
 	.childSwiper .swiper-pagination-bullet-active {
@@ -92,9 +112,28 @@ export const OOTDImgBox = styled.div`
 		opacity: 1;
 	}
 
-	.childSwiper .swiper-slide-small img {
+	.childSwiper .slide-small {
 		transition: none !important;
 	}
+
+	.blur {
+		position: absolute;
+		z-index: -10;
+		width: 100%;
+		height: 100%;
+		background: rgba(177, 177, 177, 0.5);
+		backdrop-filter: blur(100px);
+	}
+`;
+
+export const OOTDImgBackground = styled.div<{ $src: string }>`
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: -20;
+	background-image: url(${({ $src }) => $src});
+	background-repeat: no-repeat;
+	background-size: cover;
 `;
 
 export const Reaction = styled.div`
