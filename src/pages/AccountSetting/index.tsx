@@ -89,7 +89,7 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-								이름 | {userProfile?.email}
+							{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
 					</Row>
