@@ -30,12 +30,13 @@ export interface PostBase {
 }
 export interface CreatePostData extends PostBase {}
 export interface PostSummary {
-	postId: number;
+	id: number;
 	content: string;
 	postImages: PostImage[];
 	createdAt: Date;
 	isPostLike: boolean;
 	user: User;
+	requestStatus: boolean;
 }
 export interface GetPostListData {
 	post: PostSummary[];
@@ -72,12 +73,16 @@ export interface GetPostDetailData extends PostBase {
 	isPostWriter: boolean;
 }
 export interface User {
-	userId: number;
+	id: number;
 	nickname: string;
 	profilePictureUrl: string;
 }
 export interface PostImage {
-	imageUrl: string;
+	id?: number;
+	status?: string;
+	createdAt?: string;
+	updatedAt?: string;
+	url: string;
 	orderNum: number;
 }
 export interface PostClothing {

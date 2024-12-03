@@ -254,8 +254,8 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			// 업로드된 이미지 URL과 함께 orderNum을 추가
 			const uploadedImages = await Promise.all(
 				selectedImages.map(async (image, index) => {
-					const imageUrl = await uploadImageToFirebase(image.imageUrl);
-					return { imageUrl: imageUrl, orderNum: index + 1 }; // orderNum 추가
+					const imageUrl = await uploadImageToFirebase(image.url);
+					return { url: imageUrl, orderNum: index + 1 }; // orderNum 추가
 				}),
 			);
 

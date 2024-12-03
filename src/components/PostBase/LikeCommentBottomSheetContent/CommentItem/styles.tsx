@@ -9,8 +9,8 @@ export const CommentItem = styled.div`
 `;
 
 export const StyledBigUserProfile = styled(BigUserProfile)`
-	width: 52px;
-	height: 52px;
+	width: 36px;
+	height: 36px;
 	margin-bottom: auto;
 `;
 
@@ -18,7 +18,7 @@ export const CommentContent = styled.div`
 	margin-left: 8px;
 	display: flex;
 	flex-direction: column;
-	max-width: calc(100% - 60px);
+	max-width: calc(100% - 44px);
 `;
 
 export const RightContainer = styled.div`

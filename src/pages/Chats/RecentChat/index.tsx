@@ -27,7 +27,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 		};
 
 		if (socket) {
-			socket.emit('getChatRooms', userId);
+			socket.emit('getChatRooms', { userId: userId });
 			socket.on('chatRoomList', getChatRooms);
 		}
 

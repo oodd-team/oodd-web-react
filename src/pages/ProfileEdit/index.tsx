@@ -10,81 +10,79 @@ import {
 	CameraIcon,
 	UserInfo,
 	Username,
+	EmailInput
 } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../config/firebaseConfig';
+import Modal from '../../components/Modal';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
 import BottomButton from '../../components/BottomButton';
-import { UserProfileResponse } from './dto';
 import imageBasic from '../../assets/default/defaultProfile.svg';
 import Loading from '../../components/Loading';
 import camera from '../../assets/default/camera.svg';
-import request, { BaseResponse } from '../../apis/core';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../config/firebaseConfig';
-import { UserResponse } from './dto';
+import { getUserInfoApi, patchUserInfoApi } from '../../apis/user'; // API import
+import { UserInfoData, PatchUserInfoRequest } from '../../apis/user/dto'; // DTO import
+
+type ExtendedUserInfoData = UserInfoData & {
+	birthDate?: string; // 확장된 속성
+};
 
 const ProfileEdit: React.FC = () => {
-	const [user, setUser] = useState<UserResponse | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
 	const [nickname, setNickname] = useState<string>('');
 	const [bio, setBio] = useState<string>('');
 	const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
+	const [phoneNumber, setPhoneNumber] = useState<string>(''); // 전화번호
+	const [birthDate, setBirthDate] = useState<string>(''); // 생년월일
+	const [name, setName] = useState<string>(''); // 이름
+	const [email, setEmail] = useState<string>(''); // 이메일
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
+	const [modalContent, setModalContent] = useState<string | null>(null);
+	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
 
+	// 사용자 정보 불러오기
 	useEffect(() => {
-		const fetchUserProfile = async () => {
+		const getUserInfo = async () => {
 			try {
-				const storedUserId = localStorage.getItem('id'); // 로그인된 사용자 ID 가져오기
-
+				const storedUserId = Number(localStorage.getItem('my_id'));
 				if (!storedUserId) {
-					console.error('User is not logged in');
+					console.error('User ID not found in localStorage');
 					return;
 				}
 
-				const response = await request.get<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`);
-				setUserProfile(response.result as UserProfileResponse);
-				setNickname((response.result?.nickname as string) || (response.result?.name as string));
-				setBio(response.result?.bio || '');
-				setProfilePictureUrl(response.result?.profilePictureUrl || null);
+				const userId = Number(storedUserId); // 문자열을 숫자로 변환
+				const response = await getUserInfoApi(userId); // 사용자 정보 조회 API 호출
+				const userInfo: ExtendedUserInfoData = response.data; // 확장된 타입 사용
+
+				// 상태 업데이트
+				setNickname(userInfo.nickname);
+				setBio(userInfo.bio);
+				setProfilePictureUrl(userInfo.profilePictureUrl || null);
+				setPhoneNumber(userInfo.phoneNumber || '');
+				setBirthDate(userInfo.birthDate || ''); // 확장된 속성 사용
+				setName(userInfo.name || '');
+				setEmail(userInfo.email || '');
 			} catch (error) {
-				console.error('Error fetching user profile:', error);
+				console.error('Error fetching user info:', error);
+			} finally {
+				setIsLoading(false); // 로딩 상태 종료
 			}
 		};
 
-		fetchUserProfile();
-	}, []); // 빈 배열이지만, userId는 내부에서 가져옴
+		getUserInfo();
+	}, []);
 
 	const handleButtonClick = () => {
 		fileInputRef.current?.click();
 	};
-
-	// 사용자 정보 가져오기 함수
-	useEffect(() => {
-		const fetchUserData = async () => {
-			try {
-				const storedUserId = localStorage.getItem('id');
-
-				if (!storedUserId) {
-					console.error('User is not logged in');
-					return;
-				}
-
-				const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
-				setUser(response.result); // user 상태에 사용자 정보 설정 (닉네임 포함)
-			} catch (error) {
-				console.error('Error fetching user data:', error);
-			}
-		};
-
-		fetchUserData(); // user 데이터를 가져오는 함수 호출
-	}, []);
 
 	const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -104,50 +102,73 @@ const ProfileEdit: React.FC = () => {
 		}
 	};
 
+	const handleModalClose = () => {
+		setIsModalVisible(false);
+		setModalContent(null);
+	};
+
 	const handleSave = async () => {
 		try {
-			const storedUserId = localStorage.getItem('id'); // 로그인된 사용자 ID 가져오기
-
+			const storedUserId = Number(localStorage.getItem('my_id'));
 			if (!storedUserId) {
-				console.error('User is not logged in');
+				console.error('User ID not found in localStorage');
 				return;
 			}
-			const response = await request.patch<BaseResponse<UserProfileResponse>>(`/users/${storedUserId}`, {
-				nickname,
-				profilePictureUrl,
-				bio,
-			});
+
+			const formattedBirthDate = birthDate ? new Date(birthDate).toISOString().split('T')[0] : '';
+
+			const payload: PatchUserInfoRequest = {
+				name: name || 'Default Name',
+				phoneNumber: phoneNumber || '000-0000-0000',
+				birthDate: formattedBirthDate,
+				email: email || 'default@example.com',
+				nickname: nickname || '닉네임 없음',
+				profilePictureUrl: profilePictureUrl || '',
+				bio: bio || '',
+			};
+
+			console.log('Payload being sent:', payload);
+
+			const response = await patchUserInfoApi(payload, storedUserId);
+
 			if (response.isSuccess) {
-				navigate(`/mypage`);
+				setModalContent('프로필이 성공적으로 수정되었습니다.');
+				setIsModalVisible(true);
+
+				// 모달 닫힌 후 마이페이지로 이동
+				setTimeout(() => {
+					handleModalClose();
+					navigate('/mypage');
+				}, 2000);
 			} else {
-				alert('프로필 수정에 실패했습니다.');
+				setModalContent('프로필 수정에 실패했습니다.');
+				setIsModalVisible(true);
 			}
-		} catch (error) {
-			console.error('Error updating profile:', error);
-			alert('프로필 수정 중 오류가 발생했습니다.');
-		}
-		{
-			uploading ? (
-				<Loading />
-			) : (
-				<Button onClick={handleSave}>
-					<StyledText $textTheme={{ style: 'button2-medium', lineHeight: 1 }} color={theme.colors.black}>
-						저장하기
-					</StyledText>
-				</Button>
-			);
+		} catch (error: any) {
+			setModalContent('프로필 수정 중 오류가 발생했습니다.');
+			setIsModalVisible(true);
+			console.error('Error updating user info:', error.response?.data || error.message);
 		}
 	};
 
-	if (!userProfile) {
-		return <Loading />; // 또는 로딩 스피너 등을 사용할 수 있습니다.
+	if (isLoading || uploading) {
+		return <Loading />;
 	}
 
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
 				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
-
+				{isModalVisible && (
+					<Modal
+						content={modalContent || ''}
+						onClose={handleModalClose}
+						button={{
+							content: '확인',
+							onClick: handleModalClose,
+						}}
+					/>
+				)}
 				<ProfilePicWrapper>
 					<ProfilePic>
 						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
@@ -159,9 +180,15 @@ const ProfileEdit: React.FC = () => {
 				</ProfilePicWrapper>
 				<UserInfo>
 					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray3}>
-						<Username>{user?.nickname || '김아무개...'}</Username>
+						<Username>{nickname || '알수없음'}</Username>
 					</StyledText>
 				</UserInfo>
+				<Row>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+						이름
+					</StyledText>
+					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+				</Row>
 				<Row>
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						닉네임
@@ -174,10 +201,25 @@ const ProfileEdit: React.FC = () => {
 					</StyledText>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
-				<BottomButton
-					content="완료" // 버튼에 표시할 텍스트
-					onClick={handleSave} // 버튼 클릭 시 호출할 함수
-				/>
+				<Row>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+						전화번호
+					</StyledText>
+					<Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+				</Row>
+				<Row>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+						생년월일
+					</StyledText>
+					<Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+				</Row>
+				<Row>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+						이메일
+					</StyledText>
+					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+				</Row>
+				<BottomButton content="완료" onClick={handleSave} />
 			</ProfileEditContainer>
 		</OODDFrame>
 	);

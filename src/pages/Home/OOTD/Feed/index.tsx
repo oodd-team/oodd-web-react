@@ -17,6 +17,7 @@ import {
 	MoreBtn,
 	Reaction,
 	ReactionWrapper,
+	FeedImgBackground,
 } from './styles';
 import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
@@ -36,9 +37,10 @@ import { createMatchingApi } from '../../../../apis/matching';
 import { handleError } from '../../../../apis/util/handleError';
 import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
 import { ModalProps } from '../../../../components/Modal/dto';
+
 import { togglePostLikeStatusApi } from '../../../../apis/post-like';
-import { postUserBlockApi } from '../../../../apis/user';
-import { PostUserBlockRequest } from '../../../../apis/user/dto';
+import { postUserBlockApi } from '../../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
 
 interface FeedProps {
 	feed: PostSummary;
@@ -58,7 +60,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	// 게시글 좋아요 & 좋아요 취소 api
 	const togglePostLikeStatus = async () => {
 		try {
-			const response = await togglePostLikeStatusApi(feed.postId);
+			const response = await togglePostLikeStatusApi(feed.id);
 
 			if (response.isSuccess) {
 				setIsLikeClicked((prev) => !prev);
@@ -75,7 +77,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		try {
 			const data: PostUserBlockRequest = {
 				fromUserId: Number(userId) || -1,
-				toUserId: feed.user.userId,
+				toUserId: feed.user.id,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);
@@ -97,7 +99,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		try {
 			const matchingRequest: CreateMatchingRequest = {
 				requesterId: Number(userId) || -1,
-				targetId: feed.user.userId || -1,
+				targetId: feed.user.id || -1,
 				message: comment,
 			};
 			const response = await createMatchingApi(matchingRequest);
@@ -117,7 +119,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.userId}`);
+		nav(`/users/${feed.user.id}`);
 	};
 
 	const handleMoreButtonClick = (e: React.MouseEvent) => {
@@ -149,7 +151,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		} else {
 			// 그 외에 게시글 상세 조회 페이지로 이동
 			sessionStorage.setItem('scrollPosition', String(window.scrollY));
-			nav(`/post/${feed.postId}`);
+			nav(`/post/${feed.id}`);
 		}
 	};
 
@@ -157,8 +159,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
 		targetId: {
-			userId: feed.user.userId || -1,
-			postId: feed.postId || -1,
+			userId: feed.user.id || -1,
+			postId: feed.id || -1,
 		},
 		targetNickname: feed.user.nickname || '알수없음',
 		isBottomSheetOpen: isOptionsBottomSheetOpen,
@@ -224,7 +226,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 				{feed.content}
 			</FeedText>
-			<FeedImgBox $src={feed.postImages[0].imageUrl}>
+			<FeedImgBox>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -235,12 +237,10 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				>
 					{feed.postImages.map((postImage) => (
 						<>
-							<SwiperSlide key={postImage.imageUrl}>
-								<img
-									src={postImage.imageUrl}
-									alt={`${feed.user.nickname}의 피드 이미지`}
-									className="ootd-image-small"
-								/>
+							<SwiperSlide key={postImage.url}>
+								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
+								<div className="blur"></div>
+								<FeedImgBackground $src={postImage.url} />
 							</SwiperSlide>
 						</>
 					))}
@@ -249,9 +249,9 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						{isLikeClicked ? (
-							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
-						) : (
 							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
+						) : (
+							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
 						)}
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
@@ -261,7 +261,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 						</StyledText>
 					</MatchingBtn>
 				</ReactionWrapper>
-				<div className="blur"></div>
 			</FeedImgBox>
 		</FeedWrapper>
 	);

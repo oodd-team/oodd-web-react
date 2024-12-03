@@ -103,7 +103,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			nav('/mypage');
 		} else {
 			// 다른 유저의 게시물인 경우
-			nav(`/users/${post?.user.userId}`);
+			nav(`/users/${post?.user.id}`);
 		}
 	};
 
@@ -171,30 +171,13 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</MenuBtn>
 					</PostInfoContainer>
 
-					<PostContentContainer>
-						{!post ? (
-							<ContentSkeleton />
-						) : (
-							<>
-								<Content
-									ref={contentRef}
-									onClick={toggleTextDisplay}
-									$showFullText={showFullText}
-									$textTheme={{ style: 'body4-light' }}
-									color={theme.colors.black}
-								>
-									{post.content}
-								</Content>
-								{isTextOverflowing && (
-									<ShowMoreButton onClick={toggleTextDisplay} $textTheme={{ style: 'body4-light' }}>
-										{showFullText ? '간략히 보기' : '더 보기'}
-									</ShowMoreButton>
-								)}
-							</>
-						)}
-					</PostContentContainer>
+					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
-					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.imageUrl)} />}
+					<ClothingInfoList className="post-mode">
+						{post?.postClothings?.map((clothingObj, index) => (
+							<ClothingInfoItem key={index} clothingObj={clothingObj} />
+						))}
+					</ClothingInfoList>
 
 					<IconRow>
 						<IconWrapper>
@@ -211,11 +194,28 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</IconWrapper>
 					</IconRow>
 
-					<ClothingInfoList className="post-mode">
-						{post?.postClothings?.map((clothingObj, index) => (
-							<ClothingInfoItem key={index} clothingObj={clothingObj} hasRightMargin={true} />
-						))}
-					</ClothingInfoList>
+					<PostContentContainer>
+						{!post ? (
+							<ContentSkeleton />
+						) : (
+							<div>
+								<Content
+									ref={contentRef}
+									onClick={toggleTextDisplay}
+									$showFullText={showFullText}
+									$textTheme={{ style: 'body4-light' }}
+									color={theme.colors.black}
+								>
+									{post.content}
+								</Content>
+								{isTextOverflowing && (
+									<ShowMoreButton onClick={toggleTextDisplay} $textTheme={{ style: 'body4-light' }}>
+										{showFullText ? '간략히 보기' : '더 보기'}
+									</ShowMoreButton>
+								)}
+							</div>
+						)}
+					</PostContentContainer>
 				</PostContainer>
 			</PostLayout>
 

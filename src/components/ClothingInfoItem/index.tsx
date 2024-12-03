@@ -5,7 +5,7 @@ import Right from '../../assets/arrow/right.svg';
 import { ClothingInfoItemProps } from './dto';
 import { ClothingInfoItemContainer, ClothingInfoLeft, ClothingImage, ClothingInfoRight, ClothingModel } from './styles';
 
-const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete, hasRightMargin = false }) => {
+const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete }) => {
 	const handleClick = () => {
 		if (clothingObj.url) {
 			window.location.href = clothingObj.url;
@@ -13,7 +13,7 @@ const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDele
 	};
 
 	return (
-		<ClothingInfoItemContainer style={{ marginRight: hasRightMargin ? '0.75rem' : '0' }}>
+		<ClothingInfoItemContainer>
 			<ClothingInfoLeft onClick={handleClick}>
 				<ClothingImage>
 					<img src={clothingObj.imageUrl} alt="ClothingImg" />

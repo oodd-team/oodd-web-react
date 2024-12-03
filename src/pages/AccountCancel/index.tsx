@@ -9,7 +9,8 @@ import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
 
 import BottomButton from '../../components/BottomButton';
-import { patchUserWithdrawApi } from '../../apis/user'; // 새로운 API import
+import { patchUserWithdrawApi } from '../../apis/user';
+
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -26,17 +27,15 @@ const AccountCancel: React.FC = () => {
 				return;
 			}
 
-			const storedUserId = localStorage.getItem('my_id');
-			const token = localStorage.getItem('jwt_token');
+			const storedUserId = Number(localStorage.getItem('my_id'));
+			const token = localStorage.getItem('new_jwt_token');
 
 			if (!storedUserId || !token) {
-				alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-				navigate('/login');
 				return;
 			}
 
 			// API 요청
-			const response = await patchUserWithdrawApi(storedUserId); // 새로운 API 호출
+			const response = await patchUserWithdrawApi(storedUserId);
 
 			// 요청이 성공했는지 확인
 			if (response.isSuccess) {
@@ -44,11 +43,7 @@ const AccountCancel: React.FC = () => {
 				alert('계정이 성공적으로 삭제되었습니다.');
 
 				// 계정 삭제 시 localStorage에서 사용자 정보 제거
-				localStorage.removeItem('my_id');
-				localStorage.removeItem('jwt_token');
-
-				// 로그인 페이지로 리다이렉트
-				navigate('/login');
+				localStorage.clear();
 			} else {
 				// 요청 실패 시 오류 메시지 출력
 				console.error('API Error:', response.code || '알 수 없는 오류가 발생했습니다.');

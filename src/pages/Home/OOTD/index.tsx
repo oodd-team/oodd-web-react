@@ -77,7 +77,7 @@ const OOTD: React.FC = () => {
 			<FeedContainer>
 				{feeds.map((feed, index) => (
 					<div key={index}>
-						<Feed key={feed.postId} feed={feed} />
+						<Feed key={feed.id} feed={feed} />
 					</div>
 				))}
 			</FeedContainer>
