@@ -74,3 +74,12 @@ export const AddButton = styled.button`
 	border-radius: 50%;
 	z-index: 2;
 `;
+
+export const NoPostWrapper = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 80px;
+`;
