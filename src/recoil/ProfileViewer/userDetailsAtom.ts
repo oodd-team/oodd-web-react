@@ -1,9 +1,18 @@
 import { atom } from 'recoil';
-import { CombineDataProps } from '../../pages/ProfileViewer/CombineDataProps';
+import { UserInfoData } from '../../apis/user/dto';
+import imageBasic from '../../assets/default/defaultProfile.svg';
 
-export const UserInfoAtom = atom<CombineDataProps | null>({
+type BasicUserInfo = Pick<UserInfoData, 'userId' | 'nickname' | 'bio' | 'isFriend' | 'profilePictureUrl'>;
+
+export const UserInfoAtom = atom<BasicUserInfo | null>({
 	key: 'UserInfoAtom',
-	default: null,
+	default: {
+		userId: -1,
+		nickname: '알 수 없음',
+		bio: '',
+		isFriend: false,
+		profilePictureUrl: imageBasic,
+	},
 });
 
 export const isFriendAtom = atom<boolean>({

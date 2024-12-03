@@ -41,22 +41,15 @@ const UserInfo: React.FC = React.memo(() => {
 
 	if (!userDetails) return null;
 
-	const { userId, nickname, bio, userImg, isFriend = false } = userDetails;
+	const { userId, nickname, bio, profilePictureUrl, isFriend = false } = userDetails;
 
 	const my_id = Number(localStorage.getItem('my_id'));
-	const user_img = userImg || imageBasic;
+	const user_img = profilePictureUrl || imageBasic;
 	let roomId: number | null = null;
 
 	useEffect(() => {
 		setFriend(isFriend);
 	}, [isFriend, setFriend]);
-
-	useEffect(() => {
-		if (userDetails) {
-			const updatedUserDetails = { ...userDetails };
-			localStorage.setItem(`userDetails_${userDetails.userId}`, JSON.stringify(updatedUserDetails));
-		}
-	}, [userDetails]);
 
 	const handleModalOpen = (message: string) => {
 		setIsBottomSheetOpen(false);
@@ -110,7 +103,7 @@ const UserInfo: React.FC = React.memo(() => {
 		};
 
 		if (socket) {
-			socket.emit('getChatRooms', my_id); // 서버에 데이터 요청
+			socket.emit('getChatRooms', { userId: my_id }); // 서버에 데이터 요청
 			socket.on('chatRoomList', getChatRooms);
 		}
 
