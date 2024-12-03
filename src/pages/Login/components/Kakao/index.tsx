@@ -9,8 +9,8 @@ import kakao from '../../../../assets/default/snsIcon/kakao.svg';
 const Kakao: React.FC = () => {
 	const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
 	const REDIRECT_URI = encodeURIComponent(
-		import.meta.env.VITE_DEV_DOMAIN
-			? import.meta.env.VITE_DEV_DOMAIN + '/auth/kakao/callback'
+		import.meta.env.VITE_DOMAIN
+			? import.meta.env.VITE_DOMAIN + '/auth/kakao/callback'
 			: 'http://localhost:3000/auth/kakao/callback',
 	);
 

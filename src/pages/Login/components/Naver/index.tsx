@@ -7,10 +7,11 @@ import { SocialLogin, TextWrapper, LogoImgWrapper, LogoImage } from '../style';
 import naver from '../../../../assets/default/snsIcon/naver.svg';
 
 const Naver: React.FC = () => {
+	console.log(import.meta.env.VITE_DOMAIN);
 	const clientId = import.meta.env.VITE_NAVER_CLIENT_ID; // 네이버 개발자 센터에서 받은 클라이언트 ID
 	const redirectUri = encodeURIComponent(
-		import.meta.env.VITE_DEV_DOMAIN
-			? import.meta.env.VITE_DEV_DOMAIN + '/auth/naver/callback'
+		import.meta.env.VITE_DOMAIN
+			? import.meta.env.VITE_DOMAIN + '/auth/naver/callback'
 			: 'http://localhost:3000/auth/naver/callback',
 	);
 
