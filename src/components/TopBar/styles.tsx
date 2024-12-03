@@ -9,7 +9,6 @@ export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	z-index: 1;
 	background-color: white;
 	width: 100%; /* 부모 너비에 맞춤 */
-	height: 2.75rem;
 	align-items: center;
 	padding: 0.5rem 1.25rem;
 	${({ $withBorder, theme }) =>

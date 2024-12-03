@@ -40,10 +40,10 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMes
 
 	return (
 		<ChatRoomItemLayout onClick={onClickChatRoom}>
-			<UserImage src={otherUser.profilePictureUrl || defaultProfile} alt="user" />
+			<UserImage src={otherUser?.profilePictureUrl || defaultProfile} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">
-					{otherUser.nickname || '알수없음'}
+					{otherUser?.nickname || '알수없음'}
 				</StyledText>
 				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color="#1D1D1D">
 					{latestMessage.content}
