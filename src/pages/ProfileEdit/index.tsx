@@ -52,7 +52,7 @@ const ProfileEdit: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const storedUserId = localStorage.getItem('my_id'); // 사용자 ID 가져오기
+				const storedUserId = Number(localStorage.getItem('my_id'));
 				if (!storedUserId) {
 					console.error('User ID not found in localStorage');
 					return;
