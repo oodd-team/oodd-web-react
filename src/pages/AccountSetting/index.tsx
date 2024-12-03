@@ -23,7 +23,7 @@ const AccountSetting: React.FC = () => {
 
 	// 사용자 정보 가져오기
 	useEffect(() => {
-		const fetchUserInfo = async () => {
+		const getUserInfo = async () => {
 			try {
 				const storedUserId = localStorage.getItem('my_id');
 				if (!storedUserId) {
@@ -41,7 +41,7 @@ const AccountSetting: React.FC = () => {
 			}
 		};
 
-		fetchUserInfo();
+		getUserInfo();
 	}, []);
 
 	const handleConfirmLogout = () => {
