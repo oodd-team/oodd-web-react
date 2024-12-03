@@ -5,7 +5,6 @@ export const Nav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
-	margin-left: 0px;
 	position: fixed; /* 화면 상단에 고정 */
 	top: 0; /* 상단에 위치 */
 	left: 0; /* 왼쪽에 위치 */
@@ -14,14 +13,12 @@ export const Nav = styled.nav`
 	z-index: 1000; /* 다른 요소들보다 위에 오도록 설정 */
 
 	position: sticky;
-	top: 0; /* 페이지의 최상단에 고정 */
 	z-index: 998; /* 다른 요소 위에 표시되도록 설정 */
 `;
 
 export const IconContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-right: 18px;
 
 	a {
 		display: flex;

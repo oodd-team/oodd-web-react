@@ -63,7 +63,7 @@ export const PinSvg = styled.img`
 	display: flex;
 	position: absolute;
 	top: 0.75rem;
-	left: 1.25rem;
+	left: 0.75rem;
 	justify-content: center;
 	align-items: center;
 `;
