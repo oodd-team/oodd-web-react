@@ -21,14 +21,14 @@ const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const imageUrl = post.imageUrl || 'https://via.placeholder.com/72';
 
 	const handleClick = () => {
-		const path = isMyPost ? `/my-post/${post.postId}` : `/post/${post.postId}`;
+		const path = isMyPost ? `/my-post/${post.id}` : `/post/${post.id}`;
 		navigate(path);
 	};
 
 	return (
 		<PostItemContainer onClick={handleClick}>
 			<PostImageContainer>
-				<PostImage src={imageUrl} alt={`post-${post.postId}`} />
+				<PostImage src={imageUrl} alt={`post-${post.id}`} />
 				{post.isRepresentative && <PinSvg src={PinIcon} />}
 				<LikesOverlay>
 					<Icon src={HeartSvg} alt="heart icon" />
