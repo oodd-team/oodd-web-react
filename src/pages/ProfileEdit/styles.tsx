@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
+	flex-grow: 1; 
 	width: 100%;
-	//max-width: 600px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative;
 `;
 
 export const ProfilePicWrapper = styled.div`
@@ -84,11 +84,7 @@ export const FileInput = styled.input`
 	display: none;
 `;
 
-export const BottomButton = styled.button`
-	color: #ff2389;
-`;
-
-export const UserInfo = styled.button``;
+export const UserInfo = styled.div``;
 
 export const Username = styled.button`
 	color: #000;
@@ -99,3 +95,4 @@ export const Username = styled.button`
 	line-height: 136.4%; /* 30.008px */
 	letter-spacing: -0.427px;
 `;
+
