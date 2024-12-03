@@ -20,7 +20,7 @@ const Post: React.FC = () => {
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
 		targetId: {
-			userId: user.userId || -1,
+			userId: user.id || -1,
 			postId: postId || -1,
 		},
 		targetNickname: user.nickname || '알수없음',
