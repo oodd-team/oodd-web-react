@@ -36,7 +36,7 @@ jobs:
           echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }}" >> .env
           echo "VITE_GOOGLE_CLIENT_SECRET=${{ secrets.VITE_GOOGLE_CLIENT_SECRET }}" >> .env
 
-      - run: yarn build-prod
+      - run: yarn build
 
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master

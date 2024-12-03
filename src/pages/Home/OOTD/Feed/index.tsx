@@ -17,6 +17,7 @@ import {
 	MoreBtn,
 	Reaction,
 	ReactionWrapper,
+	FeedImgBackground,
 } from './styles';
 import more from '../../../../assets/default/more.svg';
 import xBtn from '../../../../assets/default/reject.svg';
@@ -224,7 +225,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 				{feed.content}
 			</FeedText>
-			<FeedImgBox $src={feed.postImages[0].imageUrl}>
+			<FeedImgBox>
 				<Swiper
 					slidesPerView={1}
 					pagination={{
@@ -241,6 +242,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 									alt={`${feed.user.nickname}의 피드 이미지`}
 									className="ootd-image-small"
 								/>
+								<div className="blur"></div>
+								<FeedImgBackground $src={postImage.imageUrl} />
 							</SwiperSlide>
 						</>
 					))}
@@ -249,9 +252,9 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						{isLikeClicked ? (
-							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
-						) : (
 							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
+						) : (
+							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
 						)}
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
@@ -261,7 +264,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 						</StyledText>
 					</MatchingBtn>
 				</ReactionWrapper>
-				<div className="blur"></div>
 			</FeedImgBox>
 		</FeedWrapper>
 	);

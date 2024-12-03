@@ -9,6 +9,7 @@ import {
 	ArrowButton,
 	Btn,
 	CardLayout,
+	OOTDImgBackground,
 	OOTDImgBox,
 	ProfileContainer,
 	ProfileImgBox,
@@ -66,6 +67,10 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 		}
 	};
 
+	const handleUserClick = () => {
+		nav(`/users/${matching.requester.requesterId}`);
+	};
+
 	const handleRejectButtonClick = () => {
 		modifyMatchingStatus('reject');
 	};
@@ -85,16 +90,27 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 		<CardLayout>
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 			<ProfileContainer>
-				<ProfileImgBox>
+				<ProfileImgBox onClick={handleUserClick}>
 					<img src={requester.profilePictureUrl || defaultProfile} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
-					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black} onClick={handleUserClick}>
 						{requester.nickname || '알수없음'}
 					</StyledText>
-					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
-						{matching.requesterPost.styleTags}
-					</StyledText>
+					<div className="row-flex">
+						{matching.requesterPost.styleTags.map((tag, index) => (
+							<div className="row-flex" key={tag}>
+								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
+									{tag}
+								</StyledText>
+								{index < matching.requesterPost.styleTags.length - 1 && (
+									<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
+										,&nbsp;
+									</StyledText>
+								)}
+							</div>
+						))}
+					</div>
 				</ProfileInfo>
 				<SeeMore onClick={() => nav(`/users/${requester.requesterId}`)}>
 					<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
@@ -106,15 +122,19 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 			<OOTDImgBox>
 				<Swiper
 					direction="vertical"
+					slidesPerView={1}
+					effect="slide"
 					pagination={{
 						clickable: true,
 					}}
 					modules={[Pagination]}
 					className="childSwiper"
 				>
-					{matching.requesterPost.postImages.map((image) => (
-						<SwiperSlide key={image.url}>
-							<img src={image.url} alt="OOTD" className="slide-image-small" />
+					{matching.requesterPost.postImages.map((postImage) => (
+						<SwiperSlide key={postImage.url}>
+							<img src={postImage.url} alt="OOTD" className="slide-image-small" />
+							<div className="blur"></div>
+							<OOTDImgBackground $src={postImage.url} />
 						</SwiperSlide>
 					))}
 				</Swiper>
