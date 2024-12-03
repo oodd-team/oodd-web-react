@@ -165,7 +165,7 @@ const MyPage: React.FC = () => {
                     ) : (
                 <NoPostWrapper>
                       <StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
-						개설된 채팅방이 없어요.
+						게시물이 없어요.
 					</StyledText>
                 </NoPostWrapper>
                   
