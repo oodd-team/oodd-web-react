@@ -39,6 +39,10 @@ export const Tabs = styled.div`
 		height: 100%;
 	}
 
+	.swiper-wrapper {
+		height: 100%;
+	}
+
 	.swiper-slider {
 		height: 100%;
 		overflow-y: scroll;

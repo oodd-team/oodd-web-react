@@ -62,6 +62,7 @@ export const ArrowButton = styled.button`
 export const OOTDImgBox = styled.div`
 	position: relative;
 	width: 100%;
+	height: 100%;
 	border-radius: 0 0 0.5rem 0.5rem;
 	overflow: hidden;
 	display: flex;
