@@ -49,13 +49,6 @@ const ProfileViewer: React.FC = () => {
 				});
 			} catch (error) {
 				console.error('사용자 정보 조회 실패:', error);
-				setUserDetails({
-					userId: userIdAsNumber,
-					nickname: '알 수 없음',
-					bio: '',
-					isFriend: false,
-					profilePictureUrl: imageBasic,
-				});
 			}
 		};
 		getUserInfo();

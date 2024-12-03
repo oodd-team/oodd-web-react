@@ -28,12 +28,15 @@ import UserProfile from '../../components/UserProfile';
 
 import { getUserPostListApi } from "../../apis/post";
 import { UserPostSummary } from "../../apis/post/dto";
+import { getUserInfoApi } from "../../apis/user";
+import { UserInfoData } from "../../apis/user/dto";
 
 const MyPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
     const [posts, setPosts] = useState<UserPostSummary[]>([]);
     const [totalPosts, setTotalPosts] = useState(0);
+    const [userInfo, setUserInfo] = useState<UserInfoData | null>(null);
     const navigate = useNavigate();
 
     const bottomSheetMenuProps: BottomSheetMenuProps = {
@@ -72,6 +75,22 @@ const MyPage: React.FC = () => {
         setIsBottomSheetOpen(true);
     };
 
+    // 사용자 정보 조회 API
+    const fetchUserInfo = async () => {
+        try {
+            const storedUserId = localStorage.getItem('my_id');
+            if (!storedUserId) {
+                console.error('User ID not found in localStorage');
+                return;
+            }
+
+            const response = await getUserInfoApi(Number(storedUserId));
+            setUserInfo(response.data);
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
+    
     // 게시물 리스트 조회 API
     const fetchPostList = async () => {
         try {
@@ -95,6 +114,7 @@ const MyPage: React.FC = () => {
 
     useEffect(() => {
         fetchPostList();
+        fetchUserInfo();
     }, []);
 
     if (isLoading) {
@@ -111,9 +131,9 @@ const MyPage: React.FC = () => {
                 <NavbarProfile />
                 <Header>
                     <UserProfile
-                        userImg={imageBasic}
-                        nickname={'김아무개...'}
-                        bio={'소개글이 없습니다.'}
+                       userImg={userInfo?.profilePictureUrl || imageBasic}
+                       nickname={userInfo?.nickname || '김아무개...'}
+                       bio={userInfo?.bio || '소개글이 없습니다.'}
                     />
                 </Header>
                 <ButtonSecondary />
