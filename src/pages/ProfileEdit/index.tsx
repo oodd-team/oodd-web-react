@@ -17,7 +17,7 @@ import { OODDFrame } from '../../components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
-import Modal from "../../components/Modal"
+import Modal from '../../components/Modal';
 
 import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
@@ -108,14 +108,14 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		try {
-			const storedUserId = localStorage.getItem('my_id');
+			const storedUserId = Number(localStorage.getItem('my_id'));
 			if (!storedUserId) {
 				console.error('User ID not found in localStorage');
 				return;
 			}
-	
+
 			const formattedBirthDate = birthDate ? new Date(birthDate).toISOString().split('T')[0] : '';
-	
+
 			const payload: PatchUserInfoRequest = {
 				name: name || 'Default Name',
 				phoneNumber: phoneNumber || '000-0000-0000',
@@ -125,11 +125,11 @@ const ProfileEdit: React.FC = () => {
 				profilePictureUrl: profilePictureUrl || '',
 				bio: bio || '',
 			};
-	
+
 			console.log('Payload being sent:', payload);
-	
+
 			const response = await patchUserInfoApi(payload, storedUserId);
-	
+
 			if (response.isSuccess) {
 				setModalContent('프로필이 성공적으로 수정되었습니다.');
 				setIsModalVisible(true);
@@ -149,7 +149,7 @@ const ProfileEdit: React.FC = () => {
 			console.error('Error updating user info:', error.response?.data || error.message);
 		}
 	};
-	
+
 	if (isLoading || uploading) {
 		return <Loading />;
 	}
@@ -159,15 +159,15 @@ const ProfileEdit: React.FC = () => {
 			<ProfileEditContainer>
 				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
 				{isModalVisible && (
-				<Modal
-					content={modalContent || ''}
-					onClose={handleModalClose}
-					button={{
-						content: '확인',
-						onClick: handleModalClose,
-					}}
-				/>
-			)}
+					<Modal
+						content={modalContent || ''}
+						onClose={handleModalClose}
+						button={{
+							content: '확인',
+							onClick: handleModalClose,
+						}}
+					/>
+				)}
 				<ProfilePicWrapper>
 					<ProfilePic>
 						<img src={profilePictureUrl || imageBasic} alt="프로필 사진" />
@@ -218,13 +218,10 @@ const ProfileEdit: React.FC = () => {
 					</StyledText>
 					<Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				</Row>
-				<BottomButton
-					content="완료" 
-					onClick={handleSave} 
-				/>
+				<BottomButton content="완료" onClick={handleSave} />
 			</ProfileEditContainer>
 		</OODDFrame>
 	);
 };
 
-export default ProfileEdit; 
+export default ProfileEdit;

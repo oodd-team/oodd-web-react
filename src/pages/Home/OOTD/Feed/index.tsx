@@ -37,9 +37,10 @@ import { createMatchingApi } from '../../../../apis/matching';
 import { handleError } from '../../../../apis/util/handleError';
 import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
 import { ModalProps } from '../../../../components/Modal/dto';
+
 import { togglePostLikeStatusApi } from '../../../../apis/post-like';
-import { postUserBlockApi } from '../../../../apis/user';
-import { PostUserBlockRequest } from '../../../../apis/user/dto';
+import { postUserBlockApi } from '../../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
 
 interface FeedProps {
 	feed: PostSummary;

@@ -27,8 +27,8 @@ import Block from '../../../assets/default/block.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { chatRoomMessagesData } from '../../../apis/chatting/dto';
-import { postUserBlockApi } from '../../../apis/user';
-import { PostUserBlockRequest } from '../../../apis/user/dto';
+import { postUserBlockApi } from '../../../apis/user-block';
+import { PostUserBlockRequest } from '../../../apis/user-block/dto';
 import { handleError } from '../../../apis/util/handleError';
 
 const ChatRoom: React.FC = () => {

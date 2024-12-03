@@ -51,7 +51,7 @@ const LoginComplete: React.FC = () => {
 		}
 	}, [location]);
 
-	const checkTermsAgreement = async (userId: string): Promise<boolean> => {
+	const checkTermsAgreement = async (userId: number): Promise<boolean> => {
 		try {
 			await postTermsAgreementApi(userId);
 			return true; // 동의 완료
