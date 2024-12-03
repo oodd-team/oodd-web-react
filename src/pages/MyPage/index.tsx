@@ -132,7 +132,7 @@ const MyPage: React.FC = () => {
                 <Header>
                     <UserProfile
                        userImg={userInfo?.profilePictureUrl || imageBasic}
-                       nickname={userInfo?.nickname || '김아무개...'}
+                       nickname={userInfo?.nickname || '알수없음'}
                        bio={userInfo?.bio || '소개글이 없습니다.'}
                     />
                 </Header>
