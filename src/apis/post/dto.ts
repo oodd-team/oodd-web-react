@@ -43,8 +43,7 @@ export interface GetPostListData {
 	meta: PaginationMeta;
 }
 export interface UserPostSummary {
-	userId: number;
-	postId: number;
+	id: number;
 	createdAt: Date;
 	imageUrl: string;
 	postLikesCount: number;

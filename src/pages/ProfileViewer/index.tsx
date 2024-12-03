@@ -116,10 +116,10 @@ const ProfileViewer: React.FC = () => {
 				</CounterContainer>
 				<PostListContainer>
 					{representativePosts.map((post) => (
-						<PostItem key={post.postId} post={post} isMyPost={false} />
+						<PostItem key={post.id} post={post} isMyPost={false} />
 					))}
 					{otherPosts.map((post) => (
-						<PostItem key={post.postId} post={post} isMyPost={false} />
+						<PostItem key={post.id} post={post} isMyPost={false} />
 					))}
 				</PostListContainer>
 				<OptionsBottomSheet {...optionsBottomSheetProps} />
