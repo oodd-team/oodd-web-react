@@ -10,6 +10,7 @@ import {
 	CameraIcon,
 	UserInfo,
 	Username,
+	EmailInput
 } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
@@ -216,7 +217,7 @@ const ProfileEdit: React.FC = () => {
 					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 						이메일
 					</StyledText>
-					<Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				</Row>
 				<BottomButton
 					content="완료" 

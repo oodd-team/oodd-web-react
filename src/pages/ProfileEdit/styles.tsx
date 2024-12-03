@@ -80,6 +80,17 @@ export const Row = styled.div`
 	}
 `;
 
+export const EmailInput = styled.input`
+  margin-bottom: 120px;
+	width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
+	padding: 25px; /* 10px padding */
+	border: 0px;
+	box-sizing: border-box;
+	border-radius: 10px;
+	background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	text-align: left;
+`;
+
 export const FileInput = styled.input`
 	display: none;
 `;
