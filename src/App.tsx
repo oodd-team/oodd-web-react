@@ -5,8 +5,6 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import LoginComplete from './pages/Login/components/LoginComplete';
 import TermsAgreement from './pages/TermsAgreement';
-import KakaoCallback from './pages/Login/components/Kakao/KakaoCallback';
-import NaverCallback from './pages/Login/components/Naver/NaverCallback';
 
 import MyPage from './pages/MyPage';
 import ProfileEdit from './pages/ProfileEdit';
@@ -65,10 +63,6 @@ const publicRoutes = [
 	{ path: '/signup', element: <SignUp /> },
 	{ path: '/login/complete', element: <LoginComplete /> },
 	{ path: '/terms-agreement', element: <TermsAgreement /> },
-
-	// 콜백
-	{ path: '/auth/kakao/callback', element: <KakaoCallback /> },
-	{ path: '/auth/naver/callback', element: <NaverCallback /> },
 ];
 
 const App: React.FC = () => {

@@ -7,16 +7,15 @@ import { SocialLogin, TextWrapper, LogoImgWrapper, LogoImage } from '../style';
 import naver from '../../../../assets/default/snsIcon/naver.svg';
 
 const Naver: React.FC = () => {
-	console.log(import.meta.env.VITE_DOMAIN);
-	const clientId = import.meta.env.VITE_NAVER_CLIENT_ID; // 네이버 개발자 센터에서 받은 클라이언트 ID
-	const redirectUri = encodeURIComponent(
-		import.meta.env.VITE_DOMAIN
-			? import.meta.env.VITE_DOMAIN + '/auth/naver/callback'
-			: 'http://localhost:3000/auth/naver/callback',
-	);
+	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 	const handleLogin = () => {
-		window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE_TOKEN`;
+		// 리다이렉트 URL 설정 및 서버 URL 생성
+		const redirectUrl = 'http://localhost:3000/login/complete';
+		const serverUrl = `${SERVER_URI}/auth/login/naver?redirectUrl=${redirectUrl}`;
+
+		// 서버로 리다이렉션
+		window.open(serverUrl, '_self');
 	};
 
 	return (
