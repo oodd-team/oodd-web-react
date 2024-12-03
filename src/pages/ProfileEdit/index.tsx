@@ -179,7 +179,7 @@ const ProfileEdit: React.FC = () => {
 				</ProfilePicWrapper>
 				<UserInfo>
 					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray3}>
-						<Username>{nickname || '김아무개...'}</Username>
+						<Username>{nickname || '알수없음'}</Username>
 					</StyledText>
 				</UserInfo>
 				<Row>
