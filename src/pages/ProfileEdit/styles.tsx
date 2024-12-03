@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const ProfileEditContainer = styled.div`
 	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
 	width: 100%;
-	//max-width: 600px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
