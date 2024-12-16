@@ -10,8 +10,10 @@ const Naver: React.FC = () => {
 	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 	const handleLogin = () => {
-		// 리다이렉트 URL 설정 및 서버 URL 생성
-		const redirectUrl = 'http://localhost:3000/login/complete';
+		// 리다이렉트 URL 설정
+		const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_DOMAIN || window.location.origin}/login/complete`);
+
+		// 서버 URL 생성
 		const serverUrl = `${SERVER_URI}/auth/login/naver?redirectUrl=${redirectUrl}`;
 
 		// 서버로 리다이렉션
