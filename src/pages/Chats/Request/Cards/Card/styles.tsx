@@ -87,6 +87,7 @@ export const OOTDImgBox = styled.div`
 	.childSwiper .swiper-slide {
 		display: flex;
 		justify-content: center;
+		transform: scale(1);
 	}
 
 	.childSwiper .swiper-pagination {

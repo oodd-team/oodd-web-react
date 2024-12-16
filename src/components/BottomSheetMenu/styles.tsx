@@ -4,6 +4,8 @@ export const BottomSheetMenuLayout = styled.ul`
 	margin-bottom: 0.62rem;
 	display: flex;
 	flex-direction: column;
+	border: 1px solid rgb(0, 0, 0, 0.1);
+	border-radius: 8px;
 `;
 
 export const SheetItem = styled.li`
@@ -13,7 +15,11 @@ export const SheetItem = styled.li`
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
-	border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+	border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+
+	:last-child {
+		border-bottom: none;
+	}
 `;
 
 export const Icon = styled.img`

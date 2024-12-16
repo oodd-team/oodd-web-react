@@ -117,6 +117,7 @@ const TabBar: React.FC = () => {
 						<RecentChat matchingCount={matchingCount} swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>
+				{/* <div className="margin"></div> */}
 			</Tabs>
 		</TabBarLayout>
 	);

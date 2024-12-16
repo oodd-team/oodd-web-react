@@ -42,7 +42,7 @@ export const InfoBox = styled.div`
 export const InfoItem = styled.p`
 	font-size: 0.875rem; /* 14px */
 	margin-bottom: 0.625rem; /* 10px */
-	padding: 10px 1.25rem; /* 20px */
+	padding: 2px 10px; 
 	display: flex;
 	justify-content: center;
 	align-items: center;

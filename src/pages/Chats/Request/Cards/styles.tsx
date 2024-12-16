@@ -6,19 +6,20 @@ export const CardsContainer = styled.div`
 
 	.parentSwiper {
 		width: 100%;
+		z-index: 10;
 	}
 
-	.parentSwiper.swiper-slide {
+	.parentSwiper .swiper-slide {
 		transition: transform 0.3s;
 		transform: scale(0.95);
 	}
 
-	.parentSwiper.swiper-slide-active {
+	.parentSwiper .swiper-slide-active {
 		transform: scale(1);
 	}
 
-	.parentSwiper.swiper-slide-next,
-	.parentSwiper.swiper-slide-prev {
+	.parentSwiper .swiper-slide-next,
+	.parentSwiper .swiper-slide-prev {
 		transform: scale(0.95);
 	}
 
