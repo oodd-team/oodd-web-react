@@ -12,7 +12,7 @@ import {
 	NoPostWrapper,
 } from './styles';
 import { OODDFrame } from '../../components/Frame/Frame';
-import NavbarProfile from '../../components/NavbarProfile';
+import NavbarProfile from './NavbarProfile';
 import NavBar from '../../components/NavBar';
 import ButtonSecondary from './ButtonSecondary';
 import PostItem from '../../components/PostItem';
