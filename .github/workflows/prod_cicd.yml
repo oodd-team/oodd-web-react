@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   cicd:
@@ -39,6 +36,7 @@ jobs:
       - run: yarn build
 
       - name: deploy to s3
+        if: github.event_name == 'push'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete

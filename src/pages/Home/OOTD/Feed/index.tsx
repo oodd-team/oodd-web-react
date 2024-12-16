@@ -236,13 +236,13 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					className="ootdSwiper"
 				>
 					{feed.postImages.map((postImage) => (
-						<>
-							<SwiperSlide key={postImage.url}>
+						<div key={postImage.url}>
+							<SwiperSlide>
 								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
 								<div className="blur"></div>
 								<FeedImgBackground $src={postImage.url} />
 							</SwiperSlide>
-						</>
+						</div>
 					))}
 				</Swiper>
 				<ReactionWrapper>

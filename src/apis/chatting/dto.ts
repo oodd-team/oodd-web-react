@@ -10,7 +10,7 @@ export interface ChatRoomData {
 export interface OtherUserDto {
 	id: number;
 	nickname: string;
-	profilePictureUrl: string;
+	profileUrl: string;
 }
 
 export interface LatestMessageDto {

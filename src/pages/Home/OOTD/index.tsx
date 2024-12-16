@@ -75,9 +75,9 @@ const OOTD: React.FC = () => {
 		<OOTDContainer>
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 			<FeedContainer>
-				{feeds.map((feed, index) => (
-					<div key={index}>
-						<Feed key={feed.id} feed={feed} />
+				{feeds.map((feed) => (
+					<div key={feed.id}>
+						<Feed feed={feed} />
 					</div>
 				))}
 			</FeedContainer>
