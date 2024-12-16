@@ -130,12 +130,12 @@ const ChatRoom: React.FC = () => {
 
 		// 컴포넌트 언마운트 시 실행
 		return () => {
-			if (socket.connected) {
-				socket.removeListener('chatRoomMessages');
-				socket.removeListener('newMessage');
+			if (socket) {
+				socket.off('chatRoomMessages');
+				socket.off('newMessage');
 			}
 		};
-	}, [chatRoomId]);
+	}, [chatRoomId, socket]);
 
 	// 메시지 렌더링에 필요한 정보 추가
 	useEffect(() => {

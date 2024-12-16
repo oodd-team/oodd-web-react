@@ -46,7 +46,7 @@ const ChatBox: React.FC = () => {
 			const sendMessageRequest = {
 				chatRoomId: Number(chatRoomId),
 				toUserId: opponentInfo?.id,
-				message: newMessage,
+				content: newMessage,
 				fromUserId: userId,
 				createdAt: new Date().toISOString(),
 			};

@@ -119,7 +119,7 @@ const UserInfo: React.FC = React.memo(() => {
 		const user: OtherUserDto = {
 			id: userId,
 			nickname: nickname,
-			profilePictureUrl: user_img,
+			profileUrl: user_img,
 		};
 
 		chatRoomList.forEach((chatRoom) => {
