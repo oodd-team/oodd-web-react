@@ -127,9 +127,7 @@ const ProfileEdit: React.FC = () => {
 				profilePictureUrl: profilePictureUrl || '',
 				bio: bio || '',
 			};
-
-			console.log('Payload being sent:', payload);
-
+			
 			const response = await patchUserInfoApi(payload, storedUserId);
 
 			if (response.isSuccess) {
