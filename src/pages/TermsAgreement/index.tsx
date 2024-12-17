@@ -7,7 +7,7 @@ import TopBar from '../../components/TopBar';
 import Modal from '../../components/Modal';
 
 import { LogoWrapper, LogoImg } from '../SignUp/style';
-import { TermsAgreementContainer, StyledTitle, CheckboxWrapper, CheckboxItem, CheckboxInput, Divider } from './styles';
+import { TermsAgreementLayout, StyledTitle, CheckboxList, CheckboxItem, CheckboxInput, Divider } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 
 import Back from '../../assets/arrow/left.svg';
@@ -55,7 +55,8 @@ const TermsAgreement: React.FC = () => {
 		});
 	};
 
-	const handleFinalClick = async () => {
+	// 완료 버튼을 눌렀을 때 실행되는 함수
+	const handleCompletedClick = async () => {
 		if (!my_id) {
 			setModalMessage('회원 정보가 없습니다.\n로그인 해 주세요!');
 			setIsModalOpen(true);
@@ -73,6 +74,7 @@ const TermsAgreement: React.FC = () => {
 			setIsModalOpen(true);
 		}
 	};
+
 	const navigateToLogin = () => {
 		navigate('/login');
 	};
@@ -80,7 +82,7 @@ const TermsAgreement: React.FC = () => {
 	return (
 		<OODDFrame>
 			<TopBar LeftButtonSrc={Back} onLeftClick={navigateToLogin} />
-			<TermsAgreementContainer>
+			<TermsAgreementLayout>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
@@ -91,7 +93,7 @@ const TermsAgreement: React.FC = () => {
 				>
 					OODD에 오신 것을 환영해요 🥳
 				</StyledTitle>
-				<CheckboxWrapper>
+				<CheckboxList>
 					<CheckboxItem>
 						<CheckboxInput
 							type="checkbox"
@@ -103,7 +105,7 @@ const TermsAgreement: React.FC = () => {
 							<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
 						</label>
 					</CheckboxItem>
-
+					{/*전체 동의와 개별 동의 구분*/}
 					<Divider />
 					{checkboxData.map(({ key, label }) => (
 						<CheckboxItem key={key}>
@@ -118,14 +120,14 @@ const TermsAgreement: React.FC = () => {
 							</label>
 						</CheckboxItem>
 					))}
-				</CheckboxWrapper>
+				</CheckboxList>
 				<BottomButton
 					content="OODD 시작하기"
-					onClick={handleFinalClick}
+					onClick={handleCompletedClick}
 					disabled={!agreements.terms || !agreements.privacy}
 				/>
 				{isModalOpen && <Modal content={modalMessage} onClose={navigateToLogin} />}
-			</TermsAgreementContainer>
+			</TermsAgreementLayout>
 		</OODDFrame>
 	);
 };

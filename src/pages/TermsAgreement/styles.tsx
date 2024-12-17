@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { StyledText } from '../../components/Text/StyledText';
 
-export const TermsAgreementContainer = styled.main`
+export const TermsAgreementLayout = styled.main`
 	display: flex;
 	flex-direction: column;
 	padding: 1.875rem;
@@ -13,7 +13,7 @@ export const BackButton = styled.img`
 	cursor: pointer;
 `;
 
-export const CheckboxWrapper = styled.div`
+export const CheckboxList = styled.div`
 	margin-top: 1.25rem;
 `;
 
