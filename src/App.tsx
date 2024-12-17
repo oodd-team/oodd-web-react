@@ -37,13 +37,13 @@ const protectedRoutes = [
 	{ path: '/', element: <Home /> },
 
 	// 사용자 프로필 및 계정 관리
-	{ path: '/mypage', element: <MyPage /> },
+	{ path: '/profile/:userId', element: <MyPage /> },
 	{ path: '/profile/edit', element: <ProfileEdit /> },
 	{ path: '/account-setting', element: <AccountSetting /> },
 	{ path: '/account-edit', element: <AccountEdit /> },
 	{ path: '/account-cancel', element: <AccountCancel /> },
 	{ path: '/verification', element: <Verification /> },
-	{ path: '/users/:userId', element: <ProfileViewer /> },
+	// { path: '/users/:userId', element: <ProfileViewer /> },
 
 	{ path: '/post/:postId', element: <Post /> },
 	{ path: '/my-post/:postId', element: <MyPost /> },
