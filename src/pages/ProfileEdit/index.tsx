@@ -47,6 +47,7 @@ const ProfileEdit: React.FC = () => {
 	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
+	const userId = localStorage.getItem('my_id');
 
 	// 사용자 정보 불러오기
 	useEffect(() => {
@@ -138,7 +139,7 @@ const ProfileEdit: React.FC = () => {
 				// 모달 닫힌 후 마이페이지로 이동
 				setTimeout(() => {
 					handleModalClose();
-					navigate('/mypage');
+					navigate(`/profile/${userId}`);
 				}, 2000);
 			} else {
 				setModalContent('프로필 수정에 실패했습니다.');
