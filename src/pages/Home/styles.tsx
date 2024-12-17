@@ -10,74 +10,32 @@ export const HomeContainer = styled.div`
 
 // HomeTopBar
 
-export const HomeTopBarContainer = styled.div`
+export const HomeTopBarContainer = styled.header`
 	width: 100%;
-	max-width: 32rem;
-	height: 2.75rem;
+	padding: 0.5rem 1.25rem;
 	display: flex;
 	justify-content: space-between;
 	background-color: white;
-	z-index: 10;
+	z-index: 20;
 	align-items: center;
 	position: fixed;
+	${({ theme }) => theme.visibleOnMobileTablet};
 `;
 
 export const HomeLogo = styled.img`
-	width: 6.6875rem;
-	height: 1.6875rem;
-	margin-left: 1.25rem;
-	cursor: pointer;
-	overflow: hidden;
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
+	padding: 0.0938rem 0;
 `;
 
-// HomeTabBar
-
-export const TabLayout = styled.div`
+export const ButtonContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: auto;
+	gap: 1rem;
 `;
 
-export const HomeTabBarLayout = styled.div`
-	position: fixed;
-	width: 100%;
-	max-width: 32rem;
-	background-color: white;
-	z-index: 10;
-	top: 2.75rem;
-	height: 2.5rem;
-	border-bottom: 0.063rem solid ${({ theme }) => theme.colors.gray2};
-`;
-
-export const HomeTabBarList = styled.ul`
-	height: 2.5rem;
+export const Button = styled.button`
+	width: 1.125rem;
+	height: 1.125rem;
 	display: flex;
-	gap: 1.25rem;
-	justify-content: space-between;
-	margin: 0 1.25rem;
-`;
-
-export const HomeTabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
-	margin-top: 1rem;
-	border-bottom: 0.125rem solid ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')};
-	text-align: center;
-	flex-grow: 1;
-	flex-basis: 0;
-	cursor: ${({ $isPointer }) => ($isPointer ? 'pointer' : '')};
-`;
-
-export const Tabs = styled.div`
-	margin-top: 5.25rem;
-	z-index: 0;
-	flex-grow: 1;
-	height: 100%;
-	.swiper-container {
-		height: 100%;
-	}
+	justify-content: center;
+	align-items: center;
+	border-radius: 0.03rem;
 `;

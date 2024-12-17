@@ -16,7 +16,7 @@ import {
 import { OODDFrame } from '../../components/Frame/Frame';
 import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
-import back from '../../assets/back.svg';
+import back from '../../assets/arrow/left.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Verification: React.FC = () => {
@@ -119,7 +119,7 @@ const Verification: React.FC = () => {
 								placeholder="이름"
 								value={name}
 								onChange={handleNameChange}
-								data-theme-style="heading2-light"
+								data-theme-style="heading1-regular"
 								data-theme-lineheight="1"
 							/>
 						</InputWrapper>

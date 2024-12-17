@@ -1,34 +1,36 @@
 import React from 'react';
-import { StyledText } from '../../../../components/Text/StyledText';
+
 import theme from '../../../../styles/theme';
-import kakao from '../../../../assets/Login/kakao.png';
 import { SocialLogin, LogoImgWrapper, LogoImage, TextWrapper } from '../style';
+import { StyledText } from '../../../../components/Text/StyledText';
+
+import kakao from '../../../../assets/default/snsIcon/kakao.svg';
 
 const Kakao: React.FC = () => {
-	// 환경 변수에서 값을 읽어옴
-	const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-	const REDIRECT_URI = encodeURIComponent(
-		import.meta.env.VITE_DEV_DOMAIN
-			? import.meta.env.VITE_DEV_DOMAIN + '/auth/kakao/callback'
-			: 'http://localhost:3000/auth/kakao/callback',
-	);
+	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 	const handleLogin = () => {
-		window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+		// 리다이렉트 URL 설정
+		const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_DOMAIN || window.location.origin}/login/complete`);
+
+		// 서버 URL 생성
+		const serverUrl = `${SERVER_URI}/auth/login/kakao?redirectUrl=${redirectUrl}`;
+
+		// 서버로 리다이렉션
+		window.open(serverUrl, '_self');
 	};
 
 	return (
-		<SocialLogin $bgColor="#FFE716" onClick={handleLogin}>
-			<LogoImgWrapper $logowidth="2.3rem" $logoheight="2.3rem">
+		<SocialLogin $bgColor="#FEE500" onClick={handleLogin}>
+			<LogoImgWrapper>
 				<LogoImage src={kakao} alt="Kakao logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
-					카카오로 시작하기
+				<StyledText $textTheme={{ style: 'body2-bold' }} color={theme.colors.black}>
+					Kakao로 계속하기
 				</StyledText>
 			</TextWrapper>
 		</SocialLogin>
 	);
 };
-
 export default Kakao;

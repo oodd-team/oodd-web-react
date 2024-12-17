@@ -1,21 +1,22 @@
-import Cards from '../../../components/Cards';
-import { StyledText } from '../../../components/Text/StyledText';
+import React from 'react';
+import Cards from './Cards';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
+import { StyledText } from '../../../components/Text/StyledText';
+import { RequestProps } from './dto';
 
-const Request: React.FC<{ matchingRequests: number }> = ({ matchingRequests }) => {
-	const handleRemoveMatching = () => {};
-
+const Request: React.FC<RequestProps> = ({ matchingCount, decreaseMatchingCount }) => {
 	return (
 		<>
-			<ReqeustInfo>
-				<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 1 }} color={theme.colors.black}>
-					Message {matchingRequests}
+			<ReqeustInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+				Message&nbsp;
+				<StyledText $textTheme={{ style: 'body1-bold' }} color="#FF2389">
+					{matchingCount}
 				</StyledText>
 			</ReqeustInfo>
-			<Cards onRemoveMatching={handleRemoveMatching} />
+			<Cards decreaseMatchingCount={decreaseMatchingCount} />
 		</>
 	);
 };
 
-export default Request;
+export default React.memo(Request);

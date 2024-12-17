@@ -12,6 +12,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 	return (
 		<ConfirmationModalWrapper
 			onClick={(e) => {
+				e.stopPropagation();
 				// Modal 외부를 클릭했을 경우 Modal 닫음
 				if (e.target === e.currentTarget) {
 					onCloseModal();
@@ -20,11 +21,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 		>
 			<ConfirmationModalLayout>
 				<ContentBox>
-					<StyledText
-						style={{ whiteSpace: 'pre-line' }}
-						$textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}
-						color={theme.colors.black}
-					>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 						{content}
 					</StyledText>
 				</ContentBox>
@@ -36,7 +33,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 									onCloseModal();
 								}}
 							>
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={theme.colors.black}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
 									취소
 								</StyledText>
 							</Button>

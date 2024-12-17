@@ -1,23 +1,21 @@
-import { ChatBoxContainer, Textarea, SendIcon } from './styles';
+import { ChatBoxContainer, Textarea, SendButton } from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import Send from '../../../../assets/Chats/Send.svg';
 import { useParams } from 'react-router-dom';
-import { OpponentInfoAtom } from '../../../../recoil/OpponentInfo';
+import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
 import { useSocket } from '../../../../context/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const storageValue = localStorage.getItem('id');
+	const storageValue = localStorage.getItem('my_id');
 	const userId = storageValue ? Number(storageValue) : -1;
-	const { roomId } = useParams();
-	const roomIdNumber = Number(roomId);
+	const { chatRoomId } = useParams();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	const [newMessage, setNewMessage] = useState('');
 
 	const socket = useSocket();
-	const isOpponentValid = !!(opponentInfo && opponentInfo.id && opponentInfo.name);
+	const isOpponentValid = !!(opponentInfo && opponentInfo.id);
 
 	// textarea 내용에 따라 높이 조정
 	useEffect(() => {
@@ -45,7 +43,15 @@ const ChatBox: React.FC = () => {
 
 		// 메시지 전송
 		if (socket) {
-			socket.emit('message', roomIdNumber, userId, opponentInfo?.id, newMessage);
+			const sendMessageRequest = {
+				chatRoomId: Number(chatRoomId),
+				toUserId: opponentInfo?.id,
+				content: newMessage,
+				fromUserId: userId,
+				createdAt: new Date().toISOString(),
+			};
+
+			socket.emit('sendMessage', sendMessageRequest);
 			setNewMessage('');
 		}
 	};
@@ -61,13 +67,14 @@ const ChatBox: React.FC = () => {
 		<ChatBoxContainer>
 			<Textarea
 				$isOpponentValid={isOpponentValid}
+				placeholder="메시지 보내기"
 				ref={textareaRef}
 				value={newMessage}
 				onKeyDown={onKeyDown}
 				onChange={onChangeMessage}
 				onSubmit={sendNewMessage}
 			/>
-			<SendIcon $isOpponentValid={isOpponentValid} src={Send} alt="send" onClick={sendNewMessage} />
+			<SendButton $isOpponentValid={isOpponentValid} onClick={sendNewMessage} />
 		</ChatBoxContainer>
 	);
 };

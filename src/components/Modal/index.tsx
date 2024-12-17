@@ -1,19 +1,39 @@
 import React from 'react';
-import { ModalWrapper, ModalContainer } from './styles';
+import ReactDOM from 'react-dom';
+import { ModalWrapper, ModalContainer, CloseButton, ConfirmButton } from './styles';
 import { StyledText } from '../Text/StyledText';
 import { ModalProps } from './dto';
+import XIcon from '../../assets/default/x.svg';
 
-const Modal: React.FC<ModalProps> = ({ content, onClose }) => {
-	const handleClick = () => {
-		onClose();
+const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, button }) => {
+	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (e.target === e.currentTarget) {
+			onClose();
+		}
 	};
 
-	return (
-		<ModalWrapper onClick={handleClick}>
-			<ModalContainer>
-				<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }}>{content}</StyledText>
+	const handleConfirmButtonClick = () => {
+		if (button) {
+			button.onClick();
+		} else {
+			onClose();
+		}
+	};
+
+	return ReactDOM.createPortal(
+		<ModalWrapper onClick={handleBackgroundClick}>
+			<ModalContainer $isCloseButtonVisible={isCloseButtonVisible || false}>
+				{isCloseButtonVisible && (
+					<CloseButton onClick={onClose}>
+						<img src={XIcon} alt="" />
+					</CloseButton>
+				)}
+				<StyledText $textTheme={{ style: 'body2-regular' }}>{content}</StyledText>
+				<ConfirmButton onClick={handleConfirmButtonClick}>{button?.content || '확인'}</ConfirmButton>
 			</ModalContainer>
-		</ModalWrapper>
+		</ModalWrapper>,
+		document.body,
 	);
 };
 

@@ -1,32 +1,32 @@
 import { StyledText } from '../Text/StyledText';
-import theme from '../../styles/theme';
 import { CommentLayout, SendContainer, CommentTextarea, SendImg } from './styles';
-import Send from '/Send.svg';
+import Send from '../../assets/default/send-comment.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { CommentProps } from './dto';
 
-const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
+const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal }) => {
 	const [comment, setComment] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	// textarea 내용에 따라 높이 조정
-	useEffect(() => {
+	// textarea 높이 조정 함수
+	const adjustTextareaHeight = () => {
 		if (textareaRef.current) {
-			textareaRef.current.style.height = '1.2rem';
-			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+			textareaRef.current.style.height = '1.2rem'; // 초기 높이 설정
+			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // 스크롤 높이에 맞춰 재조정
 		}
-	}, [comment]);
+	};
 
-	const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		if (e.target.value.length >= 100) {
-			return;
-		} else {
+	useEffect(() => {
+		adjustTextareaHeight();
+	}, [comment]); // comment가 변경될 때만 높이 재조정
+
+	const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		if (e.target.value.length <= 100) {
 			setComment(e.target.value);
 		}
 	};
 
-	// textarea에서 enter 입력 시 실행
-	const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (comment === '') {
 			e.preventDefault();
 			return;
@@ -38,29 +38,28 @@ const Comment: React.FC<CommentProps> = ({ content, sendComment }) => {
 		}
 	};
 
-	// send 이미지 클릭 시 실행
-	const onClickSend = (): void => {
+	const handleSendButtonClick = () => {
 		if (comment === '') {
 			return;
 		}
 		if (textareaRef.current) {
 			sendComment(textareaRef.current.value);
+			setComment('');
 		}
-		setComment('');
 	};
 
 	return (
-		<CommentLayout>
-			<StyledText
-				style={{ whiteSpace: 'pre-line' }}
-				$textTheme={{ style: 'body2-light', lineHeight: 1.5 }}
-				color={theme.colors.gray3}
-			>
-				{content}
-			</StyledText>
+		<CommentLayout $isModal={isModal}>
+			<StyledText $textTheme={{ style: 'body1-regular', lineHeight: 1.5 }}>{content}</StyledText>
 			<SendContainer>
-				<CommentTextarea ref={textareaRef} value={comment} onChange={onChangeComment} onKeyDown={onKeyDown} />
-				<SendImg src={Send} onClick={onClickSend} />
+				<CommentTextarea
+					ref={textareaRef}
+					value={comment}
+					onChange={handleChangeComment}
+					onKeyDown={handleKeyDown}
+					maxLength={100}
+				/>
+				<SendImg src={Send} onClick={handleSendButtonClick} />
 			</SendContainer>
 		</CommentLayout>
 	);

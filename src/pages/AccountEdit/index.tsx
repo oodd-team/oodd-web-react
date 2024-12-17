@@ -21,13 +21,10 @@ import { useNavigate } from 'react-router-dom';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 
-import naverIcon from './assets/naverIcon.png';
-import googleIcon from './assets/googleIcon.png';
-import kakaoIcon from './assets/kakaoIcon.png';
-import facebookIcon from './assets/facebookIcon.png';
-
+import naver from '../../assets/default/snsIcon/naver.svg';
+import kakao from '../../assets/default/snsIcon/kakao.svg';
 import TopBar from '../../components/TopBar';
-import back from '../../assets/back.svg';
+import back from '../../assets/arrow/left.svg';
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -60,10 +57,8 @@ const AccountEdit: React.FC = () => {
 							</StyledText>
 						</Text>
 						<SNSInfoRow>
-							<SNSIcon src={naverIcon} alt="Naver Icon" />
-							<SNSIcon src={kakaoIcon} alt="kakaoIcon" />
-							<SNSIcon src={googleIcon} alt="googleIcon" />
-							<SNSIcon src={facebookIcon} alt="facebookIcon" />
+							<SNSIcon src={naver} alt="Naver Icon" />
+							<SNSIcon src={kakao} alt="kakaoIcon" />
 						</SNSInfoRow>
 					</SNSInfo>
 				</Section>

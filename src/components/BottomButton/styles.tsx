@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const ButtonWrapper = styled.div`
 	display: flex;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	width: 100%;
-	max-width: 32rem;
 	height: 6.25rem;
 	background-color: ${({ theme }) => theme.colors.white};
 	justify-content: flex-end;
@@ -14,7 +15,8 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const Button = styled.button<{ disabled: boolean }>`
-	background-color: ${({ disabled, theme }) => (disabled ? theme.colors.gray3 : theme.colors.black)};
+	background: ${({ disabled, theme }) =>
+		disabled ? 'linear-gradient(93deg, #FFC1D6 1.22%, #F8D4D4 99.73%)' : theme.colors.gradient};
 	border-radius: 0.625rem;
 	font-size: 1rem;
 	width: calc(100% - 2.5rem);
@@ -24,9 +26,5 @@ export const Button = styled.button<{ disabled: boolean }>`
 
 	div {
 		color: white;
-	}
-
-	&:hover {
-		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 `;

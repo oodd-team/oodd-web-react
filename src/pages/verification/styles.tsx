@@ -99,11 +99,7 @@ export const StyledInput = styled.input`
 	font-size: 1rem;
 	width: 100%;
 
-	&.heading2-light {
-		font-family: 'Gmarket Sans';
-		font-weight: 300; // light
-		font-size: 1.3125rem; // 21px
-	}
+	${({ theme }) => theme.fontStyles['heading1-regular']}
 
 	&.body2-light {
 		font-family: 'Pretendard Variable';

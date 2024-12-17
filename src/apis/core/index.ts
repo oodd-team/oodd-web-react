@@ -5,8 +5,9 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
-import { JWT_KEY } from '../../config/constant';
+import { JWT_KEY, NEW_JWT_KEY } from '../../config/constant';
 
+// 기존 서버 응답 타입
 export type BaseResponse<T = any> = {
 	isSuccess: boolean;
 	message: string;
@@ -35,6 +36,43 @@ interface CustomInstance extends AxiosInstance {
 	patch<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
 }
 
+// 새로운 서버 axios 인스턴스
+export const newRequest: CustomInstance = axios.create({
+	baseURL: import.meta.env.VITE_NEW_API_URL,
+	timeout: 20000,
+	headers: {
+		accept: 'application/json',
+		Authorization: `Bearer ${NEW_JWT_KEY}`,
+	},
+});
+
+newRequest.interceptors.request.use(
+	(config) => {
+		const jwt = window.localStorage.getItem(NEW_JWT_KEY);
+		config.headers.Authorization = `Bearer ${jwt}`;
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	},
+);
+
+newRequest.interceptors.response.use(
+	(response) => {
+		// 2XX 범위
+		// response body 반환
+		console.log('network log', response);
+		return response.data;
+	},
+	(error) => {
+		// 그 외
+		// error로 AxiosError 타입 반환
+		console.error(error);
+		return Promise.reject(error);
+	},
+);
+
+// 기존 서버 axios 인스턴스
 export const request: CustomInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 20000,

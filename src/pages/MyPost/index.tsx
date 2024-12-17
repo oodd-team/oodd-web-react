@@ -1,390 +1,149 @@
 import React, { useState, useEffect } from 'react';
 
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-	PostDetailContainer,
-	UserID,
-	Pic_exam,
-	UserInfoContainer,
-	UserRow,
-	Text,
-	Menu,
-	ImageWrapper,
-	Image,
-	IconRow,
-	IconWrapper,
-	ClothingInfoContainer,
-	Tab,
-	ContentContainer,
-	UserItem,
-	CircleIcon,
-	ModalContainer,
-	TabContainer,
-	Arrow,
-	Indicator,
-} from './styles';
 
-import TopBar from '../../components/TopBar';
-import { OODDFrame } from '../../components/Frame/Frame';
-import ConfirmationModal from '../../components/ConfirmationModal';
+import { useRecoilState } from 'recoil';
+import { isPostRepresentativeAtom } from '../../recoil/Post/PostAtom';
+
+import PostBase from '../../components/PostBase';
+import Modal from '../../components/Modal';
+import { ModalProps } from '../../components/Modal/dto';
 import BottomSheet from '../../components/BottomSheet';
 import { BottomSheetProps } from '../../components/BottomSheet/dto';
 import BottomSheetMenu from '../../components/BottomSheetMenu';
 import { BottomSheetMenuProps } from '../../components/BottomSheetMenu/dto';
-import ClothingInfoCard from '../Post/ClothingInfoCard';
 
-import imageBasic from '../../assets/imageBasic.svg';
-import back from '../../assets/back.svg';
-import nextIcon from '../../assets/Upload/next.svg';
-import DeleteIcon from './assets/DeleteIcon.png';
-import EditIcon from './assets/EditIcon.svg';
-import PinIcon from './assets/PinIcon.svg';
-import mockImage from './assets/mockImage.png';
-import heartIcon from './assets/heartIcon.svg';
-import commentIcon from './assets/commentIcon.svg';
+import Edit from '../../assets/default/edit.svg';
+import Pin from '../../assets/default/pin.svg';
+import Delete from '../../assets/default/delete.svg';
 
-import request from '../../apis/core';
-import { UserResponse } from './dto';
-import { BaseResponse, PostDetailResponse, LikesResponse, CommentsResponse } from './dto';
-import Loading from '../../components/Loading';
+import { modifyPostRepresentativeStatusApi, deletePostApi } from '../../apis/post';
 
 const MyPost: React.FC = () => {
 	const { postId } = useParams<{ postId: string }>();
-	const [postDetail, setPostDetail] = useState<PostDetailResponse['result'] | null>(null);
-	const [currentImageIndex, setCurrentImageIndex] = useState(0);
-	const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-	const [activeTab, setActiveTab] = useState<'likes' | 'comments' | 'menu'>('menu');
-	const [likes, setLikes] = useState<LikesResponse['result']['likes']>([]);
-	const [comments, setComments] = useState<CommentsResponse['result']['comments']>([]);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+	const [isPostRepresentative, setIsPostRepresentative] = useRecoilState(isPostRepresentativeAtom);
+	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
+	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
+	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
+	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
+	const [pinPostResultlModalContent, setPinPostResultlModalContent] = useState('');
 	const navigate = useNavigate();
-	const [user, setUser] = useState<UserResponse | null>(null);
-	const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-
-	// 좋아요 리스트 불러오기
-	const fetchLikes = async () => {
-		try {
-			const response = await request.get<LikesResponse>(`/posts/${postId}/like`);
-			if (response.isSuccess) {
-				setLikes(response.result.likes);
-			} else {
-				console.error('Failed to fetch likes:', response.message);
-			}
-		} catch (error) {
-			console.error('Error fetching likes:', error);
-		}
-	};
-
-	// 코멘트 리스트 불러오기
-	const fetchComments = async () => {
-		try {
-			const response = await request.get<CommentsResponse>(`/posts/${postId}/comments`);
-			if (response.isSuccess) {
-				setComments(response.result.comments);
-			} else {
-				console.error('Failed to fetch comments:', response.message);
-			}
-		} catch (error) {
-			console.error('Error fetching comments:', error);
-		}
-	};
-
-	// 유저 정보 가져오기
-	const fetchUserData = async () => {
-		try {
-			const storedUserId = localStorage.getItem('id'); // Ensure correct key is used
-			if (!storedUserId) {
-				console.error('User is not logged in');
-				return;
-			}
-
-			const response = await request.get<BaseResponse<UserResponse>>(`/users/${storedUserId}`);
-			setUser(response.result as UserResponse);
-		} catch (error) {
-			console.error('Error fetching user data:', error);
-		} finally {
-			setIsLoading(false); // 로딩 완료 후 로딩 상태 false로 설정
-		}
-	};
 
 	useEffect(() => {
-		fetchPostDetail();
-		fetchUserData(); // Fetch user data
-	}, [postId]);
+		if (isPostRepresentative) {
+			setPostPinStatus('해제');
+		} else {
+			setPostPinStatus('지정');
+		}
+	}, [isPostRepresentative]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
 			{
-				text: '대표 OOTD로 지정하기',
+				text: `대표 OOTD ${postPinStatus}하기`,
 				action: () => {
-					setIsBottomSheetOpen(false);
-					handlePinPost();
+					setIsMenuBottomSheetOpen(false);
+					modifyPostRepresentativeStatus();
 				},
-				icon: PinIcon,
+				icon: Pin,
 			},
 			{
 				text: 'OODD 수정하기',
 				action: () => {
-					setIsBottomSheetOpen(false);
-					handleEditPost();
+					setIsMenuBottomSheetOpen(false);
+					handlePostEdit();
 				},
-				icon: EditIcon,
+				icon: Edit,
 			},
 			{
 				text: 'OOTD 삭제하기',
 				action: () => {
-					setIsBottomSheetOpen(false);
-					handleDeletePost();
+					setIsMenuBottomSheetOpen(false);
+					setIsDeleteConfirmationModalOpen(true);
 				},
-				icon: DeleteIcon,
+				icon: Delete,
 			},
 		],
 		marginBottom: '50px',
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isBottomSheetOpen,
-		isHandlerVisible: true,
-		// TODO: 컴포넌트 분리에 따라 BottomSheetProps 제너릭 타입 추후 수정
-		Component: () => {
-			if (activeTab === 'menu') {
-				return <BottomSheetMenu {...bottomSheetMenuProps} />;
-			} else {
-				return (
-					<ModalContainer>
-						<TabContainer>
-							<Tab active={activeTab === 'likes'} onClick={() => setActiveTab('likes')}>
-								좋아요 {likes.length}
-							</Tab>
-							<Tab active={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>
-								코멘트 {comments.length}
-							</Tab>
-						</TabContainer>
-						<ContentContainer>
-							{activeTab === 'likes' && (
-								<>
-									{likes.map((like) => (
-										<UserItem key={like.user.id}>
-											<CircleIcon>
-												<img
-													src={like.user.profilePictureUrl || mockImage}
-													alt="user avatar"
-													style={{ borderRadius: '50%', width: '100%', height: '100%' }}
-												/>
-											</CircleIcon>
-											{like.user.nickname}
-										</UserItem>
-									))}
-								</>
-							)}
-							{activeTab === 'comments' && (
-								<>
-									{comments.map((comment) => (
-										<UserItem key={comment.id}>
-											<CircleIcon>
-												<img
-													src={comment.user.profilePictureUrl || mockImage}
-													alt="user avatar"
-													style={{ borderRadius: '50%', width: '100%', height: '100%' }}
-												/>
-											</CircleIcon>
-											<div>
-												<UserID>{comment.user.nickname}</UserID>
-												<div>{comment.content}</div>
-											</div>
-										</UserItem>
-									))}
-								</>
-							)}
-						</ContentContainer>
-					</ModalContainer>
-				);
-			}
-		},
-		onCloseBottomSheet: () => {
-			setIsBottomSheetOpen(false);
-		},
+	const menuBottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isMenuBottomSheetOpen,
+		Component: BottomSheetMenu,
+		componentProps: bottomSheetMenuProps,
+		onCloseBottomSheet: () => setIsMenuBottomSheetOpen(false),
 	};
 
-	const handleOpenSheet = async (tab: 'likes' | 'comments' | 'menu') => {
-		setActiveTab(tab);
-		if (tab === 'likes') await fetchLikes();
-		if (tab === 'comments') await fetchComments();
-		setIsBottomSheetOpen(true);
+	const handleMenuOpen = () => {
+		setIsMenuBottomSheetOpen(true);
 	};
 
-	const fetchPostDetail = async () => {
-		try {
-			const response = await request.get<PostDetailResponse>(`/posts/${postId}`);
-			if (response.isSuccess) {
-				setPostDetail(response.result);
-			} else {
-				console.error('Unexpected response:', response.message);
-			}
-		} catch (error) {
-			console.error('Error fetching post details:', error);
-		} finally {
-			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
-		}
-	};
-
-	const handleNextImage = () => {
-		if (postDetail && currentImageIndex < postDetail.photoUrls.length - 1) {
-			setCurrentImageIndex(currentImageIndex + 1);
-		}
-	};
-
-	const handlePrevImage = () => {
-		if (currentImageIndex > 0) {
-			setCurrentImageIndex(currentImageIndex - 1);
-		}
-	};
-
-	const handleEditPost = () => {
+	const handlePostEdit = () => {
 		navigate('/upload', { state: { mode: 'edit', postId: postId } });
 	};
 
-	const handlePinPost = async () => {
-		// localStorage에서 storedUserId를 가져옴
-		const storedUserId = localStorage.getItem('id');
-
-		if (!storedUserId) {
-			console.error('User ID not found');
-			return;
-		}
-
+	const modifyPostRepresentativeStatus = async () => {
 		try {
-			const response = await request.patch<BaseResponse>(`/posts/${postId}/isRepresentative/${storedUserId}`, {
-				isRepresentative: true,
-			});
+			const response = await modifyPostRepresentativeStatusApi(Number(postId));
 
 			if (response.isSuccess) {
-				console.log('Post pinned successfully:', response.result);
-				// PostDetail 재로드
-				fetchPostDetail();
-				navigate('/mypage');
+				setPinPostResultlModalContent(`대표 OOTD ${postPinStatus}에 성공했어요`);
+				setIsPostRepresentative((prev) => !prev);
 			} else {
-				console.error('Failed to pin post:', response.message);
+				setPinPostResultlModalContent(`대표 OOTD ${postPinStatus}에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error pinning post:', error);
 		} finally {
-			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
+			setIsApiResponseModalOpen(true);
 		}
 	};
 
-	const handleDeletePost = () => {
-		setIsConfirmationModalOpen(true);
-	};
-
-	const handleConfirmDelete = async () => {
+	const deletePost = async () => {
 		try {
-			const response = await request.delete<BaseResponse>(`/posts/${postId}`);
-			if (response.message === 'Post deleted successfully') {
-				console.log(response.message);
-				navigate('/mypage'); // 성공적으로 삭제 후 다른 페이지로 이동
+			const response = await deletePostApi(Number(postId));
+
+			if (response.isSuccess) {
+				setPinPostResultlModalContent('OOTD 삭제에 성공했어요');
+				// 1초 뒤에 mypage로 이동
+				setTimeout(() => {
+					navigate('/mypage');
+				}, 1000);
 			} else {
-				console.error('Unexpected response:', response.message);
+				setPinPostResultlModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
 			}
 		} catch (error) {
 			console.error('Error deleting post:', error);
 		} finally {
-			setIsConfirmationModalOpen(false); // 확인 모달을 닫음
+			setIsApiResponseModalOpen(true);
+			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
 		}
 	};
 
-	const handleCancelDelete = () => {
-		setIsConfirmationModalOpen(false);
+	const deleteConfirmationModalProps: ModalProps = {
+		isCloseButtonVisible: true,
+		onClose: () => setIsDeleteConfirmationModalOpen(false),
+		content: '해당 OOTD를 삭제하시겠습니까?',
+		button: {
+			content: '삭제하기',
+			onClick: deletePost,
+		},
 	};
 
-	useEffect(() => {
-		fetchPostDetail();
-	}, [postId]);
-	if (isLoading) {
-		return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
-	}
+	const apiResponseModalProps: ModalProps = {
+		onClose: () => setIsApiResponseModalOpen(false),
+		content: pinPostResultlModalContent,
+	};
+
 	return (
-		<OODDFrame>
-			<PostDetailContainer>
-				<TopBar ID={user?.nickname || ''} text="OOTD" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+		<>
+			<PostBase onClickMenu={handleMenuOpen} />
 
-				<UserInfoContainer>
-					<UserRow>
-						<Pic_exam>
-							<img
-								src={user?.profilePictureUrl || imageBasic}
-								alt="User Profile"
-								style={{ borderRadius: '50%', width: '36px', height: '36px' }}
-							/>
-						</Pic_exam>
-						<UserID>{user?.nickname || 'Unknown User'}</UserID>
-					</UserRow>
-					<Text>{postDetail?.content || 'Loading...'}</Text>
-				</UserInfoContainer>
-				<Menu onClick={() => handleOpenSheet('menu')}>
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path
-							d="M3.97461 12.9181V10.9307H5.96207V12.9181H3.97461ZM10.9307 12.9181V10.9307H12.9182V12.9181H10.9307ZM17.8869 12.9181V10.9307H19.8743V12.9181H17.8869Z"
-							fill="black"
-							stroke="black"
-							strokeWidth="0.596239"
-						/>
-					</svg>
-				</Menu>
+			<BottomSheet {...menuBottomSheetProps} />
 
-				<ImageWrapper>
-					{postDetail?.photoUrls && postDetail.photoUrls.length > 1 && (
-						<>
-							<Arrow direction="left" onClick={handlePrevImage} disabled={currentImageIndex === 0}>
-								<img src={nextIcon} style={{ transform: 'rotate(180deg)' }} alt="Previous" />
-							</Arrow>
-							<Arrow
-								direction="right"
-								onClick={handleNextImage}
-								disabled={currentImageIndex === postDetail.photoUrls.length - 1}
-							>
-								<img src={nextIcon} alt="Next" />
-							</Arrow>
-							<Indicator>
-								{currentImageIndex + 1} / {postDetail.photoUrls.length}
-							</Indicator>
-						</>
-					)}
-					<Image src={postDetail?.photoUrls?.[currentImageIndex] || mockImage} alt="Post" />
-				</ImageWrapper>
-
-				{isBottomSheetOpen && <BottomSheet {...bottomSheetProps} />}
-				{isConfirmationModalOpen && (
-					<ConfirmationModal
-						content="해당 OOTD를 삭제하시겠습니까?"
-						isCancelButtonVisible={true}
-						confirm={{ text: '삭제하기', action: handleConfirmDelete }}
-						onCloseModal={handleCancelDelete}
-					/>
-				)}
-				<IconRow>
-					<IconWrapper onClick={() => handleOpenSheet('likes')}>
-						<img src={heartIcon} alt="Heart Icon" />
-						<span>{postDetail?.likes || 0}</span> {/* 좋아요 수 */}
-					</IconWrapper>
-					<IconWrapper onClick={() => handleOpenSheet('comments')}>
-						<img src={commentIcon} alt="Comment Icon" />
-						<span>{postDetail?.comments?.length || 0}</span> {/* 댓글 수 */}
-					</IconWrapper>
-				</IconRow>
-				<ClothingInfoContainer>
-					{postDetail?.clothingInfo?.map((clothingInfo, index: number) => (
-						<ClothingInfoCard
-							key={index}
-							imageUrl={clothingInfo.imageUrl}
-							brand={clothingInfo.brand}
-							model={clothingInfo.model}
-							url={clothingInfo.url}
-						/>
-					))}
-				</ClothingInfoContainer>
-			</PostDetailContainer>
-		</OODDFrame>
+			{isDeleteConfirmationModalOpen && <Modal {...deleteConfirmationModalProps} />}
+			{isApiResponseModalOpen && <Modal {...apiResponseModalProps} />}
+		</>
 	);
 };
 

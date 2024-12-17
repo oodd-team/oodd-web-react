@@ -1,30 +1,33 @@
 import React from 'react';
+
 import { StyledText } from '../../../../components/Text/StyledText';
 import theme from '../../../../styles/theme';
 import { SocialLogin, TextWrapper, LogoImgWrapper, LogoImage } from '../style';
-import naver from '../../../../assets/Login/naver.png';
+
+import naver from '../../../../assets/default/snsIcon/naver.svg';
 
 const Naver: React.FC = () => {
-	const clientId = import.meta.env.VITE_NAVER_CLIENT_ID; // 네이버 개발자 센터에서 받은 클라이언트 ID
-	const redirectUri = encodeURIComponent(
-		import.meta.env.VITE_DEV_DOMAIN
-			? import.meta.env.VITE_DEV_DOMAIN + '/auth/naver/callback'
-			: 'http://localhost:3000/auth/naver/callback',
-	);
-	//const state = 'random_state_string'; // CSRF 공격 방지를 위한 랜덤 문자열
+	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 	const handleLogin = () => {
-		window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE_TOKEN`;
+		// 리다이렉트 URL 설정
+		const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_DOMAIN || window.location.origin}/login/complete`);
+
+		// 서버 URL 생성
+		const serverUrl = `${SERVER_URI}/auth/login/naver?redirectUrl=${redirectUrl}`;
+
+		// 서버로 리다이렉션
+		window.open(serverUrl, '_self');
 	};
 
 	return (
-		<SocialLogin $bgColor="#00BF19" onClick={handleLogin}>
-			<LogoImgWrapper $logowidth="2.4rem" $logoheight="2.4rem">
+		<SocialLogin $bgColor="#05B918" onClick={handleLogin}>
+			<LogoImgWrapper>
 				<LogoImage src={naver} alt="Naver logo" />
 			</LogoImgWrapper>
 			<TextWrapper>
-				<StyledText $textTheme={{ style: 'body3-light', lineHeight: 1.5 }} color={theme.colors.gray4}>
-					네이버로 시작하기
+				<StyledText $textTheme={{ style: 'body2-bold' }} color={theme.colors.white}>
+					네이버로 계속하기
 				</StyledText>
 			</TextWrapper>
 		</SocialLogin>
