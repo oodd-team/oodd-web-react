@@ -34,8 +34,8 @@ const LoginComplete: React.FC = () => {
 
 					if (nickname && name) {
 						if (nickname && name) {
-							const isAgreed = await checkTermsAgreement(userId);
-							navigate(isAgreed ? '/' : '/terms-agreement');
+							const isAgreed = await hasAgreedToTerms(userId);
+							navigate(isAgreed ? '/' : '/terms-agreement'); // 이용 약관이 필요하면 (false) 해당 페이지로 이동
 						}
 					} else {
 						navigate('/signup');
@@ -51,12 +51,12 @@ const LoginComplete: React.FC = () => {
 		}
 	}, [location]);
 
-	const checkTermsAgreement = async (userId: number): Promise<boolean> => {
+	const hasAgreedToTerms = async (userId: number): Promise<boolean> => {
 		try {
 			await postTermsAgreementApi(userId);
-			return true; // 동의 완료
+			return true; // 이용 약관 동의 완료된 사용자
 		} catch {
-			return false; // 동의 필요
+			return false; // 이용 약관 동의 필요한 사용자
 		}
 	};
 

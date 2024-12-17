@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { StyledText } from '../../../../components/Text/StyledText';
 
-export const SocialLogin = styled.button<{ $bgColor: string; $border?: boolean }>`
+export const SocialLoginContainer = styled.button<{ $bgColor: string; $border?: boolean }>`
 	display: flex;
 	align-items: center;
 	width: calc(100% - 3.5rem);
@@ -27,7 +28,7 @@ export const LogoImage = styled.img`
 	max-height: 100%;
 `;
 
-export const TextWrapper = styled.section<{ $left?: string }>`
+export const StyledTextWrapper = styled(StyledText)<{ $left?: string }>`
 	display: flex;
 	width: 12.5rem;
 	padding-left: ${({ $left }) => $left || '1.2rem'};

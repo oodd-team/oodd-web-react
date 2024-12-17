@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { OODDFrame } from '../../components/Frame/Frame';
-import Naver from './components/Naver';
-import Kakao from './components/Kakao';
-
 import { LoginContainer, StyledWelcomeWrapper } from './styles';
 import theme from '../../styles/theme';
+
+import SocialLoginButton from './components/SocialLoginButton';
+
+import kakaoLogo from '../../assets/default/snsIcon/kakao.svg';
+import naverLogo from '../../assets/default/snsIcon/naver.svg';
 
 const Login: React.FC = () => {
 	return (
@@ -14,8 +16,20 @@ const Login: React.FC = () => {
 				<StyledWelcomeWrapper $textTheme={{ style: 'title2-bold' }} color={theme.colors.black}>
 					{'반가워요! \n계정을 선택해주세요.'}
 				</StyledWelcomeWrapper>
-				<Kakao />
-				<Naver />
+				<SocialLoginButton
+					bgColor="#FEE500"
+					logoSrc={kakaoLogo}
+					altText="Kakao logo"
+					buttonText="Kakao로 계속하기"
+					provider="kakao"
+				/>
+				<SocialLoginButton
+					bgColor="#05B918"
+					logoSrc={naverLogo}
+					altText="Naver logo"
+					buttonText="네이버로 계속하기"
+					provider="naver"
+				/>
 			</LoginContainer>
 		</OODDFrame>
 	);
