@@ -79,7 +79,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		nav(`/users/${feed.user.id}`);
 	};
 
-	const handleClickFeed = (e: React.MouseEvent) => {
+	const handleFeedClick = (e: React.MouseEvent) => {
 		const target = e.target as HTMLElement;
 
 		// 페이지네이션 bullet 클릭 시 이벤트 차단
@@ -199,7 +199,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	};
 
 	return (
-		<FeedWrapper onClick={handleClickFeed}>
+		<FeedWrapper onClick={handleFeedClick}>
 			<FeedTop>
 				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
