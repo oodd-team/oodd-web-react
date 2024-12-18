@@ -386,7 +386,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 				</Content>
 
 				<BottomButton
-					content={mode === ('edit' || 'edit2') ? '수정 완료' : '공유'}
+					content={mode === 'edit' || mode === 'edit2' ? '수정 완료' : '공유'}
 					onClick={handleSubmit}
 					disabled={isLoading}
 				/>
