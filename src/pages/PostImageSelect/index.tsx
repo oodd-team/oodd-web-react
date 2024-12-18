@@ -35,9 +35,10 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const location = useLocation();
 	const navigate = useNavigate();
+	const userId = localStorage.getItem('my_id');
 
 	const handleClose = () => {
-		navigate('/mypage');
+		navigate(`/profile/${userId}`);
 	};
 
 	const handlePrev = () => {

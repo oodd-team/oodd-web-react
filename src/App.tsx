@@ -6,14 +6,12 @@ import SignUp from './pages/SignUp';
 import LoginComplete from './pages/Login/components/LoginComplete';
 import TermsAgreement from './pages/TermsAgreement';
 
-import MyPage from './pages/MyPage';
+import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import AccountSetting from './pages/AccountSetting';
 import AccountEdit from './pages/AccountEdit';
 import AccountCancel from './pages/AccountCancel';
 import Verification from './pages/verification';
-
-import ProfileViewer from './pages/ProfileViewer';
 
 import Post from './pages/Post';
 import MyPost from './pages/MyPost';
@@ -37,13 +35,12 @@ const protectedRoutes = [
 	{ path: '/', element: <Home /> },
 
 	// 사용자 프로필 및 계정 관리
-	{ path: '/mypage', element: <MyPage /> },
+	{ path: '/profile/:userId', element: <Profile /> },
 	{ path: '/profile/edit', element: <ProfileEdit /> },
 	{ path: '/account-setting', element: <AccountSetting /> },
 	{ path: '/account-edit', element: <AccountEdit /> },
 	{ path: '/account-cancel', element: <AccountCancel /> },
 	{ path: '/verification', element: <Verification /> },
-	{ path: '/users/:userId', element: <ProfileViewer /> },
 
 	{ path: '/post/:postId', element: <Post /> },
 	{ path: '/my-post/:postId', element: <MyPost /> },

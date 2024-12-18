@@ -321,7 +321,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 		if (String(myUserId) === String(userId)) {
 			// 나인 경우
-			nav('/mypage');
+			nav(`/profile/${userId}`);
 		} else {
 			// 다른 유저인 경우
 			nav(`/users/${userId}`);

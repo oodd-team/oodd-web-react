@@ -28,6 +28,8 @@ const MyPost: React.FC = () => {
 	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
 	const [pinPostResultlModalContent, setPinPostResultlModalContent] = useState('');
 	const navigate = useNavigate();
+	const userId = localStorage.getItem('my_id');
+
 
 	useEffect(() => {
 		if (isPostRepresentative) {
@@ -105,9 +107,9 @@ const MyPost: React.FC = () => {
 
 			if (response.isSuccess) {
 				setPinPostResultlModalContent('OOTD 삭제에 성공했어요');
-				// 1초 뒤에 mypage로 이동
+
 				setTimeout(() => {
-					navigate('/mypage');
+					navigate(`/profile/${userId}`);
 				}, 1000);
 			} else {
 				setPinPostResultlModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
