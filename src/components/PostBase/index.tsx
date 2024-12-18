@@ -62,6 +62,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const nav = useNavigate();
+	const userId = localStorage.getItem('my_id');
+
 
 	useEffect(() => {
 		setPostId(Number(postId));
@@ -100,7 +102,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const handleUserClick = () => {
 		if (post?.isPostWriter) {
 			// 내 게시물인 경우
-			nav('/mypage');
+			nav(`/profile/${userId}`);
 		} else {
 			// 다른 유저의 게시물인 경우
 			nav(`/users/${post?.user.id}`);
