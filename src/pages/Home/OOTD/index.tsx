@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { OOTDContainer, FeedContainer } from './styles';
-import Feed from './Feed';
-import { getPostListApi } from '../../../apis/post';
-import { PostSummary } from '../../../apis/post/dto';
-import { handleError } from '../../../apis/util/handleError';
-import { ModalProps } from '../../../components/Modal/dto';
-import Modal from '../../../components/Modal';
+import Feed from './Feed/index';
+import { getPostListApi } from '@apis/post';
+import type { PostSummary } from '@apis/post/dto';
+import { handleError } from '@apis/util/handleError';
+import type { ModalProps } from '@components/Modal/dto';
+import Modal from '@components/Modal';
 
 const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);

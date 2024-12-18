@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { StyledText } from '../../../../components/Text/StyledText';
-import theme from '../../../../styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 import {
 	MatchingBtn,
 	FeedImgBox,
@@ -19,28 +19,28 @@ import {
 	ReactionWrapper,
 	FeedImgBackground,
 } from './styles';
-import more from '../../../../assets/default/more.svg';
-import xBtn from '../../../../assets/default/reject.svg';
-import likeBtn from '../../../../assets/default/heart.svg';
-import likeFillBtn from '../../../../assets/default/heart-fill.svg';
-import commentBtn from '../../../../assets/default/message-white.svg';
+import more from '@assets/default/more.svg';
+import xBtn from '@assets/default/reject.svg';
+import likeBtn from '@assets/default/heart.svg';
+import likeFillBtn from '@assets/default/heart-fill.svg';
+import commentBtn from '@assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
-import { PostSummary } from '../../../../apis/post/dto';
-import defaultProfile from '../../../../assets/default/defaultProfile.svg';
+import type { PostSummary } from '@apis/post/dto';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
-import { OptionsBottomSheetProps } from '../../../../components/BottomSheet/OptionsBottomSheet/dto';
-import OptionsBottomSheet from '../../../../components/BottomSheet/OptionsBottomSheet';
-import CommentBottomSheet from '../../../../components/CommentBottomSheet';
-import Modal from '../../../../components/Modal';
-import { CreateMatchingRequest } from '../../../../apis/matching/dto';
-import { createMatchingApi } from '../../../../apis/matching';
-import { handleError } from '../../../../apis/util/handleError';
-import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
-import { ModalProps } from '../../../../components/Modal/dto';
+import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
+import CommentBottomSheet from '@components/CommentBottomSheet';
+import Modal from '@components/Modal';
+import type { CreateMatchingRequest } from '@apis/matching/dto';
+import { createMatchingApi } from '@apis/matching';
+import { handleError } from '@apis/util/handleError';
+import type { CommentBottomSheetProps } from '@components/CommentBottomSheet/dto';
+import type { ModalProps } from '@components/Modal/dto';
 
-import { togglePostLikeStatusApi } from '../../../../apis/post-like';
-import { postUserBlockApi } from '../../../../apis/user-block';
-import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
+import { togglePostLikeStatusApi } from '@apis/post-like';
+import { postUserBlockApi } from '@apis/user-block';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
 
 interface FeedProps {
 	feed: PostSummary;
