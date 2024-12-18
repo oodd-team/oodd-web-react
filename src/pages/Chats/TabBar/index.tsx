@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { StyledText } from '../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
-import Request from '../Request';
+import Matching from '../Matching';
 import RecentChat from '../RecentChat';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import 'swiper/css';
-import { getMatchingListApi } from '../../../apis/matching';
+import { getMatchingListApi } from '@apis/matching';
 
 const TabBar: React.FC = () => {
 	const [matchingCount, setMatchingCount] = useState(0);
@@ -111,7 +111,7 @@ const TabBar: React.FC = () => {
 					autoHeight={true} // 각 슬라이드 높이를 자동으로 조정
 				>
 					<SwiperSlide className="swiper-slider">
-						<Request matchingCount={matchingCount} decreaseMatchingCount={decreaseMatchingCount} />
+						<Matching matchingCount={matchingCount} decreaseMatchingCount={decreaseMatchingCount} />
 					</SwiperSlide>
 					<SwiperSlide className="swiper-slider">
 						<RecentChat matchingCount={matchingCount} swiperRef={swiperRef} />

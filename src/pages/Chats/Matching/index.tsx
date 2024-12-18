@@ -3,9 +3,9 @@ import Cards from './Cards';
 import theme from '../../../styles/theme';
 import { ReqeustInfo } from './styles';
 import { StyledText } from '../../../components/Text/StyledText';
-import { RequestProps } from './dto';
+import { MatchingProps } from './dto';
 
-const Request: React.FC<RequestProps> = ({ matchingCount, decreaseMatchingCount }) => {
+const Matching: React.FC<MatchingProps> = ({ matchingCount, decreaseMatchingCount }) => {
 	return (
 		<>
 			<ReqeustInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
@@ -19,4 +19,4 @@ const Request: React.FC<RequestProps> = ({ matchingCount, decreaseMatchingCount 
 	);
 };
 
-export default React.memo(Request);
+export default React.memo(Matching);
