@@ -1,6 +1,6 @@
 import { OODDFrame } from '../../components/Frame/Frame';
 import NavBar from '../../components/NavBar';
-import HomeTopBar from './HomeTopBar';
+import HomeTopBar from './HomeTopBar/index';
 import OOTD from './OOTD/index.tsx';
 import { HomeContainer } from './styles';
 
