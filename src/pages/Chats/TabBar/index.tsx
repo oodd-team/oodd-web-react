@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyledText } from '@components/Text/StyledText';
 import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
-import Matching from '../Matching';
-import RecentChat from '../RecentChat';
+import Matching from '../Matching/index';
+import RecentChat from '../RecentChat/index';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';

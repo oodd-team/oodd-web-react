@@ -2,8 +2,8 @@ import { ChatBoxContainer, Textarea, SendButton } from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { OpponentInfoAtom } from '../../../../recoil/util/OpponentInfo';
-import { useSocket } from '../../../../context/SocketProvider';
+import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
+import { useSocket } from '@context/SocketProvider';
 
 const ChatBox: React.FC = () => {
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);

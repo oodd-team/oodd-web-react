@@ -1,6 +1,6 @@
 import React from 'react';
-import theme from '../../../../styles/theme';
-import { RcvdMessageProps } from '../dto';
+import theme from '@styles/theme';
+import type { RcvdMessageProps } from '../dto';
 import { FirstMessageLayout, UserImage, UsernameText, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
 const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> = React.memo(

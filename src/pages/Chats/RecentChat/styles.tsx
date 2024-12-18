@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledText } from '../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 
 export const RecentChatInfo = styled(StyledText)`
 	padding: 0.5rem 1.25rem;

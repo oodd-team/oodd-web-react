@@ -4,10 +4,10 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { CardsContainer } from './styles';
-import Card from './Card';
-import { getMatchingListApi } from '../../../../apis/matching/index.ts';
-import { MatchingDto } from '../../../../apis/matching/dto.ts';
-import { CardsProps } from './dto.ts';
+import Card from './Card/index';
+import { getMatchingListApi } from '@apis/matching';
+import type { MatchingDto } from '@apis/matching/dto';
+import type { CardsProps } from './dto';
 
 const Cards: React.FC<CardsProps> = ({ decreaseMatchingCount }) => {
 	const swiperRef = useRef<SwiperRef | null>(null);

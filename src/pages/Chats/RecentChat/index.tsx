@@ -1,11 +1,11 @@
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 import React, { useEffect, useState } from 'react';
 import SwiperCore from 'swiper';
-import Loading from '../../../components/Loading';
-import ChatRoomItem from '../ChatRoomItem';
-import { StyledText } from '../../../components/Text/StyledText';
-import { useSocket } from '../../../context/SocketProvider';
-import { ChatRoomData } from '../../../apis/chatting/dto';
+import Loading from '@components/Loading';
+import ChatRoomItem from '../ChatRoomItem/index';
+import { StyledText } from '@components/Text/StyledText';
+import { useSocket } from '@context/SocketProvider';
+import type { ChatRoomData } from '@apis/chatting/dto';
 
 interface RecentChatProps {
 	matchingCount: number;

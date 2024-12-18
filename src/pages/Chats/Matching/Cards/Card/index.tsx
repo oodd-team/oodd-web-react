@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { StyledText } from '../../../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import theme from '../../../../../styles/theme';
+import theme from '@styles/theme';
 import {
 	ArrowButton,
 	Btn,
@@ -17,18 +17,18 @@ import {
 	Reaction,
 	SeeMore,
 } from './styles';
-import rejectButton from '../../../../../assets/default/reject.svg';
-import acceptButton from '../../../../../assets/default/accept.svg';
-import defaultProfile from '../../../../../assets/default/defaultProfile.svg';
+import rejectButton from '@assets/default/reject.svg';
+import acceptButton from '@assets/default/accept.svg';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 
 import { useNavigate } from 'react-router-dom';
-import { MatchingDto } from '../../../../../apis/matching/dto';
-import { modifyMatchingStatusApi } from '../../../../../apis/matching';
-import { handleError } from '../../../../../apis/util/handleError';
-import { ModalProps } from '../../../../../components/Modal/dto';
-import Modal from '../../../../../components/Modal';
+import type { MatchingDto } from '@apis/matching/dto';
+import { modifyMatchingStatusApi } from '@apis/matching';
+import { handleError } from '@apis/util/handleError';
+import type { ModalProps } from '@components/Modal/dto';
+import Modal from '@components/Modal';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '../../../../../recoil/util/OpponentInfo';
+import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
 
 interface CardProps {
 	removeRejectedMatching: () => void;

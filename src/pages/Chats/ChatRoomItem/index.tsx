@@ -1,14 +1,14 @@
-import { StyledText } from '../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
+import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import { useEffect, useState } from 'react';
-import { ChatRoomData } from '../../../apis/chatting/dto';
-import defaultProfile from '../../../assets/default/defaultProfile.svg';
+import type { ChatRoomData } from '@apis/chatting/dto';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 dayjs.extend(relativeTime);
 
 const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMessage }) => {

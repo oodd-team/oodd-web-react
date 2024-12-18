@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SendIcon from '../../../../assets/default/send-message.svg';
+import SendIcon from '@assets/default/send-message.svg';
 
 export const ChatBoxContainer = styled.div`
 	${({ theme }) => theme.breakPoints};

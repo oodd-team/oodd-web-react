@@ -1,9 +1,9 @@
-import { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
-import defaultProfile from '../../../assets/default/defaultProfile.svg';
+import type { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { OtherUserDto } from '../../../apis/chatting/dto';
-import { chatRoomMessagesData } from '../../../apis/chatting/dto';
+import { OtherUserDto } from '@apis/chatting/dto';
+import { chatRoomMessagesData } from '@apis/chatting/dto';
 
 export const createExtendedMessages = (
 	allMessages: chatRoomMessagesData[],
