@@ -1,13 +1,14 @@
 import React from 'react';
 
 import theme from '@/styles/theme';
+
+import type { SocialLoginProps } from './SocialLoginProps';
+
 import { SocialLoginContainer, LogoImgWrapper, LogoImage, StyledTextWrapper } from './style';
 
-import { SocialLoginProps } from './SocialLoginProps';
+const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
 
 const SocialLoginButton: React.FC<SocialLoginProps> = ({ bgColor, logoSrc, altText, buttonText, provider }) => {
-	const SERVER_URI = import.meta.env.VITE_NEW_API_URL;
-
 	const handleSocialLogin = () => {
 		// 리다이렉트 URL 설정
 		const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_DOMAIN || window.location.origin}/login/complete`);

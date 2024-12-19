@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { OODDFrame } from '../../components/Frame/Frame';
+import { OODDFrame } from '@/components/Frame/Frame';
+import theme from '@/styles/theme';
+
+import kakaoLogo from '@/assets/default/snsIcon/kakao.svg';
+import naverLogo from '@/assets/default/snsIcon/naver.svg';
+
+import SocialLoginButton from './SocialLoginButton/index';
+
 import { LoginContainer, StyledWelcomeWrapper } from './styles';
-import theme from '../../styles/theme';
-
-import SocialLoginButton from './components/SocialLoginButton';
-
-import kakaoLogo from '../../assets/default/snsIcon/kakao.svg';
-import naverLogo from '../../assets/default/snsIcon/naver.svg';
 
 const Login: React.FC = () => {
 	return (
