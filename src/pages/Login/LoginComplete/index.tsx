@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import Loading from '../../../components/Loading';
-import Modal from '../../../components/Modal';
+import { getUserInfoByJwtApi } from '@/apis/auth';
+import { handleError } from '@/apis/util/handleError';
+import { postTermsAgreementApi } from '@/apis/user';
 
-import { getUserInfoByJwtApi } from '../../../apis/auth';
-import { handleError } from '../../../apis/util/handleError';
-import { postTermsAgreementApi } from '../../../apis/user';
+import Loading from '@/components/Loading';
+import Modal from '@/components/Modal';
 
 const LoginComplete: React.FC = () => {
-	const location = useLocation();
-	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
+	};
+
+	const hasAgreedToTerms = async (userId: number): Promise<boolean> => {
+		try {
+			await postTermsAgreementApi(userId);
+			return true; // 이용 약관 동의 완료된 사용자
+		} catch {
+			return false; // 이용 약관 동의 필요한 사용자
+		}
+	};
 
 	useEffect(() => {
 		// URLSearchParams를 사용해 쿼리 문자열에서 token 추출
@@ -30,12 +44,12 @@ const LoginComplete: React.FC = () => {
 					console.log(response);
 
 					const { nickname, name, userId } = response.data;
-					localStorage.setItem('my_id', `${userId}`);
+					localStorage.setItem('current_user_id', `${userId}`);
 
 					if (nickname && name) {
 						if (nickname && name) {
-							const isAgreed = await checkTermsAgreement(userId);
-							navigate(isAgreed ? '/' : '/terms-agreement');
+							const isAgreed = await hasAgreedToTerms(userId);
+							navigate(isAgreed ? '/' : '/terms-agreement'); // 이용 약관이 필요하면 (false) 해당 페이지로 이동
 						}
 					} else {
 						navigate('/signup');
@@ -50,20 +64,6 @@ const LoginComplete: React.FC = () => {
 			getUserInfoByJwt();
 		}
 	}, [location]);
-
-	const checkTermsAgreement = async (userId: number): Promise<boolean> => {
-		try {
-			await postTermsAgreementApi(userId);
-			return true; // 동의 완료
-		} catch {
-			return false; // 동의 필요
-		}
-	};
-
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
-	};
 
 	return (
 		<>
