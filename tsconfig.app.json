@@ -21,7 +21,21 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Absolute path */
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"],
+      "@apis/*": ["apis/*"],
+      "@assets/*": ["assets/*"],
+      "@config/*": ["config/*"],
+      "@context/*": ["context/*"],
+      "@page/*": ["page/*"],
+      "@recoil/*": ["recoil/*"],
+    },
   },
-  "include": ["src", "vite-env.d.ts", "server.ts"]
+  "include": ["src/**/*", "vite-env.d.ts"]
 }

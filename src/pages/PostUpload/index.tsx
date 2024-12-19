@@ -66,6 +66,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
+	const userId = localStorage.getItem('my_id');
 
 	const styletags = [
 		'classic',
@@ -286,7 +287,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			setSelectedStyletag([]);
 			setMode('');
 
-			navigate('/mypage');
+			navigate(`/profile/${userId}`);
 		} catch (error) {
 			const errorMessage = handleError(error, 'post');
 			setModalContent(errorMessage);
@@ -385,7 +386,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 				</Content>
 
 				<BottomButton
-					content={mode === ('edit' || 'edit2') ? '수정 완료' : '공유'}
+					content={mode === 'edit' || mode === 'edit2' ? '수정 완료' : '공유'}
 					onClick={handleSubmit}
 					disabled={isLoading}
 				/>

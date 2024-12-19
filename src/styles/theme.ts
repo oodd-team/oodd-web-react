@@ -329,48 +329,6 @@ const theme: DefaultTheme = {
 			line-height: 127.3%; /* 0.87519rem */
 			letter-spacing: -0.00213rem;
 		`,
-		// 여기서부터 기존 fontStyles
-		// TODO: 추후 삭제 필요
-		'body2-light': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 300; /* light */
-			font-size: 1rem;
-		`,
-		'body4-regular': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 400; /* normal */
-			font-size: 0.813rem;
-		`,
-		'body4-light': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 300; /* light */
-			font-size: 0.813rem;
-		`,
-		'body6-regular': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 400; /* normal */
-			font-size: 0.75rem;
-		`,
-		'body6-light': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 300; /* light */
-			font-size: 0.75rem;
-		`,
-		'button1-medium': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 500; /* medium */
-			font-size: 1rem;
-		`,
-		'button2-medium': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 500; /* medium */
-			font-size: 0.813rem;
-		`,
-		'button2-light': css`
-			font-family: 'Pretendard Variable';
-			font-weight: 300; /* light */
-			font-size: 0.813rem;
-		`,
 	},
 };
 

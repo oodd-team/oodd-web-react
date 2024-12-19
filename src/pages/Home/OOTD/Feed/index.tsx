@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { StyledText } from '../../../../components/Text/StyledText';
-import theme from '../../../../styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 import {
 	MatchingBtn,
 	FeedImgBox,
@@ -19,43 +19,78 @@ import {
 	ReactionWrapper,
 	FeedImgBackground,
 } from './styles';
-import more from '../../../../assets/default/more.svg';
-import xBtn from '../../../../assets/default/reject.svg';
-import likeBtn from '../../../../assets/default/heart.svg';
-import likeFillBtn from '../../../../assets/default/heart-fill.svg';
-import commentBtn from '../../../../assets/default/message-white.svg';
+import more from '@assets/default/more.svg';
+import xBtn from '@assets/default/reject.svg';
+import likeBtn from '@assets/default/heart.svg';
+import likeFillBtn from '@assets/default/heart-fill.svg';
+import commentBtn from '@assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
-import { PostSummary } from '../../../../apis/post/dto';
-import defaultProfile from '../../../../assets/default/defaultProfile.svg';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
-import { OptionsBottomSheetProps } from '../../../../components/BottomSheet/OptionsBottomSheet/dto';
-import OptionsBottomSheet from '../../../../components/BottomSheet/OptionsBottomSheet';
-import CommentBottomSheet from '../../../../components/CommentBottomSheet';
-import Modal from '../../../../components/Modal';
-import { CreateMatchingRequest } from '../../../../apis/matching/dto';
-import { createMatchingApi } from '../../../../apis/matching';
-import { handleError } from '../../../../apis/util/handleError';
-import { CommentBottomSheetProps } from '../../../../components/CommentBottomSheet/dto';
-import { ModalProps } from '../../../../components/Modal/dto';
-
-import { togglePostLikeStatusApi } from '../../../../apis/post-like';
-import { postUserBlockApi } from '../../../../apis/user-block';
-import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
-
-interface FeedProps {
-	feed: PostSummary;
-}
+import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
+import CommentBottomSheet from '@components/CommentBottomSheet';
+import Modal from '@components/Modal';
+import type { CreateMatchingRequest } from '@apis/matching/dto';
+import { createMatchingApi } from '@apis/matching';
+import { handleError } from '@apis/util/handleError';
+import type { CommentBottomSheetProps } from '@components/CommentBottomSheet/dto';
+import type { ModalProps } from '@components/Modal/dto';
+import { togglePostLikeStatusApi } from '@apis/post-like';
+import { postUserBlockApi } from '@apis/user-block';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
+import type { FeedProps } from './dto';
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
-	const nav = useNavigate();
 	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
-	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
 	const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
-	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(false);
 	const [isMatchingCommentBottomSheetOpen, setIsMatchingCommentBottomSheetOpen] = useState(false);
+	const [isOptionsBottomSheetOpen, setIsOptionsBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
+
+	const nav = useNavigate();
 	const userId = localStorage.getItem('my_id');
+	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
+
+	const handleMoreButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		setIsOptionsBottomSheetOpen(true);
+	};
+
+	const handleRejectButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		setIsBlockModalOpen(true);
+	};
+
+	const handleLikeButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		togglePostLikeStatus();
+	};
+
+	const handleMatchingButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		setIsMatchingCommentBottomSheetOpen(true);
+	};
+
+	const handleUserClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		sessionStorage.setItem('scrollPosition', String(window.scrollY));
+		nav(`/users/${feed.user.id}`);
+	};
+
+	const handleFeedClick = (e: React.MouseEvent) => {
+		const target = e.target as HTMLElement;
+
+		// 페이지네이션 bullet 클릭 시 이벤트 차단
+		if (target.classList.contains('swiper-pagination-bullet')) {
+			e.stopPropagation();
+		} else {
+			// 그 외에 게시글 상세 조회 페이지로 이동
+			sessionStorage.setItem('scrollPosition', String(window.scrollY));
+			nav(`/post/${feed.id}`);
+		}
+	};
 
 	// 게시글 좋아요 & 좋아요 취소 api
 	const togglePostLikeStatus = async () => {
@@ -116,45 +151,6 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		}
 	};
 
-	const handleUserClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.id}`);
-	};
-
-	const handleMoreButtonClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIsOptionsBottomSheetOpen(true);
-	};
-
-	const handleRejectButtonClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIsBlockModalOpen(true);
-	};
-
-	const handleLikeButtonClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		togglePostLikeStatus();
-	};
-
-	const handleMatchingButtonClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIsMatchingCommentBottomSheetOpen(true);
-	};
-
-	const handleClickFeed = (e: React.MouseEvent) => {
-		const target = e.target as HTMLElement;
-
-		// 페이지네이션 bullet 클릭 시 이벤트 차단
-		if (target.classList.contains('swiper-pagination-bullet')) {
-			e.stopPropagation();
-		} else {
-			// 그 외에 게시글 상세 조회 페이지로 이동
-			sessionStorage.setItem('scrollPosition', String(window.scrollY));
-			nav(`/post/${feed.id}`);
-		}
-	};
-
 	// 게시글 옵션(더보기) 바텀시트
 	const optionsBottomSheetProps: OptionsBottomSheetProps = {
 		domain: 'post',
@@ -203,12 +199,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	};
 
 	return (
-		<FeedWrapper onClick={handleClickFeed}>
-			<OptionsBottomSheet {...optionsBottomSheetProps} />
-			{isBlockModalOpen && <Modal {...blockModalProps} />}
-			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
-			{isStatusModalOpen && <Modal {...statusModalProps} />}
-
+		<FeedWrapper onClick={handleFeedClick}>
 			<FeedTop>
 				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
@@ -262,6 +253,11 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					</MatchingBtn>
 				</ReactionWrapper>
 			</FeedImgBox>
+
+			{isBlockModalOpen && <Modal {...blockModalProps} />}
+			<CommentBottomSheet {...matchingCommentBottomSheetProps} />
+			<OptionsBottomSheet {...optionsBottomSheetProps} />
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</FeedWrapper>
 	);
 };

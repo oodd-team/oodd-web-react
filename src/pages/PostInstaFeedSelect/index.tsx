@@ -22,6 +22,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
 	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
+	const userId = localStorage.getItem('my_id');
 
 	// 인스타그램 데이터 가져오는 함수
 	const fetchInstagramData = async (accessToken: string) => {
@@ -70,7 +71,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 
 	// 페이지 종료 함수
 	const handleClose = () => {
-		navigate('/mypage'); // 마이페이지로 이동
+		navigate(`/profile/${userId}`); 
 	};
 
 	return (
