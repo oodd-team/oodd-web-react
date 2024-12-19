@@ -49,7 +49,7 @@ const theme: DefaultTheme = {
 
 		background: {
 			white: '#FFFFFF',
-			secondary: '#F8F8F8', //Gray-100 (다양한 컴포넌트의 표면 배경)
+			secondary: '#F8F8F8', //Gray-100 (input, 바텀시트 등의 배경)
 			divider: '#E9E9E9', // Gray-200
 		},
 
@@ -58,6 +58,16 @@ const theme: DefaultTheme = {
 			inactive: '#FFBBDA', // Pink-300
 			devider: '#E9E9E9', // Gray-200
 		},
+
+		//여기서부터 기존 **추후 삭제 필요**
+		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
+		gray4: '#434343',
+		gray3: '#7B7B7B',
+		gray2: '#C4C4C4',
+		gray1: '#E9E9E9',
+		pink3: '#FF2389',
+		pink2: '#FFBBDA',
+		pink1: '#FEEEFB',
 	},
 	elevation: {
 		sm: '0px 1px 3px rgba(255, 255, 255, 0.12)', // 작은 그림자
@@ -110,9 +120,76 @@ const theme: DefaultTheme = {
 		}
 	`,
 	fontStyles: {
+		// Display (Hero Texts)
+		heading: {
+			h1: css`
+				font-family: 'Pretendard Variable';
+				font-size: 2.25rem; /* 36px */
+				font-weight: 700;
+				line-height: 2.75rem; /* 44px */
+			`,
+			h2: css`
+				font-family: 'Pretendard Variable';
+				font-size: 2rem; /* 32px */
+				font-weight: 700;
+				line-height: 2.5rem; /* 40px */
+			`,
+			h3: css`
+				font-family: 'Pretendard Variable';
+				font-size: 1.75rem; /* 28px */
+				font-weight: 700;
+				line-height: 2.25rem; /* 36px */
+			`,
+			h4: css`
+				font-family: 'Pretendard Variable';
+				font-size: 1.375rem; /* 22px */
+				font-weight: 700;
+				line-height: 1.75rem; /* 28px */
+			`,
+		},
+
+		// Body Text (Main Text Content)
+		body: {
+			large: css`
+				font-family: 'Pretendard Variable';
+				font-size: 1.125rem; /* 18px */
+				font-weight: 400;
+				line-height: 1.6875rem; /* 150% */
+			`,
+			medium: css`
+				font-family: 'Pretendard Variable';
+				font-size: 1rem; /* 16px */
+				font-weight: 500;
+				line-height: 1.5rem; /* 150% */
+			`,
+			regular: css`
+				font-family: 'Pretendard Variable';
+				font-size: 1rem; /* 16px */
+				font-weight: 400;
+				line-height: 1.5rem; /* 150% */
+			`,
+		},
+
+		// Caption (Supporting Texts/Meta Information)
+		caption: {
+			primary: css`
+				font-family: 'Pretendard Variable';
+				font-size: 0.875rem; /* 14px */
+				font-weight: 500;
+				line-height: 1.225rem; /* 140% */
+			`,
+			secondary: css`
+				font-family: 'Pretendard Variable';
+				font-size: 0.75rem; /* 12px */
+				font-weight: 400;
+				line-height: 1.05rem; /* 140% */
+			`,
+		},
+
+		// 여기서부터 기존 폰트
 		'display1-bold': css`
 			font-family: 'Pretendard Variable';
-			font-weight: 800; /* bold */
+			font-weight: 700; /* bold */
 			font-size: 3.5rem;
 			line-height: 128.6%; /* 4.501rem */
 			letter-spacing: -0.11163rem;
@@ -134,7 +211,7 @@ const theme: DefaultTheme = {
 		'display2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 2.5rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 130%; /* 3.25rem */
 			letter-spacing: -0.0705rem;
 		`,
@@ -155,7 +232,7 @@ const theme: DefaultTheme = {
 		'title1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 2.25rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 133.4%; /* 3.0015rem */
 			letter-spacing: -0.06075rem;
 		`,
@@ -176,7 +253,7 @@ const theme: DefaultTheme = {
 		'title2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.75rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 135.8%; /* 2.3765rem */
 			letter-spacing: -0.04131rem;
 		`,
@@ -197,7 +274,7 @@ const theme: DefaultTheme = {
 		'title3-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.5rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 133.4%; /* 2.001rem */
 			letter-spacing: -0.0345rem;
 		`,
@@ -218,7 +295,7 @@ const theme: DefaultTheme = {
 		'heading1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.375rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 136.4%; /* 1.8755rem */
 			letter-spacing: -0.02669rem;
 		`,
@@ -239,7 +316,7 @@ const theme: DefaultTheme = {
 		'heading2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.25rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 140%; /* 1.75rem */
 			letter-spacing: -0.0025rem;
 		`,
@@ -260,7 +337,7 @@ const theme: DefaultTheme = {
 		'headline1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1.125rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 144.5%; /* 1.62563rem */
 			letter-spacing: -0.00025rem;
 		`,
@@ -299,7 +376,7 @@ const theme: DefaultTheme = {
 		'body1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 1rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 150%; /* 1.5rem */
 			letter-spacing: -0.00569rem;
 		`,
@@ -320,7 +397,7 @@ const theme: DefaultTheme = {
 		'body2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 0.9375rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 146.7%; /* 1.37531rem */
 			letter-spacing: -0.009rem;
 		`,
@@ -341,7 +418,7 @@ const theme: DefaultTheme = {
 		'caption1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 0.75rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 133.4%; /* 1.0005rem */
 			letter-spacing: -0.00188rem;
 		`,
@@ -362,7 +439,7 @@ const theme: DefaultTheme = {
 		'caption2-bold': css`
 			font-family: 'Pretendard Variable';
 			font-size: 0.6875rem;
-			font-weight: 800;
+			font-weight: 700;
 			line-height: 127.3%; /* 0.87519rem */
 			letter-spacing: -0.00213rem;
 		`,
