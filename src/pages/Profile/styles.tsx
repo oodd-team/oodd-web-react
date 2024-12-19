@@ -13,11 +13,10 @@ export const ProfileContainer = styled.div`
 `;
 
 export const Header = styled.div`
-	margin-top: 0;
+	margin: 8px 20px;
 	display: flex;
 	align-items: center;
 	padding: 0rem;
-	margin-left: 20px;
 `;
 
 export const StatsContainer = styled.div`
@@ -82,4 +81,17 @@ export const NoPostWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	margin-top: 80px;
+`;
+
+export const Button = styled.button`
+	width: 100%;
+	margin: 1.25rem auto;
+	height: 3.1rem; 
+	text-align: center;
+	color: #FFF;
+	cursor: pointer;
+	box-sizing: border-box;
+	border-radius: 10px;
+	padding: 10px;
+	background: var(--Linear1, linear-gradient(93deg, #ff2389 1.22%, #f27575 99.73%));
 `;
