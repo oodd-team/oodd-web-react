@@ -2,16 +2,67 @@ import { DefaultTheme, css } from 'styled-components';
 
 const theme: DefaultTheme = {
 	colors: {
-		gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
+		// Brand Colors
+		brand: {
+			primary: '#FF2389', // Pink-500
+			secondary: '#F27575', // 서브 브랜드 색상
+			gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
+		},
+
+		gray: {
+			50: '#FAFAFA', // 가장 밝은 Gray
+			100: '#F8F8F8',
+			200: '#E9E9E9', // 기존 gray1
+			300: '#C4C4C4', // 기존 gray2
+			400: '#BDBDBD',
+			500: '#9E9E9E',
+			600: '#7B7B7B', // 기존 gray3
+			700: '#616161',
+			800: '#434343', // 기존 gray4
+			900: '#222222', // 가장 어두운 Gray
+		},
+
 		black: '#000000',
-		gray4: '#434343',
-		gray3: '#7B7B7B',
-		gray2: '#C4C4C4',
-		gray1: '#E9E9E9',
 		white: '#FFFFFF',
-		pink3: '#FF2389',
-		pink2: '#FFBBDA',
-		pink1: '#FEEEFB',
+
+		pink: {
+			50: '#FFF5F9', // 가장 밝은 Pink
+			100: '#FEEEFB',
+			200: '#FFD6EB',
+			300: '#FFBBDA',
+			400: '#FF8FC2',
+			500: '#FF2389', // 브랜드 생상
+			600: '#E61E7C',
+			700: '#C0196D',
+			800: '#9A1458',
+			900: '#6E0E3F', // 가장 어두운 Pink
+		},
+
+		// Functional Colors
+		text: {
+			primary: '#222222', // Gray-900
+			secondary: '#616161', // Gray-700
+			tertiary: '#9E9E9E', // Gray-500
+			caption: '#BDBDBD', // Gray-400
+			cta: '#000000', // Black
+		},
+
+		background: {
+			white: '#FFFFFF',
+			secondary: '#F8F8F8', //Gray-100 (다양한 컴포넌트의 표면 배경)
+			divider: '#E9E9E9', // Gray-200
+		},
+
+		border: {
+			active: '#FF2389', // Pink-500
+			inactive: '#FFBBDA', // Pink-300
+			devider: '#E9E9E9', // Gray-200
+		},
+	},
+	elevation: {
+		sm: '0px 1px 3px rgba(255, 255, 255, 0.12)', // 작은 그림자
+		md: '0px 4px 6px rgba(255, 255, 255, 0.16)', // 중간 그림자
+		lg: '0px 10px 15px rgba(255, 255, 255, 0.24)', // 큰 그림자
 	},
 	visibleOnMobileTablet: css`
 		@media (max-width: 767px) {
