@@ -20,27 +20,33 @@ import {
 import rejectButton from '@assets/default/reject.svg';
 import acceptButton from '@assets/default/accept.svg';
 import defaultProfile from '@assets/default/defaultProfile.svg';
-
 import { useNavigate } from 'react-router-dom';
-import type { MatchingDto } from '@apis/matching/dto';
 import { modifyMatchingStatusApi } from '@apis/matching';
 import { handleError } from '@apis/util/handleError';
 import type { ModalProps } from '@components/Modal/dto';
 import Modal from '@components/Modal';
 import { useRecoilState } from 'recoil';
 import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
-
-interface CardProps {
-	removeRejectedMatching: () => void;
-	matching: MatchingDto;
-}
+import type { CardProps } from './dto';
 
 const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
-	const nav = useNavigate();
-	const requester = matching.requester;
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+	const nav = useNavigate();
+	const requester = matching.requester;
+
+	const handleUserClick = () => {
+		nav(`/users/${matching.requester.requesterId}`);
+	};
+
+	const handleRejectButtonClick = () => {
+		modifyMatchingStatus('reject');
+	};
+
+	const handleAcceptButtonClick = () => {
+		modifyMatchingStatus('accept');
+	};
 
 	// 매칭 거절 및 수락 api
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
@@ -67,18 +73,6 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 		}
 	};
 
-	const handleUserClick = () => {
-		nav(`/users/${matching.requester.requesterId}`);
-	};
-
-	const handleRejectButtonClick = () => {
-		modifyMatchingStatus('reject');
-	};
-
-	const handleAcceptButtonClick = () => {
-		modifyMatchingStatus('accept');
-	};
-
 	const statusModalProps: ModalProps = {
 		content: modalContent,
 		onClose: () => {
@@ -88,7 +82,6 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 
 	return (
 		<CardLayout>
-			{isStatusModalOpen && <Modal {...statusModalProps} />}
 			<ProfileContainer>
 				<ProfileImgBox onClick={handleUserClick}>
 					<img src={requester.profilePictureUrl || defaultProfile} alt="profile" />
@@ -147,6 +140,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					</Btn>
 				</Reaction>
 			</OOTDImgBox>
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</CardLayout>
 	);
 };

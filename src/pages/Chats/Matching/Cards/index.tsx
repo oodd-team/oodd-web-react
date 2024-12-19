@@ -10,19 +10,8 @@ import type { MatchingDto } from '@apis/matching/dto';
 import type { CardsProps } from './dto';
 
 const Cards: React.FC<CardsProps> = ({ decreaseMatchingCount }) => {
-	const swiperRef = useRef<SwiperRef | null>(null);
 	const [matchings, setMatchings] = useState<MatchingDto[]>([]);
-
-	useEffect(() => {
-		getMatchingList();
-	}, []);
-
-	// 매칭 리스트 조회
-	const getMatchingList = async () => {
-		const response = await getMatchingListApi();
-
-		setMatchings(response.data.matching);
-	};
+	const swiperRef = useRef<SwiperRef | null>(null);
 
 	// 매칭 요청 거절 시 거절한 요청을 제거하는 함수
 	const removeRejectedMatching = (index: number) => {
@@ -35,6 +24,17 @@ const Cards: React.FC<CardsProps> = ({ decreaseMatchingCount }) => {
 			console.log('Swiper instance is not available');
 		}
 	};
+
+	// 매칭 리스트 조회 api
+	const getMatchingList = async () => {
+		const response = await getMatchingListApi();
+
+		setMatchings(response.data.matching);
+	};
+
+	useEffect(() => {
+		getMatchingList();
+	}, []);
 
 	return (
 		<CardsContainer>

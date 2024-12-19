@@ -12,9 +12,14 @@ import defaultProfile from '@assets/default/defaultProfile.svg';
 dayjs.extend(relativeTime);
 
 const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMessage }) => {
-	const nav = useNavigate();
-	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
+	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+	const nav = useNavigate();
+
+	const handleChatRoomClick = () => {
+		setOpponentInfo(otherUser);
+		nav(`/chats/${chatRoomId}`);
+	};
 
 	useEffect(() => {
 		if (latestMessage.createdAt) {
@@ -33,13 +38,8 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMes
 		}
 	}, []);
 
-	const onClickChatRoom = () => {
-		setOpponentInfo(otherUser);
-		nav(`/chats/${chatRoomId}`);
-	};
-
 	return (
-		<ChatRoomItemLayout onClick={onClickChatRoom}>
+		<ChatRoomItemLayout onClick={handleChatRoomClick}>
 			<UserImage src={otherUser?.profileUrl || defaultProfile} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">

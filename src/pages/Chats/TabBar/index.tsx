@@ -17,24 +17,15 @@ const TabBar: React.FC = () => {
 	const swiperRef = useRef<SwiperCore | null>(null);
 	const tabs = [`요청 ${activeIndex === 1 ? matchingCount : ''}`, '최근 채팅'];
 
-	useEffect(() => {
-		// 첫 탭을 최근 채팅으로 설정
-		if (swiperRef.current) {
-			swiperRef.current.slideTo(1, 0);
+	// request 컴포넌트에서 매칭 거절 시 matchingCount 감소
+	const decreaseMatchingCount = useCallback(() => {
+		if (matchingCount !== 1) {
+			setMatchingCount((prev) => Math.max(0, prev - 1));
+		} else {
+			setHasMatchingRequest(false);
+			swiperRef.current?.slideNext();
 		}
-
-		getMatchingList();
-	}, []);
-
-	// 매칭 리스트 조회
-	const getMatchingList = async () => {
-		const response = await getMatchingListApi();
-
-		if (response.isSuccess) {
-			setMatchingCount(response.data.matchingsCount);
-			setHasMatchingRequest(response.data.isMatching);
-		}
-	};
+	}, [matchingCount]);
 
 	// 매칭 요청이 있는 경우에만 '요청' 탭을 활성화
 	const handleTabClick = useCallback(
@@ -66,15 +57,24 @@ const TabBar: React.FC = () => {
 		[hasMatchingRequest],
 	);
 
-	// request 컴포넌트에서 매칭 거절 시 matchingCount 감소
-	const decreaseMatchingCount = useCallback(() => {
-		if (matchingCount !== 1) {
-			setMatchingCount((prev) => Math.max(0, prev - 1));
-		} else {
-			setHasMatchingRequest(false);
-			swiperRef.current?.slideNext();
+	// 매칭 리스트 조회 api
+	const getMatchingList = async () => {
+		const response = await getMatchingListApi();
+
+		if (response.isSuccess) {
+			setMatchingCount(response.data.matchingsCount);
+			setHasMatchingRequest(response.data.isMatching);
 		}
-	}, [matchingCount]);
+	};
+
+	useEffect(() => {
+		// 첫 탭을 최근 채팅으로 설정
+		if (swiperRef.current) {
+			swiperRef.current.slideTo(1, 0);
+		}
+
+		getMatchingList();
+	}, []);
 
 	return (
 		<TabBarLayout>

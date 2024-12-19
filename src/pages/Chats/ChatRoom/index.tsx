@@ -46,13 +46,18 @@ const ChatRoom: React.FC = () => {
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const messageLengthRef = useRef(0);
 
+	const nav = useNavigate();
+	const socket = useSocket();
+
 	const storageValue = localStorage.getItem('my_id');
 	const userId = storageValue ? Number(storageValue) : -1;
 	const { chatRoomId } = useParams();
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 
-	const nav = useNavigate();
-	const socket = useSocket();
+	// 메시지 수신 시 아래로 스크롤 (스크롤 아래 고정)
+	const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
+		if (ref.current) ref.current.scrollIntoView();
+	};
 
 	// 프로필 사진 클릭 시 프로필 페이지로 이동
 	const handleUserClick = useCallback(() => {
@@ -100,7 +105,7 @@ const ChatRoom: React.FC = () => {
 		}
 	};
 
-	// 전체 메시지 조회
+	// 전체 메시지 조회 socket api
 	const getChatRoomMessages = (data: chatRoomMessagesData[]) => {
 		setAllMessages(data);
 		if (data.length > messageLengthRef.current) {
@@ -109,11 +114,36 @@ const ChatRoom: React.FC = () => {
 		setIsLoading(false);
 	};
 
-	// 새 메시지 수신
+	// 새 메시지 수신 socket api
 	const getNewMessage = (data: chatRoomMessagesData) => {
 		setAllMessages((prevMessages) => [...prevMessages, data]);
 		setIsScroll((prev) => !prev);
 	};
+
+	// 채팅방 입장 시 스크롤 아래로 이동
+	useEffect(() => {
+		const messagesContainer = chatWindowRef.current?.parentElement;
+
+		if (messagesContainer) {
+			messagesContainer.style.scrollBehavior = 'auto';
+			messagesContainer.scrollTop = messagesContainer.scrollHeight;
+		}
+	}, []);
+
+	// 메시지 수신 시 스크롤 아래로 이동
+	useEffect(() => {
+		if (isScroll) {
+			scrollToBottom(chatWindowRef);
+			setIsScroll((prev) => !prev);
+		}
+	}, [isScroll]);
+
+	// 메시지 수신 시 렌더링에 필요한 정보 추가
+	// 이거 위에랑 합칠수없나?
+	useEffect(() => {
+		const temp = createExtendedMessages(allMessages, userId, opponentInfo);
+		setextendedMessages(temp);
+	}, [allMessages]);
 
 	useEffect(() => {
 		if (socket) {
@@ -136,34 +166,6 @@ const ChatRoom: React.FC = () => {
 			}
 		};
 	}, [chatRoomId, socket]);
-
-	// 메시지 렌더링에 필요한 정보 추가
-	useEffect(() => {
-		const temp = createExtendedMessages(allMessages, userId, opponentInfo);
-		setextendedMessages(temp);
-	}, [allMessages]);
-
-	const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
-		if (ref.current) ref.current.scrollIntoView();
-	};
-
-	useEffect(() => {
-		// 채팅방 입장 시 스크롤 아래로 이동
-		const messagesContainer = chatWindowRef.current?.parentElement;
-
-		if (messagesContainer) {
-			messagesContainer.style.scrollBehavior = 'auto';
-			messagesContainer.scrollTop = messagesContainer.scrollHeight;
-		}
-	}, []);
-
-	// 메시지 수신 시 스크롤 아래로 이동
-	useEffect(() => {
-		if (isScroll) {
-			scrollToBottom(chatWindowRef);
-			setIsScroll((prev) => !prev);
-		}
-	}, [isScroll]);
 
 	const bottomSheetMenuProps: BottomSheetMenuProps = {
 		items: [
@@ -218,7 +220,7 @@ const ChatRoom: React.FC = () => {
 		},
 	};
 
-	const kebabMenuBottomSheet: BottomSheetProps<BottomSheetMenuProps> = {
+	const kebabMenuBottomSheetProps: BottomSheetProps<BottomSheetMenuProps> = {
 		isOpenBottomSheet: isMenuBottomSheetOpen,
 		isHandlerVisible: true,
 		Component: BottomSheetMenu,
@@ -230,11 +232,6 @@ const ChatRoom: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			{isLoading && <Loading />}
-			{isLeaveModalOpen && <Modal {...leaveModalProps} />}
-			{isBlockModalOpen && <Modal {...blockModalProps} />}
-			{isStatusModalOpen && <Modal {...statusModalProps} />}
-			<BottomSheet {...kebabMenuBottomSheet} />
 			<TopBar
 				text={opponentInfo?.nickname || '알수없음'}
 				LeftButtonSrc={Back}
@@ -264,7 +261,12 @@ const ChatRoom: React.FC = () => {
 				})}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>
-			<ChatBox></ChatBox>
+			<ChatBox />
+			{isLoading && <Loading />}
+			{isLeaveModalOpen && <Modal {...leaveModalProps} />}
+			{isBlockModalOpen && <Modal {...blockModalProps} />}
+			{isStatusModalOpen && <Modal {...statusModalProps} />}
+			<BottomSheet {...kebabMenuBottomSheetProps} />
 		</OODDFrame>
 	);
 };

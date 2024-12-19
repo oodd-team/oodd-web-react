@@ -14,10 +14,10 @@ interface RecentChatProps {
 
 const RecentChat: React.FC<RecentChatProps> = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
-	const storageValue = localStorage.getItem('my_id');
-	const userId = Number(storageValue);
 	const [isLoading, setIsLoading] = useState(true);
 	const socket = useSocket();
+	const storageValue = localStorage.getItem('my_id');
+	const userId = Number(storageValue);
 
 	useEffect(() => {
 		// 채팅방 리스트 조회
