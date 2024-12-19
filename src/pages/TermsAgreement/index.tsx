@@ -22,6 +22,7 @@ const TermsAgreement: React.FC = () => {
 	const [modalMessage, setModalMessage] = useState('');
 
 	const navigate = useNavigate();
+	const my_id = Number(localStorage.getItem('my_id'));
 
 	const [agreements, setAgreements] = useState({
 		all: false,
@@ -35,7 +36,6 @@ const TermsAgreement: React.FC = () => {
 		{ key: 'privacy', label: '개인정보 수집 및 이용 동의 (필수)' },
 		{ key: 'marketing', label: '광고성 정보 수신 동의 (선택)' },
 	];
-	const my_id = Number(localStorage.getItem('my_id'));
 
 	const handleAgreementChange = (key: keyof typeof agreements) => {
 		setAgreements((prev) => {

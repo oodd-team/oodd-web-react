@@ -42,21 +42,6 @@ const SignUp: React.FC = () => {
 	const my_id = Number(localStorage.getItem('my_id'));
 	const token = localStorage.getItem('new_jwt_token');
 
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-		if (modalType === 'success') {
-			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
-		} else if (modalType === 'fail') {
-			navigate('/login');
-		}
-	};
-
-	const handleKeyDown = (event: React.KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			handleNextClick();
-		}
-	}; // 데스크탑 고려해 엔터 키 활성화
-
 	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
 	};
@@ -154,6 +139,21 @@ const SignUp: React.FC = () => {
 			setModalType('fail');
 		}
 	};
+
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		if (modalType === 'success') {
+			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
+		} else if (modalType === 'fail') {
+			navigate('/login');
+		}
+	};
+
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		if (event.key === 'Enter') {
+			handleNextClick();
+		}
+	}; // 데스크탑 고려해 엔터 키 활성화
 
 	return (
 		<OODDFrame>
