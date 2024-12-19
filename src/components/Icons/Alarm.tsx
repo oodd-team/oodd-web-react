@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconsProps } from '../IconsProps';
+import { IconsProps } from './IconsProps';
 
 const Alarm: React.FC<IconsProps> = ({ isActive = false }) => {
 	return (

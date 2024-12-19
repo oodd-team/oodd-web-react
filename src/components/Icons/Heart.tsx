@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconsProps } from '../IconsProps';
+import { IconsProps } from './IconsProps';
 
 const Heart: React.FC<IconsProps> = ({ isFilled = false }) => {
 	return (

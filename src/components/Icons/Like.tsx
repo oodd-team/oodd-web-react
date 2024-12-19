@@ -1,9 +1,9 @@
 import React from 'react';
-import { IconsProps } from '../IconsProps';
+import { IconsProps } from './IconsProps';
 
 const Like: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 	if (color && !isFilled) {
-		// color가 주어지고 isFilled가 false인 경우
+		// color가 빈 문자열이 아니고 isFilled가 false인 경우 (like-white)
 		return (
 			<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -14,8 +14,8 @@ const Like: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 			</svg>
 		);
 	}
-	if (isFilled) {
-		// isFilled가 true인 경우
+	if (color == '' && isFilled) {
+		// color가 빈 문자열이고 isFilled가 true인 경우 (like-fill)
 		return (
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none">
 				<path
@@ -26,7 +26,7 @@ const Like: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 		);
 	}
 
-	// 기본값: isFilled가 false이고 color도 빈 문자열일 경우
+	// 기본값: isFilled가 false이고 color도 빈 문자열일 경우 (like)
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none">
 			<path
