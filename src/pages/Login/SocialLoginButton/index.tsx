@@ -1,6 +1,6 @@
 import React from 'react';
 
-import theme from '../../../../styles/theme';
+import theme from '@/styles/theme';
 import { SocialLoginContainer, LogoImgWrapper, LogoImage, StyledTextWrapper } from './style';
 
 import { SocialLoginProps } from './SocialLoginProps';
