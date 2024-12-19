@@ -9,10 +9,24 @@ import Loading from '@/components/Loading';
 import Modal from '@/components/Modal';
 
 const LoginComplete: React.FC = () => {
-	const location = useLocation();
-	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
+	};
+
+	const hasAgreedToTerms = async (userId: number): Promise<boolean> => {
+		try {
+			await postTermsAgreementApi(userId);
+			return true; // 이용 약관 동의 완료된 사용자
+		} catch {
+			return false; // 이용 약관 동의 필요한 사용자
+		}
+	};
 
 	useEffect(() => {
 		// URLSearchParams를 사용해 쿼리 문자열에서 token 추출
@@ -50,20 +64,6 @@ const LoginComplete: React.FC = () => {
 			getUserInfoByJwt();
 		}
 	}, [location]);
-
-	const hasAgreedToTerms = async (userId: number): Promise<boolean> => {
-		try {
-			await postTermsAgreementApi(userId);
-			return true; // 이용 약관 동의 완료된 사용자
-		} catch {
-			return false; // 이용 약관 동의 필요한 사용자
-		}
-	};
-
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-		navigate('/login'); // 모달 닫힌 후 로그인 페이지로 이동
-	};
 
 	return (
 		<>
