@@ -30,7 +30,7 @@ const LoginComplete: React.FC = () => {
 					console.log(response);
 
 					const { nickname, name, userId } = response.data;
-					localStorage.setItem('my_id', `${userId}`);
+					localStorage.setItem('current_user_id', `${userId}`);
 
 					if (nickname && name) {
 						if (nickname && name) {
