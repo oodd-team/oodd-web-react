@@ -124,7 +124,7 @@ const SignUp: React.FC = () => {
 		}
 	};
 
-	const patchUserInfo = async (requestData: any, my_id: number) => {
+	const patchUserInfo = async (requestData: PartialUserInfoRequest, my_id: number) => {
 		try {
 			const response = await patchUserInfoApi(requestData, my_id);
 			console.log('수정 성공:', response.data);
