@@ -143,7 +143,7 @@ const SignUp: React.FC = () => {
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {
-			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
+			navigate('/signup/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
 		} else if (modalType === 'fail') {
 			navigate('/login');
 		}
