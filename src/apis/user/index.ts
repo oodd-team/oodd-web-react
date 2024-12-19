@@ -3,7 +3,7 @@ import { newRequest } from '../core';
 import { EmptySuccessResponse } from '../core/dto';
 
 // 유저 정보 수정 api
-export const patchUserInfoApi = (data: PatchUserInfoRequest, userId: number) =>
+export const patchUserInfoApi = (data: Partial<PatchUserInfoRequest>, userId: number) =>
 	newRequest.patch<PatchUserInfoResponse>(`/user/${userId}`, data);
 
 // 유저 탈퇴 api

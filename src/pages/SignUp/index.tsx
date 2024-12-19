@@ -1,39 +1,46 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import BottomButton from '../../components/BottomButton';
-import Modal from '../../components/Modal';
+import { patchUserInfoApi } from '@/apis/user';
+import { PatchUserInfoRequest } from '@/apis/user/dto';
+import { handleError } from '@/apis/util/handleError';
 
-import { StyledText } from '../../components/Text/StyledText';
-import { SignUpContainer, LogoWrapper, IntroWrapper, NickNameContainer, NickName, TapStyled, LogoImg } from './style';
+import OODDlogo from '@/assets/default/oodd.svg';
 
-import OODDlogo from '../../assets/default/oodd.svg';
+import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@/components/Text/StyledText';
+import BottomButton from '@/components/BottomButton';
+import Modal from '@/components/Modal';
 
-import { patchUserInfoApi } from '../../apis/user';
-import { handleError } from '../../apis/util/handleError';
-import { PatchUserInfoRequest } from '../../apis/user/dto';
+import {
+	SignUpLayout,
+	LogoWrapper,
+	SignupStepContainer,
+	InputContainer,
+	InputValue,
+	TapToEdit,
+	LogoImg,
+} from './style';
 
 type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 'phoneNumber' | 'nickname'>;
 
 const SignUp: React.FC = () => {
-	const navigate = useNavigate();
-
-	const my_id = Number(localStorage.getItem('my_id'));
-	const token = localStorage.getItem('new_jwt_token');
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 	const [modalType, setModalType] = useState('');
 
 	const [currentStep, setCurrentStep] = useState(1);
 	const [formData, setFormData] = useState<PartialUserInfoRequest>({
-		// 이름, 생년월일 등 개별적으로 상태 관리하지 않고 통합
 		name: '',
 		birthDate: '',
 		phoneNumber: '',
 		nickname: '', //초기 값
 	});
+
+	const navigate = useNavigate();
+
+	const my_id = Number(localStorage.getItem('my_id'));
+	const token = localStorage.getItem('new_jwt_token');
 
 	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
@@ -116,7 +123,8 @@ const SignUp: React.FC = () => {
 			await patchUserInfo(requestData, my_id);
 		}
 	};
-	const patchUserInfo = async (requestData: any, my_id: number) => {
+
+	const patchUserInfo = async (requestData: PartialUserInfoRequest, my_id: number) => {
 		try {
 			const response = await patchUserInfoApi(requestData, my_id);
 			console.log('수정 성공:', response.data);
@@ -135,11 +143,12 @@ const SignUp: React.FC = () => {
 	const handleModalClose = () => {
 		setIsModalOpen(false);
 		if (modalType === 'success') {
-			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
+			navigate('/signup/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
 		} else if (modalType === 'fail') {
 			navigate('/login');
 		}
 	};
+
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		if (event.key === 'Enter') {
 			handleNextClick();
@@ -148,16 +157,16 @@ const SignUp: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			<SignUpContainer>
+			<SignUpLayout>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
-				<IntroWrapper>
+				<SignupStepContainer>
 					<StyledText $textTheme={{ style: { mobile: 'title3-bold', tablet: 'title2-bold', desktop: 'title1-bold' } }}>
 						{label}
 					</StyledText>
-					<NickNameContainer>
-						<NickName
+					<InputContainer>
+						<InputValue
 							type={type}
 							value={value}
 							onChange={onChange}
@@ -165,19 +174,19 @@ const SignUp: React.FC = () => {
 							onKeyDown={handleKeyDown}
 						/>
 						{value === '' && (
-							<TapStyled
+							<TapToEdit
 								$textTheme={{
 									style: { mobile: 'body1-regular', tablet: 'heading1-medium', desktop: 'heading1-medium' },
 								}}
 							>
 								탭하여 수정해 주세요!
-							</TapStyled>
+							</TapToEdit>
 						)}
-					</NickNameContainer>
-				</IntroWrapper>
+					</InputContainer>
+				</SignupStepContainer>
 				<BottomButton content={currentStep < steps.length ? '다음' : '완료'} onClick={handleNextClick} />
 				{isModalOpen && <Modal content={modalMessage} onClose={handleModalClose} />}
-			</SignUpContainer>
+			</SignUpLayout>
 		</OODDFrame>
 	);
 };
