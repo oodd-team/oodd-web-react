@@ -32,16 +32,18 @@ import { StyledText } from '../Text/StyledText';
 import Modal from '../Modal';
 import { ModalProps } from '../Modal/dto';
 
+const userId = localStorage.getItem('my_id');
+
 const tabs = [
 	{ name: 'Chats', iconSelected: Chat_f, iconUnselected: Chat_s, route: '/chats' },
 	{ name: 'Home', iconSelected: Home_f, iconUnselected: Home_s, route: '/' },
-	{ name: 'Profile', iconSelected: Profile_f, iconUnselected: Profile_s, route: '/mypage' },
+	{ name: 'Profile', iconSelected: Profile_f, iconUnselected: Profile_s, route: `/profile/${userId}` },
 ];
 
 const desktopTabs = [
 	{ name: 'Home', iconSelected: homeFillDesktopIcon, iconUnselected: homeDesktopIcon, route: '/' },
 	{ name: 'Chats', iconSelected: chatFillDesktopIcon, iconUnselected: chatDesktopIcon, route: '/chats' },
-	{ name: 'Profile', iconSelected: profileFillDesktopIcon, iconUnselected: profileDesktopIcon, route: '/mypage' },
+	{ name: 'Profile', iconSelected: profileFillDesktopIcon, iconUnselected: profileDesktopIcon, route: `/profile/${userId}` },
 ];
 
 const NavBar: React.FC = () => {

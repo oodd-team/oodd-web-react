@@ -1,10 +1,7 @@
-name: CI/CD for Development
+name: CD for Development
 
 on:
   push:
-    branches:
-      - dev
-  pull_request:
     branches:
       - dev
 
@@ -21,7 +18,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "VITE_NEW_API_URL=${{ secrets.VITE_NEW_API_URL }}" > .env
+          echo "VITE_NEW_API_URL=${{ secrets.VITE_DEV_API_URL }}" > .env
           echo "VITE_DOMAIN=${{ secrets.VITE_DEV_DOMAIN }}" >> .env
           echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
           echo "VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
@@ -39,7 +36,6 @@ jobs:
       - run: yarn build-dev
 
       - name: deploy to s3
-        if: github.event_name == 'push'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete

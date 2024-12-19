@@ -5,7 +5,7 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
-import { JWT_KEY, NEW_JWT_KEY } from '../../config/constant';
+import { NEW_JWT_KEY } from '../../config/constant';
 
 // 기존 서버 응답 타입
 export type BaseResponse<T = any> = {
@@ -71,40 +71,3 @@ newRequest.interceptors.response.use(
 		return Promise.reject(error);
 	},
 );
-
-// 기존 서버 axios 인스턴스
-export const request: CustomInstance = axios.create({
-	baseURL: import.meta.env.VITE_API_URL,
-	timeout: 20000,
-	headers: {
-		accept: 'application/json',
-		Authorization: `Bearer ${localStorage.getItem(JWT_KEY)}`,
-	},
-});
-
-request.interceptors.request.use(
-	(config) => {
-		const jwt = window.localStorage.getItem(JWT_KEY);
-		config.headers.Authorization = `Bearer ${jwt}`;
-		return config;
-	},
-	(error) => {
-		return Promise.reject(error);
-	},
-);
-
-request.interceptors.response.use(
-	(response) => {
-		console.log('network log', response);
-		if (response.status === 200 || response.status === 201) {
-			return response.data;
-		} else {
-			return Promise.reject(response.data.message);
-		}
-	},
-	(error) => {
-		return Promise.reject(error.code === 'ERR_NETWORK' ? '허용되지 않은 네트워크 접근입니다.' : error);
-	},
-);
-
-export default request;
