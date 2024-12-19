@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import BottomButton from '../../components/BottomButton';
-import Modal from '../../components/Modal';
+import { patchUserInfoApi } from '@/apis/user';
+import { PatchUserInfoRequest } from '@/apis/user/dto';
+import { handleError } from '@/apis/util/handleError';
 
-import { StyledText } from '../../components/Text/StyledText';
+import OODDlogo from '@/assets/default/oodd.svg';
+
+import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@/components/Text/StyledText';
+import BottomButton from '@/components/BottomButton';
+import Modal from '@/components/Modal';
+
 import {
 	SignUpLayout,
 	LogoWrapper,
@@ -16,20 +22,9 @@ import {
 	LogoImg,
 } from './style';
 
-import OODDlogo from '../../assets/default/oodd.svg';
-
-import { patchUserInfoApi } from '../../apis/user';
-import { handleError } from '../../apis/util/handleError';
-import { PatchUserInfoRequest } from '../../apis/user/dto';
-
 type PartialUserInfoRequest = Pick<PatchUserInfoRequest, 'name' | 'birthDate' | 'phoneNumber' | 'nickname'>;
 
 const SignUp: React.FC = () => {
-	const navigate = useNavigate();
-
-	const my_id = Number(localStorage.getItem('my_id'));
-	const token = localStorage.getItem('new_jwt_token');
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
 	const [modalType, setModalType] = useState('');
@@ -41,6 +36,26 @@ const SignUp: React.FC = () => {
 		phoneNumber: '',
 		nickname: '', //초기 값
 	});
+
+	const navigate = useNavigate();
+
+	const my_id = Number(localStorage.getItem('my_id'));
+	const token = localStorage.getItem('new_jwt_token');
+
+	const handleModalClose = () => {
+		setIsModalOpen(false);
+		if (modalType === 'success') {
+			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
+		} else if (modalType === 'fail') {
+			navigate('/login');
+		}
+	};
+
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		if (event.key === 'Enter') {
+			handleNextClick();
+		}
+	}; // 데스크탑 고려해 엔터 키 활성화
 
 	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData((prevData) => ({ ...prevData, [field]: e.target.value }));
@@ -139,20 +154,6 @@ const SignUp: React.FC = () => {
 			setModalType('fail');
 		}
 	};
-
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-		if (modalType === 'success') {
-			navigate('/terms-agreement'); // 회원가입 정보 입력 되면, 이용약관 동의 페이지로
-		} else if (modalType === 'fail') {
-			navigate('/login');
-		}
-	};
-	const handleKeyDown = (event: React.KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			handleNextClick();
-		}
-	}; // 데스크탑 고려해 엔터 키 활성화
 
 	return (
 		<OODDFrame>

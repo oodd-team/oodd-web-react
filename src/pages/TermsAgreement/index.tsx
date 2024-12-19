@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import BottomButton from '../../components/BottomButton';
-import TopBar from '../../components/TopBar';
-import Modal from '../../components/Modal';
+import { postTermsAgreementApi } from '@/apis/user';
+import { handleError } from '@/apis/util/handleError';
 
-import { LogoWrapper, LogoImg } from '../SignUp/style';
+import Back from '@/assets/arrow/left.svg';
+import OODDlogo from '@/assets/default/oodd.svg';
+
+import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@/components/Text/StyledText';
+import BottomButton from '@/components/BottomButton';
+import TopBar from '@/components/TopBar';
+import Modal from '@/components/Modal';
+
+import { LogoWrapper, LogoImg } from '@/pages/SignUp/style';
+
 import { TermsAgreementLayout, StyledTitle, CheckboxList, CheckboxItem, CheckboxInput, Divider } from './styles';
-import { StyledText } from '../../components/Text/StyledText';
-
-import Back from '../../assets/arrow/left.svg';
-import OODDlogo from '../../assets/default/oodd.svg';
-
-import { postTermsAgreementApi } from '../../apis/user';
-import { handleError } from '../../apis/util/handleError';
 
 const TermsAgreement: React.FC = () => {
-	const my_id = Number(localStorage.getItem('my_id'));
-	const navigate = useNavigate();
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+
+	const navigate = useNavigate();
 
 	const [agreements, setAgreements] = useState({
 		all: false,
@@ -35,6 +35,7 @@ const TermsAgreement: React.FC = () => {
 		{ key: 'privacy', label: '개인정보 수집 및 이용 동의 (필수)' },
 		{ key: 'marketing', label: '광고성 정보 수신 동의 (선택)' },
 	];
+	const my_id = Number(localStorage.getItem('my_id'));
 
 	const handleAgreementChange = (key: keyof typeof agreements) => {
 		setAgreements((prev) => {
