@@ -4,7 +4,7 @@ import { IconsProps } from './IconsProps';
 const Message: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 	if (!isFilled) {
 		if (color) {
-			// color가 주어지고 isFilled가 false인 경우 (message-white / message)
+			// color가 주어지고 isFilled가 false인 경우 (default의 message는 color을 #8E8E8E으로, desktopNavBar의 message는 color을 black으로 )
 			return (
 				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
 					<path

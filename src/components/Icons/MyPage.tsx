@@ -4,7 +4,7 @@ import { IconsProps } from './IconsProps';
 const MyPage: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 	if (!isFilled) {
 		if (color) {
-			// color가 주어지고 isFilled가 false인 경우 (my-page-white / my-page)
+			// color가 주어지고 isFilled가 false인 경우 (default의 my-page는 color을 #8E8E8E으로, desktopNavBar의 my-page는 color을 black으로 )
 			return (
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 					<path
