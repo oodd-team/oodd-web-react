@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { Comment } from '../../apis/post-comment/dto';
+import type { Comment } from '@apis/post-comment/dto';
 
 export const IsCommentDeleteConfirmationModalOpenAtom = atom<boolean>({
 	key: 'isCommentDeleteConfirmationModalOpenAtom',
