@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
-import { UserInfoData } from '../../apis/user/dto';
-import imageBasic from '../../assets/default/defaultProfile.svg';
+import type { UserInfoData } from '@apis/user/dto';
+import imageBasic from '@assets/default/defaultProfile.svg';
 
 type BasicUserInfo = Pick<UserInfoData, 'userId' | 'nickname' | 'bio' | 'isFriend' | 'profilePictureUrl'>;
 
