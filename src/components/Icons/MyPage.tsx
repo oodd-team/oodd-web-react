@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconsProps } from './IconsProps';
+import type { IconsProps } from './dto';
 
 const MyPage: React.FC<IconsProps> = ({ isFilled = false, color = '' }) => {
 	if (!isFilled) {
