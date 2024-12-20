@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { OOTDContainer, FeedContainer } from './styles';
 import Feed from './Feed/index';
 import { getPostListApi } from '@apis/post';
@@ -14,27 +14,19 @@ const OOTD: React.FC = () => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 
 	const [reachedEnd, setReachedEnd] = useState(false);
-	const isFetchingRef = useRef(false);
+	const [isFetching, setIsFetching] = useState(false);
 	const feedPageRef = useRef(1);
 	const savedScrollPosition = sessionStorage.getItem('scrollPosition');
 	const scrollPositionRef = useRef(Number(savedScrollPosition) || 0);
 
-	// 스크롤 이벤트 핸들러 추가
-	const handleScroll = () => {
-		// 모든 데이터를 불러왔거나 아직 렌더링이 다 안 된 경우 반환
-		if (reachedEnd || isFetchingRef.current) return;
+	const observerRef = useRef<IntersectionObserver | null>(null);
+	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-		if (window.innerHeight + document.documentElement.scrollTop >= document.body.scrollHeight - window.innerHeight) {
-			isFetchingRef.current = true;
-			scrollPositionRef.current = window.scrollY; // 현재 스크롤 위치 저장
-			getPostList();
-		}
-	};
-
-	// 전체 게시글(피드) 조회 api
+	// 전체 게시글(피드) 조회 API
 	const getPostList = async () => {
-		if (reachedEnd) return;
+		if (reachedEnd || isFetching) return;
 
+		setIsFetching(true);
 		try {
 			const response = await getPostListApi(feedPageRef.current, 20);
 
@@ -50,22 +42,49 @@ const OOTD: React.FC = () => {
 			const errorMessage = handleError(error);
 			setModalContent(errorMessage);
 			setIsStatusModalOpen(true);
+		} finally {
+			setIsFetching(false);
 		}
 	};
 
 	useEffect(() => {
-		getPostList();
-		window.addEventListener('scroll', handleScroll);
+		// Intersection Observer 설정
+		observerRef.current = new IntersectionObserver(
+			(entries) => {
+				const target = entries[0];
+				if (target.isIntersecting && !isFetching) {
+					getPostList();
+				}
+			},
+			{
+				root: null, // viewport
+				rootMargin: '0px',
+				threshold: 1.0, // 요소가 100% 보여질 때 트리거
+			},
+		);
+
+		if (loadMoreRef.current) {
+			observerRef.current.observe(loadMoreRef.current);
+		}
 
 		return () => {
-			window.removeEventListener('scroll', handleScroll);
+			if (observerRef.current && loadMoreRef.current) {
+				observerRef.current.unobserve(loadMoreRef.current);
+			}
+		};
+	}, [isFetching, reachedEnd]);
+
+	useEffect(() => {
+		// 초기 데이터 로드
+		getPostList();
+
+		// 세션 저장된 스크롤 위치 복원
+		window.scrollTo(0, scrollPositionRef.current);
+
+		return () => {
+			sessionStorage.setItem('scrollPosition', String(window.scrollY));
 		};
 	}, []);
-
-	useLayoutEffect(() => {
-		window.scrollTo(0, scrollPositionRef.current); // 저장된 스크롤 위치로 이동
-		isFetchingRef.current = false;
-	}, [feeds]); // feeds가 변경될 때 실행
 
 	const statusModalProps: ModalProps = {
 		content: modalContent,
@@ -82,6 +101,7 @@ const OOTD: React.FC = () => {
 						<Feed feed={feed} />
 					</div>
 				))}
+				<div ref={loadMoreRef} style={{ height: '1px', backgroundColor: 'transparent' }} />
 			</FeedContainer>
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</OOTDContainer>
