@@ -41,7 +41,7 @@ const SignUp: React.FC = () => {
 
 	const navigate = useNavigate();
 
-	const current_user_id = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 	const token = localStorage.getItem('new_jwt_token');
 
 	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,20 +115,20 @@ const SignUp: React.FC = () => {
 
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
-		} else if (current_user_id && token) {
+		} else if (currentUserId && token) {
 			const requestData: PartialUserInfoRequest = {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthDate: formData.birthDate,
 				phoneNumber: formData.phoneNumber,
 			};
-			await patchUserInfo(requestData, current_user_id);
+			await patchUserInfo(requestData, currentUserId);
 		}
 	};
 
-	const patchUserInfo = async (requestData: PartialUserInfoRequest, current_user_id: number) => {
+	const patchUserInfo = async (requestData: PartialUserInfoRequest, currentUserId: number) => {
 		try {
-			const response = await patchUserInfoApi(requestData, current_user_id);
+			const response = await patchUserInfoApi(requestData, currentUserId);
 			console.log('수정 성공:', response.data);
 			setModalMessage('회원가입에 성공했습니다!');
 			setIsModalOpen(true);

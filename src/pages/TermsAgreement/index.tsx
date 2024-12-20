@@ -24,7 +24,7 @@ const TermsAgreement: React.FC = () => {
 	const [modalMessage, setModalMessage] = useState('');
 
 	const navigate = useNavigate();
-	const current_user_id = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const [agreements, setAgreements] = useState({
 		all: false,
@@ -60,14 +60,14 @@ const TermsAgreement: React.FC = () => {
 
 	// 완료 버튼을 눌렀을 때 실행되는 함수
 	const handleCompletedClick = async () => {
-		if (!current_user_id) {
+		if (!currentUserId) {
 			setModalMessage('회원 정보가 없습니다.\n로그인 해 주세요!');
 			setIsModalOpen(true);
 			return;
 		}
 
 		try {
-			const response = await postTermsAgreementApi(current_user_id);
+			const response = await postTermsAgreementApi(currentUserId);
 			console.log(response);
 			navigate('/'); // 성공 시 홈으로 이동
 		} catch (error) {
