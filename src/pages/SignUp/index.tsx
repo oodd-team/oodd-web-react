@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { patchUserInfoApi } from '@/apis/user';
-import { PatchUserInfoRequest } from '@/apis/user/dto';
+import type { PatchUserInfoRequest } from '@/apis/user/dto';
 import { handleError } from '@/apis/util/handleError';
 
 import OODDlogo from '@/assets/default/oodd.svg';
