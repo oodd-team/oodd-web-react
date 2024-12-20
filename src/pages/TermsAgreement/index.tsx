@@ -13,6 +13,8 @@ import BottomButton from '@/components/BottomButton';
 import TopBar from '@/components/TopBar';
 import Modal from '@/components/Modal';
 
+import { getCurrentUserId } from '@/utils/getCurrentUserId';
+
 import { LogoWrapper, LogoImg } from '@/pages/SignUp/style';
 
 import { TermsAgreementLayout, StyledTitle, CheckboxList, CheckboxItem, CheckboxInput, Divider } from './styles';
@@ -22,7 +24,7 @@ const TermsAgreement: React.FC = () => {
 	const [modalMessage, setModalMessage] = useState('');
 
 	const navigate = useNavigate();
-	const my_id = Number(localStorage.getItem('my_id'));
+	const current_user_id = getCurrentUserId();
 
 	const [agreements, setAgreements] = useState({
 		all: false,
@@ -58,14 +60,14 @@ const TermsAgreement: React.FC = () => {
 
 	// 완료 버튼을 눌렀을 때 실행되는 함수
 	const handleCompletedClick = async () => {
-		if (!my_id) {
+		if (!current_user_id) {
 			setModalMessage('회원 정보가 없습니다.\n로그인 해 주세요!');
 			setIsModalOpen(true);
 			return;
 		}
 
 		try {
-			const response = await postTermsAgreementApi(my_id);
+			const response = await postTermsAgreementApi(current_user_id);
 			console.log(response);
 			navigate('/'); // 성공 시 홈으로 이동
 		} catch (error) {

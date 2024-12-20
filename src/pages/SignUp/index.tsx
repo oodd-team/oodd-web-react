@@ -12,6 +12,8 @@ import { StyledText } from '@/components/Text/StyledText';
 import BottomButton from '@/components/BottomButton';
 import Modal from '@/components/Modal';
 
+import { getCurrentUserId } from '@/utils/getCurrentUserId';
+
 import {
 	SignUpLayout,
 	LogoWrapper,
@@ -39,7 +41,7 @@ const SignUp: React.FC = () => {
 
 	const navigate = useNavigate();
 
-	const my_id = Number(localStorage.getItem('my_id'));
+	const current_user_id = getCurrentUserId();
 	const token = localStorage.getItem('new_jwt_token');
 
 	const handleInputChange = (field: keyof PatchUserInfoRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,20 +115,20 @@ const SignUp: React.FC = () => {
 
 		if (currentStep < steps.length) {
 			setCurrentStep(currentStep + 1);
-		} else if (my_id && token) {
+		} else if (current_user_id && token) {
 			const requestData: PartialUserInfoRequest = {
 				name: formData.name,
 				nickname: formData.nickname,
 				birthDate: formData.birthDate,
 				phoneNumber: formData.phoneNumber,
 			};
-			await patchUserInfo(requestData, my_id);
+			await patchUserInfo(requestData, current_user_id);
 		}
 	};
 
-	const patchUserInfo = async (requestData: PartialUserInfoRequest, my_id: number) => {
+	const patchUserInfo = async (requestData: PartialUserInfoRequest, current_user_id: number) => {
 		try {
-			const response = await patchUserInfoApi(requestData, my_id);
+			const response = await patchUserInfoApi(requestData, current_user_id);
 			console.log('수정 성공:', response.data);
 			setModalMessage('회원가입에 성공했습니다!');
 			setIsModalOpen(true);
