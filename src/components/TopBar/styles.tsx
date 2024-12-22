@@ -6,7 +6,7 @@ export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	display: flex;
 	position: sticky;
 	top: 0; /* 부모 요소의 상단에 붙도록 설정 */
-	z-index: 1;
+	z-index: 99;
 	background-color: white;
 	width: 100%; /* 부모 너비에 맞춤 */
 	align-items: center;

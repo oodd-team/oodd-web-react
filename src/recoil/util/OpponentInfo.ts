@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { OtherUserDto } from '../../apis/chatting/dto';
+import type { OtherUserDto } from '@apis/chatting/dto';
 
 const { persistAtom } = recoilPersist();
 
