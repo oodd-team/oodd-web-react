@@ -5,6 +5,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/typescript',
 		'plugin:import/recommended',
+		'plugin:prettier/recommended',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -23,13 +24,7 @@ module.exports = {
 		node: true,
 	},
 	rules: {
-		'@typescript-eslint/strict-boolean-expressions': [
-			'error',
-			{
-				allowString: false,
-				allowNumber: false,
-			},
-		],
+		'prettier/prettier': ['error', { endOfLine: 'auto' }],
 		'import/extensions': [
 			'error',
 			'ignorePackages',
@@ -46,11 +41,61 @@ module.exports = {
 					order: 'asc',
 					caseInsensitive: true,
 				},
-				'newlines-between': 'never',
+				'newlines-between': 'always',
+				pathGroups: [
+					{
+						pattern: 'react*',
+						group: 'builtin',
+						position: 'before',
+					},
+					{
+						pattern: '@components/**/dto',
+						group: 'type',
+					},
+					{
+						pattern: '@styles/**',
+						group: 'internal',
+						position: 'before',
+					},
+					{
+						pattern: '@assets/**',
+						group: 'internal',
+						position: 'after',
+					},
+					{
+						pattern: '@components/Icons/**',
+						group: 'internal',
+						position: 'after',
+					},
+					{
+						pattern: '@components/**',
+						group: 'internal',
+						position: 'after',
+					},
+					{
+						pattern: '../**/dto',
+						group: 'type',
+						position: 'after',
+					},
+					{
+						pattern: './**/dto',
+						group: 'type',
+						position: 'after',
+					},
+					{
+						pattern: '../**/index',
+						group: 'parent',
+						position: 'before',
+					},
+					{
+						pattern: './**/index',
+						group: 'parent',
+						position: 'before',
+					},
+				],
+				pathGroupsExcludedImportTypes: ['react*'],
 			},
 		],
-		'import/no-unresolved': 'off',
-		'import/export': 'off',
 	},
 	overrides: [
 		{
