@@ -33,7 +33,7 @@ import { handleError } from '@apis/util/handleError';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const ChatRoom: React.FC = () => {
-	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
+	const [extendedMessages, setExtendedMessages] = useState<ExtendedMessageDto[]>([]);
 	const [allMessages, setAllMessages] = useRecoilState(AllMesagesAtom);
 
 	const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
@@ -130,19 +130,17 @@ const ChatRoom: React.FC = () => {
 		}
 	}, []);
 
-	// 메시지 수신 시 스크롤 아래로 이동
+	// 메시지 수신 시
 	useEffect(() => {
+		// 렌더링에 필요한 정보 추가
+		const temp = createExtendedMessages(allMessages, currentUserId, opponentInfo);
+		setExtendedMessages(temp);
+
+		// 스크롤 아래로 이동
 		if (isScroll) {
 			scrollToBottom(chatWindowRef);
 			setIsScroll((prev) => !prev);
 		}
-	}, [isScroll]);
-
-	// 메시지 수신 시 렌더링에 필요한 정보 추가
-	// 이거 위에랑 합칠수없나?
-	useEffect(() => {
-		const temp = createExtendedMessages(allMessages, currentUserId, opponentInfo);
-		setextendedMessages(temp);
 	}, [allMessages]);
 
 	useEffect(() => {
