@@ -6,6 +6,7 @@ import type { PostSummary } from '@apis/post/dto';
 import { handleError } from '@apis/util/handleError';
 import type { ModalProps } from '@components/Modal/dto';
 import Modal from '@components/Modal';
+import debounce from 'lodash/debounce';
 
 const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);
@@ -48,25 +49,29 @@ const OOTD: React.FC = () => {
 	};
 
 	useEffect(() => {
-		// Intersection Observer 설정
+		if (reachedEnd && observerRef.current && loadMoreRef.current) {
+			observerRef.current.unobserve(loadMoreRef.current);
+			return; // 더 이상 옵저버 실행 안 함
+		}
+
 		observerRef.current = new IntersectionObserver(
-			(entries) => {
+			debounce((entries) => {
 				const target = entries[0];
-				if (target.isIntersecting && !isFetching) {
+				console.log('Intersection Observer:', target.isIntersecting);
+				if (target.isIntersecting && !isFetching && !reachedEnd) {
 					getPostList();
 				}
-			},
+			}, 300), // 디바운스 적용
 			{
-				root: null, // viewport
-				rootMargin: '0px',
-				threshold: 1.0, // 요소가 100% 보여질 때 트리거
+				root: null,
+				rootMargin: '100px', // 미리 데이터 로드
+				threshold: 0, // 요소가 조금이라도 보이면 트리거
 			},
 		);
 
 		if (loadMoreRef.current) {
 			observerRef.current.observe(loadMoreRef.current);
 		}
-
 		return () => {
 			if (observerRef.current && loadMoreRef.current) {
 				observerRef.current.unobserve(loadMoreRef.current);
