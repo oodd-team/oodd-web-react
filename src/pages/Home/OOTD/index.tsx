@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import debounce from 'lodash/debounce';
 import { OOTDContainer, FeedContainer } from './styles';
 import Feed from './Feed/index';
 import { getPostListApi } from '@apis/post';
@@ -6,7 +7,6 @@ import type { PostSummary } from '@apis/post/dto';
 import { handleError } from '@apis/util/handleError';
 import type { ModalProps } from '@components/Modal/dto';
 import Modal from '@components/Modal';
-import debounce from 'lodash/debounce';
 
 const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);
@@ -16,12 +16,15 @@ const OOTD: React.FC = () => {
 
 	const [reachedEnd, setReachedEnd] = useState(false);
 	const [isFetching, setIsFetching] = useState(false);
-	const feedPageRef = useRef(1);
+
+	const feedPageRef = useRef(1); // 현재 페이지 번호를 참조하는 변수, 리렌더링 없이 값만 업데이트 하기 위해 상태가 아닌 useRef 사용
+
+	// 세션 스토리지에서 이전 스크롤 위치를 가져와 초기화
 	const savedScrollPosition = sessionStorage.getItem('scrollPosition');
 	const scrollPositionRef = useRef(Number(savedScrollPosition) || 0);
 
-	const observerRef = useRef<IntersectionObserver | null>(null);
-	const loadMoreRef = useRef<HTMLDivElement | null>(null);
+	const observerRef = useRef<IntersectionObserver | null>(null); // IntersectionObserver 인스턴스를 참조하는 변수
+	const loadMoreRef = useRef<HTMLDivElement | null>(null); // 더 많은 데이터를 로드할 때 관찰할 마지막 요소의 DOM을 참조
 
 	// 전체 게시글(피드) 조회 API
 	const getPostList = async () => {
@@ -51,28 +54,31 @@ const OOTD: React.FC = () => {
 	useEffect(() => {
 		if (reachedEnd && observerRef.current && loadMoreRef.current) {
 			observerRef.current.unobserve(loadMoreRef.current);
-			return; // 더 이상 옵저버 실행 안 함
+			return; // 데이터의 끝에 다다르면 옵저버 해제. (더이상 피드가 없으면)
 		}
 
-		observerRef.current = new IntersectionObserver(
+		observerRef.current = new IntersectionObserver( // Intersection Observer 생성
 			debounce((entries) => {
 				const target = entries[0];
 				console.log('Intersection Observer:', target.isIntersecting);
 				if (target.isIntersecting && !isFetching && !reachedEnd) {
+					// 요소가 화면에 보이고 있고, 요청 중이 아니며며 끝에 도달하지 않았다면 api 호출
 					getPostList();
 				}
-			}, 300), // 디바운스 적용
+			}, 300), // 디바운스 적용해 스크롤 이벤트 제어. 스크롤마다 이벤트 호출하는 것이 아닌 마지막 스크롤 이후 300ms동안 동작이 없으면 이벤트 호출
 			{
 				root: null,
-				rootMargin: '100px', // 미리 데이터 로드
-				threshold: 0, // 요소가 조금이라도 보이면 트리거
+				rootMargin: '100px', // // 요소가 보이기 100px 전에 미리 데이터 로드
+				threshold: 0, // 요소가 아주 조금이라도 보이면 트리거
 			},
 		);
 
+		// 옵저버를 마지막 요소에 연결
 		if (loadMoreRef.current) {
 			observerRef.current.observe(loadMoreRef.current);
 		}
 		return () => {
+			// 컴포넌트가 언마운트되거나 의존성이 변경될 때 옵저버 해제
 			if (observerRef.current && loadMoreRef.current) {
 				observerRef.current.unobserve(loadMoreRef.current);
 			}
@@ -80,13 +86,14 @@ const OOTD: React.FC = () => {
 	}, [isFetching, reachedEnd]);
 
 	useEffect(() => {
-		// 초기 데이터 로드
+		// 첫 로드 시 API 호출
 		getPostList();
 
-		// 세션 저장된 스크롤 위치 복원
+		// 세션 저장된 이전 스크롤 위치 복원
 		window.scrollTo(0, scrollPositionRef.current);
 
 		return () => {
+			// 컴포넌트 언마운트 시 현재 스크롤 위치를 세션 스토리지에 저장
 			sessionStorage.setItem('scrollPosition', String(window.scrollY));
 		};
 	}, []);
@@ -106,6 +113,7 @@ const OOTD: React.FC = () => {
 						<Feed feed={feed} />
 					</div>
 				))}
+				{/* Intersection Observer가 감지할 마지막 요소 */}
 				<div ref={loadMoreRef} style={{ height: '1px', backgroundColor: 'transparent' }} />
 			</FeedContainer>
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
