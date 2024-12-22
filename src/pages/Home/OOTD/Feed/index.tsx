@@ -21,9 +21,9 @@ import {
 } from './styles';
 import more from '@assets/default/more.svg';
 import xBtn from '@assets/default/reject.svg';
-import likeBtn from '@assets/default/heart.svg';
-import likeFillBtn from '@assets/default/heart-fill.svg';
-import commentBtn from '@assets/default/message-white.svg';
+import likeBtn from '@assets/default/heart.svg'; // 컴포넌트화
+import likeFillBtn from '@assets/default/heart-fill.svg'; // 컴포넌트화
+import commentBtn from '@assets/default/message-white.svg'; // 컴포넌트화
 import { useNavigate } from 'react-router-dom';
 import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
