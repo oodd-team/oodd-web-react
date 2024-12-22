@@ -22,6 +22,7 @@ export default defineConfig({
 			'@context': path.resolve(__dirname, 'src/context'),
 			'@page': path.resolve(__dirname, 'src/page'),
 			'@recoil': path.resolve(__dirname, 'src/recoil'),
+			'@utils': path.resolve(__dirname, 'src/utils'),
 		},
 	},
 });

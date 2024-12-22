@@ -35,6 +35,7 @@
       "@context/*": ["context/*"],
       "@page/*": ["page/*"],
       "@recoil/*": ["recoil/*"],
+      "@utils/*": ["utils/*"],
     },
   },
   "include": ["src/**/*", "vite-env.d.ts"]
