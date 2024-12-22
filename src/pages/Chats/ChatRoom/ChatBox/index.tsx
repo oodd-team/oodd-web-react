@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
 import { useSocket } from '@context/SocketProvider';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const ChatBox: React.FC = () => {
 	const [newMessage, setNewMessage] = useState('');
@@ -11,8 +12,7 @@ const ChatBox: React.FC = () => {
 	const socket = useSocket();
 
 	const { chatRoomId } = useParams();
-	const storageValue = localStorage.getItem('my_id');
-	const userId = storageValue ? Number(storageValue) : -1;
+	const currentUserId = getCurrentUserId();
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 	const isOpponentValid = !!(opponentInfo && opponentInfo.id);
 
@@ -53,7 +53,7 @@ const ChatBox: React.FC = () => {
 				chatRoomId: Number(chatRoomId),
 				toUserId: opponentInfo?.id,
 				content: newMessage,
-				fromUserId: userId,
+				fromUserId: currentUserId,
 				createdAt: new Date().toISOString(),
 			};
 			socket.emit('sendMessage', sendMessageRequest);

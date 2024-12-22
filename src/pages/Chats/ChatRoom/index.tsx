@@ -30,6 +30,7 @@ import type { chatRoomMessagesData } from '@apis/chatting/dto';
 import { postUserBlockApi } from '@apis/user-block';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
 import { handleError } from '@apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setextendedMessages] = useState<ExtendedMessageDto[]>([]);
@@ -49,9 +50,8 @@ const ChatRoom: React.FC = () => {
 	const nav = useNavigate();
 	const socket = useSocket();
 
-	const storageValue = localStorage.getItem('my_id');
-	const userId = storageValue ? Number(storageValue) : -1;
 	const { chatRoomId } = useParams();
+	const currentUserId = getCurrentUserId();
 	const opponentInfo = useRecoilValue(OpponentInfoAtom);
 
 	// 메시지 수신 시 아래로 스크롤 (스크롤 아래 고정)
@@ -74,7 +74,7 @@ const ChatRoom: React.FC = () => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: userId,
+				fromUserId: currentUserId,
 				toUserId: opponentInfo?.id || -1,
 				action: 'block',
 			};
@@ -98,7 +98,7 @@ const ChatRoom: React.FC = () => {
 		if (socket) {
 			const data = {
 				chatRoomId: Number(chatRoomId),
-				userId: userId,
+				userId: currentUserId,
 			};
 			socket.emit('leaveChatRoom', data);
 			nav('/chats', { replace: true });
@@ -141,7 +141,7 @@ const ChatRoom: React.FC = () => {
 	// 메시지 수신 시 렌더링에 필요한 정보 추가
 	// 이거 위에랑 합칠수없나?
 	useEffect(() => {
-		const temp = createExtendedMessages(allMessages, userId, opponentInfo);
+		const temp = createExtendedMessages(allMessages, currentUserId, opponentInfo);
 		setextendedMessages(temp);
 	}, [allMessages]);
 

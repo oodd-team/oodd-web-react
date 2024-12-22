@@ -40,6 +40,7 @@ import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postUserBlockApi } from '@apis/user-block';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
 import type { FeedProps } from './dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
@@ -50,7 +51,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [modalContent, setModalContent] = useState('');
 
 	const nav = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const currentUserId = getCurrentUserId();
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
 
 	const handleMoreButtonClick = (e: React.MouseEvent) => {
@@ -111,7 +112,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: Number(userId) || -1,
+				fromUserId: currentUserId || -1,
 				toUserId: feed.user.id,
 				action: 'block',
 			};
@@ -133,7 +134,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const createMatching = async (comment: string) => {
 		try {
 			const matchingRequest: CreateMatchingRequest = {
-				requesterId: Number(userId) || -1,
+				requesterId: currentUserId || -1,
 				targetId: feed.user.id || -1,
 				message: comment,
 			};
