@@ -42,15 +42,15 @@ const theme: DefaultTheme = {
 		// Functional Colors
 		text: {
 			cta: '#000000', // Black
-			primary: '#222222', // Gray-900
-			secondary: '#616161', // Gray-700
+			primary: '#4343432', // Gray-800
+			secondary: '##7B7B7B', // Gray-600
 			tertiary: '#9E9E9E', // Gray-500
-			caption: '#BDBDBD', // Gray-400
+			caption: '#C4C4C4', // Gray-300
 		},
 
 		background: {
 			primary: '#FFFFFF',
-			secondary: '#F8F8F8', //Gray-100 (input, 바텀시트 등의 배경)
+			secondary: '#F8F8F8', //Gray-100 (input, 데스크탑의 사이드 바텀시트 등의 배경)
 			divider: '#E9E9E9', // Gray-200
 		},
 
