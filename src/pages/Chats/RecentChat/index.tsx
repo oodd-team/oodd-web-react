@@ -1,11 +1,12 @@
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 import React, { useEffect, useState } from 'react';
 import SwiperCore from 'swiper';
-import Loading from '../../../components/Loading';
-import ChatRoomItem from '../ChatRoomItem';
-import { StyledText } from '../../../components/Text/StyledText';
-import { useSocket } from '../../../context/SocketProvider';
-import { ChatRoomData } from '../../../apis/chatting/dto';
+import Loading from '@components/Loading';
+import ChatRoomItem from '../ChatRoomItem/index';
+import { StyledText } from '@components/Text/StyledText';
+import { useSocket } from '@context/SocketProvider';
+import type { ChatRoomData } from '@apis/chatting/dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 interface RecentChatProps {
 	matchingCount: number;
@@ -14,10 +15,9 @@ interface RecentChatProps {
 
 const RecentChat: React.FC<RecentChatProps> = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
-	const storageValue = localStorage.getItem('my_id');
-	const userId = Number(storageValue);
 	const [isLoading, setIsLoading] = useState(true);
 	const socket = useSocket();
+	const currentUserId = getCurrentUserId();
 
 	useEffect(() => {
 		// 채팅방 리스트 조회
@@ -27,7 +27,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 		};
 
 		if (socket) {
-			socket.emit('getChatRooms', { userId: userId });
+			socket.emit('getChatRooms', { userId: currentUserId });
 			socket.on('chatRoomList', getChatRooms);
 		}
 

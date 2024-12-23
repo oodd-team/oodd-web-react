@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import BottomButton from '../../components/BottomButton';
-import TopBar from '../../components/TopBar';
-import Modal from '../../components/Modal';
+import { postTermsAgreementApi } from '@/apis/user';
+import { handleError } from '@/apis/util/handleError';
 
-import { LogoWrapper, LogoImg } from '../SignUp/style';
-import { TermsAgreementContainer, StyledTitle, CheckboxWrapper, CheckboxItem, CheckboxInput, Divider } from './styles';
-import { StyledText } from '../../components/Text/StyledText';
+import Back from '@/assets/arrow/left.svg';
+import OODDlogo from '@/assets/default/oodd.svg';
 
-import Back from '../../assets/arrow/left.svg';
-import OODDlogo from '../../assets/default/oodd.svg';
+import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@/components/Text/StyledText';
+import BottomButton from '@/components/BottomButton';
+import TopBar from '@/components/TopBar';
+import Modal from '@/components/Modal';
 
-import { postTermsAgreementApi } from '../../apis/user';
-import { handleError } from '../../apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import { LogoWrapper, LogoImg } from '@/pages/SignUp/style';
+
+import { TermsAgreementLayout, StyledTitle, CheckboxList, CheckboxItem, CheckboxInput, Divider } from './styles';
 
 const TermsAgreement: React.FC = () => {
-	const my_id = Number(localStorage.getItem('my_id'));
-	const navigate = useNavigate();
-
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalMessage, setModalMessage] = useState('');
+
+	const navigate = useNavigate();
+	const currentUserId = getCurrentUserId();
 
 	const [agreements, setAgreements] = useState({
 		all: false,
@@ -55,15 +58,16 @@ const TermsAgreement: React.FC = () => {
 		});
 	};
 
-	const handleFinalClick = async () => {
-		if (!my_id) {
+	// 완료 버튼을 눌렀을 때 실행되는 함수
+	const handleCompletedClick = async () => {
+		if (!currentUserId) {
 			setModalMessage('회원 정보가 없습니다.\n로그인 해 주세요!');
 			setIsModalOpen(true);
 			return;
 		}
 
 		try {
-			const response = await postTermsAgreementApi(my_id);
+			const response = await postTermsAgreementApi(currentUserId);
 			console.log(response);
 			navigate('/'); // 성공 시 홈으로 이동
 		} catch (error) {
@@ -73,6 +77,7 @@ const TermsAgreement: React.FC = () => {
 			setIsModalOpen(true);
 		}
 	};
+
 	const navigateToLogin = () => {
 		navigate('/login');
 	};
@@ -80,7 +85,7 @@ const TermsAgreement: React.FC = () => {
 	return (
 		<OODDFrame>
 			<TopBar LeftButtonSrc={Back} onLeftClick={navigateToLogin} />
-			<TermsAgreementContainer>
+			<TermsAgreementLayout>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />
 				</LogoWrapper>
@@ -91,7 +96,7 @@ const TermsAgreement: React.FC = () => {
 				>
 					OODD에 오신 것을 환영해요 🥳
 				</StyledTitle>
-				<CheckboxWrapper>
+				<CheckboxList>
 					<CheckboxItem>
 						<CheckboxInput
 							type="checkbox"
@@ -103,7 +108,7 @@ const TermsAgreement: React.FC = () => {
 							<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
 						</label>
 					</CheckboxItem>
-
+					{/*전체 동의와 개별 동의 구분*/}
 					<Divider />
 					{checkboxData.map(({ key, label }) => (
 						<CheckboxItem key={key}>
@@ -118,14 +123,14 @@ const TermsAgreement: React.FC = () => {
 							</label>
 						</CheckboxItem>
 					))}
-				</CheckboxWrapper>
+				</CheckboxList>
 				<BottomButton
 					content="OODD 시작하기"
-					onClick={handleFinalClick}
+					onClick={handleCompletedClick}
 					disabled={!agreements.terms || !agreements.privacy}
 				/>
 				{isModalOpen && <Modal content={modalMessage} onClose={navigateToLogin} />}
-			</TermsAgreementContainer>
+			</TermsAgreementLayout>
 		</OODDFrame>
 	);
 };
