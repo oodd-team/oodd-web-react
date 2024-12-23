@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { StyledText } from '../../Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { UserProfile } from '../styles';
 
 export const TabContainer = styled.div`

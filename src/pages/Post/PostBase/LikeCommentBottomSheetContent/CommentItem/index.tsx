@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
-import theme from '../../../../styles/theme';
+import theme from '../../../../../styles/theme';
 import {
 	StyledBigUserProfile,
 	CommentItem as StyledCommentItem,
@@ -12,7 +12,7 @@ import {
 	MenuBtn,
 } from './styles';
 
-import { StyledText } from '../../../Text/StyledText';
+import { StyledText } from '../../../../../components/Text/StyledText';
 
 import { CommentItemProps } from './dto';
 

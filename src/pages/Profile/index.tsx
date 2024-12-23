@@ -38,7 +38,7 @@ import BackSvg from '../../assets/arrow/left.svg';
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const profileUserId = Number(userId);
-	const loggedInUserId = Number(localStorage.getItem('my_id'));
+	const loggedInUserId = Number(localStorage.getItem('current_user_id'));
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [posts, setPosts] = useState<UserPostSummary[]>([]);
@@ -121,11 +121,7 @@ const Profile: React.FC = () => {
 					/>
 				</Header>
 
-				{isMyPage ? (
-					<ButtonSecondary />
-				) : (
-					<Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>
-				)}
+				{isMyPage ? <ButtonSecondary /> : <Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>}
 
 				<StatsContainer>
 					<Stat>
@@ -135,16 +131,12 @@ const Profile: React.FC = () => {
 					{isMyPage && (
 						<Stat>
 							<StatLabel>코멘트</StatLabel>
-							<StatNumber>
-								{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}
-							</StatNumber>
+							<StatNumber>{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}</StatNumber>
 						</Stat>
 					)}
 					<Stat>
 						<StatLabel>좋아요</StatLabel>
-						<StatNumber>
-							{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}
-						</StatNumber>
+						<StatNumber>{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}</StatNumber>
 					</Stat>
 				</StatsContainer>
 
