@@ -21,12 +21,11 @@ import {
 } from './styles';
 import more from '@assets/default/more.svg';
 import xBtn from '@assets/default/reject.svg';
-import likeBtn from '@assets/default/heart.svg'; // 컴포넌트화
-import likeFillBtn from '@assets/default/heart-fill.svg'; // 컴포넌트화
-import commentBtn from '@assets/default/message-white.svg'; // 컴포넌트화
 import { useNavigate } from 'react-router-dom';
 import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
+import Heart from '@/components/Icons/Heart';
+import Message from '@/components/Icons/Message';
 import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import CommentBottomSheet from '@components/CommentBottomSheet';
@@ -240,13 +239,17 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						{isLikeClicked ? (
-							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
+							<div className="button" onClick={handleLikeButtonClick}>
+								<Heart isFilled={true} />
+							</div>
 						) : (
-							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
+							<div className="button" onClick={handleLikeButtonClick}>
+								<Heart />
+							</div>
 						)}
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
-						<img src={commentBtn} />
+						<Message color="white" />
 						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
 							매칭 요청
 						</StyledText>
