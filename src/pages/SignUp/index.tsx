@@ -12,7 +12,7 @@ import { StyledText } from '@/components/Text/StyledText';
 import BottomButton from '@/components/BottomButton';
 import Modal from '@/components/Modal';
 
-import { getCurrentUserId } from '@/utils/getCurrentUserId';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import {
 	SignUpLayout,

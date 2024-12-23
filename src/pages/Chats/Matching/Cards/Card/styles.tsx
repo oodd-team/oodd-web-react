@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ArrowIcon from '../../../../../assets/arrow/min-right.svg';
+import ArrowIcon from '@assets/arrow/min-right.svg';
 
 export const CardLayout = styled.div`
 	background-color: #ececec;
