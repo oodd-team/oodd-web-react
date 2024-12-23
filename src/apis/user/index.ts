@@ -1,6 +1,6 @@
+import { newRequest } from '@apis/core';
+import { EmptySuccessResponse } from '@apis/core/dto';
 import { GetUserInfoResponse, PatchUserInfoRequest, PatchUserInfoResponse, PatchUserWithDrawResponse } from './dto';
-import { newRequest } from '../core';
-import { EmptySuccessResponse } from '../core/dto';
 
 // 유저 정보 수정 api
 export const patchUserInfoApi = (data: Partial<PatchUserInfoRequest>, userId: number) =>
