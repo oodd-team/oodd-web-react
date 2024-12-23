@@ -1,6 +1,7 @@
 //PostUploadModal/index.tsx
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { DefaultTheme, useTheme } from 'styled-components';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -67,6 +68,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const userId = localStorage.getItem('my_id');
+	const theme = useTheme() as DefaultTheme;
 
 	const styletags = [
 		'classic',
@@ -319,11 +321,11 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					<TagContainer className="clothingTag">
 						<div onClick={handleToggleSearchSheet}>
 							<img src={ClothingTag} />
-							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
+							<StyledText className="label" $textTheme={{ style: 'headline2-bold' }}>
 								옷 정보 태그
 							</StyledText>
 							{clothingInfos.length > 0 && (
-								<StyledText className="count" $textTheme={{ style: 'headline2-regular', lineHeight: 1 }}>
+								<StyledText className="count" $textTheme={{ style: 'headline2-regular' }}>
 									{clothingInfos.length}
 								</StyledText>
 							)}

@@ -6,7 +6,7 @@ export const ClothingInfoItemContainer = styled.li`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.pink2};
+	border: 0.0625rem solid ${({ theme }) => theme.colors.brand.primaryLight};
 	border-radius: 0.5rem;
 	padding: 10px;
 	min-width: 20.9375rem;

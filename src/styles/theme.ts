@@ -5,7 +5,8 @@ const theme: DefaultTheme = {
 		// Brand Colors
 		brand: {
 			primary: '#FF2389', // Pink-500
-			secondary: '#F27575', // 서브 브랜드 색상
+			primaryLight: '#FFBBDA', // Pink-300
+			primaryLighter: '#FEEEFB', // Pink-100
 			gradient: 'linear-gradient(93deg, #FF2389 1.22%, #F27575 99.73%)',
 		},
 
@@ -31,7 +32,7 @@ const theme: DefaultTheme = {
 			200: '#FFD6EB',
 			300: '#FFBBDA',
 			400: '#FF8FC2',
-			500: '#FF2389', // 브랜드 생상
+			500: '#FF2389', // 브랜드 메인 생상
 			600: '#E61E7C',
 			700: '#C0196D',
 			800: '#9A1458',
@@ -40,15 +41,15 @@ const theme: DefaultTheme = {
 
 		// Functional Colors
 		text: {
+			cta: '#000000', // Black
 			primary: '#222222', // Gray-900
 			secondary: '#616161', // Gray-700
 			tertiary: '#9E9E9E', // Gray-500
 			caption: '#BDBDBD', // Gray-400
-			cta: '#000000', // Black
 		},
 
 		background: {
-			white: '#FFFFFF',
+			primary: '#FFFFFF',
 			secondary: '#F8F8F8', //Gray-100 (input, 바텀시트 등의 배경)
 			divider: '#E9E9E9', // Gray-200
 		},
@@ -120,73 +121,6 @@ const theme: DefaultTheme = {
 		}
 	`,
 	fontStyles: {
-		// Display (Hero Texts)
-		heading: {
-			h1: css`
-				font-family: 'Pretendard Variable';
-				font-size: 2.25rem; /* 36px */
-				font-weight: 700;
-				line-height: 2.75rem; /* 44px */
-			`,
-			h2: css`
-				font-family: 'Pretendard Variable';
-				font-size: 2rem; /* 32px */
-				font-weight: 700;
-				line-height: 2.5rem; /* 40px */
-			`,
-			h3: css`
-				font-family: 'Pretendard Variable';
-				font-size: 1.75rem; /* 28px */
-				font-weight: 700;
-				line-height: 2.25rem; /* 36px */
-			`,
-			h4: css`
-				font-family: 'Pretendard Variable';
-				font-size: 1.375rem; /* 22px */
-				font-weight: 700;
-				line-height: 1.75rem; /* 28px */
-			`,
-		},
-
-		// Body Text (Main Text Content)
-		body: {
-			large: css`
-				font-family: 'Pretendard Variable';
-				font-size: 1.125rem; /* 18px */
-				font-weight: 400;
-				line-height: 1.6875rem; /* 150% */
-			`,
-			medium: css`
-				font-family: 'Pretendard Variable';
-				font-size: 1rem; /* 16px */
-				font-weight: 500;
-				line-height: 1.5rem; /* 150% */
-			`,
-			regular: css`
-				font-family: 'Pretendard Variable';
-				font-size: 1rem; /* 16px */
-				font-weight: 400;
-				line-height: 1.5rem; /* 150% */
-			`,
-		},
-
-		// Caption (Supporting Texts/Meta Information)
-		caption: {
-			primary: css`
-				font-family: 'Pretendard Variable';
-				font-size: 0.875rem; /* 14px */
-				font-weight: 500;
-				line-height: 1.225rem; /* 140% */
-			`,
-			secondary: css`
-				font-family: 'Pretendard Variable';
-				font-size: 0.75rem; /* 12px */
-				font-weight: 400;
-				line-height: 1.05rem; /* 140% */
-			`,
-		},
-
-		// 여기서부터 기존 폰트
 		'display1-bold': css`
 			font-family: 'Pretendard Variable';
 			font-weight: 700; /* bold */
