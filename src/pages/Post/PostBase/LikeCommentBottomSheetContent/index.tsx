@@ -6,32 +6,32 @@ import {
 	IsCommentDeleteConfirmationModalOpenAtom,
 	IsCommentReportModalOpenAtom,
 	selectedCommentAtom,
-} from '../../../../recoil/Post/PostCommentAtom';
+} from '@/recoil/Post/PostCommentAtom';
 
 import { TabContainer, Tab, ContentContainer, Content, BigUserProfile, LikeItem, InputLayout } from './styles';
 
-import { StyledText } from '../../../../components/Text/StyledText';
-import theme from '../../../../styles/theme';
-import Loading from '../../../../components/Loading';
-import Modal from '../../../../components/Modal';
+import { StyledText } from '@/components/Text/StyledText';
+import theme from '@/styles/theme';
+import Loading from '@/components/Loading';
+import Modal from '@/components/Modal';
 import CommentItem from './CommentItem';
 import MenuButtonList from './MenuButtonList';
 
 import { LikeCommentBottomSheetProps } from '../dto';
-import { ModalProps } from '../../../../components/Modal/dto';
-import { GetPostLikeListResponse } from '../../../../apis/post-like/dto';
-import { Comment, GetCommentListResponse } from '../../../../apis/post-comment/dto';
+import { ModalProps } from '@/components/Modal/dto';
+import { GetPostLikeListResponse } from '@/apis/post-like/dto';
+import { Comment, GetCommentListResponse } from '@/apis/post-comment/dto';
 
-import Delete from '../../../assets/default/delete.svg';
-import Block from '../../../assets/default/block.svg';
-import Report from '../../../assets/default/report.svg';
-import X from '../../../assets/default/x.svg';
+import Delete from '@/assets/default/delete.svg';
+import Block from '@/assets/default/block.svg';
+import Report from '@/assets/default/report.svg';
+import X from '@/assets/default/x.svg';
 
-import { getPostLikeListApi } from '../../../../apis/post-like';
-import { postUserBlockApi } from '../../../../apis/user-block';
-import { PostUserBlockRequest } from '../../../../apis/user-block/dto';
-import { createCommentApi, deleteCommentApi, getCommentListApi } from '../../../../apis/post-comment';
-import { handleError } from '../../../../apis/util/handleError';
+import { getPostLikeListApi } from '@/apis/post-like';
+import { postUserBlockApi } from '@/apis/user-block';
+import { PostUserBlockRequest } from '@/apis/user-block/dto';
+import { createCommentApi, deleteCommentApi, getCommentListApi } from '@/apis/post-comment';
+import { handleError } from '@/apis/util/handleError';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
