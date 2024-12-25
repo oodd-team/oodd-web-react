@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledText } from '../../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 
 export const FeedWrapper = styled.article`
 	background-color: rgba(255, 255, 255, 0.5);

@@ -13,7 +13,7 @@ import BottomButton from '@/components/BottomButton';
 import TopBar from '@/components/TopBar';
 import Modal from '@/components/Modal';
 
-import { getCurrentUserId } from '@/utils/getCurrentUserId';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import { LogoWrapper, LogoImg } from '@/pages/SignUp/style';
 

@@ -1,9 +1,9 @@
-import { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
-import defaultProfile from '../../../assets/default/defaultProfile.svg';
+import type { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
+import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { OtherUserDto } from '../../../apis/chatting/dto';
-import { chatRoomMessagesData } from '../../../apis/chatting/dto';
+import { OtherUserDto } from '@apis/chatting/dto';
+import { chatRoomMessagesData } from '@apis/chatting/dto';
 
 export const createExtendedMessages = (
 	allMessages: chatRoomMessagesData[],
@@ -14,9 +14,11 @@ export const createExtendedMessages = (
 	const isNewDay = (curDate: string, lastDate: string) => {
 		const curDateDayjs = dayjs(curDate);
 		const lastDateDayjs = dayjs(lastDate);
+
 		return !curDateDayjs.isSame(lastDateDayjs, 'day');
 	};
 
+	// 렌더링에 필요한 요소를 추가한 메시지 배열
 	const temp: ExtendedMessageDto[] = allMessages.map((message: chatRoomMessagesData, index) => {
 		const prevMessage = index !== 0 ? allMessages[index - 1] : null;
 		const nextMessage = index !== allMessages.length - 1 ? allMessages[index + 1] : null;
