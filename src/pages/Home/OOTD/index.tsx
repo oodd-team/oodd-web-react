@@ -29,6 +29,8 @@ const OOTD: React.FC = () => {
 	// 전체 게시글(피드) 조회 API
 	const getPostList = async () => {
 		if (reachedEnd || isFetching) return;
+		// 사용자가 스크롤을 빠르게 내리거나 ntersection Observer가 여러 번 트리거될 경우, 중복된 API 요청 발생 가능.
+		// 이를 막기 위해 isFetching 상태를 확인하고, 현재 요청 중인 상태라면 추가 요청을 막음
 
 		setIsFetching(true);
 		try {
