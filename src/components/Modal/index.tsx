@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ModalWrapper, ModalContainer, CloseButton, ConfirmButton } from './styles';
-import { StyledText } from '../Text/StyledText';
-import { ModalProps } from './dto';
-import XIcon from '../../assets/default/x.svg';
+import { StyledText } from '@components/Text/StyledText';
+import type { ModalProps } from './dto';
+import closeIcon from '@assets/default/x.svg';
 
 const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, button }) => {
 	const handleBackgroundClick = (e: React.MouseEvent) => {
@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, b
 			<ModalContainer $isCloseButtonVisible={isCloseButtonVisible || false}>
 				{isCloseButtonVisible && (
 					<CloseButton onClick={onClose}>
-						<img src={XIcon} alt="" />
+						<img src={closeIcon} alt="" />
 					</CloseButton>
 				)}
 				<StyledText $textTheme={{ style: 'body2-regular' }}>{content}</StyledText>
