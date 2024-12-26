@@ -1,29 +1,15 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import BottomButton from '../../../BottomButton/index.tsx';
-import BottomSheetMenu from '../../../BottomSheetMenu/index.tsx';
-import { SheetItemDto } from '../../../BottomSheetMenu/dto.ts';
-import { ReportBottomSheetMenuProps } from './dto.ts';
-import { InputLayout, ReportBottomSheetMenuWrappar } from './styles.tsx';
+import BottomButton from '@components/BottomButton/index';
+import BottomSheetMenu from '@components/BottomSheetMenu/index';
+import { SheetItemDto } from '@components/BottomSheetMenu/dto';
+import { ReportBottomSheetMenuProps } from './dto';
+import { InputLayout, ReportBottomSheetMenuWrappar } from './styles';
 
 const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 	({ onCloseReportSheet, onOpenStatusModal, sendReport, isUserReport }) => {
+		const [isVisibleTextarea, setIsTextareaVisible] = useState(false);
 		const [inputValue, setInputValue] = useState('');
 		const textareaRef = useRef<HTMLTextAreaElement>(null);
-		const [isVisibleTextarea, setIsTextareaVisible] = useState(false);
-
-		useEffect(() => {
-			if (textareaRef.current) {
-				textareaRef.current.focus(); // 마운트 또는 업데이트 시 textarea에 포커스 유지
-			}
-		}, []);
-
-		const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			setInputValue(e.target.value);
-		}, []);
-
-		const handleSubmit = useCallback(() => {
-			sendReport(inputValue);
-		}, [onCloseReportSheet, onOpenStatusModal]);
 
 		// 유저 신고 사유 목록
 		const userReportItems: SheetItemDto[] = [
@@ -110,6 +96,20 @@ const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
 				},
 			},
 		];
+
+		const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+			setInputValue(e.target.value);
+		}, []);
+
+		const handleSubmit = useCallback(() => {
+			sendReport(inputValue);
+		}, [onCloseReportSheet, onOpenStatusModal]);
+
+		useEffect(() => {
+			if (textareaRef.current) {
+				textareaRef.current.focus(); // 마운트 또는 업데이트 시 textarea에 포커스 유지
+			}
+		}, []);
 
 		return (
 			<ReportBottomSheetMenuWrappar>

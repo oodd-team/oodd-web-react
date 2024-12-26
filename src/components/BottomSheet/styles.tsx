@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import XIcon from '../../assets/default/x.svg';
+import XIcon from '@assets/default/x.svg';
 
 export const BottomSheetWrapper = styled.div<{ $isBottomSheetOpen: boolean }>`
 	position: fixed;
