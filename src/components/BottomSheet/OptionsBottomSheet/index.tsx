@@ -208,7 +208,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 										setIsReportBottomSheetOpen(false);
 									}}
 								>
-									<img src={closeIcon} alt="" />
+									<img src={closeIcon} alt="닫기" />
 								</CloseButton>
 							</ReportModalHeader>
 							<ReportModalBox>

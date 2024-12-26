@@ -5,10 +5,11 @@ import {
 	BottomSheetLayout,
 	Handler,
 	SideBarLayout,
-	XButton,
+	CloseButton,
 	SideBarTopBar,
 	ComponentBox,
 } from './styles';
+import closeIcon from '@assets/default/x.svg';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
@@ -150,7 +151,9 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			{/* 데스크탑 UI */}
 			<SideBarLayout $isSideBarOpen={isSideBarOpen}>
 				<SideBarTopBar>
-					<XButton onClick={handleCloseButtonClick} />
+					<CloseButton onClick={handleCloseButtonClick}>
+						<img src={closeIcon} alt="닫기" />
+					</CloseButton>
 				</SideBarTopBar>
 				<ComponentBox>
 					<Component {...componentProps} />

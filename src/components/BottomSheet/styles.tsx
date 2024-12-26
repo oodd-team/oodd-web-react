@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import XIcon from '@assets/default/x.svg';
 
 export const BottomSheetWrapper = styled.div<{ $isBottomSheetOpen: boolean }>`
 	position: fixed;
@@ -65,18 +64,17 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 export const SideBarTopBar = styled.header`
 	display: flex;
 	width: 100%;
-	padding: 0.5rem 1rem;
+	padding: 1rem 1.25rem 1rem 1rem;
 	margin-top: 0;
+	justify-content: flex-end;
 `;
 
-export const XButton = styled.button`
-	width: 2.25rem;
-	height: 2.25rem;
-	margin: auto 0 auto auto;
-	background-image: url(${XIcon});
-	background-repeat: no-repeat;
-	background-size: 17px;
-	background-position: center;
+export const CloseButton = styled.button`
+	width: 1.875rem;
+	height: 1.875rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const ComponentBox = styled.section`
