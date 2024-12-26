@@ -6,8 +6,8 @@ import PinIcon from '@/assets/default/pin.svg';
 import Heart from '@components/Icons/Heart';
 import Message from '@components/Icons/Message';
 
-import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
 import type { PostItemProps } from './dto';
+import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import theme from '@/styles/theme';
+
 import type { TopBarProps } from './dto';
 import { TopBarLayout, StyledTextWrapper, LeftButton, RightButton } from './styles';
 
