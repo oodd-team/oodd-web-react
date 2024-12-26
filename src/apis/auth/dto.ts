@@ -11,4 +11,5 @@ export interface getUserInfoByJwtData {
 	nickname: string;
 	profilePictureUrl: string;
 	bio: string;
+	birthDate: string;
 }
