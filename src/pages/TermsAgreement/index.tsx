@@ -84,7 +84,7 @@ const TermsAgreement: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			<TopBar LeftButtonSrc={Back} onLeftClick={navigateToLogin} />
+			<TopBar LeftButtonSrc={Back} onLeftButtonClick={navigateToLogin} />
 			<TermsAgreementLayout>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />

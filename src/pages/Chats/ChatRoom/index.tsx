@@ -234,10 +234,10 @@ const ChatRoom: React.FC = () => {
 				text={opponentInfo?.nickname || '알수없음'}
 				LeftButtonSrc={Back}
 				RightButtonSrc={KebabMenu}
-				onLeftClick={() => {
+				onLeftButtonClick={() => {
 					nav(-1);
 				}}
-				onRightClick={() => {
+				onRightButtonClick={() => {
 					setIsMenuBottomSheetOpen(true);
 				}}
 				$withBorder={true}

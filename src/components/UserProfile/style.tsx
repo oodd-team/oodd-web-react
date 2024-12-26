@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { StyledText } from '../Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 
-export const UserProfileContainer = styled.section`
+export const UserProfileLayout = styled.section`
 	display: flex;
 	flex-direction: row;
 `;
@@ -12,7 +12,7 @@ export const UserImg = styled.img`
 	border-radius: 50%;
 `;
 
-export const UserDetails = styled.section`
+export const UserDetailsContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -21,7 +21,7 @@ export const UserDetails = styled.section`
 	margin-left: 1rem;
 `;
 
-export const BioStyledText = styled(StyledText)`
+export const StyledBio = styled(StyledText)`
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;

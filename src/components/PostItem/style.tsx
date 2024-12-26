@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { StyledText } from '../Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 
-export const PostItemContainer = styled.article`
+export const PostItemLayout = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
 	width: 100%;
 	max-width: 67.5rem; /* 최대 너비 설정 */
@@ -59,7 +59,7 @@ export const LikesCountStyledText = styled(StyledText)`
 	margin: 0 8px 0.5rem 4px;
 `;
 
-export const PinSvg = styled.img`
+export const Pin = styled.img`
 	display: flex;
 	position: absolute;
 	top: 0.75rem;

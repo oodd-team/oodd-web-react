@@ -11,9 +11,9 @@ import back from '../../assets/arrow/left.svg';
 import imageBasic from '../../assets/default/defaultProfile.svg';
 import Profile_s from './../../assets/default/my-page.svg';
 import leave from '../../assets/default/leave.svg';
-import { getUserInfoApi } from '../../apis/user'; 
-import { UserInfoData } from '../../apis/user/dto'; 
-import Loading from '../../components/Loading'; 
+import { getUserInfoApi } from '../../apis/user';
+import { UserInfoData } from '../../apis/user/dto';
+import Loading from '../../components/Loading';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -67,13 +67,13 @@ const AccountSetting: React.FC = () => {
 	};
 
 	if (isLoading) {
-		return <Loading />; 
+		return <Loading />;
 	}
 
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="계정 관리" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="계정 관리" LeftButtonSrc={back} onLeftButtonClick={() => navigate(-1)} />
 
 				<ProfilePicWrapper>
 					<ProfilePic>
@@ -89,7 +89,7 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-							{userProfile?.name} | {userProfile?.email}
+								{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
 					</Row>
