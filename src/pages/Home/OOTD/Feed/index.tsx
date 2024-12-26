@@ -239,16 +239,10 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 				<ReactionWrapper>
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
-						{isLikeClicked ? (
-							<div className="button" onClick={handleLikeButtonClick}>
-								{/*Heart 컴포넌트 자체적으로 onClick 이벤트 핸들러가 없기에 이벤트 버블링으로 인한 부모 div의 onClick 이벤트가 실행 됨*/}
-								<Heart isFilled={true} />{' '}
-							</div>
-						) : (
-							<div className="button" onClick={handleLikeButtonClick}>
-								<Heart />
-							</div>
-						)}
+						<div className="button" onClick={handleLikeButtonClick}>
+							{/* Heart 컴포넌트의 isFilled 프로퍼티에 isLikeClicked 상태를 전달 */}
+							<Heart isFilled={isLikeClicked} />
+						</div>
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
 						<Message color="white" />
