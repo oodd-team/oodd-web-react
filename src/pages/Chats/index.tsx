@@ -1,8 +1,8 @@
-import { OODDFrame } from '../../components/Frame/Frame';
+import { OODDFrame } from '@components/Frame/Frame';
 import { Header } from './styles';
-import theme from '../../styles/theme';
-import NavBar from '../../components/NavBar';
-import TabBar from './TabBar';
+import theme from '@styles/theme';
+import NavBar from '@components/NavBar';
+import TabBar from './TabBar/index';
 
 const Chats: React.FC = () => {
 	return (
