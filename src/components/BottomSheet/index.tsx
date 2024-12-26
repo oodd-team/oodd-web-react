@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BottomSheetProps } from './dto';
+import type { BottomSheetProps } from './dto';
 import {
 	BottomSheetWrapper,
 	BottomSheetLayout,

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import BottomButton from '@components/BottomButton/index';
-import BottomSheetMenu from '@components/BottomSheetMenu/index';
+import BottomButton from '@components/BottomButton';
+import BottomSheetMenu from '@components/BottomSheetMenu';
 import { SheetItemDto } from '@components/BottomSheetMenu/dto';
-import { ReportBottomSheetMenuProps } from './dto';
+import type { ReportBottomSheetMenuProps } from './dto';
 import { InputLayout, ReportBottomSheetMenuWrappar } from './styles';
 
 const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(

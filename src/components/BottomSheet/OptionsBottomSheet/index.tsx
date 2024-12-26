@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import BottomSheet from '..';
+import BottomSheet from '../index';
 import BottomSheetMenu from '@components/BottomSheetMenu';
 import ReportBottomSheetMenu from './ReportBottomSheetMenu';
 import Modal from '@components/Modal';
 
-import { OptionsBottomSheetProps } from './dto';
-import { BottomSheetProps } from '../dto';
-import { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
-import { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
-import { ModalProps } from '@components/Modal/dto';
+import type { OptionsBottomSheetProps } from './dto';
+import type { BottomSheetProps } from '../dto';
+import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import type { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
+import type { ModalProps } from '@components/Modal/dto';
 
-import { SendPostReportRequest } from '@apis/post-report/dto';
-import { PostUserReportRequest } from '@apis/user-report/dto';
-import { PostUserBlockRequest } from '@apis/user-block/dto';
+import type { SendPostReportRequest } from '@apis/post-report/dto';
+import type { PostUserReportRequest } from '@apis/user-report/dto';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
 
 import { StyledText } from '@components/Text/StyledText';
 import { handleError } from '@apis/util/handleError';

@@ -1,6 +1,6 @@
 import { StyledText } from '@components/Text/StyledText';
 import { BottomSheetMenuLayout, SheetItem, IconButton } from './styles';
-import { BottomSheetMenuProps, SheetItemDto } from './dto';
+import type { BottomSheetMenuProps, SheetItemDto } from './dto';
 import React from 'react';
 
 const BottomSheetMenu: React.FC<BottomSheetMenuProps> = React.memo(({ items }) => {
