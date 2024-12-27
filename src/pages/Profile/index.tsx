@@ -108,8 +108,8 @@ const Profile: React.FC = () => {
 					<TopBar
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
-						onLeftClick={() => navigate(-1)}
-						onRightClick={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
+						onClickLeftButton={() => navigate(-1)}
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
 					/>
 				)}
 
@@ -121,11 +121,7 @@ const Profile: React.FC = () => {
 					/>
 				</Header>
 
-				{isMyPage ? (
-					<ButtonSecondary />
-				) : (
-					<Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>
-				)}
+				{isMyPage ? <ButtonSecondary /> : <Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>}
 
 				<StatsContainer>
 					<Stat>
@@ -135,16 +131,12 @@ const Profile: React.FC = () => {
 					{isMyPage && (
 						<Stat>
 							<StatLabel>코멘트</StatLabel>
-							<StatNumber>
-								{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}
-							</StatNumber>
+							<StatNumber>{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}</StatNumber>
 						</Stat>
 					)}
 					<Stat>
 						<StatLabel>좋아요</StatLabel>
-						<StatNumber>
-							{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}
-						</StatNumber>
+						<StatNumber>{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}</StatNumber>
 					</Stat>
 				</StatsContainer>
 

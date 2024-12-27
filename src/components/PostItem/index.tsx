@@ -1,46 +1,40 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import theme from '../../styles/theme';
-import {
-	PostItemContainer,
-	PostImageContainer,
-	PostImage,
-	LikesCountStyledText,
-	Icon,
-	LikesOverlay,
-	PinSvg,
-} from './style';
-import HeartSvg from '../../assets/default/like.svg';
-import MessageSvg from '../../assets/default/message.svg';
-import PinIcon from '../../assets/default/pin.svg';
-import { PostItemProps } from './dto';
+
+import theme from '@styles/theme';
+import PinIcon from '@assets/default/pin.svg';
+import Like from '@components/Icons/Like';
+import Message from '@components/Icons/Message';
+
+import type { PostItemProps } from './dto';
+import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();
-	const imageUrl = post.imageUrl;
+	const postImageUrl = post.imageUrl;
 
-	const handleClick = () => {
+	const handlePostItemClick = () => {
 		const path = isMyPost ? `/my-post/${post.id}` : `/post/${post.id}`;
 		navigate(path);
 	};
 
 	return (
-		<PostItemContainer onClick={handleClick}>
+		<PostItemLayout onClick={handlePostItemClick}>
 			<PostImageContainer>
-				<PostImage src={imageUrl} alt={`post-${post.id}`} />
-				{post.isRepresentative && <PinSvg src={PinIcon} />}
+				<PostImage src={postImageUrl} alt={`post-${post.id}`} />
+				{post.isRepresentative && <Pin src={PinIcon} />}
 				<LikesOverlay>
-					<Icon src={HeartSvg} alt="heart icon" />
+					<Like />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
 						{post.postLikesCount}
 					</LikesCountStyledText>
-					<Icon src={MessageSvg} alt="message icon" />
+					<Message />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
 						{post.postCommentsCount}
 					</LikesCountStyledText>
 				</LikesOverlay>
 			</PostImageContainer>
-		</PostItemContainer>
+		</PostItemLayout>
 	);
 };
 

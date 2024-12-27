@@ -33,7 +33,7 @@
       "@assets/*": ["assets/*"],
       "@config/*": ["config/*"],
       "@context/*": ["context/*"],
-      "@page/*": ["page/*"],
+      "@pages/*": ["pages/*"],
       "@recoil/*": ["recoil/*"],
       "@utils/*": ["utils/*"],
     },

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { TopbarLayoutProps } from './dto';
-import { StyledText } from '../Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
+import type { TopBarLayoutProps } from './dto';
 
-export const TopbarLayout = styled.header<TopbarLayoutProps>`
+export const TopBarLayout = styled.header<TopBarLayoutProps>`
 	display: flex;
 	position: sticky;
 	top: 0; /* 부모 요소의 상단에 붙도록 설정 */
@@ -18,7 +18,7 @@ export const TopbarLayout = styled.header<TopbarLayoutProps>`
 	`}
 `;
 
-export const StyledTextLayout = styled(StyledText)`
+export const StyledTextWrapper = styled(StyledText)`
 	flex-direction: column;
 	align-items: center;
 `;

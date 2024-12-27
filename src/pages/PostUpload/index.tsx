@@ -308,7 +308,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				<TopBar text="OOTD 업로드" LeftButtonSrc={Left} onLeftClick={handlePrev} />
+				<TopBar text="OOTD 업로드" LeftButtonSrc={Left} onClickLeftButton={handlePrev} />
 				<Content>
 					<ImageSwiper images={selectedImages} />
 					<StyledInput

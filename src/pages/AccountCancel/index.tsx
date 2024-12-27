@@ -10,11 +10,11 @@ import back from '../../assets/arrow/left.svg';
 
 import BottomButton from '../../components/BottomButton';
 import { patchUserWithdrawApi } from '../../apis/user';
-import Modal from '../../components/Modal'; 
+import Modal from '../../components/Modal';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
-	const [modalContent, setModalContent] = useState<string | null>(null); 
+	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const navigate = useNavigate();
 
@@ -55,8 +55,8 @@ const AccountCancel: React.FC = () => {
 				localStorage.clear();
 
 				setTimeout(() => {
-					navigate('/login'); 
-				}, 2000); 
+					navigate('/login');
+				}, 2000);
 			} else {
 				setModalContent(response.code || '알 수 없는 오류가 발생했습니다.');
 				setIsModalVisible(true);
@@ -71,7 +71,7 @@ const AccountCancel: React.FC = () => {
 	return (
 		<OODDFrame>
 			<CancelContainer>
-				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<SubTitle>
 					<StyledText as="div" $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color={theme.colors.black}>
@@ -90,28 +90,27 @@ const AccountCancel: React.FC = () => {
 				</Text>
 				<InfoBox>
 					<InfoItem as="div">
-					<StyledText
-						as="div"
-						$textTheme={{ style: 'body1-medium', lineHeight: 2 }}
-						color={theme.colors.black}
-						style={{ whiteSpace: 'nowrap' }} // 줄 바꿈 방지
-					>
-						지금까지 OODD를 이용해주셔서 감사합니다!
-					</StyledText>
-
+						<StyledText
+							as="div"
+							$textTheme={{ style: 'body1-medium', lineHeight: 2 }}
+							color={theme.colors.black}
+							style={{ whiteSpace: 'nowrap' }} // 줄 바꿈 방지
+						>
+							지금까지 OODD를 이용해주셔서 감사합니다!
+						</StyledText>
 					</InfoItem>
 				</InfoBox>
 				<CheckboxWrapper as="div">
 					<label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-					<input
-						type="checkbox"
-						checked={isChecked}
-						onChange={handleCheckboxChange}
-						style={{ marginRight: '8px' }} // 텍스트와 체크박스 간격 조절
-					/>
-					<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray3}>
-						안내사항을 모두 확인하였으며, 이에 동의합니다.
-					</StyledText>
+						<input
+							type="checkbox"
+							checked={isChecked}
+							onChange={handleCheckboxChange}
+							style={{ marginRight: '8px' }} // 텍스트와 체크박스 간격 조절
+						/>
+						<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray3}>
+							안내사항을 모두 확인하였으며, 이에 동의합니다.
+						</StyledText>
 					</label>
 				</CheckboxWrapper>
 			</CancelContainer>
@@ -125,14 +124,13 @@ const AccountCancel: React.FC = () => {
 				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
 			</div>
 			{isModalVisible && (
- 				 <Modal
-   					 content={modalContent || ''} // null일 경우 빈 문자열로 처리
-   					 onClose={handleModalClose}
-   					 isCloseButtonVisible={true}
-   				 	button={{ content: '확인', onClick: handleModalClose }}
-				 />
-)}
-
+				<Modal
+					content={modalContent || ''} // null일 경우 빈 문자열로 처리
+					onClose={handleModalClose}
+					isCloseButtonVisible={true}
+					button={{ content: '확인', onClick: handleModalClose }}
+				/>
+			)}
 		</OODDFrame>
 	);
 };
