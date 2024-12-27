@@ -1,9 +1,9 @@
 import React from 'react';
 import { Nav, IconContainer } from './styles';
 import { Link } from 'react-router-dom';
-import settingIcon from "../../../assets/default/setting.svg"
-import { StyledText } from '../../../components/Text/StyledText';
-import theme from '../../../styles/theme';
+import settingIcon from '@/assets/default/setting.svg';
+import { StyledText } from '@/components/Text/StyledText';
+import theme from '@/styles/theme';
 
 const NavbarProfile: React.FC = () => {
 	return (
