@@ -1,4 +1,4 @@
-import { UserPostSummary } from '@apis/post/dto';
+import { UserPostSummary } from '@/apis/post/dto';
 
 export interface Post extends UserPostSummary {}
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import theme from '@styles/theme';
-import { StyledText } from '@components/Text/StyledText';
+import { StyledText } from '@/components/Text/StyledText';
 
 import type { UserProfileProps } from './dto';
 import { UserProfileLayout, UserImg, UserDetailsContainer, StyledBio } from './style';
