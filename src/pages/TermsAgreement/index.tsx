@@ -15,7 +15,7 @@ import Modal from '@components/Modal';
 
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
-import { LogoWrapper, LogoImg } from '@/pages/SignUp/style';
+import { LogoWrapper, LogoImg } from '@pages/SignUp/style';
 
 import { TermsAgreementLayout, StyledTitle, CheckboxList, CheckboxItem, CheckboxInput, Divider } from './styles';
 
