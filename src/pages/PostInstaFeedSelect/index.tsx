@@ -71,14 +71,14 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 
 	// 페이지 종료 함수
 	const handleClose = () => {
-		navigate(`/profile/${userId}`); 
+		navigate(`/profile/${userId}`);
 	};
 
 	return (
 		<OODDFrame>
 			{isSuccessModalOpen && <Modal {...connectSuccessModalProps} />}
 			{isFailModalOpen && <Modal {...connectFailModalProps} />}
-			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onLeftClick={handleClose} />{' '}
+			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onClickLeftButton={handleClose} />{' '}
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>

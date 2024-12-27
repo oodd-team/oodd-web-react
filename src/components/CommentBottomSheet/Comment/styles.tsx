@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CommentLayout = styled.div<{ $isModal: boolean | undefined }>`
+export const CommentLayout = styled.div<{ $isModal: boolean }>`
 	margin: 1.38rem auto 1.25rem auto;
 	width: 100%;
 	display: flex;
@@ -34,9 +34,11 @@ export const CommentTextarea = styled.textarea`
 	line-height: 1.2rem;
 `;
 
-export const SendImg = styled.img`
+export const SendButton = styled.button`
 	width: 2.5rem;
 	height: 2.5rem;
-	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-right: 0.62rem;
 `;

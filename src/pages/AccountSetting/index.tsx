@@ -67,13 +67,13 @@ const AccountSetting: React.FC = () => {
 	};
 
 	if (isLoading) {
-		return <Loading />; 
+		return <Loading />;
 	}
 
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="계정 관리" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="계정 관리" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<ProfilePicWrapper>
 					<ProfilePic>
@@ -89,7 +89,7 @@ const AccountSetting: React.FC = () => {
 					<Row>
 						<Label>
 							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
-							{userProfile?.name} | {userProfile?.email}
+								{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
 					</Row>
