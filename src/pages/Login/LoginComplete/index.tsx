@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { getUserInfoByJwtApi } from '@/apis/auth';
-import { handleError } from '@/apis/util/handleError';
-import { postTermsAgreementApi } from '@/apis/user';
+import { getUserInfoByJwtApi } from '@apis/auth';
+import { handleError } from '@apis/util/handleError';
+import { postTermsAgreementApi } from '@apis/user';
 
-import Loading from '@/components/Loading';
-import Modal from '@/components/Modal';
+import Loading from '@components/Loading';
+import Modal from '@components/Modal';
 
 const LoginComplete: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);

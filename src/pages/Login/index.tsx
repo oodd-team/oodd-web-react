@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { OODDFrame } from '@/components/Frame/Frame';
+import { OODDFrame } from '@components/Frame/Frame';
 import theme from '@styles/theme';
 
 import kakaoLogo from '@assets/default/snsIcon/kakao.svg';

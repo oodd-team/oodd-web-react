@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { postTermsAgreementApi } from '@/apis/user';
-import { handleError } from '@/apis/util/handleError';
+import { postTermsAgreementApi } from '@apis/user';
+import { handleError } from '@apis/util/handleError';
 
 import Back from '@assets/arrow/left.svg';
 import OODDlogo from '@assets/default/oodd.svg';
 
-import { OODDFrame } from '@/components/Frame/Frame';
-import { StyledText } from '@/components/Text/StyledText';
-import BottomButton from '@/components/BottomButton';
-import TopBar from '@/components/TopBar';
-import Modal from '@/components/Modal';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import BottomButton from '@components/BottomButton';
+import TopBar from '@components/TopBar';
+import Modal from '@components/Modal';
 
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 

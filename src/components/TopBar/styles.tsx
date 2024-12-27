@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledText } from '@/components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 import type { TopBarLayoutProps } from './dto';
 
 export const TopBarLayout = styled.header<TopBarLayoutProps>`

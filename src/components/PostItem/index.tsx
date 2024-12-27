@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import theme from '@styles/theme';
 import PinIcon from '@assets/default/pin.svg';
-import Like from '@/components/Icons/Like';
-import Message from '@/components/Icons/Message';
+import Like from '@components/Icons/Like';
+import Message from '@components/Icons/Message';
 
 import type { PostItemProps } from './dto';
 import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
