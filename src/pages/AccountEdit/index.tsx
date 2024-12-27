@@ -37,7 +37,7 @@ const AccountEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="회원 정보 수정" LeftButtonSrc={back} onLeftButtonClick={() => navigate(-1)} />
+				<TopBar text="회원 정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<Section>
 					<SectionTitle>

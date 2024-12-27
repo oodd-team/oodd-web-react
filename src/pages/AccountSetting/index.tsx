@@ -73,7 +73,7 @@ const AccountSetting: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="계정 관리" LeftButtonSrc={back} onLeftButtonClick={() => navigate(-1)} />
+				<TopBar text="계정 관리" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<ProfilePicWrapper>
 					<ProfilePic>

@@ -142,7 +142,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 				<TopBar
 					text="OOTD 업로드"
 					LeftButtonSrc={images.length === 0 ? X : Left}
-					onLeftButtonClick={images.length === 0 ? handleClose : handlePrev}
+					onClickLeftButton={images.length === 0 ? handleClose : handlePrev}
 				/>
 				<Content>
 					{images.length === 0 ? (

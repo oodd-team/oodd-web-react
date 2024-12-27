@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { postTermsAgreementApi } from '@/apis/user';
 import { handleError } from '@/apis/util/handleError';
 
-import Back from '@/assets/arrow/left.svg';
-import OODDlogo from '@/assets/default/oodd.svg';
+import Back from '@assets/arrow/left.svg';
+import OODDlogo from '@assets/default/oodd.svg';
 
 import { OODDFrame } from '@/components/Frame/Frame';
 import { StyledText } from '@/components/Text/StyledText';
@@ -84,7 +84,7 @@ const TermsAgreement: React.FC = () => {
 
 	return (
 		<OODDFrame>
-			<TopBar LeftButtonSrc={Back} onLeftButtonClick={navigateToLogin} />
+			<TopBar LeftButtonSrc={Back} onClickLeftButton={navigateToLogin} />
 			<TermsAgreementLayout>
 				<LogoWrapper>
 					<LogoImg src={OODDlogo} />

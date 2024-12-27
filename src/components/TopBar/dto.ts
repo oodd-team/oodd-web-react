@@ -2,8 +2,8 @@ export interface TopBarProps {
 	text?: string;
 	RightButtonSrc?: string;
 	LeftButtonSrc?: string;
-	onLeftButtonClick?: () => void;
-	onRightButtonClick?: () => void;
+	onClickLeftButton?: () => void;
+	onClickRightButton?: () => void;
 	$withBorder?: boolean;
 }
 

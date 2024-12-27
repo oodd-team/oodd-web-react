@@ -5,7 +5,7 @@ import { patchUserInfoApi } from '@/apis/user';
 import type { PatchUserInfoRequest } from '@/apis/user/dto';
 import { handleError } from '@/apis/util/handleError';
 
-import OODDlogo from '@/assets/default/oodd.svg';
+import OODDlogo from '@assets/default/oodd.svg';
 
 import { OODDFrame } from '@/components/Frame/Frame';
 import { StyledText } from '@/components/Text/StyledText';

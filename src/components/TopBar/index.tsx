@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import theme from '@/styles/theme';
+import theme from '@styles/theme';
 
 import type { TopBarProps } from './dto';
 import { TopBarLayout, StyledTextWrapper, LeftButton, RightButton } from './styles';
@@ -10,8 +10,8 @@ const TopBar: React.FC<TopBarProps> = ({
 	text = '',
 	RightButtonSrc,
 	LeftButtonSrc,
-	onLeftButtonClick,
-	onRightButtonClick,
+	onClickLeftButton,
+	onClickRightButton,
 	$withBorder = false,
 }) => {
 	const navigate = useNavigate();
@@ -21,8 +21,8 @@ const TopBar: React.FC<TopBarProps> = ({
 			<LeftButton
 				src={LeftButtonSrc}
 				onClick={() => {
-					if (onLeftButtonClick) {
-						onLeftButtonClick();
+					if (onClickLeftButton) {
+						onClickLeftButton();
 					} else {
 						navigate(-1);
 					}
@@ -36,8 +36,8 @@ const TopBar: React.FC<TopBarProps> = ({
 			<RightButton
 				src={RightButtonSrc}
 				onClick={() => {
-					if (onRightButtonClick) {
-						onRightButtonClick();
+					if (onClickRightButton) {
+						onClickRightButton();
 					}
 				}}
 			>

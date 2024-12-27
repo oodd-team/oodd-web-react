@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import theme from '@/styles/theme';
-import PinIcon from '@/assets/default/pin.svg';
-import Heart from '@components/Icons/Heart';
+import theme from '@styles/theme';
+import PinIcon from '@assets/default/pin.svg';
+import Like from '@components/Icons/Like';
 import Message from '@components/Icons/Message';
 
 import type { PostItemProps } from './dto';
@@ -11,20 +11,20 @@ import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, Li
 
 const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();
-	const PostImageUrl = post.imageUrl;
+	const postImageUrl = post.imageUrl;
 
-	const handlePostClick = () => {
+	const handlePostItemClick = () => {
 		const path = isMyPost ? `/my-post/${post.id}` : `/post/${post.id}`;
 		navigate(path);
 	};
 
 	return (
-		<PostItemLayout onClick={handlePostClick}>
+		<PostItemLayout onClick={handlePostItemClick}>
 			<PostImageContainer>
-				<PostImage src={PostImageUrl} alt={`post-${post.id}`} />
+				<PostImage src={postImageUrl} alt={`post-${post.id}`} />
 				{post.isRepresentative && <Pin src={PinIcon} />}
 				<LikesOverlay>
-					<Heart />
+					<Like />
 					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
 						{post.postLikesCount}
 					</LikesCountStyledText>

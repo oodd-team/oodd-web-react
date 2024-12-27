@@ -104,7 +104,7 @@ const Verification: React.FC = () => {
 	return (
 		<OODDFrame>
 			<VerificationWrapper>
-				<TopBar text="본인인증" LeftButtonSrc={back} onLeftButtonClick={() => navigate(-1)} />
+				<TopBar text="본인인증" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<Container>
 					<Title>

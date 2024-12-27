@@ -157,7 +157,7 @@ const ProfileEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftButtonClick={() => navigate(-1)} />
+				<TopBar text="회원정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 				{isModalVisible && (
 					<Modal
 						content={modalContent || ''}
