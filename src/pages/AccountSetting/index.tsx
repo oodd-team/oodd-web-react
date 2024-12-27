@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
-import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
-import imageBasic from '../../assets/default/defaultProfile.svg';
-import Profile_s from './../../assets/default/my-page.svg';
-import leave from '../../assets/default/leave.svg';
-import { getUserInfoApi } from '../../apis/user'; 
-import { UserInfoData } from '../../apis/user/dto'; 
-import Loading from '../../components/Loading'; 
+import { OODDFrame } from '@/components/Frame/Frame';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { StyledText } from '@/components/Text/StyledText';
+import theme from '@/styles/theme';
+import TopBar from '@/components/TopBar';
+import back from '@/assets/arrow/left.svg';
+import imageBasic from '@/assets/default/defaultProfile.svg';
+import Profile_s from '@/assets/default/my-page.svg';
+import leave from '@/assets/default/leave.svg';
+import { getUserInfoApi } from '@/apis/user'; 
+import { UserInfoData } from '@/apis/user/dto'; 
+import Loading from '@/components/Loading';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
