@@ -74,8 +74,8 @@ const ChatRoom: React.FC = () => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: currentUserId,
-				toUserId: opponentInfo?.id || -1,
+				requesterId: currentUserId,
+				targetId: opponentInfo?.id || -1,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);
@@ -184,7 +184,6 @@ const ChatRoom: React.FC = () => {
 				icon: Block,
 			},
 		],
-		marginBottom: '4.38rem',
 	};
 
 	const leaveModalProps: ModalProps = {
@@ -234,10 +233,10 @@ const ChatRoom: React.FC = () => {
 				text={opponentInfo?.nickname || '알수없음'}
 				LeftButtonSrc={Back}
 				RightButtonSrc={KebabMenu}
-				onLeftClick={() => {
+				onClickLeftButton={() => {
 					nav(-1);
 				}}
-				onRightClick={() => {
+				onClickRightButton={() => {
 					setIsMenuBottomSheetOpen(true);
 				}}
 				$withBorder={true}

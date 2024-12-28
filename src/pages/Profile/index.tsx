@@ -108,8 +108,8 @@ const Profile: React.FC = () => {
 					<TopBar
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
-						onLeftClick={() => navigate(-1)}
-						onRightClick={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
+						onClickLeftButton={() => navigate(-1)}
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
 					/>
 				)}
 

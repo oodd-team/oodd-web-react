@@ -71,7 +71,7 @@ const AccountCancel: React.FC = () => {
 	return (
 		<OODDFrame>
 			<CancelContainer>
-				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<SubTitle>
 					<StyledText as="div" $textTheme={{ style: 'headline2-medium', lineHeight: 2 }} color={theme.colors.black}>

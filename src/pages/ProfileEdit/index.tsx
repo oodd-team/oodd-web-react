@@ -10,7 +10,7 @@ import {
 	CameraIcon,
 	UserInfo,
 	Username,
-	EmailInput
+	EmailInput,
 } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
@@ -127,7 +127,7 @@ const ProfileEdit: React.FC = () => {
 				profilePictureUrl: profilePictureUrl || '',
 				bio: bio || '',
 			};
-			
+
 			const response = await patchUserInfoApi(payload, storedUserId);
 
 			if (response.isSuccess) {
@@ -157,7 +157,7 @@ const ProfileEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="회원정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 				{isModalVisible && (
 					<Modal
 						content={modalContent || ''}

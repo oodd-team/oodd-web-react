@@ -55,9 +55,10 @@ const protectedRoutes = [
 // 인증이 필요 없는 페이지 배열
 const publicRoutes = [
 	{ path: '/login', element: <Login /> },
-	{ path: '/signup', element: <SignUp /> },
 	{ path: '/login/complete', element: <LoginComplete /> },
-	{ path: '/terms-agreement', element: <TermsAgreement /> },
+
+	{ path: '/signup', element: <SignUp /> },
+	{ path: '/signup/terms-agreement', element: <TermsAgreement /> },
 ];
 
 const App: React.FC = () => {

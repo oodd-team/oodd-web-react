@@ -213,8 +213,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 		try {
 			const blockRequest: PostUserBlockRequest = {
-				fromUserId: Number(storedUserId),
-				toUserId: selectedComment.user.id,
+				requesterId: Number(storedUserId),
+				targetId: selectedComment.user.id,
 				action: 'block',
 			};
 
