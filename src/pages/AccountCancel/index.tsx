@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper, CheckboxInput } from './styles';
+import {
+	CancelContainer,
+	SubTitle,
+	Text,
+	InfoBox,
+	InfoItem,
+	CheckboxWrapper,
+	CheckboxInput,
+	Label,
+	StyledCheckboxText,
+	StyledDiv,
+} from './styles'; // 상대 경로 index 명시
 import { StyledText } from '@components/Text/StyledText';
 import theme from '@styles/theme';
 import { OODDFrame } from '@components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 
-import TopBar from '@components/TopBar';
+import TopBar from '@components/TopBar/index';
 import back from '@assets/arrow/left.svg';
 
-import BottomButton from '@components/BottomButton';
+import BottomButton from '@components/BottomButton/index';
 import { patchUserWithdrawApi } from '@apis/user';
-import Modal from '@components/Modal';
+import Modal from '@components/Modal/index';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -74,12 +85,12 @@ const AccountCancel: React.FC = () => {
 				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<SubTitle>
-					<StyledText as="div" $textTheme={{ style: 'headline2-medium', lineHeight: 2 }} color={theme.colors.black}>
+					<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.primary}>
 						OOTD 탈퇴 전 확인하세요!
 					</StyledText>
 				</SubTitle>
 				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'caption1-regular', lineHeight: 1 }} color={theme.colors.black}>
+					<StyledText as="div" $textTheme={{ style: 'caption1-regular' }} color={theme.colors.primary}>
 						{`탈퇴하시면 이용 중인 서비스가 폐쇄되며,\n모든 데이터는 복구할 수 없습니다.`}
 					</StyledText>
 				</Text>
@@ -87,32 +98,26 @@ const AccountCancel: React.FC = () => {
 					<InfoItem as="div">
 						<StyledText
 							as="div"
-							$textTheme={{ style: 'body1-medium', lineHeight: 2 }}
-							color={theme.colors.black}
-							style={{ whiteSpace: 'nowrap' }} // 줄 바꿈 방지
+							$textTheme={{ style: 'body1-medium'}}
+							color={theme.colors.primary}
+							style={{ whiteSpace: 'nowrap' }} 
 						>
 							지금까지 OODD를 이용해주셔서 감사합니다!
 						</StyledText>
 					</InfoItem>
 				</InfoBox>
 				<CheckboxWrapper as="div">
-					<label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+					<Label>
 						<CheckboxInput type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-						<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray[600]}>
+						<StyledCheckboxText as="span" $textTheme={{ style: 'body2-regular' }}>
 							안내사항을 모두 확인하였으며, 이에 동의합니다.
-						</StyledText>
-					</label>
+						</StyledCheckboxText>
+					</Label>
 				</CheckboxWrapper>
 			</CancelContainer>
-			<div
-				style={{
-					backgroundColor: isChecked ? theme.colors.black : theme.colors.gray[300],
-					color: isChecked ? theme.colors.white : theme.colors.gray[500],
-					cursor: isChecked ? 'pointer' : 'not-allowed',
-				}}
-			>
+			<StyledDiv isChecked={isChecked}>
 				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
-			</div>
+			</StyledDiv>
 			{isModalVisible && (
 				<Modal
 					content={modalContent || ''} // null일 경우 빈 문자열로 처리

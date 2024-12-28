@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StyledText } from '@components/Text/StyledText';
 
 interface ButtonProps {
 	isChecked: boolean;
@@ -31,7 +32,7 @@ export const Text = styled.p`
 `;
 
 export const InfoBox = styled.div`
-	background: ${({ theme }) => theme.colors.gray[100]};
+	background: ${({ theme }) => theme.colors.background.secondary};
 	padding: 70px;
 	margin-top: 10px;
 	border-radius: 10px;
@@ -70,13 +71,13 @@ export const CheckboxInput = styled.input`
 	border-radius: 0.25rem;
 	position: relative;
 	&:checked {
-	background-color: ${({ theme }) => theme.colors.brand.primaryLight};
-	border-color: ${({ theme }) => theme.colors.brand.primary}; 
+		background-color: ${({ theme }) => theme.colors.background.primaryLight};
+		border-color: ${({ theme }) => theme.colors.brand.primary}; 
 }
 
 	&:checked::after {
 		content: '✓';
-		color: ${({ theme }) => theme.colors.white};
+		color: ${({ theme }) => theme.colors.contrast};
 		font-size: 0.875rem;
 		position: absolute;
 		top: 50%;
@@ -85,19 +86,20 @@ export const CheckboxInput = styled.input`
 	}
 `;
 
-export const StyledButton = styled.button<ButtonProps>`
-	margin-top: 18.75rem; 
-	background: ${({ theme, isChecked }) =>
-	isChecked ? theme.colors.black : theme.colors.gray[300]};
-	border-radius: 0.5rem; 
-	border: none;
-	padding: 1.5625rem; 
-	text-align: center;
-	font-size: 1rem; 
-	color: ${({ theme }) => theme.colors.white};
-	cursor: ${(props) => (props.isChecked ? 'pointer' : 'not-allowed')};
+export const Label = styled.label`
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+`;
 
-	&:disabled {
-		background: ${({ theme }) => `${theme.colors.black}80`};
-	}
+export const StyledCheckboxText = styled(StyledText)`
+	color: ${({ theme }) => theme.colors.text.caption};
+`;
+
+export const StyledDiv = styled.div<{ isChecked: boolean }>`
+	background-color: ${({ isChecked, theme }) =>
+		isChecked ? theme.colors.primary : theme.colors.gray[300]};
+	color: ${({ isChecked, theme }) =>
+		isChecked ? theme.colors.contrast : theme.colors.caption};
+	cursor: ${({ isChecked }) => (isChecked ? 'pointer' : 'not-allowed')};
 `;
