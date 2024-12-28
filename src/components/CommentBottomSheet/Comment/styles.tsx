@@ -13,7 +13,7 @@ export const SendContainer = styled.div`
 	width: 100%;
 	min-height: 2.5rem;
 	display: flex;
-	border: 1px solid #ff2389;
+	border: 1px solid ${({ theme }) => theme.colors.border.active};
 	border-radius: 0.5rem;
 	align-items: center;
 `;
@@ -27,11 +27,8 @@ export const CommentTextarea = styled.textarea`
 	background-color: transparent;
 	resize: none;
 	overflow: hidden;
-	font-family: 'Pretendard Variable';
-	font-size: 1rem;
-	font-style: normal;
-	font-weight: 300;
-	line-height: 1.2rem;
+	color: ${({ theme }) => theme.colors.text.primary};
+	${({ theme }) => theme.fontStyles['body2-regular']};
 `;
 
 export const SendButton = styled.button`
