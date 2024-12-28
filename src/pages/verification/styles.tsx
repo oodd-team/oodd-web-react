@@ -45,7 +45,7 @@ export const Button = styled.button`
 	padding: 1.25rem;
 	margin-top: 300px;
 	font-size: 0.875rem;
-	color: ${({ theme }) => theme.colors.white};
+	color: ${({ theme }) => theme.colors.contrast};
 	background-color: ${({ theme, disabled }) =>
   disabled ? theme.colors.gray[300] : theme.colors.black};
 	border: none;
