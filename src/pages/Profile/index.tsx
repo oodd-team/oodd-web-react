@@ -34,6 +34,7 @@ import button_plus from '@assets/default/plus.svg';
 import TopBar from '@components/TopBar';
 import MoreSvg from '@assets/default/more.svg';
 import BackSvg from '@assets/arrow/left.svg';
+import theme from '@styles/theme';
 
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
@@ -109,7 +110,7 @@ const Profile: React.FC = () => {
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
 						onClickLeftButton={() => navigate(-1)}
-						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} 
 					/>
 				)}
 
@@ -145,7 +146,7 @@ const Profile: React.FC = () => {
 						posts.map((post) => <PostItem key={post.id} post={post} />)
 					) : (
 						<NoPostWrapper>
-							<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
+							<StyledText $textTheme={{ style: 'headline1-medium' }} color={theme.colors.gray[400]}>
 								게시물이 없어요.
 							</StyledText>
 						</NoPostWrapper>

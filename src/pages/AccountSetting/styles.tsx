@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const ProfileEditContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
-	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
-
+	flex-grow: 1; 
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,18 +13,18 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 1.25rem; /* 20px */
+	margin-bottom: 1.25rem;
 	margin-top: 24px;
 `;
 
 export const ProfilePic = styled.div`
-	width: 7.25rem; /* 116px */
-	height: 7.25rem; /* 116px */
+	width: 7.25rem; 
+	height: 7.25rem; 
 	flex-shrink: 0;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-top: 2.125rem; /* 34px */
-	margin-bottom: 1.375rem; /* 22px */
+	margin-top: 2.125rem; 
+	margin-bottom: 1.375rem; 
 
 	img {
 		width: 100%;
@@ -61,7 +60,7 @@ export const List = styled.ul`
 	padding: 0;
 	margin: 0; 
 	list-style: none;
-	border-top: 0px solid #eee;
+	border-top: 0px solid ${({ theme }) => theme.colors.gray[200]};
 	position: absolute;
 	bottom: 20px; 
 `;
@@ -69,24 +68,24 @@ export const List = styled.ul`
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 15px 1.25rem; /* 15px 20px */
-	border-bottom: 0px solid #eee;
+	padding: 15px 1.25rem; 
+	border-bottom: 0px solid ${({ theme }) => theme.colors.gray[200]};
 	cursor: pointer;
 
 	& img:first-child {
-		margin-right: 1rem; /* 첫 번째 이미지(왼쪽 아이콘)의 오른쪽 간격 설정 */
+		margin-right: 1rem; 
 	}
 
 	& img:last-child {
-		margin-left: auto; /* 마지막 이미지(오른쪽 화살표 아이콘)를 오른쪽으로 정렬 */
+		margin-left: auto; 
 	}
 
 	&:hover {
-		background: #f9f9f9;
-	}
+	background: ${({ theme }) => theme.colors.gray[50]};
+}
 
 	span {
 		flex: 1;
-		text-align: left; /* 텍스트 왼쪽 정렬 */
+		text-align: left;
 	}
 `;

@@ -9,9 +9,8 @@ export const Nav = styled.nav`
 	top: 0;
 	left: 0;
 	width: 100%;
-	background-color: white;
-	z-index: 1000; /* 다른 요소들보다 위에 오도록 설정 */
-
+	background-color: ${({ theme }) => theme.colors.white};
+	z-index: 1000; 
 	position: sticky;
 `;
 
@@ -26,7 +25,7 @@ export const IconContainer = styled.div`
 	}
 
 	img {
-		width: 1.5rem; /* 24px */
-		height: 1.5rem; /* 24px */
+		width: 1.5rem; 
+		height: 1.5rem; 
 	}
 `;

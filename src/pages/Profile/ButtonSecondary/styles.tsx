@@ -5,11 +5,11 @@ export const Button = styled.button`
 	margin: 16px auto;
 	height: 3.1rem;
 	text-align: center;
-	color: #ff2389;
+	color: ${({ theme }) => theme.colors.brand.primary};
 	cursor: pointer;
 	box-sizing: border-box;
 	border: 1px solid;
 	border-radius: 10px;
-	border-color: #ff2389;
+	border-color: ${({ theme }) => theme.colors.brand.primary};
 	padding: 10px;
 `;

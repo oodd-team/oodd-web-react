@@ -1,92 +1,91 @@
 import styled from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	max-width: 512px; /* 32rem */
+	max-width: 512px; 
 	display: flex;
 	flex-direction: column;
 	position: relative;
 `;
 
 export const Section = styled.div`
-	margin-top: 1.875rem; /* 30px */
-
-	margin-bottom: 1.875rem; /* 30px */
-	width: 100%; /* Section이 부모 컨테이너의 전체 너비를 차지하도록 설정 */
+	margin-top: 1.875rem; 
+	margin-bottom: 1.875rem; 
+	width: 100%; 
 	padding: 0px 30px;
 `;
 
 export const SectionTitle = styled.div`
-	font-size: 1.125rem; /* 18px */
+	font-size: 1.125rem; 
 	font-weight: bold;
-	margin-bottom: 0.625rem; /* 10px */
-	margin-top: 1.125rem; /* 18px */
-	text-align: left; /* 텍스트를 왼쪽 정렬 */
+	margin-bottom: 0.625rem; 
+	margin-top: 1.125rem; 
+	text-align: left; 
 `;
 
 export const SNSInfo = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 0.625rem; /* 10px */
-	margin-top: 3.125rem; /* 50px */
+	margin-bottom: 0.625rem; 
+	margin-top: 3.125rem;
 `;
 
 export const SNSInfoRow = styled.div`
 	display: flex;
 	align-items: center;
-	margin-bottom: 0.625rem; /* 10px */
+	margin-bottom: 0.625rem;
 `;
 
 export const SNSIcon = styled.img`
-	width: 2.5rem; /* 40px */
-	height: 2.5rem; /* 40px */
-	margin-right: 0.625rem; /* 10px */
+	width: 2.5rem; 
+	height: 2.5rem; 
+	margin-right: 0.625rem; 
 	margin-top: 1.875rem;
 	flex-shrink: 0;
 	object-fit: cover;
 `;
 
 export const Text = styled.div`
-	font-size: 0.875rem; /* 14px */
-	color: #666;
+	font-size: 0.875rem; 
+	color: ${({ theme }) => theme.colors.gray[600]};
 	margin-top: 2.1875rem;
-	text-align: left; /* 텍스트를 왼쪽 정렬 */
+	text-align: left; 
 `;
 
 export const SnsConnection = styled.div`
-	font-size: 1rem; /* 16px */
+	font-size: 1rem; 
 	font-weight: bold;
-	color: #333;
-	margin-bottom: 0.625rem; /* 10px */
-	text-align: left; /* 텍스트를 왼쪽 정렬 */
+	color: ${({ theme }) => theme.colors.gray[700]};
+	margin-bottom: 0.625rem; 
+	text-align: left;
 `;
 
 export const MemberInfo = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 35px;
-	width: 100%; /* 부모 컨테이너의 전체 너비를 차지하도록 설정 */
+	width: 100%;
 `;
 
 export const MemberInfoRow = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: flex-start; /* 아이템들을 왼쪽으로 정렬 */
-	margin-bottom: 0.625rem; /* 10px */
+	justify-content: flex-start; 
+	margin-bottom: 0.625rem; 
 	margin-top: 10px;
 `;
 
 export const Label = styled.div`
-	font-size: 0.875rem; /* 14px */
-	color: #333;
+	font-size: 0.875rem;
+	color: ${({ theme }) => theme.colors.gray[700]};
 	display: flex;
 	align-items: center;
-	width: 6.25rem; /* 100px, 라벨의 고정 너비 설정 */
+	width: 6.25rem; 
 `;
 
 export const Info = styled.div`
-	font-size: 0.875rem; /* 14px */
-	color: #999;
-	margin-left: 0.625rem; /* 10px */
-	flex-grow: 1; /* 라벨과 함께 라인을 맞추기 위해 넓이를 확장 */
-	text-align: left; /* 텍스트를 왼쪽 정렬 */
+	font-size: 0.875rem; 
+	color: ${({ theme }) => theme.colors.gray[500]};
+	margin-left: 0.625rem; 
+	flex-grow: 1; 
+	text-align: left; 
 `;

@@ -106,8 +106,8 @@ const AccountCancel: React.FC = () => {
 			</CancelContainer>
 			<div
 				style={{
-					backgroundColor: isChecked ? '#000000' : '#d3d3d3',
-					color: isChecked ? '#ffffff' : '#808080',
+					backgroundColor: isChecked ? theme.colors.black : theme.colors.gray[300],
+					color: isChecked ? theme.colors.white : theme.colors.gray[500],
 					cursor: isChecked ? 'pointer' : 'not-allowed',
 				}}
 			>

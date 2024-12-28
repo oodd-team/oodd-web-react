@@ -18,6 +18,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
 import { useNavigate } from 'react-router-dom';
+import theme from '@styles/theme';
 
 const Verification: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -108,7 +109,9 @@ const Verification: React.FC = () => {
 
 				<Container>
 					<Title>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
+					<StyledText
+							$textTheme={{ style: 'body1-medium' }}
+							color={theme.colors.gray[600]} >
 							휴대전화번호로 본인인증하기
 						</StyledText>
 					</Title>
