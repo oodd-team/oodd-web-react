@@ -242,7 +242,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 						</div>
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
-						<Message color="white" />
+						<Message width="16" height="16" color="white" />
 						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.text.contrast}>
 							매칭 요청
 						</StyledText>
