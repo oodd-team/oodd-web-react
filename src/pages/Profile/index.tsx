@@ -52,7 +52,6 @@ const Profile: React.FC = () => {
   const [modalContent, setModalContent] = useState('');
   const [otherUser, setOtherUser] = useRecoilState(OtherUserAtom); // 상태 변수
   const navigate = useNavigate();
-
   const isMyPage = currentUserId === otherUser?.id; // Boolean 변수
 
   useEffect(() => {
