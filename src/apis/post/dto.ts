@@ -60,7 +60,7 @@ export interface GetUserPostListData {
 	meta: PaginationMeta;
 }
 export interface ModifyPostData extends PostBase {
-	postId: number;
+	id: number;
 	userId: number;
 }
 export interface GetPostDetailData extends PostBase {
