@@ -8,7 +8,7 @@ import { chatRoomMessagesData } from '@apis/chatting/dto';
 export const createExtendedMessages = (
 	allMessages: chatRoomMessagesData[],
 	userId: number,
-	opponentInfo: OtherUserDto | null,
+	otherUser: OtherUserDto | null,
 ) => {
 	// DateBar 표시 여부를 결정하는 함수
 	const isNewDay = (curDate: string, lastDate: string) => {
@@ -57,8 +57,8 @@ export const createExtendedMessages = (
 		} else {
 			// 받은 메시지일 경우 rcvdMessage 속성 추가
 			const rcvdMessage: RcvdMessageProps = {
-				fromUserNickname: opponentInfo?.nickname || '알수없음',
-				profilePictureUrl: opponentInfo?.profilePictureUrl || defaultProfile,
+				fromUserNickname: otherUser?.nickname || '알수없음',
+				profilePictureUrl: otherUser?.profilePictureUrl || defaultProfile,
 				content: message.content,
 				isProfileImageVisible,
 				isSenderChanged,

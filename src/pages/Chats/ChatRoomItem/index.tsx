@@ -2,7 +2,7 @@ import { StyledText } from '@components/Text/StyledText';
 import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
@@ -13,11 +13,11 @@ dayjs.extend(relativeTime);
 
 const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
-	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+	const [, setOtherUser] = useRecoilState(OtherUserAtom);
 	const nav = useNavigate();
 
 	const handleChatRoomClick = () => {
-		setOpponentInfo(otherUser);
+		setOtherUser(otherUser);
 		nav(`/chats/${id}`);
 	};
 
