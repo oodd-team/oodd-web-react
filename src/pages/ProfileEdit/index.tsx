@@ -11,23 +11,24 @@ import {
 	UserInfo,
 	Username,
 	EmailInput,
-} from './styles';
+} from './styles'; 
 import { StyledText } from '@components/Text/StyledText';
 import theme from '@styles/theme';
 import { OODDFrame } from '@components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@config/firebaseConfig';
-import Modal from '@components/Modal';
+import Modal from '@components/Modal/index';
 
-import TopBar from '@components/TopBar';
+import TopBar from '@components/TopBar/index';
 import back from '@assets/arrow/left.svg';
-import BottomButton from '@components/BottomButton';
+import BottomButton from '@components/BottomButton/index';
 import imageBasic from '@assets/default/defaultProfile.svg';
-import Loading from '@components/Loading';
+import Loading from '@components/Loading/index';
 import camera from '@assets/default/camera.svg';
 import { getUserInfoApi, patchUserInfoApi } from '@apis/user'; 
-import { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; 
+import type { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; // type 명시
+
 
 type ExtendedUserInfoData = UserInfoData & {
 	birthDate?: string; // 확장된 속성
@@ -178,42 +179,42 @@ const ProfileEdit: React.FC = () => {
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>
 				<UserInfo>
-					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'Heading' }} color={theme.colors.tertiary}>
 						<Username>{nickname || '알수없음'}</Username>
 					</StyledText>
 				</UserInfo>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						이름
 					</StyledText>
 					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						닉네임
 					</StyledText>
 					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						소개글
 					</StyledText>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular'}} color={theme.colors.tertiary}>
 						전화번호
 					</StyledText>
 					<Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						생년월일
 					</StyledText>
 					<Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						이메일
 					</StyledText>
 					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
