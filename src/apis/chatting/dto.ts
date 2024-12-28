@@ -11,6 +11,7 @@ export interface OtherUserDto {
 	id: number;
 	nickname: string;
 	profilePictureUrl: string;
+	bio: string; //추가
 }
 
 export interface LatestMessageDto {
