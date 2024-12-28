@@ -178,42 +178,42 @@ const ProfileEdit: React.FC = () => {
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>
 				<UserInfo>
-					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'Heading', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						<Username>{nickname || '알수없음'}</Username>
 					</StyledText>
 				</UserInfo>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						이름
 					</StyledText>
 					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						닉네임
 					</StyledText>
 					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						소개글
 					</StyledText>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						전화번호
 					</StyledText>
 					<Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						생년월일
 					</StyledText>
 					<Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray[600]}>
 						이메일
 					</StyledText>
 					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />

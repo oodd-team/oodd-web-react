@@ -98,7 +98,7 @@ const AccountCancel: React.FC = () => {
 				<CheckboxWrapper as="div">
 					<label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
 						<CheckboxInput type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-						<StyledText as="span" $textTheme={{ style: 'caption2-regular', lineHeight: 1 }} color={theme.colors.gray3}>
+						<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray[600]}>
 							안내사항을 모두 확인하였으며, 이에 동의합니다.
 						</StyledText>
 					</label>
