@@ -11,6 +11,7 @@ import back from '@assets/arrow/left.svg';
 import BottomButton from '@components/BottomButton';
 import { patchUserWithdrawApi } from '@apis/user';
 import Modal from '@components/Modal';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -35,17 +36,17 @@ const AccountCancel: React.FC = () => {
 				return;
 			}
 
-			const storedUserId = Number(localStorage.getItem('my_id'));
+			const currentUserId = getCurrentUserId();
 			const token = localStorage.getItem('new_jwt_token');
 
-			if (!storedUserId || !token) {
+			if (!currentUserId || !token) {
 				setModalContent('사용자 정보를 찾을 수 없습니다.');
 				setIsModalVisible(true);
 				return;
 			}
 
 			// API 요청
-			const response = await patchUserWithdrawApi(storedUserId);
+			const response = await patchUserWithdrawApi(currentUserId);
 
 			if (response.isSuccess) {
 				setModalContent('계정이 성공적으로 삭제되었습니다.');
