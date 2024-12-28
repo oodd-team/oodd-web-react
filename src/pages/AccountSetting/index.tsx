@@ -14,6 +14,7 @@ import leave from '@assets/default/leave.svg';
 import { getUserInfoApi } from '@apis/user'; 
 import { UserInfoData } from '@apis/user/dto'; 
 import Loading from '@components/Loading';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -25,14 +26,13 @@ const AccountSetting: React.FC = () => {
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const storedUserId = Number(localStorage.getItem('my_id'));
-				if (!storedUserId) {
+				const currentUserId = getCurrentUserId();
+				if (!currentUserId) {
 					console.error('User is not logged in');
 					return;
 				}
 
-				const userId = Number(storedUserId);
-				const response = await getUserInfoApi(userId);
+				const response = await getUserInfoApi(currentUserId);
 				setUserProfile(response.data);
 			} catch (error) {
 				console.error('Error fetching user info:', error);
