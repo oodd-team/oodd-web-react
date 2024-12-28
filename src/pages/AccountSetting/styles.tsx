@@ -60,7 +60,7 @@ export const List = styled.ul`
 	padding: 0;
 	margin: 0; 
 	list-style: none;
-	border-top: 0px solid ${({ theme }) => theme.colors.gray[200]};
+	border-top: 0px solid ${({ theme }) => theme.colors.background.divider};
 	position: absolute;
 	bottom: 20px; 
 `;
@@ -69,7 +69,7 @@ export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
 	padding: 15px 1.25rem; 
-	border-bottom: 0px solid ${({ theme }) => theme.colors.gray[200]};
+	border-bottom: 0px solid ${({ theme }) => theme.colors.background.divider};
 	cursor: pointer;
 
 	& img:first-child {
@@ -81,8 +81,8 @@ export const ListItem = styled.li`
 	}
 
 	&:hover {
-	background: ${({ theme }) => theme.colors.gray[50]};
-}
+		background: ${({ theme }) => theme.colors.background.secondary};
+	}
 
 	span {
 		flex: 1;
