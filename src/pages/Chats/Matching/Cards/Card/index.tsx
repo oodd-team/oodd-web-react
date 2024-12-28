@@ -26,18 +26,18 @@ import { handleError } from '@apis/util/handleError';
 import type { ModalProps } from '@components/Modal/dto';
 import Modal from '@components/Modal';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import type { CardProps } from './dto';
 
 const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+	const [, setOtherUser] = useRecoilState(OtherUserAtom);
 	const nav = useNavigate();
 	const requester = matching.requester;
 
 	const handleUserClick = () => {
-		nav(`/users/${matching.requester.requesterId}`);
+		nav(`/users/${requester.id}`);
 	};
 
 	const handleRejectButtonClick = () => {
@@ -52,16 +52,16 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
 		try {
 			console.log(matching);
-			const response = await modifyMatchingStatusApi(matching.matchingId, { requestStatus: status });
+			const response = await modifyMatchingStatusApi(matching.id, { requestStatus: status });
 
 			if (response.isSuccess) {
 				removeRejectedMatching(); // 매칭 리스트에서 해당 매칭을 제거
 
 				if (status === 'accept') {
-					setOpponentInfo({
-						id: requester.requesterId,
+					setOtherUser({
+						id: requester.id,
 						nickname: requester.nickname,
-						profileUrl: requester.profilePictureUrl,
+						profilePictureUrl: requester.profilePictureUrl,
 					});
 					nav(`/chats/${response.data.chatRoomId}`);
 				}
@@ -91,12 +91,12 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						{requester.nickname || '알수없음'}
 					</StyledText>
 					<div className="row-flex">
-						{matching.requesterPost.styleTags.map((tag, index) => (
+						{requester.representativePost.styleTags.map((tag, index) => (
 							<div className="row-flex" key={tag}>
 								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 									{tag}
 								</StyledText>
-								{index < matching.requesterPost.styleTags.length - 1 && (
+								{index < requester.representativePost.styleTags.length - 1 && (
 									<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 										,&nbsp;
 									</StyledText>
@@ -105,7 +105,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						))}
 					</div>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav(`/users/${requester.requesterId}`)}>
+				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
 					<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
 						OOTD 더 보기
 					</StyledText>
@@ -123,7 +123,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					modules={[Pagination]}
 					className="childSwiper"
 				>
-					{matching.requesterPost.postImages.map((postImage) => (
+					{requester.representativePost.postImages.map((postImage) => (
 						<SwiperSlide key={postImage.url}>
 							<img src={postImage.url} alt="OOTD" className="slide-image-small" />
 							<div className="blur"></div>

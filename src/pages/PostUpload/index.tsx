@@ -319,11 +319,11 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					<TagContainer className="clothingTag">
 						<div onClick={handleToggleSearchSheet}>
 							<img src={ClothingTag} />
-							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
+							<StyledText className="label" $textTheme={{ style: 'headline2-bold' }}>
 								옷 정보 태그
 							</StyledText>
 							{clothingInfos.length > 0 && (
-								<StyledText className="count" $textTheme={{ style: 'headline2-regular', lineHeight: 1 }}>
+								<StyledText className="count" $textTheme={{ style: 'headline2-regular' }}>
 									{clothingInfos.length}
 								</StyledText>
 							)}

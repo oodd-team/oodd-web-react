@@ -14,7 +14,6 @@ import AccountCancel from './pages/AccountCancel';
 import Verification from './pages/verification';
 
 import Post from './pages/Post';
-import MyPost from './pages/MyPost';
 import PostUpload from './pages/PostUpload';
 import PostImageSelect from './pages/PostImageSelect';
 import PostInstaConnect from './pages/PostInstaConnect';
@@ -43,7 +42,6 @@ const protectedRoutes = [
 	{ path: '/verification', element: <Verification /> },
 
 	{ path: '/post/:postId', element: <Post /> },
-	{ path: '/my-post/:postId', element: <MyPost /> },
 	{ path: '/upload', element: <PostUpload /> },
 	{ path: '/image-select', element: <PostImageSelect /> },
 	{ path: '/insta-connect', element: <PostInstaConnect /> },

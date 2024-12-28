@@ -38,7 +38,7 @@ import BackSvg from '@/assets/arrow/left.svg';
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const profileUserId = Number(userId);
-	const loggedInUserId = Number(localStorage.getItem('my_id'));
+	const loggedInUserId = Number(localStorage.getItem('current_user_id'));
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [posts, setPosts] = useState<UserPostSummary[]>([]);

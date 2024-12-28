@@ -2,7 +2,7 @@ import { StyledText } from '@components/Text/StyledText';
 import { CommentLayout, SendContainer, CommentTextarea, SendButton } from './styles';
 import send from '@assets/default/send-comment.svg';
 import React, { useEffect, useRef, useState } from 'react';
-import { CommentProps } from './dto';
+import type { CommentProps } from './dto';
 
 const Comment: React.FC<CommentProps> = ({ content, sendComment, isModal = false }) => {
 	const [comment, setComment] = useState('');

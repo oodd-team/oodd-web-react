@@ -8,7 +8,7 @@ const ButtonSecondary: React.FC = () => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate('/profile/edit'); 
+		navigate('/profile/edit');
 	};
 
 	return (

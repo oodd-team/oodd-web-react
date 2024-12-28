@@ -5,10 +5,10 @@ export const Nav = styled.nav`
 	justify-content: space-between;
 	align-items: center;
 	padding: 8px 20px;
-	position: fixed; 
+	position: fixed;
 	top: 0;
-	left: 0; 
-	width: 100%; 
+	left: 0;
+	width: 100%;
 	background-color: white;
 	z-index: 1000; /* 다른 요소들보다 위에 오도록 설정 */
 

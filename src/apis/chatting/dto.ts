@@ -2,7 +2,7 @@
 // base response 형태를 따르지 않으므로 data 접미사를 사용했습니다.
 // response
 export interface ChatRoomData {
-	chatRoomId: number;
+	id: number;
 	otherUser: OtherUserDto;
 	latestMessage: LatestMessageDto;
 }
@@ -10,7 +10,7 @@ export interface ChatRoomData {
 export interface OtherUserDto {
 	id: number;
 	nickname: string;
-	profileUrl: string;
+	profilePictureUrl: string;
 }
 
 export interface LatestMessageDto {
