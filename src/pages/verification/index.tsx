@@ -111,7 +111,7 @@ const Verification: React.FC = () => {
 					<Title>
 					<StyledText
 							$textTheme={{ style: 'body1-medium' }}
-							color={theme.colors.gray[600]} >
+							color={theme.colors.tertiary} >
 							휴대전화번호로 본인인증하기
 						</StyledText>
 					</Title>
@@ -123,7 +123,6 @@ const Verification: React.FC = () => {
 								value={name}
 								onChange={handleNameChange}
 								data-theme-style="heading1-regular"
-								data-theme-lineheight="1"
 							/>
 						</InputWrapper>
 						<InputWrapper>
@@ -133,7 +132,6 @@ const Verification: React.FC = () => {
 								value={phone}
 								onChange={handlePhoneChange}
 								data-theme-style="body1-medium"
-								data-theme-lineheight="1"
 							/>
 							{isVerificationSent && <ResendButton onClick={handleResend}>인증번호 새로 받기</ResendButton>}
 						</InputWrapper>
@@ -145,7 +143,6 @@ const Verification: React.FC = () => {
 									value={verificationCode}
 									onChange={handleVerificationCodeChange}
 									data-theme-style="body1-medium"
-									data-theme-lineheight="1"
 								/>
 								<Timer>{formatTime(timer)}</Timer>
 							</VerificationInputWrapper>
