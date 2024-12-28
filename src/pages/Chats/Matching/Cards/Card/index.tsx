@@ -61,7 +61,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					setOpponentInfo({
 						id: requester.id,
 						nickname: requester.nickname,
-						profileUrl: requester.profilePictureUrl,
+						profilePictureUrl: requester.profilePictureUrl,
 					});
 					nav(`/chats/${response.data.chatRoomId}`);
 				}

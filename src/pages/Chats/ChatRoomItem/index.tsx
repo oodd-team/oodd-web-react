@@ -11,14 +11,14 @@ import type { ChatRoomData } from '@apis/chatting/dto';
 import defaultProfile from '@assets/default/defaultProfile.svg';
 dayjs.extend(relativeTime);
 
-const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMessage }) => {
+const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
 	const nav = useNavigate();
 
 	const handleChatRoomClick = () => {
 		setOpponentInfo(otherUser);
-		nav(`/chats/${chatRoomId}`);
+		nav(`/chats/${id}`);
 	};
 
 	useEffect(() => {
@@ -40,7 +40,7 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMes
 
 	return (
 		<ChatRoomItemLayout onClick={handleChatRoomClick}>
-			<UserImage src={otherUser?.profileUrl || defaultProfile} alt="user" />
+			<UserImage src={otherUser?.profilePictureUrl || defaultProfile} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">
 					{otherUser?.nickname || '알수없음'}
