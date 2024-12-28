@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { StyledText } from '@components/Text/StyledText';
 
-interface ButtonProps {
-	isChecked: boolean;
-}
-
 export const CancelContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
