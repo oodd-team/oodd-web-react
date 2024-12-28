@@ -66,7 +66,7 @@ const ChatRoom: React.FC = () => {
 			setModalContent('유저 정보를 찾을 수 없습니다.');
 			setIsStatusModalOpen(true);
 		} else {
-			nav(`/users/${otherUserId}`);
+			nav(`/profile/${otherUserId}`);
 		}
 	}, [otherUser, nav]);
 

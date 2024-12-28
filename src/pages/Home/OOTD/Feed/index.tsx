@@ -76,7 +76,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.id}`);
+		nav(`/profile/${feed.user.id}`);
 	};
 
 	const handleFeedClick = (e: React.MouseEvent) => {

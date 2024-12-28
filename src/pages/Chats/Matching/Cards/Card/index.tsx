@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const requester = matching.requester;
 
 	const handleUserClick = () => {
-		nav(`/users/${requester.id}`);
+		nav(`/profile/${requester.id}`);
 	};
 
 	const handleRejectButtonClick = () => {
@@ -109,7 +109,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						))}
 					</div>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
+				<SeeMore onClick={() => nav(`/profile/${requester.id}`)}>
 					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 						OOTD 더 보기
 					</StyledText>
