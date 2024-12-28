@@ -8,9 +8,9 @@ import type { MatchingProps } from './dto';
 const Matching: React.FC<MatchingProps> = ({ matchingCount, decreaseMatchingCount }) => {
 	return (
 		<>
-			<ReqeustInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+			<ReqeustInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 				Message&nbsp;
-				<StyledText $textTheme={{ style: 'body1-bold' }} color="#FF2389">
+				<StyledText $textTheme={{ style: 'body1-bold' }} color={theme.colors.brand.primary}>
 					{matchingCount}
 				</StyledText>
 			</ReqeustInfo>

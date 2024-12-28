@@ -200,7 +200,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 					<ReportModalWrapper onClick={handleBackgroundClick}>
 						<ReportModalContainer>
 							<ReportModalHeader>
-								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
+								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.text.contrast}>
 									신고 사유 선택
 								</StyledText>
 								<CloseButton

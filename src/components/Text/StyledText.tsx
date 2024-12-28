@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import type { StyledTextProps } from './dto';
 
 export const StyledText = styled.div<StyledTextProps>`
-	color: ${(props) => props.color || theme.colors.black};
+	color: ${(props) => props.color || theme.colors.text.primary};
 	white-space: pre-line;
 	${(props) => {
 		const isMobile = useMediaQuery({ maxWidth: '767px' });

@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const requester = matching.requester;
 
 	const handleUserClick = () => {
-		nav(`/users/${requester.id}`);
+		nav(`/profile/${requester.id}`);
 	};
 
 	const handleRejectButtonClick = () => {
@@ -87,17 +87,21 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					<img src={requester.profilePictureUrl || defaultProfile} alt="profile" />
 				</ProfileImgBox>
 				<ProfileInfo>
-					<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.black} onClick={handleUserClick}>
+					<StyledText
+						$textTheme={{ style: 'body1-medium' }}
+						color={theme.colors.text.primary}
+						onClick={handleUserClick}
+					>
 						{requester.nickname || '알수없음'}
 					</StyledText>
 					<div className="row-flex">
 						{requester.representativePost.styleTags.map((tag, index) => (
 							<div className="row-flex" key={tag}>
-								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
+								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray[200]}>
 									{tag}
 								</StyledText>
 								{index < requester.representativePost.styleTags.length - 1 && (
-									<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
+									<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray[200]}>
 										,&nbsp;
 									</StyledText>
 								)}
@@ -105,8 +109,8 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						))}
 					</div>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
-					<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+				<SeeMore onClick={() => nav(`/profile/${requester.id}`)}>
+					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 						OOTD 더 보기
 					</StyledText>
 					<ArrowButton />
