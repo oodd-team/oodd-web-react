@@ -22,7 +22,7 @@ export const TabBarList = styled.ul`
 `;
 
 export const TabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
-	border-bottom: 0.13rem solid ${({ theme }) => theme.colors.gray[200]};
+	border-bottom: 0.13rem solid ${({ theme }) => theme.colors.border.divider};
 	border-image: ${({ $isSelected, theme }) => ($isSelected ? `${theme.colors.brand.gradient} 0 0 1 0` : 'transparent')};
 	text-align: center;
 	flex-grow: 1;

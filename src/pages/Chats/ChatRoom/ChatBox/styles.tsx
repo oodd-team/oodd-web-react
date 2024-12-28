@@ -11,7 +11,7 @@ export const ChatBoxContainer = styled.div`
 
 	display: flex;
 	padding: 0.5rem 1.12rem;
-	background-color: ${({ theme }) => theme.colors.text.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	gap: 0.5rem;
 	border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
 	align-items: center;

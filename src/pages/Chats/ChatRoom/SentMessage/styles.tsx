@@ -10,8 +10,8 @@ export const MessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 
 export const Message = styled(StyledText)`
 	padding: 0.4rem 0.8rem;
-	/* background-color: ${({ theme }) => theme.colors.brand.primaryLight}; */
-	border: 1.2px solid ${({ theme }) => theme.colors.brand.primaryLight};
+	background-color: ${({ theme }) => theme.colors.brand.primaryLight};
+	/* border: 1.2px solid ${({ theme }) => theme.colors.brand.primaryLight}; */
 	border-radius: 0.8rem 0 0.8rem 0.8rem;
 	max-width: 75%;
 	overflow-wrap: break-word;
