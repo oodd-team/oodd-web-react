@@ -23,8 +23,9 @@ export const StatsContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 	padding: 0.625rem 0;
-	border-top: 1px solid ${({ theme }) => theme.colors.gray[200]}; 
-	border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]}; 
+	border-top: 1px solid ${({ theme }) => theme.colors.background.divider}; 
+	border-bottom: 1px solid ${({ theme }) => theme.colors.background.divider};
+
 `;
 
 export const Stat = styled.div`
@@ -34,9 +35,8 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: ${({ theme }) => theme.colors.gray[500]};	
+	color: ${({ theme }) => theme.colors.caption};	
 	//변경된 컬러시스템에서의 gray4가 800으로 나와있어서 적용해보면 색상이 다르게 나옵니다!
-	//그래서 최대한 비슷하게 맞춰놨습니다.
 	text-align: center;
 	font-family: 'Pretendard';
 	font-size: 1rem; 
@@ -46,7 +46,7 @@ export const StatNumber = styled.div`
 `;
 
 export const StatLabel = styled.div`
-	color: ${({ theme }) => theme.colors.gray[500]};	
+	color: ${({ theme }) => theme.colors.caption};	
 	text-align: center;
 	font-family: 'Pretendard';
 	font-size: 0.75rem; 
@@ -89,9 +89,9 @@ export const Button = styled.button`
 	margin: 1.25rem auto;
 	height: 3.1rem; 
 	text-align: center;
-	color: ${({ theme }) => theme.colors.white};	
+	color: ${({ theme }) => theme.colors.contrast};	
 	cursor: pointer;
 	box-sizing: border-box;
 	border-radius: 10px;
 	padding: 10px;
-background: ${({ theme }) => theme.colors.brand.gradient};`;
+	background: ${({ theme }) => theme.colors.brand.gradient};`;
