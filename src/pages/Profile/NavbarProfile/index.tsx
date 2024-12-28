@@ -8,7 +8,7 @@ import theme from '@styles/theme';
 const NavbarProfile: React.FC = () => {
 	return (
 		<Nav>
-			<StyledText $textTheme={{ style: 'heading1-bold'}} color={theme.colors.black}>
+			<StyledText $textTheme={{ style: 'heading1-bold'}} color={theme.colors.primary}>
 				내정보
 			</StyledText>
 			<IconContainer>
