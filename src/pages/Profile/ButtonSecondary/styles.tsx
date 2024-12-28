@@ -10,6 +10,5 @@ export const Button = styled.button`
 	box-sizing: border-box;
 	border: 1px solid;
 	border-radius: 10px;
-	border-color: ${({ theme }) => theme.colors.brand.primary};
 	padding: 10px;
 `;
