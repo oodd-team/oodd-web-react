@@ -9,7 +9,7 @@ export const Nav = styled.nav`
 	top: 0;
 	left: 0;
 	width: 100%;
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.contrast};
 	z-index: 1000; 
 	position: sticky;
 `;
