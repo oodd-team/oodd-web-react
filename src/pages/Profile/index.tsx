@@ -12,8 +12,8 @@ import {
 	NoPostWrapper,
 	Button,
 } from './styles';
-import NavbarProfile from './NavbarProfile';
-import ButtonSecondary from './ButtonSecondary';
+import NavbarProfile from './NavbarProfile/index'; // 상대 경로 index 명시
+import ButtonSecondary from './ButtonSecondary/index'; // 상대 경로 index 명시
 import { OODDFrame } from '@components/Frame/Frame';
 import NavBar from '@components/NavBar';
 import PostItem from '@components/PostItem';
@@ -28,8 +28,8 @@ import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import { getUserPostListApi } from '@apis/post';
 import { getUserInfoApi } from '@apis/user';
 import { createMatchingApi } from '@apis/matching';
-import { UserPostSummary } from '@apis/post/dto';
-import { UserInfoData } from '@apis/user/dto';
+import type { UserPostSummary } from '@apis/post/dto'; // type 명시
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
 import button_plus from '@assets/default/plus.svg';
 import TopBar from '@components/TopBar';
 import MoreSvg from '@assets/default/more.svg';
