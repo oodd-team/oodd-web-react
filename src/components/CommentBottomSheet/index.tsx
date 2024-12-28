@@ -52,8 +52,8 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 					<CommentModalWrapper onClick={handleBackgroundClick}>
 						<CommentModalContainer>
 							<CommentModalHeader>
-								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
-									메시지 보내기
+								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.text.contrast}>
+									매칭 요청
 								</StyledText>
 								<CloseButton onClick={handleCloseButtonClick}>
 									<img src={closeIcon} alt="닫기" />

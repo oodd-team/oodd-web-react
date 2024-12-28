@@ -7,6 +7,7 @@ import { StyledText } from '@components/Text/StyledText';
 import { useSocket } from '@context/SocketProvider';
 import type { ChatRoomData } from '@apis/chatting/dto';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+import theme from '@styles/theme';
 
 interface RecentChatProps {
 	matchingCount: number;
@@ -46,7 +47,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 				<Loading />
 			) : chatRoomList.length !== 0 ? (
 				<>
-					<RecentChatInfo $textTheme={{ style: 'body2-regular' }} color="#1d1d1d">
+					<RecentChatInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 						최근 채팅방
 					</RecentChatInfo>
 					<ChatRoomList>
@@ -57,7 +58,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 				</>
 			) : (
 				<NoChatRoomWrapper>
-					<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
+					<StyledText $textTheme={{ style: 'headline1-medium' }} color={theme.colors.text.tertiary}>
 						개설된 채팅방이 없어요.
 					</StyledText>
 				</NoChatRoomWrapper>

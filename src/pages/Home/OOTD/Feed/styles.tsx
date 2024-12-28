@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { StyledText } from '@components/Text/StyledText';
 
 export const FeedWrapper = styled.article`
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	width: 100%;
 	margin-bottom: 1rem;
 	height: auto;
@@ -35,7 +35,7 @@ export const FeedProfileImgWrapper = styled.img`
 	overflow: hidden;
 	object-fit: cover;
 
-	background: #ffdeed;
+	background: ${({ theme }) => theme.colors.brand.primaryLighter};
 
 	box-shadow:
 		0px 1px 2px 0px rgba(0, 0, 0, 0.12),
@@ -110,7 +110,7 @@ export const FeedImgBox = styled.div`
 		width: 0.375rem;
 		height: 0.375rem;
 		border: 0.0625rem solid ${({ theme }) => theme.colors.white};
-		background: rgba(255, 255, 255, 0.5);
+		background: ${({ theme }) => theme.colors.background.primary}50;
 		opacity: 1;
 		pointer-events: auto; /* 페이지네이션 클릭 가능 */
 	}
@@ -118,7 +118,7 @@ export const FeedImgBox = styled.div`
 	.ootdSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
-		background-color: ${({ theme }) => theme.colors.white};
+		background-color: ${({ theme }) => theme.colors.background.primary};
 		opacity: 1;
 	}
 
@@ -162,16 +162,14 @@ export const Reaction = styled.div`
 `;
 
 export const MatchingBtn = styled.button`
-	background: ${({ theme }) => theme.colors.gradient};
+	background: ${({ theme }) => theme.colors.brand.gradient};
 	border-radius: 3.19rem;
-	backdrop-filter: blur(0.3125rem);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 0.85rem 1.25rem;
 	gap: 0.58rem;
 	width: 11.5rem;
-	color: white;
 `;
 
 export const MoreBtn = styled.button`

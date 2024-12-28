@@ -76,7 +76,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.id}`);
+		nav(`/profile/${feed.user.id}`);
 	};
 
 	const handleFeedClick = (e: React.MouseEvent) => {
@@ -203,18 +203,18 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedTop>
 				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
-					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 						{feed.user.nickname}
 					</StyledText>
 				</Info>
-				<FeedTimeAgo $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray2}>
+				<FeedTimeAgo $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 					{timeAgo}
 				</FeedTimeAgo>
 				<MoreBtn onClick={handleMoreButtonClick}>
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
-			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 				{feed.content}
 			</FeedText>
 			<FeedImgBox>
@@ -227,26 +227,23 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					className="ootdSwiper"
 				>
 					{feed.postImages.map((postImage) => (
-						<div key={postImage.url}>
-							<SwiperSlide>
-								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
-								<div className="blur"></div>
-								<FeedImgBackground $src={postImage.url} />
-							</SwiperSlide>
-						</div>
+						<SwiperSlide key={postImage.url}>
+							<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
+							<div className="blur"></div>
+							<FeedImgBackground $src={postImage.url} />
+						</SwiperSlide>
 					))}
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						<div className="button" onClick={handleLikeButtonClick}>
-							{/* Heart 컴포넌트의 isFilled 프로퍼티에 isLikeClicked 상태를 전달 */}
 							<Heart isFilled={isLikeClicked} />
 						</div>
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
-						<Message color="white" />
-						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
+						<Message width="16" height="16" color="white" />
+						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.text.contrast}>
 							매칭 요청
 						</StyledText>
 					</MatchingBtn>

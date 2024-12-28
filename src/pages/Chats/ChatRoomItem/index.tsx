@@ -9,6 +9,7 @@ import 'dayjs/locale/ko';
 import { useEffect, useState } from 'react';
 import type { ChatRoomData } from '@apis/chatting/dto';
 import defaultProfile from '@assets/default/defaultProfile.svg';
+import theme from '@styles/theme';
 dayjs.extend(relativeTime);
 
 const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
@@ -42,15 +43,15 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) 
 		<ChatRoomItemLayout onClick={handleChatRoomClick}>
 			<UserImage src={otherUser?.profilePictureUrl || defaultProfile} alt="user" />
 			<LeftBox>
-				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">
+				<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 					{otherUser?.nickname || '알수없음'}
 				</StyledText>
-				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color="#1D1D1D">
+				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.primary}>
 					{latestMessage.content}
 				</LatestMessage>
 			</LeftBox>
 			<RightBox>
-				<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+				<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 					{timeAgo}
 				</StyledText>
 			</RightBox>

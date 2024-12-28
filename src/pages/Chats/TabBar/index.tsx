@@ -8,12 +8,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import 'swiper/css';
 import { getMatchingListApi } from '@apis/matching';
+import theme from '@styles/theme';
 
 const TabBar: React.FC = () => {
 	const [matchingCount, setMatchingCount] = useState(0);
 	const [hasMatchingRequest, setHasMatchingRequest] = useState(false);
 
-	const [activeIndex, setActiveIndex] = useState<number>(1);
+	const [activeIndex, setActiveIndex] = useState(1);
 	const swiperRef = useRef<SwiperCore | null>(null);
 	const tabs = [`요청 ${activeIndex === 1 ? matchingCount : ''}`, '최근 채팅'];
 
@@ -91,7 +92,11 @@ const TabBar: React.FC = () => {
 								$textTheme={{
 									style: activeIndex === index && (index !== 0 || hasMatchingRequest) ? 'body2-bold' : 'body2-medium',
 								}}
-								color={activeIndex === index && (index !== 0 || hasMatchingRequest) ? '#FF2389' : '#888888'}
+								color={
+									activeIndex === index && (index !== 0 || hasMatchingRequest)
+										? theme.colors.brand.primary
+										: theme.colors.text.caption
+								}
 							>
 								{tab}
 							</StyledText>

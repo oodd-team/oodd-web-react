@@ -31,7 +31,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 	max-width: 512px;
 	left: 50%;
 	border-radius: 0.938rem 0.938rem 0 0;
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	padding: 0 1.25rem;
 	z-index: 200;
 	user-select: none;
@@ -43,7 +43,7 @@ export const Handler = React.memo(styled.hr`
 	width: 2.88rem;
 	margin: 0.6rem auto 0 auto;
 	height: 0.125rem;
-	background-color: #d9d9d9;
+	background-color: ${({ theme }) => theme.colors.gray[300]};
 	border: none;
 	border-radius: 0.125rem;
 	z-index: 300;
@@ -56,7 +56,7 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 	height: 100%;
 	position: fixed;
 	right: 0;
-	background: white;
+	background: ${({ theme }) => theme.colors.background.primary};
 	transform: translateX(${({ $isSideBarOpen }) => ($isSideBarOpen ? 0 : '100%')});
 	transition: transform 0.3s;
 `;
