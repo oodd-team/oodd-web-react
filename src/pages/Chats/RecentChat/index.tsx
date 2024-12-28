@@ -50,8 +50,8 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 						최근 채팅방
 					</RecentChatInfo>
 					<ChatRoomList>
-						{chatRoomList.map((room) => (
-							<ChatRoomItem key={room.chatRoomId} {...room} />
+						{chatRoomList.map((chatRoom) => (
+							<ChatRoomItem key={chatRoom.id} {...chatRoom} />
 						))}
 					</ChatRoomList>
 				</>

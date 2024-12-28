@@ -4,8 +4,8 @@ import type { OtherUserDto } from '@apis/chatting/dto';
 
 const { persistAtom } = recoilPersist();
 
-export const OpponentInfoAtom = atom<OtherUserDto | null>({
-	key: 'OpponentInfoAtom',
+export const OtherUserAtom = atom<OtherUserDto | null>({
+	key: 'OtherUserAtom',
 	default: null,
 	effects_UNSTABLE: [persistAtom],
 });

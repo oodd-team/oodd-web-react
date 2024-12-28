@@ -1,4 +1,4 @@
-import { BaseSuccessResponse } from '../core/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
 
 // 매칭 요청
 // request
@@ -12,9 +12,10 @@ export interface CreateMatchingRequest {
 export type CreateMatchingResponse = BaseSuccessResponse<CreateMatchingData>;
 
 export interface CreateMatchingData {
+	id: number; // matchingId
 	chatRoomId: number;
-	fromUserId: number;
-	toUserId: number;
+	requesterId: number;
+	targetId: number;
 }
 
 // 매칭 리스트 조회
@@ -22,26 +23,26 @@ export interface CreateMatchingData {
 export type GetMatchingListResponse = BaseSuccessResponse<GetMatchingListData>;
 
 export interface GetMatchingListData {
-	isMatching: boolean; // 매칭 요청 존재 여부
-	matchingsCount: number; // 매칭 요청 개수
+	hasMatching: boolean;
+	matchingsCount: number;
 	matching: MatchingDto[];
 }
 
 export interface MatchingDto {
-	matchingId: number;
+	id: number; // matchingId
 	requester: RequesterDto;
-	requesterPost: RequesterPostDto;
 }
 
 export interface RequesterDto {
-	requesterId: number;
+	id: number; // requesterId
 	nickname: string;
 	profilePictureUrl: string;
+	representativePost: RepresentativePost;
 }
 
-export interface RequesterPostDto {
-	postImages: PostImageDto[]; // 대표 게시글 이미지
-	styleTags: string[]; // 게시글 스타일 태그
+export interface RepresentativePost {
+	postImages: PostImageDto[];
+	styleTags: string[];
 }
 
 export interface PostImageDto {
@@ -59,7 +60,7 @@ export interface ModifyMatchingStatusRequest {
 export type ModifyMatchingStatusResponse = BaseSuccessResponse<ModifyMatchingStatusData>;
 
 export interface ModifyMatchingStatusData {
-	matchingId: number;
+	id: number; // matchingId
 	requesterId: number;
 	targetId: number;
 	requestStatus: string;
