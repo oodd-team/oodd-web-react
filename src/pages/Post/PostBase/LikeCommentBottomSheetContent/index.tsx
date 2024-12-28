@@ -32,6 +32,7 @@ import { postUserBlockApi } from '@apis/user-block';
 import { PostUserBlockRequest } from '@apis/user-block/dto';
 import { createCommentApi, deleteCommentApi, getCommentListApi } from '@apis/post-comment';
 import { handleError } from '@apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
@@ -202,7 +203,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 차단 api
 	const postUserBlock = async () => {
-		const storedUserId = localStorage.getItem('my_id');
+		const storedUserId = getCurrentUserId();
 
 		// 사용자 ID 또는 선택된 댓글이 없으면 함수 종료
 		if (!storedUserId || !selectedComment) {
@@ -317,7 +318,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	// 유저 클릭한 경우
 	const handleUserClick = (userId: number) => {
 		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = localStorage.getItem('my_id'); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+		const myUserId = getCurrentUserId(); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
 
 		if (String(myUserId) === String(userId)) {
 			// 나인 경우
