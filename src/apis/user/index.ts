@@ -1,5 +1,5 @@
 import { newRequest } from '@apis/core';
-import { EmptySuccessResponse } from '@apis/core/dto';
+import type { EmptySuccessResponse } from '@apis/core/dto';
 import type {
 	GetUserInfoResponse,
 	PatchUserInfoRequest,

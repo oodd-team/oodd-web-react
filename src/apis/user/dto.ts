@@ -1,4 +1,4 @@
-import { BaseSuccessResponse } from '@apis/core/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
 
 // 사용자 정보 공통 인터페이스
 export interface UserInfoData {

@@ -1,4 +1,4 @@
-import { BaseSuccessResponse } from '@apis/core/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
 
 // jwt를 이용한 사용자 정보 조회 응답
 export type getUserInfoByJwtResponse = BaseSuccessResponse<getUserInfoByJwtData>;
