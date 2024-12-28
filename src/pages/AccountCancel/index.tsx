@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper, CheckboxInput } from './styles';
-import { StyledText } from '@/components/Text/StyledText';
-import theme from '@/styles/theme';
-import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
+import { OODDFrame } from '@components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 
-import TopBar from '@/components/TopBar';
-import back from '@/assets/arrow/left.svg';
+import TopBar from '@components/TopBar';
+import back from '@assets/arrow/left.svg';
 
-import BottomButton from '@/components/BottomButton';
-import { patchUserWithdrawApi } from '@/apis/user';
-import Modal from '@/components/Modal';
+import BottomButton from '@components/BottomButton';
+import { patchUserWithdrawApi } from '@apis/user';
+import Modal from '@components/Modal';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);

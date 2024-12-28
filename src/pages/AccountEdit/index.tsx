@@ -13,18 +13,18 @@ import {
 	Label,
 	Info,
 } from './styles';
-import { OODDFrame } from '@/components/Frame/Frame';
+import { OODDFrame } from '@components/Frame/Frame';
 
-import BottomButton from '@/components/BottomButton';
+import BottomButton from '@components/BottomButton';
 
 import { useNavigate } from 'react-router-dom';
-import { StyledText } from '@/components/Text/StyledText';
-import theme from '@/styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 
-import naver from '@/assets/default/snsIcon/naver.svg';
-import kakao from '@/assets/default/snsIcon/kakao.svg';
-import TopBar from '@/components/TopBar';
-import back from '@/assets/arrow/left.svg';
+import naver from '@assets/default/snsIcon/naver.svg';
+import kakao from '@assets/default/snsIcon/kakao.svg';
+import TopBar from '@components/TopBar';
+import back from '@assets/arrow/left.svg';
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용

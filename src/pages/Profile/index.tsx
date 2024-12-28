@@ -14,26 +14,26 @@ import {
 } from './styles';
 import NavbarProfile from './NavbarProfile';
 import ButtonSecondary from './ButtonSecondary';
-import { OODDFrame } from '@/components/Frame/Frame';
-import NavBar from '@/components/NavBar';
-import PostItem from '@/components/PostItem';
-import imageBasic from '@/assets/default/defaultProfile.svg';
-import Loading from '@/components/Loading';
-import UserProfile from '@/components/UserProfile';
-import { StyledText } from '@/components/Text/StyledText';
-import Modal from '@/components/Modal';
-import CommentBottomSheet from '@/components/CommentBottomSheet';
-import OptionsBottomSheet from '@/components/BottomSheet/OptionsBottomSheet';
+import { OODDFrame } from '@components/Frame/Frame';
+import NavBar from '@components/NavBar';
+import PostItem from '@components/PostItem';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import Loading from '@components/Loading';
+import UserProfile from '@components/UserProfile';
+import { StyledText } from '@components/Text/StyledText';
+import Modal from '@components/Modal';
+import CommentBottomSheet from '@components/CommentBottomSheet';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 
-import { getUserPostListApi } from '@/apis/post';
-import { getUserInfoApi } from '@/apis/user';
-import { createMatchingApi } from '@/apis/matching';
-import { UserPostSummary } from '@/apis/post/dto';
-import { UserInfoData } from '@/apis/user/dto';
-import button_plus from '@/assets/default/plus.svg';
-import TopBar from '@/components/TopBar';
-import MoreSvg from '@/assets/default/more.svg';
-import BackSvg from '@/assets/arrow/left.svg';
+import { getUserPostListApi } from '@apis/post';
+import { getUserInfoApi } from '@apis/user';
+import { createMatchingApi } from '@apis/matching';
+import { UserPostSummary } from '@apis/post/dto';
+import { UserInfoData } from '@apis/user/dto';
+import button_plus from '@assets/default/plus.svg';
+import TopBar from '@components/TopBar';
+import MoreSvg from '@assets/default/more.svg';
+import BackSvg from '@assets/arrow/left.svg';
 
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();

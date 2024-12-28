@@ -12,22 +12,22 @@ import {
 	Username,
 	EmailInput,
 } from './styles';
-import { StyledText } from '@/components/Text/StyledText';
-import theme from '@/styles/theme';
-import { OODDFrame } from '@/components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
+import { OODDFrame } from '@components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/config/firebaseConfig';
-import Modal from '@/components/Modal';
+import { storage } from '@config/firebaseConfig';
+import Modal from '@components/Modal';
 
-import TopBar from '@/components/TopBar';
-import back from '@/assets/arrow/left.svg';
-import BottomButton from '@/components/BottomButton';
-import imageBasic from '@/assets/default/defaultProfile.svg';
-import Loading from '@/components/Loading';
-import camera from '@/assets/default/camera.svg';
-import { getUserInfoApi, patchUserInfoApi } from '@/apis/user'; 
-import { UserInfoData, PatchUserInfoRequest } from '@/apis/user/dto'; 
+import TopBar from '@components/TopBar';
+import back from '@assets/arrow/left.svg';
+import BottomButton from '@components/BottomButton';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import Loading from '@components/Loading';
+import camera from '@assets/default/camera.svg';
+import { getUserInfoApi, patchUserInfoApi } from '@apis/user'; 
+import { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; 
 
 type ExtendedUserInfoData = UserInfoData & {
 	birthDate?: string; // 확장된 속성
