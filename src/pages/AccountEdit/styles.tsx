@@ -46,7 +46,7 @@ export const SNSIcon = styled.img`
 
 export const Text = styled.div`
 	font-size: 0.875rem; 
-	color: ${({ theme }) => theme.colors.gray[600]};
+	color: ${({ theme }) => theme.colors.tertiary};
 	margin-top: 2.1875rem;
 	text-align: left; 
 `;
@@ -84,7 +84,7 @@ export const Label = styled.div`
 
 export const Info = styled.div`
 	font-size: 0.875rem; 
-	color: ${({ theme }) => theme.colors.gray[500]};
+	color: ${({ theme }) => theme.colors.caption};
 	margin-left: 0.625rem; 
 	flex-grow: 1; 
 	text-align: left; 
