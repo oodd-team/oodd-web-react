@@ -111,8 +111,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: currentUserId || -1,
-				toUserId: feed.user.id,
+				requesterId: currentUserId || -1,
+				targetId: feed.user.id,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);

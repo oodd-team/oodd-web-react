@@ -74,8 +74,8 @@ const ChatRoom: React.FC = () => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: currentUserId,
-				toUserId: opponentInfo?.id || -1,
+				requesterId: currentUserId,
+				targetId: opponentInfo?.id || -1,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);

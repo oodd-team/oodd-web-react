@@ -1,6 +1,6 @@
-import { PostUserBlockRequest } from './dto';
-import { EmptySuccessResponse } from '../core/dto';
-import { newRequest } from '../core';
+import { EmptySuccessResponse } from '@apis/core/dto';
+import { newRequest } from '@apis/core';
+import type { PostUserBlockRequest } from './dto';
 
 // 유저 차단 api
 export const postUserBlockApi = (data: PostUserBlockRequest) =>
