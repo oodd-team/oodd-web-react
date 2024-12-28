@@ -5,16 +5,16 @@ import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
-import theme from '@/styles/theme';
+import theme from '@styles/theme';
 
-import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@/recoil/Post/PostAtom';
+import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
 
-import { OODDFrame } from '@/components/Frame/Frame';
-import { StyledText } from '@/components/Text/StyledText';
-import TopBar from '@/components/TopBar';
-import NavBar from '@/components/NavBar';
-import BottomSheet from '@/components/BottomSheet';
-import ClothingInfoItem from '@/components/ClothingInfoItem';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+import NavBar from '@components/NavBar';
+import BottomSheet from '@components/BottomSheet';
+import ClothingInfoItem from '@components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
 
@@ -42,12 +42,12 @@ import LikeFill from '../../../assets/default/like-fill.svg';
 import Message from '../../../assets/default/message.svg';
 import More from '../../../assets/default/more.svg';
 
-import { BottomSheetProps } from '@/components/BottomSheet/dto';
+import { BottomSheetProps } from '@components/BottomSheet/dto';
 import { PostBaseProps } from './dto';
-import { GetPostDetailResponse } from '@/apis/post/dto';
+import { GetPostDetailResponse } from '@apis/post/dto';
 
-import { getPostDetailApi } from '@/apis/post';
-import { togglePostLikeStatusApi } from '@/apis/post-like';
+import { getPostDetailApi } from '@apis/post';
+import { togglePostLikeStatusApi } from '@apis/post-like';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();

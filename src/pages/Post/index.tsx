@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { postIdAtom, userAtom } from '@/recoil/Post/PostAtom.ts';
-import { isPostRepresentativeAtom } from '@/recoil/Post/PostAtom';
+import { postIdAtom, userAtom } from '@recoil/Post/PostAtom.ts';
+import { isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
 
 import PostBase from './PostBase/index.tsx';
-import OptionsBottomSheet from '@/components/BottomSheet/OptionsBottomSheet/index.tsx';
-import { OptionsBottomSheetProps } from '@/components/BottomSheet/OptionsBottomSheet/dto.ts';
-import Modal from '@/components/Modal';
-import { ModalProps } from '@/components/Modal/dto';
-import BottomSheet from '@/components/BottomSheet';
-import { BottomSheetProps } from '@/components/BottomSheet/dto';
-import BottomSheetMenu from '@/components/BottomSheetMenu';
-import { BottomSheetMenuProps } from '@/components/BottomSheetMenu/dto';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet/index.tsx';
+import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto.ts';
+import Modal from '@components/Modal';
+import { ModalProps } from '@components/Modal/dto';
+import BottomSheet from '@components/BottomSheet';
+import { BottomSheetProps } from '@components/BottomSheet/dto';
+import BottomSheetMenu from '@components/BottomSheetMenu';
+import { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
 
-import Edit from '@/assets/default/edit.svg';
-import Pin from '@/assets/default/pin.svg';
-import Delete from '@/assets/default/delete.svg';
+import Edit from '@assets/default/edit.svg';
+import Pin from '@assets/default/pin.svg';
+import Delete from '@assets/default/delete.svg';
 
-import { modifyPostRepresentativeStatusApi, deletePostApi } from '@/apis/post';
+import { modifyPostRepresentativeStatusApi, deletePostApi } from '@apis/post';
 
 const Post: React.FC = () => {
 	const userId = localStorage.getItem('current_user_id');
