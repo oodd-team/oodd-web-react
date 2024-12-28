@@ -203,18 +203,18 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedTop>
 				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
-					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 						{feed.user.nickname}
 					</StyledText>
 				</Info>
-				<FeedTimeAgo $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray2}>
+				<FeedTimeAgo $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 					{timeAgo}
 				</FeedTimeAgo>
 				<MoreBtn onClick={handleMoreButtonClick}>
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
-			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 				{feed.content}
 			</FeedText>
 			<FeedImgBox>
@@ -243,7 +243,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
 						<Message color="white" />
-						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
+						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.text.contrast}>
 							매칭 요청
 						</StyledText>
 					</MatchingBtn>

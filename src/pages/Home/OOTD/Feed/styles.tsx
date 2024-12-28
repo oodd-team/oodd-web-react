@@ -162,16 +162,14 @@ export const Reaction = styled.div`
 `;
 
 export const MatchingBtn = styled.button`
-	background: ${({ theme }) => theme.colors.gradient};
+	background: ${({ theme }) => theme.colors.brand.gradient};
 	border-radius: 3.19rem;
-	backdrop-filter: blur(0.3125rem);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 0.85rem 1.25rem;
 	gap: 0.58rem;
 	width: 11.5rem;
-	color: white;
 `;
 
 export const MoreBtn = styled.button`

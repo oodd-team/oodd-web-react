@@ -9,12 +9,6 @@ export const OOTDContainer = styled.div`
 	margin-bottom: 4.25rem;
 `;
 
-export const OOTDLoading = styled.div`
-	margin-top: 200px;
-`;
-
-// Feed
-
 export const FeedContainer = styled.div`
 	display: flex;
 	flex-direction: column;
