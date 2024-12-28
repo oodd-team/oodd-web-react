@@ -132,6 +132,13 @@ export const SearchResultItem = styled.div`
 	.detail {
 		margin-right: auto;
 		color: ${({ theme }) => theme.colors.black};
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2; /* 최대 2줄로 제한 */
+		-webkit-box-orient: vertical;
+		word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		overflow-wrap: break-word;
 	}
 
 	&:last-child {

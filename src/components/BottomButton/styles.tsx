@@ -16,7 +16,7 @@ export const ButtonWrapper = styled.div`
 
 export const Button = styled.button<{ disabled: boolean }>`
 	background: ${({ disabled, theme }) =>
-		disabled ? 'linear-gradient(93deg, #FFC1D6 1.22%, #F8D4D4 99.73%)' : theme.colors.gradient};
+		disabled ? 'linear-gradient(93deg, #FFC1D6 1.22%, #F8D4D4 99.73%)' : theme.colors.brand.gradient};
 	border-radius: 0.625rem;
 	font-size: 1rem;
 	width: calc(100% - 2.5rem);

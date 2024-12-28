@@ -20,11 +20,11 @@ export const ModalContainer = styled.div<{ $isCloseButtonVisible: boolean }>`
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	gap: 1rem;
+	gap: 1.5rem;
 	width: 21.25rem;
 	max-width: calc(100% - 2.5rem);
 	max-height: 30%;
-	padding: 1.25rem;
+	padding: 2rem 1.5rem 1.5rem 1.5rem;
 	${({ $isCloseButtonVisible }) => ($isCloseButtonVisible ? 'padding-top: 2.5rem' : '')};
 	background-color: ${({ theme }) => theme.colors.white};
 	border-radius: 0.625rem;

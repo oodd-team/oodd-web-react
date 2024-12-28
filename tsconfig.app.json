@@ -26,7 +26,6 @@
     /* Absolute path */
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"],
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@apis/*": ["apis/*"],
