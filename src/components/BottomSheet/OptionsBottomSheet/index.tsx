@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import BottomSheet from '..';
-import BottomSheetMenu from '../../BottomSheetMenu';
+import BottomSheet from '../index';
+import BottomSheetMenu from '@components/BottomSheetMenu';
 import ReportBottomSheetMenu from './ReportBottomSheetMenu';
-import Modal from '../../Modal';
+import Modal from '@components/Modal';
 
-import { OptionsBottomSheetProps } from './dto';
-import { BottomSheetProps } from '../dto';
-import { BottomSheetMenuProps } from '../../BottomSheetMenu/dto';
-import { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
-import { ModalProps } from '../../Modal/dto';
+import type { OptionsBottomSheetProps } from './dto';
+import type { BottomSheetProps } from '../dto';
+import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import type { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
+import type { ModalProps } from '@components/Modal/dto';
 
-import { SendPostReportRequest } from '../../../apis/post-report/dto';
-import { PostUserReportRequest } from '../../../apis/user-report/dto';
-import { PostUserBlockRequest } from '../../../apis/user-block/dto';
+import type { SendPostReportRequest } from '@apis/post-report/dto';
+import type { PostUserReportRequest } from '@apis/user-report/dto';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
 
-import { StyledText } from '../../Text/StyledText';
-import { handleError } from '../../../apis/util/handleError';
-import blockIcon from '../../../assets/default/block.svg';
-import reportIcon from '../../../assets/default/report.svg';
+import { StyledText } from '@components/Text/StyledText';
+import { handleError } from '@apis/util/handleError';
+import blockIcon from '@assets/default/block.svg';
+import reportIcon from '@assets/default/report.svg';
+import closeIcon from '@assets/default/modal-close-white.svg';
 
 import {
 	ReportBottomSheetLayout,
@@ -25,13 +26,14 @@ import {
 	ReportModalWrapper,
 	ReportModalContainer,
 	ReportModalHeader,
-	XButton,
+	CloseButton,
 	ReportModalBox,
 } from './styles';
-import theme from '../../../styles/theme';
-import { postUserBlockApi } from '../../../apis/user-block';
-import { postUserReportApi } from '../../../apis/user-report';
-import { sendPostReportApi } from '../../../apis/post-report';
+import theme from '@styles/theme';
+import { postUserBlockApi } from '@apis/user-block';
+import { postUserReportApi } from '@apis/user-report';
+import { sendPostReportApi } from '@apis/post-report';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,
@@ -44,18 +46,25 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	const [isReportBottomSheetOpen, setIsReportBottomSheetOpen] = useState(false);
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
-	const storageValue = localStorage.getItem('my_id');
-	const userId = Number(storageValue);
+	const currentUserId = getCurrentUserId();
 
-	const sendBlock = async () => {
+	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (e.target === e.currentTarget) {
+			setIsReportBottomSheetOpen(false);
+		}
+	};
+
+	// 유저 차단 api
+	const postUserBlock = async () => {
 		try {
-			const blockRequest: PostUserBlockRequest = {
-				fromUserId: userId,
+			const request: PostUserBlockRequest = {
+				fromUserId: currentUserId,
 				toUserId: targetId.userId || -1,
 				action: 'block',
 			};
-			const response = await postUserBlockApi(blockRequest);
-			
+			const response = await postUserBlockApi(request);
+
 			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
@@ -68,19 +77,20 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 		}
 	};
 
+	// 유저 또는 게시글 신고 api
 	const sendReport = async (reason: string) => {
 		try {
 			let reportData: PostUserReportRequest | SendPostReportRequest;
 
 			if (domain === 'user') {
 				reportData = {
-					fromUserId: userId,
+					fromUserId: currentUserId,
 					toUserId: targetId.userId || -1,
 					reason: reason,
 				};
 			} else {
 				reportData = {
-					requesterId: userId,
+					requesterId: currentUserId,
 					postId: targetId.postId || -1,
 					reason: reason,
 				};
@@ -91,7 +101,6 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 					? await postUserReportApi(reportData as PostUserReportRequest)
 					: await sendPostReportApi(reportData as SendPostReportRequest);
 
-			// response.isSuccess
 			if (response.isSuccess) {
 				setModalContent('정상적으로 처리되었습니다.');
 			}
@@ -126,7 +135,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 		],
 	};
 
-	// 더보기(kebab) 메뉴 바텀시트
+	// 더보기 바텀시트
 	const optionsBottomSheetProps: BottomSheetProps = {
 		isOpenBottomSheet: isBottomSheetOpen,
 		Component: BottomSheetMenu,
@@ -143,7 +152,7 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 		content: `${targetNickname || '알수없음'} 님을\n정말로 차단하시겠어요?`,
 		button: {
 			content: '차단하기',
-			onClick: sendBlock,
+			onClick: postUserBlock,
 		},
 	};
 
@@ -177,13 +186,6 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 		},
 	};
 
-	const handleBackgroundClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		if (e.target === e.currentTarget) {
-			setIsReportBottomSheetOpen(false);
-		}
-	};
-
 	return (
 		<>
 			<BottomSheet {...optionsBottomSheetProps} />
@@ -201,11 +203,13 @@ const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
 									신고 사유 선택
 								</StyledText>
-								<XButton
+								<CloseButton
 									onClick={() => {
 										setIsReportBottomSheetOpen(false);
 									}}
-								/>
+								>
+									<img src={closeIcon} alt="닫기" />
+								</CloseButton>
 							</ReportModalHeader>
 							<ReportModalBox>
 								<ReportBottomSheetMenu {...reportBottomSheetMenuProps} />

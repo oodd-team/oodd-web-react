@@ -1,4 +1,4 @@
-export interface RequestProps {
+export interface MatchingProps {
 	matchingCount: number;
 	decreaseMatchingCount: () => void;
 }

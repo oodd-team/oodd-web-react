@@ -35,7 +35,6 @@ export const IconWrapper = styled.div`
 	cursor: pointer;
 	gap: 10px;
 
-
 	p {
 		margin: 0;
 		bottom: 0;
@@ -49,7 +48,7 @@ export const IconWrapper = styled.div`
 	}
 `;
 
-export const IconImg = styled.img`
+export const Icon = styled.div`
 	width: 1.13rem;
 	height: 1.13rem;
 	object-fit: cover;
