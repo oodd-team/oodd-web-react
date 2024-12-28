@@ -41,11 +41,11 @@ const theme: DefaultTheme = {
 
 		// Functional Colors
 		text: {
-			cta: '#000000', // Black
-			primary: '#4343432', // Gray-800
-			secondary: '##7B7B7B', // Gray-600
-			tertiary: '#9E9E9E', // Gray-500
-			caption: '#C4C4C4', // Gray-300
+			primary: '#000000', // Black
+			secondary: '#4343432', // Gray-800
+			tertiary: '##7B7B7B', // Gray-600
+			caption: '#9E9E9E', // Gray-500
+			onPrimary: '#FFFFFF', // brand.primary 배경 위 텍스트 (White)
 		},
 
 		background: {
