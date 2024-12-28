@@ -42,10 +42,10 @@ const theme: DefaultTheme = {
 		// Functional Colors
 		text: {
 			primary: '#000000', // Black
-			secondary: '#4343432', // Gray-800
-			tertiary: '##7B7B7B', // Gray-600
+			secondary: '#434343', // Gray-800
+			tertiary: '#7B7B7B', // Gray-600
 			caption: '#9E9E9E', // Gray-500
-			onPrimary: '#FFFFFF', // brand.primary 배경 위 텍스트 (White)
+			contrast: '#FFFFFF', // White
 		},
 
 		background: {
@@ -57,7 +57,7 @@ const theme: DefaultTheme = {
 		border: {
 			active: '#FF2389', // Pink-500
 			inactive: '#FFBBDA', // Pink-300
-			devider: '#E9E9E9', // Gray-200
+			divider: '#E9E9E9', // Gray-200
 		},
 
 		//여기서부터 기존 **추후 삭제 필요**
@@ -390,6 +390,48 @@ const theme: DefaultTheme = {
 			font-weight: 400;
 			line-height: 127.3%; /* 0.87519rem */
 			letter-spacing: -0.00213rem;
+		`,
+
+		// TODO: 추후 삭제 필요
+		'body2-light': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 300; /* light */
+			font-size: 1rem;
+		`,
+		'body4-regular': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 400; /* normal */
+			font-size: 0.813rem;
+		`,
+		'body4-light': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 300; /* light */
+			font-size: 0.813rem;
+		`,
+		'body6-regular': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 400; /* normal */
+			font-size: 0.75rem;
+		`,
+		'body6-light': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 300; /* light */
+			font-size: 0.75rem;
+		`,
+		'button1-medium': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 500; /* medium */
+			font-size: 1rem;
+		`,
+		'button2-medium': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 500; /* medium */
+			font-size: 0.813rem;
+		`,
+		'button2-light': css`
+			font-family: 'Pretendard Variable';
+			font-weight: 300; /* light */
+			font-size: 0.813rem;
 		`,
 	},
 };
