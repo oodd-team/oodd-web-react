@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { StyledText } from '../../Text/StyledText';
-import theme from '../../../styles/theme';
+import { StyledText } from '../../../../components/Text/StyledText';
+import theme from '../../../../styles/theme';
 import { UserProfile } from '../styles';
 
 export const TabContainer = styled.div`
@@ -22,7 +22,7 @@ export const Tab = styled.div<{ $active: boolean }>`
 		left: 0;
 		width: 100%;
 		height: 2px; /* 하단 경계선 두께 */
-		background: ${(props) => (props.$active ? theme.colors.gradient : 'none')};
+		background: ${(props) => (props.$active ? theme.colors.brand.gradient : 'none')};
 	}
 `;
 
@@ -77,7 +77,7 @@ export const InputLayout = styled.div`
 	align-items: center;
 	gap: 10px;
 	background-color: white;
-	border-top: 1px solid ${({ theme }) => theme.colors.gray1};
+	border-top: 1px solid ${({ theme }) => theme.colors.border.devider};
 
 	textarea {
 		flex: 1;
@@ -107,7 +107,7 @@ export const InputLayout = styled.div`
 	}
 
 	button {
-		background: ${({ theme }) => theme.colors.gradient};
+		background: ${({ theme }) => theme.colors.brand.gradient};
 		width: 50px;
 		height: 50px;
 		border-radius: 8px;

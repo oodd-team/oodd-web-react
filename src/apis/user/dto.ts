@@ -1,15 +1,15 @@
-import { BaseSuccessResponse } from '../core/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
 
 // 사용자 정보 공통 인터페이스
 export interface UserInfoData {
-	userId: number;
+	id: number;
 	name: string;
 	phoneNumber: string;
 	email: string;
 	nickname: string;
 	profilePictureUrl: string;
 	bio: string;
-	birthDate: string; // user 공통 인터페이스에 이 두 개는 안 나와있어서 일단 이것들만 optional 처리했습니다...
+	birthDate: string;
 	isFriend: boolean;
 }
 
@@ -37,5 +37,5 @@ export type PatchUserWithDrawResponse = BaseSuccessResponse<PatchUserWithdrawDat
 export interface PatchUserWithdrawData {
 	isSuccess: boolean;
 	code: string;
-	data: Record<string, never>; // 탈퇴 성공 시 항상 빈 객체가 응답으로 온다면 Record<string, never>으로 타입 안정성 높일 수 있답니다
+	data: Record<string, never>; // 탈퇴 성공 시 항상 빈 객체가 응답으로 온다면 Record<string, never>으로 타입 안정성 높일 수 있음
 }

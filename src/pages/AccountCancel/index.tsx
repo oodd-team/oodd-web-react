@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper } from './styles';
+import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper, CheckboxInput } from './styles';
 import { StyledText } from '../../components/Text/StyledText';
 import theme from '../../styles/theme';
 import { OODDFrame } from '../../components/Frame/Frame';
@@ -74,18 +74,13 @@ const AccountCancel: React.FC = () => {
 				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<SubTitle>
-					<StyledText as="div" $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color={theme.colors.black}>
+					<StyledText as="div" $textTheme={{ style: 'headline2-medium', lineHeight: 2 }} color={theme.colors.black}>
 						OOTD 탈퇴 전 확인하세요!
 					</StyledText>
 				</SubTitle>
 				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-						탈퇴하시면 이용 중인 서비스가 폐쇄되며,
-					</StyledText>
-				</Text>
-				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-						모든 데이터는 복구할 수 없습니다.
+					<StyledText as="div" $textTheme={{ style: 'caption1-regular', lineHeight: 1 }} color={theme.colors.black}>
+						{`탈퇴하시면 이용 중인 서비스가 폐쇄되며,\n모든 데이터는 복구할 수 없습니다.`}
 					</StyledText>
 				</Text>
 				<InfoBox>
@@ -102,12 +97,7 @@ const AccountCancel: React.FC = () => {
 				</InfoBox>
 				<CheckboxWrapper as="div">
 					<label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-						<input
-							type="checkbox"
-							checked={isChecked}
-							onChange={handleCheckboxChange}
-							style={{ marginRight: '8px' }} // 텍스트와 체크박스 간격 조절
-						/>
+						<CheckboxInput type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
 						<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray3}>
 							안내사항을 모두 확인하였으며, 이에 동의합니다.
 						</StyledText>
