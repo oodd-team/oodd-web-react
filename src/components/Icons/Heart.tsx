@@ -1,9 +1,9 @@
 import React from 'react';
 import type { IconsProps } from './dto';
 
-const Heart: React.FC<IconsProps> = ({ isFilled = false }) => {
+const Heart: React.FC<IconsProps> = ({ isFilled = false, width = '56', height = '56' }) => {
 	return (
-		<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg width={width} height={height} viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect x="0.5" y="0.5" width="55" height="55" rx="27.5" fill="white" />
 			<rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="url(#paint0_linear_3603_1320)" />
 			<path

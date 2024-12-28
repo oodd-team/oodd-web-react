@@ -184,7 +184,6 @@ const ChatRoom: React.FC = () => {
 				icon: Block,
 			},
 		],
-		marginBottom: '4.38rem',
 	};
 
 	const leaveModalProps: ModalProps = {
