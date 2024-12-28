@@ -30,7 +30,7 @@ export const Input = styled.input`
 	border: 0px;
 	box-sizing: border-box;
 	border-radius: 10px;
-	background-color: ${({ theme }) => theme.colors.gray[100]};
+	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
 
@@ -43,7 +43,7 @@ export const Button = styled.button`
 	height: 1.7rem;
 	padding: 0.3rem;
 	border-radius: 50%;
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	box-shadow: 0px 2px 4px ${({ theme }) => `${theme.colors.black}33`}; 
 	border: 1px solid ${({ theme }) => theme.colors.gray[300]}; 
 	cursor: pointer;
@@ -87,7 +87,7 @@ export const EmailInput = styled.input`
 	border: 0px;
 	box-sizing: border-box;
 	border-radius: 10px;
-	background-color: ${({ theme }) => theme.colors.gray[100]};
+	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
 
