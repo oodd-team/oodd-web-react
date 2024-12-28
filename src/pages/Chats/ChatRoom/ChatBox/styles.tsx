@@ -17,7 +17,7 @@ export const ChatBoxContainer = styled.div`
 	align-items: center;
 `;
 
-export const Textarea = styled.textarea<{ $isOpponentValid: boolean }>`
+export const Textarea = styled.textarea<{ $isOtherUserValid: boolean }>`
 	width: 100%;
 	max-height: 5rem;
 	border: none;
@@ -27,7 +27,7 @@ export const Textarea = styled.textarea<{ $isOpponentValid: boolean }>`
 	resize: none;
 	overflow: hidden;
 	color: ${({ theme }) => theme.colors.black};
-	cursor: ${({ $isOpponentValid }) => ($isOpponentValid ? '' : 'not-allowed')};
+	cursor: ${({ $isOtherUserValid }) => ($isOtherUserValid ? '' : 'not-allowed')};
 	background-color: #f2f2f2;
 	${({ theme }) => theme.fontStyles['body2-regular']};
 
@@ -37,7 +37,7 @@ export const Textarea = styled.textarea<{ $isOpponentValid: boolean }>`
 	}
 `;
 
-export const SendButton = styled.button<{ $isOpponentValid: boolean }>`
+export const SendButton = styled.button<{ $isOtherUserValid: boolean }>`
 	padding: 1.12rem;
 	border-radius: 50%;
 	background-color: #ffe9f3;
@@ -45,5 +45,5 @@ export const SendButton = styled.button<{ $isOpponentValid: boolean }>`
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 1.2rem 1.2rem;
-	cursor: ${({ $isOpponentValid }) => ($isOpponentValid ? 'pointer' : '')};
+	cursor: ${({ $isOtherUserValid }) => ($isOtherUserValid ? 'pointer' : '')};
 `;
