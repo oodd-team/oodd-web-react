@@ -88,7 +88,7 @@ const AccountSetting: React.FC = () => {
 					</Row>
 					<Row>
 						<Label>
-							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'caption1-regular', lineHeight: 0 }} color={theme.colors.gray3}>
 								{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
@@ -98,13 +98,13 @@ const AccountSetting: React.FC = () => {
 				<List>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={leave} alt="로그아웃 아이콘" />
-						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
 							Logout
 						</StyledText>
 					</ListItem>
 					<ListItem onClick={handleDeleteAccountClick}>
 						<img src={Profile_s} alt="회원 탈퇴 아이콘" />
-						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
 							회원탈퇴
 						</StyledText>
 					</ListItem>

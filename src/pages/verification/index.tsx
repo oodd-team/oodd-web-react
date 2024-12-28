@@ -129,7 +129,7 @@ const Verification: React.FC = () => {
 								placeholder="전화번호"
 								value={phone}
 								onChange={handlePhoneChange}
-								data-theme-style="body2-light"
+								data-theme-style="body1-medium"
 								data-theme-lineheight="1"
 							/>
 							{isVerificationSent && <ResendButton onClick={handleResend}>인증번호 새로 받기</ResendButton>}
@@ -141,7 +141,7 @@ const Verification: React.FC = () => {
 									placeholder="인증번호를 입력하세요"
 									value={verificationCode}
 									onChange={handleVerificationCodeChange}
-									data-theme-style="body2-light"
+									data-theme-style="body1-medium"
 									data-theme-lineheight="1"
 								/>
 								<Timer>{formatTime(timer)}</Timer>

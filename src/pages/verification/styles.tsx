@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const Title = styled.h1`
 	font-size: 1.125rem;
 	margin-bottom: 1.25rem;
-s`;
+`;
 
 export const Form = styled.form`
 	display: flex;
@@ -98,14 +98,6 @@ export const StyledInput = styled.input`
 	border-radius: 0.25rem;
 	font-size: 1rem;
 	width: 100%;
-
-	${({ theme }) => theme.fontStyles['heading1-regular']}
-
-	&.body2-light {
-		font-family: 'Pretendard Variable';
-		font-weight: 300; // light
-		font-size: 1rem; // 16px
-	}
 `;
 export const StyledVerificationInput = styled.input`
 	padding: 0.625rem;
@@ -113,10 +105,4 @@ export const StyledVerificationInput = styled.input`
 	border-radius: 0.25rem;
 	font-size: 1rem;
 	width: 100%;
-
-	&.body2-light {
-		font-family: 'Pretendard Variable';
-		font-weight: 300; // light
-		font-size: 1rem; // 16px
-	}
 `;
