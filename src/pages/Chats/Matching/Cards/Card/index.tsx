@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const requester = matching.requester;
 
 	const handleUserClick = () => {
-		nav(`/users/${matching.requester.requesterId}`);
+		nav(`/users/${requester.id}`);
 	};
 
 	const handleRejectButtonClick = () => {
@@ -52,14 +52,14 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
 		try {
 			console.log(matching);
-			const response = await modifyMatchingStatusApi(matching.matchingId, { requestStatus: status });
+			const response = await modifyMatchingStatusApi(matching.id, { requestStatus: status });
 
 			if (response.isSuccess) {
 				removeRejectedMatching(); // 매칭 리스트에서 해당 매칭을 제거
 
 				if (status === 'accept') {
 					setOpponentInfo({
-						id: requester.requesterId,
+						id: requester.id,
 						nickname: requester.nickname,
 						profileUrl: requester.profilePictureUrl,
 					});
@@ -91,12 +91,12 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						{requester.nickname || '알수없음'}
 					</StyledText>
 					<div className="row-flex">
-						{matching.requesterPost.styleTags.map((tag, index) => (
+						{requester.representativePost.styleTags.map((tag, index) => (
 							<div className="row-flex" key={tag}>
 								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 									{tag}
 								</StyledText>
-								{index < matching.requesterPost.styleTags.length - 1 && (
+								{index < requester.representativePost.styleTags.length - 1 && (
 									<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray1}>
 										,&nbsp;
 									</StyledText>
@@ -105,7 +105,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 						))}
 					</div>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav(`/users/${requester.requesterId}`)}>
+				<SeeMore onClick={() => nav(`/users/${requester.id}`)}>
 					<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
 						OOTD 더 보기
 					</StyledText>
@@ -123,7 +123,7 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 					modules={[Pagination]}
 					className="childSwiper"
 				>
-					{matching.requesterPost.postImages.map((postImage) => (
+					{requester.representativePost.postImages.map((postImage) => (
 						<SwiperSlide key={postImage.url}>
 							<img src={postImage.url} alt="OOTD" className="slide-image-small" />
 							<div className="blur"></div>

@@ -63,7 +63,7 @@ const TabBar: React.FC = () => {
 
 		if (response.isSuccess) {
 			setMatchingCount(response.data.matchingsCount);
-			setHasMatchingRequest(response.data.isMatching);
+			setHasMatchingRequest(response.data.hasMatching);
 		}
 	};
 
@@ -117,7 +117,6 @@ const TabBar: React.FC = () => {
 						<RecentChat matchingCount={matchingCount} swiperRef={swiperRef} />
 					</SwiperSlide>
 				</Swiper>
-				{/* <div className="margin"></div> */}
 			</Tabs>
 		</TabBarLayout>
 	);
