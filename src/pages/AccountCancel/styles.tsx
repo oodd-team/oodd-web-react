@@ -8,7 +8,6 @@ export const CancelContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
 	flex-grow: 1; /* flexbox에서 공간을 채우도록 설정 */
-	//padding: 1.25rem; /* 20px */
 	display: flex;
 	flex-direction: column;
 `;
@@ -42,7 +41,7 @@ export const InfoBox = styled.div`
 export const InfoItem = styled.p`
 	font-size: 0.875rem; /* 14px */
 	margin-bottom: 0.625rem; /* 10px */
-	padding: 2px 10px; 
+	padding: 2px 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
