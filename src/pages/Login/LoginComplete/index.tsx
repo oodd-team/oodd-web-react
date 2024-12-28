@@ -43,13 +43,13 @@ const LoginComplete: React.FC = () => {
 					const response = await getUserInfoByJwtApi();
 					console.log(response);
 
-					const { nickname, name, userId } = response.data;
-					localStorage.setItem('current_user_id', `${userId}`);
+					const { nickname, name, id } = response.data;
+					localStorage.setItem('current_user_id', `${id}`);
 
 					if (nickname && name) {
 						if (nickname && name) {
-							const isAgreed = await hasAgreedToTerms(userId);
-							navigate(isAgreed ? '/' : '/terms-agreement'); // 이용 약관이 필요하면 (false) 해당 페이지로 이동
+							const isAgreed = await hasAgreedToTerms(id);
+							navigate(isAgreed ? '/' : '/signup/terms-agreement'); // 이용 약관이 필요하면 (false) 해당 페이지로 이동
 						}
 					} else {
 						navigate('/signup');
