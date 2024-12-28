@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@config/firebaseConfig';
 import Modal from '@components/Modal';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import TopBar from '@components/TopBar';
 import back from '@assets/arrow/left.svg';
@@ -28,6 +29,7 @@ import Loading from '@components/Loading';
 import camera from '@assets/default/camera.svg';
 import { getUserInfoApi, patchUserInfoApi } from '@apis/user'; 
 import { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; 
+
 
 type ExtendedUserInfoData = UserInfoData & {
 	birthDate?: string; // 확장된 속성
@@ -47,20 +49,18 @@ const ProfileEdit: React.FC = () => {
 	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
-	const userId = localStorage.getItem('my_id');
 
 	// 사용자 정보 불러오기
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const storedUserId = Number(localStorage.getItem('my_id'));
-				if (!storedUserId) {
+				const currentUserId = getCurrentUserId()
+				if (!currentUserId) {
 					console.error('User ID not found in localStorage');
 					return;
 				}
 
-				const userId = Number(storedUserId); // 문자열을 숫자로 변환
-				const response = await getUserInfoApi(userId); // 사용자 정보 조회 API 호출
+				const response = await getUserInfoApi(currentUserId); // 사용자 정보 조회 API 호출
 				const userInfo: ExtendedUserInfoData = response.data; // 확장된 타입 사용
 
 				// 상태 업데이트
@@ -110,8 +110,8 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		try {
-			const storedUserId = Number(localStorage.getItem('my_id'));
-			if (!storedUserId) {
+			const currentUserId = getCurrentUserId()
+			if (!currentUserId) {
 				console.error('User ID not found in localStorage');
 				return;
 			}
@@ -128,7 +128,7 @@ const ProfileEdit: React.FC = () => {
 				bio: bio || '',
 			};
 
-			const response = await patchUserInfoApi(payload, storedUserId);
+			const response = await patchUserInfoApi(payload, currentUserId);
 
 			if (response.isSuccess) {
 				setModalContent('프로필이 성공적으로 수정되었습니다.');
@@ -137,7 +137,7 @@ const ProfileEdit: React.FC = () => {
 				// 모달 닫힌 후 마이페이지로 이동
 				setTimeout(() => {
 					handleModalClose();
-					navigate(`/profile/${userId}`);
+					navigate(`/profile/${currentUserId}`);
 				}, 2000);
 			} else {
 				setModalContent('프로필 수정에 실패했습니다.');
