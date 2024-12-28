@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ArrowIcon from '@assets/arrow/min-right.svg';
 
 export const CardLayout = styled.div`
-	background-color: #ececec;
+	background-color: ${({ theme }) => theme.colors.background.divider};
 	border-radius: 0.5rem;
 	position: relative;
 	height: 100%;
@@ -79,7 +79,6 @@ export const OOTDImgBox = styled.div`
 
 	.childSwiper {
 		z-index: 10;
-		// align-items: stretch;
 		width: 100%;
 		height: 100%;
 	}
@@ -109,7 +108,7 @@ export const OOTDImgBox = styled.div`
 	.childSwiper .swiper-pagination-bullet-active {
 		width: 0.375rem;
 		height: 0.375rem;
-		background-color: ${({ theme }) => theme.colors.white};
+		background-color: ${({ theme }) => theme.colors.background.primary};
 		opacity: 1;
 	}
 

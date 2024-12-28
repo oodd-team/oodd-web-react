@@ -14,10 +14,10 @@ const ChatBox: React.FC = () => {
 	const { chatRoomId } = useParams();
 	const currentUserId = getCurrentUserId();
 	const otherUser = useRecoilValue(OtherUserAtom);
-	const isOpponentValid = !!(otherUser && otherUser.id);
+	const isOtherUserValid = !!(otherUser && otherUser.id);
 
 	useEffect(() => {
-		if (textareaRef.current && !isOpponentValid) {
+		if (textareaRef.current && !isOtherUserValid) {
 			textareaRef.current.disabled = true;
 			textareaRef.current.placeholder = '메시지를 보낼 수 없습니다.';
 		}
@@ -64,7 +64,7 @@ const ChatBox: React.FC = () => {
 	return (
 		<ChatBoxContainer>
 			<Textarea
-				$isOpponentValid={isOpponentValid}
+				$isOtherUserValid={isOtherUserValid}
 				placeholder="메시지 보내기"
 				ref={textareaRef}
 				value={newMessage}
@@ -72,7 +72,7 @@ const ChatBox: React.FC = () => {
 				onKeyDown={handleEnterKeyDown}
 				onSubmit={handleNewMessageSubmit}
 			/>
-			<SendButton $isOpponentValid={isOpponentValid} onClick={handleNewMessageSubmit} />
+			<SendButton $isOtherUserValid={isOtherUserValid} onClick={handleNewMessageSubmit} />
 		</ChatBoxContainer>
 	);
 };

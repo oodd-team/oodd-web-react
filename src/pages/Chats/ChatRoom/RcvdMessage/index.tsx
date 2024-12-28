@@ -19,19 +19,24 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile: () => void }> =
 				<FirstMessageLayout $isSenderChanged={isSenderChanged}>
 					<UserImage onClick={onClickProfile} src={profilePictureUrl} alt="프로필 사진" />
 					<MessageBox>
-						<UsernameText onClick={onClickProfile} $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+						<UsernameText
+							onClick={onClickProfile}
+							$textTheme={{ style: 'body2-regular' }}
+							color={theme.colors.text.primary}
+						>
 							{fromUserNickname}
 						</UsernameText>
-						<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+						<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 							{content}
 						</Message>
 					</MessageBox>
+					{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}
 				</FirstMessageLayout>
 			);
 		} else {
 			return (
 				<MessageLayout>
-					<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+					<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 						{content}
 					</Message>
 					{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}

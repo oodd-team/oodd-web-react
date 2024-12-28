@@ -7,7 +7,7 @@ import TabBar from './TabBar/index';
 const Chats: React.FC = () => {
 	return (
 		<OODDFrame>
-			<Header $textTheme={{ style: 'title1-bold' }} color={theme.colors.black}>
+			<Header $textTheme={{ style: 'title1-bold' }} color={theme.colors.text.primary}>
 				Chats
 			</Header>
 			<TabBar></TabBar>

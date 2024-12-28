@@ -61,12 +61,12 @@ const ChatRoom: React.FC = () => {
 
 	// 프로필 사진 클릭 시 프로필 페이지로 이동
 	const handleUserClick = useCallback(() => {
-		const opponentId = otherUser?.id ? otherUser.id : -1;
-		if (opponentId === -1) {
+		const otherUserId = otherUser?.id ? otherUser.id : -1;
+		if (otherUserId === -1) {
 			setModalContent('유저 정보를 찾을 수 없습니다.');
 			setIsStatusModalOpen(true);
 		} else {
-			nav(`/users/${opponentId}`);
+			nav(`/profile/${otherUserId}`);
 		}
 	}, [otherUser, nav]);
 
