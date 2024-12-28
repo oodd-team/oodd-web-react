@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ArrowIcon from '@assets/arrow/min-right.svg';
 
 export const CardLayout = styled.div`
-	background-color: #ececec;
+	background-color: ${({ theme }) => theme.colors.gray[200]};
 	border-radius: 0.5rem;
 	position: relative;
 	height: 100%;
@@ -79,7 +79,6 @@ export const OOTDImgBox = styled.div`
 
 	.childSwiper {
 		z-index: 10;
-		// align-items: stretch;
 		width: 100%;
 		height: 100%;
 	}

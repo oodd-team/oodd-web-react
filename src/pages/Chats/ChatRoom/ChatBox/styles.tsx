@@ -11,9 +11,9 @@ export const ChatBoxContainer = styled.div`
 
 	display: flex;
 	padding: 0.5rem 1.12rem;
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.text.white};
 	gap: 0.5rem;
-	border-top: 1px solid ${({ theme }) => theme.colors.gray2};
+	border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
 	align-items: center;
 `;
 
@@ -26,13 +26,13 @@ export const Textarea = styled.textarea<{ $isOtherUserValid: boolean }>`
 	outline: none;
 	resize: none;
 	overflow: hidden;
-	color: ${({ theme }) => theme.colors.black};
+	color: ${({ theme }) => theme.colors.text.primary};
 	cursor: ${({ $isOtherUserValid }) => ($isOtherUserValid ? '' : 'not-allowed')};
 	background-color: #f2f2f2;
 	${({ theme }) => theme.fontStyles['body2-regular']};
 
 	&::placeholder {
-		color: ${({ theme }) => theme.colors.gray2};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['body2-regular']};
 	}
 `;
@@ -40,7 +40,7 @@ export const Textarea = styled.textarea<{ $isOtherUserValid: boolean }>`
 export const SendButton = styled.button<{ $isOtherUserValid: boolean }>`
 	padding: 1.12rem;
 	border-radius: 50%;
-	background-color: #ffe9f3;
+	background-color: ${({ theme }) => theme.colors.brand.primaryLight};
 	background-image: url(${SendIcon});
 	background-repeat: no-repeat;
 	background-position: center;
