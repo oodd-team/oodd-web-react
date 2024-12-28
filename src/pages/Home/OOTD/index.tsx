@@ -119,7 +119,7 @@ const OOTD: React.FC = () => {
 					</div>
 				))}
 				{/* Intersection Observer가 감지할 마지막 요소 */}
-				<div ref={loadMoreRef} style={{ height: '1px', backgroundColor: 'transparent' }} />
+				<div ref={loadMoreRef} />
 			</FeedContainer>
 			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</OOTDContainer>
