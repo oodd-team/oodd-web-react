@@ -227,20 +227,17 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					className="ootdSwiper"
 				>
 					{feed.postImages.map((postImage) => (
-						<div key={postImage.url}>
-							<SwiperSlide>
-								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
-								<div className="blur"></div>
-								<FeedImgBackground $src={postImage.url} />
-							</SwiperSlide>
-						</div>
+						<SwiperSlide key={postImage.url}>
+							<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
+							<div className="blur"></div>
+							<FeedImgBackground $src={postImage.url} />
+						</SwiperSlide>
 					))}
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
 						<div className="button" onClick={handleLikeButtonClick}>
-							{/* Heart 컴포넌트의 isFilled 프로퍼티에 isLikeClicked 상태를 전달 */}
 							<Heart isFilled={isLikeClicked} />
 						</div>
 					</Reaction>
