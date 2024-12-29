@@ -7,13 +7,13 @@ import { isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
 
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import BottomSheet from '@components/BottomSheet';
-import BottomSheetMenu from '@components/BottomSheetMenu';
+import BottomSheetMenu from '@components/BottomSheet/BottomSheetMenu';
 import Modal from '@components/Modal';
 import PostBase from './PostBase/index';
 
 import type { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto.ts';
 import type { BottomSheetProps } from '@components/BottomSheet/dto';
-import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
 import type { ModalProps } from '@components/Modal/dto';
 
 import Edit from '@assets/default/edit.svg';

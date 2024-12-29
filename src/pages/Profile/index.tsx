@@ -22,7 +22,7 @@ import Loading from '@components/Loading';
 import UserProfile from '@components/UserProfile';
 import { StyledText } from '@components/Text/StyledText';
 import Modal from '@components/Modal';
-import CommentBottomSheet from '@components/CommentBottomSheet';
+import CommentBottomSheet from '@components/BottomSheet/CommentBottomSheet';
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 
 import { getUserPostListApi } from '@apis/post';

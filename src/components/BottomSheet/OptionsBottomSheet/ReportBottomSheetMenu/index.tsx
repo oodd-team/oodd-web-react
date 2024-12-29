@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import BottomButton from '@components/BottomButton';
-import BottomSheetMenu from '@components/BottomSheetMenu';
-import { SheetItemDto } from '@components/BottomSheetMenu/dto';
+import BottomSheetMenu from '../../BottomSheetMenu/index';
+import { SheetItemDto } from '../../BottomSheetMenu/dto';
 import type { ReportBottomSheetMenuProps } from './dto';
 import { InputLayout, ReportBottomSheetMenuWrappar } from './styles';
 

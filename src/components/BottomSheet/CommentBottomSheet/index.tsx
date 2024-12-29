@@ -1,9 +1,9 @@
 import { StyledText } from '@components/Text/StyledText';
 import theme from '@styles/theme';
 
-import BottomSheet from '@components/BottomSheet';
+import BottomSheet from '../index';
 import Comment from './Comment/index';
-import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { BottomSheetProps } from '../dto';
 import type { CommentBottomSheetProps } from './dto';
 import closeIcon from '@assets/default/modal-close-white.svg';
 

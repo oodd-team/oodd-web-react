@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import BottomSheet from '../index';
-import BottomSheetMenu from '@components/BottomSheetMenu';
-import ReportBottomSheetMenu from './ReportBottomSheetMenu';
+import BottomSheetMenu from '../BottomSheetMenu/index';
+import ReportBottomSheetMenu from './ReportBottomSheetMenu/index';
 import Modal from '@components/Modal';
 
 import type { OptionsBottomSheetProps } from './dto';
 import type { BottomSheetProps } from '../dto';
-import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import type { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
 import type { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
 import type { ModalProps } from '@components/Modal/dto';
 
