@@ -86,9 +86,9 @@ const Profile: React.FC = () => {
 		try {
 			await createMatchingApi(matchingRequestData);
 			handleModalOpen(`${userInfo?.nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
-		} catch (error: any) {
+		} catch (error) {
 			console.error('매칭 신청 오류:', error);
-			handleModalOpen(error.response?.data?.message || '매칭 신청에 실패했습니다.');
+			handleModalOpen('매칭 신청에 실패했습니다.');
 		}
 	};
 

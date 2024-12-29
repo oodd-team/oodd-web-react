@@ -152,7 +152,7 @@ const ProfileEdit: React.FC = () => {
 		} catch (error) {
 			setModalContent('프로필 수정 중 오류가 발생했습니다.');
 			setIsModalVisible(true);
-			console.error('Error updating user info:', error.response?.data || error.message);
+			console.error('Error updating user info:', error);
 		}
 	};
 
