@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+
 import { ApiDomain, errorMessages } from './errorMessage';
 
 export const handleError = (error: unknown, domain: ApiDomain = 'default') => {

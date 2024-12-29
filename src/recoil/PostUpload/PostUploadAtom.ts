@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
-import type { ClothingInfo } from '@components/ClothingInfoItem/dto';
+
 import type { PostImage } from '@apis/post/dto';
+import type { ClothingInfo } from '@components/ClothingInfoItem/dto';
 
 export const postImagesAtom = atom<PostImage[]>({
 	key: 'imagesAtom',

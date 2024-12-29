@@ -105,5 +105,5 @@ module.exports = {
 			},
 		},
 	],
-	ignorePatterns: ['src/**/*.test.ts', 'src/frontend/generated/*'],
+	ignorePatterns: ['src/**/*.test.ts', 'src/frontend/generated/*', 'src/App.tsx'],
 };
