@@ -1,28 +1,29 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import LoginComplete from './pages/Login/LoginComplete';
-import TermsAgreement from './pages/TermsAgreement';
+import Home from '@pages/Home';
+import Login from '@pages/Login';
+import SignUp from '@pages/SignUp';
+import LoginComplete from '@pages/Login/LoginComplete';
+import TermsAgreement from '@pages/TermsAgreement';
 
-import Profile from './pages/Profile';
-import ProfileEdit from './pages/ProfileEdit';
-import AccountSetting from './pages/AccountSetting';
-import AccountEdit from './pages/AccountEdit';
-import AccountCancel from './pages/AccountCancel';
-import Verification from './pages/verification';
+import Profile from '@pages/Profile';
+import ProfileEdit from '@pages/Profile/ProfileEdit';
 
-import Post from './pages/Post';
-import PostUpload from './pages/PostUpload';
-import PostImageSelect from './pages/PostImageSelect';
-import PostInstaConnect from './pages/PostInstaConnect';
-import PostInstaFeedSelect from './pages/PostInstaFeedSelect';
+import AccountSetting from '@pages/AccountSetting';
+import AccountEdit from '@pages/AccountEdit';
+import AccountCancel from '@pages/AccountCancel';
+import Verification from '@pages/verification';
 
-import Chats from './pages/Chats';
-import ChatRoom from './pages/Chats/ChatRoom';
+import Post from '@pages/Post';
+import PostUpload from '@pages/PostUpload';
+import PostImageSelect from '@pages/PostImageSelect';
+import PostInstaConnect from '@pages/PostInstaConnect';
+import PostInstaFeedSelect from '@pages/PostInstaFeedSelect';
 
-import NotFound from './pages/NotFound';
+import Chats from '@pages/Chats';
+import ChatRoom from '@pages/Chats/ChatRoom';
+
+import NotFound from '@pages/NotFound';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 	const isAuthenticated = Boolean(localStorage.getItem('new_jwt_token'));
