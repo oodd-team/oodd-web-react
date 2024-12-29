@@ -1,12 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 import debounce from 'lodash/debounce';
-import { OOTDContainer, FeedContainer } from './styles';
-import Feed from './Feed/index';
+
 import { getPostListApi } from '@apis/post';
-import type { PostSummary } from '@apis/post/dto';
 import { handleError } from '@apis/util/handleError';
-import type { ModalProps } from '@components/Modal/dto';
+
 import Modal from '@components/Modal';
+
+import type { PostSummary } from '@apis/post/dto';
+import type { ModalProps } from '@components/Modal/dto';
+
+import Feed from './Feed/index';
+
+import { OOTDContainer, FeedContainer } from './styles';
 
 const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);

@@ -1,10 +1,40 @@
-import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import dayjs from 'dayjs';
 import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { StyledText } from '@components/Text/StyledText';
+
 import theme from '@styles/theme';
+
+import { createMatchingApi } from '@apis/matching';
+import { togglePostLikeStatusApi } from '@apis/post-like';
+import { postUserBlockApi } from '@apis/user-block';
+import { handleError } from '@apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import defaultProfile from '@assets/default/defaultProfile.svg';
+import more from '@assets/default/more.svg';
+import xBtn from '@assets/default/reject.svg';
+
+import Heart from '@components/Icons/Heart';
+import Message from '@components/Icons/Message';
+
+import CommentBottomSheet from '@components/BottomSheet/CommentBottomSheet';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
+import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
+
+import type { CreateMatchingRequest } from '@apis/matching/dto';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
+import type { CommentBottomSheetProps } from '@components/BottomSheet/CommentBottomSheet/dto';
+import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
+import type { ModalProps } from '@components/Modal/dto';
+
+import type { FeedProps } from './dto';
+
 import {
 	MatchingBtn,
 	FeedImgBox,
@@ -19,27 +49,6 @@ import {
 	ReactionWrapper,
 	FeedImgBackground,
 } from './styles';
-import more from '@assets/default/more.svg';
-import xBtn from '@assets/default/reject.svg';
-import { useNavigate } from 'react-router-dom';
-import defaultProfile from '@assets/default/defaultProfile.svg';
-import dayjs from 'dayjs';
-import Heart from '@components/Icons/Heart';
-import Message from '@components/Icons/Message';
-import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
-import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
-import CommentBottomSheet from '@components/BottomSheet/CommentBottomSheet';
-import Modal from '@components/Modal';
-import type { CreateMatchingRequest } from '@apis/matching/dto';
-import { createMatchingApi } from '@apis/matching';
-import { handleError } from '@apis/util/handleError';
-import type { CommentBottomSheetProps } from '@components/BottomSheet/CommentBottomSheet/dto';
-import type { ModalProps } from '@components/Modal/dto';
-import { togglePostLikeStatusApi } from '@apis/post-like';
-import { postUserBlockApi } from '@apis/user-block';
-import type { PostUserBlockRequest } from '@apis/user-block/dto';
-import type { FeedProps } from './dto';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
