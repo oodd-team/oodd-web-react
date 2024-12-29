@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import { Content, Input, SearchResultList, SearchResultItem, Loader } from './styles';
-import theme from '../../../styles/theme';
+import theme from '@styles/theme';
 
-import { StyledText } from '../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 
 import { SearchBottomSheetProps } from '../dto';
 

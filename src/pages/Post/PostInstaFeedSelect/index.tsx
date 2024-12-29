@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { postImagesAtom } from '../../recoil/PostUpload/PostUploadAtom';
+import { postImagesAtom } from '@recoil/PostUpload/PostUploadAtom';
 
 import { Content, PostContainer, ImageWrapper } from './styles';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import TopBar from '../../components/TopBar';
-import Modal from '../../components/Modal';
-import { ModalProps } from '../../components/Modal/dto';
+import { OODDFrame } from '@components/Frame/Frame';
+import TopBar from '@components/TopBar';
+import Modal from '@components/Modal';
+import { ModalProps } from '@components/Modal/dto';
 
-import X from '../../assets/default/x.svg';
+import X from '@assets/default/x.svg';
 
 import { InstaFeedSelectModalProps, Post } from './dto';
 import { getCurrentUserId } from '@utils/getCurrentUserId';

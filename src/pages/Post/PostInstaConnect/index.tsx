@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
-import theme from '../../styles/theme';
+import theme from '@styles/theme';
 import { Content, StyledInput } from './styles';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
-import TopBar from '../../components/TopBar';
-import BottomButton from '../../components/BottomButton';
-import Modal from '../../components/Modal';
-import { ModalProps } from '../../components/Modal/dto';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+import BottomButton from '@components/BottomButton';
+import Modal from '@components/Modal';
+import { ModalProps } from '@components/Modal/dto';
 
-import X from '../../assets/default/x.svg';
+import X from '@assets/default/x.svg';
 
 import { InstaConnectModalProps } from './dto';
 

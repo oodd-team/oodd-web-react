@@ -15,10 +15,10 @@ import AccountCancel from '@pages/Account/AccountCancel';
 import Verification from '@pages/Account/Verification';
 
 import Post from '@pages/Post';
-import PostUpload from '@pages/PostUpload';
-import PostImageSelect from '@pages/PostImageSelect';
-import PostInstaConnect from '@pages/PostInstaConnect';
-import PostInstaFeedSelect from '@pages/PostInstaFeedSelect';
+import PostUpload from '@pages/Post/PostUpload';
+import PostImageSelect from '@pages/Post/PostImageSelect';
+import PostInstaConnect from '@pages/Post/PostInstaConnect';
+import PostInstaFeedSelect from '@pages/Post/PostInstaFeedSelect';
 
 import Chats from '@pages/Chats';
 import ChatRoom from '@pages/Chats/ChatRoom';

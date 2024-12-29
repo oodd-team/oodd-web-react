@@ -10,7 +10,7 @@ import {
 	postStyletagAtom,
 	postIsRepresentativeAtom,
 	modeAtom,
-} from '../../recoil/PostUpload/PostUploadAtom';
+} from '@recoil/PostUpload/PostUploadAtom';
 
 import {
 	UploadContainer,
@@ -23,34 +23,34 @@ import {
 	PinnedPostToggleContainer,
 } from './styles';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
-import TopBar from '../../components/TopBar';
-import BottomSheet from '../../components/BottomSheet';
-import { BottomSheetProps } from '../../components/BottomSheet/dto';
-import BottomButton from '../../components/BottomButton';
-import ClothingInfoItem from '../../components/ClothingInfoItem';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+import BottomSheet from '@components/BottomSheet';
+import { BottomSheetProps } from '@components/BottomSheet/dto';
+import BottomButton from '@components/BottomButton';
+import ClothingInfoItem from '@components/ClothingInfoItem';
 import ImageSwiper from './ImageSwiper';
 import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
-import Modal from '../../components/Modal';
+import Modal from '@components/Modal';
 
-import Left from '../../assets/arrow/left.svg';
-import Right from '../../assets/arrow/right.svg';
-import Up from '../../assets/arrow/up.svg';
-import ClothingTag from '../../assets/default/clothes-tag.svg';
-import StyleTag from '../../assets/default/style-tag.svg';
-import Pin from '../../assets/default/pin.svg';
+import Left from '@assets/arrow/left.svg';
+import Right from '@assets/arrow/right.svg';
+import Up from '@assets/arrow/up.svg';
+import ClothingTag from '@assets/default/clothes-tag.svg';
+import StyleTag from '@assets/default/style-tag.svg';
+import Pin from '@assets/default/pin.svg';
 
-import { ClothingInfo } from '../../components/ClothingInfoItem/dto';
-import { ModalProps } from '../../components/Modal/dto';
+import { ClothingInfo } from '@components/ClothingInfoItem/dto';
+import { ModalProps } from '@components/Modal/dto';
 import { PostUploadModalProps } from './dto';
-import { PostBase } from '../../apis/post/dto';
+import { PostBase } from '@apis/post/dto';
 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../config/firebaseConfig';
-import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
-import { handleError } from '../../apis/util/handleError';
+import { storage } from '@config/firebaseConfig';
+import { getPostDetailApi, createPostApi, modifyPostApi } from '@apis/post';
+import { handleError } from '@apis/util/handleError';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {

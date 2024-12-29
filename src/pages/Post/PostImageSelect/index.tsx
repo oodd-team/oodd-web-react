@@ -8,19 +8,19 @@ import {
 	postClothingInfosAtom,
 	postStyletagAtom,
 	postIsRepresentativeAtom,
-} from '../../recoil/PostUpload/PostUploadAtom';
+} from '@recoil/PostUpload/PostUploadAtom';
 
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 
-import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
-import TopBar from '../../components/TopBar';
-import BottomButton from '../../components/BottomButton';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+import BottomButton from '@components/BottomButton';
 import ImageSwiper from './ImageSwiper';
 
-import X from '../../assets/default/x.svg';
-import Left from '../../assets/arrow/left.svg';
-import PhotoBig from '../../assets/default/photo-big.svg';
+import X from '@assets/default/x.svg';
+import Left from '@assets/arrow/left.svg';
+import PhotoBig from '@assets/default/photo-big.svg';
 
 import { ImageSelectModalProps } from './dto';
 import heic2any from 'heic2any';
