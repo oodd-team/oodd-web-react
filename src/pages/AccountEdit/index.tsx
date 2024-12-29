@@ -12,7 +12,7 @@ import {
 	MemberInfoRow,
 	Label,
 	Info,
-} from './styles'; 
+} from './styles';
 import { OODDFrame } from '@components/Frame/Frame';
 import BottomButton from '@components/BottomButton/index';
 
@@ -30,7 +30,7 @@ const AccountEdit: React.FC = () => {
 
 	// 본인 인증 페이지로 이동하는 함수
 	const handleVerification = () => {
-		navigate('/Verification');
+		navigate('/account/verification');
 	};
 
 	return (

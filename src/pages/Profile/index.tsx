@@ -98,7 +98,7 @@ const Profile: React.FC = () => {
 		<OODDFrame>
 			<ProfileContainer>
 				{isMyPage && (
-					<AddButton onClick={() => navigate('/image-select')}>
+					<AddButton onClick={() => navigate('/post/upload/photo/select')}>
 						<img src={button_plus} alt="Add" />
 					</AddButton>
 				)}
@@ -110,7 +110,7 @@ const Profile: React.FC = () => {
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
 						onClickLeftButton={() => navigate(-1)}
-						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} 
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)}
 					/>
 				)}
 

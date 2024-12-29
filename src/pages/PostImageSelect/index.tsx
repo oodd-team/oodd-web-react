@@ -52,7 +52,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 
 	const handleNext = () => {
 		const state = location.state as { mode?: string; postId?: number };
-		navigate('/upload', { state: { mode: state?.mode, postId: state?.postId } });
+		navigate('/post/upload/content', { state: { mode: state?.mode, postId: state?.postId } });
 	};
 
 	// 파일 선택기에서 사진 업로드

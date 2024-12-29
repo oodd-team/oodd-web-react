@@ -102,7 +102,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		if (mode === 'edit') {
 			setMode('edit2');
 		}
-		navigate('/image-select', { state: { mode: mode, postId: state.postId } });
+		navigate('/post/upload/photo/select', { state: { mode: mode, postId: state.postId } });
 	};
 
 	const getPost = async (postId: number) => {

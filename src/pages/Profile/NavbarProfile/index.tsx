@@ -8,11 +8,11 @@ import theme from '@styles/theme';
 const NavbarProfile: React.FC = () => {
 	return (
 		<Nav>
-			<StyledText $textTheme={{ style: 'heading1-bold'}} color={theme.colors.primary}>
+			<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.primary}>
 				내정보
 			</StyledText>
 			<IconContainer>
-				<Link to="/account-setting">
+				<Link to="/account/setting">
 					<img src={settingIcon} alt="설정아이콘" />
 				</Link>
 			</IconContainer>

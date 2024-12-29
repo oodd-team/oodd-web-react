@@ -145,7 +145,7 @@ const Verification: React.FC = () => {
 									data-theme-style="body1-medium"
 								/>
 								<Timer>{formatTime(timer)}</Timer>
-							</VerificationInputWrapper>
+							</account/verificationInputWrapper>
 						)}
 
 						<Button type="submit" disabled={isVerificationSent && verificationCode.length !== 6}>
@@ -153,7 +153,7 @@ const Verification: React.FC = () => {
 						</Button>
 					</Form>
 				</Container>
-			</VerificationWrapper>
+			</account/verificationWrapper>
 		</OODDFrame>
 	);
 };

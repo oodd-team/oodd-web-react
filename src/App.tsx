@@ -33,19 +33,21 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 const protectedRoutes = [
 	{ path: '/', element: <Home /> },
 
-	// 사용자 프로필 및 계정 관리
+	// profile
 	{ path: '/profile/:userId', element: <Profile /> },
 	{ path: '/profile/edit', element: <ProfileEdit /> },
-	{ path: '/account-setting', element: <AccountSetting /> },
-	{ path: '/account-edit', element: <AccountEdit /> },
-	{ path: '/account-cancel', element: <AccountCancel /> },
-	{ path: '/verification', element: <Verification /> },
+
+	// account
+	{ path: '/account/setting', element: <AccountSetting /> },
+	{ path: '/account/edit', element: <AccountEdit /> },
+	{ path: '/account/cancel', element: <AccountCancel /> },
+	{ path: '/account/verification', element: <Verification /> },
 
 	{ path: '/post/:postId', element: <Post /> },
-	{ path: '/upload', element: <PostUpload /> },
-	{ path: '/image-select', element: <PostImageSelect /> },
-	{ path: '/insta-connect', element: <PostInstaConnect /> },
-	{ path: '/insta-feed-select', element: <PostInstaFeedSelect /> },
+	{ path: '/post/upload/photo/select', element: <PostImageSelect /> },
+	{ path: '/post/upload/instagram/connect', element: <PostInstaConnect /> },
+	{ path: '/post/upload/instagram/select', element: <PostInstaFeedSelect /> },
+	{ path: '/post/upload/content', element: <PostUpload /> },
 
 	// 메시지/채팅
 	{ path: '/chats', element: <Chats /> },

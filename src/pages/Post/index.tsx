@@ -110,7 +110,7 @@ const Post: React.FC = () => {
 				text: 'OOTD 수정하기',
 				action: () => {
 					setIsMyPostMenuBottomSheetOpen(false);
-					navigate('/upload', { state: { mode: 'edit', postId: postId } });
+					navigate('/post/upload/content', { state: { mode: 'edit', postId: postId } });
 				},
 				icon: Edit,
 			},

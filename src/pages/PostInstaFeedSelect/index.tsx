@@ -67,7 +67,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const handlePostSelect = (post: Post) => {
 		const newImages = post.imgs.map((url, index) => ({ url, orderNum: index }));
 		setImages(newImages); // 선택한 이미지 Recoil 상태로 설정
-		navigate('/upload'); // 다음 페이지로 이동
+		navigate('/post/upload/content'); // 다음 페이지로 이동
 	};
 
 	// 페이지 종료 함수

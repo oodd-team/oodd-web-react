@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles'; 
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 import { OODDFrame } from '@components/Frame/Frame';
 import ConfirmationModal from '@components/ConfirmationModal/index';
 import { StyledText } from '@components/Text/StyledText';
@@ -11,7 +11,7 @@ import back from '@assets/arrow/left.svg';
 import imageBasic from '@assets/default/defaultProfile.svg';
 import Profile_s from '@assets/default/my-page.svg';
 import leave from '@assets/default/leave.svg';
-import { getUserInfoApi } from '@apis/user'; 
+import { getUserInfoApi } from '@apis/user';
 import type { UserInfoData } from '@apis/user/dto'; // type 명시
 import Loading from '@components/Loading/index';
 
@@ -63,7 +63,7 @@ const AccountSetting: React.FC = () => {
 
 	const handleDeleteAccountClick = () => {
 		// 회원 탈퇴 로직 추가
-		navigate('/account-cancel');
+		navigate('/account/cancel');
 	};
 
 	if (isLoading) {
@@ -98,7 +98,7 @@ const AccountSetting: React.FC = () => {
 				<List>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={leave} alt="로그아웃 아이콘" />
-						<StyledText $textTheme={{ style: 'body1-medium'}} color={theme.colors.primary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
 							Logout
 						</StyledText>
 					</ListItem>
