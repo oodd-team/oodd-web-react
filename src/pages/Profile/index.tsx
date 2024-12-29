@@ -12,28 +12,29 @@ import {
 	NoPostWrapper,
 	Button,
 } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import NavbarProfile from './NavbarProfile';
-import NavBar from '../../components/NavBar';
-import ButtonSecondary from './ButtonSecondary';
-import PostItem from '../../components/PostItem';
-import imageBasic from '../../assets/default/defaultProfile.svg';
-import Loading from '../../components/Loading';
-import UserProfile from '../../components/UserProfile';
-import { StyledText } from '../../components/Text/StyledText';
-import Modal from '../../components/Modal';
-import CommentBottomSheet from '../../components/CommentBottomSheet';
-import OptionsBottomSheet from '../../components/BottomSheet/OptionsBottomSheet';
+import NavbarProfile from './NavbarProfile/index'; // 상대 경로 index 명시
+import ButtonSecondary from './ButtonSecondary/index'; // 상대 경로 index 명시
+import { OODDFrame } from '@components/Frame/Frame';
+import NavBar from '@components/NavBar';
+import PostItem from '@components/PostItem';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import Loading from '@components/Loading';
+import UserProfile from '@components/UserProfile';
+import { StyledText } from '@components/Text/StyledText';
+import Modal from '@components/Modal';
+import CommentBottomSheet from '@components/CommentBottomSheet';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 
-import { getUserPostListApi } from '../../apis/post';
-import { getUserInfoApi } from '../../apis/user';
-import { createMatchingApi } from '../../apis/matching';
-import { UserPostSummary } from '../../apis/post/dto';
-import { UserInfoData } from '../../apis/user/dto';
-import button_plus from '../../assets/default/plus.svg';
-import TopBar from '../../components/TopBar';
-import MoreSvg from '../../assets/default/more.svg';
-import BackSvg from '../../assets/arrow/left.svg';
+import { getUserPostListApi } from '@apis/post';
+import { getUserInfoApi } from '@apis/user';
+import { createMatchingApi } from '@apis/matching';
+import type { UserPostSummary } from '@apis/post/dto'; // type 명시
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
+import button_plus from '@assets/default/plus.svg';
+import TopBar from '@components/TopBar';
+import MoreSvg from '@assets/default/more.svg';
+import BackSvg from '@assets/arrow/left.svg';
+import theme from '@styles/theme';
 
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
@@ -109,7 +110,7 @@ const Profile: React.FC = () => {
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
 						onClickLeftButton={() => navigate(-1)}
-						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} 
 					/>
 				)}
 
@@ -145,7 +146,7 @@ const Profile: React.FC = () => {
 						posts.map((post) => <PostItem key={post.id} post={post} />)
 					) : (
 						<NoPostWrapper>
-							<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
+							<StyledText $textTheme={{ style: 'headline1-medium' }} color={theme.colors.gray[400]}>
 								게시물이 없어요.
 							</StyledText>
 						</NoPostWrapper>
