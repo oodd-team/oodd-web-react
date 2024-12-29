@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { StyledText } from '@components/Text/StyledText';
 
-export const SocialLoginContainer = styled.button<{ $bgColor: string; $border?: boolean }>`
+export const SocialLoginContainer = styled.button<{ $bgColor: string }>`
 	display: flex;
 	align-items: center;
 	width: calc(100% - 3.5rem);
@@ -9,7 +9,6 @@ export const SocialLoginContainer = styled.button<{ $bgColor: string; $border?: 
 	height: 3.5rem;
 	background-color: ${({ $bgColor }) => $bgColor};
 	border-radius: 0.5rem;
-	border: ${({ $border }) => ($border ? '1px solid #000' : 'none')};
 	cursor: pointer;
 	margin-bottom: 0.5rem;
 	box-sizing: border-box;
@@ -28,10 +27,10 @@ export const LogoImage = styled.img`
 	max-height: 100%;
 `;
 
-export const StyledTextWrapper = styled(StyledText)<{ $left?: string }>`
+export const StyledTextWrapper = styled(StyledText)`
 	display: flex;
 	width: 12.5rem;
-	padding-left: ${({ $left }) => $left || '1.2rem'};
+	padding-left: 1.2rem;
 	align-items: center;
 	margin: 0 auto;
 `;

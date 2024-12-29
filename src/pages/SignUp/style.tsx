@@ -55,7 +55,7 @@ export const InputContainer = styled.section`
 
 export const InputValue = styled.input`
 	width: 100%;
-	max-width: 300px;
+	max-width: 18.75rem;
 	height: 3.25rem;
 	font-family: Pretendard;
 	font-size: 2.5rem;
