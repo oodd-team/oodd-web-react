@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { postIdAtom, userAtom } from '@recoil/Post/PostAtom.ts';
-import { isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
-
-import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
-import BottomSheet from '@components/BottomSheet';
-import BottomSheetMenu from '@components/BottomSheet/BottomSheetMenu';
-import Modal from '@components/Modal';
-import PostBase from './PostBase/index';
-
-import type { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto.ts';
-import type { BottomSheetProps } from '@components/BottomSheet/dto';
-import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
-import type { ModalProps } from '@components/Modal/dto';
-
-import Edit from '@assets/default/edit.svg';
-import Pin from '@assets/default/pin.svg';
-import Delete from '@assets/default/delete.svg';
 
 import { modifyPostRepresentativeStatusApi, deletePostApi } from '@apis/post';
+import { isPostRepresentativeAtom, postIdAtom, userAtom } from '@recoil/Post/PostAtom';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import Delete from '@assets/default/delete.svg';
+import Edit from '@assets/default/edit.svg';
+import Pin from '@assets/default/pin.svg';
+
+import BottomSheet from '@components/BottomSheet';
+import BottomSheetMenu from '@components/BottomSheet/BottomSheetMenu';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
+import Modal from '@components/Modal';
+
+import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
+import type { ModalProps } from '@components/Modal/dto';
+
+import PostBase from './PostBase/index';
 
 const Post: React.FC = () => {
 	const user = useRecoilValue(userAtom);
@@ -41,8 +41,10 @@ const Post: React.FC = () => {
 	const navigate = useNavigate();
 
 	const handleMenuOpen = () => {
-		{
-			isMyPost ? setIsMyPostMenuBottomSheetOpen(true) : setIsOptionsBottomSheetOpen(true);
+		if (isMyPost) {
+			setIsMyPostMenuBottomSheetOpen(true);
+		} else {
+			setIsOptionsBottomSheetOpen(true);
 		}
 	};
 

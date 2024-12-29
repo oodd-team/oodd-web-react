@@ -1,6 +1,6 @@
-import React from 'react';
+import type { ToggleSwitchProps } from '../dto';
+
 import { HiddenCheckbox } from './styles';
-import { ToggleSwitchProps } from '../dto';
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, disabled }) => {
 	return <HiddenCheckbox checked={checked} onChange={onChange} disabled={disabled} role="switch" />;

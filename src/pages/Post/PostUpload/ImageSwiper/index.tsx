@@ -1,15 +1,16 @@
-import React, { useRef } from 'react';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { useRef } from 'react';
+
 import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import PhotoWhite from '@assets/default/photo-white.svg';
+
+import type { ImageSwiperProps } from '../dto';
+
 import { SwiperContainer, ImageWrapper, StyledNavigation, StyledPagination } from './styles';
-
-import PhotoWhite from '../../../assets/default/photo-white.svg';
-
-import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	const swiperRef = useRef<SwiperRef | null>(null);

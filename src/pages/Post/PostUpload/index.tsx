@@ -1,8 +1,14 @@
 //PostUploadModal/index.tsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useRecoilState } from 'recoil';
+
+import { getPostDetailApi, createPostApi, modifyPostApi } from '@apis/post';
+import { PostBase } from '@apis/post/dto';
+import { handleError } from '@apis/util/handleError';
+import { storage } from '@config/firebaseConfig';
 import {
 	postImagesAtom,
 	postContentAtom,
@@ -11,6 +17,31 @@ import {
 	postIsRepresentativeAtom,
 	modeAtom,
 } from '@recoil/PostUpload/PostUploadAtom';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import Left from '@assets/arrow/left.svg';
+import Right from '@assets/arrow/right.svg';
+import Up from '@assets/arrow/up.svg';
+import ClothingTag from '@assets/default/clothes-tag.svg';
+import Pin from '@assets/default/pin.svg';
+import StyleTag from '@assets/default/style-tag.svg';
+
+import BottomButton from '@components/BottomButton';
+import BottomSheet from '@components/BottomSheet';
+import ClothingInfoItem from '@components/ClothingInfoItem';
+import { OODDFrame } from '@components/Frame/Frame';
+import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { ClothingInfo } from '@components/ClothingInfoItem/dto';
+import type { ModalProps } from '@components/Modal/dto';
+
+import type { PostUploadModalProps } from './dto';
+
+import ImageSwiper from './ImageSwiper/index';
+import SearchBottomSheetContent from './SearchBottomSheetContent/index';
 
 import {
 	UploadContainer,
@@ -22,36 +53,7 @@ import {
 	StyletagItem,
 	PinnedPostToggleContainer,
 } from './styles';
-
-import { OODDFrame } from '@components/Frame/Frame';
-import { StyledText } from '@components/Text/StyledText';
-import TopBar from '@components/TopBar';
-import BottomSheet from '@components/BottomSheet';
-import { BottomSheetProps } from '@components/BottomSheet/dto';
-import BottomButton from '@components/BottomButton';
-import ClothingInfoItem from '@components/ClothingInfoItem';
-import ImageSwiper from './ImageSwiper';
-import SearchBottomSheetContent from './SearchBottomSheetContent';
 import ToggleSwitch from './ToggleSwitch';
-import Modal from '@components/Modal';
-
-import Left from '@assets/arrow/left.svg';
-import Right from '@assets/arrow/right.svg';
-import Up from '@assets/arrow/up.svg';
-import ClothingTag from '@assets/default/clothes-tag.svg';
-import StyleTag from '@assets/default/style-tag.svg';
-import Pin from '@assets/default/pin.svg';
-
-import { ClothingInfo } from '@components/ClothingInfoItem/dto';
-import { ModalProps } from '@components/Modal/dto';
-import { PostUploadModalProps } from './dto';
-import { PostBase } from '@apis/post/dto';
-
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@config/firebaseConfig';
-import { getPostDetailApi, createPostApi, modifyPostApi } from '@apis/post';
-import { handleError } from '@apis/util/handleError';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);

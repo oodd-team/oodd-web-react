@@ -1,5 +1,4 @@
-export interface ImageSelectModalProps {}
-import { PostImage } from '../../apis/post/dto';
+import { PostImage } from '@apis/post/dto';
 
 export interface ImageSwiperProps {
 	images: PostImage[];

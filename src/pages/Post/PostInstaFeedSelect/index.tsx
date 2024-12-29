@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
+
 import { postImagesAtom } from '@recoil/PostUpload/PostUploadAtom';
-
-import { Content, PostContainer, ImageWrapper } from './styles';
-
-import { OODDFrame } from '@components/Frame/Frame';
-import TopBar from '@components/TopBar';
-import Modal from '@components/Modal';
-import { ModalProps } from '@components/Modal/dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import X from '@assets/default/x.svg';
 
-import { InstaFeedSelectModalProps, Post } from './dto';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
+import { OODDFrame } from '@components/Frame/Frame';
+import Modal from '@components/Modal';
+import TopBar from '@components/TopBar';
 
-const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
+import type { ModalProps } from '@components/Modal/dto';
+
+import type { Post } from './dto';
+
+import { Content, PostContainer, ImageWrapper } from './styles';
+
+const PostInstaFeedSelect: React.FC = () => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
 	const [, setIsLoading] = useState(false);
 	const [isFailModalOpen, setIsFailModalOpen] = useState(false);

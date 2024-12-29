@@ -1,16 +1,17 @@
-import React, { useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useRef, useState } from 'react';
+
 import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import Plus from '@assets/default/plus.svg';
+import Reject from '@assets/default/reject.svg';
+
+import type { ImageSwiperProps } from '../dto';
+
 import { SwiperContainer, ImageWrapper, RemoveButton, StyledNavigation, AddButton, HiddenFileInput } from './styles';
-
-import Reject from '../../../assets/default/reject.svg';
-import Plus from '../../../assets/default/plus.svg';
-
-import { ImageSwiperProps } from '../dto';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemoveImage }) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);

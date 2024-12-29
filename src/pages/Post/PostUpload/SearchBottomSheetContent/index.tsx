@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 import axios from 'axios';
 
-import { Content, Input, SearchResultList, SearchResultItem, Loader } from './styles';
 import theme from '@styles/theme';
 
 import { StyledText } from '@components/Text/StyledText';
 
-import { SearchBottomSheetProps } from '../dto';
+import type { SearchBottomSheetProps } from '../dto';
+
+import { Content, Input, SearchResultList, SearchResultItem, Loader } from './styles';
 
 const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, onSelectClothingInfo }) => {
 	const [searchQuery, setSearchQuery] = useState('');

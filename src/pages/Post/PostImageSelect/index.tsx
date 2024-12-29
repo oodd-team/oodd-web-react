@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import heic2any from 'heic2any';
 import { useRecoilState } from 'recoil';
+
 import {
 	postImagesAtom,
 	postContentAtom,
@@ -9,24 +11,21 @@ import {
 	postStyletagAtom,
 	postIsRepresentativeAtom,
 } from '@recoil/PostUpload/PostUploadAtom';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
-import { UploadContainer, ImageDragDropContainer, Content } from './styles';
+import Left from '@assets/arrow/left.svg';
+import PhotoBig from '@assets/default/photo-big.svg';
+import X from '@assets/default/x.svg';
 
+import BottomButton from '@components/BottomButton';
 import { OODDFrame } from '@components/Frame/Frame';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
-import BottomButton from '@components/BottomButton';
+
 import ImageSwiper from './ImageSwiper';
+import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 
-import X from '@assets/default/x.svg';
-import Left from '@assets/arrow/left.svg';
-import PhotoBig from '@assets/default/photo-big.svg';
-
-import { ImageSelectModalProps } from './dto';
-import heic2any from 'heic2any';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
-
-const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
+const PostImageSelect: React.FC = () => {
 	const [images, setImages] = useRecoilState(postImagesAtom);
 	const [, setContent] = useRecoilState(postContentAtom);
 	const [, setClothingInfos] = useRecoilState(postClothingInfosAtom);
