@@ -11,21 +11,27 @@ export const InputLayout = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	background-color: ${({ theme }) => theme.colors.background.primary};
+	padding: 0 1rem;
+	margin-bottom: 6.25rem;
+	margin-top: -1rem;
 
 	textarea {
 		display: block;
 		width: 100%;
 		height: 5.25rem;
-		border-radius: 0.5rem;
-		border: 0.0625rem solid #ededed;
-		margin-bottom: 5.25rem;
-		margin-top: -1rem;
+		padding: 0.8rem 0.9375rem;
 		outline: none;
-		padding: 1rem 0.9375rem;
+		border-radius: 0.5rem;
+		border: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 		${({ theme }) => theme.fontStyles['body1-medium']};
-		line-height: 1.25%;
-		color: #1d1d1d;
-		background-color: #f8f8f8;
+		color: ${({ theme }) => theme.colors.text.primary};
+		background-color: ${({ theme }) => theme.colors.background.secondary};
 		resize: none;
+
+		&::placeholder {
+			color: ${({ theme }) => theme.colors.text.tertiary};
+			${({ theme }) => theme.fontStyles['body2-regular']};
+		}
 	}
 `;

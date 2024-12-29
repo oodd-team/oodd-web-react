@@ -10,7 +10,8 @@ export const MessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 
 export const Message = styled(StyledText)`
 	padding: 0.4rem 0.8rem;
-	background-color: #ffe9f3;
+	background-color: ${({ theme }) => theme.colors.brand.primaryLight};
+	/* border: 1.2px solid ${({ theme }) => theme.colors.brand.primaryLight}; */
 	border-radius: 0.8rem 0 0.8rem 0.8rem;
 	max-width: 75%;
 	overflow-wrap: break-word;
@@ -20,7 +21,7 @@ export const TimeWrapper = styled.time`
 	display: flex;
 	align-items: flex-end;
 	margin-right: 0.5rem;
-	color: #8e8e93;
+	color: ${({ theme }) => theme.colors.text.caption};
 	font-family: 'Pretendard Variable';
 	font-size: 0.5625rem;
 	font-style: normal;

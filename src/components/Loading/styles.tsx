@@ -35,7 +35,7 @@ export const Dot = styled.hr<{ $index: number }>`
 	z-index: 200;
 	border-radius: 50%;
 	border: none;
-	background-color: ${({ theme }) => theme.colors.gray2};
+	background-color: ${({ theme }) => theme.colors.gray[300]};
 
 	// 각 점에 대해 딜레이를 적용하여 순차적으로 애니메이션을 시작
 	animation: ${bounceGroup} 2s ease-in-out infinite;

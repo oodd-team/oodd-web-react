@@ -22,6 +22,7 @@ import { StyledText } from '@components/Text/StyledText';
 import Modal from '@components/Modal';
 import type { ModalProps } from '@components/Modal/dto';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+import theme from '@styles/theme';
 
 const NavBar: React.FC = () => {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -120,7 +121,7 @@ const NavBar: React.FC = () => {
 								<StyledText
 									className="styled-text"
 									$textTheme={{ style: selectedTab === tab.name ? `heading2-bold` : 'heading2-medium' }}
-									color="#1d1d1d"
+									color={theme.colors.text.primary}
 								>
 									{tab.name}
 								</StyledText>

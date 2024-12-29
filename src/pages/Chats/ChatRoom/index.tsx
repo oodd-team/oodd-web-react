@@ -18,7 +18,7 @@ import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
 import type { ModalProps } from '@components/Modal/dto';
 import { createExtendedMessages } from './createExtendedMessages';
 import { AllMesagesAtom } from '@recoil/Chats/AllMessages';
-import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import { useSocket } from '@context/SocketProvider';
 import Back from '@assets/arrow/left.svg';
 import KebabMenu from '@assets/default/more.svg';
@@ -52,7 +52,7 @@ const ChatRoom: React.FC = () => {
 
 	const { chatRoomId } = useParams();
 	const currentUserId = getCurrentUserId();
-	const opponentInfo = useRecoilValue(OpponentInfoAtom);
+	const otherUser = useRecoilValue(OtherUserAtom);
 
 	// 메시지 수신 시 아래로 스크롤 (스크롤 아래 고정)
 	const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
@@ -61,21 +61,21 @@ const ChatRoom: React.FC = () => {
 
 	// 프로필 사진 클릭 시 프로필 페이지로 이동
 	const handleUserClick = useCallback(() => {
-		const opponentId = opponentInfo?.id ? opponentInfo.id : -1;
-		if (opponentId === -1) {
+		const otherUserId = otherUser?.id ? otherUser.id : -1;
+		if (otherUserId === -1) {
 			setModalContent('유저 정보를 찾을 수 없습니다.');
 			setIsStatusModalOpen(true);
 		} else {
-			nav(`/users/${opponentId}`);
+			nav(`/profile/${otherUserId}`);
 		}
-	}, [opponentInfo, nav]);
+	}, [otherUser, nav]);
 
 	// 유저 차단 api
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
 				requesterId: currentUserId,
-				targetId: opponentInfo?.id || -1,
+				targetId: otherUser?.id || -1,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);
@@ -133,7 +133,7 @@ const ChatRoom: React.FC = () => {
 	// 메시지 수신 시
 	useEffect(() => {
 		// 렌더링에 필요한 정보 추가
-		const temp = createExtendedMessages(allMessages, currentUserId, opponentInfo);
+		const temp = createExtendedMessages(allMessages, currentUserId, otherUser);
 		setExtendedMessages(temp);
 
 		// 스크롤 아래로 이동
@@ -230,7 +230,7 @@ const ChatRoom: React.FC = () => {
 	return (
 		<OODDFrame>
 			<TopBar
-				text={opponentInfo?.nickname || '알수없음'}
+				text={otherUser?.nickname || '알수없음'}
 				LeftButtonSrc={Back}
 				RightButtonSrc={KebabMenu}
 				onClickLeftButton={() => {

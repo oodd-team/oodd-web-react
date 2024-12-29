@@ -2,7 +2,7 @@ import { ChatBoxContainer, Textarea, SendButton } from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { OpponentInfoAtom } from '@recoil/util/OpponentInfo';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import { useSocket } from '@context/SocketProvider';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
@@ -13,11 +13,11 @@ const ChatBox: React.FC = () => {
 
 	const { chatRoomId } = useParams();
 	const currentUserId = getCurrentUserId();
-	const opponentInfo = useRecoilValue(OpponentInfoAtom);
-	const isOpponentValid = !!(opponentInfo && opponentInfo.id);
+	const otherUser = useRecoilValue(OtherUserAtom);
+	const isOtherUserValid = !!(otherUser && otherUser.id);
 
 	useEffect(() => {
-		if (textareaRef.current && !isOpponentValid) {
+		if (textareaRef.current && !isOtherUserValid) {
 			textareaRef.current.disabled = true;
 			textareaRef.current.placeholder = '메시지를 보낼 수 없습니다.';
 		}
@@ -51,7 +51,7 @@ const ChatBox: React.FC = () => {
 		if (socket) {
 			const sendMessageRequest = {
 				chatRoomId: Number(chatRoomId),
-				toUserId: opponentInfo?.id,
+				toUserId: otherUser?.id,
 				content: newMessage,
 				fromUserId: currentUserId,
 				createdAt: new Date().toISOString(),
@@ -64,7 +64,7 @@ const ChatBox: React.FC = () => {
 	return (
 		<ChatBoxContainer>
 			<Textarea
-				$isOpponentValid={isOpponentValid}
+				$isOtherUserValid={isOtherUserValid}
 				placeholder="메시지 보내기"
 				ref={textareaRef}
 				value={newMessage}
@@ -72,7 +72,7 @@ const ChatBox: React.FC = () => {
 				onKeyDown={handleEnterKeyDown}
 				onSubmit={handleNewMessageSubmit}
 			/>
-			<SendButton $isOpponentValid={isOpponentValid} onClick={handleNewMessageSubmit} />
+			<SendButton $isOtherUserValid={isOtherUserValid} onClick={handleNewMessageSubmit} />
 		</ChatBoxContainer>
 	);
 };

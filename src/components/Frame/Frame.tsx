@@ -3,7 +3,7 @@ import theme from '@styles/theme';
 
 export const OODDFrame = styled.div`
 	${theme.breakPoints};
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	height: 100vh;
 	margin: auto;
 	display: flex;

@@ -8,7 +8,7 @@ import { chatRoomMessagesData } from '@apis/chatting/dto';
 export const createExtendedMessages = (
 	allMessages: chatRoomMessagesData[],
 	userId: number,
-	opponentInfo: OtherUserDto | null,
+	otherUser: OtherUserDto | null,
 ) => {
 	// DateBar 표시 여부를 결정하는 함수
 	const isNewDay = (curDate: string, lastDate: string) => {
@@ -33,13 +33,12 @@ export const createExtendedMessages = (
 		let isProfileImageVisible =
 			prevMessage === null || prevMessage.fromUser.id !== message.fromUser.id || isDateBarVisible;
 
-		// 가장 마지막 메시지이거나, 전송자 또는 시간 또는 날짜가 바뀌기 직전인 경우
+		// 가장 마지막 메시지이거나, 전송자 또는 시간이 바뀌기 직전인 경우
 		// 메시지 전송 시각 출력
 		let isTimeVisible =
 			nextMessage === null ||
 			message.fromUser.id !== nextMessage.fromUser.id ||
-			formattedTime !== dayjs(nextMessage.createdAt).format('HH:mm') ||
-			isNewDay(nextMessage.createdAt, message.createdAt);
+			formattedTime !== dayjs(nextMessage.createdAt).format('HH:mm');
 
 		// 채팅의 첫 메시지가 아니고, 전송자가 바뀐 경우
 		// margin-top 추가
@@ -57,8 +56,8 @@ export const createExtendedMessages = (
 		} else {
 			// 받은 메시지일 경우 rcvdMessage 속성 추가
 			const rcvdMessage: RcvdMessageProps = {
-				fromUserNickname: opponentInfo?.nickname || '알수없음',
-				profilePictureUrl: opponentInfo?.profileUrl || defaultProfile,
+				fromUserNickname: otherUser?.nickname || '알수없음',
+				profilePictureUrl: otherUser?.profilePictureUrl || defaultProfile,
 				content: message.content,
 				isProfileImageVisible,
 				isSenderChanged,

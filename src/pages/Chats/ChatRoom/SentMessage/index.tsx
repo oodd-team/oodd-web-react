@@ -8,7 +8,7 @@ const SentMessage: React.FC<SentMessageProps> = React.memo(
 		return (
 			<MessageLayout $isSenderChanged={isSenderChanged}>
 				{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}
-				<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+				<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 					{content}
 				</Message>
 			</MessageLayout>
