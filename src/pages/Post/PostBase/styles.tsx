@@ -1,5 +1,6 @@
-import { styled }, { keyframes } from 'styled-components';
-import { StyledText } from '../../../components/Text/StyledText';
+import { styled, keyframes } from 'styled-components';
+
+import { StyledText } from '@components/Text/StyledText';
 
 // 그라데이션 애니메이션 정의
 const shimmer = keyframes`

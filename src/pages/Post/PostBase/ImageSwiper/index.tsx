@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { SwiperContainer, ImageWrapper, StyledNavigation } from './styles';
-
 import { ImageSwiperProps } from '../dto';
+
+import { SwiperContainer, ImageWrapper, StyledNavigation } from './styles';
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 	const swiperRef = useRef<SwiperRef | null>(null);

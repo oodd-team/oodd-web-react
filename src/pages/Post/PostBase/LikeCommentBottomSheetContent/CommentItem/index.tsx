@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 
 import theme from '@styles/theme';
+
+import More from '@assets/default/more.svg';
+
+import { StyledText } from '@components/Text/StyledText';
+
+import type { CommentItemProps } from './dto';
+
 import {
 	StyledBigUserProfile,
 	CommentItem as StyledCommentItem,
@@ -11,12 +18,6 @@ import {
 	RightContainer,
 	MenuBtn,
 } from './styles';
-
-import { StyledText } from '@components/Text/StyledText';
-
-import type { CommentItemProps } from './dto';
-
-import More from '@assets/default/more.svg';
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, handleMenuOpen }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>();
