@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const BottomSheetMenuLayout = styled.ul`
 	margin-bottom: 0.62rem;

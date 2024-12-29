@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import ArrowIcon from '@assets/arrow/min-right.svg';
 
 export const CardLayout = styled.div`

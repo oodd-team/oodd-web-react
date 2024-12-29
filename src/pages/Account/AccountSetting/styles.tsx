@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
 	margin: 0 auto;
 	width: 100%;
-	flex-grow: 1; 
+	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -18,13 +18,13 @@ export const ProfilePicWrapper = styled.div`
 `;
 
 export const ProfilePic = styled.div`
-	width: 7.25rem; 
-	height: 7.25rem; 
+	width: 7.25rem;
+	height: 7.25rem;
 	flex-shrink: 0;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-top: 2.125rem; 
-	margin-bottom: 1.375rem; 
+	margin-top: 2.125rem;
+	margin-bottom: 1.375rem;
 
 	img {
 		width: 100%;
@@ -42,14 +42,13 @@ export const Row = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 10px; 
+	margin-bottom: 10px;
 
 	${Label} {
 		width: auto;
 		margin: 0;
 	}
 `;
-
 
 export const FileInput = styled.input`
 	display: none;
@@ -58,26 +57,26 @@ export const FileInput = styled.input`
 export const List = styled.ul`
 	width: 100%;
 	padding: 0;
-	margin: 0; 
+	margin: 0;
 	list-style: none;
 	border-top: 0px solid ${({ theme }) => theme.colors.background.divider};
 	position: absolute;
-	bottom: 20px; 
+	bottom: 20px;
 `;
 
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 15px 1.25rem; 
+	padding: 15px 1.25rem;
 	border-bottom: 0px solid ${({ theme }) => theme.colors.background.divider};
 	cursor: pointer;
 
 	& img:first-child {
-		margin-right: 1rem; 
+		margin-right: 1rem;
 	}
 
 	& img:last-child {
-		margin-left: auto; 
+		margin-left: auto;
 	}
 
 	&:hover {

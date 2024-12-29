@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import theme from '@styles/theme';
 import { StyledText } from '@components/Text/StyledText';
 import type { TopBarLayoutProps } from './dto';

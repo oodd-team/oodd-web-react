@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const VerificationWrapper = styled.div`
 	margin: 0 auto;
 	width: 100%;
-	flex-grow: 1; 
+	flex-grow: 1;
 	padding: 1.25rem;
 	display: flex;
 	flex-direction: column;
@@ -11,7 +11,7 @@ export const VerificationWrapper = styled.div`
 `;
 
 export const Container = styled.div`
-	margin-top: 5px; 
+	margin-top: 5px;
 	padding: 1rem;
 `;
 
@@ -46,15 +46,13 @@ export const Button = styled.button`
 	margin-top: 300px;
 	font-size: 0.875rem;
 	color: ${({ theme }) => theme.colors.contrast};
-	background-color: ${({ theme, disabled }) =>
-  disabled ? theme.colors.gray[300] : theme.colors.black};
+	background-color: ${({ theme, disabled }) => (disabled ? theme.colors.gray[300] : theme.colors.black)};
 	border: none;
 	border-radius: 0.3125rem;
 	cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
 	&:hover {
-		background-color: ${({ theme, disabled }) =>
-  		disabled ? theme.colors.gray[300] : theme.colors.gray[700]};
+		background-color: ${({ theme, disabled }) => (disabled ? theme.colors.gray[300] : theme.colors.gray[700])};
 	}
 `;
 

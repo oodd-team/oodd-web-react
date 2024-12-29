@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const CommentLayout = styled.div<{ $isModal: boolean }>`
 	margin: 1.38rem auto 1.25rem auto;

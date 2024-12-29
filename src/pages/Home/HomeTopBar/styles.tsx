@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const HomeTopBarContainer = styled.header`
 	width: 100%;

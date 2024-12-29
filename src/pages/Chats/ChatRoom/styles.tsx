@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const MessagesContainer = styled.div<{ $isLoading: boolean }>`
 	visibility: ${({ $isLoading }) => ($isLoading ? 'hidden' : 'visible')};

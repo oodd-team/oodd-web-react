@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { StyledText } from '@components/Text/StyledText';
 
 export const LoginContainer = styled.main`
