@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const Nav = styled.nav`
 	display: flex;
@@ -10,7 +10,7 @@ export const Nav = styled.nav`
 	left: 0;
 	width: 100%;
 	background-color: ${({ theme }) => theme.colors.contrast};
-	z-index: 1000; 
+	z-index: 1000;
 	position: sticky;
 `;
 
@@ -25,7 +25,7 @@ export const IconContainer = styled.div`
 	}
 
 	img {
-		width: 1.5rem; 
-		height: 1.5rem; 
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 `;

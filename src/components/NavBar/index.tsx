@@ -1,5 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import theme from '@styles/theme';
+
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import logout from '@assets/default/leave.svg';
+import logo from '@assets/default/oodd.svg';
+
+import Alarm from '@components/Icons/Alarm';
+import Home from '@components/Icons/Home';
+import Message from '@components/Icons/Message';
+import MyPage from '@components/Icons/MyPage';
+
+import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
+
+import type { ModalProps } from '@components/Modal/dto';
+
 import {
 	NavBarContainer,
 	NavBarWrapper,
@@ -12,17 +30,6 @@ import {
 	SideNavBarFooter,
 	Icon,
 } from './styles';
-import Message from '@components/Icons/Message';
-import Home from '@components/Icons/Home';
-import MyPage from '@components/Icons/MyPage';
-import Alarm from '@components/Icons/Alarm';
-import logo from '@assets/default/oodd.svg';
-import logout from '@assets/default/leave.svg';
-import { StyledText } from '@components/Text/StyledText';
-import Modal from '@components/Modal';
-import type { ModalProps } from '@components/Modal/dto';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
-import theme from '@styles/theme';
 
 const NavBar: React.FC = () => {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);

@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 import type { User } from '@apis/post/dto';
 
 export const postIdAtom = atom<number>({

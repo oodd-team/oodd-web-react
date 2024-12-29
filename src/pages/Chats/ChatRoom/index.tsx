@@ -1,36 +1,44 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import dayjs from 'dayjs';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { MessagesContainer } from './styles';
-import { OODDFrame } from '@components/Frame/Frame';
-import TopBar from '@components/TopBar';
-import RcvdMessage from './RcvdMessage/index';
-import SentMessage from './SentMessage/index';
-import DateBar from './DateBar/index';
-import ChatBox from './ChatBox/index';
-import BottomSheet from '@components/BottomSheet';
-import BottomSheetMenu from '@components/BottomSheetMenu';
-import Modal from '@components/Modal';
-import Loading from '@components/Loading';
-import type { ExtendedMessageDto } from './dto';
-import type { BottomSheetProps } from '@components/BottomSheet/dto';
-import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
-import type { ModalProps } from '@components/Modal/dto';
-import { createExtendedMessages } from './createExtendedMessages';
+
+import 'dayjs/locale/ko';
+import { postUserBlockApi } from '@apis/user-block';
+import { handleError } from '@apis/util/handleError';
+import { useSocket } from '@context/SocketProvider';
 import { AllMesagesAtom } from '@recoil/Chats/AllMessages';
 import { OtherUserAtom } from '@recoil/util/OtherUser';
-import { useSocket } from '@context/SocketProvider';
-import Back from '@assets/arrow/left.svg';
-import KebabMenu from '@assets/default/more.svg';
-import Exit from '@assets/default/leave.svg';
-import Block from '@assets/default/block.svg';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-import type { chatRoomMessagesData } from '@apis/chatting/dto';
-import { postUserBlockApi } from '@apis/user-block';
-import type { PostUserBlockRequest } from '@apis/user-block/dto';
-import { handleError } from '@apis/util/handleError';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import Back from '@assets/arrow/left.svg';
+import Block from '@assets/default/block.svg';
+import Exit from '@assets/default/leave.svg';
+import KebabMenu from '@assets/default/more.svg';
+
+import BottomSheet from '@components/BottomSheet';
+import BottomSheetMenu from '@components/BottomSheet/BottomSheetMenu';
+import { OODDFrame } from '@components/Frame/Frame';
+import Loading from '@components/Loading';
+import Modal from '@components/Modal';
+import TopBar from '@components/TopBar';
+
+import type { chatRoomMessagesData } from '@apis/chatting/dto';
+import type { PostUserBlockRequest } from '@apis/user-block/dto';
+import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { ModalProps } from '@components/Modal/dto';
+
+import type { ExtendedMessageDto } from './dto';
+
+import ChatBox from './ChatBox/index';
+import DateBar from './DateBar/index';
+import RcvdMessage from './RcvdMessage/index';
+import SentMessage from './SentMessage/index';
+
+import { createExtendedMessages } from './createExtendedMessages';
+import { MessagesContainer } from './styles';
 
 const ChatRoom: React.FC = () => {
 	const [extendedMessages, setExtendedMessages] = useState<ExtendedMessageDto[]>([]);

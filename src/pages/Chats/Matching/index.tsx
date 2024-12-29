@@ -1,9 +1,14 @@
-import React from 'react';
-import Cards from './Cards/index';
+import { memo } from 'react';
+
 import theme from '@styles/theme';
-import { ReqeustInfo } from './styles';
+
 import { StyledText } from '@components/Text/StyledText';
+
 import type { MatchingProps } from './dto';
+
+import Cards from './Cards/index';
+
+import { ReqeustInfo } from './styles';
 
 const Matching: React.FC<MatchingProps> = ({ matchingCount, decreaseMatchingCount }) => {
 	return (
@@ -19,4 +24,4 @@ const Matching: React.FC<MatchingProps> = ({ matchingCount, decreaseMatchingCoun
 	);
 };
 
-export default React.memo(Matching);
+export default memo(Matching);

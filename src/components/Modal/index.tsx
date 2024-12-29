@@ -1,9 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ModalWrapper, ModalContainer, CloseButton, ConfirmButton } from './styles';
-import { StyledText } from '@components/Text/StyledText';
-import type { ModalProps } from './dto';
+import { createPortal } from 'react-dom';
+
 import closeIcon from '@assets/default/x.svg';
+
+import { StyledText } from '@components/Text/StyledText';
+
+import type { ModalProps } from './dto';
+
+import { ModalWrapper, ModalContainer, CloseButton, ConfirmButton } from './styles';
 
 const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, button }) => {
 	const handleBackgroundClick = (e: React.MouseEvent) => {
@@ -21,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ isCloseButtonVisible, onClose, content, b
 		}
 	};
 
-	return ReactDOM.createPortal(
+	return createPortal(
 		<ModalWrapper onClick={handleBackgroundClick}>
 			<ModalContainer $isCloseButtonVisible={isCloseButtonVisible || false}>
 				{isCloseButtonVisible && (

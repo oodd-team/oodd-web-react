@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const OOTDContainer = styled.div`
 	display: flex;

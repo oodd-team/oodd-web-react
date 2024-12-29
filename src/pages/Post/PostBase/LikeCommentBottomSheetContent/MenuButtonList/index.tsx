@@ -1,8 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import type { MenuButtonListProps } from './dto';
-import { MenuListWrapper, MenuListContainer, MenuButtonItem } from './styles';
+import { createPortal } from 'react-dom';
+
 import { StyledText } from '@components/Text/StyledText';
+
+import type { MenuButtonListProps } from './dto';
+
+import { MenuListWrapper, MenuListContainer, MenuButtonItem } from './styles';
 
 const MenuButtonList: React.FC<MenuButtonListProps> = ({ items, onClose, position }) => {
 	const handleWrapperClick = () => {
@@ -13,7 +15,7 @@ const MenuButtonList: React.FC<MenuButtonListProps> = ({ items, onClose, positio
 		event.stopPropagation(); // Container 클릭 시 이벤트 중단
 	};
 
-	return ReactDOM.createPortal(
+	return createPortal(
 		<MenuListWrapper onClick={handleWrapperClick}>
 			<MenuListContainer $position={position} onClick={handleContainerClick}>
 				{items.map((item, index) => (

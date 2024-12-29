@@ -1,20 +1,35 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
+import { useRecoilState } from 'recoil';
 import 'dayjs/locale/ko';
 
 import theme from '@styles/theme';
 
+import { getPostDetailApi } from '@apis/post';
+import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
-import { OODDFrame } from '@components/Frame/Frame';
-import { StyledText } from '@components/Text/StyledText';
-import TopBar from '@components/TopBar';
-import NavBar from '@components/NavBar';
+import Left from '@assets/arrow/left.svg';
+import LikeFill from '@assets/default/like-fill.svg';
+import Like from '@assets/default/like.svg';
+import Message from '@assets/default/message.svg';
+import More from '@assets/default/more.svg';
+
 import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';
+import { OODDFrame } from '@components/Frame/Frame';
+import NavBar from '@components/NavBar';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+
+import type { GetPostDetailResponse } from '@apis/post/dto';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+
+import type { PostBaseProps } from './dto';
+
 import ImageSwiper from './ImageSwiper/index';
 import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent/index';
 
@@ -35,20 +50,6 @@ import {
 	Icon,
 	ClothingInfoList,
 } from './styles';
-
-import Left from '@assets/arrow/left.svg';
-import Like from '@assets/default/like.svg';
-import LikeFill from '@assets/default/like-fill.svg';
-import Message from '@assets/default/message.svg';
-import More from '@assets/default/more.svg';
-
-import type { BottomSheetProps } from '@components/BottomSheet/dto';
-import type { PostBaseProps } from './dto';
-import type { GetPostDetailResponse } from '@apis/post/dto';
-
-import { getPostDetailApi } from '@apis/post';
-import { togglePostLikeStatusApi } from '@apis/post-like';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [, setPostId] = useRecoilState(postIdAtom);

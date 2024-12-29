@@ -1,11 +1,15 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, memo } from 'react';
+
 import BottomButton from '@components/BottomButton';
-import BottomSheetMenu from '@components/BottomSheetMenu';
-import { SheetItemDto } from '@components/BottomSheetMenu/dto';
+
 import type { ReportBottomSheetMenuProps } from './dto';
+
+import { SheetItemDto } from '../../BottomSheetMenu/dto';
+import BottomSheetMenu from '../../BottomSheetMenu/index';
+
 import { InputLayout, ReportBottomSheetMenuWrappar } from './styles';
 
-const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = React.memo(
+const ReportBottomSheetMenu: React.FC<ReportBottomSheetMenuProps> = memo(
 	({ onCloseReportSheet, onOpenStatusModal, sendReport, isUserReport }) => {
 		const [isVisibleTextarea, setIsTextareaVisible] = useState(false);
 		const [inputValue, setInputValue] = useState('');

@@ -1,24 +1,35 @@
 import { useState } from 'react';
-import BottomSheet from '../index';
-import BottomSheetMenu from '@components/BottomSheetMenu';
-import ReportBottomSheetMenu from './ReportBottomSheetMenu';
-import Modal from '@components/Modal';
 
-import type { OptionsBottomSheetProps } from './dto';
-import type { BottomSheetProps } from '../dto';
-import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
-import type { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
-import type { ModalProps } from '@components/Modal/dto';
+import theme from '@styles/theme';
+
+import { sendPostReportApi } from '@apis/post-report';
+import { postUserBlockApi } from '@apis/user-block';
+import { postUserReportApi } from '@apis/user-report';
+import { handleError } from '@apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import blockIcon from '@assets/default/block.svg';
+import closeIcon from '@assets/default/modal-close-white.svg';
+import reportIcon from '@assets/default/report.svg';
+
+import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
 
 import type { SendPostReportRequest } from '@apis/post-report/dto';
-import type { PostUserReportRequest } from '@apis/user-report/dto';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
+import type { PostUserReportRequest } from '@apis/user-report/dto';
+import type { ModalProps } from '@components/Modal/dto';
 
-import { StyledText } from '@components/Text/StyledText';
-import { handleError } from '@apis/util/handleError';
-import blockIcon from '@assets/default/block.svg';
-import reportIcon from '@assets/default/report.svg';
-import closeIcon from '@assets/default/modal-close-white.svg';
+import type { BottomSheetMenuProps } from '../BottomSheetMenu/dto';
+import type { BottomSheetProps } from '../dto';
+
+import type { OptionsBottomSheetProps } from './dto';
+import type { ReportBottomSheetMenuProps } from './ReportBottomSheetMenu/dto';
+
+import BottomSheetMenu from '../BottomSheetMenu/index';
+import BottomSheet from '../index';
+
+import ReportBottomSheetMenu from './ReportBottomSheetMenu/index';
 
 import {
 	ReportBottomSheetLayout,
@@ -29,11 +40,6 @@ import {
 	CloseButton,
 	ReportModalBox,
 } from './styles';
-import theme from '@styles/theme';
-import { postUserBlockApi } from '@apis/user-block';
-import { postUserReportApi } from '@apis/user-report';
-import { sendPostReportApi } from '@apis/post-report';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const OptionsBottomSheet: React.FC<OptionsBottomSheetProps> = ({
 	domain,

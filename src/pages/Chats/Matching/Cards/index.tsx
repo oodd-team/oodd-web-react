@@ -1,13 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { useEffect, useRef, useState } from 'react';
+
 import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { CardsContainer } from './styles';
-import Card from './Card/index';
 import { getMatchingListApi } from '@apis/matching';
+
 import type { MatchingDto } from '@apis/matching/dto';
+
 import type { CardsProps } from './dto';
+
+import Card from './Card/index';
+
+import { CardsContainer } from './styles';
 
 const Cards: React.FC<CardsProps> = ({ decreaseMatchingCount }) => {
 	const [matchings, setMatchings] = useState<MatchingDto[]>([]);

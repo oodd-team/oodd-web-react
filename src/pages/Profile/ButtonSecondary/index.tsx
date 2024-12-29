@@ -1,8 +1,10 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from './styles';
-import { StyledText } from '@components/Text/StyledText';
+
 import theme from '@styles/theme';
+
+import { StyledText } from '@components/Text/StyledText';
+
+import { Button } from './styles';
 
 const ButtonSecondary: React.FC = () => {
 	const navigate = useNavigate();

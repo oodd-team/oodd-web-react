@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const ProfileContainer = styled.div`
 	width: 100%;
@@ -7,7 +7,7 @@ export const ProfileContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: center;
-	box-sizing: border-box; 
+	box-sizing: border-box;
 	overflow-y: auto;
 	padding-top: 0rem;
 `;
@@ -23,9 +23,8 @@ export const StatsContainer = styled.div`
 	display: flex;
 	justify-content: space-around;
 	padding: 0.625rem 0;
-	border-top: 1px solid ${({ theme }) => theme.colors.background.divider}; 
+	border-top: 1px solid ${({ theme }) => theme.colors.background.divider};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.background.divider};
-
 `;
 
 export const Stat = styled.div`
@@ -35,21 +34,21 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: ${({ theme }) => theme.colors.caption};	
+	color: ${({ theme }) => theme.colors.caption};
 	//변경된 컬러시스템에서의 gray4가 800으로 나와있어서 적용해보면 색상이 다르게 나옵니다!
 	text-align: center;
 	font-family: 'Pretendard';
-	font-size: 1rem; 
+	font-size: 1rem;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
 `;
 
 export const StatLabel = styled.div`
-	color: ${({ theme }) => theme.colors.caption};	
+	color: ${({ theme }) => theme.colors.caption};
 	text-align: center;
 	font-family: 'Pretendard';
-	font-size: 0.75rem; 
+	font-size: 0.75rem;
 	font-style: normal;
 	font-weight: 300;
 `;
@@ -57,7 +56,7 @@ export const StatLabel = styled.div`
 export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between; 
+	justify-content: space-between;
 	gap: 15px;
 	cursor: pointer;
 	margin-bottom: 100px;
@@ -87,11 +86,12 @@ export const NoPostWrapper = styled.div`
 export const Button = styled.button`
 	width: 100%;
 	margin: 1.25rem auto;
-	height: 3.1rem; 
+	height: 3.1rem;
 	text-align: center;
-	color: ${({ theme }) => theme.colors.contrast};	
+	color: ${({ theme }) => theme.colors.contrast};
 	cursor: pointer;
 	box-sizing: border-box;
 	border-radius: 10px;
 	padding: 10px;
-	background: ${({ theme }) => theme.colors.brand.gradient};`;
+	background: ${({ theme }) => theme.colors.brand.gradient};
+`;

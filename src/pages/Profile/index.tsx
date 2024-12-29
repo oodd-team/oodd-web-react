@@ -1,5 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import theme from '@styles/theme';
+
+import { createMatchingApi } from '@apis/matching';
+import { getUserPostListApi } from '@apis/post';
+import { getUserInfoApi } from '@apis/user';
+
+import BackSvg from '@assets/arrow/left.svg';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import MoreSvg from '@assets/default/more.svg';
+import button_plus from '@assets/default/plus.svg';
+
+import CommentBottomSheet from '@components/BottomSheet/CommentBottomSheet';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
+import { OODDFrame } from '@components/Frame/Frame';
+import Loading from '@components/Loading';
+import Modal from '@components/Modal';
+import NavBar from '@components/NavBar';
+import PostItem from '@components/PostItem';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+import UserProfile from '@components/UserProfile';
+
+import type { UserPostSummary } from '@apis/post/dto'; // type 명시
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
+
+import ButtonSecondary from './ButtonSecondary/index'; // 상대 경로 index 명시
+import NavbarProfile from './NavbarProfile/index'; // 상대 경로 index 명시
+
 import {
 	ProfileContainer,
 	Header,
@@ -12,29 +41,6 @@ import {
 	NoPostWrapper,
 	Button,
 } from './styles';
-import NavbarProfile from './NavbarProfile/index'; // 상대 경로 index 명시
-import ButtonSecondary from './ButtonSecondary/index'; // 상대 경로 index 명시
-import { OODDFrame } from '@components/Frame/Frame';
-import NavBar from '@components/NavBar';
-import PostItem from '@components/PostItem';
-import imageBasic from '@assets/default/defaultProfile.svg';
-import Loading from '@components/Loading';
-import UserProfile from '@components/UserProfile';
-import { StyledText } from '@components/Text/StyledText';
-import Modal from '@components/Modal';
-import CommentBottomSheet from '@components/CommentBottomSheet';
-import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
-
-import { getUserPostListApi } from '@apis/post';
-import { getUserInfoApi } from '@apis/user';
-import { createMatchingApi } from '@apis/matching';
-import type { UserPostSummary } from '@apis/post/dto'; // type 명시
-import type { UserInfoData } from '@apis/user/dto'; // type 명시
-import button_plus from '@assets/default/plus.svg';
-import TopBar from '@components/TopBar';
-import MoreSvg from '@assets/default/more.svg';
-import BackSvg from '@assets/arrow/left.svg';
-import theme from '@styles/theme';
 
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
@@ -80,9 +86,9 @@ const Profile: React.FC = () => {
 		try {
 			await createMatchingApi(matchingRequestData);
 			handleModalOpen(`${userInfo?.nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
-		} catch (error: any) {
+		} catch (error) {
 			console.error('매칭 신청 오류:', error);
-			handleModalOpen(error.response?.data?.message || '매칭 신청에 실패했습니다.');
+			handleModalOpen('매칭 신청에 실패했습니다.');
 		}
 	};
 
@@ -98,7 +104,7 @@ const Profile: React.FC = () => {
 		<OODDFrame>
 			<ProfileContainer>
 				{isMyPage && (
-					<AddButton onClick={() => navigate('/image-select')}>
+					<AddButton onClick={() => navigate('/post/upload/photo/select')}>
 						<img src={button_plus} alt="Add" />
 					</AddButton>
 				)}
@@ -110,7 +116,7 @@ const Profile: React.FC = () => {
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
 						onClickLeftButton={() => navigate(-1)}
-						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} 
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)}
 					/>
 				)}
 

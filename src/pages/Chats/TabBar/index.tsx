@@ -1,14 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+
+import SwiperCore from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import theme from '@styles/theme';
+
+import { getMatchingListApi } from '@apis/matching';
+
 import { StyledText } from '@components/Text/StyledText';
-import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
+
 import Matching from '../Matching/index';
 import RecentChat from '../RecentChat/index';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
+import { TabBarLayout, TabBarContainer, TabBarWrapper, TabBarList, Tabs } from './styles';
+
 import 'swiper/css';
-import { getMatchingListApi } from '@apis/matching';
-import theme from '@styles/theme';
 
 const TabBar: React.FC = () => {
 	const [matchingCount, setMatchingCount] = useState(0);
@@ -127,4 +133,4 @@ const TabBar: React.FC = () => {
 	);
 };
 
-export default React.memo(TabBar);
+export default memo(TabBar);

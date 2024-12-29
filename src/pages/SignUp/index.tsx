@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { patchUserInfoApi } from '@apis/user';
-import type { PatchUserInfoRequest } from '@apis/user/dto';
 import { handleError } from '@apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import OODDlogo from '@assets/default/oodd.svg';
 
-import { OODDFrame } from '@components/Frame/Frame';
-import { StyledText } from '@components/Text/StyledText';
 import BottomButton from '@components/BottomButton';
+import { OODDFrame } from '@components/Frame/Frame';
 import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
 
-import { getCurrentUserId } from '@utils/getCurrentUserId';
+import type { PatchUserInfoRequest } from '@apis/user/dto';
 
 import {
 	SignUpLayout,

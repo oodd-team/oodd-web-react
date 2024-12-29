@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
+
 import { BigUserProfile } from '../styles';
 
 export const CommentItem = styled.div`

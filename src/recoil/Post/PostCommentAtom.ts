@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 import type { Comment } from '@apis/post-comment/dto';
 
 export const IsCommentDeleteConfirmationModalOpenAtom = atom<boolean>({

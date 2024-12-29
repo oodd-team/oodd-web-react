@@ -1,4 +1,4 @@
-import { chatRoomMessagesData } from '@apis/chatting/dto';
+import type { chatRoomMessagesData } from '@apis/chatting/dto';
 
 export interface ExtendedMessageDto extends chatRoomMessagesData {
 	isDateBarVisible: boolean;

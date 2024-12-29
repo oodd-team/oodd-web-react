@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const PostItemLayout = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */

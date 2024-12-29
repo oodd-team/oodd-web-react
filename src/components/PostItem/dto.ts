@@ -1,6 +1,6 @@
 import { UserPostSummary } from '@apis/post/dto';
 
-export interface Post extends UserPostSummary {}
+export type Post = UserPostSummary;
 
 export interface PostItemProps {
 	post: Post;

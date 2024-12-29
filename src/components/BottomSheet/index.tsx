@@ -1,5 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import closeIcon from '@assets/default/x.svg';
+
 import type { BottomSheetProps } from './dto';
+
 import {
 	BottomSheetWrapper,
 	BottomSheetLayout,
@@ -9,7 +13,6 @@ import {
 	SideBarTopBar,
 	ComponentBox,
 } from './styles';
-import closeIcon from '@assets/default/x.svg';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
