@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { OODDFrame } from '../../components/Frame/Frame';
+
+import theme from '@styles/theme';
+
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+
 import { NotFoundContainer, TextContainer, ButtonContainer, StyledButton } from './styles';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
 
 const NotFound = () => {
 	const navigate = useNavigate();

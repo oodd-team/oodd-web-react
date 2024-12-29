@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
-import { StyledText } from '@components/Text/StyledText';
+
 import theme from '@styles/theme';
+
+import { StyledText } from '@components/Text/StyledText';
 
 export const TermsAgreementLayout = styled.main`
 	display: flex;
