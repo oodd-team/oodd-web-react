@@ -1,4 +1,26 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+import theme from '@styles/theme';
+
+import { getUserInfoApi, patchUserInfoApi } from '@apis/user';
+import { storage } from '@config/firebaseConfig';
+
+import back from '@assets/arrow/left.svg';
+import camera from '@assets/default/camera.svg';
+import imageBasic from '@assets/default/defaultProfile.svg';
+
+import BottomButton from '@components/BottomButton/index';
+import { OODDFrame } from '@components/Frame/Frame';
+import Loading from '@components/Loading/index';
+import Modal from '@components/Modal/index';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar/index';
+
+import type { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; // type 명시
+
 import {
 	ProfileEditContainer,
 	ProfilePic,
@@ -11,24 +33,7 @@ import {
 	UserInfo,
 	Username,
 	EmailInput,
-} from './styles'; 
-import { StyledText } from '@components/Text/StyledText';
-import theme from '@styles/theme';
-import { OODDFrame } from '@components/Frame/Frame';
-import { useNavigate } from 'react-router-dom';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@config/firebaseConfig';
-import Modal from '@components/Modal/index';
-
-import TopBar from '@components/TopBar/index';
-import back from '@assets/arrow/left.svg';
-import BottomButton from '@components/BottomButton/index';
-import imageBasic from '@assets/default/defaultProfile.svg';
-import Loading from '@components/Loading/index';
-import camera from '@assets/default/camera.svg';
-import { getUserInfoApi, patchUserInfoApi } from '@apis/user'; 
-import type { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; // type 명시
-
+} from './styles';
 
 type ExtendedUserInfoData = UserInfoData & {
 	birthDate?: string; // 확장된 속성
@@ -144,7 +149,7 @@ const ProfileEdit: React.FC = () => {
 				setModalContent('프로필 수정에 실패했습니다.');
 				setIsModalVisible(true);
 			}
-		} catch (error: any) {
+		} catch (error) {
 			setModalContent('프로필 수정 중 오류가 발생했습니다.');
 			setIsModalVisible(true);
 			console.error('Error updating user info:', error.response?.data || error.message);
@@ -202,7 +207,7 @@ const ProfileEdit: React.FC = () => {
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular'}} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 						전화번호
 					</StyledText>
 					<Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
