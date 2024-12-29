@@ -24,6 +24,7 @@ import PhotoBig from '../../assets/default/photo-big.svg';
 
 import { ImageSelectModalProps } from './dto';
 import heic2any from 'heic2any';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const [images, setImages] = useRecoilState(postImagesAtom);
@@ -35,7 +36,7 @@ const PostImageSelect: React.FC<ImageSelectModalProps> = () => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	const handleClose = () => {
 		navigate(`/profile/${userId}`);

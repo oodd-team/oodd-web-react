@@ -14,6 +14,7 @@ import { ModalProps } from '../../components/Modal/dto';
 import X from '../../assets/default/x.svg';
 
 import { InstaFeedSelectModalProps, Post } from './dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
@@ -22,7 +23,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
 	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	// 인스타그램 데이터 가져오는 함수
 	const fetchInstagramData = async (accessToken: string) => {

@@ -48,6 +48,7 @@ import { GetPostDetailResponse } from '@apis/post/dto';
 
 import { getPostDetailApi } from '@apis/post';
 import { togglePostLikeStatusApi } from '@apis/post-like';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
@@ -62,7 +63,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const nav = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	useEffect(() => {
 		setPostId(Number(postId));

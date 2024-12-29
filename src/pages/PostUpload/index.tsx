@@ -51,6 +51,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
 import { handleError } from '../../apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -66,7 +67,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	const styletags = [
 		'classic',

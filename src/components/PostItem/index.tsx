@@ -9,12 +9,12 @@ import Message from '@components/Icons/Message';
 import type { PostItemProps } from './dto';
 import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
 
-const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
+const PostItem: React.FC<PostItemProps> = ({ post }) => {
 	const navigate = useNavigate();
 	const postImageUrl = post.imageUrl;
 
 	const handlePostItemClick = () => {
-		const path = isMyPost ? `/my-post/${post.id}` : `/post/${post.id}`;
+		const path = `/post/${post.id}`;
 		navigate(path);
 	};
 
