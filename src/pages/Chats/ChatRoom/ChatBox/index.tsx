@@ -1,10 +1,13 @@
-import { ChatBoxContainer, Textarea, SendButton } from './styles';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { OtherUserAtom } from '@recoil/util/OtherUser';
+
+import { useRecoilValue } from 'recoil';
+
 import { useSocket } from '@context/SocketProvider';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+
+import { ChatBoxContainer, Textarea, SendButton } from './styles';
 
 const ChatBox: React.FC = () => {
 	const [newMessage, setNewMessage] = useState('');

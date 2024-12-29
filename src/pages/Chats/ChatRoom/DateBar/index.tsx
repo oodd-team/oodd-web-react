@@ -1,12 +1,14 @@
-import React from 'react';
+import { memo } from 'react';
+
 import theme from '@styles/theme';
+
 import { DatebarLayout, Date, Divider } from './styles';
 
 interface DateBarProps {
 	formattedDate: string; // yyyy년 MM월 dd일 EEEE
 }
 
-const DateBar: React.FC<DateBarProps> = React.memo(({ formattedDate }) => {
+const DateBar: React.FC<DateBarProps> = memo(({ formattedDate }) => {
 	return (
 		<DatebarLayout>
 			<Divider />
