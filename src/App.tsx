@@ -9,10 +9,10 @@ import TermsAgreement from '@pages/TermsAgreement';
 import Profile from '@pages/Profile';
 import ProfileEdit from '@pages/Profile/ProfileEdit';
 
-import AccountSetting from '@pages/AccountSetting';
-import AccountEdit from '@pages/AccountEdit';
-import AccountCancel from '@pages/AccountCancel';
-import Verification from '@pages/verification';
+import AccountSetting from '@pages/Account/AccountSetting';
+import AccountEdit from '@pages/Account/AccountEdit';
+import AccountCancel from '@pages/Account/AccountCancel';
+import Verification from '@pages/Account/verification';
 
 import Post from '@pages/Post';
 import PostUpload from '@pages/PostUpload';
