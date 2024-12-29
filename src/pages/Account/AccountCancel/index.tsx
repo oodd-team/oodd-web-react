@@ -1,4 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import theme from '@styles/theme';
+
+import { patchUserWithdrawApi } from '@apis/user';
+
+import back from '@assets/arrow/left.svg';
+
+import BottomButton from '@components/BottomButton/index';
+import { OODDFrame } from '@components/Frame/Frame';
+import Modal from '@components/Modal/index';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar/index';
+
 import {
 	CancelContainer,
 	SubTitle,
@@ -11,17 +25,6 @@ import {
 	StyledCheckboxText,
 	StyledDiv,
 } from './styles'; // 상대 경로 index 명시
-import { StyledText } from '@components/Text/StyledText';
-import theme from '@styles/theme';
-import { OODDFrame } from '@components/Frame/Frame';
-import { useNavigate } from 'react-router-dom';
-
-import TopBar from '@components/TopBar/index';
-import back from '@assets/arrow/left.svg';
-
-import BottomButton from '@components/BottomButton/index';
-import { patchUserWithdrawApi } from '@apis/user';
-import Modal from '@components/Modal/index';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -98,9 +101,9 @@ const AccountCancel: React.FC = () => {
 					<InfoItem as="div">
 						<StyledText
 							as="div"
-							$textTheme={{ style: 'body1-medium'}}
+							$textTheme={{ style: 'body1-medium' }}
 							color={theme.colors.primary}
-							style={{ whiteSpace: 'nowrap' }} 
+							style={{ whiteSpace: 'nowrap' }}
 						>
 							지금까지 OODD를 이용해주셔서 감사합니다!
 						</StyledText>

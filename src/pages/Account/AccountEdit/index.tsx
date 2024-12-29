@@ -1,4 +1,16 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import theme from '@styles/theme';
+
+import back from '@assets/arrow/left.svg';
+import kakao from '@assets/default/snsIcon/kakao.svg';
+import naver from '@assets/default/snsIcon/naver.svg';
+
+import BottomButton from '@components/BottomButton/index';
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar/index';
+
 import {
 	ProfileEditContainer,
 	Section,
@@ -13,17 +25,6 @@ import {
 	Label,
 	Info,
 } from './styles';
-import { OODDFrame } from '@components/Frame/Frame';
-import BottomButton from '@components/BottomButton/index';
-
-import { useNavigate } from 'react-router-dom';
-import { StyledText } from '@components/Text/StyledText';
-import theme from '@styles/theme';
-
-import naver from '@assets/default/snsIcon/naver.svg';
-import kakao from '@assets/default/snsIcon/kakao.svg';
-import TopBar from '@components/TopBar/index';
-import back from '@assets/arrow/left.svg';
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용

@@ -1,4 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import theme from '@styles/theme';
+
+import back from '@assets/arrow/left.svg';
+
+import { OODDFrame } from '@components/Frame/Frame';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar';
+
 import {
 	Container,
 	Title,
@@ -12,13 +22,6 @@ import {
 	ResendButton,
 	InputWrapper,
 } from './styles';
-
-import { OODDFrame } from '../../components/Frame/Frame';
-import { StyledText } from '../../components/Text/StyledText';
-import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
-import { useNavigate } from 'react-router-dom';
-import theme from '@styles/theme';
 
 const Verification: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -109,9 +112,7 @@ const Verification: React.FC = () => {
 
 				<Container>
 					<Title>
-					<StyledText
-							$textTheme={{ style: 'body1-medium' }}
-							color={theme.colors.tertiary} >
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.tertiary}>
 							휴대전화번호로 본인인증하기
 						</StyledText>
 					</Title>
@@ -145,7 +146,7 @@ const Verification: React.FC = () => {
 									data-theme-style="body1-medium"
 								/>
 								<Timer>{formatTime(timer)}</Timer>
-							</account/verificationInputWrapper>
+							</VerificationInputWrapper>
 						)}
 
 						<Button type="submit" disabled={isVerificationSent && verificationCode.length !== 6}>
@@ -153,7 +154,7 @@ const Verification: React.FC = () => {
 						</Button>
 					</Form>
 				</Container>
-			</account/verificationWrapper>
+			</VerificationWrapper>
 		</OODDFrame>
 	);
 };

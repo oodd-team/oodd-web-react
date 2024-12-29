@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
-import { OODDFrame } from '@components/Frame/Frame';
-import ConfirmationModal from '@components/ConfirmationModal/index';
-import { StyledText } from '@components/Text/StyledText';
 import theme from '@styles/theme';
-import TopBar from '@components/TopBar/index';
+
+import { getUserInfoApi } from '@apis/user';
+
 import back from '@assets/arrow/left.svg';
 import imageBasic from '@assets/default/defaultProfile.svg';
-import Profile_s from '@assets/default/my-page.svg';
 import leave from '@assets/default/leave.svg';
-import { getUserInfoApi } from '@apis/user';
-import type { UserInfoData } from '@apis/user/dto'; // type 명시
+import Profile_s from '@assets/default/my-page.svg';
+
+import ConfirmationModal from '@components/ConfirmationModal/index';
+import { OODDFrame } from '@components/Frame/Frame';
 import Loading from '@components/Loading/index';
+import { StyledText } from '@components/Text/StyledText';
+import TopBar from '@components/TopBar/index';
+
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
+
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
