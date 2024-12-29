@@ -14,7 +14,7 @@ import {
 
 import { StyledText } from '@components/Text/StyledText';
 
-import { CommentItemProps } from './dto';
+import type { CommentItemProps } from './dto';
 
 import More from '@assets/default/more.svg';
 

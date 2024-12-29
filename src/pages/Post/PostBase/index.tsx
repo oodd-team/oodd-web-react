@@ -15,8 +15,8 @@ import TopBar from '@components/TopBar';
 import NavBar from '@components/NavBar';
 import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';
-import ImageSwiper from './ImageSwiper';
-import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent';
+import ImageSwiper from './ImageSwiper/index';
+import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent/index';
 
 import {
 	PostLayout,
@@ -36,22 +36,21 @@ import {
 	ClothingInfoList,
 } from './styles';
 
-import Left from '../../../assets/arrow/left.svg';
-import Like from '../../../assets/default/like.svg';
-import LikeFill from '../../../assets/default/like-fill.svg';
-import Message from '../../../assets/default/message.svg';
-import More from '../../../assets/default/more.svg';
+import Left from '@assets/arrow/left.svg';
+import Like from '@assets/default/like.svg';
+import LikeFill from '@assets/default/like-fill.svg';
+import Message from '@assets/default/message.svg';
+import More from '@assets/default/more.svg';
 
-import { BottomSheetProps } from '@components/BottomSheet/dto';
-import { PostBaseProps } from './dto';
-import { GetPostDetailResponse } from '@apis/post/dto';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { PostBaseProps } from './dto';
+import type { GetPostDetailResponse } from '@apis/post/dto';
 
 import { getPostDetailApi } from '@apis/post';
 import { togglePostLikeStatusApi } from '@apis/post-like';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
-	const { postId } = useParams<{ postId: string }>();
 	const [, setPostId] = useRecoilState(postIdAtom);
 	const [post, setPost] = useState<GetPostDetailResponse['data']>();
 	const [user, setUser] = useRecoilState(userAtom);
@@ -62,41 +61,14 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [isLikeCommentBottomSheetOpen, setIsLikeCommentBottomSheetOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
-	const nav = useNavigate();
+	const { postId } = useParams<{ postId: string }>();
 	const userId = getCurrentUserId();
 
-	useEffect(() => {
-		setPostId(Number(postId));
+	const nav = useNavigate();
 
-		// 게시글 정보 가져오기
-		const getPost = async () => {
-			try {
-				const response = await getPostDetailApi(Number(postId));
-				const data = response.data;
-				setPost(data);
-				setUser(data.user);
-				setIsPostRepresentative(data.isRepresentative);
-				setTimeAgo(dayjs(data.createdAt).locale('ko').fromNow());
-			} catch (error) {
-				console.error('Error fetching post data:', error);
-			}
-		};
-
-		getPost();
-	}, [postId]);
-
-	const contentRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (contentRef.current) {
-			// 실제 높이와 줄 제한 높이 비교
-			const { scrollHeight, clientHeight } = contentRef.current;
-			setIsTextOverflowing(scrollHeight > clientHeight);
-		}
-	}, [post?.content]);
-
-	const toggleTextDisplay = () => {
-		setShowFullText((prev) => !prev);
+	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
+		setActiveTab(tab); // 클릭한 버튼에 따라 activeTab 설정
+		setIsLikeCommentBottomSheetOpen(true);
 	};
 
 	const handleUserClick = () => {
@@ -109,26 +81,13 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		}
 	};
 
-	const handleLikeCommentOpen = (tab: 'likes' | 'comments') => {
-		setActiveTab(tab); // 클릭한 버튼에 따라 activeTab 설정
-		setIsLikeCommentBottomSheetOpen(true);
+	const contentRef = useRef<HTMLDivElement>(null);
+
+	const toggleTextDisplay = () => {
+		setShowFullText((prev) => !prev);
 	};
 
-	const likeCommentbottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isLikeCommentBottomSheetOpen,
-		isHandlerVisible: true,
-		Component: LikeCommentBottomSheetContent,
-		onCloseBottomSheet: () => {
-			setIsLikeCommentBottomSheetOpen(false);
-		},
-		componentProps: {
-			tab: activeTab,
-			likeCount: post?.postLikesCount,
-			commentCount: post?.postCommentsCount,
-		},
-	};
-
-	// 게시글 좋아요 누르기/취소하기
+	// 게시글 좋아요 누르기/취소하기 api
 	const togglePostLikeStatus = async () => {
 		if (!post || !postId) return;
 
@@ -150,6 +109,48 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			console.error('Error toggling like status:', error);
 			setPost(prevPost); // 실패하면 원래 상태로 롤백
 		}
+	};
+
+	useEffect(() => {
+		setPostId(Number(postId));
+
+		// 게시글 정보 가져오기
+		const getPost = async () => {
+			try {
+				const response = await getPostDetailApi(Number(postId));
+				const data = response.data;
+				setPost(data);
+				setUser(data.user);
+				setIsPostRepresentative(data.isRepresentative);
+				setTimeAgo(dayjs(data.createdAt).locale('ko').fromNow());
+			} catch (error) {
+				console.error('Error fetching post data:', error);
+			}
+		};
+
+		getPost();
+	}, [postId]);
+
+	useEffect(() => {
+		if (contentRef.current) {
+			// 실제 높이와 줄 제한 높이 비교
+			const { scrollHeight, clientHeight } = contentRef.current;
+			setIsTextOverflowing(scrollHeight > clientHeight);
+		}
+	}, [post?.content]);
+
+	const likeCommentbottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isLikeCommentBottomSheetOpen,
+		isHandlerVisible: true,
+		Component: LikeCommentBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsLikeCommentBottomSheetOpen(false);
+		},
+		componentProps: {
+			tab: activeTab,
+			likeCount: post?.postLikesCount,
+			commentCount: post?.postCommentsCount,
+		},
 	};
 
 	return (

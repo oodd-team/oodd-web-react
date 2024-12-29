@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MenuButtonListProps } from './dto';
+import type { MenuButtonListProps } from './dto';
 import { MenuListWrapper, MenuListContainer, MenuButtonItem } from './styles';
 import { StyledText } from '@components/Text/StyledText';
 
