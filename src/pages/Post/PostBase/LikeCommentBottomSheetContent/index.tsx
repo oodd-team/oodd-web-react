@@ -14,13 +14,13 @@ import { StyledText } from '@components/Text/StyledText';
 import theme from '@styles/theme';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
-import CommentItem from './CommentItem';
-import MenuButtonList from './MenuButtonList';
+import CommentItem from './CommentItem/index';
+import MenuButtonList from './MenuButtonList/index';
 
-import { LikeCommentBottomSheetProps } from '../dto';
-import { ModalProps } from '@components/Modal/dto';
-import { GetPostLikeListResponse } from '@apis/post-like/dto';
-import { Comment, GetCommentListResponse } from '@apis/post-comment/dto';
+import type { LikeCommentBottomSheetProps } from '../dto';
+import type { ModalProps } from '@components/Modal/dto';
+import type { GetPostLikeListResponse } from '@apis/post-like/dto';
+import type { Comment, GetCommentListResponse } from '@apis/post-comment/dto';
 
 import Delete from '@assets/default/delete.svg';
 import Block from '@assets/default/block.svg';
@@ -36,15 +36,11 @@ import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ tab, likeCount, commentCount }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>(tab);
-	const { postId } = useParams<{ postId: string }>();
 
 	const [likes, setLikes] = useState<GetPostLikeListResponse['data']['likes']>([]);
 	const [postLikeCount, setPostLikeCount] = useState(likeCount);
 	const [comments, setComments] = useState<GetCommentListResponse['data']['comments']>([]);
 	const [postCommentCount, setPostCommentCount] = useState(commentCount);
-	const [isBlockConfirmationModalOpen, setIsBlockConfirmationModalOpen] = useState(false);
-	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
@@ -60,50 +56,43 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 	const [isMenuVisible, setIsMenuVisible] = useState(false);
 	const [menuPosition, setMenuPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
 
+	const [isBlockConfirmationModalOpen, setIsBlockConfirmationModalOpen] = useState(false);
+	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [isCommentDeleteConfirmationModalOpen, setIsCommentDeleteConfirmationModalOpen] = useRecoilState(
 		IsCommentDeleteConfirmationModalOpenAtom,
 	);
 	const [, setIsCommentReportModalOpen] = useRecoilState(IsCommentReportModalOpenAtom);
+	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 
+	const { postId } = useParams<{ postId: string }>();
 	const nav = useNavigate();
 
-	useEffect(() => {
-		setPage(1);
-		setReachedEnd(false);
-		setLikes([]);
-		setComments([]);
+	// 댓글 메뉴 클릭한 경우
+	const handleMenuOpen = (comment: Comment, event: React.MouseEvent<HTMLButtonElement>) => {
+		setSelectedComment(comment);
+		const rect = event.currentTarget.getBoundingClientRect();
+		setMenuPosition({ top: rect.bottom + window.scrollY - 90, left: rect.left + window.scrollX - 100 });
+		setIsMenuVisible(true);
+	};
 
-		if (activeTab === 'likes') {
-			getPostLikeList(1);
-		} else if (activeTab === 'comments') {
-			getPostCommentList();
+	// 유저 클릭한 경우
+	const handleUserClick = (userId: number) => {
+		// 로컬 스토리지에서 사용자 ID 가져오기
+		const myUserId = getCurrentUserId(); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
+
+		if (String(myUserId) === String(userId)) {
+			// 나인 경우
+			nav(`/profile/${userId}`);
+		} else {
+			// 다른 유저인 경우
+			nav(`/users/${userId}`);
 		}
-	}, [activeTab]);
+	};
 
-	// IntersectionObserver를 활용하여 무한 스크롤 감지
-	useEffect(() => {
-		if (observerRef.current) observerRef.current.disconnect();
-
-		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-			const [entry] = entries;
-			if (entry.isIntersecting && !isLoading) {
-				console.log('호출');
-				getPostLikeList(page);
-			}
-		};
-
-		observerRef.current = new IntersectionObserver(handleIntersection, {
-			root: null,
-			rootMargin: '0px',
-			threshold: 1.0,
-		});
-
-		if (loadMoreRef.current) observerRef.current.observe(loadMoreRef.current);
-
-		return () => {
-			if (observerRef.current) observerRef.current.disconnect();
-		};
-	}, [page, reachedEnd, loadMoreRef.current, activeTab]);
+	// 댓글 작성 Input
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setInputValue(e.target.value);
+	}, []);
 
 	// 좋아요 리스트 불러오기 api
 	const getPostLikeList = async (currentPage: number) => {
@@ -155,11 +144,6 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			setIsLoading(false);
 		}
 	};
-
-	// 댓글 작성 Input
-	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setInputValue(e.target.value);
-	}, []);
 
 	// 댓글 작성 api
 	const createComment = async () => {
@@ -233,6 +217,44 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		}
 	};
 
+	useEffect(() => {
+		setPage(1);
+		setReachedEnd(false);
+		setLikes([]);
+		setComments([]);
+
+		if (activeTab === 'likes') {
+			getPostLikeList(1);
+		} else if (activeTab === 'comments') {
+			getPostCommentList();
+		}
+	}, [activeTab]);
+
+	// IntersectionObserver를 활용하여 무한 스크롤 감지
+	useEffect(() => {
+		if (observerRef.current) observerRef.current.disconnect();
+
+		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+			const [entry] = entries;
+			if (entry.isIntersecting && !isLoading) {
+				console.log('호출');
+				getPostLikeList(page);
+			}
+		};
+
+		observerRef.current = new IntersectionObserver(handleIntersection, {
+			root: null,
+			rootMargin: '0px',
+			threshold: 1.0,
+		});
+
+		if (loadMoreRef.current) observerRef.current.observe(loadMoreRef.current);
+
+		return () => {
+			if (observerRef.current) observerRef.current.disconnect();
+		};
+	}, [page, reachedEnd, loadMoreRef.current, activeTab]);
+
 	// 본인 댓글 메뉴 항목
 	const MyCommentMenuItems = [
 		{
@@ -305,28 +327,6 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 		onClose: () => {
 			setIsStatusModalOpen(false);
 		},
-	};
-
-	// 댓글 메뉴 클릭한 경우
-	const handleMenuOpen = (comment: Comment, event: React.MouseEvent<HTMLButtonElement>) => {
-		setSelectedComment(comment);
-		const rect = event.currentTarget.getBoundingClientRect();
-		setMenuPosition({ top: rect.bottom + window.scrollY - 90, left: rect.left + window.scrollX - 100 });
-		setIsMenuVisible(true);
-	};
-
-	// 유저 클릭한 경우
-	const handleUserClick = (userId: number) => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = getCurrentUserId(); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
-
-		if (String(myUserId) === String(userId)) {
-			// 나인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저인 경우
-			nav(`/users/${userId}`);
-		}
 	};
 
 	return (

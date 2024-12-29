@@ -5,24 +5,25 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { postIdAtom, userAtom } from '@recoil/Post/PostAtom.ts';
 import { isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
 
-import PostBase from './PostBase/index.tsx';
-import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet/index.tsx';
-import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto.ts';
-import Modal from '@components/Modal';
-import { ModalProps } from '@components/Modal/dto';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import BottomSheet from '@components/BottomSheet';
-import { BottomSheetProps } from '@components/BottomSheet/dto';
 import BottomSheetMenu from '@components/BottomSheetMenu';
-import { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import Modal from '@components/Modal';
+import PostBase from './PostBase/index';
+
+import type { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto.ts';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { BottomSheetMenuProps } from '@components/BottomSheetMenu/dto';
+import type { ModalProps } from '@components/Modal/dto';
 
 import Edit from '@assets/default/edit.svg';
 import Pin from '@assets/default/pin.svg';
 import Delete from '@assets/default/delete.svg';
 
 import { modifyPostRepresentativeStatusApi, deletePostApi } from '@apis/post';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const Post: React.FC = () => {
-	const userId = localStorage.getItem('current_user_id');
 	const user = useRecoilValue(userAtom);
 	const postId = useRecoilValue(postIdAtom);
 	const [isMyPost, setIsMyPost] = useState(false);
@@ -35,7 +36,53 @@ const Post: React.FC = () => {
 	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
+
+	const userId = getCurrentUserId();
 	const navigate = useNavigate();
+
+	const handleMenuOpen = () => {
+		{
+			isMyPost ? setIsMyPostMenuBottomSheetOpen(true) : setIsOptionsBottomSheetOpen(true);
+		}
+	};
+
+	const modifyPostRepresentativeStatus = async () => {
+		try {
+			const response = await modifyPostRepresentativeStatusApi(Number(postId));
+
+			if (response.isSuccess) {
+				setModalContent(`대표 OOTD ${postPinStatus}에 성공했어요`);
+				setIsPostRepresentative((prev) => !prev);
+			} else {
+				setModalContent(`대표 OOTD ${postPinStatus}에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
+			}
+		} catch (error) {
+			console.error('Error pinning post:', error);
+		} finally {
+			setIsApiResponseModalOpen(true);
+		}
+	};
+
+	const deletePost = async () => {
+		try {
+			const response = await deletePostApi(Number(postId));
+
+			if (response.isSuccess) {
+				setModalContent('OOTD 삭제에 성공했어요');
+
+				setTimeout(() => {
+					navigate(`/profile/${userId}`);
+				}, 1000);
+			} else {
+				setModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
+			}
+		} catch (error) {
+			console.error('Error deleting post:', error);
+		} finally {
+			setIsApiResponseModalOpen(true);
+			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
+		}
+	};
 
 	useEffect(() => {
 		// 현재 게시글이 내 게시글인지 확인
@@ -43,12 +90,6 @@ const Post: React.FC = () => {
 			setIsMyPost(Number(userId) === user.id);
 		}
 	}, [user, postId]);
-
-	const handleMenuOpen = () => {
-		{
-			isMyPost ? setIsMyPostMenuBottomSheetOpen(true) : setIsOptionsBottomSheetOpen(true);
-		}
-	};
 
 	useEffect(() => {
 		setPostPinStatus(isPostRepresentative ? '해제' : '지정');
@@ -103,44 +144,6 @@ const Post: React.FC = () => {
 		Component: BottomSheetMenu,
 		componentProps: isMyPost ? myPostMenuProps : optionsBottomSheetProps,
 		onCloseBottomSheet: () => setIsMyPostMenuBottomSheetOpen(false),
-	};
-
-	const modifyPostRepresentativeStatus = async () => {
-		try {
-			const response = await modifyPostRepresentativeStatusApi(Number(postId));
-
-			if (response.isSuccess) {
-				setModalContent(`대표 OOTD ${postPinStatus}에 성공했어요`);
-				setIsPostRepresentative((prev) => !prev);
-			} else {
-				setModalContent(`대표 OOTD ${postPinStatus}에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
-			}
-		} catch (error) {
-			console.error('Error pinning post:', error);
-		} finally {
-			setIsApiResponseModalOpen(true);
-		}
-	};
-
-	const deletePost = async () => {
-		try {
-			const response = await deletePostApi(Number(postId));
-
-			if (response.isSuccess) {
-				setModalContent('OOTD 삭제에 성공했어요');
-
-				setTimeout(() => {
-					navigate(`/profile/${userId}`);
-				}, 1000);
-			} else {
-				setModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
-			}
-		} catch (error) {
-			console.error('Error deleting post:', error);
-		} finally {
-			setIsApiResponseModalOpen(true);
-			setIsDeleteConfirmationModalOpen(false); // 확인 모달을 닫음
-		}
 	};
 
 	const deleteConfirmationModalProps: ModalProps = {
