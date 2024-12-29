@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { StyledText } from '@components/Text/StyledText';
 
 export const PostItemLayout = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
@@ -43,20 +42,14 @@ export const PostImage = styled.img`
 
 export const LikesOverlay = styled.div`
 	position: absolute;
-	bottom: 0; /* 하단에 배치 */
+	bottom: 0.625rem; /* 하단에 배치 */
+	right: 0.625rem;
 	width: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: flex-end;
+	align-items: center;
 	box-sizing: border-box;
-`;
-
-export const Icon = styled.img`
-	margin-bottom: 0.5rem;
-`;
-
-export const LikesCountStyledText = styled(StyledText)`
-	margin: 0 8px 0.5rem 4px;
+	gap: 5px;
 `;
 
 export const Pin = styled.img`

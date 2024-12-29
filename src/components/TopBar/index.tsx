@@ -30,7 +30,7 @@ const TopBar: React.FC<TopBarProps> = ({
 			>
 				<img src={LeftButtonSrc || ''} alt="뒤로가기" />
 			</LeftButton>
-			<StyledTextWrapper $textTheme={{ style: 'body1-bold' }} color={theme.colors.black}>
+			<StyledTextWrapper $textTheme={{ style: 'heading1-bold' }} color={theme.colors.text.primary}>
 				{text}
 			</StyledTextWrapper>
 			<RightButton

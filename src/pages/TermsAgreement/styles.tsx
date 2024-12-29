@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 
 export const TermsAgreementLayout = styled.main`
 	display: flex;
@@ -29,12 +30,12 @@ export const CheckboxInput = styled.input`
 	appearance: none; /* 기본 스타일 제거 */
 	width: 1.25rem;
 	height: 1.25rem;
-	border: 0.125rem solid #e0e0e0;
+	border: 0.125rem solid ${theme.colors.border.divider};
 	border-radius: 0.25rem;
 	position: relative;
 	&:checked {
-		background-color: #ffbbda;
-		border-color: #ff2389;
+		background-color: ${theme.colors.brand.primaryLighter};
+		border-color: ${theme.colors.brand.primary};
 	}
 	&:checked::after {
 		content: '✓';
@@ -49,7 +50,7 @@ export const CheckboxInput = styled.input`
 
 export const Divider = styled.hr`
 	border: none;
-	border-top: 0.0625rem solid #e0e0e0;
+	border-top: 0.0625rem solid ${theme.colors.border.divider};
 	margin: 0.625rem 0;
 `;
 

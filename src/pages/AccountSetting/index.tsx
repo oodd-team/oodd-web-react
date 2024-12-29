@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
-import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
-import imageBasic from '../../assets/default/defaultProfile.svg';
-import Profile_s from './../../assets/default/my-page.svg';
-import leave from '../../assets/default/leave.svg';
-import { getUserInfoApi } from '../../apis/user';
-import { UserInfoData } from '../../apis/user/dto';
-import Loading from '../../components/Loading';
+import { ProfileEditContainer, ProfilePic, ProfilePicWrapper, Label, Row, List, ListItem } from './styles'; 
+import { OODDFrame } from '@components/Frame/Frame';
+import ConfirmationModal from '@components/ConfirmationModal/index';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
+import TopBar from '@components/TopBar/index';
+import back from '@assets/arrow/left.svg';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import Profile_s from '@assets/default/my-page.svg';
+import leave from '@assets/default/leave.svg';
+import { getUserInfoApi } from '@apis/user'; 
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
+import Loading from '@components/Loading/index';
 
 const AccountSetting: React.FC = () => {
 	const navigate = useNavigate();
@@ -81,14 +81,14 @@ const AccountSetting: React.FC = () => {
 					</ProfilePic>
 					<Row>
 						<Label>
-							<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+							<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
 								{userProfile?.nickname}
 							</StyledText>
 						</Label>
 					</Row>
 					<Row>
 						<Label>
-							<StyledText $textTheme={{ style: 'body6-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.tertiary}>
 								{userProfile?.name} | {userProfile?.email}
 							</StyledText>
 						</Label>
@@ -98,13 +98,13 @@ const AccountSetting: React.FC = () => {
 				<List>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={leave} alt="로그아웃 아이콘" />
-						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium'}} color={theme.colors.primary}>
 							Logout
 						</StyledText>
 					</ListItem>
 					<ListItem onClick={handleDeleteAccountClick}>
 						<img src={Profile_s} alt="회원 탈퇴 아이콘" />
-						<StyledText $textTheme={{ style: 'body2-Light', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
 							회원탈퇴
 						</StyledText>
 					</ListItem>

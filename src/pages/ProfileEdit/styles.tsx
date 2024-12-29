@@ -14,23 +14,23 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 10px; /* 20px */
+	margin-bottom: 10px; 
 	position: relative;
 `;
 
 export const Label = styled.label`
-	font-size: 0.875rem; /* 14px */
-	color: #333;
+	font-size: 0.875rem; 
+	color: ${({ theme }) => theme.colors.gray[700]};
 `;
 
 export const Input = styled.input`
-	width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
-	padding: 25px; /* 10px padding */
-	margin: 10px 0; /* 위아래 간격 조정 */
+	width: 100%; 
+	padding: 25px; 
+	margin: 10px 0; 
 	border: 0px;
 	box-sizing: border-box;
 	border-radius: 10px;
-	background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
 
@@ -43,20 +43,20 @@ export const Button = styled.button`
 	height: 1.7rem;
 	padding: 0.3rem;
 	border-radius: 50%;
-	background-color: white;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-	border: 1px solid #ddd; /* 아이콘 테두리 */
+	background-color: ${({ theme }) => theme.colors.background.primary};
+	box-shadow: 0px 2px 4px ${({ theme }) => `${theme.colors.black}33`}; 
+	border: 1px solid ${({ theme }) => theme.colors.gray[300]}; 
 	cursor: pointer;
 `;
 
 export const ProfilePic = styled.div`
-	width: 7.25rem; /* 116px */
-	height: 7.25rem; /* 116px */
+	width: 7.25rem; 
+	height: 7.25rem; 
 	flex-shrink: 0;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-top: 2.125rem; /* 34px */
-	margin-bottom: 15px; /* 20px */
+	margin-top: 2.125rem; 
+	margin-bottom: 15px; 
 
 	img {
 		width: 100%;
@@ -69,25 +69,25 @@ export const CameraIcon = styled.img``;
 
 export const Row = styled.div`
 	display: flex;
-	flex-direction: column; /* 세로 배치 */
+	flex-direction: column; 
 	align-items: stretch;
 	width: 100%;
-	margin-top: 0px; /* Row 간격 10px */
-	padding: 0px 20px; /* 좌우 여백 20px */
+	margin-top: 0px; 
+	padding: 0px 20px;
 
 	${Label} {
-		width: 6.25rem; /* 100px */
+		width: 6.25rem; 
 	}
 `;
 
 export const EmailInput = styled.input`
   margin-bottom: 120px;
-	width: 100%; /* Row의 padding에 맞춰 꽉 채우기 */
-	padding: 25px; /* 10px padding */
+	width: 100%; 
+	padding: 25px; 
 	border: 0px;
 	box-sizing: border-box;
 	border-radius: 10px;
-	background-color: #f0f0f0; /* 박스 내부 회색 배경 */
+	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
 
@@ -98,12 +98,12 @@ export const FileInput = styled.input`
 export const UserInfo = styled.div``;
 
 export const Username = styled.button`
-	color: #000;
+	color: ${({ theme }) => theme.colors.black};
 	font-family: Pretendard;
 	font-size: 22px;
 	font-style: normal;
 	font-weight: 700;
-	line-height: 136.4%; /* 30.008px */
+	line-height: 136.4%;
 	letter-spacing: -0.427px;
 `;
 

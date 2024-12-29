@@ -27,7 +27,7 @@ const SocialLoginButton: React.FC<SocialLoginProps> = ({ bgColor, logoSrc, altTe
 			</LogoImgWrapper>
 			<StyledTextWrapper
 				$textTheme={{ style: 'body2-bold' }}
-				color={provider === 'kakao' ? theme.colors.black : theme.colors.white}
+				color={provider === 'kakao' ? theme.colors.text.primary : theme.colors.text.contrast}
 			>
 				{buttonText}
 			</StyledTextWrapper>

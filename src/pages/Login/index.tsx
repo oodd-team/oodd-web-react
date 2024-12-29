@@ -14,7 +14,7 @@ const Login: React.FC = () => {
 	return (
 		<OODDFrame>
 			<LoginContainer>
-				<StyledWelcomeWrapper $textTheme={{ style: 'title2-bold' }} color={theme.colors.black}>
+				<StyledWelcomeWrapper $textTheme={{ style: 'title2-bold' }} color={theme.colors.text.primary}>
 					{'반가워요! \n계정을 선택해주세요.'}
 				</StyledWelcomeWrapper>
 				<SocialLoginButton

@@ -13,7 +13,7 @@ const UserProfile: React.FC<UserProfileProps> = React.memo(({ userImg, bio = '',
 			<UserImg src={userImg} alt={`${nickname}'s profile`} />
 			<UserDetailsContainer>
 				<StyledText $textTheme={{ style: 'headline2-bold' }}>{nickname}</StyledText>
-				<StyledBio $textTheme={{ style: 'body2-regular' }} color={theme.colors.gray3}>
+				<StyledBio $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 					{truncatedBio}
 				</StyledBio>
 			</UserDetailsContainer>
