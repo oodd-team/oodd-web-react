@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
 import Home from '@pages/Home';
 import Login from '@pages/Login';
-import SignUp from '@pages/SignUp';
 import LoginComplete from '@pages/Login/LoginComplete';
-import TermsAgreement from '@pages/TermsAgreement';
+
+import SignUp from '@pages/SignUp';
+import TermsAgreement from '@pages/SignUp/TermsAgreement';
 
 import Profile from '@pages/Profile';
 import ProfileEdit from '@pages/Profile/ProfileEdit';
