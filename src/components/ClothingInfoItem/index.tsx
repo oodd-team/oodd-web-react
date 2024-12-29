@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyledText } from '../Text/StyledText';
-import X from '../../assets/default/x.svg';
-import Right from '../../assets/arrow/right.svg';
-import { ClothingInfoItemProps } from './dto';
+import Right from '@assets/arrow/right.svg';
+import X from '@assets/default/x.svg';
+
+import { StyledText } from '@components/Text/StyledText';
+
+import type { ClothingInfoItemProps } from './dto';
+
 import { ClothingInfoItemContainer, ClothingInfoLeft, ClothingImage, ClothingInfoRight, ClothingModel } from './styles';
 
 const ClothingInfoItem: React.FC<ClothingInfoItemProps> = ({ clothingObj, onDelete }) => {

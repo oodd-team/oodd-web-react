@@ -1,5 +1,5 @@
-import { newRequest } from '../core';
-import {
+import { newRequest } from '@apis/core';
+import type {
 	CreateMatchingRequest,
 	CreateMatchingResponse,
 	GetMatchingListResponse,

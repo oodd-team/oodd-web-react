@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { StyledText } from '../../../../components/Text/StyledText';
+import { styled } from 'styled-components';
+
+import { StyledText } from '@components/Text/StyledText';
 
 export const FirstMessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 	display: flex;
@@ -43,7 +44,7 @@ export const Message = styled(StyledText)`
 export const TimeWrapper = styled.time`
 	display: flex;
 	align-items: flex-end;
-	color: ${({ theme }) => theme.colors.gray3};
+	color: ${({ theme }) => theme.colors.text.caption};
 	font-family: 'Pretendard Variable';
 	font-size: 0.5625rem;
 	font-style: normal;

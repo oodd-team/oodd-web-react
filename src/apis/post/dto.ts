@@ -25,7 +25,7 @@ export interface PostBase {
 	content: string;
 	postImages: PostImage[];
 	postStyletags: string[];
-	postClothings: PostClothing[] | null;
+	postClothings?: PostClothing[] | null;
 	isRepresentative: boolean;
 }
 export interface CreatePostData extends PostBase {}
@@ -36,7 +36,7 @@ export interface PostSummary {
 	createdAt: Date;
 	isPostLike: boolean;
 	user: User;
-	requestStatus: boolean;
+	requestStatus: boolean | null;
 }
 export interface GetPostListData {
 	post: PostSummary[];
@@ -60,7 +60,7 @@ export interface GetUserPostListData {
 	meta: PaginationMeta;
 }
 export interface ModifyPostData extends PostBase {
-	postId: number;
+	id: number;
 	userId: number;
 }
 export interface GetPostDetailData extends PostBase {

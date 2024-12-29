@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const OOTDContainer = styled.div`
 	display: flex;
@@ -8,12 +8,6 @@ export const OOTDContainer = styled.div`
 	margin-top: 2.5rem;
 	margin-bottom: 4.25rem;
 `;
-
-export const OOTDLoading = styled.div`
-	margin-top: 200px;
-`;
-
-// Feed
 
 export const FeedContainer = styled.div`
 	display: flex;

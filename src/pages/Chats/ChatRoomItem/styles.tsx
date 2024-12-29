@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { StyledText } from '../../../components/Text/StyledText';
+import { styled } from 'styled-components';
+
+import { StyledText } from '@components/Text/StyledText';
 
 export const ChatRoomItemLayout = styled.li`
 	width: 100%;

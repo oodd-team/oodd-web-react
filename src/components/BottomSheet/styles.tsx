@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import XIcon from '../../assets/default/x.svg';
+import { memo } from 'react';
+
+import { styled } from 'styled-components';
 
 export const BottomSheetWrapper = styled.div<{ $isBottomSheetOpen: boolean }>`
 	position: fixed;
@@ -32,7 +32,7 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 	max-width: 512px;
 	left: 50%;
 	border-radius: 0.938rem 0.938rem 0 0;
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	padding: 0 1.25rem;
 	z-index: 200;
 	user-select: none;
@@ -40,11 +40,11 @@ export const BottomSheetLayout = styled.div.attrs<{ $currentTranslateY: number; 
 	transition: transform 0.3s;
 `;
 
-export const Handler = React.memo(styled.hr`
+export const Handler = memo(styled.hr`
 	width: 2.88rem;
 	margin: 0.6rem auto 0 auto;
 	height: 0.125rem;
-	background-color: #d9d9d9;
+	background-color: ${({ theme }) => theme.colors.gray[300]};
 	border: none;
 	border-radius: 0.125rem;
 	z-index: 300;
@@ -57,7 +57,7 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 	height: 100%;
 	position: fixed;
 	right: 0;
-	background: white;
+	background: ${({ theme }) => theme.colors.background.primary};
 	transform: translateX(${({ $isSideBarOpen }) => ($isSideBarOpen ? 0 : '100%')});
 	transition: transform 0.3s;
 `;
@@ -65,18 +65,17 @@ export const SideBarLayout = styled.div<{ $isSideBarOpen: boolean }>`
 export const SideBarTopBar = styled.header`
 	display: flex;
 	width: 100%;
-	padding: 0.5rem 1rem;
+	padding: 1rem 1.25rem 1rem 1rem;
 	margin-top: 0;
+	justify-content: flex-end;
 `;
 
-export const XButton = styled.button`
-	width: 2.25rem;
-	height: 2.25rem;
-	margin: auto 0 auto auto;
-	background-image: url(${XIcon});
-	background-repeat: no-repeat;
-	background-size: 17px;
-	background-position: center;
+export const CloseButton = styled.button`
+	width: 1.875rem;
+	height: 1.875rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const ComponentBox = styled.section`

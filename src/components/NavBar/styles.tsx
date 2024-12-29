@@ -1,19 +1,17 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const NavBarContainer = styled.nav`
-	// fixed 포지션에 breakPoint를 적용하는 방법
 	position: fixed;
-	${({ theme }) => theme.visibleOnMobileTablet}; // breakPoint 미디어쿼리
-	bottom: 0; // 경우에 따라 top 0 등으로 작성
-	left: 50%; // 수직 중앙에 위치
-	transform: translateX(-50%); // width에 따른 수직 중앙 조정
-	width: 100%; // brakePoint에 따른 width에 따르도록 설정
+	${({ theme }) => theme.visibleOnMobileTablet};
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
 
-	// 이후로 자기 코드에 맞춰서 작성
 	height: 5.5rem;
 	justify-content: center;
 	align-items: center;
-	background: ${({ theme }) => theme.colors.gradient}; // 여기서 그래디언트 색상 사용
+	background: ${({ theme }) => theme.colors.brand.gradient};
 	margin: 0;
 	border-radius: 1.25rem 1.25rem 0 0;
 	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
@@ -35,7 +33,6 @@ export const IconWrapper = styled.div`
 	cursor: pointer;
 	gap: 10px;
 
-
 	p {
 		margin: 0;
 		bottom: 0;
@@ -49,7 +46,7 @@ export const IconWrapper = styled.div`
 	}
 `;
 
-export const IconImg = styled.img`
+export const Icon = styled.div`
 	width: 1.13rem;
 	height: 1.13rem;
 	object-fit: cover;
@@ -67,7 +64,7 @@ export const SideNavBarContainer = styled.nav`
 	padding: 2.5rem 1.5rem;
 	border-radius: 0 3rem 3rem 0;
 	position: fixed;
-	background: white;
+	background: ${({ theme }) => theme.colors.background.primary};
 	filter: drop-shadow(0rem 0rem 0.25rem rgba(0, 0, 0, 0.25));
 `;
 
@@ -91,7 +88,7 @@ export const SideNavBarHeader = styled.header`
 	}
 
 	button:hover {
-		background: rgba(0, 0, 0, 0.1);
+		background: ${({ theme }) => theme.colors.gray[200]};
 	}
 `;
 
@@ -111,7 +108,7 @@ export const SideNavBarButton = styled.label`
 		align-items: center;
 		border-radius: 50%;
 		padding: 0.6rem;
-		background: white;
+		background: ${({ theme }) => theme.colors.background.primary};
 		transition: background 0.2s;
 
 		box-shadow:
@@ -121,7 +118,7 @@ export const SideNavBarButton = styled.label`
 	}
 
 	button:hover {
-		background: rgba(0, 0, 0, 0.1);
+		background: ${({ theme }) => theme.colors.gray[200]};
 	}
 
 	img {

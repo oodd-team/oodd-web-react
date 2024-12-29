@@ -1,13 +1,16 @@
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import { ThemeProvider } from 'styled-components';
-import theme from './styles/theme';
-import GlobalStyle from './styles/GlobalStyles';
+import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
-import './styles/fonts/font.css';
-import { SocketProvider } from './context/SocketProvider.tsx';
+import { ThemeProvider } from 'styled-components';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+import GlobalStyle from '@styles/GlobalStyles';
+import theme from '@styles/theme';
+
+import '@styles/fonts/font.css';
+import { SocketProvider } from '@context/SocketProvider';
+
+import App from './App';
+
+createRoot(document.getElementById('root')!).render(
 	<ThemeProvider theme={theme}>
 		<GlobalStyle />
 		<RecoilRoot>

@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import { StyledText } from '../../components/Text/StyledText';
+import { styled } from 'styled-components';
 
-export const SignUpContainer = styled.main`
+import { StyledText } from '@components/Text/StyledText';
+
+export const SignUpLayout = styled.main`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -35,7 +36,7 @@ export const LogoImg = styled.img`
 	width: 100%;
 `;
 
-export const IntroWrapper = styled.div`
+export const SignupStepContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	max-width: 21.875rem;
@@ -44,7 +45,7 @@ export const IntroWrapper = styled.div`
 	text-align: center;
 `;
 
-export const NickNameContainer = styled.section`
+export const InputContainer = styled.section`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -53,9 +54,9 @@ export const NickNameContainer = styled.section`
 	margin: 5rem auto 0; /* 중앙 정렬을 위한 auto */
 `;
 
-export const NickName = styled.input`
+export const InputValue = styled.input`
 	width: 100%;
-	max-width: 300px;
+	max-width: 18.75rem;
 	height: 3.25rem;
 	font-family: Pretendard;
 	font-size: 2.5rem;
@@ -68,7 +69,7 @@ export const NickName = styled.input`
 	margin: 0 auto; /* 중앙 정렬 */
 `;
 
-export const TapStyled = styled(StyledText)`
+export const TapToEdit = styled(StyledText)`
 	width: 100%;
 	height: 1.3125rem;
 	margin: 1.25rem auto 0; /* 중앙 정렬을 위한 auto */

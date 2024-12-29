@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import CloseIcon from '../../../assets/default/modal-close-white.svg';
+import { styled } from 'styled-components';
 
 export const ReportBottomSheetLayout = styled.div`
 	${({ theme }) => theme.visibleOnMobileTablet};
@@ -34,7 +33,7 @@ export const ReportModalContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	border-radius: 0.38rem;
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 `;
 
 export const ReportModalHeader = styled.header`
@@ -45,7 +44,7 @@ export const ReportModalHeader = styled.header`
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 0.38rem 0.38rem 0 0;
-	background: ${({ theme }) => theme.colors.gradient};
+	background: ${({ theme }) => theme.colors.brand.gradient};
 `;
 
 export const ReportModalBox = styled.section`
@@ -54,13 +53,11 @@ export const ReportModalBox = styled.section`
 	width: 100%;
 `;
 
-export const XButton = styled.button`
+export const CloseButton = styled.button`
 	width: 1.875rem;
 	height: 1.875rem;
-	margin: auto 0 auto auto;
-	background-image: url(${CloseIcon});
-	background-repeat: no-repeat;
-	background-size: 1.875rem;
-	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	opacity: 0.5;
 `;

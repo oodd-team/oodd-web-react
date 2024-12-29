@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const TabBarLayout = styled.div`
 	display: flex;
@@ -22,8 +22,8 @@ export const TabBarList = styled.ul`
 `;
 
 export const TabBarWrapper = styled.li<{ $isSelected: boolean; $isPointer: boolean }>`
-	border-bottom: 0.13rem solid #e9e9e9;
-	border-image: ${({ $isSelected, theme }) => ($isSelected ? `${theme.colors.gradient} 0 0 1 0` : 'transparent')};
+	border-bottom: 0.13rem solid ${({ theme }) => theme.colors.border.divider};
+	border-image: ${({ $isSelected, theme }) => ($isSelected ? `${theme.colors.brand.gradient} 0 0 1 0` : 'transparent')};
 	text-align: center;
 	flex-grow: 1;
 	padding: 0.62rem;

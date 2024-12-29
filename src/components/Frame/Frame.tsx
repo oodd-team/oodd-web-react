@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import theme from '../../styles/theme';
+import { styled } from 'styled-components';
 
-// 공통 레이아웃 -> 모두 적용해주세요
+import theme from '@styles/theme';
+
 export const OODDFrame = styled.div`
 	${theme.breakPoints};
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	height: 100vh;
 	margin: auto;
 	display: flex;

@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
-import { User } from '../../apis/post/dto';
+
+import type { User } from '@apis/post/dto';
 
 export const postIdAtom = atom<number>({
 	key: 'postIdAtom',

@@ -1,7 +1,10 @@
-import { StyledText } from '../Text/StyledText';
-import theme from '../../styles/theme';
+import theme from '@styles/theme';
+
+import { StyledText } from '@components/Text/StyledText';
+
+import type { ConfirmationModalProps } from './dto';
+
 import { ConfirmationModalLayout, ConfirmationModalWrapper, ContentBox, ButtonContainer, Button } from './styles';
-import { ConfirmationModalProps } from './dto';
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 	content,

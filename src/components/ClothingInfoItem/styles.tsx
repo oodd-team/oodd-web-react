@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import { StyledText } from '../../components/Text/StyledText';
+import { styled } from 'styled-components';
+
+import { StyledText } from '@components/Text/StyledText';
 
 export const ClothingInfoItemContainer = styled.li`
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.pink2};
+	border: 0.0625rem solid ${({ theme }) => theme.colors.brand.primaryLight};
 	border-radius: 0.5rem;
 	padding: 10px;
 	min-width: 20.9375rem;
@@ -25,7 +26,6 @@ export const ClothingInfoLeft = styled.div`
 
 	.infoDetail {
 		overflow: hidden;
-		white-space: nowrap;
 		text-overflow: ellipsis;
 		width: 75%;
 		display: flex;
@@ -40,7 +40,13 @@ export const ClothingInfoLeft = styled.div`
 	.model {
 		margin-right: auto;
 		color: ${({ theme }) => theme.colors.black};
-		//overflow-x: hidden;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2; /* 최대 2줄로 제한 */
+		-webkit-box-orient: vertical;
+		word-break: keep-all; /* 단어 단위로 줄바꿈 */
+		overflow-wrap: break-word; /* 단어가 너무 길 경우 다음 줄로 넘김 */
 	}
 `;
 

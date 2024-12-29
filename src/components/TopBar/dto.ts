@@ -1,12 +1,12 @@
 export interface TopBarProps {
-	text?: string; // 텍스트, optional prop
-	RightButtonSrc?: string; // KebabMenuButton src의 Optional prop
-	LeftButtonSrc?: string; // BackButton src의 Optional prop
-	onLeftClick?: () => void; // BackButton src의 Optional prop
-	onRightClick?: () => void; // KebabMenuButton src의 Optional prop
+	text?: string;
+	RightButtonSrc?: string;
+	LeftButtonSrc?: string;
+	onClickLeftButton?: () => void;
+	onClickRightButton?: () => void;
 	$withBorder?: boolean;
 }
 
-export interface TopbarLayoutProps {
+export interface TopBarLayoutProps {
 	$withBorder?: boolean;
 }
