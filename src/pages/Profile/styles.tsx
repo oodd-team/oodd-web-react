@@ -88,7 +88,7 @@ export const Button = styled.button`
 	margin: 1.25rem auto;
 	height: 3.1rem;
 	text-align: center;
-	color: ${({ theme }) => theme.colors.contrast};
+	color: ${({ theme }) => theme.colors.text.contrast};
 	cursor: pointer;
 	box-sizing: border-box;
 	border-radius: 10px;
