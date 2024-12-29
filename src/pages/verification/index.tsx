@@ -18,6 +18,7 @@ import { StyledText } from '../../components/Text/StyledText';
 import TopBar from '../../components/TopBar';
 import back from '../../assets/arrow/left.svg';
 import { useNavigate } from 'react-router-dom';
+import theme from '@styles/theme';
 
 const Verification: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -104,11 +105,13 @@ const Verification: React.FC = () => {
 	return (
 		<OODDFrame>
 			<VerificationWrapper>
-				<TopBar text="본인인증" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="본인인증" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<Container>
 					<Title>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color="7B7B7B">
+					<StyledText
+							$textTheme={{ style: 'body1-medium' }}
+							color={theme.colors.tertiary} >
 							휴대전화번호로 본인인증하기
 						</StyledText>
 					</Title>
@@ -120,7 +123,6 @@ const Verification: React.FC = () => {
 								value={name}
 								onChange={handleNameChange}
 								data-theme-style="heading1-regular"
-								data-theme-lineheight="1"
 							/>
 						</InputWrapper>
 						<InputWrapper>
@@ -129,8 +131,7 @@ const Verification: React.FC = () => {
 								placeholder="전화번호"
 								value={phone}
 								onChange={handlePhoneChange}
-								data-theme-style="body2-light"
-								data-theme-lineheight="1"
+								data-theme-style="body1-medium"
 							/>
 							{isVerificationSent && <ResendButton onClick={handleResend}>인증번호 새로 받기</ResendButton>}
 						</InputWrapper>
@@ -141,8 +142,7 @@ const Verification: React.FC = () => {
 									placeholder="인증번호를 입력하세요"
 									value={verificationCode}
 									onChange={handleVerificationCodeChange}
-									data-theme-style="body2-light"
-									data-theme-lineheight="1"
+									data-theme-style="body1-medium"
 								/>
 								<Timer>{formatTime(timer)}</Timer>
 							</VerificationInputWrapper>

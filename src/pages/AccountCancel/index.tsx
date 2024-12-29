@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
-import { CancelContainer, SubTitle, Text, InfoBox, InfoItem, CheckboxWrapper } from './styles';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
-import { OODDFrame } from '../../components/Frame/Frame';
+import {
+	CancelContainer,
+	SubTitle,
+	Text,
+	InfoBox,
+	InfoItem,
+	CheckboxWrapper,
+	CheckboxInput,
+	Label,
+	StyledCheckboxText,
+	StyledDiv,
+} from './styles'; // 상대 경로 index 명시
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
+import { OODDFrame } from '@components/Frame/Frame';
 import { useNavigate } from 'react-router-dom';
 
-import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
+import TopBar from '@components/TopBar/index';
+import back from '@assets/arrow/left.svg';
 
-import BottomButton from '../../components/BottomButton';
-import { patchUserWithdrawApi } from '../../apis/user';
-import Modal from '../../components/Modal'; 
+import BottomButton from '@components/BottomButton/index';
+import { patchUserWithdrawApi } from '@apis/user';
+import Modal from '@components/Modal/index';
 
 const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
-	const [modalContent, setModalContent] = useState<string | null>(null); 
+	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const navigate = useNavigate();
 
@@ -55,8 +66,8 @@ const AccountCancel: React.FC = () => {
 				localStorage.clear();
 
 				setTimeout(() => {
-					navigate('/login'); 
-				}, 2000); 
+					navigate('/login');
+				}, 2000);
 			} else {
 				setModalContent(response.code || '알 수 없는 오류가 발생했습니다.');
 				setIsModalVisible(true);
@@ -71,68 +82,50 @@ const AccountCancel: React.FC = () => {
 	return (
 		<OODDFrame>
 			<CancelContainer>
-				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<SubTitle>
-					<StyledText as="div" $textTheme={{ style: 'body1-medium', lineHeight: 2 }} color={theme.colors.black}>
+					<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.primary}>
 						OOTD 탈퇴 전 확인하세요!
 					</StyledText>
 				</SubTitle>
 				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-						탈퇴하시면 이용 중인 서비스가 폐쇄되며,
-					</StyledText>
-				</Text>
-				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'body2-light', lineHeight: 1 }} color={theme.colors.black}>
-						모든 데이터는 복구할 수 없습니다.
+					<StyledText as="div" $textTheme={{ style: 'caption1-regular' }} color={theme.colors.primary}>
+						{`탈퇴하시면 이용 중인 서비스가 폐쇄되며,\n모든 데이터는 복구할 수 없습니다.`}
 					</StyledText>
 				</Text>
 				<InfoBox>
 					<InfoItem as="div">
-					<StyledText
-						as="div"
-						$textTheme={{ style: 'body1-medium', lineHeight: 2 }}
-						color={theme.colors.black}
-						style={{ whiteSpace: 'nowrap' }} // 줄 바꿈 방지
-					>
-						지금까지 OODD를 이용해주셔서 감사합니다!
-					</StyledText>
-
+						<StyledText
+							as="div"
+							$textTheme={{ style: 'body1-medium'}}
+							color={theme.colors.primary}
+							style={{ whiteSpace: 'nowrap' }} 
+						>
+							지금까지 OODD를 이용해주셔서 감사합니다!
+						</StyledText>
 					</InfoItem>
 				</InfoBox>
 				<CheckboxWrapper as="div">
-					<label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-					<input
-						type="checkbox"
-						checked={isChecked}
-						onChange={handleCheckboxChange}
-						style={{ marginRight: '8px' }} // 텍스트와 체크박스 간격 조절
-					/>
-					<StyledText as="span" $textTheme={{ style: 'body4-light', lineHeight: 1 }} color={theme.colors.gray3}>
-						안내사항을 모두 확인하였으며, 이에 동의합니다.
-					</StyledText>
-					</label>
+					<Label>
+						<CheckboxInput type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+						<StyledCheckboxText as="span" $textTheme={{ style: 'body2-regular' }}>
+							안내사항을 모두 확인하였으며, 이에 동의합니다.
+						</StyledCheckboxText>
+					</Label>
 				</CheckboxWrapper>
 			</CancelContainer>
-			<div
-				style={{
-					backgroundColor: isChecked ? '#000000' : '#d3d3d3',
-					color: isChecked ? '#ffffff' : '#808080',
-					cursor: isChecked ? 'pointer' : 'not-allowed',
-				}}
-			>
+			<StyledDiv isChecked={isChecked}>
 				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
-			</div>
+			</StyledDiv>
 			{isModalVisible && (
- 				 <Modal
-   					 content={modalContent || ''} // null일 경우 빈 문자열로 처리
-   					 onClose={handleModalClose}
-   					 isCloseButtonVisible={true}
-   				 	button={{ content: '확인', onClick: handleModalClose }}
-				 />
-)}
-
+				<Modal
+					content={modalContent || ''} // null일 경우 빈 문자열로 처리
+					onClose={handleModalClose}
+					isCloseButtonVisible={true}
+					button={{ content: '확인', onClick: handleModalClose }}
+				/>
+			)}
 		</OODDFrame>
 	);
 };

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { StyledText } from '../Text/StyledText';
 
-export const PostItemContainer = styled.article`
+export const PostItemLayout = styled.article`
 	flex: 1 1 calc(50% - 0.5rem); /* 기본적으로 두 개씩 배치되도록 설정 */
 	width: 100%;
 	max-width: 67.5rem; /* 최대 너비 설정 */
@@ -43,27 +42,21 @@ export const PostImage = styled.img`
 
 export const LikesOverlay = styled.div`
 	position: absolute;
-	bottom: 0; /* 하단에 배치 */
+	bottom: 0.625rem; /* 하단에 배치 */
+	right: 0.625rem;
 	width: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: flex-end;
+	align-items: center;
 	box-sizing: border-box;
+	gap: 5px;
 `;
 
-export const Icon = styled.img`
-	margin-bottom: 0.5rem;
-`;
-
-export const LikesCountStyledText = styled(StyledText)`
-	margin: 0 8px 0.5rem 4px;
-`;
-
-export const PinSvg = styled.img`
+export const Pin = styled.img`
 	display: flex;
 	position: absolute;
 	top: 0.75rem;
-	left: 1.25rem;
+	left: 0.75rem;
 	justify-content: center;
 	align-items: center;
 `;

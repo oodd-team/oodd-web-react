@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import LoginComplete from './pages/Login/components/LoginComplete';
+import LoginComplete from './pages/Login/LoginComplete';
 import TermsAgreement from './pages/TermsAgreement';
 
 import Profile from './pages/Profile';
@@ -14,7 +14,6 @@ import AccountCancel from './pages/AccountCancel';
 import Verification from './pages/verification';
 
 import Post from './pages/Post';
-import MyPost from './pages/MyPost';
 import PostUpload from './pages/PostUpload';
 import PostImageSelect from './pages/PostImageSelect';
 import PostInstaConnect from './pages/PostInstaConnect';
@@ -43,7 +42,6 @@ const protectedRoutes = [
 	{ path: '/verification', element: <Verification /> },
 
 	{ path: '/post/:postId', element: <Post /> },
-	{ path: '/my-post/:postId', element: <MyPost /> },
 	{ path: '/upload', element: <PostUpload /> },
 	{ path: '/image-select', element: <PostImageSelect /> },
 	{ path: '/insta-connect', element: <PostInstaConnect /> },
@@ -57,9 +55,10 @@ const protectedRoutes = [
 // 인증이 필요 없는 페이지 배열
 const publicRoutes = [
 	{ path: '/login', element: <Login /> },
-	{ path: '/signup', element: <SignUp /> },
 	{ path: '/login/complete', element: <LoginComplete /> },
-	{ path: '/terms-agreement', element: <TermsAgreement /> },
+
+	{ path: '/signup', element: <SignUp /> },
+	{ path: '/signup/terms-agreement', element: <TermsAgreement /> },
 ];
 
 const App: React.FC = () => {

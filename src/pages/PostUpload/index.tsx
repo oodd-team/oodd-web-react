@@ -51,6 +51,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebaseConfig';
 import { getPostDetailApi, createPostApi, modifyPostApi } from '../../apis/post';
 import { handleError } from '../../apis/util/handleError';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [selectedImages, setSelectedImages] = useRecoilState(postImagesAtom);
@@ -66,7 +67,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	const styletags = [
 		'classic',
@@ -308,7 +309,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	return (
 		<OODDFrame>
 			<UploadContainer>
-				<TopBar text="OOTD 업로드" LeftButtonSrc={Left} onLeftClick={handlePrev} />
+				<TopBar text="OOTD 업로드" LeftButtonSrc={Left} onClickLeftButton={handlePrev} />
 				<Content>
 					<ImageSwiper images={selectedImages} />
 					<StyledInput
@@ -319,11 +320,11 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					<TagContainer className="clothingTag">
 						<div onClick={handleToggleSearchSheet}>
 							<img src={ClothingTag} />
-							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
+							<StyledText className="label" $textTheme={{ style: 'headline2-bold' }}>
 								옷 정보 태그
 							</StyledText>
 							{clothingInfos.length > 0 && (
-								<StyledText className="count" $textTheme={{ style: 'headline2-regular', lineHeight: 1 }}>
+								<StyledText className="count" $textTheme={{ style: 'headline2-regular' }}>
 									{clothingInfos.length}
 								</StyledText>
 							)}

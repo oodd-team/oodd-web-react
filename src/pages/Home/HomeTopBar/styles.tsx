@@ -5,7 +5,7 @@ export const HomeTopBarContainer = styled.header`
 	padding: 0.5rem 1.25rem;
 	display: flex;
 	justify-content: space-between;
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	z-index: 20;
 	align-items: center;
 	position: fixed;

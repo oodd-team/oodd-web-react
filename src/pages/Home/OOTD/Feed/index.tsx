@@ -21,12 +21,11 @@ import {
 } from './styles';
 import more from '@assets/default/more.svg';
 import xBtn from '@assets/default/reject.svg';
-import likeBtn from '@assets/default/heart.svg';
-import likeFillBtn from '@assets/default/heart-fill.svg';
-import commentBtn from '@assets/default/message-white.svg';
 import { useNavigate } from 'react-router-dom';
 import defaultProfile from '@assets/default/defaultProfile.svg';
 import dayjs from 'dayjs';
+import Heart from '@components/Icons/Heart';
+import Message from '@components/Icons/Message';
 import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import CommentBottomSheet from '@components/CommentBottomSheet';
@@ -40,6 +39,7 @@ import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postUserBlockApi } from '@apis/user-block';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
 import type { FeedProps } from './dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [isLikeClicked, setIsLikeClicked] = useState(feed.isPostLike);
@@ -50,7 +50,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [modalContent, setModalContent] = useState('');
 
 	const nav = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const currentUserId = getCurrentUserId();
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
 
 	const handleMoreButtonClick = (e: React.MouseEvent) => {
@@ -76,7 +76,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const handleUserClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		nav(`/users/${feed.user.id}`);
+		nav(`/profile/${feed.user.id}`);
 	};
 
 	const handleFeedClick = (e: React.MouseEvent) => {
@@ -111,8 +111,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const postUserBlock = async () => {
 		try {
 			const data: PostUserBlockRequest = {
-				fromUserId: Number(userId) || -1,
-				toUserId: feed.user.id,
+				requesterId: currentUserId || -1,
+				targetId: feed.user.id,
 				action: 'block',
 			};
 			const response = await postUserBlockApi(data);
@@ -133,7 +133,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const createMatching = async (comment: string) => {
 		try {
 			const matchingRequest: CreateMatchingRequest = {
-				requesterId: Number(userId) || -1,
+				requesterId: currentUserId || -1,
 				targetId: feed.user.id || -1,
 				message: comment,
 			};
@@ -203,18 +203,18 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 			<FeedTop>
 				<Info onClick={handleUserClick}>
 					<FeedProfileImgWrapper src={feed.user.profilePictureUrl || defaultProfile} alt="profile" />
-					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 						{feed.user.nickname}
 					</StyledText>
 				</Info>
-				<FeedTimeAgo $textTheme={{ style: 'caption2-medium' }} color={theme.colors.gray2}>
+				<FeedTimeAgo $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 					{timeAgo}
 				</FeedTimeAgo>
 				<MoreBtn onClick={handleMoreButtonClick}>
 					<img src={more} />
 				</MoreBtn>
 			</FeedTop>
-			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+			<FeedText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 				{feed.content}
 			</FeedText>
 			<FeedImgBox>
@@ -227,27 +227,23 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 					className="ootdSwiper"
 				>
 					{feed.postImages.map((postImage) => (
-						<div key={postImage.url}>
-							<SwiperSlide>
-								<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
-								<div className="blur"></div>
-								<FeedImgBackground $src={postImage.url} />
-							</SwiperSlide>
-						</div>
+						<SwiperSlide key={postImage.url}>
+							<img src={postImage.url} alt={`${feed.user.nickname}의 피드 이미지`} className="ootd-image-small" />
+							<div className="blur"></div>
+							<FeedImgBackground $src={postImage.url} />
+						</SwiperSlide>
 					))}
 				</Swiper>
 				<ReactionWrapper>
 					<Reaction>
 						<img className="button" onClick={handleRejectButtonClick} src={xBtn} />
-						{isLikeClicked ? (
-							<img className="button" onClick={handleLikeButtonClick} src={likeFillBtn} />
-						) : (
-							<img className="button" onClick={handleLikeButtonClick} src={likeBtn} />
-						)}
+						<div className="button" onClick={handleLikeButtonClick}>
+							<Heart isFilled={isLikeClicked} />
+						</div>
 					</Reaction>
 					<MatchingBtn onClick={handleMatchingButtonClick}>
-						<img src={commentBtn} />
-						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.white}>
+						<Message width="16" height="16" color="white" />
+						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.text.contrast}>
 							매칭 요청
 						</StyledText>
 					</MatchingBtn>

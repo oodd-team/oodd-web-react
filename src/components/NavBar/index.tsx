@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	NavBarContainer,
 	NavBarWrapper,
-	IconImg,
 	IconWrapper,
 	SideNavBarContainer,
 	SideNavBarList,
@@ -11,46 +10,50 @@ import {
 	SideNavBarButton,
 	SideNavBarHeader,
 	SideNavBarFooter,
+	Icon,
 } from './styles';
-import Chat_s from './../../assets/default/message-white.svg';
-import Chat_f from './../../assets/default/message-fill.svg';
-import Home_s from './../../assets/default/home.svg';
-import Home_f from './../../assets/default/home-fill.svg';
-import Profile_s from './../../assets/default/my-page-white.svg';
-import Profile_f from './../../assets/default/my-page-fill.svg';
-import logo from './../../assets/default/oodd.svg';
-import alarm from './../../assets/default/alarm.svg';
-// import clickedAlarm from './../../assets/default/alarm-on.svg';
-import chatDesktopIcon from './../../assets/default/desktopNavBar/message.svg';
-import chatFillDesktopIcon from './../../assets/default/desktopNavBar/message-fill.svg';
-import homeDesktopIcon from './../../assets/default/desktopNavBar/home.svg';
-import homeFillDesktopIcon from './../../assets/default/desktopNavBar/home-fill.svg';
-import profileDesktopIcon from './../../assets/default/desktopNavBar/my-page.svg';
-import profileFillDesktopIcon from './../../assets/default/desktopNavBar/my-page-fill.svg';
-import logout from './../../assets/default/leave.svg';
-import { StyledText } from '../Text/StyledText';
-import Modal from '../Modal';
-import { ModalProps } from '../Modal/dto';
-
-const userId = localStorage.getItem('my_id');
-
-const tabs = [
-	{ name: 'Chats', iconSelected: Chat_f, iconUnselected: Chat_s, route: '/chats' },
-	{ name: 'Home', iconSelected: Home_f, iconUnselected: Home_s, route: '/' },
-	{ name: 'Profile', iconSelected: Profile_f, iconUnselected: Profile_s, route: `/profile/${userId}` },
-];
-
-const desktopTabs = [
-	{ name: 'Home', iconSelected: homeFillDesktopIcon, iconUnselected: homeDesktopIcon, route: '/' },
-	{ name: 'Chats', iconSelected: chatFillDesktopIcon, iconUnselected: chatDesktopIcon, route: '/chats' },
-	{ name: 'Profile', iconSelected: profileFillDesktopIcon, iconUnselected: profileDesktopIcon, route: `/profile/${userId}` },
-];
+import Message from '@components/Icons/Message';
+import Home from '@components/Icons/Home';
+import MyPage from '@components/Icons/MyPage';
+import Alarm from '@components/Icons/Alarm';
+import logo from '@assets/default/oodd.svg';
+import logout from '@assets/default/leave.svg';
+import { StyledText } from '@components/Text/StyledText';
+import Modal from '@components/Modal';
+import type { ModalProps } from '@components/Modal/dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+import theme from '@styles/theme';
 
 const NavBar: React.FC = () => {
-	const [selectedTab, setSelectedTab] = useState('');
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+	const [selectedTab, setSelectedTab] = useState('');
 	const navigate = useNavigate();
 	const location = useLocation();
+	const currentUserId = getCurrentUserId();
+
+	const tabs = [
+		{
+			name: 'Chats',
+			Icon: (isSelected: boolean, isDesktop: boolean) => (
+				<Message isFilled={isSelected} color={isDesktop ? 'black' : 'white'} width="16" height="16" />
+			),
+			route: '/chats',
+		},
+		{
+			name: 'Home',
+			Icon: (isSelected: boolean, isDesktop: boolean) => (
+				<Home isFilled={isSelected} color={isDesktop ? 'black' : 'white'} width="18" height="18" />
+			),
+			route: '/',
+		},
+		{
+			name: 'Profile',
+			Icon: (isSelected: boolean, isDesktop: boolean) => (
+				<MyPage isFilled={isSelected} color={isDesktop ? 'black' : 'white'} />
+			),
+			route: `/profile/${currentUserId}`,
+		},
+	];
 
 	useEffect(() => {
 		const currentTab = tabs.find((tab) => tab.route === location.pathname);
@@ -68,7 +71,7 @@ const NavBar: React.FC = () => {
 		}
 	};
 
-	const handleConfirmLogout = () => {
+	const handleLogoutConfirmButtonClick = () => {
 		localStorage.clear();
 		setIsLogoutModalOpen(false);
 
@@ -87,18 +90,17 @@ const NavBar: React.FC = () => {
 		content: '이 기기에서 정말 로그아웃 할까요?',
 		button: {
 			content: '로그아웃',
-			onClick: handleConfirmLogout,
+			onClick: handleLogoutConfirmButtonClick,
 		},
 	};
 
 	return (
 		<>
-			{isLogoutModalOpen && <Modal {...logoutModalProps} />}
 			<NavBarContainer>
 				<NavBarWrapper>
 					{tabs.map((tab) => (
 						<IconWrapper key={tab.name} onClick={() => handleTabClick(tab)}>
-							<IconImg src={selectedTab === tab.name ? tab.iconSelected : tab.iconUnselected} />
+							<Icon>{tab.Icon(selectedTab === tab.name, false)}</Icon>
 							<p>{tab.name}</p>
 						</IconWrapper>
 					))}
@@ -108,20 +110,18 @@ const NavBar: React.FC = () => {
 				<SideNavBarHeader>
 					<img src={logo} alt="oodd" className="logo" />
 					<button className="alarm">
-						<img src={alarm} alt="알림" />
+						<Alarm></Alarm>
 					</button>
 				</SideNavBarHeader>
 				<SideNavBarList>
-					{desktopTabs.map((tab) => (
+					{tabs.map((tab) => (
 						<SideNavBarItem key={tab.name} onClick={() => handleTabClick(tab)}>
 							<SideNavBarButton>
-								<button>
-									<img src={selectedTab === tab.name ? tab.iconSelected : tab.iconUnselected} />
-								</button>
+								<button>{tab.Icon(selectedTab === tab.name, true)}</button>
 								<StyledText
 									className="styled-text"
 									$textTheme={{ style: selectedTab === tab.name ? `heading2-bold` : 'heading2-medium' }}
-									color="#1d1d1d"
+									color={theme.colors.text.primary}
 								>
 									{tab.name}
 								</StyledText>
@@ -132,11 +132,12 @@ const NavBar: React.FC = () => {
 				<SideNavBarFooter>
 					<SideNavBarButton onClick={handleLogoutButtonClick}>
 						<button>
-							<img src={logout} alt="" />
+							<img src={logout} alt="로그아웃" />
 						</button>
 					</SideNavBarButton>
 				</SideNavBarFooter>
 			</SideNavBarContainer>
+			{isLogoutModalOpen && <Modal {...logoutModalProps} />}
 		</>
 	);
 };

@@ -93,6 +93,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 			// 타겟 요소가 뷰포트에 들어오고 로딩 중이 아닐 때 결과 로드 함수 호출
 			if (entry.isIntersecting && !isLoading) {
 				loadResults();
+				console.log('감지');
 			}
 		};
 

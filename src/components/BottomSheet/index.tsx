@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BottomSheetProps } from './dto';
+import type { BottomSheetProps } from './dto';
 import {
 	BottomSheetWrapper,
 	BottomSheetLayout,
 	Handler,
 	SideBarLayout,
-	XButton,
+	CloseButton,
 	SideBarTopBar,
 	ComponentBox,
 } from './styles';
+import closeIcon from '@assets/default/x.svg';
 
 const BottomSheet: React.FC<BottomSheetProps> = ({
 	isOpenBottomSheet,
@@ -17,43 +18,44 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 	componentProps,
 	onCloseBottomSheet,
 }) => {
-	const startY = useRef<number | null>(null);
-	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 	const [isInitialRender, setisInitialRender] = useState(true);
 	const [isRendered, setIsRendered] = useState(false);
+	const [isDragging, setIsDragging] = useState(false);
+	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 	const [currentTranslateY, setCurrentTranslateY] = useState(0);
-	const [isDragging, setIsDragging] = useState<boolean>(false);
+	const startY = useRef<number | null>(null);
 
-	useEffect(() => {
-		if (isOpenBottomSheet) {
-			setIsSideBarOpen(true);
-			setisInitialRender(false);
-			setIsRendered(true);
-			setCurrentTranslateY(0);
-		} else {
-			setIsSideBarOpen(false);
-			setIsRendered(false);
+	// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
+	const handleBackgroundClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (!isDragging && e.target === e.currentTarget) {
+			onCloseBottomSheet();
 		}
-	}, [isOpenBottomSheet]);
+	};
 
-	// 드래그 시작 시점의 y값
-	const onPointerDown = useCallback((event: React.PointerEvent | React.TouchEvent) => {
-		if ('touches' in event) {
-			startY.current = event.touches[0].clientY;
+	const handleCloseButtonClick = () => {
+		onCloseBottomSheet();
+	};
+
+	// 드래그 시작
+	const handlePointerDown = useCallback((e: React.PointerEvent | React.TouchEvent) => {
+		if ('touches' in e) {
+			startY.current = e.touches[0].clientY;
 		} else {
-			startY.current = event.clientY;
+			startY.current = e.clientY;
 		}
 		setIsDragging(true);
 	}, []);
 
-	const onPointerMove = useCallback(
-		(event: PointerEvent | TouchEvent) => {
+	// 드래그 중
+	const handlePointerMove = useCallback(
+		(e: PointerEvent | TouchEvent) => {
 			if (startY.current !== null) {
 				let currentY;
-				if ('touches' in event) {
-					currentY = event.touches[0].clientY;
+				if ('touches' in e) {
+					currentY = e.touches[0].clientY;
 				} else {
-					currentY = event.clientY;
+					currentY = e.clientY;
 				}
 				const deltaY = currentY - startY.current;
 				if (deltaY > 0) {
@@ -64,15 +66,15 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 		[startY],
 	);
 
-	// 드래그 종료 시점의 y값
-	const onPointerUp = useCallback(
-		(event: PointerEvent | TouchEvent) => {
+	// 드래그 종료
+	const handlePonterUp = useCallback(
+		(e: PointerEvent | TouchEvent) => {
 			if (startY.current !== null) {
 				let endY;
-				if ('changedTouches' in event) {
-					endY = event.changedTouches[0].clientY;
+				if ('changedTouches' in e) {
+					endY = e.changedTouches[0].clientY;
 				} else {
-					endY = event.clientY;
+					endY = e.clientY;
 				}
 
 				// 두 값의 변화량이 50px보다 크면 아래로 드래그한 것으로 간주하여 바텀시트 닫음
@@ -85,7 +87,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 				}
 				startY.current = null; // 초기화
 
-				// PointerUp 직후 onClick 동작 방지
+				// pointerUp 직후 onClick 동작 방지
 				setTimeout(() => {
 					setIsDragging(false);
 				}, 100);
@@ -94,48 +96,52 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 		[startY, onCloseBottomSheet],
 	);
 
+	// 초기 렌더링 시 window에 이벤트 리스너 등록
+	// 이벤트 리스너는 on[event] 형식으로 작성했습니다
 	useEffect(() => {
 		// 데스크탑
-		const handlePointerUp = (event: PointerEvent) => onPointerUp(event);
-		const handlePointerMove = (event: PointerEvent) => onPointerMove(event);
+		const onPointerUp = (e: PointerEvent) => handlePonterUp(e);
+		const onPointerMove = (e: PointerEvent) => handlePointerMove(e);
 		// 모바일 & 태블릿
-		const handleTouchEnd = (event: TouchEvent) => onPointerUp(event);
-		const handleTouchMove = (event: TouchEvent) => onPointerMove(event);
+		const onTouchEnd = (e: TouchEvent) => handlePonterUp(e);
+		const onTouchMove = (e: TouchEvent) => handlePointerMove(e);
 
-		window.addEventListener('pointermove', handlePointerMove);
-		window.addEventListener('touchmove', handleTouchMove);
-		window.addEventListener('pointerup', handlePointerUp);
-		window.addEventListener('touchend', handleTouchEnd);
+		window.addEventListener('pointermove', onPointerMove);
+		window.addEventListener('pointerup', onPointerUp);
+		window.addEventListener('touchmove', onTouchMove);
+		window.addEventListener('touchend', onTouchEnd);
 
+		// 언마운트 시 이벤트리스너 제거
 		return () => {
-			window.removeEventListener('pointermove', handlePointerMove);
-			window.removeEventListener('touchmove', handleTouchMove);
-			window.removeEventListener('pointerup', handlePointerUp);
-			window.removeEventListener('touchend', handleTouchEnd);
+			window.removeEventListener('pointermove', onPointerMove);
+			window.removeEventListener('pointerup', onPointerUp);
+			window.removeEventListener('touchmove', onTouchMove);
+			window.removeEventListener('touchend', onTouchEnd);
 		};
-	}, [onPointerMove, onPointerUp]);
+	}, [handlePointerMove, handlePonterUp]);
 
-	// 초기 렌더링 시 바텀시트 안 보이게 설정
-	if (isInitialRender && !isOpenBottomSheet) return null;
-
-	// BottomSheet 외부를 클릭할 경우 BottomSheet 닫음
-	const handleBackgroundClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		if (!isDragging && e.target === e.currentTarget) {
-			onCloseBottomSheet();
+	// 바텀시트 초기 렌더링 버그를 해결하기 위한 상태값 업데이트
+	useEffect(() => {
+		if (isOpenBottomSheet) {
+			setisInitialRender(false);
+			setIsRendered(true);
+			setIsSideBarOpen(true);
+			setCurrentTranslateY(0);
+		} else {
+			setIsRendered(false);
+			setIsSideBarOpen(false);
 		}
-	};
+	}, [isOpenBottomSheet]);
 
-	const handleButtonClick = () => {
-		onCloseBottomSheet();
-	};
+	// 부모 요소 초기 렌더링 시 바텀시트 안 보이게 설정
+	if (isInitialRender && !isOpenBottomSheet) return null;
 
 	return (
 		<BottomSheetWrapper $isBottomSheetOpen={isRendered} onClick={handleBackgroundClick}>
 			{/* 모바일 & 태블릿 UI */}
 			<BottomSheetLayout
-				onPointerDown={onPointerDown}
-				onTouchStart={onPointerDown}
+				onPointerDown={handlePointerDown}
+				onTouchStart={handlePointerDown}
 				$currentTranslateY={currentTranslateY}
 				$isBottomSheetOpen={isRendered}
 			>
@@ -145,7 +151,9 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 			{/* 데스크탑 UI */}
 			<SideBarLayout $isSideBarOpen={isSideBarOpen}>
 				<SideBarTopBar>
-					<XButton onClick={handleButtonClick} />
+					<CloseButton onClick={handleCloseButtonClick}>
+						<img src={closeIcon} alt="닫기" />
+					</CloseButton>
 				</SideBarTopBar>
 				<ComponentBox>
 					<Component {...componentProps} />

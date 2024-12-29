@@ -14,6 +14,7 @@ import { ModalProps } from '../../components/Modal/dto';
 import X from '../../assets/default/x.svg';
 
 import { InstaFeedSelectModalProps, Post } from './dto';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(true);
@@ -22,7 +23,7 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
 	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
-	const userId = localStorage.getItem('my_id');
+	const userId = getCurrentUserId();
 
 	// 인스타그램 데이터 가져오는 함수
 	const fetchInstagramData = async (accessToken: string) => {
@@ -71,14 +72,14 @@ const PostInstaFeedSelect: React.FC<InstaFeedSelectModalProps> = () => {
 
 	// 페이지 종료 함수
 	const handleClose = () => {
-		navigate(`/profile/${userId}`); 
+		navigate(`/profile/${userId}`);
 	};
 
 	return (
 		<OODDFrame>
 			{isSuccessModalOpen && <Modal {...connectSuccessModalProps} />}
 			{isFailModalOpen && <Modal {...connectFailModalProps} />}
-			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onLeftClick={handleClose} />{' '}
+			<TopBar text="가져올 OOTD 선택" LeftButtonSrc={X} onClickLeftButton={handleClose} />{' '}
 			<Content>
 				{posts.map((post, index) => (
 					<PostContainer key={index} onClick={() => handlePostSelect(post)}>

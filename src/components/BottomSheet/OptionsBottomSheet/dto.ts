@@ -9,10 +9,3 @@ export interface OptionsBottomSheetProps {
 	isBottomSheetOpen: boolean;
 	onClose: () => void;
 }
-
-export interface BlockInfoDto {
-	userId: number;
-	friendId: number;
-	friendName: string;
-	action: 'toggle';
-}

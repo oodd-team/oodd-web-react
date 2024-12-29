@@ -1,5 +1,5 @@
 import React from 'react';
-import theme from '../../../../styles/theme';
+import theme from '@styles/theme';
 import { DatebarLayout, Date, Divider } from './styles';
 
 interface DateBarProps {
@@ -10,7 +10,7 @@ const DateBar: React.FC<DateBarProps> = React.memo(({ formattedDate }) => {
 	return (
 		<DatebarLayout>
 			<Divider />
-			<Date $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
+			<Date $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.tertiary}>
 				{formattedDate}
 			</Date>
 			<Divider />

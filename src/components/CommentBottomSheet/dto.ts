@@ -1,4 +1,4 @@
-import { CommentProps } from '../Comment/dto';
+import { CommentProps } from './Comment/dto';
 
 export interface CommentBottomSheetProps {
 	isBottomSheetOpen: boolean;

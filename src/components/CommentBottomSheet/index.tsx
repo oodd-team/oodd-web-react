@@ -1,10 +1,11 @@
-import { StyledText } from '../Text/StyledText';
-import theme from '../../styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 
-import BottomSheet from '../BottomSheet';
-import Comment from '../Comment';
-import { BottomSheetProps } from '../BottomSheet/dto';
-import { CommentBottomSheetProps } from './dto';
+import BottomSheet from '@components/BottomSheet';
+import Comment from './Comment/index';
+import type { BottomSheetProps } from '@components/BottomSheet/dto';
+import type { CommentBottomSheetProps } from './dto';
+import closeIcon from '@assets/default/modal-close-white.svg';
 
 import {
 	CommentBottomSheetLayout,
@@ -13,7 +14,7 @@ import {
 	CommentModalHeader,
 	CommentModalLayout,
 	CommentModalWrapper,
-	XButton,
+	CloseButton,
 } from './styles';
 
 const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
@@ -21,13 +22,6 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 	commentProps,
 	handleCloseBottomSheet,
 }) => {
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isBottomSheetOpen,
-		Component: Comment,
-		componentProps: commentProps,
-		onCloseBottomSheet: handleCloseBottomSheet,
-	};
-
 	const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
@@ -35,8 +29,15 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 		}
 	};
 
-	const handleButtonClick = () => {
+	const handleCloseButtonClick = () => {
 		handleCloseBottomSheet();
+	};
+
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isBottomSheetOpen,
+		Component: Comment,
+		componentProps: commentProps,
+		onCloseBottomSheet: handleCloseBottomSheet,
 	};
 
 	return (
@@ -51,10 +52,12 @@ const CommentBottomSheet: React.FC<CommentBottomSheetProps> = ({
 					<CommentModalWrapper onClick={handleBackgroundClick}>
 						<CommentModalContainer>
 							<CommentModalHeader>
-								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.white}>
-									메시지 보내기
+								<StyledText $textTheme={{ style: 'heading1-bold' }} color={theme.colors.text.contrast}>
+									매칭 요청
 								</StyledText>
-								<XButton onClick={handleButtonClick} />
+								<CloseButton onClick={handleCloseButtonClick}>
+									<img src={closeIcon} alt="닫기" />
+								</CloseButton>
 							</CommentModalHeader>
 							<CommentModalBox>
 								<Comment {...commentProps} isModal={true} />

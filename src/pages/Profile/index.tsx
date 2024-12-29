@@ -12,33 +12,34 @@ import {
 	NoPostWrapper,
 	Button,
 } from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-import NavbarProfile from './NavbarProfile';
-import NavBar from '../../components/NavBar';
-import ButtonSecondary from './ButtonSecondary';
-import PostItem from '../../components/PostItem';
-import imageBasic from '../../assets/default/defaultProfile.svg';
-import Loading from '../../components/Loading';
-import UserProfile from '../../components/UserProfile';
-import { StyledText } from '../../components/Text/StyledText';
-import Modal from '../../components/Modal';
-import CommentBottomSheet from '../../components/CommentBottomSheet';
-import OptionsBottomSheet from '../../components/BottomSheet/OptionsBottomSheet';
+import NavbarProfile from './NavbarProfile/index'; // 상대 경로 index 명시
+import ButtonSecondary from './ButtonSecondary/index'; // 상대 경로 index 명시
+import { OODDFrame } from '@components/Frame/Frame';
+import NavBar from '@components/NavBar';
+import PostItem from '@components/PostItem';
+import imageBasic from '@assets/default/defaultProfile.svg';
+import Loading from '@components/Loading';
+import UserProfile from '@components/UserProfile';
+import { StyledText } from '@components/Text/StyledText';
+import Modal from '@components/Modal';
+import CommentBottomSheet from '@components/CommentBottomSheet';
+import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 
-import { getUserPostListApi } from '../../apis/post';
-import { getUserInfoApi } from '../../apis/user';
-import { createMatchingApi } from '../../apis/matching';
-import { UserPostSummary } from '../../apis/post/dto';
-import { UserInfoData } from '../../apis/user/dto';
-import button_plus from '../../assets/default/plus.svg';
-import TopBar from '../../components/TopBar';
-import MoreSvg from '../../assets/default/more.svg';
-import BackSvg from '../../assets/arrow/left.svg';
+import { getUserPostListApi } from '@apis/post';
+import { getUserInfoApi } from '@apis/user';
+import { createMatchingApi } from '@apis/matching';
+import type { UserPostSummary } from '@apis/post/dto'; // type 명시
+import type { UserInfoData } from '@apis/user/dto'; // type 명시
+import button_plus from '@assets/default/plus.svg';
+import TopBar from '@components/TopBar';
+import MoreSvg from '@assets/default/more.svg';
+import BackSvg from '@assets/arrow/left.svg';
+import theme from '@styles/theme';
 
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const profileUserId = Number(userId);
-	const loggedInUserId = Number(localStorage.getItem('my_id'));
+	const loggedInUserId = Number(localStorage.getItem('current_user_id'));
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [posts, setPosts] = useState<UserPostSummary[]>([]);
@@ -108,8 +109,8 @@ const Profile: React.FC = () => {
 					<TopBar
 						RightButtonSrc={MoreSvg}
 						LeftButtonSrc={BackSvg}
-						onLeftClick={() => navigate(-1)}
-						onRightClick={() => setIsOptionsBottomSheetOpen(true)} // OptionsBottomSheet 열기
+						onClickLeftButton={() => navigate(-1)}
+						onClickRightButton={() => setIsOptionsBottomSheetOpen(true)} 
 					/>
 				)}
 
@@ -121,11 +122,7 @@ const Profile: React.FC = () => {
 					/>
 				</Header>
 
-				{isMyPage ? (
-					<ButtonSecondary />
-				) : (
-					<Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>
-				)}
+				{isMyPage ? <ButtonSecondary /> : <Button onClick={() => setIsBottomSheetOpen(true)}>매칭신청</Button>}
 
 				<StatsContainer>
 					<Stat>
@@ -135,16 +132,12 @@ const Profile: React.FC = () => {
 					{isMyPage && (
 						<Stat>
 							<StatLabel>코멘트</StatLabel>
-							<StatNumber>
-								{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}
-							</StatNumber>
+							<StatNumber>{posts.reduce((sum, post) => sum + (post.postCommentsCount || 0), 0)}</StatNumber>
 						</Stat>
 					)}
 					<Stat>
 						<StatLabel>좋아요</StatLabel>
-						<StatNumber>
-							{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}
-						</StatNumber>
+						<StatNumber>{posts.reduce((sum, post) => sum + (post.postLikesCount || 0), 0)}</StatNumber>
 					</Stat>
 				</StatsContainer>
 
@@ -153,7 +146,7 @@ const Profile: React.FC = () => {
 						posts.map((post) => <PostItem key={post.id} post={post} />)
 					) : (
 						<NoPostWrapper>
-							<StyledText $textTheme={{ style: 'headline1-medium' }} color="#8e8e93">
+							<StyledText $textTheme={{ style: 'headline1-medium' }} color={theme.colors.gray[400]}>
 								게시물이 없어요.
 							</StyledText>
 						</NoPostWrapper>

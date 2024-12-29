@@ -20,13 +20,13 @@ export const ModalContainer = styled.div<{ $isCloseButtonVisible: boolean }>`
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	gap: 1rem;
+	gap: 1.5rem;
 	width: 21.25rem;
 	max-width: calc(100% - 2.5rem);
 	max-height: 30%;
-	padding: 1.25rem;
+	padding: 2rem 1.5rem 1.5rem 1.5rem;
 	${({ $isCloseButtonVisible }) => ($isCloseButtonVisible ? 'padding-top: 2.5rem' : '')};
-	background-color: ${({ theme }) => theme.colors.white};
+	background-color: ${({ theme }) => theme.colors.background.primary};
 	border-radius: 0.625rem;
 	box-shadow: 0 -0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 	z-index: 999;
@@ -49,7 +49,7 @@ export const ConfirmButton = styled.button`
 	padding: 0.625rem 0.875rem;
 	justify-content: center;
 	align-items: center;
-	background: ${({ theme }) => theme.colors.gradient};
+	background: ${({ theme }) => theme.colors.brand.gradient};
 	border-radius: 0.5rem;
 	color: white;
 	${({ theme }) => theme.fontStyles['body1-medium']}

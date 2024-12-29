@@ -1,20 +1,26 @@
-import { StyledText } from '../../../components/Text/StyledText';
+import { StyledText } from '@components/Text/StyledText';
 import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { OpponentInfoAtom } from '../../../recoil/util/OpponentInfo';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import { useEffect, useState } from 'react';
-import { ChatRoomData } from '../../../apis/chatting/dto';
-import defaultProfile from '../../../assets/default/defaultProfile.svg';
+import type { ChatRoomData } from '@apis/chatting/dto';
+import defaultProfile from '@assets/default/defaultProfile.svg';
+import theme from '@styles/theme';
 dayjs.extend(relativeTime);
 
-const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMessage }) => {
-	const nav = useNavigate();
-	const [, setOpponentInfo] = useRecoilState(OpponentInfoAtom);
+const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
+	const [, setOtherUser] = useRecoilState(OtherUserAtom);
+	const nav = useNavigate();
+
+	const handleChatRoomClick = () => {
+		setOtherUser(otherUser);
+		nav(`/chats/${id}`);
+	};
 
 	useEffect(() => {
 		if (latestMessage.createdAt) {
@@ -33,24 +39,19 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ chatRoomId, otherUser, latestMes
 		}
 	}, []);
 
-	const onClickChatRoom = () => {
-		setOpponentInfo(otherUser);
-		nav(`/chats/${chatRoomId}`);
-	};
-
 	return (
-		<ChatRoomItemLayout onClick={onClickChatRoom}>
-			<UserImage src={otherUser?.profileUrl || defaultProfile} alt="user" />
+		<ChatRoomItemLayout onClick={handleChatRoomClick}>
+			<UserImage src={otherUser?.profilePictureUrl || defaultProfile} alt="user" />
 			<LeftBox>
-				<StyledText $textTheme={{ style: 'body2-medium' }} color="#1D1D1D">
+				<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 					{otherUser?.nickname || '알수없음'}
 				</StyledText>
-				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color="#1D1D1D">
+				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.primary}>
 					{latestMessage.content}
 				</LatestMessage>
 			</LeftBox>
 			<RightBox>
-				<StyledText $textTheme={{ style: 'caption2-regular' }} color="#8e8e93">
+				<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
 					{timeAgo}
 				</StyledText>
 			</RightBox>

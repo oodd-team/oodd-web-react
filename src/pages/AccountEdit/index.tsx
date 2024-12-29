@@ -12,19 +12,18 @@ import {
 	MemberInfoRow,
 	Label,
 	Info,
-} from './styles';
-import { OODDFrame } from '../../components/Frame/Frame';
-
-import BottomButton from '../../components/BottomButton'; // BottomButton 컴포넌트 임포트
+} from './styles'; 
+import { OODDFrame } from '@components/Frame/Frame';
+import BottomButton from '@components/BottomButton/index';
 
 import { useNavigate } from 'react-router-dom';
-import { StyledText } from '../../components/Text/StyledText';
-import theme from '../../styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+import theme from '@styles/theme';
 
-import naver from '../../assets/default/snsIcon/naver.svg';
-import kakao from '../../assets/default/snsIcon/kakao.svg';
-import TopBar from '../../components/TopBar';
-import back from '../../assets/arrow/left.svg';
+import naver from '@assets/default/snsIcon/naver.svg';
+import kakao from '@assets/default/snsIcon/kakao.svg';
+import TopBar from '@components/TopBar/index';
+import back from '@assets/arrow/left.svg';
 
 const AccountEdit: React.FC = () => {
 	const navigate = useNavigate(); // useNavigate 훅 사용
@@ -37,22 +36,22 @@ const AccountEdit: React.FC = () => {
 	return (
 		<OODDFrame>
 			<ProfileEditContainer>
-				<TopBar text="회원 정보 수정" LeftButtonSrc={back} onLeftClick={() => navigate(-1)} />
+				<TopBar text="회원 정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
 							로그인 정보
 						</StyledText>
 					</SectionTitle>
 					<SNSInfo>
 						<SnsConnection>
-							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 								SNS 연결
 							</StyledText>
 						</SnsConnection>
 						<Text>
-							<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 								연결된 SNS계정으로 로그인되었습니다.
 							</StyledText>
 						</Text>
@@ -64,14 +63,14 @@ const AccountEdit: React.FC = () => {
 				</Section>
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium', lineHeight: 0 }} color={theme.colors.black}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
 							회원 정보
 						</StyledText>
 					</SectionTitle>
 					<MemberInfo>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 									이름
 								</StyledText>
 							</Label>
@@ -79,7 +78,7 @@ const AccountEdit: React.FC = () => {
 						</MemberInfoRow>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 0 }} color={theme.colors.gray3}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
 									연락처
 								</StyledText>
 							</Label>

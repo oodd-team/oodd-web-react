@@ -1,26 +1,23 @@
 import React from 'react';
-import { StyledText } from '../Text/StyledText';
-import theme from '../../styles/theme';
-import { UserProfileContainer, UserImg, UserDetails, BioStyledText } from './style';
 
-interface UserProfileProps {
-	userImg?: string; // string | undefined
-	bio?: string;
-	nickname: string;
-}
+import theme from '@styles/theme';
+import { StyledText } from '@components/Text/StyledText';
+
+import type { UserProfileProps } from './dto';
+import { UserProfileLayout, UserImg, UserDetailsContainer, StyledBio } from './style';
 
 const UserProfile: React.FC<UserProfileProps> = React.memo(({ userImg, bio = '', nickname }) => {
 	const truncatedBio = bio ? (bio.length > 50 ? bio.substring(0, 50) + '...' : bio) : '';
 	return (
-		<UserProfileContainer>
+		<UserProfileLayout>
 			<UserImg src={userImg} alt={`${nickname}'s profile`} />
-			<UserDetails>
+			<UserDetailsContainer>
 				<StyledText $textTheme={{ style: 'headline2-bold' }}>{nickname}</StyledText>
-				<BioStyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.gray3}>
+				<StyledBio $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 					{truncatedBio}
-				</BioStyledText>
-			</UserDetails>
-		</UserProfileContainer>
+				</StyledBio>
+			</UserDetailsContainer>
+		</UserProfileLayout>
 	);
 });
 

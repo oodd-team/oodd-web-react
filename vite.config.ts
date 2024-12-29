@@ -20,8 +20,9 @@ export default defineConfig({
 			'@assets': path.resolve(__dirname, 'src/assets'),
 			'@config': path.resolve(__dirname, 'src/config'),
 			'@context': path.resolve(__dirname, 'src/context'),
-			'@page': path.resolve(__dirname, 'src/page'),
+			'@pages': path.resolve(__dirname, 'src/pages'),
 			'@recoil': path.resolve(__dirname, 'src/recoil'),
+			'@utils': path.resolve(__dirname, 'src/utils'),
 		},
 	},
 });
