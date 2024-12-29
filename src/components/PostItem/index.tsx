@@ -5,9 +5,10 @@ import theme from '@styles/theme';
 import PinIcon from '@assets/default/pin.svg';
 import Like from '@components/Icons/Like';
 import Message from '@components/Icons/Message';
+import { StyledText } from '@components/Text/StyledText';
 
 import type { PostItemProps } from './dto';
-import { PostItemLayout, PostImageContainer, PostImage, LikesCountStyledText, LikesOverlay, Pin } from './style';
+import { PostItemLayout, PostImageContainer, PostImage, LikesOverlay, Pin } from './style';
 
 const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 	const navigate = useNavigate();
@@ -25,13 +26,13 @@ const PostItem: React.FC<PostItemProps> = ({ post, isMyPost = true }) => {
 				{post.isRepresentative && <Pin src={PinIcon} />}
 				<LikesOverlay>
 					<Like />
-					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
+					<StyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.tertiary}>
 						{post.postLikesCount}
-					</LikesCountStyledText>
-					<Message />
-					<LikesCountStyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.gray3}>
+					</StyledText>
+					<Message color="#8E8E8E" />
+					<StyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.tertiary}>
 						{post.postCommentsCount}
-					</LikesCountStyledText>
+					</StyledText>
 				</LikesOverlay>
 			</PostImageContainer>
 		</PostItemLayout>
