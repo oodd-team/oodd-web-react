@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
-import { StyledText } from '@components/Text/StyledText';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useRecoilState } from 'recoil';
 import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+
 import theme from '@styles/theme';
+
+import { modifyMatchingStatusApi } from '@apis/matching';
+import { handleError } from '@apis/util/handleError';
+import { OtherUserAtom } from '@recoil/util/OtherUser';
+
+import acceptButton from '@assets/default/accept.svg';
+import defaultProfile from '@assets/default/defaultProfile.svg';
+import rejectButton from '@assets/default/reject.svg';
+
+import Modal from '@components/Modal';
+import { StyledText } from '@components/Text/StyledText';
+
+import type { ModalProps } from '@components/Modal/dto';
+
+import type { CardProps } from './dto';
+
 import {
 	ArrowButton,
 	Btn,
@@ -17,17 +36,6 @@ import {
 	Reaction,
 	SeeMore,
 } from './styles';
-import rejectButton from '@assets/default/reject.svg';
-import acceptButton from '@assets/default/accept.svg';
-import defaultProfile from '@assets/default/defaultProfile.svg';
-import { useNavigate } from 'react-router-dom';
-import { modifyMatchingStatusApi } from '@apis/matching';
-import { handleError } from '@apis/util/handleError';
-import type { ModalProps } from '@components/Modal/dto';
-import Modal from '@components/Modal';
-import { useRecoilState } from 'recoil';
-import { OtherUserAtom } from '@recoil/util/OtherUser';
-import type { CardProps } from './dto';
 
 const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
