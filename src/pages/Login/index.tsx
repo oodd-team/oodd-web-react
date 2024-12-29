@@ -1,10 +1,9 @@
-import React from 'react';
-
-import { OODDFrame } from '@components/Frame/Frame';
 import theme from '@styles/theme';
 
 import kakaoLogo from '@assets/default/snsIcon/kakao.svg';
 import naverLogo from '@assets/default/snsIcon/naver.svg';
+
+import { OODDFrame } from '@components/Frame/Frame';
 
 import SocialLoginButton from './SocialLoginButton/index';
 

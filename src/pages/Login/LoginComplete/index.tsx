@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getUserInfoByJwtApi } from '@apis/auth';
-import { handleError } from '@apis/util/handleError';
 import { postTermsAgreementApi } from '@apis/user';
+import { handleError } from '@apis/util/handleError';
 
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
