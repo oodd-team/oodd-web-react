@@ -13,7 +13,7 @@ export interface StyledTextProps {
 		lineHeight?: number;
 	};
 	color?: string;
-	children: any;
+	children: unknown;
 }
 
 export type FontStyleKey = keyof typeof theme.fontStyles;

@@ -1,5 +1,5 @@
 export interface BottomButtonProps {
-	content: String;
+	content: string;
 	onClick: () => void;
 	disabled?: boolean;
 }

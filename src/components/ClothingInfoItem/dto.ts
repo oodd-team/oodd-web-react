@@ -1,6 +1,6 @@
-import { PostClothing } from '../../apis/post/dto';
+import type { PostClothing } from '@apis/post/dto';
 
-export interface ClothingInfo extends PostClothing {}
+export type ClothingInfo = PostClothing;
 
 export interface ClothingInfoItemProps {
 	clothingObj: ClothingInfo;

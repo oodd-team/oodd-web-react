@@ -1,6 +1,9 @@
-import { styled } from 'styled-components';
-import theme from '@styles/theme';
 import { useMediaQuery } from 'react-responsive';
+
+import { styled } from 'styled-components';
+
+import theme from '@styles/theme';
+
 import type { StyledTextProps } from './dto';
 
 export const StyledText = styled.div<StyledTextProps>`
