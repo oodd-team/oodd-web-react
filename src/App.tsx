@@ -12,7 +12,7 @@ import ProfileEdit from '@pages/Profile/ProfileEdit';
 import AccountSetting from '@pages/Account/AccountSetting';
 import AccountEdit from '@pages/Account/AccountEdit';
 import AccountCancel from '@pages/Account/AccountCancel';
-import Verification from '@pages/Account/verification';
+import Verification from '@pages/Account/Verification';
 
 import Post from '@pages/Post';
 import PostUpload from '@pages/PostUpload';
