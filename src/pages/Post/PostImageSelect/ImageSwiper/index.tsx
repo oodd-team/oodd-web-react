@@ -17,7 +17,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [currentSlide, setCurrentSlide] = useState(0);
 
-	const handleSelectImage = () => {
+	const handleImageSelect = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
@@ -51,7 +51,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, onProcessFile, onRemo
 					</SwiperSlide>
 				))}
 				<SwiperSlide className="add-btn-box">
-					<AddButton onClick={handleSelectImage}>
+					<AddButton onClick={handleImageSelect}>
 						<img src={Plus} />
 					</AddButton>
 					<HiddenFileInput
