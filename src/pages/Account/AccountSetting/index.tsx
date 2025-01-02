@@ -95,7 +95,7 @@ const AccountSetting: React.FC = () => {
           </Row>
           <Row>
             <Label>
-              <StyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.tertiary}>
+              <StyledText $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.tertiary}>
                 {userProfile?.name} | {userProfile?.email}
               </StyledText>
             </Label>

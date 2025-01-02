@@ -112,7 +112,7 @@ const Verification: React.FC = () => {
 
 				<Container>
 					<Title>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.tertiary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.tertiary}>
 							휴대전화번호로 본인인증하기
 						</StyledText>
 					</Title>
