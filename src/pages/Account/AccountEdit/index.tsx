@@ -47,12 +47,12 @@ const AccountEdit: React.FC = () => {
 					</SectionTitle>
 					<SNSInfo>
 						<SnsConnection>
-							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 								SNS 연결
 							</StyledText>
 						</SnsConnection>
 						<Text>
-							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+							<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 								연결된 SNS계정으로 로그인되었습니다.
 							</StyledText>
 						</Text>
@@ -71,7 +71,7 @@ const AccountEdit: React.FC = () => {
 					<MemberInfo>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 									이름
 								</StyledText>
 							</Label>
@@ -79,7 +79,7 @@ const AccountEdit: React.FC = () => {
 						</MemberInfoRow>
 						<MemberInfoRow>
 							<Label>
-								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 									연락처
 								</StyledText>
 							</Label>

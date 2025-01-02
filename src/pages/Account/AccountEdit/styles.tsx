@@ -46,7 +46,7 @@ export const SNSIcon = styled.img`
 
 export const Text = styled.div`
 	font-size: 0.875rem;
-	color: ${({ theme }) => theme.colors.tertiary};
+	color: ${({ theme }) => theme.colors.text.tertiary};
 	margin-top: 2.1875rem;
 	text-align: left;
 `;
