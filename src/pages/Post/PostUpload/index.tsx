@@ -84,21 +84,6 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		'luxury',
 	];
 
-	// 게시물 업로드인지 수정인지 모드 확인
-	useEffect(() => {
-		const handleMode = async () => {
-			const state = location.state as { mode?: string; postId?: number };
-			if (state?.mode) {
-				setMode(state.mode); // 모드 상태를 설정
-			}
-			if (state.mode === 'edit' && state?.postId && selectedImages.length === 0) {
-				await getPost(state.postId);
-			}
-		};
-
-		handleMode();
-	}, []);
-
 	const handlePrev = () => {
 		const state = location.state as { mode?: string; postId?: number };
 		if (mode === 'edit') {
@@ -107,37 +92,19 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		navigate('/post/upload/photo/select', { state: { mode: mode, postId: state.postId } });
 	};
 
-	const getPost = async (postId: number) => {
-		setIsLoading(true);
-
-		try {
-			const response = await getPostDetailApi(postId);
-
-			const { postImages, content, postStyletags, postClothings, isRepresentative } = response.data;
-
-			setSelectedImages(postImages);
-			setContent(content);
-			setClothingInfos(postClothings ?? []);
-			setSelectedStyletag(postStyletags);
-			setIsRepresentative(isRepresentative);
-		} catch (error) {
-			const errorMessage = handleError(error, 'post');
-			setModalContent(errorMessage);
-			setIsStatusModalOpen(true);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	const handleToggleSearchSheet = () => {
+	const handleSearchSheetToggle = () => {
 		setIsSearchBottomSheetOpen((open) => !open);
 	};
 
-	const handleToggleStyleTagList = () => {
+	const handleStyleTagListToggle = () => {
 		setIsStyletagListOpen((open) => !open);
 	};
 
-	const handleAddClothingInfo = (newClothingInfo: ClothingInfo) => {
+	const handleIsRepresentativeToggle = () => {
+		setIsRepresentative((isRepresentative) => !isRepresentative);
+	};
+
+	const handleClothingInfoAdd = (newClothingInfo: ClothingInfo) => {
 		setClothingInfos((clothingInfos) => {
 			// 중복 확인 (새로운 의류 정보가 이미 존재하지 않을 경우 추가)
 			const isDuplicate = clothingInfos.some(
@@ -151,25 +118,12 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		});
 	};
 
-	const handleDeleteClothingInfo = (deleteClothingInfo: ClothingInfo) => {
+	const handleClothingInfoDelete = (deleteClothingInfo: ClothingInfo) => {
 		const deletedClothingInfo = clothingInfos.filter((clothing) => clothing !== deleteClothingInfo);
 		setClothingInfos(deletedClothingInfo);
 	};
 
-	const bottomSheetProps: BottomSheetProps = {
-		isOpenBottomSheet: isSearchBottomSheetOpen,
-		isHandlerVisible: false,
-		Component: SearchBottomSheetContent,
-		onCloseBottomSheet: () => {
-			setIsSearchBottomSheetOpen(false);
-		},
-		componentProps: {
-			onClose: () => setIsSearchBottomSheetOpen(false),
-			onSelectClothingInfo: handleAddClothingInfo,
-		},
-	};
-
-	const handleSelectStyletag = (tag: string) => {
+	const handleStyletagSelect = (tag: string) => {
 		setSelectedStyletag((prev) => {
 			// 선택된 태그가 이미 존재하면 제거
 			if (prev.includes(tag)) {
@@ -179,10 +133,6 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			return [...prev, tag];
 		});
 		setIsStyletagListOpen(false);
-	};
-
-	const handleToggleIsRepresentative = () => {
-		setIsRepresentative(!isRepresentative);
 	};
 
 	const cropImage = (imageUrl: string): Promise<Blob> => {
@@ -300,6 +250,56 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 		}
 	};
 
+	const getPost = async (postId: number) => {
+		setIsLoading(true);
+
+		try {
+			const response = await getPostDetailApi(postId);
+
+			const { postImages, content, postStyletags, postClothings, isRepresentative } = response.data;
+
+			setSelectedImages(postImages);
+			setContent(content);
+			setClothingInfos(postClothings ?? []);
+			setSelectedStyletag(postStyletags);
+			setIsRepresentative(isRepresentative);
+		} catch (error) {
+			const errorMessage = handleError(error, 'post');
+			setModalContent(errorMessage);
+			setIsStatusModalOpen(true);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// 게시물 업로드인지 수정인지 모드 확인
+	useEffect(() => {
+		const handleMode = async () => {
+			const state = location.state as { mode?: string; postId?: number };
+			if (state?.mode) {
+				setMode(state.mode); // 모드 상태를 설정
+			}
+			if (state.mode === 'edit' && state?.postId && selectedImages.length === 0) {
+				await getPost(state.postId);
+			}
+		};
+
+		handleMode();
+	}, []);
+
+	const bottomSheetProps: BottomSheetProps = {
+		isOpenBottomSheet: isSearchBottomSheetOpen,
+		isHandlerVisible: false,
+		Component: SearchBottomSheetContent,
+		onCloseBottomSheet: () => {
+			setIsSearchBottomSheetOpen(false);
+		},
+		componentProps: {
+			onClose: () => setIsSearchBottomSheetOpen(false),
+			onSelectClothingInfo: handleClothingInfoAdd,
+		},
+	};
+
 	// api 처리 상태 모달 (성공/실패)
 	const statusModalProps: ModalProps = {
 		content: modalContent,
@@ -320,7 +320,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 						placeholder="문구를 작성하세요..."
 					/>
 					<TagContainer className="clothingTag">
-						<div onClick={handleToggleSearchSheet}>
+						<div onClick={handleSearchSheetToggle}>
 							<img src={ClothingTag} />
 							<StyledText className="label" $textTheme={{ style: 'headline2-bold' }}>
 								옷 정보 태그
@@ -335,13 +335,13 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 						{clothingInfos.length > 0 && (
 							<ClothingInfoList>
 								{clothingInfos.map((clothingObj, index) => (
-									<ClothingInfoItem key={index} clothingObj={clothingObj} onDelete={handleDeleteClothingInfo} />
+									<ClothingInfoItem key={index} clothingObj={clothingObj} onDelete={handleClothingInfoDelete} />
 								))}
 							</ClothingInfoList>
 						)}
 					</TagContainer>
 					<TagContainer>
-						<div onClick={handleToggleStyleTagList}>
+						<div onClick={handleStyleTagListToggle}>
 							<img src={StyleTag} />
 							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
 								스타일 태그
@@ -368,7 +368,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 								{styletags.map((tag) => (
 									<StyletagItem
 										key={tag}
-										onClick={() => handleSelectStyletag(tag)}
+										onClick={() => handleStyletagSelect(tag)}
 										selected={selectedStyletag[0] === tag}
 									>
 										<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
@@ -383,7 +383,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 						<img src={Pin} />
 						<StyledText $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
 						<div>
-							<ToggleSwitch checked={isRepresentative} onChange={handleToggleIsRepresentative} />
+							<ToggleSwitch checked={isRepresentative} onChange={handleIsRepresentativeToggle} />
 						</div>
 					</PinnedPostToggleContainer>
 				</Content>

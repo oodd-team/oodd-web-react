@@ -33,7 +33,7 @@ export const MenuButtonItem = styled.button<{ $color?: string }>`
 	width: 120px;
 	padding: 0 10px;
 	cursor: pointer;
-	color: ${(props) => props.$color || props.theme.colors.white};
+	color: ${(props) => props.$color || props.theme.colors.text.primary};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.white};
 
 	img {

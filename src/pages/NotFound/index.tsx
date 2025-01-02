@@ -14,7 +14,7 @@ const NotFound = () => {
 		<OODDFrame>
 			<NotFoundContainer>
 				<TextContainer>
-					<StyledText $textTheme={{ style: 'display1-bold' }} color={theme.colors.pink3}>
+					<StyledText $textTheme={{ style: 'display1-bold' }} color={theme.colors.brand.primary}>
 						404 ERROR
 					</StyledText>
 					<StyledText $textTheme={{ style: 'headline2-medium' }}>죄송합니다. 페이지를 찾을 수 없습니다.</StyledText>
@@ -26,7 +26,7 @@ const NotFound = () => {
 					</div>
 				</TextContainer>
 				<ButtonContainer>
-					<StyledButton as="a" href="/" $textTheme={{ style: 'body2-regular' }} color={theme.colors.pink3}>
+					<StyledButton as="a" href="/" $textTheme={{ style: 'body2-regular' }} color={theme.colors.brand.primary}>
 						메인으로
 					</StyledButton>
 					<StyledButton

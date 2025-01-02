@@ -25,15 +25,14 @@ import X from '@assets/default/x.svg';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
+import CommentItem from './CommentItem/index';
+import MenuButtonList from './MenuButtonList/index';
 
 import type { Comment, GetCommentListResponse } from '@apis/post-comment/dto';
 import type { GetPostLikeListResponse } from '@apis/post-like/dto';
 import type { ModalProps } from '@components/Modal/dto';
 
 import type { LikeCommentBottomSheetProps } from '../dto';
-
-import CommentItem from './CommentItem/index';
-import MenuButtonList from './MenuButtonList/index';
 
 import { TabContainer, Tab, ContentContainer, Content, BigUserProfile, LikeItem, InputLayout } from './styles';
 
@@ -338,7 +337,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				<Tab $active={activeTab === 'likes'} onClick={() => setActiveTab('likes')}>
 					<StyledText
 						$textTheme={{ style: 'body2-bold' }}
-						color={activeTab === 'likes' ? theme.colors.pink : theme.colors.gray3}
+						color={activeTab === 'likes' ? theme.colors.brand.primary : theme.colors.text.tertiary}
 					>
 						좋아요 {postLikeCount || 0}
 					</StyledText>
@@ -346,7 +345,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				<Tab $active={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>
 					<StyledText
 						$textTheme={{ style: 'body2-bold' }}
-						color={activeTab === 'comments' ? theme.colors.pink : theme.colors.gray3}
+						color={activeTab === 'comments' ? theme.colors.brand.primary : theme.colors.text.tertiary}
 					>
 						코멘트 {postCommentCount || 0}
 					</StyledText>
@@ -356,7 +355,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			<ContentContainer $isCommentTab={activeTab === 'comments'}>
 				{activeTab === 'likes' &&
 					(postLikeCount === 0 ? (
-						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.tertiary}>
 							아직 좋아요가 없습니다
 						</Content>
 					) : (
@@ -375,7 +374,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				{activeTab === 'comments' && (
 					<>
 						{postCommentCount === 0 ? (
-							<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+							<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.tertiary}>
 								아직 댓글이 없습니다
 							</Content>
 						) : (

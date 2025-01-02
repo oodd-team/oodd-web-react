@@ -11,11 +11,11 @@ export const Content = styled.div`
 		width: 100%;
 		padding: 0.825rem 0;
 
-		border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray1};
+		border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.border.divider};
 
 		div {
 			padding-left: 1.25rem;
-			color: ${({ theme }) => theme.colors.black};
+			color: ${({ theme }) => theme.colors.text.primary};
 			cursor: pointer;
 		}
 	}
@@ -28,7 +28,7 @@ export const Input = styled.input`
 	text-align: left;
 	font-size: 1rem;
 	background-color: #f8f8f8;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.gray2};
+	border: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 	border-radius: 0.3125rem;
 
 	&:focus {
@@ -36,7 +36,7 @@ export const Input = styled.input`
 	}
 
 	::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -44,7 +44,7 @@ export const Input = styled.input`
 
 	/* Firefox */
 	&:-moz-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -52,7 +52,7 @@ export const Input = styled.input`
 
 	/* Internet Explorer 10-11 */
 	&:-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -60,7 +60,7 @@ export const Input = styled.input`
 
 	/* Edge */
 	&::-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -68,7 +68,7 @@ export const Input = styled.input`
 
 	/* Safari */
 	&::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -90,7 +90,7 @@ export const SearchResultList = styled.div`
 	}
 
 	.total {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 	}
 
 	.ref {
@@ -104,7 +104,7 @@ export const SearchResultItem = styled.div`
 	flex-direction: row;
 	width: 100%;
 	height: 5.625rem;
-	border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.gray1};
+	border-bottom: solid 0.0625rem ${({ theme }) => theme.colors.border.divider};
 	padding: 0.9375rem 0;
 	cursor: pointer;
 
@@ -131,7 +131,7 @@ export const SearchResultItem = styled.div`
 
 	.detail {
 		margin-right: auto;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

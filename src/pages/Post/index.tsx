@@ -37,8 +37,8 @@ const Post: React.FC = () => {
 	const [modalContent, setModalContent] = useState('');
 	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
 
-	const userId = getCurrentUserId();
 	const navigate = useNavigate();
+	const userId = getCurrentUserId();
 
 	const handleMenuOpen = () => {
 		if (isMyPost) {

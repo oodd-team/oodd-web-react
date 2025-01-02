@@ -38,7 +38,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, handleUserClick, han
 				<StyledText $textTheme={{ style: 'body2-regular' }}>{comment.content}</StyledText>
 			</CommentContent>
 			<RightContainer>
-				<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
+				<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.tertiary}>
 					{timeAgo}
 				</StyledText>
 				<MenuBtn onClick={(event) => handleMenuOpen(comment, event)}>

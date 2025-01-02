@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
@@ -6,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import PhotoWhite from '@assets/default/photo-white.svg';
+import Photo from '@components/Icons/Photo';
 
 import type { ImageSwiperProps } from '../dto';
 
@@ -31,9 +32,10 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 					el: '.swiper-pagination',
 					type: 'custom',
 					renderCustom: (_, current, total) => {
+						const photoIcon = ReactDOMServer.renderToString(<Photo color="white" />);
 						return `
 							<div class="swiper-pagination-custom">
-								<img src="${PhotoWhite}" alt="Pagination Icon" />
+								${photoIcon}
 								<span>${current}/${total}</span>
 							</div>`;
 					},
