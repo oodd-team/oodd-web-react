@@ -83,7 +83,7 @@ export const StyledPagination = styled.div`
 	width: 65px;
 	height: 34px;
 	color: white;
-	background: ${({ theme }) => theme.colors.gradient};
+	background: ${({ theme }) => theme.colors.brand.gradient};
 	border-radius: 17px;
 
 	.swiper-pagination-custom {

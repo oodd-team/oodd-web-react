@@ -164,10 +164,18 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						<UserProfile onClick={handleUserClick}>
 							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
 						</UserProfile>
-						<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+						<UserName
+							onClick={handleUserClick}
+							$textTheme={{ style: 'body2-medium' }}
+							color={theme.colors.text.primary}
+						>
 							{user.nickname}
 						</UserName>
-						<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
+						<StyledText
+							className="timeAgo"
+							$textTheme={{ style: 'caption2-regular' }}
+							color={theme.colors.text.tertiary}
+						>
 							{timeAgo}
 						</StyledText>
 						<MenuBtn onClick={onClickMenu}>
@@ -208,7 +216,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 									onClick={toggleTextDisplay}
 									$showFullText={showFullText}
 									$textTheme={{ style: 'body4-light' }}
-									color={theme.colors.black}
+									color={theme.colors.text.primary}
 								>
 									{post.content}
 								</Content>

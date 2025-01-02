@@ -173,7 +173,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 								<StyledText
 									className="detail"
 									$textTheme={{ style: 'caption1-regular', lineHeight: 1 }}
-									color={theme.colors.gray3}
+									color={theme.colors.text.tertiary}
 								>
 									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
 								</StyledText>
@@ -183,7 +183,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					<div className="ref" ref={loadMoreRef}></div>
 					{isLoading && (
 						<Loader>
-							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.text.tertiary}>
 								로딩 중
 							</StyledText>
 						</Loader>

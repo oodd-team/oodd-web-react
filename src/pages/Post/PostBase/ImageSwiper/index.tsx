@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { ImageSwiperProps } from '../dto';
+import type { ImageSwiperProps } from '../dto';
 
 import { SwiperContainer, ImageWrapper, StyledNavigation } from './styles';
 

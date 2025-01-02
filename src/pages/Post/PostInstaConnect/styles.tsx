@@ -38,31 +38,31 @@ export const StyledInput = styled.input`
 	}
 
 	::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Firefox */
 	&:-moz-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Internet Explorer 10-11 */
 	&:-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Edge */
 	&::-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 
 	/* Safari */
 	&::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		${({ theme }) => theme.fontStyles['title1-regular']}
 	}
 `;

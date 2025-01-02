@@ -75,7 +75,7 @@ const PostInstaConnect: React.FC = () => {
 						<StyledText
 							className="tab-to-write"
 							$textTheme={{ style: 'body4-regular', lineHeight: 1.2 }}
-							color={theme.colors.gray4}
+							color={theme.colors.gray[800]}
 						>
 							{!instagramID ? '탭해서 ID를 작성하세요' : '  .'}
 						</StyledText>
