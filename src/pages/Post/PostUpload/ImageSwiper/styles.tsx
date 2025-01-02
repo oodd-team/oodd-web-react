@@ -82,7 +82,7 @@ export const StyledPagination = styled.div`
 	align-items: center;
 	width: 65px;
 	height: 34px;
-	color: white;
+	color: ${({ theme }) => theme.colors.text.contrast};
 	background: ${({ theme }) => theme.colors.brand.gradient};
 	border-radius: 17px;
 
@@ -92,11 +92,8 @@ export const StyledPagination = styled.div`
 		justify-content: center;
 	}
 
-	.swiper-pagination-custom img {
-		margin-right: 0.3125rem;
-	}
-
 	span {
+		margin-left: 0.3125rem;
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 0.8125rem;

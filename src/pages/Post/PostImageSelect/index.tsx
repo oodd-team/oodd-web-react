@@ -14,8 +14,8 @@ import {
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import PhotoBig from '@assets/default/photo-big.svg';
 import X from '@assets/default/x.svg';
+import Photo from '@components/Icons/Photo';
 
 import BottomButton from '@components/BottomButton';
 import { OODDFrame } from '@components/Frame/Frame';
@@ -156,7 +156,7 @@ const PostImageSelect: React.FC = () => {
 							<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
 								사진을 여기에 끌어다 놓으세요
 							</StyledText>
-							<img src={PhotoBig} />
+							<Photo height="100px" width="100px" />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>
 					) : (

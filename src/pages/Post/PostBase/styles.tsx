@@ -133,6 +133,7 @@ export const IconRow = styled.div`
 	height: 20px;
 	align-items: center;
 	padding: 0 20px;
+	gap: 16px;
 `;
 
 export const IconWrapper = styled.div`
@@ -140,22 +141,20 @@ export const IconWrapper = styled.div`
 	align-items: center;
 	gap: 8px;
 	cursor: pointer;
+	height: 22px;
 
 	span {
 		font-size: 15px;
 		color: ${({ theme }) => theme.colors.text.primary};
-		margin-right: 16px;
 	}
 `;
 
 export const Icon = styled.div`
-	width: 20px;
-	height: 20px;
-
-	img {
-		width: 20px;
-		height: 20px;
-	}
+	width: 18px;
+	height: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const ClothingInfoList = styled.div`

@@ -13,8 +13,7 @@ import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/Pos
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import LikeFill from '@assets/default/like-fill.svg';
-import Like from '@assets/default/like.svg';
+import Like from '@components/Icons/Like';
 import Message from '@assets/default/message.svg';
 import More from '@assets/default/more.svg';
 
@@ -185,16 +184,18 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
-					<ClothingInfoList className="post-mode">
-						{post?.postClothings?.map((clothingObj, index) => (
-							<ClothingInfoItem key={index} clothingObj={clothingObj} />
-						))}
-					</ClothingInfoList>
+					{post?.postClothings && (
+						<ClothingInfoList className="post-mode">
+							{post.postClothings.map((clothingObj, index) => (
+								<ClothingInfoItem key={index} clothingObj={clothingObj} />
+							))}
+						</ClothingInfoList>
+					)}
 
 					<IconRow>
 						<IconWrapper>
 							<Icon onClick={togglePostLikeStatus}>
-								{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
+								{post?.isPostLike ? <Like isFilled={true} color={theme.colors.brand.primary} /> : <Like />}
 							</Icon>
 							<span onClick={() => handleLikeCommentOpen('likes')}>{post?.postLikesCount ?? 0}</span>
 						</IconWrapper>
