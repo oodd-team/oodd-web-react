@@ -1,4 +1,3 @@
-import React from 'react';
 import type { IconsProps } from './dto';
 
 const Alarm: React.FC<IconsProps> = ({ isFilled = false, width = '14', height = '18' }) => {

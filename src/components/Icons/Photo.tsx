@@ -1,4 +1,3 @@
-import React from 'react';
 import type { IconsProps } from './dto';
 
 const Photo: React.FC<IconsProps> = ({ width = '18', height = '18', color = '#8E8E8E' }) => {
