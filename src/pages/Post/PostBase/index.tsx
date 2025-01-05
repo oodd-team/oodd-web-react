@@ -10,7 +10,6 @@ import theme from '@styles/theme';
 import { getPostDetailApi } from '@apis/post';
 import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
 import Message from '@assets/default/message.svg';

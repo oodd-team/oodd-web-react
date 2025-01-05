@@ -37,10 +37,10 @@ const PostImageSelect: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const handleClose = () => {
-		navigate(`/profile/${userId}`);
+		navigate(`/profile/${currentUserId}`);
 	};
 
 	const handlePrev = () => {

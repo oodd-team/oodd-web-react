@@ -54,12 +54,11 @@ const ProfileEdit: React.FC = () => {
 	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [uploading, setUploading] = useState<boolean>(false);
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const currentUserId = getCurrentUserId();
 				if (!currentUserId) {
 					console.error('User ID not found');
 					return;
@@ -114,7 +113,6 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		try {
-			const currentUserId = getCurrentUserId();
 			if (!currentUserId) {
 				console.error('User ID not found');
 				return;
@@ -140,7 +138,7 @@ const ProfileEdit: React.FC = () => {
 
 				setTimeout(() => {
 					handleModalClose();
-					navigate(`/profile/${userId}`);
+					navigate(`/profile/${currentUserId}`);
 				}, 2000);
 			} else {
 				setModalContent('프로필 수정에 실패했습니다.');

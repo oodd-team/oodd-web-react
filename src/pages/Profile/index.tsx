@@ -49,7 +49,7 @@ import {
 const Profile: React.FC = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const profileUserId = Number(userId);
-	const loggedInUserId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 	const otherUser = useRecoilValue(OtherUserAtom);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -62,7 +62,7 @@ const Profile: React.FC = () => {
 	const [modalContent, setModalContent] = useState('');
 	const navigate = useNavigate();
 
-	const isMyPage = loggedInUserId === profileUserId;
+	const isMyPage = currentUserId === profileUserId;
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -83,7 +83,7 @@ const Profile: React.FC = () => {
 
 	const createMatching = async (message: string) => {
 		const matchingRequestData = {
-			requesterId: loggedInUserId,
+			requesterId: currentUserId,
 			targetId: otherUser?.id || profileUserId,
 			message: message,
 		};

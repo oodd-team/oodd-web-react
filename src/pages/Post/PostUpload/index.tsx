@@ -69,7 +69,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const styletags = [
 		'classic',
@@ -240,7 +240,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			setSelectedStyletag([]);
 			setMode('');
 
-			navigate(`/profile/${userId}`);
+			navigate(`/profile/${currentUserId}`);
 		} catch (error) {
 			const errorMessage = handleError(error, 'post');
 			setModalContent(errorMessage);
