@@ -1,7 +1,5 @@
 import { styled } from 'styled-components';
 
-import SendIcon from '@assets/default/send-message.svg';
-
 export const ChatBoxContainer = styled.div`
 	${({ theme }) => theme.breakPoints};
 	position: fixed;
@@ -14,7 +12,7 @@ export const ChatBoxContainer = styled.div`
 	padding: 0.5rem 1.12rem;
 	background-color: ${({ theme }) => theme.colors.background.primary};
 	gap: 0.5rem;
-	border-top: 1px solid ${({ theme }) => theme.colors.gray[300]};
+	/* border-top: 1px solid ${({ theme }) => theme.colors.gray[300]}; */
 	align-items: center;
 `;
 
@@ -39,12 +37,9 @@ export const Textarea = styled.textarea<{ $isOtherUserValid: boolean }>`
 `;
 
 export const SendButton = styled.button<{ $isOtherUserValid: boolean }>`
-	padding: 1.12rem;
+	width: 2rem;
+	height: 2rem;
 	border-radius: 50%;
-	background-color: ${({ theme }) => theme.colors.brand.primaryLight};
-	background-image: url(${SendIcon});
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 1.2rem 1.2rem;
+	/* background-color: ${({ theme }) => theme.colors.brand.primaryLight}; */
 	cursor: ${({ $isOtherUserValid }) => ($isOtherUserValid ? 'pointer' : '')};
 `;
