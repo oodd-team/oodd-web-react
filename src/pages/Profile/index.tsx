@@ -22,16 +22,16 @@ import { OODDFrame } from '@components/Frame/Frame';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import NavBar from '@components/NavBar';
-import PostItem from '@components/PostItem';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
-import UserProfile from '@components/UserProfile';
 
 import type { UserPostSummary } from '@apis/post/dto';
 import type { UserInfoData } from '@apis/user/dto';
 
 import ButtonSecondary from './ButtonSecondary/index';
 import NavbarProfile from './NavbarProfile/index';
+import PostItem from './PostItem/index';
+import UserProfile from './UserProfile/index';
 
 import {
 	ProfileContainer,
