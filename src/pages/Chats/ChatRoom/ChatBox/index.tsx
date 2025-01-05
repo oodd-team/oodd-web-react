@@ -7,6 +7,8 @@ import { useSocket } from '@context/SocketProvider';
 import { OtherUserAtom } from '@recoil/util/OtherUser';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
+import SendIcon from '@assets/default/send-message.svg';
+
 import { ChatBoxContainer, Textarea, SendButton } from './styles';
 
 const ChatBox: React.FC = () => {
@@ -75,7 +77,9 @@ const ChatBox: React.FC = () => {
 				onKeyDown={handleEnterKeyDown}
 				onSubmit={handleNewMessageSubmit}
 			/>
-			<SendButton $isOtherUserValid={isOtherUserValid} onClick={handleNewMessageSubmit} />
+			<SendButton $isOtherUserValid={isOtherUserValid} onClick={handleNewMessageSubmit}>
+				<img src={SendIcon} alt="" />
+			</SendButton>
 		</ChatBoxContainer>
 	);
 };
