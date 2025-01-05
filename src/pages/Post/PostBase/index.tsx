@@ -62,6 +62,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const { postId } = useParams<{ postId: string }>();
+	const contentRef = useRef<HTMLDivElement>(null);
 
 	const nav = useNavigate();
 
@@ -73,8 +74,6 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const handleUserClick = () => {
 		nav(`/profile/${post?.user.id}`);
 	};
-
-	const contentRef = useRef<HTMLDivElement>(null);
 
 	const toggleTextDisplay = () => {
 		setShowFullText((prev) => !prev);

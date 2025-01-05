@@ -47,11 +47,6 @@ import {
 } from './styles';
 
 const Profile: React.FC = () => {
-	const { userId } = useParams<{ userId: string }>();
-	const profileUserId = Number(userId);
-	const currentUserId = getCurrentUserId();
-	const otherUser = useRecoilValue(OtherUserAtom);
-
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [posts, setPosts] = useState<UserPostSummary[]>([]);
 	const [totalPosts, setTotalPosts] = useState<number>(0);
@@ -61,6 +56,11 @@ const Profile: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const navigate = useNavigate();
+
+	const { userId } = useParams<{ userId: string }>();
+	const profileUserId = Number(userId);
+	const currentUserId = getCurrentUserId();
+	const otherUser = useRecoilValue(OtherUserAtom);
 
 	const isMyPage = currentUserId === profileUserId;
 
