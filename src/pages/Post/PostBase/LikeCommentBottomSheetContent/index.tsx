@@ -81,13 +81,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 클릭한 경우
 	const handleUserClick = (userId: number) => {
-		if (currentUserId === userId) {
-			// 나인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저인 경우
-			nav(`/users/${userId}`);
-		}
+		nav(`/profile/${userId}`);
 	};
 
 	// 댓글 작성 Input
