@@ -4,8 +4,7 @@ import theme from '@styles/theme';
 
 import { StyledText } from '@components/Text/StyledText';
 
-import type { TopBarLayoutProps } from './dto';
-export const TopBarLayout = styled.header<TopBarLayoutProps>`
+export const TopBarLayout = styled.header<{ $withBorder: boolean }>`
 	display: flex;
 	position: sticky;
 	top: 0; /* 부모 요소의 상단에 붙도록 설정 */
