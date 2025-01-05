@@ -17,7 +17,7 @@ interface Content {
 	content: string;
 }
 
-interface CreateCommentData extends Content {}
+type CreateCommentData = Content;
 
 export interface Comment {
 	id: number;
