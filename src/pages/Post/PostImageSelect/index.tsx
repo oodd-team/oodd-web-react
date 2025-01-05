@@ -155,9 +155,7 @@ const PostImageSelect: React.FC = () => {
 							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
 						>
-							<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
-								사진을 여기에 끌어다 놓으세요
-							</StyledText>
+							<StyledText $textTheme={{ style: 'heading1-regular' }}>사진을 여기에 끌어다 놓으세요</StyledText>
 							<Photo height="100px" width="100px" />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>

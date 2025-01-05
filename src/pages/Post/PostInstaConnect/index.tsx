@@ -57,26 +57,18 @@ const PostInstaConnect: React.FC = () => {
 
 			<Content>
 				{isLoading ? (
-					<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }}>
-						{instagramID} 계정에 연동하고 있어요
-					</StyledText>
+					<StyledText $textTheme={{ style: 'body2-light' }}>{instagramID} 계정에 연동하고 있어요</StyledText>
 				) : (
 					<>
-						<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>인스타 계정 연동을 위해</StyledText>
-						<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
-							인스타그램 ID를 작성해주세요
-						</StyledText>
+						<StyledText $textTheme={{ style: 'heading1-regular' }}>인스타 계정 연동을 위해</StyledText>
+						<StyledText $textTheme={{ style: 'heading1-regular' }}>인스타그램 ID를 작성해주세요</StyledText>
 						<StyledInput
 							type="text"
 							value={instagramID}
 							onChange={(e) => setInstagramID(e.target.value)}
 							placeholder="인스타그램 ID"
 						/>
-						<StyledText
-							className="tab-to-write"
-							$textTheme={{ style: 'body4-regular', lineHeight: 1.2 }}
-							color={theme.colors.gray[800]}
-						>
+						<StyledText className="tab-to-write" $textTheme={{ style: 'body4-regular' }} color={theme.colors.gray[800]}>
 							{!instagramID ? '탭해서 ID를 작성하세요' : '  .'}
 						</StyledText>
 					</>

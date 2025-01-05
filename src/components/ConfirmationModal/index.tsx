@@ -43,7 +43,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 						</>
 					)}
 					<Button onClick={confirm.action}>
-						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={'#F00'}>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={'#F00'}>
 							{confirm.text}
 						</StyledText>
 					</Button>
