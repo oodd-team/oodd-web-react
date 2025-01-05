@@ -1,4 +1,3 @@
-import React from 'react';
 import type { IconsProps } from './dto';
 
 const Heart: React.FC<IconsProps> = ({ isFilled = false, width = '56', height = '56' }) => {

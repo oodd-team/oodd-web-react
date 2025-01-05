@@ -1,4 +1,3 @@
-import React from 'react';
 import type { IconsProps } from './dto';
 
 const Like: React.FC<IconsProps> = ({ isFilled = false, color = '', width = '16', height = '14' }) => {
