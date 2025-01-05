@@ -46,7 +46,7 @@ export const StyledInput = styled.textarea`
 	}
 
 	::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -54,7 +54,7 @@ export const StyledInput = styled.textarea`
 
 	/* Firefox */
 	&:-moz-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -62,7 +62,7 @@ export const StyledInput = styled.textarea`
 
 	/* Internet Explorer 10-11 */
 	&:-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -70,7 +70,7 @@ export const StyledInput = styled.textarea`
 
 	/* Edge */
 	&::-ms-input-placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -78,7 +78,7 @@ export const StyledInput = styled.textarea`
 
 	/* Safari */
 	&::placeholder {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 		font-family: 'Pretendard Variable';
 		font-weight: 300;
 		font-size: 1rem;
@@ -89,11 +89,11 @@ export const TagContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	border-bottom: 0.0625rem solid ${({ theme }) => theme.colors.gray1};
+	border-bottom: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 
 	.label {
 		padding: 0 0.9375rem;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 	}
 
 	> div {
@@ -113,18 +113,18 @@ export const TagContainer = styled.div`
 	}
 
 	.count {
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 	}
 
 	&.clothingTag {
-		border-top: 0.0625rem solid ${({ theme }) => theme.colors.gray1};
+		border-top: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 		right: 0.9375rem;
 	}
 
 	.not_selected {
 		position: absolute;
 		right: 2.8125rem;
-		color: ${({ theme }) => theme.colors.gray3};
+		color: ${({ theme }) => theme.colors.text.tertiary};
 	}
 `;
 
@@ -162,13 +162,13 @@ export const StyletagItem = styled.span<{ selected: boolean }>`
 	padding: 0 0.65rem;
 	height: 2rem;
 	//min-width: 4.375rem;
-	background: ${({ selected, theme }) => (selected ? theme.colors.gradient : 'none')};
-	border: 1px solid ${({ theme }) => theme.colors.pink2};
+	background: ${({ selected, theme }) => (selected ? theme.colors.brand.gradient : 'none')};
+	border: 1px solid ${({ theme }) => theme.colors.border.inactive};
 	border-radius: 8px;
 	cursor: pointer;
 
 	.tag {
-		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.pink3)};
+		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.brand.primary)};
 	}
 `;
 
@@ -180,7 +180,7 @@ export const PinnedPostToggleContainer = styled.label`
 
 	:nth-child(2) {
 		padding: 1.25rem 0.9375rem;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 	}
 
 	div:last-child {

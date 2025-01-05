@@ -38,13 +38,13 @@ export const StyledButton = styled(StyledText)`
 	display: inline-block;
 	text-align: center;
 	padding: 6px 16px;
-	border: 1px solid ${({ theme }) => theme.colors.pink3};
+	border: 1px solid ${({ theme }) => theme.colors.brand.primary};
 	border-radius: 8px;
 	cursor: pointer;
 	text-decoration: none;
 
 	&.prev {
-		background-color: ${({ theme }) => theme.colors.pink3};
+		background-color: ${({ theme }) => theme.colors.brand.primary};
 		color: ${({ theme }) => theme.colors.white};
 	}
 `;
