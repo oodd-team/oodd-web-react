@@ -26,7 +26,7 @@ const PostInstaFeedSelect: React.FC = () => {
 	const [posts, setPosts] = useState<Post[]>([]); // Post 타입으로 지정
 	const [, setImages] = useRecoilState(postImagesAtom);
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	// 인스타그램 데이터 가져오는 함수
 	const fetchInstagramData = async (accessToken: string) => {
@@ -75,7 +75,7 @@ const PostInstaFeedSelect: React.FC = () => {
 
 	// 페이지 종료 함수
 	const handleClose = () => {
-		navigate(`/profile/${userId}`);
+		navigate(`/profile/${currentUserId}`);
 	};
 
 	return (

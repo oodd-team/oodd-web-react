@@ -168,7 +168,7 @@ export const StyletagItem = styled.span<{ selected: boolean }>`
 	cursor: pointer;
 
 	.tag {
-		color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.brand.primary)};
+		color: ${({ selected, theme }) => (selected ? theme.colors.text.contrast : theme.colors.brand.primary)};
 	}
 `;
 

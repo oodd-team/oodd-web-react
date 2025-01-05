@@ -34,7 +34,7 @@ export const Stat = styled.div`
 `;
 
 export const StatNumber = styled.div`
-	color: ${({ theme }) => theme.colors.caption};
+	color: ${({ theme }) => theme.colors.text.caption};
 	//변경된 컬러시스템에서의 gray4가 800으로 나와있어서 적용해보면 색상이 다르게 나옵니다!
 	text-align: center;
 	font-family: 'Pretendard';
@@ -58,7 +58,6 @@ export const PostsContainer = styled.div`
 	flex-wrap: wrap;
 	justify-content: space-between;
 	gap: 15px;
-	cursor: pointer;
 	margin-bottom: 100px;
 	padding: 20px;
 `;

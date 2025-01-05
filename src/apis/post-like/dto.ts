@@ -1,5 +1,5 @@
-import { BaseSuccessResponse } from '../core/dto';
-import { PaginationMeta } from '../util/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
+import type { PaginationMeta } from '@apis/util/dto';
 
 // 좋아요 누르기/취소
 export type TogglePostLikeStatusResponse = BaseSuccessResponse<TogglePostLikeStatusData>;

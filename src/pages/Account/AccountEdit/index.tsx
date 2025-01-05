@@ -41,7 +41,7 @@ const AccountEdit: React.FC = () => {
 
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.primary}>
 							로그인 정보
 						</StyledText>
 					</SectionTitle>
@@ -64,7 +64,7 @@ const AccountEdit: React.FC = () => {
 				</Section>
 				<Section>
 					<SectionTitle>
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.primary}>
 							회원 정보
 						</StyledText>
 					</SectionTitle>

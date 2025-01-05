@@ -15,6 +15,7 @@ import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
 import X from '@assets/default/x.svg';
+
 import Photo from '@components/Icons/Photo';
 
 import BottomButton from '@components/BottomButton';
@@ -23,6 +24,7 @@ import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
 
 import ImageSwiper from './ImageSwiper/index';
+
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 
 const PostImageSelect: React.FC = () => {
@@ -35,10 +37,10 @@ const PostImageSelect: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const handleClose = () => {
-		navigate(`/profile/${userId}`);
+		navigate(`/profile/${currentUserId}`);
 	};
 
 	const handlePrev = () => {
@@ -153,9 +155,7 @@ const PostImageSelect: React.FC = () => {
 							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
 						>
-							<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
-								사진을 여기에 끌어다 놓으세요
-							</StyledText>
+							<StyledText $textTheme={{ style: 'heading1-regular' }}>사진을 여기에 끌어다 놓으세요</StyledText>
 							<Photo height="100px" width="100px" />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>

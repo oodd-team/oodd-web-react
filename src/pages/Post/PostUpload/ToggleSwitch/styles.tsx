@@ -18,7 +18,7 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 		width: 25px;
 		height: 25px;
 		border-radius: 50%;
-		background-color: ${({ theme }) => theme.colors.white};
+		background-color: ${({ theme }) => theme.colors.background.primary};
 		border: 1.5px solid ${({ theme }) => theme.colors.border.active};
 		transition: left 250ms linear;
 	}
@@ -29,7 +29,7 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 	}
 
 	&:checked::before {
-		background-color: white;
+		background-color: ${({ theme }) => theme.colors.background.primary};
 		left: 25px;
 	}
 `;

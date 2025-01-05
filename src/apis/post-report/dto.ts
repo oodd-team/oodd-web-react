@@ -1,4 +1,4 @@
-import { BaseSuccessResponse } from '../core/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
 
 interface BaseReport {
 	id: number; // 신고 ID

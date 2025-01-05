@@ -10,12 +10,12 @@ import theme from '@styles/theme';
 import { getPostDetailApi } from '@apis/post';
 import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import Like from '@components/Icons/Like';
 import Message from '@assets/default/message.svg';
 import More from '@assets/default/more.svg';
+
+import Like from '@components/Icons/Like';
 
 import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';
@@ -62,7 +62,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const { postId } = useParams<{ postId: string }>();
-	const userId = getCurrentUserId();
+	const contentRef = useRef<HTMLDivElement>(null);
 
 	const nav = useNavigate();
 
@@ -72,16 +72,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	};
 
 	const handleUserClick = () => {
-		if (post?.isPostWriter) {
-			// 내 게시물인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저의 게시물인 경우
-			nav(`/users/${post?.user.id}`);
-		}
+		nav(`/profile/${post?.user.id}`);
 	};
-
-	const contentRef = useRef<HTMLDivElement>(null);
 
 	const toggleTextDisplay = () => {
 		setShowFullText((prev) => !prev);

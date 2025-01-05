@@ -1,6 +1,6 @@
-import { TogglePostLikeStatusResponse, GetPostLikeListResponse } from './dto';
+import { newRequest } from '@apis/core';
 
-import { newRequest } from '../core';
+import type { TogglePostLikeStatusResponse, GetPostLikeListResponse } from './dto';
 
 // 게시글 좋아요 누르기/취소
 export const togglePostLikeStatusApi = (postId: number) =>

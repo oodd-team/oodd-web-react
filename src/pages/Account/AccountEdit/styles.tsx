@@ -84,7 +84,7 @@ export const Label = styled.div`
 
 export const Info = styled.div`
 	font-size: 0.875rem;
-	color: ${({ theme }) => theme.colors.caption};
+	color: ${({ theme }) => theme.colors.text.caption};
 	margin-left: 0.625rem;
 	flex-grow: 1;
 	text-align: left;

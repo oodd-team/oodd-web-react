@@ -1,6 +1,6 @@
-import { SendPostReportRequest, SendPostReportResponse } from './dto';
+import { newRequest } from '@apis/core';
 
-import { newRequest } from '../core';
+import type { SendPostReportRequest, SendPostReportResponse } from './dto';
 
 // 게시글 신고 API
 export const sendPostReportApi = (data: SendPostReportRequest) =>

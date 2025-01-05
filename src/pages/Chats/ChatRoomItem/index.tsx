@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import dayjs from 'dayjs';
+import dayjs, { extend } from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRecoilState } from 'recoil';
 
@@ -17,13 +17,11 @@ import type { ChatRoomData } from '@apis/chatting/dto';
 
 import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 
-import 'dayjs/locale/ko';
-dayjs.extend(relativeTime);
-
 const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 	const [, setOtherUser] = useRecoilState(OtherUserAtom);
 	const nav = useNavigate();
+	extend(relativeTime);
 
 	const handleChatRoomClick = () => {
 		setOtherUser(otherUser);

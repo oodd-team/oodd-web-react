@@ -45,7 +45,7 @@ export const Button = styled.button`
 	padding: 1.25rem;
 	margin-top: 300px;
 	font-size: 0.875rem;
-	color: ${({ theme }) => theme.colors.contrast};
+	color: ${({ theme }) => theme.colors.text.contrast};
 	background-color: ${({ theme, disabled }) => (disabled ? theme.colors.gray[300] : theme.colors.black)};
 	border: none;
 	border-radius: 0.3125rem;
@@ -76,7 +76,7 @@ export const Timer = styled.div`
 	top: 50%;
 	transform: translateY(-50%);
 	font-size: 1rem;
-	color: ${({ theme }) => theme.colors.red || theme.colors.brand.primary};
+	color: ${({ theme }) => theme.colors.brand.primary};
 `;
 
 export const ResendButton = styled.button`
@@ -86,7 +86,7 @@ export const ResendButton = styled.button`
 	transform: translateY(-50%);
 	padding: 0.625rem;
 	font-size: 0.875rem;
-	color: ${({ theme }) => theme.colors.black};
+	color: ${({ theme }) => theme.colors.text.primary};
 	background: none;
 	border: none;
 	cursor: pointer;

@@ -1,5 +1,5 @@
-import { BaseSuccessResponse } from '../core/dto';
-import { PaginationMeta } from '../util/dto';
+import type { BaseSuccessResponse } from '@apis/core/dto';
+import type { PaginationMeta } from '@apis/util/dto';
 
 // 게시글 생성
 //request
@@ -28,7 +28,7 @@ export interface PostBase {
 	postClothings?: PostClothing[] | null;
 	isRepresentative: boolean;
 }
-export interface CreatePostData extends PostBase {}
+export type CreatePostData = PostBase;
 export interface PostSummary {
 	id: number;
 	content: string;

@@ -10,7 +10,6 @@ interface FontStylesByPlatform {
 export interface StyledTextProps {
 	$textTheme: {
 		style: FontStyleKey | FontStylesByPlatform;
-		lineHeight?: number;
 	};
 	color?: string;
 	children: unknown;

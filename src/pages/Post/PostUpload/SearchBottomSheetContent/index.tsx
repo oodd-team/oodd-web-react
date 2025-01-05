@@ -157,7 +157,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					value={searchQuery}
 					onChange={(e) => handleInputChange(e.target.value)}
 				/>
-				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
+				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular' }}>
 					취소
 				</StyledText>
 			</div>
@@ -167,12 +167,12 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 						<SearchResultItem key={index} onClick={() => handleClothingInfoAdd(searchResultItem)}>
 							<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
 							<div className="infoContainer">
-								<StyledText className="detail" $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }}>
+								<StyledText className="detail" $textTheme={{ style: 'body2-bold' }}>
 									{searchResultItem.brand}
 								</StyledText>
 								<StyledText
 									className="detail"
-									$textTheme={{ style: 'caption1-regular', lineHeight: 1 }}
+									$textTheme={{ style: 'caption1-regular' }}
 									color={theme.colors.text.tertiary}
 								>
 									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
@@ -183,7 +183,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					<div className="ref" ref={loadMoreRef}></div>
 					{isLoading && (
 						<Loader>
-							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.text.tertiary}>
+							<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.text.tertiary}>
 								로딩 중
 							</StyledText>
 						</Loader>

@@ -27,7 +27,7 @@ export interface chatRoomMessagesData {
 	fromUser: FromUserDto;
 	toUser: ToUserDto;
 	createdAt: string;
-	toUserReadAt: any;
+	toUserReadAt: Date;
 }
 
 export interface FromUserDto {

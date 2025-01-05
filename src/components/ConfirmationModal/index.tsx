@@ -24,7 +24,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 		>
 			<ConfirmationModalLayout>
 				<ContentBox>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 						{content}
 					</StyledText>
 				</ContentBox>
@@ -36,14 +36,14 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 									onCloseModal();
 								}}
 							>
-								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.black}>
+								<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 									취소
 								</StyledText>
 							</Button>
 						</>
 					)}
 					<Button onClick={confirm.action}>
-						<StyledText $textTheme={{ style: 'body2-regular', lineHeight: 1.5 }} color={'#F00'}>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={'#F00'}>
 							{confirm.text}
 						</StyledText>
 					</Button>

@@ -25,14 +25,15 @@ import X from '@assets/default/x.svg';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
-import CommentItem from './CommentItem/index';
-import MenuButtonList from './MenuButtonList/index';
 
 import type { Comment, GetCommentListResponse } from '@apis/post-comment/dto';
 import type { GetPostLikeListResponse } from '@apis/post-like/dto';
 import type { ModalProps } from '@components/Modal/dto';
 
 import type { LikeCommentBottomSheetProps } from '../dto';
+
+import CommentItem from './CommentItem/index';
+import MenuButtonList from './MenuButtonList/index';
 
 import { TabContainer, Tab, ContentContainer, Content, BigUserProfile, LikeItem, InputLayout } from './styles';
 
@@ -68,6 +69,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	const { postId } = useParams<{ postId: string }>();
 	const nav = useNavigate();
+	const currentUserId = getCurrentUserId();
 
 	// 댓글 메뉴 클릭한 경우
 	const handleMenuOpen = (comment: Comment, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,16 +81,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 클릭한 경우
 	const handleUserClick = (userId: number) => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = getCurrentUserId(); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
-
-		if (String(myUserId) === String(userId)) {
-			// 나인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저인 경우
-			nav(`/users/${userId}`);
-		}
+		nav(`/profile/${userId}`);
 	};
 
 	// 댓글 작성 Input
@@ -189,10 +182,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 차단 api
 	const postUserBlock = async () => {
-		const storedUserId = getCurrentUserId();
-
 		// 사용자 ID 또는 선택된 댓글이 없으면 함수 종료
-		if (!storedUserId || !selectedComment) {
+		if (!currentUserId || !selectedComment) {
 			setModalContent('유저 정보를 찾을 수 없습니다.');
 			setIsStatusModalOpen(true);
 			return;
@@ -200,7 +191,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 		try {
 			const blockRequest: PostUserBlockRequest = {
-				requesterId: Number(storedUserId),
+				requesterId: currentUserId,
 				targetId: selectedComment.user.id,
 				action: 'block',
 			};

@@ -69,7 +69,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const styletags = [
 		'classic',
@@ -240,7 +240,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 			setSelectedStyletag([]);
 			setMode('');
 
-			navigate(`/profile/${userId}`);
+			navigate(`/profile/${currentUserId}`);
 		} catch (error) {
 			const errorMessage = handleError(error, 'post');
 			setModalContent(errorMessage);
@@ -343,21 +343,21 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					<TagContainer>
 						<div onClick={handleStyleTagListToggle}>
 							<img src={StyleTag} />
-							<StyledText className="label" $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>
+							<StyledText className="label" $textTheme={{ style: 'headline2-bold' }}>
 								스타일 태그
 							</StyledText>
 							{isStyletagListOpen ? (
 								<img src={Up} />
 							) : selectedStyletag.length === 0 ? (
 								<>
-									<StyledText className="not_selected" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+									<StyledText className="not_selected" $textTheme={{ style: 'body2-light' }}>
 										미지정
 									</StyledText>
 									<img src={Right} />
 								</>
 							) : (
 								<StyletagItem selected={false}>
-									<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+									<StyledText className="tag" $textTheme={{ style: 'body2-light' }}>
 										#{selectedStyletag[0]}
 									</StyledText>
 								</StyletagItem>
@@ -371,7 +371,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 										onClick={() => handleStyletagSelect(tag)}
 										selected={selectedStyletag[0] === tag}
 									>
-										<StyledText className="tag" $textTheme={{ style: 'body2-light', lineHeight: 1 }}>
+										<StyledText className="tag" $textTheme={{ style: 'body2-light' }}>
 											#{tag}
 										</StyledText>
 									</StyletagItem>
@@ -381,7 +381,7 @@ const PostUpload: React.FC<PostUploadModalProps> = () => {
 					</TagContainer>
 					<PinnedPostToggleContainer>
 						<img src={Pin} />
-						<StyledText $textTheme={{ style: 'headline2-bold', lineHeight: 1 }}>대표 OOTD 지정</StyledText>
+						<StyledText $textTheme={{ style: 'headline2-bold' }}>대표 OOTD 지정</StyledText>
 						<div>
 							<ToggleSwitch checked={isRepresentative} onChange={handleIsRepresentativeToggle} />
 						</div>
