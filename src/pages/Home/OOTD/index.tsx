@@ -3,12 +3,8 @@ import { useState, useEffect, useRef } from 'react';
 import debounce from 'lodash/debounce';
 
 import { getPostListApi } from '@apis/post';
-import { handleError } from '@apis/util/handleError';
-
-import Modal from '@components/Modal';
 
 import type { PostSummary } from '@apis/post/dto';
-import type { ModalProps } from '@components/Modal/dto';
 
 import Feed from './Feed/index';
 
@@ -16,9 +12,6 @@ import { OOTDContainer, FeedContainer } from './styles';
 
 const OOTD: React.FC = () => {
 	const [feeds, setFeeds] = useState<PostSummary[]>([]);
-
-	const [modalContent, setModalContent] = useState('알 수 없는 오류입니다.\n관리자에게 문의해 주세요.');
-	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 
 	const isFetchingRef = useRef(false);
 	const isReachedEndRef = useRef(false);
@@ -51,10 +44,6 @@ const OOTD: React.FC = () => {
 					feedPageRef.current += 1;
 				}
 			}
-		} catch (error) {
-			const errorMessage = handleError(error);
-			setModalContent(errorMessage);
-			setIsStatusModalOpen(true);
 		} finally {
 			isFetchingRef.current = false;
 			console.log(feeds);
@@ -109,13 +98,6 @@ const OOTD: React.FC = () => {
 		};
 	}, []);
 
-	const statusModalProps: ModalProps = {
-		content: modalContent,
-		onClose: () => {
-			setIsStatusModalOpen(false);
-		},
-	};
-
 	return (
 		<OOTDContainer>
 			<FeedContainer>
@@ -127,7 +109,6 @@ const OOTD: React.FC = () => {
 				{/* Intersection Observer가 감지할 마지막 요소 */}
 				<div ref={loadMoreRef} />
 			</FeedContainer>
-			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</OOTDContainer>
 	);
 };
