@@ -80,7 +80,7 @@ export const InputLayout = styled.div`
 	align-items: center;
 	gap: 10px;
 	background-color: white;
-	border-top: 1px solid ${({ theme }) => theme.colors.border.devider};
+	border-top: 1px solid ${({ theme }) => theme.colors.border.divider};
 
 	textarea {
 		flex: 1;
@@ -89,7 +89,7 @@ export const InputLayout = styled.div`
 		height: 50px;
 		max-height: 70px;
 		border-radius: 8px;
-		border: 0.0625rem solid #ededed;
+		border: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 		outline: none;
 		padding: 0.8125rem 0.9375rem;
 		font-family: 'Pretendard Variable';
@@ -97,8 +97,8 @@ export const InputLayout = styled.div`
 		font-style: normal;
 		font-weight: 300;
 		line-height: 150%;
-		color: #1d1d1d;
-		background-color: #f8f8f8;
+		color: ${({ theme }) => theme.colors.text.secondary};
+		background-color: ${({ theme }) => theme.colors.background.secondary};
 		resize: none;
 		overflow-y: auto;
 
@@ -114,7 +114,7 @@ export const InputLayout = styled.div`
 		width: 50px;
 		height: 50px;
 		border-radius: 8px;
-		color: ${({ theme }) => theme.colors.white};
+		color: ${({ theme }) => theme.colors.text.contrast};
 		border: none;
 		font-size: 0.875rem;
 	}

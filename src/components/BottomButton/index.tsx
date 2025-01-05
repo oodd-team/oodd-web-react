@@ -8,7 +8,7 @@ const BottomButton: React.FC<BottomButtonProps> = ({ content, onClick, disabled 
 	return (
 		<ButtonWrapper>
 			<Button onClick={onClick} disabled={disabled}>
-				<StyledText $textTheme={{ style: 'body1-regular', lineHeight: 2 }}>{content}</StyledText>
+				<StyledText $textTheme={{ style: 'body1-regular' }}>{content}</StyledText>
 			</Button>
 		</ButtonWrapper>
 	);

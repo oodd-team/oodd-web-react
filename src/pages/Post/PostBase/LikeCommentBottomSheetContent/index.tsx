@@ -69,6 +69,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	const { postId } = useParams<{ postId: string }>();
 	const nav = useNavigate();
+	const currentUserId = getCurrentUserId();
 
 	// 댓글 메뉴 클릭한 경우
 	const handleMenuOpen = (comment: Comment, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,16 +81,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 클릭한 경우
 	const handleUserClick = (userId: number) => {
-		// 로컬 스토리지에서 사용자 ID 가져오기
-		const myUserId = getCurrentUserId(); // 로컬 스토리지에 저장된 사용자 ID를 가져옴
-
-		if (String(myUserId) === String(userId)) {
-			// 나인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저인 경우
-			nav(`/users/${userId}`);
-		}
+		nav(`/profile/${userId}`);
 	};
 
 	// 댓글 작성 Input
@@ -190,10 +182,8 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 	// 유저 차단 api
 	const postUserBlock = async () => {
-		const storedUserId = getCurrentUserId();
-
 		// 사용자 ID 또는 선택된 댓글이 없으면 함수 종료
-		if (!storedUserId || !selectedComment) {
+		if (!currentUserId || !selectedComment) {
 			setModalContent('유저 정보를 찾을 수 없습니다.');
 			setIsStatusModalOpen(true);
 			return;
@@ -201,7 +191,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 
 		try {
 			const blockRequest: PostUserBlockRequest = {
-				requesterId: Number(storedUserId),
+				requesterId: currentUserId,
 				targetId: selectedComment.user.id,
 				action: 'block',
 			};
@@ -338,7 +328,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				<Tab $active={activeTab === 'likes'} onClick={() => setActiveTab('likes')}>
 					<StyledText
 						$textTheme={{ style: 'body2-bold' }}
-						color={activeTab === 'likes' ? theme.colors.pink : theme.colors.gray3}
+						color={activeTab === 'likes' ? theme.colors.brand.primary : theme.colors.text.tertiary}
 					>
 						좋아요 {postLikeCount || 0}
 					</StyledText>
@@ -346,7 +336,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				<Tab $active={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>
 					<StyledText
 						$textTheme={{ style: 'body2-bold' }}
-						color={activeTab === 'comments' ? theme.colors.pink : theme.colors.gray3}
+						color={activeTab === 'comments' ? theme.colors.brand.primary : theme.colors.text.tertiary}
 					>
 						코멘트 {postCommentCount || 0}
 					</StyledText>
@@ -356,7 +346,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 			<ContentContainer $isCommentTab={activeTab === 'comments'}>
 				{activeTab === 'likes' &&
 					(postLikeCount === 0 ? (
-						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+						<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.tertiary}>
 							아직 좋아요가 없습니다
 						</Content>
 					) : (
@@ -375,7 +365,7 @@ const LikeCommentBottomSheetContent: React.FC<LikeCommentBottomSheetProps> = ({ 
 				{activeTab === 'comments' && (
 					<>
 						{postCommentCount === 0 ? (
-							<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.gray3}>
+							<Content $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.tertiary}>
 								아직 댓글이 없습니다
 							</Content>
 						) : (

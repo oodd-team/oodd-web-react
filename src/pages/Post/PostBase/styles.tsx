@@ -16,9 +16,9 @@ const shimmer = keyframes`
 const LoadingSkeleton = styled.div`
 	background: linear-gradient(
 		90deg,
-		${({ theme }) => theme.colors.gray1} 25%,
-		${({ theme }) => theme.colors.gray2} 50%,
-		${({ theme }) => theme.colors.gray1} 75%
+		${({ theme }) => theme.colors.gray[200]} 25%,
+		${({ theme }) => theme.colors.gray[300]} 50%,
+		${({ theme }) => theme.colors.gray[200]} 75%
 	);
 	background-size: 200% 100%;
 	animation: ${shimmer} 2s infinite;
@@ -79,7 +79,7 @@ export const UserProfile = styled(LoadingSkeleton)`
 	height: 32px;
 	border-radius: 50%;
 	overflow: hidden;
-	border: solid 0.5px ${({ theme }) => theme.colors.gray1};
+	border: solid 0.5px ${({ theme }) => theme.colors.border.divider};
 
 	img {
 		width: 100%;
@@ -88,7 +88,9 @@ export const UserProfile = styled(LoadingSkeleton)`
 	}
 `;
 
-export const UserName = styled(StyledText)``;
+export const UserName = styled(StyledText)`
+	cursor: pointer;
+`;
 
 export const MenuBtn = styled.button`
 	width: 18px;
@@ -120,7 +122,7 @@ export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 
 export const ShowMoreButton = styled(StyledText)`
 	cursor: pointer;
-	color: ${({ theme }) => theme.colors.gray3};
+	color: ${({ theme }) => theme.colors.text.tertiary};
 `;
 
 export const ImageSkeleton = styled(LoadingSkeleton)`
@@ -133,6 +135,7 @@ export const IconRow = styled.div`
 	height: 20px;
 	align-items: center;
 	padding: 0 20px;
+	gap: 16px;
 `;
 
 export const IconWrapper = styled.div`
@@ -140,22 +143,20 @@ export const IconWrapper = styled.div`
 	align-items: center;
 	gap: 8px;
 	cursor: pointer;
+	height: 22px;
 
 	span {
 		font-size: 15px;
-		color: #000;
-		margin-right: 16px;
+		color: ${({ theme }) => theme.colors.text.primary};
 	}
 `;
 
 export const Icon = styled.div`
-	width: 20px;
-	height: 20px;
-
-	img {
-		width: 20px;
-		height: 20px;
-	}
+	width: 18px;
+	height: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const ClothingInfoList = styled.div`
@@ -185,7 +186,7 @@ export const InputLayout = styled.div`
 		width: calc(100% - 3rem);
 		height: 5.75rem;
 		border-radius: 0.125rem;
-		border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
+		border: 0.0625rem solid ${({ theme }) => theme.colors.border.divider};
 		margin-bottom: 5.875rem;
 		z-index: 2;
 		margin-top: -3.75rem;
@@ -196,7 +197,7 @@ export const InputLayout = styled.div`
 		font-style: normal;
 		font-weight: 300;
 		line-height: 150%;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 		resize: none;
 	}
 `;

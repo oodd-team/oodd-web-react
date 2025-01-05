@@ -1,6 +1,8 @@
-import { newRequest } from '../core';
-import { CreateCommentRequest, CreateCommentResponse, GetCommentListResponse } from './dto';
-import { EmptySuccessResponse } from '../core/dto';
+import { newRequest } from '@apis/core';
+
+import type { EmptySuccessResponse } from '@apis/core/dto';
+
+import type { CreateCommentRequest, CreateCommentResponse, GetCommentListResponse } from './dto';
 
 // 게시글 댓글 생성 API
 export const createCommentApi = (postId: number, data: CreateCommentRequest) =>

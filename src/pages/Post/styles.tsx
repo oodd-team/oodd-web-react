@@ -11,7 +11,7 @@ export const InputLayout = styled.div`
 		width: calc(100% - 3rem);
 		height: 5.75rem;
 		border-radius: 0.125rem;
-		border: 0.0625rem solid ${({ theme }) => theme.colors.gray3};
+		border: 0.0625rem solid ${({ theme }) => theme.colors.gray[600]};
 		margin-bottom: 5.875rem;
 		z-index: 2;
 		margin-top: -3.75rem;
@@ -22,7 +22,7 @@ export const InputLayout = styled.div`
 		font-style: normal;
 		font-weight: 300;
 		line-height: 150%;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 		resize: none;
 	}
 `;

@@ -37,8 +37,8 @@ const Post: React.FC = () => {
 	const [modalContent, setModalContent] = useState('');
 	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
 
-	const userId = getCurrentUserId();
 	const navigate = useNavigate();
+	const currentUserId = getCurrentUserId();
 
 	const handleMenuOpen = () => {
 		if (isMyPost) {
@@ -73,7 +73,7 @@ const Post: React.FC = () => {
 				setModalContent('OOTD 삭제에 성공했어요');
 
 				setTimeout(() => {
-					navigate(`/profile/${userId}`);
+					navigate(`/profile/${currentUserId}`);
 				}, 1000);
 			} else {
 				setModalContent(`OOTD 삭제에 실패했어요\n잠시 뒤 다시 시도해 보세요`);
@@ -89,7 +89,7 @@ const Post: React.FC = () => {
 	useEffect(() => {
 		// 현재 게시글이 내 게시글인지 확인
 		if (user?.id && postId) {
-			setIsMyPost(Number(userId) === user.id);
+			setIsMyPost(currentUserId === user.id);
 		}
 	}, [user, postId]);
 

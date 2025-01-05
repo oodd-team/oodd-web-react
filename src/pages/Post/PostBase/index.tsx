@@ -10,13 +10,12 @@ import theme from '@styles/theme';
 import { getPostDetailApi } from '@apis/post';
 import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/PostAtom';
-import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import LikeFill from '@assets/default/like-fill.svg';
-import Like from '@assets/default/like.svg';
 import Message from '@assets/default/message.svg';
 import More from '@assets/default/more.svg';
+
+import Like from '@components/Icons/Like';
 
 import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';
@@ -63,7 +62,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const [activeTab, setActiveTab] = useState<'likes' | 'comments'>('likes'); // activeTab state
 
 	const { postId } = useParams<{ postId: string }>();
-	const userId = getCurrentUserId();
+	const contentRef = useRef<HTMLDivElement>(null);
 
 	const nav = useNavigate();
 
@@ -73,16 +72,8 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	};
 
 	const handleUserClick = () => {
-		if (post?.isPostWriter) {
-			// 내 게시물인 경우
-			nav(`/profile/${userId}`);
-		} else {
-			// 다른 유저의 게시물인 경우
-			nav(`/users/${post?.user.id}`);
-		}
+		nav(`/profile/${post?.user.id}`);
 	};
-
-	const contentRef = useRef<HTMLDivElement>(null);
 
 	const toggleTextDisplay = () => {
 		setShowFullText((prev) => !prev);
@@ -164,10 +155,18 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						<UserProfile onClick={handleUserClick}>
 							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
 						</UserProfile>
-						<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.black}>
+						<UserName
+							onClick={handleUserClick}
+							$textTheme={{ style: 'body2-medium' }}
+							color={theme.colors.text.primary}
+						>
 							{user.nickname}
 						</UserName>
-						<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray3}>
+						<StyledText
+							className="timeAgo"
+							$textTheme={{ style: 'caption2-regular' }}
+							color={theme.colors.text.tertiary}
+						>
 							{timeAgo}
 						</StyledText>
 						<MenuBtn onClick={onClickMenu}>
@@ -177,16 +176,18 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 
 					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
-					<ClothingInfoList className="post-mode">
-						{post?.postClothings?.map((clothingObj, index) => (
-							<ClothingInfoItem key={index} clothingObj={clothingObj} />
-						))}
-					</ClothingInfoList>
+					{post?.postClothings && (
+						<ClothingInfoList className="post-mode">
+							{post.postClothings.map((clothingObj, index) => (
+								<ClothingInfoItem key={index} clothingObj={clothingObj} />
+							))}
+						</ClothingInfoList>
+					)}
 
 					<IconRow>
 						<IconWrapper>
 							<Icon onClick={togglePostLikeStatus}>
-								{post?.isPostLike ? <img src={LikeFill} alt="like" /> : <img src={Like} alt="like" />}
+								{post?.isPostLike ? <Like isFilled={true} color={theme.colors.brand.primary} /> : <Like />}
 							</Icon>
 							<span onClick={() => handleLikeCommentOpen('likes')}>{post?.postLikesCount ?? 0}</span>
 						</IconWrapper>
@@ -208,7 +209,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 									onClick={toggleTextDisplay}
 									$showFullText={showFullText}
 									$textTheme={{ style: 'body4-light' }}
-									color={theme.colors.black}
+									color={theme.colors.text.primary}
 								>
 									{post.content}
 								</Content>

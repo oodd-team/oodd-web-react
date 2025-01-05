@@ -10,7 +10,7 @@ export const FirstMessageLayout = styled.div<{ $isSenderChanged: boolean }>`
 
 export const MessageLayout = styled.div`
 	display: flex;
-	margin: 0 auto 0.5rem 2.938rem;
+	margin: 0 auto 0.5rem 2rem;
 `;
 
 export const UserImage = styled.img`

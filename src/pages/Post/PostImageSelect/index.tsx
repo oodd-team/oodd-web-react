@@ -14,15 +14,17 @@ import {
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import PhotoBig from '@assets/default/photo-big.svg';
 import X from '@assets/default/x.svg';
+
+import Photo from '@components/Icons/Photo';
 
 import BottomButton from '@components/BottomButton';
 import { OODDFrame } from '@components/Frame/Frame';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
 
-import ImageSwiper from './ImageSwiper';
+import ImageSwiper from './ImageSwiper/index';
+
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 
 const PostImageSelect: React.FC = () => {
@@ -35,10 +37,10 @@ const PostImageSelect: React.FC = () => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = getCurrentUserId();
+	const currentUserId = getCurrentUserId();
 
 	const handleClose = () => {
-		navigate(`/profile/${userId}`);
+		navigate(`/profile/${currentUserId}`);
 	};
 
 	const handlePrev = () => {
@@ -55,7 +57,7 @@ const PostImageSelect: React.FC = () => {
 	};
 
 	// 파일 선택기에서 사진 업로드
-	const handleSelectImage = () => {
+	const handleImageSelect = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
@@ -74,14 +76,14 @@ const PostImageSelect: React.FC = () => {
 		setActive(false);
 
 		if (event.dataTransfer.files) {
-			handleProcessFile(event.dataTransfer.files);
+			processFile(event.dataTransfer.files);
 		}
 	};
 
 	const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		if (event.target.files) {
-			handleProcessFile(event.target.files);
+			processFile(event.target.files);
 			// 파일 선택 후 input 값 초기화
 			if (fileInputRef.current) {
 				fileInputRef.current.value = ''; // input 값을 초기화하여 동일한 파일을 다시 추가할 수 있도록 함
@@ -89,7 +91,7 @@ const PostImageSelect: React.FC = () => {
 		}
 	};
 
-	const handleProcessFile = async (files: FileList) => {
+	const processFile = async (files: FileList) => {
 		const filesArray = Array.from(files);
 		for (const file of filesArray) {
 			try {
@@ -111,7 +113,7 @@ const PostImageSelect: React.FC = () => {
 				reader.readAsDataURL(fileBlob);
 				reader.onload = () => {
 					if (reader.result) {
-						handleAddImage(reader.result.toString());
+						handleImageAdd(reader.result.toString());
 					}
 				};
 			} catch (error) {
@@ -121,14 +123,14 @@ const PostImageSelect: React.FC = () => {
 		}
 	};
 
-	const handleAddImage = (newImage: string) => {
+	const handleImageAdd = (newImage: string) => {
 		setImages((prevImages) => {
 			const maxOrderNum = prevImages.reduce((max, img) => (img.orderNum > max ? img.orderNum : max), -1);
 			return [...prevImages, { url: newImage, orderNum: maxOrderNum + 1 }];
 		});
 	};
 
-	const handleRemoveImage = (image: string) => {
+	const handleImageRemove = (image: string) => {
 		// 이미지가 1개일 때는 삭제 할 수 없음
 		if (images.length > 1) {
 			const newImages = images.filter((img) => img.url !== image);
@@ -153,20 +155,18 @@ const PostImageSelect: React.FC = () => {
 							onDragLeave={handleDragLeave}
 							onDrop={handleDrop}
 						>
-							<StyledText $textTheme={{ style: 'heading1-regular', lineHeight: 2 }}>
-								사진을 여기에 끌어다 놓으세요
-							</StyledText>
-							<img src={PhotoBig} />
+							<StyledText $textTheme={{ style: 'heading1-regular' }}>사진을 여기에 끌어다 놓으세요</StyledText>
+							<Photo height="100px" width="100px" />
 							<input type="file" onChange={handleFileInputChange} ref={fileInputRef} multiple accept="image/*,.heic" />
 						</ImageDragDropContainer>
 					) : (
-						<ImageSwiper images={images} onRemoveImage={handleRemoveImage} onProcessFile={handleProcessFile} />
+						<ImageSwiper images={images} onRemoveImage={handleImageRemove} onProcessFile={processFile} />
 					)}
 				</Content>
 
 				<BottomButton
 					content={images.length === 0 ? '컴퓨터에서 사진 선택' : '다음'}
-					onClick={images.length === 0 ? handleSelectImage : handleNext}
+					onClick={images.length === 0 ? handleImageSelect : handleNext}
 				/>
 			</UploadContainer>
 		</OODDFrame>

@@ -1,5 +1,8 @@
-import { newRequest } from '../core';
-import {
+import { newRequest } from '@apis/core';
+
+import type { EmptySuccessResponse } from '@apis/core/dto';
+
+import type {
 	CreatePostRequest,
 	CreatePostResponse,
 	GetPostListResponse,
@@ -8,7 +11,6 @@ import {
 	ModifyPostRequest,
 	ModifyPostResponse,
 } from './dto';
-import { EmptySuccessResponse } from '../core/dto';
 
 // 게시글 생성
 export const createPostApi = (data: CreatePostRequest) => newRequest.post<CreatePostResponse>('/post', data);

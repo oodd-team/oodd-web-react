@@ -19,11 +19,41 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 	const observerRef = useRef<IntersectionObserver | null>(null);
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+	const handleCloseSheet = () => {
+		onClose();
+	};
+
 	const handleInputChange = (query: string) => {
 		setSearchQuery(query);
 	};
 
-	const fetchSearchResult = async (searchQuery: string, start: number) => {
+	const handleClothingInfoAdd = (item: any) => {
+		onSelectClothingInfo({
+			imageUrl: item.image,
+			brandName: item.brand,
+			modelName: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
+			modelNumber: '1',
+			url: item.link,
+		});
+		onClose();
+	};
+
+	const removeBrandFromTitle = (title: string, brand: string) => {
+		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
+		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		// 브랜드 이름을 감싸고 있는 [ ]를 제거
+		const bracketRegex = new RegExp(`[\\[\\]()<>]*${escapedBrand}[\\[\\]()<>]*`, 'gi'); //gi: 대소문자 구분 없이(g) 모든 위치에서(i)
+		// 변환된 브랜드 이름을 제거
+		const brandRegex = new RegExp(escapedBrand, 'gi');
+		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거
+		return title
+			.replace(/<[^>]+>/g, '')
+			.replace(bracketRegex, '')
+			.replace(brandRegex, '')
+			.trim();
+	};
+
+	const getSearchResult = async (searchQuery: string, start: number) => {
 		try {
 			//네이버 쇼핑 api 프록시 서버 사용
 			const response = await axios.get(
@@ -56,7 +86,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 			setReachedEnd(false);
 
 			if (searchQuery) {
-				fetchSearchResult(searchQuery, 1).then((data) => {
+				getSearchResult(searchQuery, 1).then((data) => {
 					if (data) {
 						setSearchResult(data.items);
 					} else {
@@ -77,7 +107,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 			if (!reachedEnd && searchQuery) {
 				setIsLoading(true);
 
-				const data = await fetchSearchResult(searchQuery, start);
+				const data = await getSearchResult(searchQuery, start);
 
 				if (data) {
 					setSearchResult((prevResult) => [...prevResult, ...data.items]);
@@ -118,36 +148,6 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 		};
 	}, [reachedEnd, searchQuery, isLoading, searchResult]);
 
-	const handleAddClothingInfo = (item: any) => {
-		onSelectClothingInfo({
-			imageUrl: item.image,
-			brandName: item.brand,
-			modelName: removeBrandFromTitle(item.title, item.brand), //검색 결과에서 <b></b> 태그 제거하고 텍스트만 표시
-			modelNumber: '1',
-			url: item.link,
-		});
-		onClose();
-	};
-
-	const removeBrandFromTitle = (title: string, brand: string) => {
-		// 브랜드 이름에서 특수 문자를 이스케이프 처리하여 정규 표현식에서 사용할 수 있도록 변환
-		const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		// 브랜드 이름을 감싸고 있는 [ ]를 제거
-		const bracketRegex = new RegExp(`[\\[\\]()<>]*${escapedBrand}[\\[\\]()<>]*`, 'gi'); //gi: 대소문자 구분 없이(g) 모든 위치에서(i)
-		// 변환된 브랜드 이름을 제거
-		const brandRegex = new RegExp(escapedBrand, 'gi');
-		// 제목에서 브랜드 이름과 <b></b> 태그를 제거하고 양쪽 끝의 공백을 제거
-		return title
-			.replace(/<[^>]+>/g, '')
-			.replace(bracketRegex, '')
-			.replace(brandRegex, '')
-			.trim();
-	};
-
-	const handleCloseSheet = () => {
-		onClose();
-	};
-
 	return (
 		<Content>
 			<div className="input_container">
@@ -157,23 +157,23 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					value={searchQuery}
 					onChange={(e) => handleInputChange(e.target.value)}
 				/>
-				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular', lineHeight: 1 }}>
+				<StyledText onClick={handleCloseSheet} $textTheme={{ style: 'body2-regular' }}>
 					취소
 				</StyledText>
 			</div>
 			{searchQuery && searchResult.length > 0 ? (
 				<SearchResultList>
 					{searchResult.map((searchResultItem, index) => (
-						<SearchResultItem key={index} onClick={() => handleAddClothingInfo(searchResultItem)}>
+						<SearchResultItem key={index} onClick={() => handleClothingInfoAdd(searchResultItem)}>
 							<img src={searchResultItem.image} alt={searchResultItem.title.replace(/<[^>]+>/g, '')} />
 							<div className="infoContainer">
-								<StyledText className="detail" $textTheme={{ style: 'body2-bold', lineHeight: 1.2 }}>
+								<StyledText className="detail" $textTheme={{ style: 'body2-bold' }}>
 									{searchResultItem.brand}
 								</StyledText>
 								<StyledText
 									className="detail"
-									$textTheme={{ style: 'caption1-regular', lineHeight: 1 }}
-									color={theme.colors.gray3}
+									$textTheme={{ style: 'caption1-regular' }}
+									color={theme.colors.text.tertiary}
 								>
 									{removeBrandFromTitle(searchResultItem.title, searchResultItem.brand)}
 								</StyledText>
@@ -183,7 +183,7 @@ const SearchBottomSheetContent: React.FC<SearchBottomSheetProps> = ({ onClose, o
 					<div className="ref" ref={loadMoreRef}></div>
 					{isLoading && (
 						<Loader>
-							<StyledText $textTheme={{ style: 'body2-light', lineHeight: 2 }} color={theme.colors.gray3}>
+							<StyledText $textTheme={{ style: 'body2-light' }} color={theme.colors.text.tertiary}>
 								로딩 중
 							</StyledText>
 						</Loader>

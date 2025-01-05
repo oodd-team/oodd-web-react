@@ -7,6 +7,7 @@ import theme from '@styles/theme';
 
 import { getUserInfoApi, patchUserInfoApi } from '@apis/user';
 import { storage } from '@config/firebaseConfig';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import back from '@assets/arrow/left.svg';
 import camera from '@assets/default/camera.svg';
@@ -19,7 +20,7 @@ import Modal from '@components/Modal/index';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar/index';
 
-import type { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto'; // type 명시
+import type { UserInfoData, PatchUserInfoRequest } from '@apis/user/dto';
 
 import {
 	ProfileEditContainer,
@@ -36,7 +37,7 @@ import {
 } from './styles';
 
 type ExtendedUserInfoData = UserInfoData & {
-	birthDate?: string; // 확장된 속성
+	birthDate?: string;
 };
 
 const ProfileEdit: React.FC = () => {
@@ -44,43 +45,39 @@ const ProfileEdit: React.FC = () => {
 	const [nickname, setNickname] = useState<string>('');
 	const [bio, setBio] = useState<string>('');
 	const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
-	const [phoneNumber, setPhoneNumber] = useState<string>(''); // 전화번호
-	const [birthDate, setBirthDate] = useState<string>(''); // 생년월일
-	const [name, setName] = useState<string>(''); // 이름
-	const [email, setEmail] = useState<string>(''); // 이메일
+	const [phoneNumber, setPhoneNumber] = useState<string>('');
+	const [birthDate, setBirthDate] = useState<string>('');
+	const [name, setName] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
 	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-	const [uploading, setUploading] = useState<boolean>(false); // 업로드 상태 관리
-	const userId = localStorage.getItem('my_id');
+	const [uploading, setUploading] = useState<boolean>(false);
+	const currentUserId = getCurrentUserId();
 
-	// 사용자 정보 불러오기
 	useEffect(() => {
 		const getUserInfo = async () => {
 			try {
-				const storedUserId = Number(localStorage.getItem('my_id'));
-				if (!storedUserId) {
-					console.error('User ID not found in localStorage');
+				if (!currentUserId) {
+					console.error('User ID not found');
 					return;
 				}
 
-				const userId = Number(storedUserId); // 문자열을 숫자로 변환
-				const response = await getUserInfoApi(userId); // 사용자 정보 조회 API 호출
-				const userInfo: ExtendedUserInfoData = response.data; // 확장된 타입 사용
+				const response = await getUserInfoApi(currentUserId);
+				const userInfo: ExtendedUserInfoData = response.data;
 
-				// 상태 업데이트
 				setNickname(userInfo.nickname);
 				setBio(userInfo.bio);
 				setProfilePictureUrl(userInfo.profilePictureUrl || null);
 				setPhoneNumber(userInfo.phoneNumber || '');
-				setBirthDate(userInfo.birthDate || ''); // 확장된 속성 사용
+				setBirthDate(userInfo.birthDate || '');
 				setName(userInfo.name || '');
 				setEmail(userInfo.email || '');
 			} catch (error) {
 				console.error('Error fetching user info:', error);
 			} finally {
-				setIsLoading(false); // 로딩 상태 종료
+				setIsLoading(false);
 			}
 		};
 
@@ -97,8 +94,8 @@ const ProfileEdit: React.FC = () => {
 			setUploading(true);
 			try {
 				const storageRef = ref(storage, `profilePictures/${file.name}`);
-				await uploadBytes(storageRef, file); // Firebase에 파일 업로드
-				const imageUrl = await getDownloadURL(storageRef); // 업로드된 파일의 다운로드 URL 가져오기
+				await uploadBytes(storageRef, file);
+				const imageUrl = await getDownloadURL(storageRef);
 				setProfilePictureUrl(imageUrl);
 				console.log('File uploaded and URL retrieved:', imageUrl);
 			} catch (error) {
@@ -116,9 +113,8 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		try {
-			const storedUserId = Number(localStorage.getItem('my_id'));
-			if (!storedUserId) {
-				console.error('User ID not found in localStorage');
+			if (!currentUserId) {
+				console.error('User ID not found');
 				return;
 			}
 
@@ -134,16 +130,15 @@ const ProfileEdit: React.FC = () => {
 				bio: bio || '',
 			};
 
-			const response = await patchUserInfoApi(payload, storedUserId);
+			const response = await patchUserInfoApi(payload, currentUserId);
 
 			if (response.isSuccess) {
 				setModalContent('프로필이 성공적으로 수정되었습니다.');
 				setIsModalVisible(true);
 
-				// 모달 닫힌 후 마이페이지로 이동
 				setTimeout(() => {
 					handleModalClose();
-					navigate(`/profile/${userId}`);
+					navigate(`/profile/${currentUserId}`);
 				}, 2000);
 			} else {
 				setModalContent('프로필 수정에 실패했습니다.');
@@ -184,42 +179,42 @@ const ProfileEdit: React.FC = () => {
 					<FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
 				</ProfilePicWrapper>
 				<UserInfo>
-					<StyledText $textTheme={{ style: 'Heading' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'Heading' }} color={theme.colors.text.tertiary}>
 						<Username>{nickname || '알수없음'}</Username>
 					</StyledText>
 				</UserInfo>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						이름
 					</StyledText>
 					<Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						닉네임
 					</StyledText>
 					<Input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						소개글
 					</StyledText>
 					<Input value={bio} onChange={(e) => setBio(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						전화번호
 					</StyledText>
 					<Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						생년월일
 					</StyledText>
 					<Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
 				</Row>
 				<Row>
-					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.tertiary}>
+					<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 						이메일
 					</StyledText>
 					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />

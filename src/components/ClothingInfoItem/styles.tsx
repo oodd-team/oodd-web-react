@@ -39,7 +39,7 @@ export const ClothingInfoLeft = styled.div`
 
 	.model {
 		margin-right: auto;
-		color: ${({ theme }) => theme.colors.black};
+		color: ${({ theme }) => theme.colors.text.primary};
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

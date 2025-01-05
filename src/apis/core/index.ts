@@ -5,6 +5,7 @@ import axios, {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from 'axios';
+
 import { NEW_JWT_KEY } from '../../config/constant';
 
 // 기존 서버 응답 타입
