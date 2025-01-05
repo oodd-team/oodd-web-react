@@ -88,7 +88,9 @@ export const UserProfile = styled(LoadingSkeleton)`
 	}
 `;
 
-export const UserName = styled(StyledText)``;
+export const UserName = styled(StyledText)`
+	cursor: pointer;
+`;
 
 export const MenuBtn = styled.button`
 	width: 18px;
