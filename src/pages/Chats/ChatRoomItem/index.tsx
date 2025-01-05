@@ -17,8 +17,6 @@ import type { ChatRoomData } from '@apis/chatting/dto';
 
 import { UserImage, ChatRoomItemLayout, LeftBox, RightBox, LatestMessage } from './styles';
 
-import 'dayjs/locale/ko';
-
 const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) => {
 	const [timeAgo, setTimeAgo] = useState<string | null>(null);
 	const [, setOtherUser] = useRecoilState(OtherUserAtom);

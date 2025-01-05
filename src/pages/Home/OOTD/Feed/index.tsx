@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import dayjs from 'dayjs';
+import dayjs, { extend } from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -58,6 +59,7 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 
+	extend(relativeTime);
 	const nav = useNavigate();
 	const currentUserId = getCurrentUserId();
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
