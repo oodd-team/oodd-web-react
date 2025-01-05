@@ -58,7 +58,6 @@ export const PostsContainer = styled.div`
 	flex-wrap: wrap;
 	justify-content: space-between;
 	gap: 15px;
-	cursor: pointer;
 	margin-bottom: 100px;
 	padding: 20px;
 `;
