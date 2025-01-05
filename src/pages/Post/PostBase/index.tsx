@@ -13,9 +13,10 @@ import { postIdAtom, userAtom, isPostRepresentativeAtom } from '@recoil/Post/Pos
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
-import Like from '@components/Icons/Like';
 import Message from '@assets/default/message.svg';
 import More from '@assets/default/more.svg';
+
+import Like from '@components/Icons/Like';
 
 import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';

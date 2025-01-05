@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import ReactDOMServer from 'react-dom/server';
 
+import { renderToString } from 'react-dom/server';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -32,7 +32,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images }) => {
 					el: '.swiper-pagination',
 					type: 'custom',
 					renderCustom: (_, current, total) => {
-						const photoIcon = ReactDOMServer.renderToString(<Photo color="white" />);
+						const photoIcon = renderToString(<Photo color="white" />);
 						return `
 							<div class="swiper-pagination-custom">
 								${photoIcon}

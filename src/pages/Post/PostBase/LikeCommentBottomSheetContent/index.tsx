@@ -25,14 +25,15 @@ import X from '@assets/default/x.svg';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
-import CommentItem from './CommentItem/index';
-import MenuButtonList from './MenuButtonList/index';
 
 import type { Comment, GetCommentListResponse } from '@apis/post-comment/dto';
 import type { GetPostLikeListResponse } from '@apis/post-like/dto';
 import type { ModalProps } from '@components/Modal/dto';
 
 import type { LikeCommentBottomSheetProps } from '../dto';
+
+import CommentItem from './CommentItem/index';
+import MenuButtonList from './MenuButtonList/index';
 
 import { TabContainer, Tab, ContentContainer, Content, BigUserProfile, LikeItem, InputLayout } from './styles';
 

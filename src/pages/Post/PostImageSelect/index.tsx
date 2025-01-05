@@ -15,6 +15,7 @@ import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Left from '@assets/arrow/left.svg';
 import X from '@assets/default/x.svg';
+
 import Photo from '@components/Icons/Photo';
 
 import BottomButton from '@components/BottomButton';
@@ -23,6 +24,7 @@ import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
 
 import ImageSwiper from './ImageSwiper/index';
+
 import { UploadContainer, ImageDragDropContainer, Content } from './styles';
 
 const PostImageSelect: React.FC = () => {
