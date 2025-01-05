@@ -64,17 +64,17 @@ export const CheckboxInput = styled.input`
 	appearance: none;
 	width: 1.25rem;
 	height: 1.25rem;
-	border: 0.125rem solid ${({ theme }) => theme.colors.gray[200]};
+	border: 0.125rem solid ${({ theme }) => theme.colors.border.divider};
 	border-radius: 0.25rem;
 	position: relative;
 	&:checked {
-		background-color: ${({ theme }) => theme.colors.background.primaryLight};
+		background-color: ${({ theme }) => theme.colors.brand.primaryLight};
 		border-color: ${({ theme }) => theme.colors.brand.primary};
 	}
 
 	&:checked::after {
 		content: '✓';
-		color: ${({ theme }) => theme.colors.contrast};
+		color: ${({ theme }) => theme.colors.text.contrast};
 		font-size: 0.875rem;
 		position: absolute;
 		top: 50%;
@@ -91,10 +91,4 @@ export const Label = styled.label`
 
 export const StyledCheckboxText = styled(StyledText)`
 	color: ${({ theme }) => theme.colors.text.caption};
-`;
-
-export const StyledDiv = styled.div<{ isChecked: boolean }>`
-	background-color: ${({ isChecked, theme }) => (isChecked ? theme.colors.primary : theme.colors.gray[300])};
-	color: ${({ isChecked, theme }) => (isChecked ? theme.colors.contrast : theme.colors.caption)};
-	cursor: ${({ isChecked }) => (isChecked ? 'pointer' : 'not-allowed')};
 `;

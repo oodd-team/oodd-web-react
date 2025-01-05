@@ -45,6 +45,6 @@ export const StyledButton = styled(StyledText)`
 
 	&.prev {
 		background-color: ${({ theme }) => theme.colors.brand.primary};
-		color: ${({ theme }) => theme.colors.white};
+		color: ${({ theme }) => theme.colors.text.contrast};
 	}
 `;

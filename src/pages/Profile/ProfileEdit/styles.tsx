@@ -98,7 +98,7 @@ export const FileInput = styled.input`
 export const UserInfo = styled.div``;
 
 export const Username = styled.button`
-	color: ${({ theme }) => theme.colors.black};
+	color: ${({ theme }) => theme.colors.text.primary};
 	font-family: Pretendard;
 	font-size: 22px;
 	font-style: normal;

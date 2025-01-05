@@ -81,7 +81,7 @@ const AccountSetting: React.FC = () => {
 					</ProfilePic>
 					<Row>
 						<Label>
-							<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
+							<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.primary}>
 								{userProfile?.nickname}
 							</StyledText>
 						</Label>
@@ -98,13 +98,13 @@ const AccountSetting: React.FC = () => {
 				<List>
 					<ListItem onClick={handleLogoutClick}>
 						<img src={leave} alt="로그아웃 아이콘" />
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.primary}>
 							Logout
 						</StyledText>
 					</ListItem>
 					<ListItem onClick={handleDeleteAccountClick}>
 						<img src={Profile_s} alt="회원 탈퇴 아이콘" />
-						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.primary}>
+						<StyledText $textTheme={{ style: 'body1-medium' }} color={theme.colors.text.primary}>
 							회원탈퇴
 						</StyledText>
 					</ListItem>

@@ -36,12 +36,12 @@ export const CheckboxInput = styled.input`
 	border-radius: 0.25rem;
 	position: relative;
 	&:checked {
-		background-color: ${theme.colors.brand.primaryLighter};
+		background-color: ${theme.colors.brand.primaryLight};
 		border-color: ${theme.colors.brand.primary};
 	}
 	&:checked::after {
 		content: '✓';
-		color: white;
+		color: ${theme.colors.text.contrast};
 		font-size: 0.875rem;
 		position: absolute;
 		top: 50%;

@@ -114,7 +114,7 @@ export const InputLayout = styled.div`
 		width: 50px;
 		height: 50px;
 		border-radius: 8px;
-		color: ${({ theme }) => theme.colors.white};
+		color: ${({ theme }) => theme.colors.text.contrast};
 		border: none;
 		font-size: 0.875rem;
 	}

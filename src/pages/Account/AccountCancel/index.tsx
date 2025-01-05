@@ -24,7 +24,6 @@ import {
 	CheckboxInput,
 	Label,
 	StyledCheckboxText,
-	StyledDiv,
 } from './styles';
 
 const AccountCancel: React.FC = () => {
@@ -85,12 +84,12 @@ const AccountCancel: React.FC = () => {
 			<CancelContainer>
 				<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 				<SubTitle>
-					<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.primary}>
+					<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.text.primary}>
 						OOTD 탈퇴 전 확인하세요!
 					</StyledText>
 				</SubTitle>
 				<Text as="div">
-					<StyledText as="div" $textTheme={{ style: 'caption1-regular' }} color={theme.colors.primary}>
+					<StyledText as="div" $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.primary}>
 						{`탈퇴하시면 이용 중인 서비스가 폐쇄되며,\n모든 데이터는 복구할 수 없습니다.`}
 					</StyledText>
 				</Text>
@@ -99,7 +98,7 @@ const AccountCancel: React.FC = () => {
 						<StyledText
 							as="div"
 							$textTheme={{ style: 'body1-medium' }}
-							color={theme.colors.primary}
+							color={theme.colors.text.primary}
 							style={{ whiteSpace: 'nowrap' }}
 						>
 							지금까지 OODD를 이용해주셔서 감사합니다!
@@ -115,9 +114,7 @@ const AccountCancel: React.FC = () => {
 					</Label>
 				</CheckboxWrapper>
 			</CancelContainer>
-			<StyledDiv isChecked={isChecked}>
-				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
-			</StyledDiv>
+			<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
 			{isModalVisible && (
 				<Modal
 					content={modalContent || ''}
