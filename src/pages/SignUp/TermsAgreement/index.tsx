@@ -67,7 +67,7 @@ const TermsAgreement: React.FC = () => {
 		try {
 			const response = await postTermsAgreementApi(currentUserId);
 			console.log(response);
-			navigate('/'); // 성공 시 홈으로 이동
+			navigate('/signup/pick-my-style'); // 성공 시 취향 선택 UI로 이동
 		} catch (error) {
 			console.error('약관 동의 API 호출 실패:', error);
 			const errorMessage = handleError(error);
