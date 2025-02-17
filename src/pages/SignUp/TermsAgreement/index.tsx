@@ -123,7 +123,7 @@ const TermsAgreement: React.FC = () => {
 					))}
 				</CheckboxList>
 				<BottomButton
-					content="OODD 시작하기"
+					content="다음"
 					onClick={handleCompletedClick}
 					disabled={!agreements.terms || !agreements.privacy}
 				/>
