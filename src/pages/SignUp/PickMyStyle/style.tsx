@@ -66,14 +66,23 @@ export const ImageContainer = styled.div`
 	cursor: pointer;
 `;
 
-export const PlaceholderImage = styled.div`
+export const PlaceholderImage = styled.div<{ isClicked: boolean }>`
 	width: 12.5rem;
 	height: 13.75rem;
-	background: lightgray;
+	background-color: lightgray;
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	color: white;
-	font-weight: bold;
-	border-radius: 0.3125rem;
+	justify-content: center;
+	font-size: 0.875rem;
+	border-radius: 0.5rem;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+
+	transform: ${({ isClicked }) => (isClicked ? 'scale(0.9)' : 'scale(1)')};
+	box-shadow: ${({ isClicked }) => (isClicked ? '0 0.125rem 0.25rem rgba(0, 0, 0, 0.2)' : 'none')};
+
+	&:hover {
+		transform: ${({ isClicked }) => (isClicked ? 'scale(0.9)' : 'scale(0.95)')};
+	}
 `;

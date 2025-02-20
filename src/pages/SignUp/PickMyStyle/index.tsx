@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import theme from '@styles/theme';
@@ -32,23 +33,21 @@ const categories = [
 	'luxury',
 ];
 
-// const categoryImages: Record<string, string[]> = {
-// 	classic: ['/images/classic1.jpg', '/images/classic2.jpg'],
-// 	street: ['/images/street1.jpg', '/images/street2.jpg'],
-// 	hip: ['/images/hip1.jpg', '/images/hip2.jpg'],
-// 	casual: ['/images/casual1.jpg', '/images/casual2.jpg'],
-// 	sporty: ['/images/sporty1.jpg', '/images/sporty2.jpg'],
-// 	feminine: ['/images/feminine1.jpg', '/images/feminine2.jpg'],
-// 	minimal: ['/images/minimal1.jpg', '/images/minimal2.jpg'],
-// 	formal: ['/images/formal1.jpg', '/images/formal2.jpg'],
-// 	outdoor: ['/images/outdoor1.jpg', '/images/outdoor2.jpg'],
-// 	luxury: ['/images/luxury1.jpg', '/images/luxury2.jpg'],
-// };
-
 const PickMyStyle: React.FC = () => {
+	const [clickedImages, setClickedImages] = useState<{ [key: string]: boolean }>({});
 	const navigate = useNavigate();
+
 	const navigateToLogin = () => {
 		navigate('/login');
+	};
+
+	// 특정 이미지 클릭 시 해당 이미지의 상태만 변경
+	const handleImageClick = (category: string, index: number) => {
+		const key = `${category}-${index}`;
+		setClickedImages((prev) => ({
+			...prev,
+			[key]: !prev[key], // 클릭할 때마다 상태 변경 (토글 기능)
+		}));
 	};
 
 	return (
@@ -76,8 +75,15 @@ const PickMyStyle: React.FC = () => {
 								# {category}
 							</StyledCategory>
 							<ImageContainer>
-								<PlaceholderImage>이미지 1</PlaceholderImage>
-								<PlaceholderImage>이미지 2</PlaceholderImage>
+								{[0, 1].map((index) => (
+									<PlaceholderImage
+										key={index}
+										isClicked={!!clickedImages[`${category}-${index}`]}
+										onClick={() => handleImageClick(category, index)}
+									>
+										이미지 {index + 1}
+									</PlaceholderImage>
+								))}
 							</ImageContainer>
 						</CategoryItem>
 					))}
