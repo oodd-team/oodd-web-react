@@ -1,4 +1,4 @@
-export interface MatchingProps {
+export interface MatchingRoomProps {
 	matchingCount: number;
 	decreaseMatchingCount: () => void;
 }

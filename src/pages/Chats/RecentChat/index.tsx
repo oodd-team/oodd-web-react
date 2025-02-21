@@ -12,7 +12,7 @@ import { StyledText } from '@components/Text/StyledText';
 import type { ChatRoomData } from '@apis/chatting/dto';
 
 import ChatRoomItem from '../ChatRoomItem/index';
-import MatchingRoom from '../MatchingRoom/index';
+import MatchingRoomItem from '../MatchingRoomItem/index';
 
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 
@@ -60,7 +60,7 @@ const RecentChat: React.FC = () => {
 						최근 채팅방
 					</RecentChatInfo>
 					<ChatRoomList>
-						<MatchingRoom {...latestMatching} />
+						<MatchingRoomItem {...latestMatching} />
 						{chatRoomList.map((chatRoom) => (
 							<ChatRoomItem key={chatRoom.id} {...chatRoom} />
 						))}
