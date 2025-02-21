@@ -50,6 +50,7 @@ const PickMyStyle: React.FC = () => {
 		} catch (error) {
 			console.error('API 요청 실패:', error);
 			setModalMessage('스타일 선택 중 오류가 발생했습니다.');
+			console.log(requestData);
 			setIsModalOpen(true);
 		}
 	};
