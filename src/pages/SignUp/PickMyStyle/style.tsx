@@ -32,43 +32,23 @@ export const CategoryList = styled.div`
 	width: 100%;
 	max-width: 31.25rem;
 	margin: auto;
-	flex-grow: 1; // 남은 공간을 전부 차지하게 설정
-	overflow-y: auto; // 내부에서만 스크롤 가능하도록 설정
-	padding-bottom: 6.25rem; // 스크롤 여유 공간 추가
+	flex-grow: 1;
+	overflow-y: auto;
+	padding-bottom: 6.25rem;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.625rem;
 
 	// 스크롤바 숨기기
 	&::-webkit-scrollbar {
-		display: none; // 크롬, 사파리
+		display: none;
 	}
-	scrollbar-width: none; // 파이어폭스
+	scrollbar-width: none;
 `;
 
-export const StyledCategory = styled(StyledText)`
-	display: flex;
-	width: content-fit;
-	padding: 0.1875rem;
-	border-radius: 0.3125rem;
-	border: 0.0625rem solid ${({ theme }) => theme.colors.brand.primary};
-	background-color: ${({ theme }) => theme.colors.brand.primaryLighter};
-`;
-export const CategoryItem = styled.div`
-	display: flex;
-	flex-direction: column;
-	border-radius: 0.9375rem;
-	margin-bottom: 0.625rem;
-`;
-
-export const ImageContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	gap: 0.625rem;
-	margin-top: 0.625rem;
-	cursor: pointer;
-`;
-
-export const PlaceholderImage = styled.div<{ isClicked: boolean }>`
-	width: 12.5rem;
-	height: 13.75rem;
+export const PlaceholderImage = styled.div<{ $isClicked: boolean }>`
+	width: 100%;
+	aspect-ratio: 1;
 	background-color: lightgray;
 	display: flex;
 	align-items: center;
@@ -79,10 +59,18 @@ export const PlaceholderImage = styled.div<{ isClicked: boolean }>`
 		transform 0.2s ease,
 		box-shadow 0.2s ease;
 
-	transform: ${({ isClicked }) => (isClicked ? 'scale(0.9)' : 'scale(1)')};
-	box-shadow: ${({ isClicked }) => (isClicked ? '0 0.125rem 0.25rem rgba(0, 0, 0, 0.2)' : 'none')};
+	transform: ${({ $isClicked }) => ($isClicked ? 'scale(0.9)' : 'scale(1)')};
+	box-shadow: ${({ $isClicked }) => ($isClicked ? '0 0.125rem 0.25rem rgba(0, 0, 0, 0.2)' : 'none')};
 
 	&:hover {
-		transform: ${({ isClicked }) => (isClicked ? 'scale(0.9)' : 'scale(0.95)')};
+		transform: ${({ $isClicked }) => ($isClicked ? 'scale(0.9)' : 'scale(0.95)')};
+	}
+	cursor: pointer;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0.5rem;
 	}
 `;

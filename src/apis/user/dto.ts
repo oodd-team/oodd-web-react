@@ -11,6 +11,7 @@ export interface UserInfoData {
 	bio: string;
 	birthDate: string;
 	isFriend: boolean;
+	userStyleTag: string[];
 }
 
 // 사용자 정보 조회 응답
@@ -28,6 +29,7 @@ export interface PatchUserInfoRequest {
 	nickname: string;
 	profilePictureUrl: string;
 	bio: string;
+	userStyleTag: string[];
 }
 
 // 회원 탈퇴 응답
