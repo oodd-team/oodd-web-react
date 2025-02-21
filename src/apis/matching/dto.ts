@@ -18,29 +18,35 @@ export interface CreateMatchingData {
 	targetId: number;
 }
 
-// 매칭 리스트 조회
-// response
-export type GetMatchingListResponse = BaseSuccessResponse<GetMatchingListData>;
-
-export interface GetMatchingListData {
-	hasMatching: boolean;
-	matchingsCount: number;
-	matching: MatchingDto[];
+// 최근 매칭 조회
+export interface LatestMatchingData {
+	id: number;
+	requesterId: number;
+	targetId: number;
+	requestStatus: 'accepted' | 'rejected' | 'pending';
+	createdAt: Date;
 }
 
-export interface MatchingDto {
-	id: number; // matchingId
+// 매칭 리스트 조회
+// response
+
+export interface MatchingInfoData {
+	id: number;
+	message: string;
+	createdAt: string;
+	chatRoomId: number;
+	targetId: number;
 	requester: RequesterDto;
 }
 
 export interface RequesterDto {
-	id: number; // requesterId
+	id: number;
 	nickname: string;
 	profilePictureUrl: string;
-	representativePost: RepresentativePost;
+	representativePost: RepresentativePostDto;
 }
 
-export interface RepresentativePost {
+export interface RepresentativePostDto {
 	postImages: PostImageDto[];
 	styleTags: string[];
 }

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import SwiperCore from 'swiper';
-
 import theme from '@styles/theme';
 
+import { LatestMatchingData } from '@apis/matching/dto';
 import { useSocket } from '@context/SocketProvider';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
@@ -13,16 +12,13 @@ import { StyledText } from '@components/Text/StyledText';
 import type { ChatRoomData } from '@apis/chatting/dto';
 
 import ChatRoomItem from '../ChatRoomItem/index';
+import MatchingRoom from '../MatchingRoom/index';
 
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 
-interface RecentChatProps {
-	matchingCount: number;
-	swiperRef: React.MutableRefObject<SwiperCore | null>;
-}
-
-const RecentChat: React.FC<RecentChatProps> = () => {
+const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
+	const [latestMatching, setLatestMatching] = useState<LatestMatchingData | null>();
 	const [isLoading, setIsLoading] = useState(true);
 	const socket = useSocket();
 	const currentUserId = getCurrentUserId();
@@ -34,8 +30,14 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 			setIsLoading(false);
 		};
 
+		// 최근 매칭 조회
+		const getLatestMatching = (data: LatestMatchingData) => {
+			setLatestMatching(data);
+		};
+
 		if (socket) {
 			socket.emit('getChatRooms', { userId: currentUserId });
+			socket.on('matchingInfo', getLatestMatching);
 			socket.on('chatRoomList', getChatRooms);
 		}
 
@@ -58,6 +60,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 						최근 채팅방
 					</RecentChatInfo>
 					<ChatRoomList>
+						<MatchingRoom {...latestMatching} />
 						{chatRoomList.map((chatRoom) => (
 							<ChatRoomItem key={chatRoom.id} {...chatRoom} />
 						))}
