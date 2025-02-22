@@ -1,5 +1,7 @@
 import type { BaseSuccessResponse } from '@apis/core/dto';
 
+type RequestStatusEnum = 'accepted' | 'rejected' | 'pending';
+
 // 매칭 요청
 // request
 export interface CreateMatchingRequest {
@@ -18,25 +20,24 @@ export interface CreateMatchingData {
 	targetId: number;
 }
 
-// 최근 매칭 조회
+// 최근 매칭 조회 (채팅방 리스트에서)
 export interface LatestMatchingData {
 	id: number;
 	requesterId: number;
 	targetId: number;
-	requestStatus: 'accepted' | 'rejected' | 'pending';
+	requestStatus: RequestStatusEnum;
 	createdAt: Date;
 }
 
-// 매칭 리스트 조회
-// response
-
-export interface MatchingInfoData {
+// 전체 매칭 리스트 조회
+export interface MatchingData {
 	id: number;
 	message: string;
 	createdAt: string;
 	chatRoomId: number;
 	targetId: number;
 	requester: RequesterDto;
+	requestStatus: RequestStatusEnum;
 }
 
 export interface RequesterDto {

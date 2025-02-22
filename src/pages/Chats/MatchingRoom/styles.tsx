@@ -1,10 +1,13 @@
 import { styled } from 'styled-components';
 
-import { StyledText } from '@components/Text/StyledText';
-
-export const ReqeustInfo = styled(StyledText)`
+export const MessagesContainer = styled.div<{ $isLoading: boolean }>`
+	visibility: ${({ $isLoading }) => ($isLoading ? 'hidden' : 'visible')};
+	width: 100%;
+	overflow-y: scroll;
 	display: flex;
-	align-items: center;
-	padding: 0.5rem 1.25rem;
-	text-align: left;
+	flex: 1;
+	flex-direction: column;
+	padding: 1.25rem 1.25rem 0 1.25rem;
+	margin: 0 auto 3.2rem auto;
+	scroll-behavior: smooth;
 `;

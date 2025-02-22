@@ -3,12 +3,15 @@ import 'dayjs/locale/ko';
 
 import defaultProfile from '@assets/default/defaultProfile.svg';
 
-import type { OtherUserDto, chatRoomMessagesData } from '@apis/chatting/dto';
+import type { OtherUserDto, ChatRoomMessagesData } from '@apis/chatting/dto';
 
-import type { ExtendedMessageDto, RcvdMessageProps, SentMessageProps } from './dto';
+import { RcvdMessageProps } from '../RcvdMessage/dto';
+import { SentMessageProps } from '../SentMessage/dto';
+
+import type { ExtendedMessageDto } from './dto';
 
 export const createExtendedMessages = (
-	allMessages: chatRoomMessagesData[],
+	allMessages: ChatRoomMessagesData[],
 	userId: number,
 	otherUser: OtherUserDto | null,
 ) => {
@@ -21,7 +24,7 @@ export const createExtendedMessages = (
 	};
 
 	// 렌더링에 필요한 요소를 추가한 메시지 배열
-	const temp: ExtendedMessageDto[] = allMessages.map((message: chatRoomMessagesData, index) => {
+	const temp: ExtendedMessageDto[] = allMessages.map((message: ChatRoomMessagesData, index) => {
 		const prevMessage = index !== 0 ? allMessages[index - 1] : null;
 		const nextMessage = index !== allMessages.length - 1 ? allMessages[index + 1] : null;
 		const formattedTime = dayjs(message.createdAt).format('HH:mm');

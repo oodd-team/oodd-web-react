@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import theme from '@styles/theme';
 
-import type { RcvdMessageProps } from '../dto';
+import type { RcvdMessageProps } from './dto';
 
 import { FirstMessageLayout, UserImage, UsernameText, MessageBox, Message, TimeWrapper, MessageLayout } from './styles';
 
