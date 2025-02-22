@@ -33,11 +33,19 @@ const RecentChat: React.FC = () => {
 		// 최근 매칭 조회
 		const getLatestMatching = (data: LatestMatchingData) => {
 			setLatestMatching(data);
+			console.log('getLatestMatching');
+		};
+
+		const matchingNotFound = (data: LatestMatchingData) => {
+			console.log(data);
+			console.log('matchingNotFound');
 		};
 
 		if (socket) {
 			socket.emit('getChatRooms', { userId: currentUserId });
-			socket.on('matchingInfo', getLatestMatching);
+			socket.emit('getLatestMatching', { userId: currentUserId }, getLatestMatching);
+			socket.on('getLatestMatching', getLatestMatching);
+			socket.on('matchingNotFound', matchingNotFound);
 			socket.on('chatRoomList', getChatRooms);
 		}
 

@@ -22,10 +22,10 @@ export interface CreateMatchingData {
 
 // 최근 매칭 조회 (채팅방 리스트에서)
 export interface LatestMatchingData {
-	id: number;
-	requesterId: number;
-	targetId: number;
-	requestStatus: RequestStatusEnum;
+	id?: number;
+	requesterId?: number;
+	targetId?: number;
+	requestStatus?: RequestStatusEnum;
 	createdAt: Date;
 }
 

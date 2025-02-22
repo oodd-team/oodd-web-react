@@ -9,11 +9,11 @@ import Back from '@assets/arrow/left.svg';
 import { OODDFrame } from '@components/Frame/Frame';
 import TopBar from '@components/TopBar';
 
-import type { MatchingRoomProps } from './dto';
-
+import MatchingMessage from './MatchingMessage';
+import NoMatchingMessage from './NoMatchingMessage';
 import { MessagesContainer } from './styles';
 
-const MatchingRoom: React.FC<MatchingRoomProps> = () => {
+const MatchingRoom: React.FC = () => {
 	const [allMatchings, setAllMatchings] = useState<MatchingData[]>([]);
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -28,9 +28,9 @@ const MatchingRoom: React.FC<MatchingRoomProps> = () => {
 		if (ref.current) ref.current.scrollIntoView();
 	};
 
-	// 매칭 정보 불러오기 socket api
-	const getMatchingInfo = (data: MatchingData) => {
-		setAllMatchings([...allMatchings, data]);
+	// 전체 매칭 불러오기 socket api
+	const getAllMatchings = (data: MatchingData[]) => {
+		setAllMatchings(data);
 		setIsScroll(true);
 		setIsLoading(false);
 	};
@@ -56,7 +56,7 @@ const MatchingRoom: React.FC<MatchingRoomProps> = () => {
 
 	useEffect(() => {
 		if (socket) {
-			socket.on('getMatchingInfo', getMatchingInfo);
+			socket.emit('getAllMatchings', getAllMatchings);
 		}
 
 		return () => {
@@ -77,9 +77,14 @@ const MatchingRoom: React.FC<MatchingRoomProps> = () => {
 				$withBorder={true}
 			/>
 			<MessagesContainer $isLoading={isLoading}>
-				{allMatchings.map((matching: MatchingData) => {
-					return <div key={matching.id}></div>;
-				})}
+				{allMatchings.length === 0 ? (
+					<NoMatchingMessage />
+				) : (
+					allMatchings.map((matching: MatchingData) => {
+						// TODO: 매칭 상태에 따라 응답 버튼 렌더링
+						return <MatchingMessage {...matching} />;
+					})
+				)}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>
 		</OODDFrame>

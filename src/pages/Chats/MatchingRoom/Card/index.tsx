@@ -37,12 +37,11 @@ import {
 	SeeMore,
 } from './styles';
 
-const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
+const Card: React.FC<CardProps> = ({ id, chatRoomId, requester }) => {
 	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
 	const [, setOtherUser] = useRecoilState(OtherUserAtom);
 	const nav = useNavigate();
-	const requester = matching.requester;
 
 	const handleUserClick = () => {
 		nav(`/profile/${requester.id}`);
@@ -59,19 +58,16 @@ const Card: React.FC<CardProps> = ({ removeRejectedMatching, matching }) => {
 	// 매칭 거절 및 수락 api
 	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
 		try {
-			console.log(matching);
-			const response = await modifyMatchingStatusApi(matching.id, { requestStatus: status });
+			const response = await modifyMatchingStatusApi(id, { requestStatus: status });
 
 			if (response.isSuccess) {
-				removeRejectedMatching(); // 매칭 리스트에서 해당 매칭을 제거
-
 				if (status === 'accept') {
 					setOtherUser({
 						id: requester.id,
 						nickname: requester.nickname,
 						profilePictureUrl: requester.profilePictureUrl,
 					});
-					nav(`/chats/${response.data.chatRoomId}`);
+					nav(`/chats/${chatRoomId}`);
 				}
 			}
 		} catch (error) {
