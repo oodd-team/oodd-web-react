@@ -11,8 +11,8 @@ import { StyledText } from '@components/Text/StyledText';
 
 import type { ChatRoomData } from '@apis/chatting/dto';
 
-import ChatRoomItem from '../ChatRoomItem/index';
-import MatchingRoomItem from '../MatchingRoomItem/index';
+import ChatRoomItem from './ChatRoomItem/index';
+import MatchingRoomItem from './MatchingRoomItem/index';
 
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 
