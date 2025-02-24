@@ -19,6 +19,7 @@ import { getCurrentUserId } from '@utils/getCurrentUserId';
 import defaultProfile from '@assets/default/defaultProfile.svg';
 import more from '@assets/default/more.svg';
 import xBtn from '@assets/default/reject.svg';
+import share from '@assets/default/share.svg';
 
 import Heart from '@components/Icons/Heart';
 import Message from '@components/Icons/Message';
@@ -209,6 +210,24 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		},
 	};
 
+	// 친구한테 프로필 공유하기
+	const handleShareButtonClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		// 사용자 ID로 프로필 URL 생성
+		const profileUrl = `${window.location.origin}/profile/${feed.user.id}`;
+
+		navigator.clipboard
+			.writeText(profileUrl)
+			.then(() => {
+				setModalContent(`${feed.user.nickname}님의 프로필이 복사되었습니다!`);
+				setIsStatusModalOpen(true); // 복사 성공 후 모달 열기
+			})
+			.catch(() => {
+				setModalContent('프로필 복사에 실패했습니다. 다시 시도해 주세요.');
+				setIsStatusModalOpen(true); // 복사 실패 시 모달 열기
+			});
+	};
+
 	return (
 		<FeedWrapper onClick={handleFeedClick}>
 			<FeedTop>
@@ -251,7 +270,11 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 						<div className="button" onClick={handleLikeButtonClick}>
 							<Heart isFilled={isLikeClicked} />
 						</div>
+						<div className="button" onClick={handleShareButtonClick}>
+							<img src={share} alt="공유" />
+						</div>
 					</Reaction>
+
 					<MatchingBtn onClick={handleMatchingButtonClick}>
 						<Message width="16" height="16" color="white" />
 						<StyledText $textTheme={{ style: 'body1-regular' }} color={theme.colors.text.contrast}>
