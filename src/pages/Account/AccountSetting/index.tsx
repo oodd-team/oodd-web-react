@@ -11,9 +11,9 @@ import imageBasic from '@assets/default/defaultProfile.svg';
 import leave from '@assets/default/leave.svg';
 import Profile_s from '@assets/default/my-page.svg';
 
-import ConfirmationModal from '@components/ConfirmationModal/index';
 import { OODDFrame } from '@components/Frame/Frame';
 import Loading from '@components/Loading/index';
+import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar/index';
 
@@ -111,11 +111,11 @@ const AccountSetting: React.FC = () => {
 				</List>
 
 				{isLogoutModalOpen && (
-					<ConfirmationModal
+					<Modal
 						content="이 기기에서 정말 로그아웃 할까요?"
-						isCancelButtonVisible={true}
-						confirm={{ text: '로그아웃', action: handleConfirmLogout }}
-						onCloseModal={handleCloseModal}
+						onClose={handleCloseModal}
+						button={{ content: '확인', onClick: handleConfirmLogout }}
+						isCloseButtonVisible={true}
 					/>
 				)}
 			</ProfileEditContainer>
