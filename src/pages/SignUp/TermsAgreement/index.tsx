@@ -102,7 +102,7 @@ const TermsAgreement: React.FC = () => {
 							onChange={handleAllAgreementChange}
 							id="all-agreement"
 						/>
-						<label htmlFor="all-agreement">
+						<label htmlFor="all-agreement" style={{ cursor: 'pointer' }}>
 							<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
 						</label>
 					</CheckboxItem>
@@ -116,7 +116,7 @@ const TermsAgreement: React.FC = () => {
 								onChange={() => handleAgreementChange(key)}
 								id={key}
 							/>
-							<label htmlFor={key}>
+							<label htmlFor={key} style={{ cursor: 'pointer' }}>
 								<StyledText $textTheme={{ style: 'body2-regular' }}>{label}</StyledText>
 							</label>
 						</CheckboxItem>
