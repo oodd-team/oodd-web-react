@@ -39,7 +39,7 @@ const PickMyStyle: React.FC = () => {
 			.filter((category): category is string => !!category); // undefined 제거
 
 		const requestData: Partial<PatchUserInfoRequest> = {
-			userStyleTag: selectedCategories,
+			userStyletags: selectedCategories,
 		};
 		console.log(requestData);
 

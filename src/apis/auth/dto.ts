@@ -12,4 +12,5 @@ export interface getUserInfoByJwtData {
 	profilePictureUrl: string;
 	bio: string;
 	birthDate: string;
+	userStyletags: string[];
 }
