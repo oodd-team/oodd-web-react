@@ -27,7 +27,7 @@ const PickMyStyle: React.FC = () => {
 
 	// 유저 정보 가져오기
 	useEffect(() => {
-		const fetchUserInfo = async () => {
+		const getUserInfo = async () => {
 			try {
 				const userInfo = await getUserInfoApi(currentUserId);
 				setNickname(userInfo.data.nickname);
@@ -35,7 +35,7 @@ const PickMyStyle: React.FC = () => {
 				console.error('유저 정보 불러오기 실패:', error);
 			}
 		};
-		fetchUserInfo();
+		getUserInfo();
 	}, [currentUserId]);
 
 	// 이미지 클릭 시 상태 변경
