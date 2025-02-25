@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useRecoilState } from 'recoil';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -9,79 +7,19 @@ import 'swiper/css/pagination';
 
 import theme from '@styles/theme';
 
-import { modifyMatchingStatusApi } from '@apis/matching';
-import { handleError } from '@apis/util/handleError';
-import { OtherUserAtom } from '@recoil/util/OtherUser';
-
-import acceptButton from '@assets/default/accept.svg';
 import defaultProfile from '@assets/default/defaultProfile.svg';
-import rejectButton from '@assets/default/reject.svg';
 
-import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
-
-import type { ModalProps } from '@components/Modal/dto';
 
 import type { CardProps } from './dto';
 
-import {
-	ArrowButton,
-	Btn,
-	CardLayout,
-	OOTDImgBackground,
-	OOTDImgBox,
-	ProfileContainer,
-	ProfileImgBox,
-	ProfileInfo,
-	Reaction,
-	SeeMore,
-} from './styles';
+import { CardLayout, OOTDImgBackground, OOTDImgBox, ProfileContainer, ProfileImgBox, ProfileInfo } from './styles';
 
-const Card: React.FC<CardProps> = ({ id, chatRoomId, requester }) => {
-	const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-	const [modalContent, setModalContent] = useState('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-	const [, setOtherUser] = useRecoilState(OtherUserAtom);
+const Card: React.FC<CardProps> = ({ requester }) => {
 	const nav = useNavigate();
 
 	const handleUserClick = () => {
 		nav(`/profile/${requester.id}`);
-	};
-
-	const handleRejectButtonClick = () => {
-		modifyMatchingStatus('reject');
-	};
-
-	const handleAcceptButtonClick = () => {
-		modifyMatchingStatus('accept');
-	};
-
-	// 매칭 거절 및 수락 api
-	const modifyMatchingStatus = async (status: 'accept' | 'reject') => {
-		try {
-			const response = await modifyMatchingStatusApi(id, { requestStatus: status });
-
-			if (response.isSuccess) {
-				if (status === 'accept') {
-					setOtherUser({
-						id: requester.id,
-						nickname: requester.nickname,
-						profilePictureUrl: requester.profilePictureUrl,
-					});
-					nav(`/chats/${chatRoomId}`);
-				}
-			}
-		} catch (error) {
-			const errorMessage = handleError(error);
-			setModalContent(errorMessage);
-			setIsStatusModalOpen(true);
-		}
-	};
-
-	const statusModalProps: ModalProps = {
-		content: modalContent,
-		onClose: () => {
-			setIsStatusModalOpen(false);
-		},
 	};
 
 	return (
@@ -113,12 +51,6 @@ const Card: React.FC<CardProps> = ({ id, chatRoomId, requester }) => {
 						))}
 					</div>
 				</ProfileInfo>
-				<SeeMore onClick={() => nav(`/profile/${requester.id}`)}>
-					<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.caption}>
-						OOTD 더 보기
-					</StyledText>
-					<ArrowButton />
-				</SeeMore>
 			</ProfileContainer>
 			<OOTDImgBox>
 				<Swiper
@@ -139,16 +71,7 @@ const Card: React.FC<CardProps> = ({ id, chatRoomId, requester }) => {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<Reaction>
-					<Btn onClick={handleRejectButtonClick}>
-						<img src={rejectButton} alt="reject" />
-					</Btn>
-					<Btn onClick={handleAcceptButtonClick}>
-						<img src={acceptButton} alt="accept" />
-					</Btn>
-				</Reaction>
 			</OOTDImgBox>
-			{isStatusModalOpen && <Modal {...statusModalProps} />}
 		</CardLayout>
 	);
 };
