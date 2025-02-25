@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { patchUserInfoApi } from '@apis/user';
+import { getUserInfoApi, patchUserInfoApi } from '@apis/user';
 import { PatchUserInfoRequest } from '@apis/user/dto';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 import { styleImages } from '@utils/styleImages';
@@ -16,6 +16,7 @@ import TopBar from '@components/TopBar';
 import { PickMyStyleLayout, StyledSubTitle, StyledTitle, CategoryList, PlaceholderImage } from './style';
 
 const PickMyStyle: React.FC = () => {
+	const [nickname, setNickname] = useState('');
 	const [clickedImages, setClickedImages] = useState<{ [key: number]: boolean }>({});
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +24,19 @@ const PickMyStyle: React.FC = () => {
 
 	const navigate = useNavigate();
 	const currentUserId = getCurrentUserId();
+
+	// 유저 정보 가져오기
+	useEffect(() => {
+		const fetchUserInfo = async () => {
+			try {
+				const userInfo = await getUserInfoApi(currentUserId);
+				setNickname(userInfo.data.nickname);
+			} catch (error) {
+				console.error('유저 정보 불러오기 실패:', error);
+			}
+		};
+		fetchUserInfo();
+	}, [currentUserId]);
 
 	// 이미지 클릭 시 상태 변경
 	const handleImageClick = (id: number) => {
@@ -70,14 +84,14 @@ const PickMyStyle: React.FC = () => {
 			<PickMyStyleLayout>
 				<StyledTitle
 					$textTheme={{
-						style: { mobile: 'title3-bold', tablet: 'title2-bold', desktop: 'title1-bold' },
+						style: { mobile: 'heading1-bold', tablet: 'title2-bold', desktop: 'title2-bold' },
 					}}
 				>
-					스타일을 선택해주세요!
+					{nickname}님의 취향을 알려주세요!
 				</StyledTitle>
 				<StyledSubTitle
 					$textTheme={{
-						style: { mobile: 'caption1-medium', tablet: 'body2-medium', desktop: 'body1-medium' },
+						style: { mobile: 'caption1-medium', tablet: 'body2-medium', desktop: 'body2-medium' },
 					}}
 				>
 					OODD가 당신의 취향을 분석하여 맞춤 스타일을 추천해 드릴게요.
