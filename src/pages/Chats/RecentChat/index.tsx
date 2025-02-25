@@ -20,8 +20,10 @@ const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
 	const [latestMatching, setLatestMatching] = useState<LatestMatchingData | null>();
 	const [isLoading, setIsLoading] = useState(true);
-	const socket = useSocket();
 	const currentUserId = getCurrentUserId();
+
+	const socket = useSocket();
+	const matchingSocket = useSocket('matching');
 
 	useEffect(() => {
 		// 채팅방 리스트 조회
@@ -43,10 +45,13 @@ const RecentChat: React.FC = () => {
 
 		if (socket) {
 			socket.emit('getChatRooms', { userId: currentUserId });
-			socket.emit('getLatestMatching', { userId: currentUserId }, getLatestMatching);
-			socket.on('getLatestMatching', getLatestMatching);
-			socket.on('matchingNotFound', matchingNotFound);
 			socket.on('chatRoomList', getChatRooms);
+		}
+
+		if (matchingSocket) {
+			matchingSocket.emit('getLatestMatching', { userId: currentUserId });
+			matchingSocket.on('getLatestMatching', getLatestMatching);
+			matchingSocket.on('matchingNotFound', matchingNotFound);
 		}
 
 		// 이벤트 리스너 정리
@@ -55,8 +60,13 @@ const RecentChat: React.FC = () => {
 			if (socket) {
 				socket.off('getChatRooms', getChatRooms);
 			}
+
+			if (matchingSocket) {
+				matchingSocket.off('getLatestMatching', getLatestMatching);
+				matchingSocket.off('matchingNotFound', matchingNotFound);
+			}
 		};
-	}, [socket]);
+	}, [socket, matchingSocket]);
 
 	return (
 		<>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { MatchingData } from '@apis/matching/dto';
 import { useSocket } from '@context/SocketProvider';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Back from '@assets/arrow/left.svg';
 
@@ -20,19 +21,13 @@ const MatchingRoom: React.FC = () => {
 	const [isScroll, setIsScroll] = useState(false);
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 
+	const currentUserId = getCurrentUserId();
 	const nav = useNavigate();
-	const socket = useSocket();
+	const socket = useSocket('matching');
 
 	// 메시지 수신 시 아래로 스크롤 (스크롤 아래 고정)
 	const scrollToBottom = (ref: React.RefObject<HTMLDivElement>) => {
 		if (ref.current) ref.current.scrollIntoView();
-	};
-
-	// 전체 매칭 불러오기 socket api
-	const getAllMatchings = (data: MatchingData[]) => {
-		setAllMatchings(data);
-		setIsScroll(true);
-		setIsLoading(false);
 	};
 
 	// 채팅방 입장 시 스크롤 아래로 이동
@@ -55,8 +50,23 @@ const MatchingRoom: React.FC = () => {
 	}, [allMatchings]);
 
 	useEffect(() => {
+		// 전체 매칭 불러오기 socket api
+		const getAllMatchings = ({ matching }: { matching: MatchingData[] }) => {
+			console.log(allMatchings);
+			setAllMatchings(matching);
+			setIsScroll(true);
+			setIsLoading(false);
+		};
+
+		const getNewMatching = (data: MatchingData) => {
+			console.log(data);
+		};
+
 		if (socket) {
-			socket.emit('getAllMatchings', getAllMatchings);
+			socket.emit('getAllMatchings', { userId: currentUserId });
+			socket.emit('getMatching', { userId: currentUserId });
+			socket.on('matchings', getAllMatchings);
+			socket.on('nextMatching', getNewMatching);
 		}
 
 		return () => {
@@ -82,7 +92,7 @@ const MatchingRoom: React.FC = () => {
 				) : (
 					allMatchings.map((matching: MatchingData) => {
 						// TODO: 매칭 상태에 따라 응답 버튼 렌더링
-						return <MatchingMessage {...matching} />;
+						return <MatchingMessage key={matching.id} {...matching} />;
 					})
 				)}
 				<div ref={chatWindowRef} />
