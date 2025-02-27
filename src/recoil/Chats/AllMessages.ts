@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-import type { chatRoomMessagesData } from '@apis/chatting/dto';
+import type { ChatRoomMessagesData } from '@apis/chatting/dto';
 
-export const AllMesagesAtom = atom<chatRoomMessagesData[] | []>({
+export const AllMesagesAtom = atom<ChatRoomMessagesData[] | []>({
 	key: 'allMessagesAtom',
 	default: [],
 });
