@@ -16,7 +16,7 @@ const MatchingMessage: React.FC<MatchingData> = ({ id, message, createdAt, chatR
 		fromUserNickname: '오딩이',
 		profilePictureUrl: '',
 		content: '얘가 너 소개받고 싶대',
-		isSenderChanged: true,
+		isSenderChanged: false,
 		isProfileImageVisible: true,
 		isTimeVisible: false,
 		formattedTime,

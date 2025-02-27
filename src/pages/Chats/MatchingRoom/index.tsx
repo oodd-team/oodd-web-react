@@ -10,8 +10,11 @@ import Back from '@assets/arrow/left.svg';
 import { OODDFrame } from '@components/Frame/Frame';
 import TopBar from '@components/TopBar';
 
+import ChatBox from '../ChatBox';
+
 import MatchingMessage from './MatchingMessage';
 import NoMatchingMessage from './NoMatchingMessage';
+import ResponseMessage from './ResponseMessage';
 import { MessagesContainer } from './styles';
 
 const MatchingRoom: React.FC = () => {
@@ -92,11 +95,17 @@ const MatchingRoom: React.FC = () => {
 				) : (
 					allMatchings.map((matching: MatchingData) => {
 						// TODO: 매칭 상태에 따라 응답 버튼 렌더링
-						return <MatchingMessage key={matching.id} {...matching} />;
+						return (
+							<div key={matching.id}>
+								<MatchingMessage {...matching} />
+								<ResponseMessage requestStatus={matching.requestStatus} />
+							</div>
+						);
 					})
 				)}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>
+			<ChatBox />
 		</OODDFrame>
 	);
 };
