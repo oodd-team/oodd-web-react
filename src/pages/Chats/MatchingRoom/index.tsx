@@ -19,6 +19,7 @@ import { MessagesContainer } from './styles';
 
 const MatchingRoom: React.FC = () => {
 	const [allMatchings, setAllMatchings] = useState<MatchingData[]>([]);
+	const [hasNewMatching, setHasNewMatching] = useState(true);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [isScroll, setIsScroll] = useState(false);
@@ -55,15 +56,17 @@ const MatchingRoom: React.FC = () => {
 	useEffect(() => {
 		// 전체 매칭 불러오기 socket api
 		const getAllMatchings = ({ matching }: { matching: MatchingData[] }) => {
-			console.log(allMatchings);
 			setAllMatchings(matching);
 			setIsScroll(true);
 			setIsLoading(false);
 		};
 
 		const getNewMatching = (data: MatchingData) => {
-			if (JSON.stringify(data) === '{}') return;
-			setAllMatchings([...allMatchings, data]);
+			if (JSON.stringify(data) === '{}') {
+				setHasNewMatching(false);
+			} else {
+				setAllMatchings([...allMatchings, data]);
+			}
 		};
 
 		if (socket) {
@@ -95,7 +98,6 @@ const MatchingRoom: React.FC = () => {
 					<NoMatchingMessage />
 				) : (
 					allMatchings.map((matching: MatchingData) => {
-						// TODO: 매칭 상태에 따라 응답 버튼 렌더링
 						return (
 							<div key={matching.id}>
 								<MatchingMessage {...matching} />
@@ -104,6 +106,7 @@ const MatchingRoom: React.FC = () => {
 						);
 					})
 				)}
+				{!hasNewMatching && <NoMatchingMessage />}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>
 			<ChatBox disabled={true} />

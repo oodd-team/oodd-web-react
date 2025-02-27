@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 export const CardLayout = styled.div`
 	border-radius: 0.5rem;
 	position: relative;
+	height: fit-content;
 `;
 
 export const ProfileContainer = styled.div`

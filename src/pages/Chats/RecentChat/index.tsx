@@ -35,12 +35,12 @@ const RecentChat: React.FC = () => {
 		// 최근 매칭 조회
 		const getLatestMatching = (data: LatestMatchingData) => {
 			setLatestMatching(data);
-			console.log('getLatestMatching');
 		};
 
-		const matchingNotFound = (data: LatestMatchingData) => {
-			console.log(data);
-			console.log('matchingNotFound');
+		const matchingNotFound = (data: { joinedAt: Date }) => {
+			setLatestMatching({
+				createdAt: data.joinedAt,
+			});
 		};
 
 		if (socket) {

@@ -28,7 +28,7 @@ const MatchingMessage: React.FC<MatchingData> = ({ id, message, createdAt, chatR
 		content: message,
 		isSenderChanged: false,
 		isProfileImageVisible: false,
-		isTimeVisible: true,
+		isTimeVisible: false,
 		formattedTime,
 	};
 
@@ -41,9 +41,11 @@ const MatchingMessage: React.FC<MatchingData> = ({ id, message, createdAt, chatR
 	return (
 		<>
 			<RcvdMessage {...firstMessageProps} />
-			<RcvdMessage {...matchingMessageProps}>
-				<Card {...cardProps} />
-			</RcvdMessage>
+			<div style={{ maxWidth: '90%' }}>
+				<RcvdMessage {...matchingMessageProps}>
+					<Card {...cardProps} />
+				</RcvdMessage>
+			</div>
 		</>
 	);
 };

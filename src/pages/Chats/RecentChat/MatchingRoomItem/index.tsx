@@ -38,8 +38,6 @@ const MatchingRoomItem: React.FC<Partial<LatestMatchingData>> = ({ requestStatus
 		}
 	}, []);
 
-	console.log(requestStatus);
-
 	return (
 		<MatchingRoomLayout onClick={handleMatchingRoomClick}>
 			<UserImage src={'오딩이 프로필 이미지'} alt="user" />
