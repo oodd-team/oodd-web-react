@@ -62,7 +62,8 @@ const MatchingRoom: React.FC = () => {
 		};
 
 		const getNewMatching = (data: MatchingData) => {
-			console.log(data);
+			if (JSON.stringify(data) === '{}') return;
+			setAllMatchings([...allMatchings, data]);
 		};
 
 		if (socket) {
@@ -98,7 +99,7 @@ const MatchingRoom: React.FC = () => {
 						return (
 							<div key={matching.id}>
 								<MatchingMessage {...matching} />
-								<ResponseMessage requestStatus={matching.requestStatus} />
+								<ResponseMessage matchingId={matching.id} requestStatus={matching.requestStatus} />
 							</div>
 						);
 					})

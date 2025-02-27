@@ -6,7 +6,8 @@ export const ResponseContainer = styled.div`
 	justify-content: flex-end;
 `;
 
-export const ResponseButton = styled.button`
+export const ResponseButton = styled.button<{ $isPending: boolean }>`
+	cursor: ${({ $isPending }) => `${$isPending ? 'pointer' : 'default'}`};
 	padding: 0.4rem 0.8rem;
 	margin: 0.5rem 0;
 	background-color: #f2f2f2;
