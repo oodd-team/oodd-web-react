@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const ProfileEditContainer = styled.div`
-	max-width: 512px;
+	max-width: 32rem;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -11,7 +11,7 @@ export const Section = styled.div`
 	margin-top: 1.875rem;
 	margin-bottom: 1.875rem;
 	width: 100%;
-	padding: 0px 30px;
+	padding: 0rem 1.875rem;
 `;
 
 export const SectionTitle = styled.div`
@@ -62,7 +62,7 @@ export const SnsConnection = styled.div`
 export const MemberInfo = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-top: 35px;
+	margin-top: 2.1875rem;
 	width: 100%;
 `;
 
@@ -71,7 +71,7 @@ export const MemberInfoRow = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	margin-bottom: 0.625rem;
-	margin-top: 10px;
+	margin-top: 0.625rem;
 `;
 
 export const Label = styled.div`

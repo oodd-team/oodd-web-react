@@ -14,7 +14,7 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 10px;
+	margin-bottom: 0.625rem;
 	position: relative;
 `;
 
@@ -25,19 +25,19 @@ export const Label = styled.label`
 
 export const Input = styled.input`
 	width: 100%;
-	padding: 25px;
-	margin: 10px 0;
-	border: 0px;
+	padding: 1.5625rem;
+	margin: 0.625rem 0;
+	border: 0rem;
 	box-sizing: border-box;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
 
 export const Button = styled.button`
 	position: absolute;
-	bottom: 10px;
-	right: 10px;
+	bottom: 0.625rem;
+	right: 0.625rem;
 	z-index: 1;
 	width: 1.7rem;
 	height: 1.7rem;
@@ -56,7 +56,7 @@ export const ProfilePic = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-top: 2.125rem;
-	margin-bottom: 15px;
+	margin-bottom: 0.9375rem;
 
 	img {
 		width: 100%;
@@ -72,8 +72,8 @@ export const Row = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 	width: 100%;
-	margin-top: 0px;
-	padding: 0px 20px;
+	margin-top: 0rem;
+	padding: 0rem 1.25rem;
 
 	${Label} {
 		width: 6.25rem;
@@ -81,12 +81,12 @@ export const Row = styled.div`
 `;
 
 export const EmailInput = styled.input`
-	margin-bottom: 120px;
+	margin-bottom: 7.5rem;
 	width: 100%;
-	padding: 25px;
+	padding: 1.5625rem;
 	border: 0px;
 	box-sizing: border-box;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	background-color: ${({ theme }) => theme.colors.background.secondary};
 	text-align: left;
 `;
@@ -100,9 +100,9 @@ export const UserInfo = styled.div``;
 export const Username = styled.button`
 	color: ${({ theme }) => theme.colors.text.primary};
 	font-family: Pretendard;
-	font-size: 22px;
+	font-size: 1.375rem;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 136.4%;
-	letter-spacing: -0.427px;
+	letter-spacing: -0.0267rem;
 `;
