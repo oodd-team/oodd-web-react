@@ -105,7 +105,7 @@ const MatchingRoom: React.FC = () => {
 				)}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>
-			<ChatBox />
+			<ChatBox disabled={true} />
 		</OODDFrame>
 	);
 };

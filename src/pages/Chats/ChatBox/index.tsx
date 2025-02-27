@@ -11,7 +11,7 @@ import SendIcon from '@assets/default/send-message.svg';
 
 import { ChatBoxContainer, Textarea, SendButton } from './styles';
 
-const ChatBox: React.FC = () => {
+const ChatBox: React.FC<{ disabled?: boolean }> = ({ disabled = false }) => {
 	const [newMessage, setNewMessage] = useState('');
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 	const socket = useSocket();
@@ -22,9 +22,9 @@ const ChatBox: React.FC = () => {
 	const isOtherUserValid = !!(otherUser && otherUser.id);
 
 	useEffect(() => {
-		if (textareaRef.current && !isOtherUserValid) {
+		if (textareaRef.current && (!isOtherUserValid || disabled)) {
 			textareaRef.current.disabled = true;
-			textareaRef.current.placeholder = '메시지를 보낼 수 없습니다.';
+			textareaRef.current.placeholder = '메시지를 보낼 수 없는 채팅방입니다.';
 		}
 	}, []);
 
