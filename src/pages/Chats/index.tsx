@@ -3,8 +3,7 @@ import theme from '@styles/theme';
 import { OODDFrame } from '@components/Frame/Frame';
 import NavBar from '@components/NavBar';
 
-import TabBar from './TabBar/index';
-
+import RecentChat from './RecentChat';
 import { Header } from './styles';
 
 const Chats: React.FC = () => {
@@ -13,7 +12,7 @@ const Chats: React.FC = () => {
 			<Header $textTheme={{ style: 'title1-bold' }} color={theme.colors.text.primary}>
 				Chats
 			</Header>
-			<TabBar></TabBar>
+			<RecentChat />
 			<NavBar />
 		</OODDFrame>
 	);

@@ -1,5 +1,7 @@
 import type { BaseSuccessResponse } from '@apis/core/dto';
 
+type RequestStatusEnum = 'accepted' | 'rejected' | 'pending';
+
 // 매칭 요청
 // request
 export interface CreateMatchingRequest {
@@ -18,29 +20,34 @@ export interface CreateMatchingData {
 	targetId: number;
 }
 
-// 매칭 리스트 조회
-// response
-export type GetMatchingListResponse = BaseSuccessResponse<GetMatchingListData>;
-
-export interface GetMatchingListData {
-	hasMatching: boolean;
-	matchingsCount: number;
-	matching: MatchingDto[];
+// 최근 매칭 조회 (채팅방 리스트에서)
+export interface LatestMatchingData {
+	id?: number;
+	requesterId?: number;
+	targetId?: number;
+	requestStatus?: RequestStatusEnum;
+	createdAt: Date;
 }
 
-export interface MatchingDto {
-	id: number; // matchingId
+// 전체 매칭 리스트 조회
+export interface MatchingData {
+	id: number;
+	message: string;
+	createdAt: string;
+	chatRoomId: number;
+	targetId: number;
 	requester: RequesterDto;
+	requestStatus: RequestStatusEnum;
 }
 
 export interface RequesterDto {
-	id: number; // requesterId
+	id: number;
 	nickname: string;
 	profilePictureUrl: string;
-	representativePost: RepresentativePost;
+	representativePost: RepresentativePostDto;
 }
 
-export interface RepresentativePost {
+export interface RepresentativePostDto {
 	postImages: PostImageDto[];
 	styleTags: string[];
 }

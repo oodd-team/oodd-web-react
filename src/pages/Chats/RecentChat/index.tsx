@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import SwiperCore from 'swiper';
-
 import theme from '@styles/theme';
 
+import { LatestMatchingData } from '@apis/matching/dto';
 import { useSocket } from '@context/SocketProvider';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
@@ -12,20 +11,19 @@ import { StyledText } from '@components/Text/StyledText';
 
 import type { ChatRoomData } from '@apis/chatting/dto';
 
-import ChatRoomItem from '../ChatRoomItem/index';
+import ChatRoomItem from './ChatRoomItem/index';
+import MatchingRoomItem from './MatchingRoomItem/index';
 
 import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
 
-interface RecentChatProps {
-	matchingCount: number;
-	swiperRef: React.MutableRefObject<SwiperCore | null>;
-}
-
-const RecentChat: React.FC<RecentChatProps> = () => {
+const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
+	const [latestMatching, setLatestMatching] = useState<LatestMatchingData | null>();
 	const [isLoading, setIsLoading] = useState(true);
-	const socket = useSocket();
 	const currentUserId = getCurrentUserId();
+
+	const socket = useSocket();
+	const matchingSocket = useSocket('matching');
 
 	useEffect(() => {
 		// 채팅방 리스트 조회
@@ -34,9 +32,26 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 			setIsLoading(false);
 		};
 
+		// 최근 매칭 조회
+		const getLatestMatching = (data: LatestMatchingData) => {
+			setLatestMatching(data);
+		};
+
+		const matchingNotFound = (data: { joinedAt: Date }) => {
+			setLatestMatching({
+				createdAt: data.joinedAt,
+			});
+		};
+
 		if (socket) {
 			socket.emit('getChatRooms', { userId: currentUserId });
 			socket.on('chatRoomList', getChatRooms);
+		}
+
+		if (matchingSocket) {
+			matchingSocket.emit('getLatestMatching', { userId: currentUserId });
+			matchingSocket.on('getLatestMatching', getLatestMatching);
+			matchingSocket.on('matchingNotFound', matchingNotFound);
 		}
 
 		// 이벤트 리스너 정리
@@ -45,8 +60,13 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 			if (socket) {
 				socket.off('getChatRooms', getChatRooms);
 			}
+
+			if (matchingSocket) {
+				matchingSocket.off('getLatestMatching', getLatestMatching);
+				matchingSocket.off('matchingNotFound', matchingNotFound);
+			}
 		};
-	}, [socket]);
+	}, [socket, matchingSocket]);
 
 	return (
 		<>
@@ -58,6 +78,7 @@ const RecentChat: React.FC<RecentChatProps> = () => {
 						최근 채팅방
 					</RecentChatInfo>
 					<ChatRoomList>
+						<MatchingRoomItem {...latestMatching} />
 						{chatRoomList.map((chatRoom) => (
 							<ChatRoomItem key={chatRoom.id} {...chatRoom} />
 						))}

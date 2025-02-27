@@ -2,47 +2,55 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { io, Socket } from 'socket.io-client';
 
-const SocketContext = createContext<Socket | null>(null);
+type SocketMap = { [endpoint: string]: Socket };
+
+const SocketContext = createContext<SocketMap | null>(null);
 
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [socket, setSocket] = useState<Socket | null>(null);
+	const [socketMap, setSocketMap] = useState<SocketMap>({});
 
 	useEffect(() => {
-		const newSocket = io(`${import.meta.env.VITE_NEW_API_URL}/socket/chatting`, {
-			transports: ['websocket'],
-		});
-		setSocket(newSocket);
+		const endpoints = ['chatting', 'matching']; // 필요한 엔드포인트 추가
+		const newSockets: SocketMap = {};
 
-		newSocket.on('connect', () => {
-			console.log('connection is open');
+		endpoints.forEach((endpoint) => {
+			const socket = io(`${import.meta.env.VITE_NEW_API_URL}/socket/${endpoint}`, {
+				transports: ['websocket'],
+			});
+			newSockets[endpoint] = socket;
+
+			socket.on('connect', () => {
+				console.log(`${endpoint} connection is open`);
+			});
+
+			socket.on('disconnect', (reason) => {
+				console.log(`${endpoint} Disconnected from server:`, reason);
+			});
+
+			socket.on('connect_error', (err) => {
+				console.log(`${endpoint} connect error:`, err.message);
+			});
 		});
 
-		newSocket.on('disconnect', (reason) => {
-			console.log('Disconnected from server:', reason);
-		});
-
-		newSocket.on('connect_error', (err) => {
-			console.log(err.message);
-		});
+		setSocketMap(newSockets);
 
 		return () => {
-			newSocket.disconnect();
+			Object.values(newSockets).forEach((socket) => socket.disconnect());
 		};
 	}, []);
 
-	// 소켓 설정이 완료되지 않은 경우 렌더링 방지
-	// 채팅방에서 새로고침했을 때 오류 방지
-	if (!socket) {
+	if (!Object.keys(socketMap).length) {
 		return null;
 	}
 
-	return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
+	return <SocketContext.Provider value={socketMap}>{children}</SocketContext.Provider>;
 };
 
-export const useSocket = () => {
-	const context = useContext(SocketContext);
-	if (context === null) {
-		throw new Error('useSocket must be used within a SocketProvider');
+// 엔드포인트를 인자로 받아 해당 소켓을 반환하는 훅
+export const useSocket = (endpoint = 'chatting') => {
+	const socketMap = useContext(SocketContext);
+	if (!socketMap || !socketMap[endpoint]) {
+		throw new Error(`useSocket must be used within a SocketProvider with a valid endpoint (${endpoint})`);
 	}
-	return context;
+	return socketMap[endpoint];
 };

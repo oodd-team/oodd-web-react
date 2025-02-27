@@ -25,6 +25,7 @@ import PostInstaFeedSelect from '@pages/Post/PostInstaFeedSelect';
 
 import Chats from '@pages/Chats';
 import ChatRoom from '@pages/Chats/ChatRoom';
+import MatchingRoom from '@pages/Chats/MatchingRoom';
 
 import NotFound from '@pages/NotFound';
 
@@ -56,6 +57,7 @@ const protectedRoutes = [
 	// 메시지/채팅
 	{ path: '/chats', element: <Chats /> },
 	{ path: '/chats/:chatRoomId', element: <ChatRoom /> },
+	{ path: '/matching', element: <MatchingRoom /> },
 ];
 
 // 인증이 필요 없는 페이지 배열

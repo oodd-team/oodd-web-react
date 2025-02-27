@@ -30,7 +30,7 @@ export const MessageBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 0.2rem;
-	max-width: 75%;
+	/* max-width: 75%; */
 	margin-right: 0.5rem;
 `;
 

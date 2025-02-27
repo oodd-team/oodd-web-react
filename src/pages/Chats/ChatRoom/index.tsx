@@ -24,7 +24,7 @@ import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import TopBar from '@components/TopBar';
 
-import type { chatRoomMessagesData } from '@apis/chatting/dto';
+import type { ChatRoomMessagesData } from '@apis/chatting/dto';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
 import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
 import type { BottomSheetProps } from '@components/BottomSheet/dto';
@@ -32,10 +32,10 @@ import type { ModalProps } from '@components/Modal/dto';
 
 import type { ExtendedMessageDto } from './dto';
 
-import ChatBox from './ChatBox/index';
-import DateBar from './DateBar/index';
-import RcvdMessage from './RcvdMessage/index';
-import SentMessage from './SentMessage/index';
+import ChatBox from '../ChatBox/index';
+import DateBar from '../DateBar/index';
+import RcvdMessage from '../RcvdMessage/index';
+import SentMessage from '../SentMessage/index';
 
 import { createExtendedMessages } from './createExtendedMessages';
 import { MessagesContainer } from './styles';
@@ -114,7 +114,7 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// 전체 메시지 조회 socket api
-	const getChatRoomMessages = (data: chatRoomMessagesData[]) => {
+	const getChatRoomMessages = (data: ChatRoomMessagesData[]) => {
 		setAllMessages(data);
 		if (data.length > messageLengthRef.current) {
 			setIsScroll((prev) => !prev);
@@ -123,7 +123,7 @@ const ChatRoom: React.FC = () => {
 	};
 
 	// 새 메시지 수신 socket api
-	const getNewMessage = (data: chatRoomMessagesData) => {
+	const getNewMessage = (data: ChatRoomMessagesData) => {
 		setAllMessages((prevMessages) => [...prevMessages, data]);
 		setIsScroll((prev) => !prev);
 	};
