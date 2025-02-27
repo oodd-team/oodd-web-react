@@ -1,19 +1,27 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useSocket } from '@context/SocketProvider';
 
 import { ResponseButton, ResponseContainer } from './styles';
 
 export interface ResponseMessageProps {
 	matchingId: number;
+	chatRoomId: number;
 	requestStatus: 'accepted' | 'rejected' | 'pending';
 }
 
-const ResponseMessage: React.FC<ResponseMessageProps> = ({ matchingId, requestStatus }) => {
+const ResponseMessage: React.FC<ResponseMessageProps> = ({ matchingId, chatRoomId, requestStatus }) => {
 	const socket = useSocket('matching');
 	const isPending = requestStatus === 'pending';
+	const nav = useNavigate();
 
 	const handlebuttonClick = (status: 'accept' | 'reject') => {
+		if (requestStatus !== 'pending') return;
 		if (socket) {
 			socket.emit('patchMatching', { id: matchingId, requestStatus: status });
+			if (status === 'accept') {
+				nav(`/chats/${chatRoomId}`);
+			}
 		}
 	};
 

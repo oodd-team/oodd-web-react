@@ -98,10 +98,15 @@ const MatchingRoom: React.FC = () => {
 					<NoMatchingMessage />
 				) : (
 					allMatchings.map((matching: MatchingData) => {
+						console.log(matching);
 						return (
 							<div key={matching.id}>
 								<MatchingMessage {...matching} />
-								<ResponseMessage matchingId={matching.id} requestStatus={matching.requestStatus} />
+								<ResponseMessage
+									matchingId={matching.id}
+									chatRoomId={matching.chatRoomId}
+									requestStatus={matching.requestStatus}
+								/>
 							</div>
 						);
 					})
