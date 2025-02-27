@@ -7,6 +7,7 @@ import LoginComplete from '@pages/Login/LoginComplete';
 
 import SignUp from '@pages/SignUp';
 import TermsAgreement from '@pages/SignUp/TermsAgreement';
+import PickMyStyle from '@pages/SignUp/PickMyStyle';
 
 import Profile from '@pages/Profile';
 import ProfileEdit from '@pages/Profile/ProfileEdit';
@@ -66,6 +67,7 @@ const publicRoutes = [
 
 	{ path: '/signup', element: <SignUp /> },
 	{ path: '/signup/terms-agreement', element: <TermsAgreement /> },
+	{ path: '/signup/pick-my-style', element: <PickMyStyle /> },
 ];
 
 const App: React.FC = () => {
