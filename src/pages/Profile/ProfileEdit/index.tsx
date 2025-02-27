@@ -49,6 +49,7 @@ const ProfileEdit: React.FC = () => {
 	const [birthDate, setBirthDate] = useState<string>('');
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
+	const [userStyletags, setUserStyletags] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
 	const [modalContent, setModalContent] = useState<string | null>(null);
@@ -74,6 +75,7 @@ const ProfileEdit: React.FC = () => {
 				setBirthDate(userInfo.birthDate || '');
 				setName(userInfo.name || '');
 				setEmail(userInfo.email || '');
+				setUserStyletags(userInfo.userStyletags || []);
 			} catch (error) {
 				console.error('Error fetching user info:', error);
 			} finally {
@@ -128,6 +130,7 @@ const ProfileEdit: React.FC = () => {
 				nickname: nickname || '닉네임 없음',
 				profilePictureUrl: profilePictureUrl || '',
 				bio: bio || '',
+				userStyletags: userStyletags || [],
 			};
 
 			const response = await patchUserInfoApi(payload, currentUserId);
