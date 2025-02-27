@@ -94,23 +94,19 @@ const MatchingRoom: React.FC = () => {
 				$withBorder={true}
 			/>
 			<MessagesContainer $isLoading={isLoading}>
-				{allMatchings.length === 0 ? (
-					<NoMatchingMessage />
-				) : (
-					allMatchings.map((matching: MatchingData) => {
-						console.log(matching);
-						return (
-							<div key={matching.id}>
-								<MatchingMessage {...matching} />
-								<ResponseMessage
-									matchingId={matching.id}
-									chatRoomId={matching.chatRoomId}
-									requestStatus={matching.requestStatus}
-								/>
-							</div>
-						);
-					})
-				)}
+				{allMatchings.map((matching: MatchingData) => {
+					console.log(matching);
+					return (
+						<div key={matching.id}>
+							<MatchingMessage {...matching} />
+							<ResponseMessage
+								matchingId={matching.id}
+								chatRoomId={matching.chatRoomId}
+								requestStatus={matching.requestStatus}
+							/>
+						</div>
+					);
+				})}
 				{!hasNewMatching && <NoMatchingMessage />}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>

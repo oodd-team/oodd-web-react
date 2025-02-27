@@ -8,6 +8,8 @@ import theme from '@styles/theme';
 
 import { LatestMatchingData } from '@apis/matching/dto';
 
+import defaultProfile from '@assets/default/defaultProfile.svg';
+
 import { StyledText } from '@components/Text/StyledText';
 
 import { UserImage, MatchingRoomLayout, LeftBox, RightBox, LatestMessage } from './styles';
@@ -40,7 +42,7 @@ const MatchingRoomItem: React.FC<Partial<LatestMatchingData>> = ({ requestStatus
 
 	return (
 		<MatchingRoomLayout onClick={handleMatchingRoomClick}>
-			<UserImage src={'오딩이 프로필 이미지'} alt="user" />
+			<UserImage src={defaultProfile} alt="user" />
 			<LeftBox>
 				<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 					오딩이
