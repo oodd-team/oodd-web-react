@@ -152,12 +152,13 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 
 		socket.on('error', (data) => {
 			setModalContent(data);
-			setIsMatchingCommentBottomSheetOpen(false);
 			setIsStatusModalOpen(true);
 
 			// 리스너가 중복 등록되지 않도록 바로 정리
 			socket.off('error');
 		});
+
+		setIsMatchingCommentBottomSheetOpen(false);
 	};
 
 	// 게시글 옵션(더보기) 바텀시트

@@ -65,6 +65,7 @@ const MatchingRoom: React.FC = () => {
 			if (JSON.stringify(data) === '{}') {
 				setHasNewMatching(false);
 			} else {
+				setHasNewMatching(true);
 				setAllMatchings([...allMatchings, data]);
 			}
 		};
