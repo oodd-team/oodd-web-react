@@ -50,18 +50,22 @@ export const Button = styled.button`
 `;
 
 export const ProfilePic = styled.div`
-	width: 7.25rem;
-	height: 7.25rem;
+	width: 7.5rem;
+	height: 7.5rem;
 	flex-shrink: 0;
 	border-radius: 50%;
 	overflow: hidden;
-	margin-top: 2.125rem;
+	margin-top: 2rem;
 	margin-bottom: 0.9375rem;
 
 	img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		box-shadow:
+			0px 2px 8px 0px rgba(0, 0, 0, 0.12),
+			0px 1px 4px 0px rgba(0, 0, 0, 0.08),
+			0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 	}
 `;
 
