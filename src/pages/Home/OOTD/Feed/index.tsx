@@ -10,10 +10,10 @@ import 'swiper/css/pagination';
 
 import theme from '@styles/theme';
 
-import { createMatchingApi } from '@apis/matching';
 import { togglePostLikeStatusApi } from '@apis/post-like';
 import { postUserBlockApi } from '@apis/user-block';
 import { handleError } from '@apis/util/handleError';
+import { useSocket } from '@context/SocketProvider';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import defaultProfile from '@assets/default/defaultProfile.svg';
@@ -29,7 +29,6 @@ import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import Modal from '@components/Modal';
 import { StyledText } from '@components/Text/StyledText';
 
-import type { CreateMatchingRequest } from '@apis/matching/dto';
 import type { PostUserBlockRequest } from '@apis/user-block/dto';
 import type { CommentBottomSheetProps } from '@components/BottomSheet/CommentBottomSheet/dto';
 import { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBottomSheet/dto';
@@ -64,6 +63,8 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 	const nav = useNavigate();
 	const currentUserId = getCurrentUserId();
 	const timeAgo = dayjs(feed.createdAt).locale('ko').fromNow();
+
+	const socket = useSocket('matching');
 
 	const handleMoreButtonClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -141,26 +142,22 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 		}
 	};
 
-	// 매칭 생성 api
-	const createMatching = async (comment: string) => {
-		try {
-			const matchingRequest: CreateMatchingRequest = {
-				requesterId: currentUserId || -1,
-				targetId: feed.user.id || -1,
-				message: comment,
-			};
-			const response = await createMatchingApi(matchingRequest);
+	// 매칭 신청 socket api
+	const createMatching = (comment: string) => {
+		socket.emit('requestMatching', {
+			requesterId: currentUserId,
+			targetId: feed.user.id,
+			message: comment,
+		});
 
-			if (response.isSuccess) {
-				setModalContent(`${feed.user.nickname} 님에게 대표 OOTD와\n한 줄 메세지를 보냈어요!`);
-			}
-		} catch (error) {
-			const errorMessage = handleError(error, 'user');
-			setModalContent(errorMessage);
-		} finally {
+		socket.on('error', (data) => {
+			setModalContent(data);
 			setIsMatchingCommentBottomSheetOpen(false);
 			setIsStatusModalOpen(true);
-		}
+
+			// 리스너가 중복 등록되지 않도록 바로 정리
+			socket.off('error');
+		});
 	};
 
 	// 게시글 옵션(더보기) 바텀시트

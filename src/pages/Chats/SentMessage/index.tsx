@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import theme from '@styles/theme';
 
-import type { SentMessageProps } from '../dto';
+import type { SentMessageProps } from './dto';
 
 import { Message, TimeWrapper, MessageLayout } from './styles';
 

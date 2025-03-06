@@ -21,7 +21,7 @@ export interface LatestMessageDto {
 // 채팅방 전체 대화 내역 조회
 // 최근 메시지 수신
 // response
-export interface chatRoomMessagesData {
+export interface ChatRoomMessagesData {
 	id: number;
 	content: string;
 	fromUser: FromUserDto;
