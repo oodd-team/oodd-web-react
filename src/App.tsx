@@ -30,6 +30,7 @@ import MatchingRoom from '@pages/Chats/MatchingRoom';
 import NotFound from '@pages/NotFound';
 import { getUserInfoApi } from '@apis/user';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
+import Loading from '@components/Loading';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -42,6 +43,10 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 		};
 		checkAuth();
 	}, []);
+
+	if (isAuthenticated === null) {
+		return <Loading />;
+	}
 
 	return isAuthenticated ? children : <Navigate to="/login" />;
 };
