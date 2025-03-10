@@ -22,7 +22,7 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile?: () => void; ch
 			return (
 				<FirstMessageLayout $isSenderChanged={isSenderChanged}>
 					<UserImage onClick={onClickProfile} src={profilePictureUrl} alt="프로필 사진" />
-					<MessageBox>
+					<div>
 						<UsernameText
 							onClick={onClickProfile}
 							$textTheme={{ style: 'body2-regular' }}
@@ -30,12 +30,14 @@ const RcvdMessage: React.FC<RcvdMessageProps & { onClickProfile?: () => void; ch
 						>
 							{fromUserNickname}
 						</UsernameText>
-						<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
-							{children}
-							{content}
-						</Message>
-					</MessageBox>
-					{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}
+						<MessageBox>
+							<Message $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
+								{children}
+								{content}
+							</Message>
+							{isTimeVisible && <TimeWrapper>{formattedTime}</TimeWrapper>}
+						</MessageBox>
+					</div>
 				</FirstMessageLayout>
 			);
 		} else {

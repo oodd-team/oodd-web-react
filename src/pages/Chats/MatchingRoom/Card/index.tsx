@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({ requester }) => {
 				</ProfileImgBox>
 				<ProfileInfo>
 					<StyledText
-						$textTheme={{ style: 'body1-medium' }}
+						$textTheme={{ style: 'body2-medium' }}
 						color={theme.colors.text.primary}
 						onClick={handleUserClick}
 					>
@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ requester }) => {
 					<div className="row-flex">
 						{requester.representativePost.styleTags.map((tag, index) => (
 							<div className="row-flex" key={tag}>
-								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray[200]}>
+								<StyledText $textTheme={{ style: 'caption2-regular' }} color={theme.colors.gray[600]}>
 									{tag}
 								</StyledText>
 								{index < requester.representativePost.styleTags.length - 1 && (

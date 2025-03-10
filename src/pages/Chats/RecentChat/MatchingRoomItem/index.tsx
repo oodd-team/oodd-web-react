@@ -47,7 +47,7 @@ const MatchingRoomItem: React.FC<Partial<LatestMatchingData>> = ({ requestStatus
 				<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 					오딩이
 				</StyledText>
-				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.primary}>
+				<LatestMessage $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.primary}>
 					{requestStatus === 'pending' ? '얘가 너 소개받고 싶대' : '매칭이 들어오면 오딩이가 알려줄게!'}
 				</LatestMessage>
 			</LeftBox>

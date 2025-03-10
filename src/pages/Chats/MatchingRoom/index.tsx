@@ -56,6 +56,7 @@ const MatchingRoom: React.FC = () => {
 	useEffect(() => {
 		// 전체 매칭 불러오기 socket api
 		const getAllMatchings = ({ matching }: { matching: MatchingData[] }) => {
+			console.log(matching);
 			setAllMatchings(matching);
 			setIsScroll(true);
 			setIsLoading(false);
@@ -70,16 +71,23 @@ const MatchingRoom: React.FC = () => {
 			}
 		};
 
+		const handleError = (data: string) => {
+			alert(data);
+		};
+
 		if (socket) {
 			socket.emit('getAllMatchings', { userId: currentUserId });
 			socket.emit('getMatching', { userId: currentUserId });
 			socket.on('matchings', getAllMatchings);
 			socket.on('nextMatching', getNewMatching);
+			socket.on('error', handleError);
 		}
 
 		return () => {
 			if (socket) {
-				socket.off();
+				socket.off('matchings');
+				socket.off('nextMatching');
+				socket.off('error');
 			}
 		};
 	}, [socket]);
@@ -103,6 +111,7 @@ const MatchingRoom: React.FC = () => {
 							<ResponseMessage
 								matchingId={matching.id}
 								chatRoomId={matching.chatRoomId}
+								requester={matching.requester}
 								requestStatus={matching.requestStatus}
 							/>
 						</div>

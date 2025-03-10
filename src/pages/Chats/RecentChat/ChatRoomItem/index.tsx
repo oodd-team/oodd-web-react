@@ -52,7 +52,7 @@ const ChatRoomItem: React.FC<ChatRoomData> = ({ id, otherUser, latestMessage }) 
 				<StyledText $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
 					{otherUser?.nickname || '알수없음'}
 				</StyledText>
-				<LatestMessage $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.primary}>
+				<LatestMessage $textTheme={{ style: 'caption1-regular' }} color={theme.colors.text.primary}>
 					{latestMessage.content}
 				</LatestMessage>
 			</LeftBox>
