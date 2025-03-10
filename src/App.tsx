@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Home from '@pages/Home';
@@ -28,9 +28,21 @@ import ChatRoom from '@pages/Chats/ChatRoom';
 import MatchingRoom from '@pages/Chats/MatchingRoom';
 
 import NotFound from '@pages/NotFound';
+import { getUserInfoApi } from '@apis/user';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-	const isAuthenticated = Boolean(localStorage.getItem('new_jwt_token'));
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+	useEffect(() => {
+		const checkAuth = async () => {
+			const currentUserId = getCurrentUserId();
+			const response = await getUserInfoApi(currentUserId);
+			setIsAuthenticated(response.isSuccess);
+		};
+		checkAuth();
+	}, []);
+
 	return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
