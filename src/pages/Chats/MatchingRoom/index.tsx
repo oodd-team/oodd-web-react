@@ -56,6 +56,7 @@ const MatchingRoom: React.FC = () => {
 	useEffect(() => {
 		// 전체 매칭 불러오기 socket api
 		const getAllMatchings = ({ matching }: { matching: MatchingData[] }) => {
+			console.log(matching);
 			setAllMatchings(matching);
 			setIsScroll(true);
 			setIsLoading(false);
@@ -65,8 +66,13 @@ const MatchingRoom: React.FC = () => {
 			if (JSON.stringify(data) === '{}') {
 				setHasNewMatching(false);
 			} else {
+				setHasNewMatching(true);
 				setAllMatchings([...allMatchings, data]);
 			}
+		};
+
+		const handleError = (data: string) => {
+			alert(data);
 		};
 
 		if (socket) {
@@ -74,11 +80,14 @@ const MatchingRoom: React.FC = () => {
 			socket.emit('getMatching', { userId: currentUserId });
 			socket.on('matchings', getAllMatchings);
 			socket.on('nextMatching', getNewMatching);
+			socket.on('error', handleError);
 		}
 
 		return () => {
 			if (socket) {
-				socket.off();
+				socket.off('matchings');
+				socket.off('nextMatching');
+				socket.off('error');
 			}
 		};
 	}, [socket]);
@@ -94,23 +103,20 @@ const MatchingRoom: React.FC = () => {
 				$withBorder={true}
 			/>
 			<MessagesContainer $isLoading={isLoading}>
-				{allMatchings.length === 0 ? (
-					<NoMatchingMessage />
-				) : (
-					allMatchings.map((matching: MatchingData) => {
-						console.log(matching);
-						return (
-							<div key={matching.id}>
-								<MatchingMessage {...matching} />
-								<ResponseMessage
-									matchingId={matching.id}
-									chatRoomId={matching.chatRoomId}
-									requestStatus={matching.requestStatus}
-								/>
-							</div>
-						);
-					})
-				)}
+				{allMatchings.map((matching: MatchingData) => {
+					console.log(matching);
+					return (
+						<div key={matching.id}>
+							<MatchingMessage {...matching} />
+							<ResponseMessage
+								matchingId={matching.id}
+								chatRoomId={matching.chatRoomId}
+								requester={matching.requester}
+								requestStatus={matching.requestStatus}
+							/>
+						</div>
+					);
+				})}
 				{!hasNewMatching && <NoMatchingMessage />}
 				<div ref={chatWindowRef} />
 			</MessagesContainer>

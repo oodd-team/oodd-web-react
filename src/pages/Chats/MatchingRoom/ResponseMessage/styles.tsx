@@ -11,6 +11,6 @@ export const ResponseButton = styled.button<{ $isPending: boolean }>`
 	padding: 0.4rem 0.8rem;
 	margin: 0.5rem 0;
 	background-color: #f2f2f2;
-	border-radius: 0.5rem;
+	border-radius: 0.8rem;
 	overflow-wrap: break-word;
 `;

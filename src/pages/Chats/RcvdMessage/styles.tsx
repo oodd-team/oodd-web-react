@@ -24,13 +24,12 @@ export const UserImage = styled.img`
 
 export const UsernameText = styled(StyledText)`
 	cursor: pointer;
+	margin-bottom: 0.2rem;
 `;
 
 export const MessageBox = styled.div`
 	display: flex;
-	flex-direction: column;
 	gap: 0.2rem;
-	/* max-width: 75%; */
 	margin-right: 0.5rem;
 `;
 

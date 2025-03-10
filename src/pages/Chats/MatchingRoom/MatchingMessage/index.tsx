@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 
 import RcvdMessage from '@pages/Chats/RcvdMessage';
 
+import defaultProfile from '@assets/default/defaultProfile.svg';
+
 import type { MatchingData } from '@apis/matching/dto';
 import type { RcvdMessageProps } from '@pages/Chats/RcvdMessage/dto';
 
@@ -14,7 +16,7 @@ const MatchingMessage: React.FC<MatchingData> = ({ id, message, createdAt, chatR
 
 	const firstMessageProps: RcvdMessageProps = {
 		fromUserNickname: '오딩이',
-		profilePictureUrl: '',
+		profilePictureUrl: defaultProfile,
 		content: '얘가 너 소개받고 싶대',
 		isSenderChanged: false,
 		isProfileImageVisible: true,
@@ -24,7 +26,7 @@ const MatchingMessage: React.FC<MatchingData> = ({ id, message, createdAt, chatR
 
 	const matchingMessageProps: RcvdMessageProps = {
 		fromUserNickname: '오딩이',
-		profilePictureUrl: '',
+		profilePictureUrl: defaultProfile,
 		content: message,
 		isSenderChanged: false,
 		isProfileImageVisible: false,
