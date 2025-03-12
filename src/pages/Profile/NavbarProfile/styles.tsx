@@ -4,7 +4,7 @@ export const Nav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 8px 20px;
+	padding: 0.5rem 1.25rem;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -17,7 +17,7 @@ export const Nav = styled.nav`
 export const IconContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-right: 18px;
+	margin-right: 5px;
 
 	a {
 		display: flex;
