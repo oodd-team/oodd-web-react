@@ -17,7 +17,7 @@ export const Nav = styled.nav`
 export const IconContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-right: 1.125rem;
+	margin-right: 5px;
 
 	a {
 		display: flex;
