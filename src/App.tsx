@@ -37,9 +37,17 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 
 	useEffect(() => {
 		const checkAuth = async () => {
-			const currentUserId = getCurrentUserId();
-			const response = await getUserInfoApi(currentUserId);
-			setIsAuthenticated(response.isSuccess);
+			try {
+				const currentUserId = getCurrentUserId();
+				if (!currentUserId) {
+					setIsAuthenticated(false);
+					return;
+				}
+
+				await getUserInfoApi(currentUserId);
+			} catch (error) {
+				setIsAuthenticated(false);
+			}
 		};
 		checkAuth();
 	}, []);
