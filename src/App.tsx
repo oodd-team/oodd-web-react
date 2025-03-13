@@ -44,7 +44,8 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 					return;
 				}
 
-				await getUserInfoApi(currentUserId);
+				const response = await getUserInfoApi(currentUserId);
+				setIsAuthenticated(response.isSuccess);
 			} catch (error) {
 				setIsAuthenticated(false);
 			}
