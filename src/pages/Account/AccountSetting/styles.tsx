@@ -14,7 +14,7 @@ export const ProfilePicWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 1.25rem;
-	margin-top: 24px;
+	margin-top: 1.5rem;
 `;
 
 export const ProfilePic = styled.div`
@@ -42,7 +42,7 @@ export const Row = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 0.625rem;
 
 	${Label} {
 		width: auto;
@@ -59,15 +59,15 @@ export const List = styled.ul`
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	border-top: 0px solid ${({ theme }) => theme.colors.background.divider};
+	border-top: 0rem solid ${({ theme }) => theme.colors.background.divider};
 	position: absolute;
-	bottom: 20px;
+	bottom: 1.25rem;
 `;
 
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 15px 1.25rem;
+	padding: 0.9375rem 1.25rem;
 	border-bottom: 0px solid ${({ theme }) => theme.colors.background.divider};
 	cursor: pointer;
 

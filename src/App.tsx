@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import Home from '@pages/Home';
@@ -7,6 +7,7 @@ import LoginComplete from '@pages/Login/LoginComplete';
 
 import SignUp from '@pages/SignUp';
 import TermsAgreement from '@pages/SignUp/TermsAgreement';
+import PickMyStyle from '@pages/SignUp/PickMyStyle';
 
 import Profile from '@pages/Profile';
 import ProfileEdit from '@pages/Profile/ProfileEdit';
@@ -24,11 +25,29 @@ import PostInstaFeedSelect from '@pages/Post/PostInstaFeedSelect';
 
 import Chats from '@pages/Chats';
 import ChatRoom from '@pages/Chats/ChatRoom';
+import MatchingRoom from '@pages/Chats/MatchingRoom';
 
 import NotFound from '@pages/NotFound';
+import { getUserInfoApi } from '@apis/user';
+import { getCurrentUserId } from '@utils/getCurrentUserId';
+import Loading from '@components/Loading';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-	const isAuthenticated = Boolean(localStorage.getItem('new_jwt_token'));
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+	useEffect(() => {
+		const checkAuth = async () => {
+			const currentUserId = getCurrentUserId();
+			const response = await getUserInfoApi(currentUserId);
+			setIsAuthenticated(response.isSuccess);
+		};
+		checkAuth();
+	}, []);
+
+	if (isAuthenticated === null) {
+		return <Loading />;
+	}
+
 	return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
@@ -55,6 +74,7 @@ const protectedRoutes = [
 	// 메시지/채팅
 	{ path: '/chats', element: <Chats /> },
 	{ path: '/chats/:chatRoomId', element: <ChatRoom /> },
+	{ path: '/matching', element: <MatchingRoom /> },
 ];
 
 // 인증이 필요 없는 페이지 배열
@@ -64,6 +84,7 @@ const publicRoutes = [
 
 	{ path: '/signup', element: <SignUp /> },
 	{ path: '/signup/terms-agreement', element: <TermsAgreement /> },
+	{ path: '/signup/pick-my-style', element: <PickMyStyle /> },
 ];
 
 const App: React.FC = () => {

@@ -67,7 +67,7 @@ const TermsAgreement: React.FC = () => {
 		try {
 			const response = await postTermsAgreementApi(currentUserId);
 			console.log(response);
-			navigate('/'); // 성공 시 홈으로 이동
+			navigate('/signup/pick-my-style'); // 성공 시 취향 선택 UI로 이동
 		} catch (error) {
 			console.error('약관 동의 API 호출 실패:', error);
 			const errorMessage = handleError(error);
@@ -102,7 +102,7 @@ const TermsAgreement: React.FC = () => {
 							onChange={handleAllAgreementChange}
 							id="all-agreement"
 						/>
-						<label htmlFor="all-agreement">
+						<label htmlFor="all-agreement" style={{ cursor: 'pointer' }}>
 							<StyledText $textTheme={{ style: 'body1-medium' }}>약관 전체 동의</StyledText>
 						</label>
 					</CheckboxItem>
@@ -116,14 +116,14 @@ const TermsAgreement: React.FC = () => {
 								onChange={() => handleAgreementChange(key)}
 								id={key}
 							/>
-							<label htmlFor={key}>
+							<label htmlFor={key} style={{ cursor: 'pointer' }}>
 								<StyledText $textTheme={{ style: 'body2-regular' }}>{label}</StyledText>
 							</label>
 						</CheckboxItem>
 					))}
 				</CheckboxList>
 				<BottomButton
-					content="OODD 시작하기"
+					content="다음"
 					onClick={handleCompletedClick}
 					disabled={!agreements.terms || !agreements.privacy}
 				/>
