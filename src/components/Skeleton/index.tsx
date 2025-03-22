@@ -15,7 +15,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
 	className = '',
 	style = {},
 }) => {
-	// width와 height가 숫자인 경우 px 단위를 추가
+	// width와 height가 숫자인 경우 rem 단위를 추가
 	const getSize = (size: string | number) => {
 		if (typeof size === 'number') {
 			return `${size}px`;
