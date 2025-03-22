@@ -155,8 +155,8 @@ const Profile: React.FC = () => {
 
 					{/* 포스트 스켈레톤 */}
 					<PostsContainer>
-						{[1, 2].map((item) => (
-							<Skeleton key={item} width="48%" height={300} style={{ marginBottom: '16px' }} />
+						{[1, 2, 3, 4].map((item) => (
+							<Skeleton key={item} width="48%" height={260} />
 						))}
 					</PostsContainer>
 
