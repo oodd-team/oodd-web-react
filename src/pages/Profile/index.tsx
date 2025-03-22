@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -19,9 +20,9 @@ import button_plus from '@assets/default/plus.svg';
 import CommentBottomSheet from '@components/BottomSheet/CommentBottomSheet';
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
 import { OODDFrame } from '@components/Frame/Frame';
-import Loading from '@components/Loading';
 import Modal from '@components/Modal';
 import NavBar from '@components/NavBar';
+import Skeleton from '@components/Skeleton';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
 
@@ -69,15 +70,19 @@ const Profile: React.FC = () => {
 			try {
 				const response = await getUserInfoApi(profileUserId);
 				const postResponse = await getUserPostListApi(1, 10, profileUserId);
-				setUserInfo(response.data);
-				setPosts(postResponse.data.post);
-				setTotalPosts(postResponse.data.totalPostsCount);
+				// 1초 동안 스켈레톤 보여주기 확인용! 나중에 다 수정하고 삭제예정!
+				setTimeout(() => {
+					setUserInfo(response.data);
+					setPosts(postResponse.data.post);
+					setTotalPosts(postResponse.data.totalPostsCount);
+					setIsLoading(false);
+				}, 1000);
 			} catch (error) {
 				console.error('데이터 가져오기 실패:', error);
-			} finally {
-				setIsLoading(false);
+				setIsLoading(false); // 실패해도 로딩 상태는 끝나야 하니까 여기서도 false 처리
 			}
 		};
+
 		fetchData();
 	}, [profileUserId]);
 
@@ -103,7 +108,63 @@ const Profile: React.FC = () => {
 		setIsModalOpen(true);
 	};
 
-	if (isLoading) return <Loading />;
+	// 로딩 중일 때 스켈레톤 UI 표시
+	if (isLoading) {
+		return (
+			<OODDFrame>
+				<ProfileContainer>
+					{isMyPage ? (
+						<NavbarProfile />
+					) : (
+						<TopBar
+							RightButtonSrc={MoreSvg}
+							LeftButtonSrc={BackSvg}
+							onClickLeftButton={() => navigate(-1)}
+							onClickRightButton={() => setIsOptionsBottomSheetOpen(true)}
+						/>
+					)}
+
+					<Header>
+						{/* 프로필 섹션 스켈레톤 */}
+						<Skeleton width={70} height={70} borderRadius={40} style={{ flexShrink: 0 }} />
+						<div style={{ marginLeft: '16px', flex: 1 }}>
+							<Skeleton width={100} height={20} />
+							<Skeleton width={300} height={16} style={{ marginTop: '8px' }} />
+						</div>
+					</Header>
+
+					{/* 버튼 스켈레톤 */}
+					<div style={{ width: '90%', margin: '16px auto' }}>
+						<Skeleton width="100%" height={40} borderRadius={10} />
+					</div>
+
+					{/* 통계 스켈레톤 */}
+					<StatsContainer>
+						<Stat>
+							<Skeleton width={50} height={24} />
+						</Stat>
+						{isMyPage && (
+							<Stat>
+								<Skeleton width={50} height={24} />
+							</Stat>
+						)}
+						<Stat>
+							<Skeleton width={50} height={24} />
+						</Stat>
+					</StatsContainer>
+
+					{/* 포스트 스켈레톤 */}
+					<PostsContainer>
+						{[1, 2].map((item) => (
+							<Skeleton key={item} width="48%" height={300} style={{ marginBottom: '16px' }} />
+						))}
+					</PostsContainer>
+
+					{isMyPage && <NavBar />}
+				</ProfileContainer>
+			</OODDFrame>
+		);
+	}
 
 	return (
 		<OODDFrame>
