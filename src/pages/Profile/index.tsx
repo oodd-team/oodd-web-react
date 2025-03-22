@@ -37,6 +37,7 @@ import UserProfile from './UserProfile/index';
 import {
 	ProfileContainer,
 	Header,
+	ProfileDetail,
 	StatsContainer,
 	Stat,
 	StatNumber,
@@ -126,11 +127,12 @@ const Profile: React.FC = () => {
 
 					<Header>
 						{/* 프로필 섹션 스켈레톤 */}
-						<Skeleton width={70} height={70} borderRadius={40} style={{ flexShrink: 0 }} />
-						<div style={{ marginLeft: '16px', flex: 1 }}>
+						<Skeleton width={70} height={70} borderRadius={40} />
+
+						<ProfileDetail>
 							<Skeleton width={100} height={20} />
-							<Skeleton width={300} height={16} style={{ marginTop: '8px' }} />
-						</div>
+							<Skeleton width={300} height={20} />
+						</ProfileDetail>
 					</Header>
 
 					{/* 버튼 스켈레톤 */}
