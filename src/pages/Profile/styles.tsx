@@ -12,6 +12,14 @@ export const ProfileContainer = styled.div`
 	padding-top: 0rem;
 `;
 
+export const ProfileDetail = styled.div`
+	flex: 1;
+	margin-left: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+`;
+
 export const Header = styled.div`
 	margin: 8px 20px;
 	display: flex;
