@@ -15,8 +15,8 @@ import imageBasic from '@assets/default/defaultProfile.svg';
 
 import BottomButton from '@components/BottomButton/index';
 import { OODDFrame } from '@components/Frame/Frame';
-import Loading from '@components/Loading/index';
 import Modal from '@components/Modal/index';
+import Skeleton from '@components/Skeleton';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar/index';
 
@@ -83,7 +83,7 @@ const ProfileEdit: React.FC = () => {
 			}
 		};
 
-		getUserInfo();
+		setTimeout(getUserInfo, 1000);
 	}, []);
 
 	const handleButtonClick = () => {
@@ -155,7 +155,56 @@ const ProfileEdit: React.FC = () => {
 	};
 
 	if (isLoading || uploading) {
-		return <Loading />;
+		return (
+			<OODDFrame>
+				<ProfileEditContainer>
+					<TopBar text="회원정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
+					<ProfilePicWrapper>
+						<Skeleton width={120} height={120} borderRadius={80} />
+					</ProfilePicWrapper>
+					<UserInfo>
+						<Skeleton width={100} height={30} />
+					</UserInfo>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							이름
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							닉네임
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							소개글
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							전화번호
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							생년월일
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<Row>
+						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
+							이메일
+						</StyledText>
+						<Skeleton width="100%" height={60} />
+					</Row>
+					<BottomButton content="완료" onClick={handleSave} disabled={isLoading || uploading} />
+				</ProfileEditContainer>
+			</OODDFrame>
+		);
 	}
 
 	return (
@@ -222,7 +271,7 @@ const ProfileEdit: React.FC = () => {
 					</StyledText>
 					<EmailInput type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				</Row>
-				<BottomButton content="완료" onClick={handleSave} />
+				<BottomButton content="완료" onClick={handleSave} disabled={isLoading || uploading} />
 			</ProfileEditContainer>
 		</OODDFrame>
 	);
