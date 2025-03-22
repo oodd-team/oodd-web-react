@@ -160,8 +160,11 @@ const ProfileEdit: React.FC = () => {
 				<ProfileEditContainer>
 					<TopBar text="회원정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 					<ProfilePicWrapper>
-						<Skeleton width={120} height={120} borderRadius={80} />
+						<ProfilePic>
+							<Skeleton width={120} height={120} borderRadius={80} />
+						</ProfilePic>
 					</ProfilePicWrapper>
+
 					<UserInfo>
 						<Skeleton width={100} height={30} />
 					</UserInfo>
