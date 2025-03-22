@@ -97,7 +97,7 @@ const Post: React.FC = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			setIsLoading(false);
-		}, 5000);
+		}, 1000);
 
 		// 현재 게시글이 내 게시글인지 확인
 		if (user?.id && postId) {
