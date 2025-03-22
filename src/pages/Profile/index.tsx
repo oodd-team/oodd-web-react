@@ -46,6 +46,7 @@ import {
 	AddButton,
 	NoPostWrapper,
 	Button,
+	ButtonSkeleton,
 } from './styles';
 
 const Profile: React.FC = () => {
@@ -136,9 +137,9 @@ const Profile: React.FC = () => {
 					</Header>
 
 					{/* 버튼 스켈레톤 */}
-					<div style={{ width: '90%', margin: '16px auto' }}>
-						<Skeleton width="100%" height={40} borderRadius={10} />
-					</div>
+					<ButtonSkeleton>
+						<Skeleton width="100%" height={40} />
+					</ButtonSkeleton>
 
 					{/* 통계 스켈레톤 */}
 					<StatsContainer>

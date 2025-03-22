@@ -102,3 +102,8 @@ export const Button = styled.button`
 	padding: 10px;
 	background: ${({ theme }) => theme.colors.brand.gradient};
 `;
+
+export const ButtonSkeleton = styled.button`
+	width: 90%;
+	margin: 16px auto;
+`;
