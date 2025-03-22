@@ -59,6 +59,7 @@ export const PostsContainer = styled.div`
 	gap: 15px;
 	margin-bottom: 100px;
 	padding: 20px;
+	width: 100%;
 `;
 
 export const AddButton = styled.button`
