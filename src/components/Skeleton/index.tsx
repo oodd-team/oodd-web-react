@@ -11,7 +11,7 @@ interface SkeletonProps {
 const Skeleton: React.FC<SkeletonProps> = ({
 	width = '100%',
 	height = '16px',
-	borderRadius = '4px',
+	borderRadius = '5px',
 	className = '',
 }) => {
 	// width와 height가 숫자인 경우 rem 단위를 추가
