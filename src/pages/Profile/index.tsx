@@ -6,9 +6,9 @@ import { useRecoilValue } from 'recoil';
 
 import theme from '@styles/theme';
 
-import { createMatchingApi } from '@apis/matching';
 import { getUserPostListApi } from '@apis/post';
 import { getUserInfoApi } from '@apis/user';
+import { useSocket } from '@context/SocketProvider';
 import { OtherUserAtom } from '@recoil/util/OtherUser';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
@@ -59,6 +59,7 @@ const Profile: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const navigate = useNavigate();
+	const socket = useSocket('matching');
 
 	const { userId } = useParams<{ userId: string }>();
 	const profileUserId = Number(userId);
@@ -88,26 +89,22 @@ const Profile: React.FC = () => {
 		fetchData();
 	}, [profileUserId]);
 
-	const createMatching = async (message: string) => {
-		const matchingRequestData = {
+	const createMatching = (comment: string) => {
+		socket.emit('requestMatching', {
 			requesterId: currentUserId,
 			targetId: otherUser?.id || profileUserId,
-			message: message,
-		};
+			message: comment,
+		});
 
-		try {
-			await createMatchingApi(matchingRequestData);
-			handleModalOpen(`${userInfo?.nickname}님에게 대표 OOTD와 \n한 줄 메세지를 보냈어요!`);
-		} catch (error) {
-			console.error('매칭 신청 오류:', error);
-			handleModalOpen('매칭 신청에 실패했습니다.');
-		}
-	};
+		socket.on('error', (data) => {
+			setModalContent(data);
+			setIsModalOpen(true);
 
-	const handleModalOpen = (message: string) => {
+			// 리스너가 중복 등록되지 않도록 바로 정리
+			socket.off('error');
+		});
+
 		setIsBottomSheetOpen(false);
-		setModalContent(message);
-		setIsModalOpen(true);
 	};
 
 	// 로딩 중일 때 스켈레톤 UI 표시

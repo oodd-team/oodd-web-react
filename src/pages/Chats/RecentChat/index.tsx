@@ -7,14 +7,13 @@ import { useSocket } from '@context/SocketProvider';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
 import Loading from '@components/Loading';
-import { StyledText } from '@components/Text/StyledText';
 
 import type { ChatRoomData } from '@apis/chatting/dto';
 
 import ChatRoomItem from './ChatRoomItem/index';
 import MatchingRoomItem from './MatchingRoomItem/index';
 
-import { ChatRoomList, NoChatRoomWrapper, RecentChatInfo } from './styles';
+import { ChatRoomList, RecentChatInfo } from './styles';
 
 const RecentChat: React.FC = () => {
 	const [chatRoomList, setChatRoomList] = useState<ChatRoomData[]>([]);
@@ -72,7 +71,7 @@ const RecentChat: React.FC = () => {
 		<>
 			{isLoading ? (
 				<Loading />
-			) : chatRoomList.length !== 0 ? (
+			) : (
 				<>
 					<RecentChatInfo $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.primary}>
 						최근 채팅방
@@ -84,12 +83,6 @@ const RecentChat: React.FC = () => {
 						))}
 					</ChatRoomList>
 				</>
-			) : (
-				<NoChatRoomWrapper>
-					<StyledText $textTheme={{ style: 'headline1-medium' }} color={theme.colors.text.tertiary}>
-						개설된 채팅방이 없어요.
-					</StyledText>
-				</NoChatRoomWrapper>
 			)}
 		</>
 	);

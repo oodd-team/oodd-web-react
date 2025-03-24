@@ -16,30 +16,30 @@ export const SubTitle = styled.h3`
 	margin-bottom: 0.625rem;
 	text-align: center;
 	text-align: left;
-	margin-top: 10px;
+	margin-top: 0.625rem;
 	padding: 1.25rem;
 `;
 
 export const Text = styled.p`
 	font-size: 0.875rem;
-	margin-bottom: 5px;
+	margin-bottom: 0.3125rem;
 	text-align: left;
-	margin-top: 10px;
+	margin-top: 0.625rem;
 	padding: 0rem 1.25rem;
 `;
 
 export const InfoBox = styled.div`
 	background: ${({ theme }) => theme.colors.background.secondary};
-	padding: 70px;
-	margin-top: 10px;
-	border-radius: 10px;
-	margin: 10px 20px 1.25rem 20px;
+	padding: 4.375rem;
+	margin-top: 0.625rem;
+	border-radius: 0.625rem;
+	margin: 0.625rem 1.25rem 1.25rem 1.25rem;
 `;
 
 export const InfoItem = styled.p`
 	font-size: 0.875rem;
 	margin-bottom: 0.625rem;
-	padding: 2px 10px;
+	padding: 0.125rem 0.625rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -51,7 +51,7 @@ export const CheckboxWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	margin-bottom: 1.25rem;
-	padding: 0rem 15px;
+	padding: 0rem 0.9375rem;
 
 	input[type='checkbox'] {
 		margin-right: 0.625rem;

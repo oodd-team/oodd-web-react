@@ -8,7 +8,8 @@ export const Button = styled.button`
 	color: ${({ theme }) => theme.colors.brand.primary};
 	cursor: pointer;
 	box-sizing: border-box;
-	border: 1px solid;
-	border-radius: 10px;
-	padding: 10px;
+	border: 0.0625rem solid;
+	border-radius: 0.625rem;
+	padding: 0.625rem;
+	padding-inline: 1rem;
 `;

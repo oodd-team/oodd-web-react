@@ -13,11 +13,3 @@ export const ChatRoomList = styled.ul`
 	gap: 1rem;
 	padding: 0.62rem 1.25rem;
 `;
-
-export const NoChatRoomWrapper = styled.div`
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;

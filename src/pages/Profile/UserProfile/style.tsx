@@ -11,6 +11,10 @@ export const UserImg = styled.img`
 	height: 4.5rem;
 	object-fit: cover;
 	border-radius: 50%;
+	box-shadow:
+		0px 2px 8px 0px rgba(0, 0, 0, 0.12),
+		0px 1px 4px 0px rgba(0, 0, 0, 0.08),
+		0px 0px 1px 0px rgba(0, 0, 0, 0.08);
 `;
 
 export const UserDetailsContainer = styled.section`

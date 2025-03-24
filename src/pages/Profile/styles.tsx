@@ -21,7 +21,7 @@ export const ProfileDetail = styled.div`
 `;
 
 export const Header = styled.div`
-	margin: 8px 20px;
+	margin: 0.5rem 1.25rem;
 	display: flex;
 	align-items: center;
 	padding: 0rem;
@@ -64,10 +64,11 @@ export const PostsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	gap: 15px;
+	gap: 0.9375rem;
 	margin-bottom: 100px;
 	padding: 20px;
 	width: 100%;
+
 `;
 
 export const AddButton = styled.button`
@@ -87,7 +88,7 @@ export const NoPostWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 80px;
+	margin-top: 5rem;
 `;
 
 export const Button = styled.button`
@@ -98,8 +99,8 @@ export const Button = styled.button`
 	color: ${({ theme }) => theme.colors.text.contrast};
 	cursor: pointer;
 	box-sizing: border-box;
-	border-radius: 10px;
-	padding: 10px;
+	border-radius: 0.625rem;
+	padding: 0.625rem;
 	background: ${({ theme }) => theme.colors.brand.gradient};
 `;
 

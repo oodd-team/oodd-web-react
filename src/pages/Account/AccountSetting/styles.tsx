@@ -56,15 +56,16 @@ export const List = styled.ul`
 	padding: 0;
 	margin: 0;
 	list-style: none;
-	border-top: 0px solid ${({ theme }) => theme.colors.background.divider};
+	border-top: 0rem solid ${({ theme }) => theme.colors.background.divider};
 	position: absolute;
-	bottom: 20px;
+	bottom: 1.25rem;
 `;
 
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
 	padding: 15px 10px;
+
 	border-bottom: 0px solid ${({ theme }) => theme.colors.background.divider};
 	cursor: pointer;
 
