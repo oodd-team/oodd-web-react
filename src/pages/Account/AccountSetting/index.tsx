@@ -73,22 +73,22 @@ const AccountSetting: React.FC = () => {
 					<TopBar text="계정 관리" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 					<ProfilePicWrapper>
 						<ProfilePic>
-							<Skeleton width={120} height={120} borderRadius={80} />
+							<Skeleton width={7.5} height={7.5} borderRadius={5} />
 						</ProfilePic>{' '}
 						<Row>
-							<Skeleton width="60%" height={20} />
+							<Skeleton width="60%" height={1.25} />
 						</Row>
 						<Row>
-							<Skeleton width="100%" height={20} />
+							<Skeleton width="100%" height={1.25} />
 						</Row>
 					</ProfilePicWrapper>
 
 					<List>
 						<ListItem>
-							<Skeleton width="100%" height={40} />
+							<Skeleton width="100%" height={2.5} />
 						</ListItem>
 						<ListItem>
-							<Skeleton width="100%" height={40} />
+							<Skeleton width="100%" height={2.5} />
 						</ListItem>
 					</List>
 				</ProfileEditContainer>

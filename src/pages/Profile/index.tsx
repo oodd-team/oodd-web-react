@@ -128,38 +128,38 @@ const Profile: React.FC = () => {
 
 					<Header>
 						{/* 프로필 섹션 스켈레톤 */}
-						<Skeleton width={70} height={70} borderRadius={40} />
+						<Skeleton width={4.375} height={4.375} borderRadius={2.5} />
 
 						<ProfileDetail>
-							<Skeleton width={100} height={20} />
-							<Skeleton width={300} height={20} />
+							<Skeleton width={6.25} height={1.25} />
+							<Skeleton width={18.75} height={1.25} />
 						</ProfileDetail>
 					</Header>
 
 					{/* 버튼 스켈레톤 */}
 					<ButtonSkeleton>
-						<Skeleton width="100%" height={40} />
+						<Skeleton width="100%" height={2.5} />
 					</ButtonSkeleton>
 
 					{/* 통계 스켈레톤 */}
 					<StatsContainer>
 						<Stat>
-							<Skeleton width={50} height={24} />
+							<Skeleton width={3.125} height={1.5} />
 						</Stat>
 						{isMyPage && (
 							<Stat>
-								<Skeleton width={50} height={24} />
+								<Skeleton width={3.125} height={1.5} />
 							</Stat>
 						)}
 						<Stat>
-							<Skeleton width={50} height={24} />
+							<Skeleton width={3.125} height={1.5} />
 						</Stat>
 					</StatsContainer>
 
 					{/* 포스트 스켈레톤 */}
 					<PostsContainer>
 						{[1, 2, 3, 4].map((item) => (
-							<Skeleton key={item} width="48%" height={260} />
+							<Skeleton key={item} width="48%" height={16.25} />
 						))}
 					</PostsContainer>
 

@@ -181,14 +181,14 @@ const Post: React.FC = () => {
 				<TopBar LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 				<InfoWrapper>
 					<PicWrapper>
-						<Skeleton width={40} height={40} borderRadius={40} />
+						<Skeleton width={2.5} height={2.5} borderRadius={2.5} />
 					</PicWrapper>
 					<NameWrapper>
-						<Skeleton width={100} height={20} />
+						<Skeleton width={6.25} height={1.25} />
 					</NameWrapper>
 				</InfoWrapper>
 				<PostWrapper>
-					<Skeleton width="100%" height={800} />
+					<Skeleton width="100%" height={50} />
 				</PostWrapper>
 			</OODDFrame>
 		);

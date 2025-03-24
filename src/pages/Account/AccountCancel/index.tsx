@@ -95,7 +95,7 @@ const AccountCancel: React.FC = () => {
 					<SubTitle>
 						<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.text.primary}>
 							OOTD 탈퇴 전 확인하세요!
-							<Skeleton width="100%" height={400} />
+							<Skeleton width="100%" height={25} />
 						</StyledText>
 					</SubTitle>
 				</CancelContainer>

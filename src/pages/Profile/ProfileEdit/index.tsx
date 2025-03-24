@@ -161,48 +161,48 @@ const ProfileEdit: React.FC = () => {
 					<TopBar text="회원정보 수정" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
 					<ProfilePicWrapper>
 						<ProfilePic>
-							<Skeleton width={120} height={120} borderRadius={80} />
+							<Skeleton width={7.5} height={7.5} borderRadius={5} />
 						</ProfilePic>
 					</ProfilePicWrapper>
 
 					<UserInfo>
-						<Skeleton width={100} height={30} />
+						<Skeleton width={6.25} height={1.875} />
 					</UserInfo>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							이름
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							닉네임
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							소개글
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							전화번호
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							생년월일
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<Row>
 						<StyledText $textTheme={{ style: 'body2-regular' }} color={theme.colors.text.tertiary}>
 							이메일
 						</StyledText>
-						<Skeleton width="100%" height={60} />
+						<Skeleton width="100%" height={3.75} />
 					</Row>
 					<BottomButton content="완료" onClick={handleSave} disabled={isLoading || uploading} />
 				</ProfileEditContainer>
