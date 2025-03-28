@@ -995,6 +995,18 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
+"@tanstack/query-core@5.69.2":
+  version "5.69.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.69.2.tgz#65d4fa172c48aa1549661b0442df6c44281a08e9"
+  integrity sha512-+spKBqGMSxVMhYPMHr4L7efc4CDdb0Y8nE4UxP/FjV4V3ajP3uhBsh0T7pSuObBgYkU+nY1PRkJhKNmwlHmkUg==
+
+"@tanstack/react-query@^5.69.3":
+  version "5.69.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.69.3.tgz#30b49a99af412a518babc61fe7dfa12625c3776a"
+  integrity sha512-EozCj1aFM/c827GQbVnvEt2x80oBax1vd2e5s/2EDeD469AZW9BPAyRK9VVyD0I1yvO6vOI+tPKXXFcadbSXvA==
+  dependencies:
+    "@tanstack/query-core" "5.69.2"
+
 "@types/babel__core@^7.20.5":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"
