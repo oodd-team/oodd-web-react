@@ -19,7 +19,7 @@ export const createPostApi = (data: CreatePostRequest) => newRequest.post<Create
 // 전체 게시글 리스트
 export const getPostListApi = async ({ pageParam = 1 }) => {
 	const response = await newRequest.get<GetPostListResponse>('/post', {
-		params: { page: pageParam, take: 20 },
+		params: { page: pageParam, take: 10 },
 	});
 	return {
 		posts: response.data.post,
