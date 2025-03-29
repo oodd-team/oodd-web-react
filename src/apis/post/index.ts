@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { newRequest } from '@apis/core';
 
 import type { EmptySuccessResponse } from '@apis/core/dto';
@@ -43,3 +45,11 @@ export const deletePostApi = (postId: number) => newRequest.delete<EmptySuccessR
 // 대표 게시글 지정
 export const modifyPostRepresentativeStatusApi = (postId: number) =>
 	newRequest.patch<EmptySuccessResponse>(`/post/${postId}/is-representative`);
+
+export const usePostDetail = (postId: number) => {
+	return useQuery({
+		queryKey: ['postDetail', postId],
+		queryFn: () => getPostDetailApi(postId),
+		enabled: !!postId, // postId가 존재할 때만 요청 수행
+	});
+};
