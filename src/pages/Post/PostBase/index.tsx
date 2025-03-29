@@ -34,7 +34,6 @@ import LikeCommentBottomSheetContent from './LikeCommentBottomSheetContent/index
 
 import {
 	PostLayout,
-	PostContainer,
 	PostInfoContainer,
 	UserProfile,
 	UserName,
@@ -129,17 +128,19 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		return (
 			<OODDFrame>
 				<TopBar LeftButtonSrc={Left} onClickLeftButton={() => nav(-1)} />
-				<PostInfoContainer>
-					<UserProfile>
-						<Skeleton width={2.5} height={2.5} borderRadius={2.5} />
-					</UserProfile>
-					<UserNameWrapper>
-						<Skeleton width={6.25} height={1.25} />
-					</UserNameWrapper>
-				</PostInfoContainer>
-				<PostWrapper>
-					<Skeleton width="100%" height={40} />
-				</PostWrapper>
+				<PostLayout>
+					<PostInfoContainer>
+						<UserProfile>
+							<Skeleton width={2.5} height={2.5} borderRadius={2.5} />
+						</UserProfile>
+						<UserNameWrapper>
+							<Skeleton width={6.25} height={1.25} />
+						</UserNameWrapper>
+					</PostInfoContainer>
+					<PostWrapper>
+						<Skeleton width="100%" height={40} />
+					</PostWrapper>
+				</PostLayout>
 			</OODDFrame>
 		);
 	}
@@ -149,76 +150,70 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 			<TopBar LeftButtonSrc={Left} />
 
 			<PostLayout>
-				<PostContainer>
-					<PostInfoContainer>
-						<UserProfile onClick={handleUserClick}>
-							{user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
-						</UserProfile>
-						<UserName
-							onClick={handleUserClick}
-							$textTheme={{ style: 'body2-medium' }}
-							color={theme.colors.text.primary}
-						>
-							{user?.nickname ?? '알수없음'}
-						</UserName>
-						<StyledText
-							className="timeAgo"
-							$textTheme={{ style: 'caption2-regular' }}
-							color={theme.colors.text.tertiary}
-						>
-							{timeAgo}
-						</StyledText>
-						<MenuBtn onClick={onClickMenu}>
-							<img src={More} alt="more" />
-						</MenuBtn>
-					</PostInfoContainer>
+				<PostInfoContainer>
+					<UserProfile onClick={handleUserClick}>
+						{user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
+					</UserProfile>
+					<UserName onClick={handleUserClick} $textTheme={{ style: 'body2-medium' }} color={theme.colors.text.primary}>
+						{user?.nickname ?? '알수없음'}
+					</UserName>
+					<StyledText className="timeAgo" $textTheme={{ style: 'caption2-regular' }} color={theme.colors.text.tertiary}>
+						{timeAgo}
+					</StyledText>
+					<MenuBtn onClick={onClickMenu}>
+						<img src={More} alt="more" />
+					</MenuBtn>
+				</PostInfoContainer>
 
-					{post && <ImageSwiper images={post.postImages.map((image) => image.url)} />}
+				{post && (
+					<PostWrapper>
+						<ImageSwiper images={post.postImages.map((image) => image.url)} />
+					</PostWrapper>
+				)}
 
-					{post?.postClothings && (
-						<ClothingInfoList className="post-mode">
-							{post.postClothings.map((clothingObj, index) => (
-								<ClothingInfoItem key={index} clothingObj={clothingObj} />
-							))}
-						</ClothingInfoList>
+				{post?.postClothings ? (
+					<ClothingInfoList className="post-mode">
+						{post.postClothings.map((clothingObj, index) => (
+							<ClothingInfoItem key={index} clothingObj={clothingObj} />
+						))}
+					</ClothingInfoList>
+				) : null}
+
+				<IconRow>
+					<IconWrapper>
+						<Icon onClick={() => togglePostLikeStatus()}>
+							{post?.isPostLike ? <Like isFilled={true} color={theme.colors.brand.primary} /> : <Like />}
+						</Icon>
+						<span onClick={() => handleLikeCommentOpen('likes')}>{post?.postLikesCount ?? 0}</span>
+					</IconWrapper>
+					<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
+						<Icon>
+							<img src={Message} alt="message" />
+						</Icon>
+						<span>{post?.postCommentsCount ?? 0}</span>
+					</IconWrapper>
+				</IconRow>
+
+				<PostContentContainer>
+					{post && (
+						<div>
+							<Content
+								ref={contentRef}
+								onClick={toggleTextDisplay}
+								$showFullText={showFullText}
+								$textTheme={{ style: 'body4-light' }}
+								color={theme.colors.text.primary}
+							>
+								{post.content}
+							</Content>
+							{isTextOverflowing && (
+								<ShowMoreButton onClick={toggleTextDisplay} $textTheme={{ style: 'body4-light' }}>
+									{showFullText ? '간략히 보기' : '더 보기'}
+								</ShowMoreButton>
+							)}
+						</div>
 					)}
-
-					<IconRow>
-						<IconWrapper>
-							<Icon onClick={() => togglePostLikeStatus()}>
-								{post?.isPostLike ? <Like isFilled={true} color={theme.colors.brand.primary} /> : <Like />}
-							</Icon>
-							<span onClick={() => handleLikeCommentOpen('likes')}>{post?.postLikesCount ?? 0}</span>
-						</IconWrapper>
-						<IconWrapper onClick={() => handleLikeCommentOpen('comments')}>
-							<Icon>
-								<img src={Message} alt="message" />
-							</Icon>
-							<span>{post?.postCommentsCount ?? 0}</span>
-						</IconWrapper>
-					</IconRow>
-
-					<PostContentContainer>
-						{post && (
-							<div>
-								<Content
-									ref={contentRef}
-									onClick={toggleTextDisplay}
-									$showFullText={showFullText}
-									$textTheme={{ style: 'body4-light' }}
-									color={theme.colors.text.primary}
-								>
-									{post.content}
-								</Content>
-								{isTextOverflowing && (
-									<ShowMoreButton onClick={toggleTextDisplay} $textTheme={{ style: 'body4-light' }}>
-										{showFullText ? '간략히 보기' : '더 보기'}
-									</ShowMoreButton>
-								)}
-							</div>
-						)}
-					</PostContentContainer>
-				</PostContainer>
+				</PostContentContainer>
 			</PostLayout>
 
 			<NavBar />
