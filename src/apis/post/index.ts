@@ -19,8 +19,15 @@ export const createPostApi = (data: CreatePostRequest) => newRequest.post<Create
 
 // 게시글 리스트 조회
 // 전체 게시글 리스트
-export const getPostListApi = (page: number = 1, take: number = 10) =>
-	newRequest.get<GetPostListResponse>(`/post`, { params: { page, take } });
+export const getPostListApi = async ({ pageParam = 1 }) => {
+	const response = await newRequest.get<GetPostListResponse>('/post', {
+		params: { page: pageParam, take: 10 },
+	});
+	return {
+		posts: response.data.post,
+		nextPage: response.data.post.length > 0 ? pageParam + 1 : undefined, // 다음 페이지 여부 확인
+	};
+};
 // 유저 게시글 리스트
 export const getUserPostListApi = (page: number = 1, take: number = 10, userId: number) =>
 	newRequest.get<GetUserPostListResponse>(`/post`, { params: { page, take, userId } });
