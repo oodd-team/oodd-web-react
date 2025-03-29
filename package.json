@@ -12,6 +12,8 @@
     "start:json-server": "json-server --watch db.json --port 5000"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.70.0",
+    "@tanstack/react-query-devtools": "^5.70.0",
     "@types/styled-components": "^5.1.34",
     "axios": "^1.7.2",
     "dayjs": "^1.11.12",

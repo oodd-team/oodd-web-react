@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import theme from '@styles/theme';
@@ -11,6 +11,7 @@ import back from '@assets/arrow/left.svg';
 import BottomButton from '@components/BottomButton/index';
 import { OODDFrame } from '@components/Frame/Frame';
 import Modal from '@components/Modal/index';
+import Skeleton from '@components/Skeleton';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar/index';
 
@@ -30,7 +31,14 @@ const AccountCancel: React.FC = () => {
 	const [isChecked, setIsChecked] = useState(false);
 	const [modalContent, setModalContent] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState(true); // Loading state
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 1000);
+	}, []);
 
 	const handleCheckboxChange = () => {
 		setIsChecked(!isChecked);
@@ -78,6 +86,23 @@ const AccountCancel: React.FC = () => {
 			setIsModalVisible(true);
 		}
 	};
+
+	if (isLoading) {
+		return (
+			<OODDFrame>
+				<CancelContainer>
+					<TopBar text="회원 탈퇴" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
+					<SubTitle>
+						<StyledText as="div" $textTheme={{ style: 'headline2-medium' }} color={theme.colors.text.primary}>
+							OOTD 탈퇴 전 확인하세요!
+							<Skeleton width="100%" height={25} />
+						</StyledText>
+					</SubTitle>
+				</CancelContainer>
+				<BottomButton content="탈퇴하기" onClick={handleDeleteAccount} disabled={!isChecked} />
+			</OODDFrame>
+		);
+	}
 
 	return (
 		<OODDFrame>

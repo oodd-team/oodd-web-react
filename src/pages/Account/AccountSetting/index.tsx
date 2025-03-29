@@ -12,8 +12,8 @@ import leave from '@assets/default/leave.svg';
 import Profile_s from '@assets/default/my-page.svg';
 
 import { OODDFrame } from '@components/Frame/Frame';
-import Loading from '@components/Loading/index';
 import Modal from '@components/Modal';
+import Skeleton from '@components/Skeleton';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar/index';
 
@@ -44,8 +44,7 @@ const AccountSetting: React.FC = () => {
 				setIsLoading(false);
 			}
 		};
-
-		getUserInfo();
+		setTimeout(getUserInfo, 1000);
 	}, []);
 
 	const handleConfirmLogout = () => {
@@ -68,7 +67,33 @@ const AccountSetting: React.FC = () => {
 	};
 
 	if (isLoading) {
-		return <Loading />;
+		return (
+			<OODDFrame>
+				<ProfileEditContainer>
+					<TopBar text="계정 관리" LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
+					<ProfilePicWrapper>
+						<ProfilePic>
+							<Skeleton width={7.5} height={7.5} borderRadius={5} />
+						</ProfilePic>{' '}
+						<Row>
+							<Skeleton width="60%" height={1.25} />
+						</Row>
+						<Row>
+							<Skeleton width="100%" height={1.25} />
+						</Row>
+					</ProfilePicWrapper>
+
+					<List>
+						<ListItem>
+							<Skeleton width="100%" height={2.5} />
+						</ListItem>
+						<ListItem>
+							<Skeleton width="100%" height={2.5} />
+						</ListItem>
+					</List>
+				</ProfileEditContainer>
+			</OODDFrame>
+		);
 	}
 
 	return (

@@ -1,72 +1,51 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'lodash/debounce';
 
 import { getPostListApi } from '@apis/post';
 
-import type { PostSummary } from '@apis/post/dto';
+import Loading from '@components/Loading';
 
 import Feed from './Feed/index';
 
 import { OOTDContainer, FeedContainer } from './styles';
 
 const OOTD: React.FC = () => {
-	const [feeds, setFeeds] = useState<PostSummary[]>([]);
-
-	const isFetchingRef = useRef(false);
-	const isReachedEndRef = useRef(false);
-	const feedPageRef = useRef(1);
-
-	// IntersectionObserver 인스턴스를 참조하는 변수
-	const observerRef = useRef<IntersectionObserver | null>(null);
-	// observer 콜백 함수를 트리거하는 요소를 참조하는 변수
+	// 무한 스크롤을 감지할 요소
 	const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-	// 세션 스토리지에서 이전 스크롤 위치를 가져와 초기화
-	const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-	const scrollPositionRef = useRef(Number(savedScrollPosition) || 0);
+	// Intersection Observer 인스턴스 저장 (컴포넌트 언마운트 시 해제 위함)
+	const observerRef = useRef<IntersectionObserver | null>(null);
 
-	// 전체 게시글(피드) 조회 API
-	const getPostList = async () => {
-		// 모든 데이터를 불러왔거나 요청 중이라면 함수 실행 중단
-		if (isReachedEndRef.current || isFetchingRef.current) return;
+	// React Query를 사용한 무한 스크롤 데이터 로드
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
+		queryKey: ['posts'], // 같은 key를 가진 쿼리는 캐시됨
+		queryFn: ({ pageParam }) => getPostListApi({ pageParam }), // 페이지별 데이터 가져오는 함수
+		initialPageParam: 1, // 첫 번째 페이지는 1부터 시작
+		getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined, // 다음 페이지가 존재하면 page + 1, 없으면 undefined
+	});
 
-		isFetchingRef.current = true;
-
-		try {
-			const response = await getPostListApi(feedPageRef.current, 20);
-
-			if (response.isSuccess) {
-				if (response.data.post.length === 0) {
-					isReachedEndRef.current = true;
-				} else {
-					setFeeds((prevFeeds) => [...prevFeeds, ...response.data.post]);
-					feedPageRef.current += 1;
-				}
-			}
-		} finally {
-			isFetchingRef.current = false;
-			console.log(feeds);
-		}
-	};
-
+	// 디버깅
 	useEffect(() => {
-		// 데이터의 끝에 다다르면 옵저버 해제 (더이상 피드가 없으면)
-		if (isReachedEndRef.current && observerRef.current && loadMoreRef.current) {
-			observerRef.current.unobserve(loadMoreRef.current);
+		console.log('Query Status:', status);
+		console.log('Fetched Data:', data);
+		console.log('Fetching Next Page:', isFetchingNextPage);
+		console.log('Has Next Page:', hasNextPage);
+	}, [status, data, isFetchingNextPage, hasNextPage]);
 
-			return;
-		}
+	// Intersection Observer를 설정하여 스크롤이 마지막 요소에 닿았을 때 fetchNextPage 호출
+	useEffect(() => {
+		if (!loadMoreRef.current || !hasNextPage) return; // 다음 페이지가 없으면 실행 X
 
 		// Intersection Observer 생성
 		observerRef.current = new IntersectionObserver(
 			debounce((entries) => {
-				const target = entries[0];
-				console.log('Intersection Observer:', target.isIntersecting);
-				if (target.isIntersecting && !isFetchingRef.current && !isReachedEndRef.current) {
-					getPostList();
+				// 요소가 화면에 보이면 fetchNextPage 호출 (스크롤 트리거)
+				if (entries[0].isIntersecting) {
+					fetchNextPage();
 				}
-			}, 300),
+			}, 300), // 디바운싱 적용 (300ms 내 반복 호출 방지)
 			{
 				root: null,
 				rootMargin: '100px',
@@ -74,40 +53,27 @@ const OOTD: React.FC = () => {
 			},
 		);
 
-		// 옵저버를 마지막 요소에 연결
-		if (loadMoreRef.current) {
-			observerRef.current.observe(loadMoreRef.current);
-		}
+		// 옵저버를 마지막 요소(loadMoreRef)에 연결
+		observerRef.current.observe(loadMoreRef.current);
+
 		return () => {
 			// 컴포넌트 언마운트 시 옵저버 해제
-			if (observerRef.current && loadMoreRef.current) {
-				observerRef.current.unobserve(loadMoreRef.current);
-			}
+			observerRef.current?.disconnect();
 		};
-	}, []);
-
-	useEffect(() => {
-		getPostList();
-
-		// 세션에 저장된 이전 스크롤 위치 복원
-		window.scrollTo(0, scrollPositionRef.current);
-
-		return () => {
-			// 컴포넌트 언마운트 시 현재 스크롤 위치를 세션 스토리지에 저장
-			sessionStorage.setItem('scrollPosition', String(window.scrollY));
-		};
-	}, []);
+	}, [hasNextPage, fetchNextPage]);
 
 	return (
 		<OOTDContainer>
 			<FeedContainer>
-				{feeds.map((feed) => (
-					<div key={feed.id}>
-						<Feed feed={feed} />
-					</div>
-				))}
-				{/* Intersection Observer가 감지할 마지막 요소 */}
+				{data?.pages.flatMap((page) =>
+					page.posts.map((feed) => (
+						<div key={feed.id}>
+							<Feed feed={feed} />
+						</div>
+					)),
+				)}
 				<div ref={loadMoreRef} />
+				{isFetchingNextPage && <Loading />}
 			</FeedContainer>
 		</OOTDContainer>
 	);

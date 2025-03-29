@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const Button = styled.button`
 	width: 90%;
-	margin: 1rem auto;
+	margin: 16px auto;
 	height: 3.1rem;
 	text-align: center;
 	color: ${({ theme }) => theme.colors.brand.primary};

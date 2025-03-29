@@ -12,6 +12,14 @@ export const ProfileContainer = styled.div`
 	padding-top: 0rem;
 `;
 
+export const ProfileDetail = styled.div`
+	flex: 1;
+	margin-left: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+`;
+
 export const Header = styled.div`
 	margin: 0.5rem 1.25rem;
 	display: flex;
@@ -35,7 +43,6 @@ export const Stat = styled.div`
 
 export const StatNumber = styled.div`
 	color: ${({ theme }) => theme.colors.text.caption};
-	//변경된 컬러시스템에서의 gray4가 800으로 나와있어서 적용해보면 색상이 다르게 나옵니다!
 	text-align: center;
 	font-family: 'Pretendard';
 	font-size: 1rem;
@@ -59,7 +66,9 @@ export const PostsContainer = styled.div`
 	justify-content: space-between;
 	gap: 0.9375rem;
 	margin-bottom: 100px;
-	padding: 1.25rem;
+	padding: 20px;
+	width: 100%;
+
 `;
 
 export const AddButton = styled.button`
@@ -93,4 +102,9 @@ export const Button = styled.button`
 	border-radius: 0.625rem;
 	padding: 0.625rem;
 	background: ${({ theme }) => theme.colors.brand.gradient};
+`;
+
+export const ButtonSkeleton = styled.button`
+	width: 90%;
+	margin: 16px auto;
 `;

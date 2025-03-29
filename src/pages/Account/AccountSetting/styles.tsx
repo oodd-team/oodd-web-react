@@ -13,8 +13,6 @@ export const ProfilePicWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 1.25rem;
-	margin-top: 1.5rem;
 `;
 
 export const ProfilePic = styled.div`
@@ -24,7 +22,6 @@ export const ProfilePic = styled.div`
 	border-radius: 50%;
 	overflow: hidden;
 	margin-top: 2.125rem;
-	margin-bottom: 1.375rem;
 
 	img {
 		width: 100%;
@@ -42,7 +39,7 @@ export const Row = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 0.625rem;
+	margin-top: 10px;
 
 	${Label} {
 		width: auto;
@@ -67,7 +64,8 @@ export const List = styled.ul`
 export const ListItem = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 0.9375rem 1.25rem;
+	padding: 15px 10px;
+
 	border-bottom: 0px solid ${({ theme }) => theme.colors.background.divider};
 	cursor: pointer;
 
