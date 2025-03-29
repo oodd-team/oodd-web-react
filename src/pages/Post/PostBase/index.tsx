@@ -20,6 +20,7 @@ import BottomSheet from '@components/BottomSheet';
 import ClothingInfoItem from '@components/ClothingInfoItem';
 import { OODDFrame } from '@components/Frame/Frame';
 import NavBar from '@components/NavBar';
+import Skeleton from '@components/Skeleton';
 import { StyledText } from '@components/Text/StyledText';
 import TopBar from '@components/TopBar';
 
@@ -39,14 +40,14 @@ import {
 	UserName,
 	MenuBtn,
 	PostContentContainer,
-	ContentSkeleton,
 	Content,
 	ShowMoreButton,
-	ImageSkeleton,
 	IconRow,
 	IconWrapper,
 	Icon,
 	ClothingInfoList,
+	UserNameWrapper,
+	PostWrapper,
 } from './styles';
 
 const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
@@ -59,7 +60,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 	const { postId } = useParams<{ postId: string }>();
 	const contentRef = useRef<HTMLDivElement>(null);
 
-	const { data } = usePostDetail(Number(postId));
+	const { data, isLoading } = usePostDetail(Number(postId));
 	const queryClient = useQueryClient();
 	const post = data?.data;
 	const user = post?.user;
@@ -124,6 +125,25 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 		},
 	};
 
+	if (isLoading) {
+		return (
+			<OODDFrame>
+				<TopBar LeftButtonSrc={Left} onClickLeftButton={() => nav(-1)} />
+				<PostInfoContainer>
+					<UserProfile>
+						<Skeleton width={2.5} height={2.5} borderRadius={2.5} />
+					</UserProfile>
+					<UserNameWrapper>
+						<Skeleton width={6.25} height={1.25} />
+					</UserNameWrapper>
+				</PostInfoContainer>
+				<PostWrapper>
+					<Skeleton width="100%" height={40} />
+				</PostWrapper>
+			</OODDFrame>
+		);
+	}
+
 	return (
 		<OODDFrame>
 			<TopBar LeftButtonSrc={Left} />
@@ -132,7 +152,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 				<PostContainer>
 					<PostInfoContainer>
 						<UserProfile onClick={handleUserClick}>
-							{post?.user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
+							{user && <img src={post.user.profilePictureUrl} alt="profileImg" />}
 						</UserProfile>
 						<UserName
 							onClick={handleUserClick}
@@ -153,7 +173,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 						</MenuBtn>
 					</PostInfoContainer>
 
-					{!post ? <ImageSkeleton /> : <ImageSwiper images={post.postImages.map((image) => image.url)} />}
+					{post && <ImageSwiper images={post.postImages.map((image) => image.url)} />}
 
 					{post?.postClothings && (
 						<ClothingInfoList className="post-mode">
@@ -179,9 +199,7 @@ const PostBase: React.FC<PostBaseProps> = ({ onClickMenu }) => {
 					</IconRow>
 
 					<PostContentContainer>
-						{!post ? (
-							<ContentSkeleton />
-						) : (
+						{post && (
 							<div>
 								<Content
 									ref={contentRef}

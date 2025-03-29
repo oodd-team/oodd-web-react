@@ -1,28 +1,6 @@
-import { styled, keyframes } from 'styled-components';
+import { styled } from 'styled-components';
 
 import { StyledText } from '@components/Text/StyledText';
-
-// 그라데이션 애니메이션 정의
-const shimmer = keyframes`
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-`;
-
-// 공통된 로딩 스타일
-const LoadingSkeleton = styled.div`
-	background: linear-gradient(
-		90deg,
-		${({ theme }) => theme.colors.gray[200]} 25%,
-		${({ theme }) => theme.colors.gray[300]} 50%,
-		${({ theme }) => theme.colors.gray[200]} 75%
-	);
-	background-size: 200% 100%;
-	animation: ${shimmer} 2s infinite;
-`;
 
 export const PostLayout = styled.div`
 	display: flex;
@@ -73,7 +51,7 @@ export const PostInfoContainer = styled.div`
 	}
 `;
 
-export const UserProfile = styled(LoadingSkeleton)`
+export const UserProfile = styled.button`
 	cursor: pointer;
 	width: 32px;
 	height: 32px;
@@ -102,12 +80,6 @@ export const PostContentContainer = styled.div`
 	padding: 0 20px;
 `;
 
-export const ContentSkeleton = styled(LoadingSkeleton)`
-	width: 100%;
-	height: 16px;
-	border-radius: 4px;
-`;
-
 export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 	word-wrap: break-word;
 	word-break: break-all;
@@ -123,11 +95,6 @@ export const Content = styled(StyledText)<{ $showFullText: boolean }>`
 export const ShowMoreButton = styled(StyledText)`
 	cursor: pointer;
 	color: ${({ theme }) => theme.colors.text.tertiary};
-`;
-
-export const ImageSkeleton = styled(LoadingSkeleton)`
-	width: 100%;
-	aspect-ratio: 4 / 5;
 `;
 
 export const IconRow = styled.div`
@@ -200,4 +167,14 @@ export const InputLayout = styled.div`
 		color: ${({ theme }) => theme.colors.text.primary};
 		resize: none;
 	}
+`;
+
+export const UserNameWrapper = styled.div`
+	margin-left: 10px;
+	margin-top: 10px;
+`;
+
+export const PostWrapper = styled.div`
+	margin-top: 10px;
+	padding-inline: 30px;
 `;

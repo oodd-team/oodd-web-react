@@ -7,7 +7,6 @@ import { modifyPostRepresentativeStatusApi, deletePostApi } from '@apis/post';
 import { isPostRepresentativeAtom, postIdAtom, userAtom } from '@recoil/Post/PostAtom';
 import { getCurrentUserId } from '@utils/getCurrentUserId';
 
-import back from '@assets/arrow/left.svg';
 import Delete from '@assets/default/delete.svg';
 import Edit from '@assets/default/edit.svg';
 import Pin from '@assets/default/pin.svg';
@@ -15,10 +14,7 @@ import Pin from '@assets/default/pin.svg';
 import BottomSheet from '@components/BottomSheet';
 import BottomSheetMenu from '@components/BottomSheet/BottomSheetMenu';
 import OptionsBottomSheet from '@components/BottomSheet/OptionsBottomSheet';
-import { OODDFrame } from '@components/Frame/Frame';
 import Modal from '@components/Modal';
-import Skeleton from '@components/Skeleton';
-import TopBar from '@components/TopBar/index';
 
 import type { BottomSheetMenuProps } from '@components/BottomSheet/BottomSheetMenu/dto';
 import type { BottomSheetProps } from '@components/BottomSheet/dto';
@@ -26,8 +22,6 @@ import type { OptionsBottomSheetProps } from '@components/BottomSheet/OptionsBot
 import type { ModalProps } from '@components/Modal/dto';
 
 import PostBase from './PostBase/index';
-
-import { PicWrapper, NameWrapper, InfoWrapper, PostWrapper } from './styles';
 
 const Post: React.FC = () => {
 	const user = useRecoilValue(userAtom);
@@ -42,8 +36,6 @@ const Post: React.FC = () => {
 	const [isApiResponseModalOpen, setIsApiResponseModalOpen] = useState(false);
 	const [modalContent, setModalContent] = useState('');
 	const [postPinStatus, setPostPinStatus] = useState<'지정' | '해제'>('지정');
-
-	const [isLoading, setIsLoading] = useState(true);
 
 	const navigate = useNavigate();
 	const currentUserId = getCurrentUserId();
@@ -99,7 +91,6 @@ const Post: React.FC = () => {
 		if (user?.id && postId) {
 			setIsMyPost(currentUserId === user.id);
 		}
-		setIsLoading(false);
 	}, [user, postId]);
 
 	useEffect(() => {
@@ -171,25 +162,6 @@ const Post: React.FC = () => {
 		onClose: () => setIsApiResponseModalOpen(false),
 		content: modalContent,
 	};
-
-	if (isLoading) {
-		return (
-			<OODDFrame>
-				<TopBar LeftButtonSrc={back} onClickLeftButton={() => navigate(-1)} />
-				<InfoWrapper>
-					<PicWrapper>
-						<Skeleton width={2.5} height={2.5} borderRadius={2.5} />
-					</PicWrapper>
-					<NameWrapper>
-						<Skeleton width={6.25} height={1.25} />
-					</NameWrapper>
-				</InfoWrapper>
-				<PostWrapper>
-					<Skeleton width="100%" height={50} />
-				</PostWrapper>
-			</OODDFrame>
-		);
-	}
 
 	return (
 		<>
