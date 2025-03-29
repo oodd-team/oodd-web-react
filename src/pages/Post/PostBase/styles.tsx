@@ -1,53 +1,18 @@
-import { styled, keyframes } from 'styled-components';
+import { styled } from 'styled-components';
 
 import { StyledText } from '@components/Text/StyledText';
-
-// 그라데이션 애니메이션 정의
-const shimmer = keyframes`
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-`;
-
-// 공통된 로딩 스타일
-const LoadingSkeleton = styled.div`
-	background: linear-gradient(
-		90deg,
-		${({ theme }) => theme.colors.gray[200]} 25%,
-		${({ theme }) => theme.colors.gray[300]} 50%,
-		${({ theme }) => theme.colors.gray[200]} 75%
-	);
-	background-size: 200% 100%;
-	animation: ${shimmer} 2s infinite;
-`;
 
 export const PostLayout = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 100%;
-	height: 100%;
-	height: calc(100vh - 2.75rem);
-	overflow-y: scroll;
-
-	scrollbar-width: none; // Firefox
-	-ms-overflow-style: none; // IE 10+
-	&::-webkit-scrollbar {
-		display: none; // Safari & Chrome
-	}
-`;
-
-export const PostContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	max-width: 450px;
-	height: 100%;
-	overflow-y: scroll;
 	gap: 16px;
+
+	width: 100%;
+	height: calc(100vh - 2.75rem);
+	padding: 0 20px;
+	padding-bottom: 6.5rem;
+	overflow-y: scroll;
 
 	scrollbar-width: none; // Firefox
 	-ms-overflow-style: none; // IE 10+
@@ -64,7 +29,6 @@ export const PostInfoContainer = styled.div`
 	display: flex;
 	align-items: center;
 	margin-top: 8px;
-	padding: 0 20px;
 	gap: 8px;
 	align-self: stretch;
 
@@ -73,7 +37,7 @@ export const PostInfoContainer = styled.div`
 	}
 `;
 
-export const UserProfile = styled(LoadingSkeleton)`
+export const UserProfile = styled.button`
 	cursor: pointer;
 	width: 32px;
 	height: 32px;
@@ -99,13 +63,6 @@ export const MenuBtn = styled.button`
 
 export const PostContentContainer = styled.div`
 	width: 100%;
-	padding: 0 20px;
-`;
-
-export const ContentSkeleton = styled(LoadingSkeleton)`
-	width: 100%;
-	height: 16px;
-	border-radius: 4px;
 `;
 
 export const Content = styled(StyledText)<{ $showFullText: boolean }>`
@@ -125,16 +82,11 @@ export const ShowMoreButton = styled(StyledText)`
 	color: ${({ theme }) => theme.colors.text.tertiary};
 `;
 
-export const ImageSkeleton = styled(LoadingSkeleton)`
-	width: 100%;
-	aspect-ratio: 4 / 5;
-`;
-
 export const IconRow = styled.div`
 	display: flex;
 	height: 20px;
 	align-items: center;
-	padding: 0 20px;
+	margin-right: auto;
 	gap: 16px;
 `;
 
@@ -160,8 +112,8 @@ export const Icon = styled.div`
 `;
 
 export const ClothingInfoList = styled.div`
-	padding: 0 20px;
 	display: flex;
+	margin-right: auto;
 	flex-shrink: 0;
 	overflow-x: auto;
 	white-space: nowrap;
@@ -200,4 +152,13 @@ export const InputLayout = styled.div`
 		color: ${({ theme }) => theme.colors.text.primary};
 		resize: none;
 	}
+`;
+
+export const UserNameWrapper = styled.div`
+	margin-left: 10px;
+	margin-top: 10px;
+`;
+
+export const PostWrapper = styled.div`
+	width: 100%;
 `;
